@@ -1,7 +1,7 @@
 import { getDb } from "../connection";
 import { SQLiteDatabase } from "expo-sqlite";
 
-import { Game } from "~/types";
+import { Game, NewGameDetails } from "~/types";
 
 const getCurrentTimestamp = (): number => Math.floor(Date.now() / 1000);
 
@@ -48,13 +48,20 @@ export const gameRepository = {
    * Creates a new game record with initial values.
    * Returns the newly created Game object.
    */
-  createNewGame(): Game {
+  createNewGame(details: NewGameDetails): Game {
     console.log("Repository: Creating new game");
     const db: SQLiteDatabase = getDb();
     const startTimestamp = getCurrentTimestamp();
     const insertSql = `INSERT INTO games (status, current_year, current_month, overall_public_approval, start_timestamp)
                  VALUES (?, ?, ?, ?, ?);`;
-    const insertParams = ["active", 1, 1, 0.5, startTimestamp];
+    const insertParams = [
+      "active",
+      1,
+      1,
+      0.5,
+      details.pressSecretaryName,
+      startTimestamp,
+    ];
 
     // Query to get the last inserted ID
     const selectLastIdSql = `SELECT last_insert_rowid() as id;`;

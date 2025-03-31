@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS games (
   current_year INTEGER NOT NULL DEFAULT 1,
   current_month INTEGER NOT NULL DEFAULT 1,
   overall_public_approval REAL DEFAULT 0.5, -- Example: 0.0 to 1.0
+  press_secretary_name TEXT NOT NULL,
   start_timestamp INTEGER NOT NULL,
   end_timestamp INTEGER,
   created_at INTEGER NOT NULL DEFAULT (${getCurrentTimestamp()}),
