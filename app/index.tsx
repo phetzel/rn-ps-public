@@ -45,7 +45,7 @@ export default function Screen() {
 
   const handleNavigateToCreate = async () => {
     if (canStartNewGame) {
-      router.push(`/create`);
+      router.push(`/games/create`);
     } else {
       // Optionally show an inline error or rely on button disabled state
       console.warn("Max games reached, cannot navigate to create.");
@@ -55,11 +55,11 @@ export default function Screen() {
   const handleContinueGame = () => {
     if (currentGameBeingPlayed) {
       // If a game session was already loaded, jump right back in
-      router.push(`/game/${currentGameBeingPlayed.id}`);
+      // router.push(`/game/${currentGameBeingPlayed.id}`);
     } else if (activeGames.length === 1) {
       // If only one active game exists, load and play it automatically
       loadGameToPlay(activeGames[0].id).then(() => {
-        router.push(`/game/${activeGames[0].id}`);
+        // router.push(`/game/${activeGames[0].id}`);
       });
     } else {
       // If multiple active games, or none, go to the manage screen

@@ -6,7 +6,7 @@ import {
   Theme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { Stack, SplashScreen, useRouter } from "expo-router";
+import { Stack, SplashScreen } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform, View } from "react-native";
@@ -34,8 +34,6 @@ const DARK_THEME: Theme = {
 export { ErrorBoundary } from "expo-router";
 
 export default function RootLayout() {
-  const router = useRouter();
-
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
 
@@ -108,22 +106,14 @@ export default function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: "Press Secretary",
-            headerRight: () => <ThemeToggle />,
+            // title: "Press Secretary", // Give it the correct title
+            headerShown: false, // Ensure header is shown
           }}
         />
         <Stack.Screen
           name="games"
           options={{
-            title: "Saved Games",
-            headerRight: () => <ThemeToggle />,
-          }}
-        />
-        <Stack.Screen
-          name="create"
-          options={{
-            title: "New Game",
-            headerRight: () => <ThemeToggle />,
+            headerShown: false,
           }}
         />
       </Stack>

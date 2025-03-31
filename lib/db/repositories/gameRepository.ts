@@ -52,8 +52,8 @@ export const gameRepository = {
     console.log("Repository: Creating new game");
     const db: SQLiteDatabase = getDb();
     const startTimestamp = getCurrentTimestamp();
-    const insertSql = `INSERT INTO games (status, current_year, current_month, overall_public_approval, start_timestamp)
-                 VALUES (?, ?, ?, ?, ?);`;
+    const insertSql = `INSERT INTO games (status, current_year, current_month, overall_public_approval, press_secretary_name, start_timestamp)
+                 VALUES (?, ?, ?, ?, ?, ?);`;
     const insertParams = [
       "active",
       1,

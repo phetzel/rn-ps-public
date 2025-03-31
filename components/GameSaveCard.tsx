@@ -44,7 +44,7 @@ export default function GameSaveCard({ game }: GameSaveCardProps) {
     if (game.status !== "active") return; // Should already be disabled, but double-check
     loadGameToPlay(game.id)
       .then(() => {
-        router.push(`/game/${game.id}`);
+        // router.push(`/game/${game.id}`);
       })
       .catch((err) => {
         console.error("Failed to load game from card:", err);
@@ -86,7 +86,7 @@ export default function GameSaveCard({ game }: GameSaveCardProps) {
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" size="icon" disabled={isLoading}>
-              <Trash2 className="text-foreground" size={18} />
+              <Trash2 className="text-white" size={18} />
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
@@ -115,7 +115,7 @@ export default function GameSaveCard({ game }: GameSaveCardProps) {
           disabled={game.status !== "active" || isLoading} // Disable if not active or loading
           onPress={handleLoad}
         >
-          <Play className="text-foreground" size={18} />
+          <Play className="text-background" size={18} />
         </Button>
       </CardFooter>
     </Card>

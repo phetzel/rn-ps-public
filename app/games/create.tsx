@@ -67,7 +67,7 @@ export default function CreateGameScreen() {
     const newGame = await createAndStartGame(details);
 
     if (newGame) {
-      router.replace(`/game/${newGame.id}`);
+      //   router.replace(`/game/${newGame.id}`);
     } else {
       setError("root.serverError", {
         type: "custom",

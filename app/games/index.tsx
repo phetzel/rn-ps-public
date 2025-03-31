@@ -8,7 +8,7 @@ import { Button } from "~/components/ui/button";
 import GameSaveCard from "~/components/GameSaveCard";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 
-export default function ManageGamesScreen() {
+export default function GamesScreen() {
   const router = useRouter();
   const { isLoading, error, availableGames, loadAvailableGames } = useGameStore(
     (state) => ({

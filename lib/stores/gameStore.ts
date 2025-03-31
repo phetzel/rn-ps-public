@@ -105,6 +105,7 @@ export const useGameStore = create<GameStoreState & GameStoreActions>(
 
       get()._setLoading(true);
       try {
+        console.log("createAndStartGame", details);
         // Call the updated repository method that takes details
         const newGame = gameRepository.createNewGame(details);
 
