@@ -3,7 +3,6 @@ import * as React from "react";
 import { useRouter } from "expo-router";
 
 import { HeaderBackIcon } from "~/components/HeaderBackIcon";
-import { ThemeToggle } from "~/components/ThemeToggle";
 
 export default function GamesLayout() {
   const router = useRouter();
@@ -18,7 +17,6 @@ export default function GamesLayout() {
         name="index"
         options={{
           title: "Saved Games",
-          headerRight: () => <ThemeToggle />,
           headerLeft: () => <HeaderBackIcon onPress={handleBack} />,
         }}
       />
@@ -26,7 +24,6 @@ export default function GamesLayout() {
         name="create"
         options={{
           title: "New Game",
-          headerRight: () => <ThemeToggle />,
           headerLeft: () => <HeaderBackIcon onPress={handleBack} />,
         }}
       />

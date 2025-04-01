@@ -58,7 +58,7 @@ export default function RootLayout() {
 
   React.useEffect(() => {
     if (Platform.OS === "android") {
-      setAndroidNavigationBar(colorScheme);
+      setAndroidNavigationBar("light");
     }
     if (Platform.OS === "web") {
       document.documentElement.classList.add("bg-background");
@@ -81,7 +81,7 @@ export default function RootLayout() {
   // If DB initialization failed critically, show an error message
   if (dbError && !isDbInitialized) {
     return (
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+      <ThemeProvider value={LIGHT_THEME}>
         <View
           style={{
             flex: 1,
@@ -99,7 +99,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+    <ThemeProvider value={LIGHT_THEME}>
       <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
       <Stack>
         <Stack.Screen
