@@ -2,7 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
 
-import { useGameStore } from "~/lib/stores/gameStore";
+import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { Trash2 } from "~/lib/icons/Trash2";
 import { Play } from "~/lib/icons/Play";
 import {
@@ -34,11 +34,13 @@ interface GameSaveCardProps {
 
 export default function GameSaveCard({ game }: GameSaveCardProps) {
   const router = useRouter();
-  const { loadGameToPlay, deleteGame, isLoading } = useGameStore((state) => ({
-    loadGameToPlay: state.loadGameToPlay,
-    deleteGame: state.deleteGame,
-    isLoading: state.isLoading, // To disable buttons while actions are processing
-  }));
+  const { loadGameToPlay, deleteGame, isLoading } = useSaveManagerStore(
+    (state) => ({
+      loadGameToPlay: state.loadGameToPlay,
+      deleteGame: state.deleteGame,
+      isLoading: state.isLoading, // To disable buttons while actions are processing
+    })
+  );
 
   const handleLoad = () => {
     if (game.status !== "active") return; // Should already be disabled, but double-check

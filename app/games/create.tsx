@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { useGameStore } from "~/lib/stores/gameStore";
+import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { NewGameDetails } from "~/types";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -37,7 +37,7 @@ export default function CreateGameScreen() {
     createAndStartGame,
     isLoading,
     error: globalError,
-  } = useGameStore((state) => ({
+  } = useSaveManagerStore((state) => ({
     createAndStartGame: state.createAndStartGame,
     isLoading: state.isLoading,
     error: state.error,
@@ -72,12 +72,12 @@ export default function CreateGameScreen() {
       setError("root.serverError", {
         type: "custom",
         message:
-          useGameStore.getState().error ||
+          useSaveManagerStore.getState().error ||
           "An unknown error occurred creating the game.",
       });
       console.error(
         "Game creation failed, error should be in store state:",
-        useGameStore.getState().error
+        useSaveManagerStore.getState().error
       );
     }
   };

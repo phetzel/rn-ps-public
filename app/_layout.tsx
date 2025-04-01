@@ -15,9 +15,8 @@ import { PortalHost } from "@rn-primitives/portal";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
-import { useGameStore } from "~/lib/stores/gameStore";
+import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { Text } from "~/components/ui/text";
-import { ThemeToggle } from "~/components/ThemeToggle";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -43,7 +42,7 @@ export default function RootLayout() {
     initDb,
     isLoading: isDbLoading,
     error: dbError,
-  } = useGameStore((state) => ({
+  } = useSaveManagerStore((state) => ({
     isDbInitialized: state.isDbInitialized,
     initDb: state.initDb,
     isLoading: state.isLoading, // Get general loading state initially tied to DB init

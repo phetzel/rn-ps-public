@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Image } from "react-native";
 import Animated, {
   FadeInUp,
   FadeOutDown,
@@ -8,7 +8,7 @@ import Animated, {
 import { useRouter } from "expo-router";
 
 import { MAX_ACTIVE_GAMES } from "~/lib/constants";
-import { useGameStore } from "~/lib/stores/gameStore";
+import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { Button } from "~/components/ui/button";
 import {
@@ -23,19 +23,14 @@ import { Text } from "~/components/ui/text";
 
 export default function Screen() {
   const router = useRouter();
-  const {
-    isLoading,
-    error,
-    availableGames,
-    currentGameBeingPlayed,
-    loadGameToPlay,
-  } = useGameStore((state) => ({
-    isLoading: state.isLoading,
-    error: state.error,
-    availableGames: state.availableGames,
-    currentGameBeingPlayed: state.currentGameBeingPlayed,
-    loadGameToPlay: state.loadGameToPlay,
-  }));
+  const { isLoading, error, availableGames, currentGameId, loadGameToPlay } =
+    useSaveManagerStore((state) => ({
+      isLoading: state.isLoading,
+      error: state.error,
+      availableGames: state.availableGames,
+      currentGameId: state.currentGameId,
+      loadGameToPlay: state.loadGameToPlay,
+    }));
 
   const activeGames = React.useMemo(
     () => availableGames.filter((g) => g.status === "active"),
@@ -53,7 +48,7 @@ export default function Screen() {
   };
 
   const handleContinueGame = () => {
-    if (currentGameBeingPlayed) {
+    if (currentGameId) {
       // If a game session was already loaded, jump right back in
       // router.push(`/game/${currentGameBeingPlayed.id}`);
     } else if (activeGames.length === 1) {
@@ -73,10 +68,19 @@ export default function Screen() {
   };
 
   return (
-    <View className="flex-1 justify-center items-center p-6 bg-background">
+    <View className="flex-1 justify-around items-center p-6 bg-background">
+      <View className="w-full items-center justify-center mt-10">
+        <Image
+          source={require("../assets/images/icon.png")}
+          style={{ width: 200, height: 200 }}
+          resizeMode="contain"
+        />
+        <Text className="text-2xl font-bold mt-4">Press Secretary</Text>
+        <Text className="text-lg text-muted-foreground">Simulation Game</Text>
+      </View>
       <Card className="w-full max-w-sm p-6">
         <CardHeader className="items-center">
-          <CardTitle className="text-center">Main Menu</CardTitle>
+          <CardTitle className="text-center">Menu</CardTitle>
         </CardHeader>
         <CardContent className="gap-4">
           {isLoading && <ActivityIndicator size="large" className="my-4" />}
@@ -89,17 +93,9 @@ export default function Screen() {
           )}
 
           {/* Show Continue if a game is loaded OR if only one active game exists */}
-          {(currentGameBeingPlayed || activeGames.length === 1) &&
-            !isLoading && (
-              <Button size="lg" onPress={handleContinueGame}>
-                <Text>Continue Game</Text>
-              </Button>
-            )}
-
-          {/* Always show Load/Manage unless loading */}
-          {!isLoading && (
-            <Button size="lg" variant="secondary" onPress={handleLoadGame}>
-              <Text>Load / Manage Games</Text>
+          {currentGameId && !isLoading && (
+            <Button size="lg" onPress={handleContinueGame}>
+              <Text>Continue Game</Text>
             </Button>
           )}
 
@@ -114,6 +110,13 @@ export default function Screen() {
               <Text>
                 {canStartNewGame ? "Start New Game" : "All Game Slots Full"}
               </Text>
+            </Button>
+          )}
+
+          {/* Always show Load/Manage unless loading */}
+          {!isLoading && activeGames.length > 0 && (
+            <Button size="lg" variant="secondary" onPress={handleLoadGame}>
+              <Text>Load / Manage Games</Text>
             </Button>
           )}
         </CardContent>

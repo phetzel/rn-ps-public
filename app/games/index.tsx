@@ -2,7 +2,7 @@ import * as React from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
 import { useRouter } from "expo-router";
 
-import { useGameStore } from "~/lib/stores/gameStore";
+import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import GameSaveCard from "~/components/GameSaveCard";
@@ -10,14 +10,13 @@ import { AlertCircle } from "~/lib/icons/AlertCircle";
 
 export default function GamesScreen() {
   const router = useRouter();
-  const { isLoading, error, availableGames, loadAvailableGames } = useGameStore(
-    (state) => ({
+  const { isLoading, error, availableGames, loadAvailableGames } =
+    useSaveManagerStore((state) => ({
       isLoading: state.isLoading,
       error: state.error,
       availableGames: state.availableGames,
       loadAvailableGames: state.loadAvailableGames, // Get action to potentially refresh
-    })
-  );
+    }));
 
   return (
     <View className="flex-1 p-4 bg-background">
