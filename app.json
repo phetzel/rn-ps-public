@@ -51,8 +51,7 @@
             ]
           }
         }
-      ],
-      "@skam22/watermelondb-expo-plugin"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
