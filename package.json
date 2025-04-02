@@ -10,7 +10,14 @@
     "ios": "expo start -c --ios",
     "web": "expo start -c --web",
     "clean": "rm -rf .expo node_modules",
-    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css"
+    "postinstall": "npx tailwindcss -i ./global.css -o ./node_modules/.cache/nativewind/global.css",
+    "dev:client": "expo start --dev-client -c",
+    "build:dev:ios": "eas build --profile development --platform ios",
+    "build:preview:ios": "eas build --profile preview --platform ios",
+    "build:prod:ios": "eas build --profile production --platform ios",
+    "build:dev:android": "eas build --profile development --platform android",
+    "build:preview:android": "eas build --profile preview --platform android",
+    "build:prod:android": "eas build --profile production --platform android"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.3",
