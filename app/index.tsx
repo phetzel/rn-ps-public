@@ -1,5 +1,7 @@
 import * as React from "react";
 import { View, ActivityIndicator, Image } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
+import { Q } from "@nozbe/watermelondb";
 import Animated, {
   FadeInUp,
   FadeOutDown,
@@ -8,7 +10,9 @@ import Animated, {
 import { useRouter } from "expo-router";
 
 import { MAX_ACTIVE_GAMES } from "~/lib/constants";
-import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
+import { database } from "~/lib/db";
+import type Game from "~/lib/db/models/Game";
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { Button } from "~/components/ui/button";
 import {
@@ -21,21 +25,23 @@ import {
 } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 
-export default function Screen() {
+interface ScreenProps {
+  activeGames: Game[];
+}
+
+export function Screen({ activeGames }: ScreenProps) {
   const router = useRouter();
-  const { isLoading, error, availableGames, currentGameId, loadGameToPlay } =
-    useSaveManagerStore((state) => ({
-      isLoading: state.isLoading,
+
+  // Get state and actions from the *new* store
+  const { isLoading, error, currentGameId, setCurrentGameId } =
+    useGameManagerStore((state) => ({
+      isLoading: state.isLoading, // Reflects action loading state
       error: state.error,
-      availableGames: state.availableGames,
       currentGameId: state.currentGameId,
-      loadGameToPlay: state.loadGameToPlay,
+      setCurrentGameId: state.setCurrentGameId,
+      // 'loadGameToPlay' is replaced by setCurrentGameId
     }));
 
-  const activeGames = React.useMemo(
-    () => availableGames.filter((g) => g.status === "active"),
-    [availableGames]
-  );
   const canStartNewGame = activeGames.length < MAX_ACTIVE_GAMES;
 
   const handleNavigateToCreate = async () => {
@@ -49,15 +55,11 @@ export default function Screen() {
 
   const handleContinueGame = () => {
     if (currentGameId) {
-      // If a game session was already loaded, jump right back in
-      // router.push(`/game/${currentGameBeingPlayed.id}`);
+      router.push(`/games/${currentGameId}/(tabs)/current`);
     } else if (activeGames.length === 1) {
-      // If only one active game exists, load and play it automatically
-      loadGameToPlay(activeGames[0].id).then(() => {
-        // router.push(`/game/${activeGames[0].id}`);
-      });
+      setCurrentGameId(activeGames[0].id);
+      router.push(`/games/${activeGames[0].id}/(tabs)/current`);
     } else {
-      // If multiple active games, or none, go to the manage screen
       router.push("/games");
     }
   };
@@ -66,6 +68,8 @@ export default function Screen() {
     // Navigate to the screen showing all saves
     router.push("/games");
   };
+
+  const isGameListLoading = activeGames === undefined;
 
   return (
     <View className="flex-1 justify-around items-center p-6 bg-background">
@@ -83,9 +87,11 @@ export default function Screen() {
           <CardTitle className="text-center">Menu</CardTitle>
         </CardHeader>
         <CardContent className="gap-4">
-          {isLoading && <ActivityIndicator size="large" className="my-4" />}
+          {(isLoading || isGameListLoading) && (
+            <ActivityIndicator size="large" className="my-4" />
+          )}
 
-          {error && (
+          {error && !isLoading && (
             <View className="flex-row items-center bg-destructive/10 p-3 rounded-md border border-destructive">
               <AlertCircle className="text-destructive mr-2" size={20} />
               <Text className="text-destructive flex-shrink">{error}</Text>
@@ -114,7 +120,7 @@ export default function Screen() {
           )}
 
           {/* Always show Load/Manage unless loading */}
-          {!isLoading && activeGames.length > 0 && (
+          {!isLoading && !isGameListLoading && activeGames.length > 0 && (
             <Button size="lg" variant="secondary" onPress={handleLoadGame}>
               <Text>Load / Manage Games</Text>
             </Button>
@@ -124,3 +130,13 @@ export default function Screen() {
     </View>
   );
 }
+
+const enhance = withObservables([], () => ({
+  activeGames: database
+    .get<Game>("games")
+    .query(Q.where("status", "active"))
+    .observeWithColumns(["status"]),
+}));
+
+// Export the HOC-wrapped component as the default
+export default enhance(Screen);

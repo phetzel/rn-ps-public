@@ -5,7 +5,8 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+// import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { NewGameDetails } from "~/types";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -36,8 +37,8 @@ export default function CreateGameScreen() {
   const {
     createAndStartGame,
     isLoading,
-    error: globalError,
-  } = useSaveManagerStore((state) => ({
+    error: storeError,
+  } = useGameManagerStore((state) => ({
     createAndStartGame: state.createAndStartGame,
     isLoading: state.isLoading,
     error: state.error,
@@ -63,21 +64,20 @@ export default function CreateGameScreen() {
       // Map other fields later
     };
 
-    // Call the Zustand action
     const newGame = await createAndStartGame(details);
 
     if (newGame) {
-      //   router.replace(`/game/${newGame.id}`);
+      router.replace(`/games/${newGame.id}/(tabs)/current`);
     } else {
       setError("root.serverError", {
         type: "custom",
         message:
-          useSaveManagerStore.getState().error ||
+          useGameManagerStore.getState().error ||
           "An unknown error occurred creating the game.",
       });
       console.error(
         "Game creation failed, error should be in store state:",
-        useSaveManagerStore.getState().error
+        useGameManagerStore.getState().error
       );
     }
   };
@@ -100,12 +100,10 @@ export default function CreateGameScreen() {
             </View>
           )}
           {/* Display global store error if not handled by form-specific error */}
-          {!errors.root?.serverError && globalError && (
+          {!errors.root?.serverError && storeError && (
             <View className="flex-row items-center bg-destructive/10 p-3 rounded-md border border-destructive mb-4">
               <AlertCircle className="text-destructive mr-2" size={16} />
-              <Text className="text-destructive flex-shrink">
-                {globalError}
-              </Text>
+              <Text className="text-destructive flex-shrink">{storeError}</Text>
             </View>
           )}
 

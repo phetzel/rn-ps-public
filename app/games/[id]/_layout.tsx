@@ -1,4 +1,3 @@
-// app/games/[id]/_layout.tsx - UPDATED
 import React, { useEffect } from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 

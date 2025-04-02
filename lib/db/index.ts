@@ -1,43 +1,35 @@
-import { getDb } from "./connection";
-import { ALL_TABLES, ALL_TRIGGERS, ALL_INDEXES } from "./schema";
-import { SQLiteDatabase } from "expo-sqlite";
+import { Platform } from "react-native";
+import { Database } from "@nozbe/watermelondb";
+import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 
-// Re-export repository functions for easy access
-// export * from "./gameRepository";
-// export * from "./levelRepository";
-// export * from './interactionRepository'; // Add later
+import { myAppSchema } from "./schema";
+import { migrations } from "./migrations";
+// Models
+import Game from "./models/Game";
+import Level from "./models/Level";
+import CabinetMember from "./models/CabinetMember";
+import Publication from "./models/Publication";
+import Journalist from "./models/Journalist";
+import SubgroupApproval from "./models/SubgroupApproval";
 
-let _isInitialized = false;
+const adapter = new SQLiteAdapter({
+  schema: myAppSchema,
+  migrations: migrations,
+  jsi: Platform.OS === "ios" || Platform.OS === "android",
+  onSetUpError: (error) => {
+    console.error(`Database setup failed:`, error);
+  },
+});
 
-export const initializeDatabase = async (): Promise<void> => {
-  if (_isInitialized) {
-    console.log("Database already initialized.");
-    return;
-  }
-
-  console.log("Attempting to initialize database...");
-  const db: SQLiteDatabase = getDb();
-
-  try {
-    console.log("Executing Schema SQL...");
-    const allSqlCommands = [
-      ...ALL_TABLES,
-      ...ALL_TRIGGERS,
-      ...ALL_INDEXES,
-    ].join(";\n");
-
-    await db.execAsync(allSqlCommands);
-
-    _isInitialized = true;
-    console.log("Database initialization successful.");
-
-    return Promise.resolve();
-  } catch (error: any) {
-    _isInitialized = false;
-    console.error("Database initialization failed:", error);
-
-    throw new Error(
-      `Database initialization failed: ${error.message || error}`
-    );
-  }
-};
+export const database = new Database({
+  adapter,
+  modelClasses: [
+    // List ALL your models here
+    Game,
+    Level,
+    CabinetMember,
+    Publication,
+    Journalist,
+    SubgroupApproval,
+  ],
+});

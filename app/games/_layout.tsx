@@ -27,6 +27,12 @@ export default function GamesLayout() {
           headerLeft: () => <HeaderBackIcon onPress={handleBack} />,
         }}
       />
+      <Stack.Screen
+        name="[id]"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

@@ -1,8 +1,10 @@
 import * as React from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
+import { withObservables } from "@nozbe/watermelondb/react";
 
-import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
+import type Game from "~/lib/db/models/Game";
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { Trash2 } from "~/lib/icons/Trash2";
 import { Play } from "~/lib/icons/Play";
 import {
@@ -26,61 +28,67 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
-import { Game } from "~/types";
 
 interface GameSaveCardProps {
   game: Game;
+  status: string;
+  currentYear: number;
+  currentMonth: number;
+  overallPublicApproval: number;
+  updatedAt: Date;
 }
 
-export default function GameSaveCard({ game }: GameSaveCardProps) {
+function GameSaveCard({
+  game,
+  status,
+  currentYear,
+  currentMonth,
+  overallPublicApproval,
+  updatedAt,
+}: GameSaveCardProps) {
   const router = useRouter();
-  const { loadGameToPlay, deleteGame, isLoading } = useSaveManagerStore(
+  const { setCurrentGameId, deleteGame, isLoading } = useGameManagerStore(
     (state) => ({
-      loadGameToPlay: state.loadGameToPlay,
+      setCurrentGameId: state.setCurrentGameId,
       deleteGame: state.deleteGame,
-      isLoading: state.isLoading, // To disable buttons while actions are processing
+      isLoading: state.isLoading, // Global loading for actions
     })
   );
 
   const handleLoad = () => {
-    if (game.status !== "active") return; // Should already be disabled, but double-check
-    loadGameToPlay(game.id)
-      .then(() => {
-        // router.push(`/game/${game.id}`);
-      })
-      .catch((err) => {
-        console.error("Failed to load game from card:", err);
-      });
+    if (status !== "active") return;
+    setCurrentGameId(game.id);
+    router.push(`/games/${game.id}/(tabs)/current`);
   };
 
   const handleDelete = () => {
     deleteGame(game.id).catch((err) => {
       console.error("Failed to delete game from card:", err);
-      // Error state is handled globally by the store
     });
   };
 
-  const lastPlayedDate = new Date(game.updated_at * 1000).toLocaleDateString();
-  const lastPlayedTime = new Date(game.updated_at * 1000).toLocaleTimeString(
-    [],
-    { hour: "numeric", minute: "2-digit" }
-  );
+  const lastPlayedDate = updatedAt.toLocaleDateString();
+  const lastPlayedTime = updatedAt.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
 
   return (
     <Card className="w-full">
       <CardHeader>
         {/* You can give games names later, for now use ID or Year/Month */}
         <CardTitle>
-          Game #{game.id} - Year {game.current_year}, Month {game.current_month}
+          Game #{game.id.substring(0, 6)}... - Year {currentYear}, Month{" "}
+          {currentMonth}{" "}
         </CardTitle>
         <CardDescription>
-          Status: {game.status} | Last Played: {lastPlayedDate} {lastPlayedTime}
+          tatus: {status} | Last Played: {lastPlayedDate} {lastPlayedTime}{" "}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {/* Display other relevant info like approval */}
         <Text>
-          Public Approval: {Math.round(game.overall_public_approval * 100)}%
+          Public Approval: {Math.round(overallPublicApproval * 100)}%{" "}
         </Text>
         {/* Add more details as needed */}
       </CardContent>
@@ -100,12 +108,14 @@ export default function GameSaveCard({ game }: GameSaveCardProps) {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>
+                <Text>Cancel</Text>
+              </AlertDialogCancel>
               <AlertDialogAction
                 onPress={handleDelete}
                 className="bg-destructive"
               >
-                Delete
+                <Text>Delete</Text>
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -123,3 +133,16 @@ export default function GameSaveCard({ game }: GameSaveCardProps) {
     </Card>
   );
 }
+
+const enhance = withObservables(["game"], ({ game }: { game: Game }) => ({
+  game: game.observe(), // Observe the game model itself for actions
+  // Observe specific fields needed for display
+  status: game.status,
+  currentYear: game.currentYear,
+  currentMonth: game.currentMonth,
+  overallPublicApproval: game.overallPublicApproval,
+  updatedAt: game.updatedAt, // Observe the date field
+}));
+
+// --- Export Enhanced Component ---
+export default enhance(GameSaveCard);

@@ -11,11 +11,13 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform, View } from "react-native";
 import { PortalHost } from "@rn-primitives/portal";
+import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider"; // Import WDB Provider
 
+import { database } from "~/lib/db"; // Import your WDB
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore"; // Import new store
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
-import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { Text } from "~/components/ui/text";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -37,24 +39,17 @@ export default function RootLayout() {
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
 
   // Zustand state for DB initialization
-  const {
-    isDbInitialized,
-    initDb,
-    isLoading: isDbLoading,
-    error: dbError,
-  } = useSaveManagerStore((state) => ({
-    isDbInitialized: state.isDbInitialized,
-    initDb: state.initDb,
-    isLoading: state.isLoading, // Get general loading state initially tied to DB init
-    error: state.error,
+  const { isDbReady, initializeDb, dbError } = useGameManagerStore((state) => ({
+    isDbReady: state.isDbReady,
+    initializeDb: state.initialize,
+    dbError: state.error,
   }));
 
   React.useEffect(() => {
-    // Initialize DB only if not already done
-    if (!isDbInitialized) {
-      initDb();
+    if (!isDbReady) {
+      initializeDb();
     }
-  }, [isDbInitialized, initDb]); // Depend on initDb reference and init status
+  }, [isDbReady, initializeDb]);
 
   React.useEffect(() => {
     if (Platform.OS === "android") {
@@ -69,17 +64,17 @@ export default function RootLayout() {
 
   // Hide splash screen once DB is initialized (or errored) and color scheme is ready
   React.useEffect(() => {
-    if ((isDbInitialized || dbError) && isColorSchemeLoaded) {
+    if ((isDbReady || dbError) && isColorSchemeLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [isDbInitialized, dbError, isColorSchemeLoaded]);
+  }, [isDbReady, dbError, isColorSchemeLoaded]);
 
-  if ((!isDbInitialized && !dbError) || !isColorSchemeLoaded) {
+  if ((!isDbReady && !dbError) || !isColorSchemeLoaded) {
     return null;
   }
 
   // If DB initialization failed critically, show an error message
-  if (dbError && !isDbInitialized) {
+  if (dbError && !isDbReady) {
     return (
       <ThemeProvider value={LIGHT_THEME}>
         <View
@@ -99,24 +94,26 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={LIGHT_THEME}>
-      <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-      <Stack>
-        <Stack.Screen
-          name="index"
-          options={{
-            // title: "Press Secretary", // Give it the correct title
-            headerShown: false, // Ensure header is shown
-          }}
-        />
-        <Stack.Screen
-          name="games"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-      <PortalHost />
-    </ThemeProvider>
+    <DatabaseProvider database={database}>
+      <ThemeProvider value={LIGHT_THEME}>
+        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+        <Stack>
+          <Stack.Screen
+            name="index"
+            options={{
+              // title: "Press Secretary", // Give it the correct title
+              headerShown: false, // Ensure header is shown
+            }}
+          />
+          <Stack.Screen
+            name="games"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+        <PortalHost />
+      </ThemeProvider>
+    </DatabaseProvider>
   );
 }
