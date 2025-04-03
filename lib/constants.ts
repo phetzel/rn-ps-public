@@ -1,3 +1,6 @@
+// Blue: #113c57
+// Red: #d44c3d
+
 export const NAV_THEME = {
   light: {
     background: "hsl(0 0% 100%)", // background

@@ -87,18 +87,9 @@ export const generateMockPublications = (): NewPublicationData[] => [
 ];
 
 // --- Mock Journalist Data ---
-interface MockJournalistInputData {
-  publicationName: string; // Temporary key for mapping
-  name: string;
-  bias: string | null;
-  aggressiveness: number;
-  reputation: number;
-  relationship: number;
-  isActive: boolean; // Use camelCase
-}
 
 export interface NewJournalistData {
-  publicationId: string; // Use camelCase (represents the foreign key)
+  publication: Publication; // Use camelCase (represents the foreign key)
   name: string;
   bias: string | null;
   aggressiveness: number;
@@ -108,11 +99,13 @@ export interface NewJournalistData {
 }
 
 export const generateMockJournalists = (
-  publicationMap: Map<string, string> // Map<publicationName, publicationId>
+  publications: Publication[]
 ): NewJournalistData[] => {
-  const mockData: MockJournalistInputData[] = [
+  if (publications.length === 0) return [];
+
+  const mockJournalists: NewJournalistData[] = [
     {
-      publicationName: "Capital Chronicle",
+      publication: publications[0 % publications.length],
       name: "Sarah Inquiry",
       bias: "liberal",
       aggressiveness: 0.7,
@@ -121,7 +114,7 @@ export const generateMockJournalists = (
       isActive: true,
     },
     {
-      publicationName: "Liberty Ledger",
+      publication: publications[1 % publications.length],
       name: "Mark Statement",
       bias: "conservative",
       aggressiveness: 0.6,
@@ -130,7 +123,7 @@ export const generateMockJournalists = (
       isActive: true,
     },
     {
-      publicationName: "Metro Monitor",
+      publication: publications[2 % publications.length],
       name: "Alex Objective",
       bias: "neutral",
       aggressiveness: 0.5,
@@ -139,7 +132,7 @@ export const generateMockJournalists = (
       isActive: true,
     },
     {
-      publicationName: "Metro Monitor",
+      publication: publications[3 % publications.length],
       name: "Brenda Beat",
       bias: "neutral",
       aggressiveness: 0.8,
@@ -148,7 +141,7 @@ export const generateMockJournalists = (
       isActive: true,
     },
     {
-      publicationName: "Digital Dispatch",
+      publication: publications[4 % publications.length],
       name: "Chris Coder",
       bias: "liberal",
       aggressiveness: 0.4,
@@ -157,7 +150,7 @@ export const generateMockJournalists = (
       isActive: true,
     },
     {
-      publicationName: "Wall Street Wire",
+      publication: publications[5 % publications.length],
       name: "Penny Profit",
       bias: "conservative",
       aggressiveness: 0.6,
@@ -167,27 +160,6 @@ export const generateMockJournalists = (
     },
   ];
 
-  const results: NewJournalistData[] = [];
-  mockData.forEach((jData) => {
-    const pubId = publicationMap.get(jData.publicationName);
-    if (!pubId) {
-      console.warn(
-        `Could not find publication ID for ${jData.publicationName} while generating journalist ${jData.name}`
-      );
-      return;
-    }
-
-    results.push({
-      publicationId: pubId, // Use camelCase
-      name: jData.name,
-      bias: jData.bias,
-      aggressiveness: jData.aggressiveness,
-      reputation: jData.reputation,
-      relationship: jData.relationship,
-      isActive: jData.isActive, // Use camelCase
-    });
-  });
-
-  return results;
+  return mockJournalists;
 };
 // --- END OF FILE mockData.ts ---

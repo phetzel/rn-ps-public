@@ -13,7 +13,7 @@ import { Platform, View } from "react-native";
 import { PortalHost } from "@rn-primitives/portal";
 import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider"; // Import WDB Provider
 
-import { database } from "~/lib/db"; // Import your WDB
+import { database } from "~/lib/db";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore"; // Import new store
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
@@ -94,15 +94,14 @@ export default function RootLayout() {
   }
 
   return (
-    <DatabaseProvider database={database}>
-      <ThemeProvider value={LIGHT_THEME}>
+    <ThemeProvider value={LIGHT_THEME}>
+      <DatabaseProvider database={database}>
         <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
         <Stack>
           <Stack.Screen
             name="index"
             options={{
-              // title: "Press Secretary", // Give it the correct title
-              headerShown: false, // Ensure header is shown
+              headerShown: false,
             }}
           />
           <Stack.Screen
@@ -113,7 +112,7 @@ export default function RootLayout() {
           />
         </Stack>
         <PortalHost />
-      </ThemeProvider>
-    </DatabaseProvider>
+      </DatabaseProvider>
+    </ThemeProvider>
   );
 }

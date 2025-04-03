@@ -1,4 +1,4 @@
-import { Model } from "@nozbe/watermelondb";
+import { Model, Relation } from "@nozbe/watermelondb";
 import {
   field,
   text,
@@ -6,12 +6,18 @@ import {
   relation,
   readonly,
 } from "@nozbe/watermelondb/decorators";
+import { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
+
 import type Game from "./Game";
 
 export default class CabinetMember extends Model {
   static table = "cabinet_members";
 
-  @relation("games", "game_id") game!: Game;
+  static associations: Associations = {
+    games: { type: "belongs_to", key: "game_id" },
+  };
+
+  @relation("games", "game_id") game!: Relation<Game>;
 
   @text("role") role!: string;
   @text("name") name!: string;

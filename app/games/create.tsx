@@ -127,6 +127,7 @@ export default function CreateGameScreen() {
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
+                  autoCapitalize="words"
                   aria-labelledbyledby="nameLabel"
                   aria-invalid={error ? "true" : "false"}
                   editable={!isLoading}

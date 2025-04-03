@@ -31,34 +31,22 @@ import {
 
 interface GameSaveCardProps {
   game: Game;
-  status: string;
-  currentYear: number;
-  currentMonth: number;
-  overallPublicApproval: number;
-  updatedAt: Date;
 }
 
-function GameSaveCard({
-  game,
-  status,
-  currentYear,
-  currentMonth,
-  overallPublicApproval,
-  updatedAt,
-}: GameSaveCardProps) {
+function GameSaveCard({ game }: GameSaveCardProps) {
   const router = useRouter();
   const { setCurrentGameId, deleteGame, isLoading } = useGameManagerStore(
     (state) => ({
       setCurrentGameId: state.setCurrentGameId,
       deleteGame: state.deleteGame,
-      isLoading: state.isLoading, // Global loading for actions
+      isLoading: state.isLoading,
     })
   );
 
   const handleLoad = () => {
-    if (status !== "active") return;
+    if (game.status !== "active") return;
     setCurrentGameId(game.id);
-    router.push(`/games/${game.id}/(tabs)/current`);
+    router.push(`/games/play/(tabs)/current`);
   };
 
   const handleDelete = () => {
@@ -67,8 +55,8 @@ function GameSaveCard({
     });
   };
 
-  const lastPlayedDate = updatedAt.toLocaleDateString();
-  const lastPlayedTime = updatedAt.toLocaleTimeString([], {
+  const lastPlayedDate = game.updatedAt.toLocaleDateString();
+  const lastPlayedTime = game.updatedAt.toLocaleTimeString([], {
     hour: "numeric",
     minute: "2-digit",
   });
@@ -76,21 +64,17 @@ function GameSaveCard({
   return (
     <Card className="w-full">
       <CardHeader>
-        {/* You can give games names later, for now use ID or Year/Month */}
         <CardTitle>
-          Game #{game.id.substring(0, 6)}... - Year {currentYear}, Month{" "}
-          {currentMonth}{" "}
+          Year {game.currentYear}, Month {game.currentMonth}{" "}
         </CardTitle>
         <CardDescription>
-          tatus: {status} | Last Played: {lastPlayedDate} {lastPlayedTime}{" "}
+          Status: {game.status} | Last Played: {lastPlayedDate} {lastPlayedTime}{" "}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {/* Display other relevant info like approval */}
         <Text>
-          Public Approval: {Math.round(overallPublicApproval * 100)}%{" "}
+          Public Approval: {Math.round(game.overallPublicApproval * 100)}%{" "}
         </Text>
-        {/* Add more details as needed */}
       </CardContent>
       <CardFooter className="flex-row justify-end gap-2">
         <AlertDialog>
@@ -134,15 +118,4 @@ function GameSaveCard({
   );
 }
 
-const enhance = withObservables(["game"], ({ game }: { game: Game }) => ({
-  game: game.observe(), // Observe the game model itself for actions
-  // Observe specific fields needed for display
-  status: game.status,
-  currentYear: game.currentYear,
-  currentMonth: game.currentMonth,
-  overallPublicApproval: game.overallPublicApproval,
-  updatedAt: game.updatedAt, // Observe the date field
-}));
-
-// --- Export Enhanced Component ---
-export default enhance(GameSaveCard);
+export default GameSaveCard;

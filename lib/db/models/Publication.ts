@@ -1,4 +1,4 @@
-import { Model } from "@nozbe/watermelondb";
+import { Model, Relation } from "@nozbe/watermelondb";
 import {
   field,
   text,
@@ -8,13 +8,20 @@ import {
   readonly,
 } from "@nozbe/watermelondb/decorators";
 import type { Query } from "@nozbe/watermelondb";
+import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
+
 import type Game from "./Game";
 import type Journalist from "./Journalist";
 
 export default class Publication extends Model {
   static table = "publications";
 
-  @relation("games", "game_id") game!: Game;
+  static associations: Associations = {
+    games: { type: "belongs_to", key: "game_id" },
+    journalists: { type: "has_many", foreignKey: "publication_id" }, // How journalists link back
+  };
+
+  @relation("games", "game_id") game!: Relation<Game>;
   @children("journalists") journalists!: Query<Journalist>; // Publications have many journalists
 
   @text("name") name!: string;

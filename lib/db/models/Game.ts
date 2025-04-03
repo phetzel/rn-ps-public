@@ -6,20 +6,39 @@ import {
   children,
   readonly,
   json,
+  writer,
 } from "@nozbe/watermelondb/decorators";
-import type { Query } from "@nozbe/watermelondb";
+import { Query } from "@nozbe/watermelondb";
+import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
 
-import type Level from "./Level"; // Assuming Level.ts is in the same directory
+// Models
+import type Level from "./Level";
 import type CabinetMember from "./CabinetMember";
 import type Publication from "./Publication";
 import type Journalist from "./Journalist";
 import type SubgroupApproval from "./SubgroupApproval";
+// Types
 import type { PsRelationships } from "~/types";
+// Mock Data
+import {
+  DEFAULT_CABINET_MEMBERS,
+  generateMockPublications,
+  generateMockJournalists,
+  DEFAULT_SUBGROUPS,
+} from "~/lib/mockData";
 
 const sanitizer = (value: any) => value;
 
 export default class Game extends Model {
   static table = "games"; // Corresponds to the table name in the schema
+
+  static associations: Associations = {
+    levels: { type: "has_many", foreignKey: "game_id" },
+    cabinet_members: { type: "has_many", foreignKey: "game_id" },
+    publications: { type: "has_many", foreignKey: "game_id" },
+    journalists: { type: "has_many", foreignKey: "game_id" },
+    subgroup_approvals: { type: "has_many", foreignKey: "game_id" },
+  };
 
   // Define relations to child tables
   // @children(tableName) defines a has-many relationship
@@ -73,5 +92,22 @@ export default class Game extends Model {
   //       game.currentMonth += 1;
   //     }
   //   });
+  // }
+
+  // @writer async initialize() {
+  //   await this.batch(
+  //     DEFAULT_CABINET_MEMBERS.forEach((member) => {
+  //       this.collections
+  //         .get("cabinet_members")
+  //         .prepareCreate((cabinetMember) => {
+  //           cabinetMember.game.set(this);
+  //           cabinetMember.role = member.role;
+  //           cabinetMember.name = member.name;
+  //           cabinetMember.influenceArea = member.influenceArea;
+  //           cabinetMember.approvalRating = member.approvalRating;
+  //           cabinetMember.isActive = cabinetMember.isActive;
+  //         });
+  //     })
+  //   );
   // }
 }

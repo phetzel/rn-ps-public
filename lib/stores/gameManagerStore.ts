@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Q } from "@nozbe/watermelondb";
+import type { Relation } from "@nozbe/watermelondb";
 
 import { database } from "~/lib/db";
 import type Game from "~/lib/db/models/Game";
@@ -99,7 +100,8 @@ export const useGameManagerStore = create<GameManagerStoreState>(
           await Promise.all(
             DEFAULT_CABINET_MEMBERS.map((memberData) =>
               cabinetCollection.create((member) => {
-                member.game = newGame; // Link to the game
+                member.game.set(newGame);
+                // member.game.id = newGame._raw.id;
                 member.role = memberData.role;
                 member.name = memberData.name;
                 member.influenceArea = memberData.influenceArea;
@@ -115,7 +117,7 @@ export const useGameManagerStore = create<GameManagerStoreState>(
           const createdPublications = await Promise.all(
             mockPublicationData.map(async (pubData) => {
               const createdPub = await publicationCollection.create((pub) => {
-                pub.game = newGame; // Link to the game
+                pub.game.set(newGame);
                 pub.name = pubData.name;
                 pub.politicalLeaning = pubData.politicalLeaning;
                 pub.reach = pubData.reach;
@@ -127,12 +129,12 @@ export const useGameManagerStore = create<GameManagerStoreState>(
 
           // 5. Create Journalists (using the publication map)
           const mockJournalistData =
-            generateMockJournalists(publicationNameIdMap);
+            generateMockJournalists(createdPublications);
           await Promise.all(
             mockJournalistData.map((journoData) =>
               journalistCollection.create((journalist) => {
-                journalist.game = newGame; // Link to the game
-                // journalist.publication = publicationNameIdMap.get(journoData);
+                journalist.game.set(newGame); // Link to the game
+                journalist.publication.set(journoData.publication);
                 journalist.name = journoData.name;
                 journalist.bias = journoData.bias;
                 journalist.aggressiveness = journoData.aggressiveness;
@@ -147,7 +149,7 @@ export const useGameManagerStore = create<GameManagerStoreState>(
           await Promise.all(
             DEFAULT_SUBGROUPS.map((subgroupKey) =>
               subgroupCollection.create((subgroup) => {
-                subgroup.game = newGame; // Link to the game
+                subgroup.game.set(newGame); // Link to the game
                 subgroup.subgroupKey = subgroupKey;
                 subgroup.approvalRating = 0.5; // Default starting approval
               })
