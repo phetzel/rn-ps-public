@@ -1,7 +1,5 @@
 import * as React from "react";
-import { View } from "react-native";
 import { useRouter } from "expo-router";
-import { withObservables } from "@nozbe/watermelondb/react";
 
 import type Game from "~/lib/db/models/Game";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";

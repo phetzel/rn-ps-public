@@ -1,21 +1,23 @@
 import { create } from "zustand";
 import { Q } from "@nozbe/watermelondb";
-import type { Relation } from "@nozbe/watermelondb";
 
 import { database } from "~/lib/db";
 import type Game from "~/lib/db/models/Game";
-import type CabinetMember from "~/lib/db/models/CabinetMember";
-import type Publication from "~/lib/db/models/Publication";
-import type Journalist from "~/lib/db/models/Journalist";
-import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
 import type { NewGameDetails } from "~/types";
+import { SUBGROUPS } from "~/lib/constants";
 // Temp mock data
 import {
   DEFAULT_CABINET_MEMBERS,
   generateMockPublications,
   generateMockJournalists,
-  DEFAULT_SUBGROUPS,
 } from "../mockData";
+import {
+  gamesCollection,
+  cabinetCollection,
+  publicationCollection,
+  journalistCollection,
+  subgroupCollection,
+} from "~/lib/db/helpers";
 
 // Define the type for the JSON relationships for clarity
 type PsRelationships = {
@@ -69,16 +71,6 @@ export const useGameManagerStore = create<GameManagerStoreState>(
       set({ isLoading: true, error: null });
       try {
         const createdGame = await database.write(async () => {
-          // 1. Get collections
-          const gamesCollection = database.get<Game>("games");
-          const cabinetCollection =
-            database.get<CabinetMember>("cabinet_members");
-          const publicationCollection =
-            database.get<Publication>("publications");
-          const journalistCollection = database.get<Journalist>("journalists");
-          const subgroupCollection =
-            database.get<SubgroupApproval>("subgroup_approvals");
-
           // 2. Create the Game
           const initialRelationships: PsRelationships = {
             president: 0.5,
@@ -88,11 +80,11 @@ export const useGameManagerStore = create<GameManagerStoreState>(
             game.status = "active";
             game.currentYear = 1;
             game.currentMonth = 1;
-            game.overallPublicApproval = 0.5;
+            game.overallPublicApproval = 50;
             game.psName = details.pressSecretaryName;
-            game.psCredibility = 0.5;
+            game.psCredibility = 50;
             game.psRelationships = initialRelationships;
-            game.presidentApproval = 0.5;
+            game.presidentApproval = 50;
             game.startTimestamp = Math.floor(Date.now() / 1000);
           });
 
@@ -101,7 +93,6 @@ export const useGameManagerStore = create<GameManagerStoreState>(
             DEFAULT_CABINET_MEMBERS.map((memberData) =>
               cabinetCollection.create((member) => {
                 member.game.set(newGame);
-                // member.game.id = newGame._raw.id;
                 member.role = memberData.role;
                 member.name = memberData.name;
                 member.influenceArea = memberData.influenceArea;
@@ -146,12 +137,14 @@ export const useGameManagerStore = create<GameManagerStoreState>(
           );
 
           // 6. Create Subgroup Approvals
+          console.log("Creating Subgroup Approvals", SUBGROUPS);
           await Promise.all(
-            DEFAULT_SUBGROUPS.map((subgroupKey) =>
+            SUBGROUPS.map((sub) =>
               subgroupCollection.create((subgroup) => {
                 subgroup.game.set(newGame); // Link to the game
-                subgroup.subgroupKey = subgroupKey;
-                subgroup.approvalRating = 0.5; // Default starting approval
+                subgroup.subgroupKey = sub.key;
+                subgroup.category = sub.category;
+                subgroup.approvalRating = 50; // Default starting approval
               })
             )
           );

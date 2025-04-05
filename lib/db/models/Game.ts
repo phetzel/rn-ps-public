@@ -24,7 +24,7 @@ import {
   DEFAULT_CABINET_MEMBERS,
   generateMockPublications,
   generateMockJournalists,
-  DEFAULT_SUBGROUPS,
+  // DEFAULT_SUBGROUPS,
 } from "~/lib/mockData";
 
 const sanitizer = (value: any) => value;

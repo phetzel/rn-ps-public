@@ -1,7 +1,6 @@
 import * as React from "react";
 import { View, ActivityIndicator, Image } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { Q } from "@nozbe/watermelondb";
 import Animated, {
   FadeInUp,
   FadeOutDown,
@@ -10,8 +9,8 @@ import Animated, {
 import { useRouter } from "expo-router";
 
 import { MAX_ACTIVE_GAMES } from "~/lib/constants";
-import { database } from "~/lib/db";
 import type Game from "~/lib/db/models/Game";
+import { observeAllGames } from "~/lib/db/helpers";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { Button } from "~/components/ui/button";
@@ -24,12 +23,13 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
+import { ThemedView } from "~/components/ThemedView";
 
 interface ScreenProps {
-  activeGames: Game[];
+  games: Game[];
 }
 
-export function Screen({ activeGames }: ScreenProps) {
+export function Screen({ games }: ScreenProps) {
   const router = useRouter();
 
   // Get state and actions from the *new* store
@@ -42,7 +42,7 @@ export function Screen({ activeGames }: ScreenProps) {
       // 'loadGameToPlay' is replaced by setCurrentGameId
     }));
 
-  const canStartNewGame = activeGames.length < MAX_ACTIVE_GAMES;
+  const canStartNewGame = games.length < MAX_ACTIVE_GAMES;
 
   const handleNavigateToCreate = async () => {
     if (canStartNewGame) {
@@ -54,6 +54,7 @@ export function Screen({ activeGames }: ScreenProps) {
   };
 
   const handleContinueGame = () => {
+    const activeGames = games.filter((game) => game.status === "active");
     if (currentGameId) {
       router.push(`/games/${currentGameId}/(tabs)/current`);
     } else if (activeGames.length === 1) {
@@ -69,10 +70,10 @@ export function Screen({ activeGames }: ScreenProps) {
     router.push("/games");
   };
 
-  const isGameListLoading = activeGames === undefined;
+  const isGameListLoading = games === undefined;
 
   return (
-    <View className="flex-1 justify-around items-center p-6 bg-background">
+    <ThemedView className="justify-around items-center p-6">
       <View className="w-full items-center justify-center mt-10">
         <Image
           source={require("../assets/images/icon.png")}
@@ -120,22 +121,19 @@ export function Screen({ activeGames }: ScreenProps) {
           )}
 
           {/* Always show Load/Manage unless loading */}
-          {!isLoading && !isGameListLoading && activeGames.length > 0 && (
+          {!isLoading && !isGameListLoading && games.length > 0 && (
             <Button size="lg" variant="secondary" onPress={handleLoadGame}>
               <Text>Load / Manage Games</Text>
             </Button>
           )}
         </CardContent>
       </Card>
-    </View>
+    </ThemedView>
   );
 }
 
 const enhance = withObservables([], () => ({
-  activeGames: database
-    .get<Game>("games")
-    .query(Q.where("status", "active"))
-    .observeWithColumns(["status"]),
+  games: observeAllGames(),
 }));
 
 // Export the HOC-wrapped component as the default

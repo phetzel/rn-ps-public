@@ -1,0 +1,19 @@
+import { View, type ViewProps } from "react-native";
+
+export type ThemedViewProps = ViewProps & {
+  className?: string;
+};
+
+export function ThemedView({
+  className,
+  style,
+  ...otherProps
+}: ThemedViewProps) {
+  return (
+    <View
+      className={`${className} bg-background flex-1`}
+      style={style}
+      {...otherProps}
+    />
+  );
+}

@@ -1,15 +1,13 @@
 import * as React from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
-import { useRouter } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
-import { Q } from "@nozbe/watermelondb";
 
-import { database } from "~/lib/db";
 import type Game from "~/lib/db/models/Game";
+import { observeAllGames } from "~/lib/db/helpers";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { Text } from "~/components/ui/text";
-import { Button } from "~/components/ui/button";
 import GameSaveCard from "~/components/GameSaveCard";
+import { ThemedView } from "~/components/ThemedView";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 
 interface GamesScreenProps {
@@ -17,7 +15,6 @@ interface GamesScreenProps {
 }
 
 function GamesScreen({ allGames }: GamesScreenProps) {
-  const router = useRouter();
   const { error: actionError } = useGameManagerStore((state) => ({
     error: state.error,
   }));
@@ -25,7 +22,7 @@ function GamesScreen({ allGames }: GamesScreenProps) {
   const isLoading = allGames === undefined;
 
   return (
-    <View className="flex-1 p-4 bg-background">
+    <ThemedView className="p-4">
       {isLoading ? ( // Show loading only if list is empty initially
         <ActivityIndicator size="large" className="my-10" />
       ) : actionError ? (
@@ -48,21 +45,12 @@ function GamesScreen({ allGames }: GamesScreenProps) {
           contentContainerClassName="py-4"
         />
       )}
-    </View>
+    </ThemedView>
   );
 }
 
 const enhance = withObservables([], () => ({
-  allGames: database
-    .get<Game>("games")
-    .query(Q.sortBy("updated_at", Q.desc))
-    .observeWithColumns([
-      "status",
-      "current_year",
-      "current_month",
-      "overall_public_approval",
-      "updated_at",
-    ]),
+  allGames: observeAllGames(),
 }));
 
 export default enhance(GamesScreen);

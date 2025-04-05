@@ -78,8 +78,7 @@ export const myAppSchema = appSchema({
         { name: "game_id", type: "string", isIndexed: true },
         { name: "subgroup_key", type: "string", isIndexed: true }, // Index for lookup
         { name: "approval_rating", type: "number" },
-        // WDB doesn't directly support multi-column unique constraints in schema
-        // Enforce this uniqueness in your application logic when creating/updating records.
+        { name: "category", type: "string" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
