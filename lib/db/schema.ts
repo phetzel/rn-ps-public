@@ -97,19 +97,19 @@ export const myAppSchema = appSchema({
     }),
 
     // Game content
-    // tableSchema({
-    //   name: "levels",
-    //   columns: [
-    //     { name: "game_id", type: "string", isIndexed: true }, // Foreign keys are strings (IDs) and indexed
-    //     { name: "year", type: "number" },
-    //     { name: "month", type: "number" },
-    //     { name: "scenario_briefing", type: "string", isOptional: true },
-    //     { name: "start_timestamp", type: "number", isOptional: true },
-    //     { name: "end_timestamp", type: "number", isOptional: true },
-    //     { name: "created_at", type: "number" },
-    //     { name: "updated_at", type: "number" },
-    //   ],
-    // }),
+    tableSchema({
+      name: "levels",
+      columns: [
+        { name: "game_id", type: "string", isIndexed: true }, // Foreign keys are strings (IDs) and indexed
+        { name: "year", type: "number" },
+        { name: "month", type: "number" },
+        { name: "scenario_briefing", type: "string", isOptional: true },
+        { name: "start_timestamp", type: "number", isOptional: true },
+        { name: "end_timestamp", type: "number", isOptional: true },
+        { name: "created_at", type: "number" },
+        { name: "updated_at", type: "number" },
+      ],
+    }),
     // tableSchema({
     //   name: "situations",
     //   columns: [

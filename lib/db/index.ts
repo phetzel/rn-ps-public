@@ -11,6 +11,8 @@ import CabinetMember from "./models/CabinetMember";
 import Publication from "./models/Publication";
 import Journalist from "./models/Journalist";
 import SubgroupApproval from "./models/SubgroupApproval";
+import PressSecretary from "./models/PressSecretary";
+import President from "./models/President";
 
 const adapter = new SQLiteAdapter({
   schema: myAppSchema,
@@ -31,5 +33,7 @@ export const database = new Database({
     Publication,
     Journalist,
     SubgroupApproval,
+    PressSecretary,
+    President,
   ],
 });

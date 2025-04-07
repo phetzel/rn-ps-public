@@ -9,7 +9,7 @@ import type Journalist from "~/lib/db/models/Journalist";
 import type Level from "~/lib/db/models/Level";
 // import type Outcome from "~/lib/db/models/Outcome";
 import type President from "~/lib/db/models/President";
-import type PressSecretary from "./models/PressSecretary";
+import type PressSecretary from "~/lib/db/models/PressSecretary";
 import type Publication from "~/lib/db/models/Publication";
 // import type Situation from "~/lib/db/models/Situation";
 import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
@@ -106,7 +106,7 @@ export async function createGameWithDetails(
       president.psRelationship = 80;
     });
 
-    // 3. Create Cabinet Members
+    // // 3. Create Cabinet Members
     await Promise.all(
       DEFAULT_CABINET_MEMBERS.map((memberData) =>
         cabinetCollection.create((member) => {
@@ -120,7 +120,7 @@ export async function createGameWithDetails(
       )
     );
 
-    // 4. Create Publications
+    // // 4. Create Publications
     const mockPublicationData = generateMockPublications();
     const publicationNameIdMap = new Map<string, string>();
     const createdPublications = await Promise.all(
@@ -137,7 +137,7 @@ export async function createGameWithDetails(
       })
     );
 
-    // 5. Create Journalists (using the publication map)
+    // // 5. Create Journalists (using the publication map)
     const mockJournalistData = generateMockJournalists(createdPublications);
     await Promise.all(
       mockJournalistData.map((journoData) =>
@@ -154,7 +154,7 @@ export async function createGameWithDetails(
       )
     );
 
-    // 6. Create Subgroup Approvals
+    // // 6. Create Subgroup Approvals
     await Promise.all(
       SUBGROUPS.map((sub) =>
         subgroupCollection.create((subgroup) => {
