@@ -27,6 +27,7 @@ export default class Publication extends Model {
   @text("name") name!: string;
   @text("political_leaning") politicalLeaning!: string;
   @field("reach") reach!: number;
+  @field("approval_rating") approvalRating!: number;
 
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;

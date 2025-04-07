@@ -2,16 +2,16 @@ import { Model, Relation } from "@nozbe/watermelondb";
 import {
   field,
   text,
-  date,
   relation,
+  date,
   readonly,
 } from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
 
 import type Game from "./Game";
 
-export default class CabinetMember extends Model {
-  static table = "cabinet_members";
+export default class PressSecretary extends Model {
+  static table = "press_secretaries";
 
   static associations: Associations = {
     games: { type: "belongs_to", key: "game_id" },
@@ -19,12 +19,9 @@ export default class CabinetMember extends Model {
 
   @relation("games", "game_id") game!: Relation<Game>;
 
-  @text("role") role!: string;
   @text("name") name!: string;
-  @text("influence_area") influenceArea!: string;
   @field("approval_rating") approvalRating!: number;
-  @field("ps_relationship") psRelationship!: number;
-  @field("is_active") isActive!: boolean;
+  @text("credibility") credibility!: number;
 
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;

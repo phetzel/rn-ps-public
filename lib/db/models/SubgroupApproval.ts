@@ -6,7 +6,7 @@ import {
   relation,
   readonly,
 } from "@nozbe/watermelondb/decorators";
-import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
+import type { Associations } from "@nozbe/watermelondb/Model";
 
 import type Game from "./Game";
 

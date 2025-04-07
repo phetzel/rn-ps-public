@@ -17,6 +17,11 @@ import type CabinetMember from "./CabinetMember";
 import type Publication from "./Publication";
 import type Journalist from "./Journalist";
 import type SubgroupApproval from "./SubgroupApproval";
+import type PressSecretary from "./PressSecretary";
+import type President from "./President";
+// import type Situation from "./Situation";
+// import type Outcome from "./Outcome";
+
 // Types
 import type { PsRelationships } from "~/types";
 // Mock Data
@@ -27,8 +32,6 @@ import {
   // DEFAULT_SUBGROUPS,
 } from "~/lib/mockData";
 
-const sanitizer = (value: any) => value;
-
 export default class Game extends Model {
   static table = "games"; // Corresponds to the table name in the schema
 
@@ -38,6 +41,10 @@ export default class Game extends Model {
     publications: { type: "has_many", foreignKey: "game_id" },
     journalists: { type: "has_many", foreignKey: "game_id" },
     subgroup_approvals: { type: "has_many", foreignKey: "game_id" },
+    press_secretaries: { type: "has_many", foreignKey: "game_id" },
+    presidents: { type: "has_many", foreignKey: "game_id" },
+    // situations: { type: "has_many", foreignKey: "game_id" },
+    // outcomes: { type: "has_many", foreignKey: "game_id" },
   };
 
   // Define relations to child tables
@@ -47,18 +54,15 @@ export default class Game extends Model {
   @children("publications") publications!: Query<Publication>;
   @children("journalists") journalists!: Query<Journalist>; // Direct journalists link if needed, though often accessed via publication
   @children("subgroup_approvals") subgroupApprovals!: Query<SubgroupApproval>;
+  @children("press_secretaries") pressSecretaries!: Query<PressSecretary>;
+  @children("presidents") presidents!: Query<President>;
+  // @children("situations") situations!: Query<Situation>;
+  // @children("outcomes") outcomes!: Query<Outcome>;
 
   // Define fields corresponding to columns in the schema
-  // Use @text for string, @field for number/boolean, @date for timestamps
   @text("status") status!: string;
   @field("current_year") currentYear!: number;
   @field("current_month") currentMonth!: number;
-  @field("overall_public_approval") overallPublicApproval!: number;
-  @text("ps_name") psName!: string;
-  @field("ps_credibility") psCredibility!: number;
-  @json("ps_relationships_json", sanitizer)
-  psRelationships!: PsRelationships | null;
-  @field("president_approval") presidentApproval!: number;
   @field("start_timestamp") startTimestamp!: number;
   @field("end_timestamp") endTimestamp!: number | null; // Optional number
 

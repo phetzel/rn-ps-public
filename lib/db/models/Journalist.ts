@@ -27,7 +27,7 @@ export default class Journalist extends Model {
   @text("bias") bias!: string | null;
   @field("aggressiveness") aggressiveness!: number;
   @field("reputation") reputation!: number;
-  @field("relationship") relationship!: number;
+  @field("ps_relationship") relationship!: number;
   @field("is_active") isActive!: boolean;
 
   @readonly @date("created_at") createdAt!: Date;
