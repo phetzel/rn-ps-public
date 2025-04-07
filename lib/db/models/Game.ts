@@ -21,16 +21,8 @@ import type PressSecretary from "./PressSecretary";
 import type President from "./President";
 // import type Situation from "./Situation";
 // import type Outcome from "./Outcome";
-
-// Types
-import type { PsRelationships } from "~/types";
-// Mock Data
-import {
-  DEFAULT_CABINET_MEMBERS,
-  generateMockPublications,
-  generateMockJournalists,
-  // DEFAULT_SUBGROUPS,
-} from "~/lib/mockData";
+// Enums
+import { GameStatus } from "~/types";
 
 export default class Game extends Model {
   static table = "games"; // Corresponds to the table name in the schema
@@ -60,7 +52,7 @@ export default class Game extends Model {
   // @children("outcomes") outcomes!: Query<Outcome>;
 
   // Define fields corresponding to columns in the schema
-  @text("status") status!: string;
+  @text("status") status!: GameStatus;
   @field("current_year") currentYear!: number;
   @field("current_month") currentMonth!: number;
   @field("start_timestamp") startTimestamp!: number;
@@ -96,22 +88,5 @@ export default class Game extends Model {
   //       game.currentMonth += 1;
   //     }
   //   });
-  // }
-
-  // @writer async initialize() {
-  //   await this.batch(
-  //     DEFAULT_CABINET_MEMBERS.forEach((member) => {
-  //       this.collections
-  //         .get("cabinet_members")
-  //         .prepareCreate((cabinetMember) => {
-  //           cabinetMember.game.set(this);
-  //           cabinetMember.role = member.role;
-  //           cabinetMember.name = member.name;
-  //           cabinetMember.influenceArea = member.influenceArea;
-  //           cabinetMember.approvalRating = member.approvalRating;
-  //           cabinetMember.isActive = cabinetMember.isActive;
-  //         });
-  //     })
-  //   );
   // }
 }

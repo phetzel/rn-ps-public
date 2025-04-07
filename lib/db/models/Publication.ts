@@ -10,8 +10,11 @@ import {
 import type { Query } from "@nozbe/watermelondb";
 import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
 
+// Models
 import type Game from "./Game";
 import type Journalist from "./Journalist";
+// Enums
+import type { PoliticalLeaning } from "~/types";
 
 export default class Publication extends Model {
   static table = "publications";
@@ -25,7 +28,7 @@ export default class Publication extends Model {
   @children("journalists") journalists!: Query<Journalist>; // Publications have many journalists
 
   @text("name") name!: string;
-  @text("political_leaning") politicalLeaning!: string;
+  @text("political_leaning") politicalLeaning!: PoliticalLeaning;
   @field("reach") reach!: number;
   @field("approval_rating") approvalRating!: number;
 

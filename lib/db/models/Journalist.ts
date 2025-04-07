@@ -8,8 +8,11 @@ import {
 } from "@nozbe/watermelondb/decorators";
 import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
 
+// Models
 import type Game from "./Game";
 import type Publication from "./Publication";
+// Enums
+import type { PoliticalLeaning } from "~/types";
 
 export default class Journalist extends Model {
   static table = "journalists";
@@ -24,7 +27,7 @@ export default class Journalist extends Model {
   publication!: Relation<Publication>; // Journalist belongs to a publication
 
   @text("name") name!: string;
-  @text("bias") bias!: string | null;
+  @text("bias") bias!: PoliticalLeaning | null;
   @field("aggressiveness") aggressiveness!: number;
   @field("reputation") reputation!: number;
   @field("ps_relationship") relationship!: number;

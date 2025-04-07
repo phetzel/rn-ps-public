@@ -5,6 +5,8 @@
 // Blue: #113c57
 // Red: #d44c3d
 
+import { CabinetRole, SubgroupCategory, SubgroupKey } from "~/types";
+
 export const NAV_THEME = {
   light: {
     background: "hsl(0 0% 100%)", // background
@@ -26,46 +28,59 @@ export const NAV_THEME = {
 
 export const MAX_ACTIVE_GAMES = 3;
 
-export const SUBGROUP_CATEGORIES = ["political", "socioeconomic", "sector"];
+// Cabinet
+export const CABINET_DISPLAY_ROLES = {
+  [CabinetRole.State]: "Secretary of State",
+  [CabinetRole.Treasury]: "Secretary of the Treasury",
+  [CabinetRole.Defense]: "Secretary of Defense",
+  [CabinetRole.Justice]: "Attorney General",
+  [CabinetRole.HHS]: "Secretary of Health and Human Services",
+  [CabinetRole.Homeland]: "Secretary of Homeland Security",
+};
+
+// Subgroups
+export const SUBGROUP_DISPLAY_NAMES = {
+  [SubgroupKey.LeftWingBase]: "Left Wing",
+  [SubgroupKey.RightWingBase]: "Right Wing",
+  [SubgroupKey.MiddleClass]: "Middle Class",
+  [SubgroupKey.UpperClass]: "Upper Class",
+  [SubgroupKey.LowerClass]: "Lower Class",
+  [SubgroupKey.MilitaryCommunity]: "Military Community",
+  [SubgroupKey.TechSector]: "Tech Sector",
+  [SubgroupKey.FinancialMarket]: "Financial Market",
+};
+
 export const SUBGROUPS = [
   {
-    name: "Left Wing",
-    key: "left_wing_base",
-    category: "political",
+    key: SubgroupKey.LeftWingBase,
+    category: SubgroupCategory.Political,
   },
   {
-    name: "Right Wing",
-    key: "right_wing_base",
-    category: "political",
+    key: SubgroupKey.RightWingBase,
+    category: SubgroupCategory.Political,
   },
   {
-    name: "Middle Class",
-    key: "middle_class",
-    category: "socioeconomic",
+    key: SubgroupKey.MiddleClass,
+    category: SubgroupCategory.Socioeconomic,
   },
   {
-    name: "Wealthy",
-    key: "wealthy",
-    category: "socioeconomic",
+    key: SubgroupKey.UpperClass,
+    category: SubgroupCategory.Socioeconomic,
   },
   {
-    name: "Lower Class",
-    key: "lower_class",
-    category: "socioeconomic",
+    key: SubgroupKey.LowerClass,
+    category: SubgroupCategory.Socioeconomic,
   },
   {
-    name: "Military Community",
-    key: "military_community",
-    category: "sector",
+    key: SubgroupKey.MilitaryCommunity,
+    category: SubgroupCategory.Sector,
   },
   {
-    name: "Tech Sector",
-    key: "tech_sector",
-    category: "sector",
+    key: SubgroupKey.TechSector,
+    category: SubgroupCategory.Sector,
   },
   {
-    name: "Financial Market",
-    key: "financial_market",
-    category: "sector",
+    key: SubgroupKey.FinancialMarket,
+    category: SubgroupCategory.Sector,
   },
 ];

@@ -27,6 +27,10 @@ const createGameSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "Press Secretary name is required" }),
+  presidentName: z
+    .string()
+    .trim()
+    .min(1, { message: "President name is required" }),
 });
 
 // Infer the type from the schema
@@ -53,6 +57,7 @@ export default function CreateGameScreen() {
     resolver: zodResolver(createGameSchema),
     defaultValues: {
       pressSecretaryName: "",
+      presidentName: "",
     },
   });
 
@@ -61,6 +66,7 @@ export default function CreateGameScreen() {
     console.log("Form data submitted:", data);
     const details: NewGameDetails = {
       pressSecretaryName: data.pressSecretaryName,
+      presidentName: data.presidentName,
       // Map other fields later
     };
 
@@ -123,7 +129,7 @@ export default function CreateGameScreen() {
                 fieldState: { error },
               }) => (
                 <Input
-                  placeholder="e.g., C.J. Cregg"
+                  placeholder="e.g., George Akerson"
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -138,6 +144,41 @@ export default function CreateGameScreen() {
             {errors.pressSecretaryName && (
               <Text className="text-destructive mt-1 text-sm">
                 {errors.pressSecretaryName.message}
+              </Text>
+            )}
+          </View>
+
+          {/* President Name Input */}
+          <View>
+            <Label
+              nativeID="presidentNameLabel"
+              className={errors.presidentName ? "text-destructive" : ""}
+            >
+              President Name
+            </Label>
+            <Controller
+              control={control}
+              name="presidentName"
+              render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+              }) => (
+                <Input
+                  placeholder="e.g., George Washington"
+                  value={value}
+                  onChangeText={onChange}
+                  onBlur={onBlur}
+                  autoCapitalize="words"
+                  aria-labelledbyledby="presidentNameLabel"
+                  aria-invalid={error ? "true" : "false"}
+                  editable={!isLoading}
+                  className={error ? "border-destructive" : ""}
+                />
+              )}
+            />
+            {errors.presidentName && (
+              <Text className="text-destructive mt-1 text-sm">
+                {errors.presidentName.message}
               </Text>
             )}
           </View>

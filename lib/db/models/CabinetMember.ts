@@ -8,7 +8,10 @@ import {
 } from "@nozbe/watermelondb/decorators";
 import { Associations } from "@nozbe/watermelondb/Model";
 
+// Models
 import type Game from "./Game";
+// Enums
+import type { CabinetRole, InfluenceArea } from "~/types";
 
 export default class CabinetMember extends Model {
   static table = "cabinet_members";
@@ -19,9 +22,9 @@ export default class CabinetMember extends Model {
 
   @relation("games", "game_id") game!: Relation<Game>;
 
-  @text("role") role!: string;
+  @text("role") role!: CabinetRole;
   @text("name") name!: string;
-  @text("influence_area") influenceArea!: string;
+  @text("influence_area") influenceArea!: InfluenceArea;
   @field("approval_rating") approvalRating!: number;
   @field("ps_relationship") psRelationship!: number;
   @field("is_active") isActive!: boolean;

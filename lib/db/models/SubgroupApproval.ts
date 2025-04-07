@@ -8,7 +8,10 @@ import {
 } from "@nozbe/watermelondb/decorators";
 import type { Associations } from "@nozbe/watermelondb/Model";
 
+// Models
 import type Game from "./Game";
+// Enums
+import type { SubgroupCategory, SubgroupKey } from "~/types";
 
 export default class SubgroupApproval extends Model {
   static table = "subgroup_approvals";
@@ -19,9 +22,9 @@ export default class SubgroupApproval extends Model {
 
   @relation("games", "game_id") game!: Relation<Game>;
 
-  @text("subgroup_key") subgroupKey!: string; // e.g., "left_wing", "tech_sector"
+  @text("subgroup_key") subgroupKey!: SubgroupKey; // e.g., "left_wing", "tech_sector"
   @field("approval_rating") approvalRating!: number;
-  @text("category") category!: string;
+  @text("category") category!: SubgroupCategory;
 
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;

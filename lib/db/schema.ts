@@ -6,7 +6,7 @@ export const myAppSchema = appSchema({
     tableSchema({
       name: "games",
       columns: [
-        { name: "status", type: "string", isIndexed: true }, // Index status
+        { name: "status", type: "string", isIndexed: true },
         { name: "current_year", type: "number" },
         { name: "current_month", type: "number" },
         { name: "start_timestamp", type: "number" },
