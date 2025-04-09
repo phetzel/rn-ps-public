@@ -1,62 +1,81 @@
 import { withObservables } from "@nozbe/watermelondb/react";
+import { View } from "react-native";
 
-import { Text } from "~/components/ui/text";
+import { SUBGROUP_DISPLAY_NAMES } from "~/lib/constants";
 import { observeSubgroupApprovals } from "~/lib/db/helpers";
 import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
+import { Briefcase } from "~/lib/icons/Briefcase";
+import { Landmark } from "~/lib/icons/Landmark";
+import { TrendingUp } from "~/lib/icons/TrendingUp";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
+import { Progress } from "~/components/ui/progress";
+import { Badge } from "~/components/ui/badge";
+import { Text } from "~/components/ui/text";
+import { SubgroupCategory, SubgroupKey } from "~/types";
 
 interface SubgroupStateProps {
   subgroupApprovals: SubgroupApproval[];
 }
-export function SubgroupState({ subgroupApprovals }: SubgroupStateProps) {
+const SubgroupState = ({ subgroupApprovals }: SubgroupStateProps) => {
+  // Group subgroups by category
+  const groupedApprovals = subgroupApprovals.reduce<
+    Record<SubgroupCategory, SubgroupApproval[]>
+  >((acc, approval) => {
+    if (!acc[approval.category as SubgroupCategory]) {
+      acc[approval.category as SubgroupCategory] = [];
+    }
+    acc[approval.category as SubgroupCategory].push(approval);
+    return acc;
+  }, {} as Record<SubgroupCategory, SubgroupApproval[]>);
+
+  // Create an ordered list of categories
+  const categories = Object.keys(groupedApprovals) as SubgroupCategory[];
+
+  const getCategoryIcon = (category: SubgroupCategory) => {
+    switch (category) {
+      case SubgroupCategory.Political:
+        return <Landmark className="h-4 w-4 text-primary" />;
+      case SubgroupCategory.Socioeconomic:
+        return <TrendingUp className="h-4 w-4 text-primary" />;
+      case SubgroupCategory.Sector:
+        return <Briefcase className="h-4 w-4 text-primary" />;
+      default:
+        return <Briefcase className="h-4 w-4 text-primary " />;
+    }
+  };
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Approval by Subgroups</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>
-                <Text>Category</Text>
-              </TableHead>
-              <TableHead>
-                <Text>Subgroup</Text>
-              </TableHead>
-              <TableHead>
-                <Text>Approval</Text>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {subgroupApprovals.map((approval, index) => (
-              <TableRow key={approval.id}>
-                <TableCell className="font-medium">
-                  <Text>{approval.category}</Text>
-                </TableCell>
-                <TableCell>
-                  <Text>{approval.subgroupKey}</Text>
-                </TableCell>
-                <TableCell>
-                  <Text>{approval.approvalRating}%</Text>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
+    <View className="gap-4">
+      {categories.map((category, categoryIdx) => (
+        <Card key={categoryIdx}>
+          <CardHeader className="pb-2 flex-row items-center gap-2">
+            {getCategoryIcon(category)}
+            <CardTitle className="text-lg">
+              {category.charAt(0).toUpperCase() + category.slice(1)} Groups
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <View className="gap-4">
+              {groupedApprovals[category].map((subgroup, idx) => (
+                <View key={subgroup.id} className="gap-2">
+                  <View className="flex-row justify-between items-center">
+                    <Text className="text-sm font-medium">
+                      {SUBGROUP_DISPLAY_NAMES[subgroup.subgroupKey]}
+                    </Text>
+                    <Text text-sm font-medium>
+                      {subgroup.approvalRating}%
+                    </Text>
+                  </View>
+                  <Progress value={subgroup.approvalRating} className="h-2" />
+                </View>
+              ))}
+            </View>
+          </CardContent>
+        </Card>
+      ))}
+    </View>
   );
-}
+};
 
 const enhance = withObservables(["gameId"], ({ gameId }) => ({
   subgroupApprovals: observeSubgroupApprovals(gameId),

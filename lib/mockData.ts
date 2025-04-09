@@ -9,6 +9,7 @@ export interface NewCabinetMemberData {
   name: string;
   influenceArea: InfluenceArea;
   approvalRating: number; // Use camelCase
+  psRelationship: number;
   isActive: boolean; // Use camelCase (matches model)
 }
 
@@ -18,6 +19,7 @@ export const DEFAULT_CABINET_MEMBERS: NewCabinetMemberData[] = [
     name: "Alice Albright",
     influenceArea: InfluenceArea.ForeignRelations,
     approvalRating: 55,
+    psRelationship: 50,
     isActive: true,
   },
   {
@@ -25,6 +27,7 @@ export const DEFAULT_CABINET_MEMBERS: NewCabinetMemberData[] = [
     name: "Bob Banker",
     influenceArea: InfluenceArea.Economy,
     approvalRating: 50,
+    psRelationship: 50,
     isActive: true,
   },
   {
@@ -32,6 +35,7 @@ export const DEFAULT_CABINET_MEMBERS: NewCabinetMemberData[] = [
     name: "General Carl Command",
     influenceArea: InfluenceArea.Military,
     approvalRating: 60,
+    psRelationship: 50,
     isActive: true,
   },
   {
@@ -39,6 +43,7 @@ export const DEFAULT_CABINET_MEMBERS: NewCabinetMemberData[] = [
     name: "Judge Diana Decree",
     influenceArea: InfluenceArea.Legal,
     approvalRating: 52,
+    psRelationship: 50,
     isActive: true,
   },
   {
@@ -46,6 +51,7 @@ export const DEFAULT_CABINET_MEMBERS: NewCabinetMemberData[] = [
     name: "Dr. Evelyn Epidemic",
     influenceArea: InfluenceArea.Health,
     approvalRating: 48,
+    psRelationship: 50,
     isActive: true,
   },
   {
@@ -53,6 +59,7 @@ export const DEFAULT_CABINET_MEMBERS: NewCabinetMemberData[] = [
     name: "Frank Fortress",
     influenceArea: InfluenceArea.HomelandSecurity,
     approvalRating: 50,
+    psRelationship: 50,
     isActive: true,
   },
 ];

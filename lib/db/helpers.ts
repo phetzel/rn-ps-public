@@ -1,5 +1,6 @@
 import { Q } from "@nozbe/watermelondb";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 import { database } from "~/lib/db";
 // Models
@@ -51,6 +52,24 @@ export function observeSubgroupApprovals(
     .observe();
 }
 
+export function observePressSecretary(
+  gameId: string
+): Observable<PressSecretary | undefined> {
+  return pressSecretaryCollection
+    .query(Q.where("game_id", gameId), Q.take(1))
+    .observe()
+    .pipe(map((secretaries: PressSecretary[]) => secretaries[0]));
+}
+
+export function observePresident(
+  gameId: string
+): Observable<President | undefined> {
+  return presidentCollection
+    .query(Q.where("game_id", gameId), Q.take(1))
+    .observe()
+    .pipe(map((presidents: President[]) => presidents[0]));
+}
+
 export function observeCabinetMembers(
   gameId: string
 ): Observable<CabinetMember[]> {
@@ -68,13 +87,7 @@ export function observePublications(gameId: string): Observable<Publication[]> {
 export function observeJournalistsForPublication(
   publication: Publication
 ): Observable<Journalist[]> {
-  return publication.journalists.observeWithColumns([
-    "name",
-    "bias",
-    "aggressiveness",
-    "reputation",
-    "relationship",
-  ]);
+  return publication.journalists.observe();
 }
 
 // Game CRUD operations
@@ -115,6 +128,7 @@ export async function createGameWithDetails(
           member.name = memberData.name;
           member.influenceArea = memberData.influenceArea;
           member.approvalRating = memberData.approvalRating;
+          member.psRelationship = memberData.psRelationship;
           member.isActive = memberData.isActive;
         })
       )

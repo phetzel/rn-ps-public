@@ -8,6 +8,7 @@ import type PressSecretary from "~/lib/db/models/PressSecretary";
 import type President from "~/lib/db/models/President";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 // Icons
+import { Award } from "~/lib/icons/Award";
 import { Trash2 } from "~/lib/icons/Trash2";
 import { Play } from "~/lib/icons/Play";
 import { User } from "~/lib/icons/User";
@@ -106,7 +107,7 @@ function GameSaveCard({
 
         {president && (
           <View className="flex-row items-center gap-2">
-            <User className="h-3.5 w-3.5 text-muted-foreground" />
+            <Award className="h-3.5 w-3.5 text-muted-foreground" />
             <Text className="text-sm">President {president.name}</Text>
             <Text className="text-xs text-muted-foreground">
               ({president.approvalRating}% approval)

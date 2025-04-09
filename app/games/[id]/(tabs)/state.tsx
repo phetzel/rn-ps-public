@@ -1,13 +1,18 @@
+import { useState } from "react";
 import { Image } from "react-native";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import ParallaxScrollView from "~/components/ParallaxScrollView";
-import CabinetState from "~/components/tab-state/CabinetState";
-import MediaState from "~/components/tab-state/MediaState";
-import SubgroupState from "~/components/tab-state/SubgroupState";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { Text } from "~/components/ui/text";
+import ParallaxScrollView from "~/components/ParallaxScrollView";
+import CabinetStateCard from "~/components/tab-state/CabinetStateCard";
+import MediaStateCard from "~/components/tab-state/MediaStateCard";
+import PresidentStateCard from "~/components/tab-state/PresidentStateCard";
+import PressSecretaryStateCard from "~/components/tab-state/PressSecretaryStateCard";
+import SubgroupState from "~/components/tab-state/SubgroupState";
 
 export default function StateScreen() {
+  const [currentTab, setCurrentTab] = useState<string>("admin");
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
 
   if (!currentGameId) {
@@ -30,9 +35,37 @@ export default function StateScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <CabinetState gameId={currentGameId} />
-      <MediaState gameId={currentGameId} />
-      <SubgroupState gameId={currentGameId} />
+      <Tabs
+        value={currentTab}
+        onValueChange={setCurrentTab}
+        className="w-full max-w-[400px] mx-auto flex-col gap-2"
+      >
+        <TabsList className="flex-row w-full">
+          <TabsTrigger value="admin" className="flex-1">
+            <Text>Admin</Text>
+          </TabsTrigger>
+          <TabsTrigger value="public" className="flex-1">
+            <Text>Opinion</Text>
+          </TabsTrigger>
+          <TabsTrigger value="media" className="flex-1">
+            <Text>Media</Text>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="admin" className="mt-4 gap-4">
+          <PressSecretaryStateCard gameId={currentGameId} />
+          <PresidentStateCard gameId={currentGameId} />
+          <CabinetStateCard gameId={currentGameId} />
+        </TabsContent>
+
+        <TabsContent value="public" className="mt-4">
+          <SubgroupState gameId={currentGameId} />
+        </TabsContent>
+
+        <TabsContent value="media" className="mt-4">
+          <MediaStateCard gameId={currentGameId} />
+        </TabsContent>
+      </Tabs>
     </ParallaxScrollView>
   );
 }
