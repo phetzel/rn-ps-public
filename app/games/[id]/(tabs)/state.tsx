@@ -23,7 +23,7 @@ export default function StateScreen() {
     <ParallaxScrollView
       headerImage={
         <Image
-          source={require("~/assets/images/tab-header-state.png")}
+          source={require("~/assets/images/header-state.png")}
           style={{
             width: "100%",
             height: "100%",

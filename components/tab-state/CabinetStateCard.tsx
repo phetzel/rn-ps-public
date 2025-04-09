@@ -15,18 +15,6 @@ interface CabinetStateCardProps {
 }
 
 const CabinetStateCard = ({ cabinetMembers }: CabinetStateCardProps) => {
-  const getPoliticalLeaningColor = (leaning: string): string => {
-    switch (leaning) {
-      case "liberal":
-        return "bg-blue-100 text-blue-800";
-      case "conservative":
-        return "bg-red-100 text-red-800";
-      case "neutral":
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   return (
     <Card>
       <CardHeader className="pb-2 flex-row items-center gap-2">
