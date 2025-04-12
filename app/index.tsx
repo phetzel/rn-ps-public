@@ -12,6 +12,7 @@ import { MAX_ACTIVE_GAMES } from "~/lib/constants";
 import type Game from "~/lib/db/models/Game";
 import { observeAllGames } from "~/lib/db/helpers";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { Button } from "~/components/ui/button";
 import {
@@ -42,6 +43,10 @@ export function Screen({ games }: ScreenProps) {
       // 'loadGameToPlay' is replaced by setCurrentGameId
     }));
 
+  const { setGameCurrentLevel } = useCurrentLevelStore((state) => ({
+    setGameCurrentLevel: state.setGameCurrentLevel,
+  }));
+
   const canStartNewGame = games.length < MAX_ACTIVE_GAMES;
 
   const handleNavigateToCreate = async () => {
@@ -53,15 +58,30 @@ export function Screen({ games }: ScreenProps) {
     }
   };
 
-  const handleContinueGame = () => {
-    const activeGames = games.filter((game) => game.status === "active");
-    if (currentGameId) {
-      router.push(`/games/${currentGameId}/(tabs)/current`);
-    } else if (activeGames.length === 1) {
-      setCurrentGameId(activeGames[0].id);
-      router.push(`/games/${activeGames[0].id}/(tabs)/current`);
-    } else {
-      router.push("/games");
+  const handleContinueGame = async () => {
+    try {
+      const activeGames = games.filter((game) => game.status === "active");
+      const gameId =
+        currentGameId || (activeGames.length === 1 ? activeGames[0].id : null);
+
+      if (!gameId) {
+        router.push("/games");
+        return;
+      }
+
+      if (!currentGameId) {
+        setCurrentGameId(gameId);
+      }
+
+      const level = await setGameCurrentLevel(gameId);
+
+      if (level) {
+        router.push(`/games/${gameId}/(tabs)/current`);
+      } else {
+        console.warn("No level found for game", gameId);
+      }
+    } catch (error) {
+      console.error("Failed to continue game:", error);
     }
   };
 

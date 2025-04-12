@@ -32,6 +32,8 @@ export default class Publication extends Model {
   @field("reach") reach!: number;
   @field("approval_rating") approvalRating!: number;
 
+  @field("game_id") game_id!: string;
+
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 }

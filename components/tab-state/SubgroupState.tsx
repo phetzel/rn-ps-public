@@ -9,9 +9,8 @@ import { Landmark } from "~/lib/icons/Landmark";
 import { TrendingUp } from "~/lib/icons/TrendingUp";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Progress } from "~/components/ui/progress";
-import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
-import { SubgroupCategory, SubgroupKey } from "~/types";
+import { SubgroupCategory } from "~/types";
 
 interface SubgroupStateProps {
   subgroupApprovals: SubgroupApproval[];

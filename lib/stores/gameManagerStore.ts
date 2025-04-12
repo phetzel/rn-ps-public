@@ -4,27 +4,25 @@ import { Q } from "@nozbe/watermelondb";
 import { database } from "~/lib/db";
 import type Game from "~/lib/db/models/Game";
 import type { NewGameDetails } from "~/types";
-import { SUBGROUPS } from "~/lib/constants";
-// Temp mock data
 import {
-  DEFAULT_CABINET_MEMBERS,
-  generateMockPublications,
-  generateMockJournalists,
-} from "../mockData";
-import { createGameWithDetails, destroyGame } from "~/lib/db/helpers";
+  createGameWithDetails,
+  destroyGame,
+  fetchGame,
+} from "~/lib/db/helpers";
 
 interface GameManagerStoreState {
   // --- Core State ---
   isDbReady: boolean;
-  currentGameId: string | null; // WDB uses string IDs!
+  currentGameId: string | null;
 
   // --- Action State ---
   isLoading: boolean;
   error: string | null;
 
   // --- Actions ---
-  initialize: () => Promise<void>; // Initialize DB connection check
+  initialize: () => Promise<void>;
   setCurrentGameId: (id: string | null) => void;
+  getCurrentGame: () => Promise<Game | null>;
   createAndStartGame: (details: NewGameDetails) => Promise<Game | null>;
   deleteGame: (gameId: string) => Promise<void>;
 }
@@ -50,7 +48,18 @@ export const useGameManagerStore = create<GameManagerStoreState>(
     },
 
     setCurrentGameId: (id: string | null) => {
-      set({ currentGameId: id, error: null }); // Clear error on selection change
+      set({ currentGameId: id, error: null });
+    },
+
+    getCurrentGame: async () => {
+      const currentGameId = get().currentGameId;
+      if (!currentGameId) return null;
+      try {
+        return await fetchGame(currentGameId);
+      } catch (error) {
+        set({ error: String(error) });
+        return null;
+      }
     },
 
     createAndStartGame: async (

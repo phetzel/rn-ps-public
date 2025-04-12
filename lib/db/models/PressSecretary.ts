@@ -23,6 +23,8 @@ export default class PressSecretary extends Model {
   @field("approval_rating") approvalRating!: number;
   @text("credibility") credibility!: number;
 
+  @field("game_id") game_id!: string;
+
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 }

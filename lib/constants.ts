@@ -5,7 +5,12 @@
 // Blue: #113c57
 // Red: #d44c3d
 
-import { CabinetRole, SubgroupCategory, SubgroupKey } from "~/types";
+import {
+  CabinetRole,
+  SubgroupCategory,
+  SubgroupKey,
+  LevelStatus,
+} from "~/types";
 
 export const NAV_THEME = {
   light: {
@@ -27,6 +32,13 @@ export const NAV_THEME = {
 };
 
 export const MAX_ACTIVE_GAMES = 3;
+
+export const LEVEL_STATUS_DISPLAY_NAMES = {
+  [LevelStatus.Briefing]: "Briefing",
+  [LevelStatus.PressConference]: "Press Conference",
+  [LevelStatus.Outcome]: "Outcome",
+  [LevelStatus.Completed]: "Completed",
+};
 
 // Cabinet
 export const CABINET_DISPLAY_ROLES = {

@@ -26,6 +26,8 @@ export default class SubgroupApproval extends Model {
   @field("approval_rating") approvalRating!: number;
   @text("category") category!: SubgroupCategory;
 
+  @field("game_id") game_id!: string;
+
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 }

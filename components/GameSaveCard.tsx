@@ -7,6 +7,7 @@ import type Game from "~/lib/db/models/Game";
 import type PressSecretary from "~/lib/db/models/PressSecretary";
 import type President from "~/lib/db/models/President";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Icons
 import { Award } from "~/lib/icons/Award";
 import { Trash2 } from "~/lib/icons/Trash2";
@@ -47,9 +48,6 @@ function GameSaveCard({
   pressSecretaries,
   presidents,
 }: GameSaveCardProps) {
-  console.log("GameSaveCard pressSecretaries", pressSecretaries);
-  console.log("GameSaveCard presidents", presidents);
-
   const president: President | undefined = presidents?.[0];
   const pressSecretary: PressSecretary | undefined = pressSecretaries?.[0];
 
@@ -61,11 +59,25 @@ function GameSaveCard({
       isLoading: state.isLoading,
     })
   );
+  const { setGameCurrentLevel } = useCurrentLevelStore((state) => ({
+    setGameCurrentLevel: state.setGameCurrentLevel,
+  }));
 
-  const handleLoad = () => {
+  const handleLoad = async () => {
     if (game.status !== "active") return;
-    setCurrentGameId(game.id);
-    router.push(`/games/play/(tabs)/current`);
+
+    try {
+      setCurrentGameId(game.id);
+      const level = await setGameCurrentLevel(game.id);
+
+      if (level) {
+        router.push(`/games/${game.id}/(tabs)/current`);
+      } else {
+        console.warn("No level found for this game");
+      }
+    } catch (error) {
+      console.error("Failed to load game:", error);
+    }
   };
 
   const handleDelete = () => {

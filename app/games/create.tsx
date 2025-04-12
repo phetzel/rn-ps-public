@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
 import { NewGameDetails } from "~/types";
 import { Button } from "~/components/ui/button";
@@ -47,6 +48,9 @@ export default function CreateGameScreen() {
     isLoading: state.isLoading,
     error: state.error,
   }));
+  const { createNewLevel } = useCurrentLevelStore((state) => ({
+    createNewLevel: state.createNewLevel,
+  }));
 
   const {
     control,
@@ -63,7 +67,6 @@ export default function CreateGameScreen() {
 
   // Form submission handler
   const onSubmit = async (data: CreateGameFormData) => {
-    console.log("Form data submitted:", data);
     const details: NewGameDetails = {
       pressSecretaryName: data.pressSecretaryName,
       presidentName: data.presidentName,
@@ -73,14 +76,18 @@ export default function CreateGameScreen() {
     const newGame = await createAndStartGame(details);
 
     if (newGame) {
-      router.replace(`/games/${newGame.id}/(tabs)/current`);
+      const newLevel = await createNewLevel(newGame);
+      if (newLevel) {
+        router.replace(`/games/${newGame.id}/(tabs)/current`);
+      } else {
+        setError("root.serverError", {
+          type: "custom",
+          message:
+            useGameManagerStore.getState().error ||
+            "An unknown error occurred creating the game.",
+        });
+      }
     } else {
-      setError("root.serverError", {
-        type: "custom",
-        message:
-          useGameManagerStore.getState().error ||
-          "An unknown error occurred creating the game.",
-      });
       console.error(
         "Game creation failed, error should be in store state:",
         useGameManagerStore.getState().error

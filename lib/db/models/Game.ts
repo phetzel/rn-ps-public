@@ -5,11 +5,10 @@ import {
   date,
   children,
   readonly,
-  json,
   writer,
 } from "@nozbe/watermelondb/decorators";
 import { Query } from "@nozbe/watermelondb";
-import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
+import type { Associations } from "@nozbe/watermelondb/Model";
 
 // Models
 import type Level from "./Level";
@@ -19,8 +18,7 @@ import type Journalist from "./Journalist";
 import type SubgroupApproval from "./SubgroupApproval";
 import type PressSecretary from "./PressSecretary";
 import type President from "./President";
-// import type Situation from "./Situation";
-// import type Outcome from "./Outcome";
+import type Situation from "./Situation";
 // Enums
 import { GameStatus } from "~/types";
 
@@ -29,13 +27,13 @@ export default class Game extends Model {
 
   static associations: Associations = {
     levels: { type: "has_many", foreignKey: "game_id" },
+    situations: { type: "has_many", foreignKey: "game_id" },
     cabinet_members: { type: "has_many", foreignKey: "game_id" },
     publications: { type: "has_many", foreignKey: "game_id" },
     journalists: { type: "has_many", foreignKey: "game_id" },
     subgroup_approvals: { type: "has_many", foreignKey: "game_id" },
     press_secretaries: { type: "has_many", foreignKey: "game_id" },
     presidents: { type: "has_many", foreignKey: "game_id" },
-    // situations: { type: "has_many", foreignKey: "game_id" },
     // outcomes: { type: "has_many", foreignKey: "game_id" },
   };
 
@@ -48,8 +46,6 @@ export default class Game extends Model {
   @children("subgroup_approvals") subgroupApprovals!: Query<SubgroupApproval>;
   @children("press_secretaries") pressSecretaries!: Query<PressSecretary>;
   @children("presidents") presidents!: Query<President>;
-  // @children("situations") situations!: Query<Situation>;
-  // @children("outcomes") outcomes!: Query<Outcome>;
 
   // Define fields corresponding to columns in the schema
   @text("status") status!: GameStatus;
@@ -62,31 +58,15 @@ export default class Game extends Model {
   @readonly @date("updated_at") updatedAt!: Date; // WDB manages this
 
   // --- Optional: Add Model-specific methods ---
-
-  // Example: Getter/Setter for JSON field
-  // get psRelationships(): Record<string, any> | null {
-  //   try {
-  //     return this.psRelationshipsJson ? JSON.parse(this.psRelationshipsJson) : null;
-  //   } catch (e) {
-  //     console.error("Error parsing psRelationshipsJson", e);
-  //     return null;
-  //   }
-  // }
-  // async updatePsRelationships(newData: Record<string, any>): Promise<void> {
-  //   await this.update(game => {
-  //     game.psRelationshipsJson = JSON.stringify(newData);
-  //   });
-  // }
-
   // Example: Action to advance time
-  // async advanceMonth() {
-  //   await this.update(game => {
-  //     if (game.currentMonth === 12) {
-  //       game.currentMonth = 1;
-  //       game.currentYear += 1;
-  //     } else {
-  //       game.currentMonth += 1;
-  //     }
-  //   });
-  // }
+  @writer async advanceMonth() {
+    await this.update((game) => {
+      if (game.currentMonth === 12) {
+        game.currentMonth = 1;
+        game.currentYear += 1;
+      } else {
+        game.currentMonth += 1;
+      }
+    });
+  }
 }

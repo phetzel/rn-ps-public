@@ -23,6 +23,8 @@ export default class President extends Model {
   @field("approval_rating") approvalRating!: number;
   @field("ps_relationship") psRelationship!: number;
 
+  @field("game_id") game_id!: string;
+
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 }

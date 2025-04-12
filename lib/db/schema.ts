@@ -100,38 +100,29 @@ export const myAppSchema = appSchema({
     tableSchema({
       name: "levels",
       columns: [
-        { name: "game_id", type: "string", isIndexed: true }, // Foreign keys are strings (IDs) and indexed
+        { name: "game_id", type: "string", isIndexed: true },
         { name: "year", type: "number" },
         { name: "month", type: "number" },
-        { name: "scenario_briefing", type: "string", isOptional: true },
-        { name: "start_timestamp", type: "number", isOptional: true },
-        { name: "end_timestamp", type: "number", isOptional: true },
+        { name: "status", type: "string" },
+        { name: "active_situations", type: "string", isOptional: true },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
     }),
-    // tableSchema({
-    //   name: "situations",
-    //   columns: [
-    //     { name: "game_id", type: "string", isIndexed: true },
-    //     { name: "start_level_id", type: "string", isIndexed: true },
-    //     {
-    //       name: "resolution_level_id",
-    //       type: "string",
-    //       isIndexed: true,
-    //       isOptional: true,
-    //     },
-    //     { name: "title", type: "string" },
-    //     { name: "description", type: "string" },
-    //     { name: "category", type: "string" },
-    //     { name: "severity", type: "number" },
-    //     { name: "resolved", type: "boolean" },
-    //     { name: "involvement", type: "string" }, // JSON
-    //     { name: "hidden_truth", type: "string", isOptional: true },
-    //     { name: "created_at", type: "number" },
-    //     { name: "updated_at", type: "number" },
-    //   ],
-    // }),
+    tableSchema({
+      name: "situations",
+      columns: [
+        { name: "game_id", type: "string", isIndexed: true },
+        { name: "start_level_id", type: "string", isIndexed: true },
+        { name: "type", type: "string" },
+        { name: "title", type: "string" },
+        { name: "description", type: "string" },
+        { name: "status", type: "string" },
+        { name: "progress", type: "string", isOptional: true },
+        { name: "created_at", type: "number" },
+        { name: "updated_at", type: "number" },
+      ],
+    }),
     // tableSchema({
     //   name: "outcomes",
     //   columns: [

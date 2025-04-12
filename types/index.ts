@@ -4,6 +4,36 @@ export enum GameStatus {
   Completed = "completed",
 }
 
+export enum LevelStatus {
+  Briefing = "briefing",
+  PressConference = "press_conference",
+  Outcome = "outcome",
+  Completed = "completed",
+}
+
+export interface ActiveSituationInfo {
+  id: string;
+  status: SituationStatus;
+}
+
+export enum SituationType {
+  Domestic = "domestic",
+  Foreign = "foreign",
+  Scandal = "scandal",
+  Economic = "economic",
+  Security = "security",
+  PublicSentiment = "public_sentiment",
+}
+
+export enum SituationStatus {
+  Active = "active",
+  Completed = "completed",
+}
+
+export interface SituationProgress {
+  stage: number;
+}
+
 export enum CabinetRole {
   State = "state",
   Treasury = "treasury",
@@ -52,7 +82,10 @@ export interface NewGameDetails {
   // Add party etc. later
 }
 
-export interface PsRelationships {
-  president: number;
-  cabinet: Record<string, number>;
+export interface NewSituationData {
+  type: SituationType;
+  title: string;
+  description: string;
+  status: SituationStatus;
+  progress: string | null;
 }

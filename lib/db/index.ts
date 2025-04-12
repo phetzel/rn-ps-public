@@ -5,14 +5,17 @@ import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
 import { myAppSchema } from "./schema";
 import { migrations } from "./migrations";
 // Models
-import Game from "./models/Game";
-import Level from "./models/Level";
-import CabinetMember from "./models/CabinetMember";
-import Publication from "./models/Publication";
-import Journalist from "./models/Journalist";
-import SubgroupApproval from "./models/SubgroupApproval";
-import PressSecretary from "./models/PressSecretary";
-import President from "./models/President";
+import {
+  CabinetMember,
+  Game,
+  Journalist,
+  Level,
+  Publication,
+  Situation,
+  SubgroupApproval,
+  PressSecretary,
+  President,
+} from "./models";
 
 const adapter = new SQLiteAdapter({
   schema: myAppSchema,
@@ -35,5 +38,6 @@ export const database = new Database({
     SubgroupApproval,
     PressSecretary,
     President,
+    Situation,
   ],
 });

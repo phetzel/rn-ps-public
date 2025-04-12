@@ -1,0 +1,89 @@
+import React from "react";
+import { View } from "react-native";
+import { useRouter } from "expo-router";
+import { withObservables } from "@nozbe/watermelondb/react";
+
+import { CalendarClock } from "~/lib/icons/CalendarClock";
+import { observeLevel } from "~/lib/db/helpers";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Badge } from "~/components/ui/badge";
+import { Text } from "~/components/ui/text";
+import { Level } from "~/lib/db/models";
+import { LevelStatus } from "~/types";
+import { Button } from "~/components/ui/button";
+import { ArrowRight } from "~/lib/icons/ArrowRight";
+import { LEVEL_STATUS_DISPLAY_NAMES } from "~/lib/constants";
+
+interface CurrentLevelCardProps {
+  level: Level | undefined;
+}
+
+const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
+  if (!level) return null;
+
+  const renderStatusText = (status: LevelStatus) => {
+    switch (status) {
+      case LevelStatus.Briefing:
+        return "Prepare by reviewing ongoing situations and planning your communication strategy.";
+      case LevelStatus.PressConference:
+        return "Face the press and carefully manage your responses to their questions.";
+      case LevelStatus.Outcome:
+        return "Review the outcomes of your decisions and their impact on public opinion.";
+      default:
+        return "Unknown status";
+    }
+  };
+
+  return (
+    <Card className="border-l-4 border-l-primary">
+      <CardHeader className="flex-row items-center gap-2">
+        <CalendarClock className="h-5 w-5 text-primary" />
+        <CardTitle className="text-xl">
+          Month {level.month} Year {level.year}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex-row items-center justify-between gap-2">
+        <View className="flex-1 justify-center gap-2">
+          <View className="flex-row gap-2">
+            <Badge>
+              <Text>{LEVEL_STATUS_DISPLAY_NAMES[level.status]}</Text>
+            </Badge>
+          </View>
+
+          <Text className="text-sm text-muted-foreground">
+            {renderStatusText(level.status)}
+          </Text>
+        </View>
+
+        <View className="flex-col gap-2">
+          <Button className="flex-row gap-2">
+            <Text>
+              {level.status === LevelStatus.Briefing
+                ? "Start"
+                : level.status === LevelStatus.PressConference
+                ? "Start"
+                : level.status === LevelStatus.Outcome
+                ? "Review"
+                : "Next"}
+            </Text>
+            <ArrowRight className="h-4 w-4 text-muted-foreground" />
+          </Button>
+
+          {level.status !== LevelStatus.Briefing && (
+            <Button variant="outline" className="w-full md:w-auto">
+              <Text>Review Briefing</Text>
+            </Button>
+          )}
+        </View>
+      </CardContent>
+    </Card>
+  );
+};
+
+const enhance = withObservables(["levelId"], ({ levelId }) => ({
+  // Get the actual Level model from watermelonDB
+  level: observeLevel(levelId),
+}));
+
+// The enhanced component that will react to database changes
+export default enhance(CurrentLevelCard);
