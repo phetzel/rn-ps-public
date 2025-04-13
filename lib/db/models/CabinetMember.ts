@@ -29,6 +29,8 @@ export default class CabinetMember extends Model {
   @field("ps_relationship") psRelationship!: number;
   @field("is_active") isActive!: boolean;
 
+  @field("game_id") game_id!: string;
+
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
 }

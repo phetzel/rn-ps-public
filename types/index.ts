@@ -30,8 +30,23 @@ export enum SituationStatus {
   Completed = "completed",
 }
 
+export interface Preference {
+  weight: number;
+  rationale: string; // explanation for the briefing UI
+}
+
+export interface StagePreferences {
+  president?: Preference;
+  cabinet?: {
+    [cabinetMember: string]: Preference;
+  };
+}
+
 export interface SituationProgress {
   stage: number;
+  preferences?: {
+    [stageNumber: number]: StagePreferences;
+  };
 }
 
 export enum CabinetRole {

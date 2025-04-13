@@ -7,7 +7,30 @@ export const mockDomesticSituations: NewSituationData[] = [
     description:
       "The President's healthcare reform bill faces fierce debate in Congress.",
     status: SituationStatus.Active,
-    progress: '{"stage":0,"votesNeeded":50,"votesSecured":45}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: 2,
+            rationale:
+              "Passage is crucial; prioritize moderate bipartisan support.",
+          },
+          cabinet: {
+            health: {
+              weight: 3,
+              rationale:
+                "Fully supportive; urgent action needed to improve healthcare access.",
+            },
+            treasury: {
+              weight: -1,
+              rationale:
+                "Concerns about budgetary impact; advise fiscal caution.",
+            },
+          },
+        },
+      },
+    }),
   },
   {
     type: SituationType.Domestic,
@@ -15,7 +38,28 @@ export const mockDomesticSituations: NewSituationData[] = [
     description:
       "Administration pushes for massive spending on national infrastructure.",
     status: SituationStatus.Active,
-    progress: '{"stage":0}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: 3,
+            rationale:
+              "Infrastructure spending is a key campaign promise; push hard.",
+          },
+          cabinet: {
+            transportation: {
+              weight: 3,
+              rationale: "Strongly supportive; critical repairs are overdue.",
+            },
+            treasury: {
+              weight: -2,
+              rationale: "Budget constraints raise significant concerns.",
+            },
+          },
+        },
+      },
+    }),
   },
 ];
 
@@ -25,7 +69,27 @@ export const mockForeignSituations: NewSituationData[] = [
     title: "Trade Conflict with China",
     description: "Tariff negotiations with China escalate tensions.",
     status: SituationStatus.Active,
-    progress: '{"stage":0}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: 1,
+            rationale: "Maintain tough but open negotiation stance.",
+          },
+          cabinet: {
+            commerce: {
+              weight: 2,
+              rationale: "Protect domestic businesses aggressively.",
+            },
+            state: {
+              weight: 0,
+              rationale: "",
+            },
+          },
+        },
+      },
+    }),
   },
   {
     type: SituationType.Foreign,
@@ -33,7 +97,28 @@ export const mockForeignSituations: NewSituationData[] = [
     description:
       "US attempts to mediate ongoing peace talks in the Middle East.",
     status: SituationStatus.Active,
-    progress: '{"stage":0}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: 2,
+            rationale:
+              "Support peace talks strongly but remain neutral publicly.",
+          },
+          cabinet: {
+            state: {
+              weight: 3,
+              rationale: "Fully invested in diplomatic solutions.",
+            },
+            defense: {
+              weight: -1,
+              rationale: "Skeptical; prefer cautious military preparedness.",
+            },
+          },
+        },
+      },
+    }),
   },
 ];
 
@@ -44,7 +129,28 @@ export const mockScandalSituations: NewSituationData[] = [
     description:
       "Secretary of Interior faces allegations of financial misconduct.",
     status: SituationStatus.Active,
-    progress: '{"stage":0,"investigationStatus":"ongoing"}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: -2,
+            rationale:
+              "Maintain distance; let the investigation run its course.",
+          },
+          cabinet: {
+            interior: {
+              weight: -3,
+              rationale: "Strongly defensive, denies wrongdoing.",
+            },
+            justice: {
+              weight: 2,
+              rationale: "Advocates thorough and transparent investigation.",
+            },
+          },
+        },
+      },
+    }),
   },
   {
     type: SituationType.Scandal,
@@ -52,7 +158,24 @@ export const mockScandalSituations: NewSituationData[] = [
     description:
       "Private derogatory remarks by the President leaked to the press.",
     status: SituationStatus.Active,
-    progress: '{"stage":0}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: -3,
+            rationale:
+              "Damage control needed immediately; minimize further fallout.",
+          },
+          cabinet: {
+            communications: {
+              weight: 3,
+              rationale: "Immediate public relations strategy required.",
+            },
+          },
+        },
+      },
+    }),
   },
 ];
 
@@ -63,7 +186,24 @@ export const mockEconomicSituations: NewSituationData[] = [
     description:
       "Stock market faces an unexpected sharp decline causing panic.",
     status: SituationStatus.Active,
-    progress: '{"stage":0}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: 1,
+            rationale: "Calm public statements needed to prevent panic.",
+          },
+          cabinet: {
+            treasury: {
+              weight: 3,
+              rationale:
+                "Immediate fiscal measures needed to stabilize markets.",
+            },
+          },
+        },
+      },
+    }),
   },
 ];
 
@@ -74,7 +214,29 @@ export const mockSecuritySituations: NewSituationData[] = [
     description:
       "Massive cyberattack disrupts major infrastructure services nationwide.",
     status: SituationStatus.Active,
-    progress: '{"stage":0}',
+    progress: JSON.stringify({
+      stage: 0,
+      preferences: {
+        0: {
+          president: {
+            weight: 3,
+            rationale: "Rapid and decisive public response needed.",
+          },
+          cabinet: {
+            homeland_security: {
+              weight: 3,
+              rationale:
+                "Immediate actions required to secure and restore services.",
+            },
+            defense: {
+              weight: 2,
+              rationale:
+                "Military cybersecurity readiness should be highlighted.",
+            },
+          },
+        },
+      },
+    }),
   },
 ];
 
