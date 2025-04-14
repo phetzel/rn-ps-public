@@ -38,3 +38,16 @@ export async function fetchLastLevel(gameId: string): Promise<Level | null> {
     .fetch()
     .then((results) => results[0]);
 }
+
+export async function updateLevelStatus(levelId: string, status: LevelStatus) {
+  return await database.write(async () => {
+    const level = await levelsCollection.find(levelId);
+    if (!level) {
+      throw new Error(`Level with ID ${levelId} not found`);
+    }
+
+    await level.update((record) => {
+      record.status = status;
+    });
+  });
+}

@@ -10,7 +10,6 @@ import {
 } from "@nozbe/watermelondb/decorators";
 import { Query } from "@nozbe/watermelondb";
 import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
-import { z } from "zod";
 
 import type Game from "./Game";
 import type Situation from "./Situation";
@@ -19,13 +18,7 @@ import {
   SituationStatus,
   type ActiveSituationInfo,
 } from "~/types";
-
-// Active situation JSON Schema
-export const activeSituationInfoSchema = z.object({
-  id: z.string(),
-  status: z.nativeEnum(SituationStatus),
-});
-export const levelActiveSituationsSchema = z.array(activeSituationInfoSchema);
+import { levelActiveSituationsSchema } from "~/lib/schemas";
 
 export default class Level extends Model {
   static table = "levels";

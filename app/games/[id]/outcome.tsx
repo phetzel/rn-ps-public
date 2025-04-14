@@ -1,22 +1,20 @@
-import { Image } from "react-native";
-
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
+import { View, Image } from "react-native";
+import { useRouter } from "expo-router";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import BriefingSituationsList from "~/components/briefing/BriefingSituationsList";
 
-export default function BriefingScreen() {
+export default function OutcomeScreen() {
+  const router = useRouter();
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
-  const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
-
-  console.log("currentLevelId", currentLevelId);
-  console.log("currentGameId", currentGameId);
 
   return (
     <ParallaxScrollView
       headerImage={
         <Image
-          source={require("~/assets/images/header-briefing.png")}
+          source={require("~/assets/images/header-outcome.png")}
           style={{
             width: "100%",
             height: "100%",
@@ -28,7 +26,16 @@ export default function BriefingScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <BriefingSituationsList gameId={currentGameId} levelId={currentLevelId} />
+      <View>
+        <Text>Outcome</Text>
+        <Button
+          onPress={() =>
+            router.replace(`/games/${currentGameId}/(tabs)/current`)
+          }
+        >
+          Back
+        </Button>
+      </View>
     </ParallaxScrollView>
   );
 }

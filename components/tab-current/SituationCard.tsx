@@ -14,12 +14,11 @@ import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
 import { Situation, Level } from "~/lib/db/models";
 import { Clock } from "~/lib/icons/Clock";
-import { SituationType } from "~/types";
-import { AlertCircle } from "~/lib/icons/AlertCircle";
-import { Globe } from "~/lib/icons/Globe";
-import { DollarSign } from "~/lib/icons/DollarSign";
-import { Shield } from "~/lib/icons/Shield";
-import { Users } from "~/lib/icons/Users";
+import {
+  getSituationIcon,
+  getSituationBadgeVariant,
+  formatSituationType,
+} from "~/lib/utils";
 
 interface SituationCardProps {
   situation: Situation;
@@ -27,54 +26,14 @@ interface SituationCardProps {
 }
 
 const SituationCard = ({ situation, startLevel }: SituationCardProps) => {
-  const getSituationIcon = (type: SituationType) => {
-    switch (type) {
-      case SituationType.Domestic:
-        return <Users className="h-5 w-5 text-primary" />;
-      case SituationType.Foreign:
-        return <Globe className="h-5 w-5 text-primary" />;
-      case SituationType.Scandal:
-        return <AlertCircle className="h-5 w-5 text-primary" />;
-      case SituationType.Economic:
-        return <DollarSign className="h-5 w-5 text-primary" />;
-      case SituationType.Security:
-        return <Shield className="h-5 w-5 text-primary" />;
-      case SituationType.PublicSentiment:
-        return <Users className="h-5 w-5 text-primary" />;
-      default:
-        return <AlertCircle className="h-5 w-5 text-primary" />;
-    }
-  };
-
-  const formatSituationType = (type: SituationType) => {
-    return type.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase());
-  };
-
-  const getSituationBadgeVariant = (type: SituationType) => {
-    switch (type) {
-      case SituationType.Domestic:
-        return "default";
-      case SituationType.Foreign:
-        return "secondary";
-      case SituationType.Scandal:
-        return "destructive";
-      case SituationType.Economic:
-        return "outline";
-      case SituationType.Security:
-        return "destructive";
-      case SituationType.PublicSentiment:
-        return "default";
-      default:
-        return "default";
-    }
-  };
+  const Icon = getSituationIcon(situation.type);
 
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <View className="flex-row justify-between items-start">
           <View className="flex-row items-center gap-2">
-            {getSituationIcon(situation.type)}
+            <Icon className="h-5 w-5 text-primary" />
             <CardTitle className="text-lg">{situation.title}</CardTitle>
           </View>
           <Badge variant={getSituationBadgeVariant(situation.type)}>

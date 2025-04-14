@@ -5,6 +5,9 @@ export default function GameSessionLayout() {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="briefing" />
+      <Stack.Screen name="press-conference" />
+      <Stack.Screen name="outcome" />
     </Stack>
   );
 }

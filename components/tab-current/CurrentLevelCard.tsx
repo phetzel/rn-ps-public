@@ -19,6 +19,8 @@ interface CurrentLevelCardProps {
 }
 
 const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
+  const router = useRouter();
+
   if (!level) return null;
 
   const renderStatusText = (status: LevelStatus) => {
@@ -34,6 +36,15 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
     }
   };
 
+  const handleButtonPress = () => {
+    if (level.status === LevelStatus.Briefing) {
+      router.push(`/games/${level.game_id}/briefing`);
+    } else if (level.status === LevelStatus.PressConference) {
+      router.push(`/games/${level.game_id}/press-conference`);
+    } else if (level.status === LevelStatus.Outcome) {
+      router.push(`/games/${level.game_id}/outcome`);
+    }
+  };
   return (
     <Card className="border-l-4 border-l-primary">
       <CardHeader className="flex-row items-center gap-2">
@@ -56,7 +67,7 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
         </View>
 
         <View className="flex-col gap-2">
-          <Button className="flex-row gap-2">
+          <Button onPress={handleButtonPress} className="flex-row gap-2">
             <Text>
               {level.status === LevelStatus.Briefing
                 ? "Start"

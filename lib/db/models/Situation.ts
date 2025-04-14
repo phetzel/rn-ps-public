@@ -8,20 +8,15 @@ import {
   writer,
 } from "@nozbe/watermelondb/decorators";
 import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
-import { z } from "zod";
 
 import type Game from "./Game";
 import type Level from "./Level";
+import { situationProgressSchema } from "~/lib/schemas";
 import type {
   SituationType,
   SituationStatus,
   SituationProgress,
 } from "~/types";
-
-// Situation progress JSON Schema
-export const situationProgressSchema = z.object({
-  stage: z.number(),
-});
 
 export default class Situation extends Model {
   static table = "situations";

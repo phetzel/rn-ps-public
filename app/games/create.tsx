@@ -3,7 +3,6 @@ import { View, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
@@ -21,21 +20,7 @@ import {
   CardTitle,
 } from "~/components/ui/card";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
-
-// Define Zod schema for validation
-const createGameSchema = z.object({
-  pressSecretaryName: z
-    .string()
-    .trim()
-    .min(1, { message: "Press Secretary name is required" }),
-  presidentName: z
-    .string()
-    .trim()
-    .min(1, { message: "President name is required" }),
-});
-
-// Infer the type from the schema
-type CreateGameFormData = z.infer<typeof createGameSchema>;
+import { createGameSchema, type CreateGameFormData } from "~/lib/schemas";
 
 export default function CreateGameScreen() {
   const router = useRouter();

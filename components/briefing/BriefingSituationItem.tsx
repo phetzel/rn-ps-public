@@ -1,0 +1,208 @@
+import React, { useState } from "react";
+import { View } from "react-native";
+
+// Icons
+import { ArrowLeft } from "~/lib/icons/ArrowLeft";
+import { ArrowRight } from "~/lib/icons/ArrowRight";
+import { CheckCircle2 } from "~/lib/icons/CheckCircle2";
+import { ChevronDown } from "~/lib/icons/ChevronDown";
+import { ChevronUp } from "~/lib/icons/ChevronUp";
+// Components
+import { Button } from "~/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "~/components/ui/card";
+import { Text } from "~/components/ui/text";
+import { Badge } from "~/components/ui/badge";
+import { Separator } from "~/components/ui/separator";
+import { Situation } from "~/lib/db/models";
+import { CABINET_DISPLAY_ROLES } from "~/lib/constants";
+import {
+  getSituationIcon,
+  getSituationBadgeVariant,
+  formatSituationType,
+} from "~/lib/utils";
+import { CabinetRole } from "~/types";
+
+interface BriefingSituationItemProps {
+  situation: Situation;
+  isFirst: boolean;
+  handlePrevious: () => void;
+  isLast: boolean;
+  handleNext: () => void;
+  handleComplete: () => void;
+}
+
+const BriefingSituationItem = ({
+  situation,
+  isFirst,
+  handlePrevious,
+  isLast,
+  handleNext,
+  handleComplete,
+}: BriefingSituationItemProps) => {
+  const [isCabinetExpanded, setIsCabinetExpanded] = useState<boolean>(false);
+
+  // Get preferences from the situation progress
+  const progress = situation.parseProgress;
+  //   console.log("BriefingSituationItem situation", situation);
+  console.log("BriefingSituationItem progress", progress);
+
+  if (!progress || !progress.preferences) {
+    return null;
+  }
+
+  const { stage, preferences } = progress;
+  const stagePreferences = preferences[stage];
+
+  // This needs to be adjusted based on your actual data structure
+  const presidentPreference = stagePreferences.president;
+  const cabinetPreferences = stagePreferences.cabinet;
+
+  const Icon = getSituationIcon(situation.type);
+
+  // Helper function to get preference indicator
+  function getPreferenceIndicator(weight: number) {
+    if (weight >= 3) return "Strongly Supports";
+    if (weight >= 1) return "Supports";
+    if (weight === 0) return "Neutral";
+    if (weight >= -2) return "Opposes";
+    return "Strongly Opposes";
+  }
+
+  // Helper function to get preference color
+  function getPreferenceColor(weight: number): string {
+    if (weight >= 3) return "text-green-600";
+    if (weight >= 1) return "text-green-500";
+    if (weight === 0) return "text-gray-500";
+    if (weight >= -2) return "text-orange-500";
+    return "text-red-500";
+  }
+
+  return (
+    <Card className="border-l-4 border-l-primary">
+      <CardHeader className="gap-2">
+        <View className="flex-row justify-between items-center">
+          <View className="flex-1 flex-row items-center gap-2 mr-2">
+            <Icon className="h-5 w-5 text-primary flex-shrink-0" />
+            <CardTitle className="text-xl flex-shrink">
+              {situation.title}
+            </CardTitle>
+          </View>
+
+          <Badge
+            variant={getSituationBadgeVariant(situation.type)}
+            className="flex-shrink-0"
+          >
+            <Text>{formatSituationType(situation.type)}</Text>
+          </Badge>
+        </View>
+        <CardDescription>{situation.description}</CardDescription>
+      </CardHeader>
+
+      <CardContent className="gap-4">
+        <Separator />
+
+        {presidentPreference ? (
+          <View className="gap-2">
+            <Text className="font-medium">President's Position:</Text>
+            <View className="gap-2">
+              <View className="flex-row justify-between items-center">
+                <Text className="text-sm font-medium">Stance:</Text>
+                <Text
+                  className={`text-sm font-medium ${getPreferenceColor(
+                    presidentPreference.weight
+                  )}`}
+                >
+                  {getPreferenceIndicator(presidentPreference.weight)}
+                </Text>
+              </View>
+
+              <Text className="text-sm">{presidentPreference.rationale}</Text>
+            </View>
+          </View>
+        ) : (
+          <Text className="text-sm">No specific preferences</Text>
+        )}
+
+        {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
+          <View className="gap-2">
+            <View className="flex-row justify-between items-center">
+              <Text className="font-medium">Cabinet Positions:</Text>
+              <Button
+                variant="ghost"
+                size="sm"
+                onPress={() => setIsCabinetExpanded(!isCabinetExpanded)}
+                className="h-8 gap-2 flex-row"
+              >
+                <Text>{isCabinetExpanded ? "Collapse" : "Expand"}</Text>
+                {isCabinetExpanded ? (
+                  <ChevronUp className="h-4 w-4 text-foreground" />
+                ) : (
+                  <ChevronDown className="h-4 w-4 text-foreground" />
+                )}
+              </Button>
+            </View>
+
+            {isCabinetExpanded && (
+              <View className="gap-4">
+                {Object.entries(cabinetPreferences).map(
+                  ([member, pref], idx) => (
+                    <View key={idx} className="gap-2">
+                      <View className="flex-row justify-between items-center">
+                        <Text className="text-sm font-medium capitalize">
+                          {CABINET_DISPLAY_ROLES[member as CabinetRole]}
+                          {/* {member} */}
+                        </Text>
+                        <Text
+                          className={`text-sm font-medium ${getPreferenceColor(
+                            pref.weight
+                          )}`}
+                        >
+                          {getPreferenceIndicator(pref.weight)}
+                        </Text>
+                      </View>
+
+                      <Text className="text-sm">{pref.rationale}</Text>
+                    </View>
+                  )
+                )}
+              </View>
+            )}
+          </View>
+        )}
+      </CardContent>
+
+      <CardFooter className="flex-row justify-between">
+        <Button
+          variant="outline"
+          className="flex-row gap-2"
+          onPress={handlePrevious}
+          disabled={isFirst}
+        >
+          <ArrowLeft className="h-4 w-4 text-muted-foreground" />
+          <Text>Previous</Text>
+        </Button>
+
+        <Button
+          onPress={isLast ? handleComplete : handleNext}
+          className="flex-row gap-2"
+        >
+          <Text> {isLast ? "Complete" : "Next"} </Text>
+          {isLast ? (
+            <CheckCircle2 className="h-4 w-4 text-muted-foreground" />
+          ) : (
+            <ArrowRight className="h-4 w-4 text-muted-foreground" />
+          )}
+        </Button>
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default BriefingSituationItem;
