@@ -6,11 +6,14 @@ import {
   relation,
   readonly,
   writer,
+  children,
 } from "@nozbe/watermelondb/decorators";
-import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
+import { Query } from "@nozbe/watermelondb";
+import type { Associations } from "@nozbe/watermelondb/Model";
 
 import type Game from "./Game";
 import type Level from "./Level";
+import type Question from "./Question";
 import { situationProgressSchema } from "~/lib/schemas";
 import type {
   SituationType,
@@ -24,10 +27,12 @@ export default class Situation extends Model {
   static associations: Associations = {
     game: { type: "belongs_to", key: "game_id" },
     start_level: { type: "belongs_to", key: "start_level_id" },
+    questions: { type: "has_many", foreignKey: "situation_id" },
   };
 
   @relation("games", "game_id") game!: Relation<Game>;
   @relation("levels", "start_level_id") startLevel!: Relation<Level>;
+  @children("questions") questions!: Query<Question>;
 
   @text("type") type!: SituationType;
   @text("title") title!: string;

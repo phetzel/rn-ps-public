@@ -50,8 +50,6 @@ const BriefingSituationItem = ({
 
   // Get preferences from the situation progress
   const progress = situation.parseProgress;
-  //   console.log("BriefingSituationItem situation", situation);
-  console.log("BriefingSituationItem progress", progress);
 
   if (!progress || !progress.preferences) {
     return null;
@@ -155,10 +153,11 @@ const BriefingSituationItem = ({
                   ([member, pref], idx) => (
                     <View key={idx} className="gap-2">
                       <View className="flex-row justify-between items-center">
-                        <Text className="text-sm font-medium capitalize">
-                          {CABINET_DISPLAY_ROLES[member as CabinetRole]}
-                          {/* {member} */}
-                        </Text>
+                        <View className="flex-1 mr-2">
+                          <Text className="text-sm font-medium capitalize">
+                            {CABINET_DISPLAY_ROLES[member as CabinetRole]}
+                          </Text>
+                        </View>
                         <Text
                           className={`text-sm font-medium ${getPreferenceColor(
                             pref.weight

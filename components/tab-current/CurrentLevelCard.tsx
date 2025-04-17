@@ -80,11 +80,11 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
             <ArrowRight className="h-4 w-4 text-muted-foreground" />
           </Button>
 
-          {level.status !== LevelStatus.Briefing && (
+          {/* {level.status !== LevelStatus.Briefing && (
             <Button variant="outline" className="w-full md:w-auto">
               <Text>Review Briefing</Text>
             </Button>
-          )}
+          )} */}
         </View>
       </CardContent>
     </Card>
@@ -92,9 +92,7 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
 };
 
 const enhance = withObservables(["levelId"], ({ levelId }) => ({
-  // Get the actual Level model from watermelonDB
   level: observeLevel(levelId),
 }));
 
-// The enhanced component that will react to database changes
 export default enhance(CurrentLevelCard);

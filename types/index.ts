@@ -90,6 +90,43 @@ export enum SubgroupKey {
   FinancialMarket = "financial_market",
 }
 
+export enum QuestionStatus {
+  Pending = "pending",
+  Skipped = "skipped",
+  Answered = "answered",
+  FollowUpAnswered = "followup_answered",
+  FollowUpSkipped = "followup_skipped",
+  Ignored = "ignored",
+}
+
+export interface QuestionAnswer {
+  text: string;
+  impacts: {
+    president?: { weight: number; reaction?: string };
+    cabinet?: { [role: string]: { weight: number; reaction?: string } };
+    publications?: {
+      [publicationId: string]: { weight: number; reaction?: string };
+    };
+    subgroups?: {
+      [subgroupKey: string]: { weight: number; reaction?: string };
+    };
+  };
+}
+
+export interface QuestionData {
+  text: string;
+  situationStage: number;
+  answers: QuestionAnswer[];
+  selectedAnswerIndex?: number; // Track which answer was selected
+  followUps?: {
+    [answerId: number]: {
+      text: string;
+      answers: QuestionAnswer[];
+      selectedAnswerIndex?: number; // Track which follow-up answer was selected
+    };
+  };
+}
+
 // Create Game
 export interface NewGameDetails {
   pressSecretaryName: string;

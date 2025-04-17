@@ -123,30 +123,20 @@ export const myAppSchema = appSchema({
         { name: "updated_at", type: "number" },
       ],
     }),
-    // tableSchema({
-    //   name: "outcomes",
-    //   columns: [
-    //     { name: "game_id", type: "string", isIndexed: true },
-    //     { name: "level_id", type: "string", isIndexed: true },
-    //     {
-    //       name: "situation_id",
-    //       type: "string",
-    //       isIndexed: true,
-    //       isOptional: true,
-    //     },
-    //     {
-    //       name: "journalist_id",
-    //       type: "string",
-    //       isIndexed: true,
-    //       isOptional: true,
-    //     },
-    //     { name: "question_text", type: "string", isOptional: true },
-    //     { name: "player_answer", type: "string" },
-    //     { name: "answer_type", type: "string" },
-    //     { name: "immediate_effects", type: "string" }, // JSON
-    //     { name: "outcome_summary", type: "string" },
-    //     { name: "created_at", type: "number" },
-    //   ],
-    // }),
+
+    tableSchema({
+      name: "questions",
+      columns: [
+        { name: "level_id", type: "string", isIndexed: true },
+        { name: "situation_id", type: "string", isIndexed: true },
+        { name: "journalist_id", type: "string", isIndexed: true },
+        { name: "question_text", type: "string" },
+        { name: "data", type: "string" },
+        { name: "status", type: "string" },
+        { name: "selected_answer_index", type: "number", isOptional: true },
+        { name: "created_at", type: "number" },
+        { name: "updated_at", type: "number" },
+      ],
+    }),
   ],
 });

@@ -17,7 +17,7 @@ export const mockDomesticSituations: NewSituationData[] = [
               "Passage is crucial; prioritize moderate bipartisan support.",
           },
           cabinet: {
-            health: {
+            hhs: {
               weight: 3,
               rationale:
                 "Fully supportive; urgent action needed to improve healthcare access.",
@@ -48,10 +48,6 @@ export const mockDomesticSituations: NewSituationData[] = [
               "Infrastructure spending is a key campaign promise; push hard.",
           },
           cabinet: {
-            transportation: {
-              weight: 3,
-              rationale: "Strongly supportive; critical repairs are overdue.",
-            },
             treasury: {
               weight: -2,
               rationale: "Budget constraints raise significant concerns.",
@@ -78,7 +74,7 @@ export const mockForeignSituations: NewSituationData[] = [
             rationale: "Maintain tough but open negotiation stance.",
           },
           cabinet: {
-            commerce: {
+            treasury: {
               weight: 2,
               rationale: "Protect domestic businesses aggressively.",
             },
@@ -139,7 +135,7 @@ export const mockScandalSituations: NewSituationData[] = [
               "Maintain distance; let the investigation run its course.",
           },
           cabinet: {
-            interior: {
+            homeland: {
               weight: -3,
               rationale: "Strongly defensive, denies wrongdoing.",
             },
@@ -168,7 +164,7 @@ export const mockScandalSituations: NewSituationData[] = [
               "Damage control needed immediately; minimize further fallout.",
           },
           cabinet: {
-            communications: {
+            justice: {
               weight: 3,
               rationale: "Immediate public relations strategy required.",
             },
@@ -223,7 +219,7 @@ export const mockSecuritySituations: NewSituationData[] = [
             rationale: "Rapid and decisive public response needed.",
           },
           cabinet: {
-            homeland_security: {
+            homeland: {
               weight: 3,
               rationale:
                 "Immediate actions required to secure and restore services.",

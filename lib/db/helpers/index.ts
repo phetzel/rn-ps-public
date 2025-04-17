@@ -4,3 +4,5 @@ export * from "./observations";
 export * from "./gameApi";
 export * from "./levelApi";
 export * from "./situationApi";
+export * from "./questionApi";
+export * from "./journalistApi";

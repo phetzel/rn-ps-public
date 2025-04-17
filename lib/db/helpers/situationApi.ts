@@ -16,6 +16,12 @@ export async function fetchActiveSituationsForGame(
     .fetch();
 }
 
+export async function fetchSituationById(
+  situationId: string
+): Promise<Situation> {
+  return await situationCollection.find(situationId);
+}
+
 export async function createSituationsForLevel(
   game: Game,
   level: Level,

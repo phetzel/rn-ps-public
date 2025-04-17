@@ -32,7 +32,7 @@ const SituationCard = ({ situation, startLevel }: SituationCardProps) => {
     <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <View className="flex-row justify-between items-start">
-          <View className="flex-row items-center gap-2">
+          <View className="flex-row items-center gap-2 flex-1 mr-2">
             <Icon className="h-5 w-5 text-primary" />
             <CardTitle className="text-lg">{situation.title}</CardTitle>
           </View>

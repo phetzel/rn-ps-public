@@ -8,8 +8,8 @@ import {
   observeActiveSituationsForGame,
   observeLevel,
 } from "~/lib/db/helpers/observations";
-import { updateLevelStatus } from "~/lib/db/helpers/levelApi";
 import { Situation, Level } from "~/lib/db/models";
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
@@ -31,6 +31,9 @@ const BriefingSituationsList = ({
 }: BriefingSituationListProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
+  const progressCurrentLevel = useCurrentLevelStore(
+    (state) => state.progressCurrentLevel
+  );
 
   if (!situations || situations.length === 0) {
     return (
@@ -58,8 +61,16 @@ const BriefingSituationsList = ({
   };
 
   const handleComplete = async () => {
-    await updateLevelStatus(levelId, LevelStatus.PressConference);
-    router.push(`/games/${gameId}/(tabs)/current`);
+    try {
+      if (level.status == LevelStatus.Briefing) {
+        await progressCurrentLevel();
+      }
+
+      router.push(`/games/${gameId}/(tabs)/current`);
+    } catch (error) {
+      console.error("Failed to start press conference:", error);
+      // Show error to user (you could add a toast or alert here)
+    }
   };
 
   const currentSituation = situations[currentIndex];

@@ -13,6 +13,7 @@ import type { Associations } from "@nozbe/watermelondb/Model"; // Import for cla
 
 import type Game from "./Game";
 import type Situation from "./Situation";
+import type Question from "./Question";
 import {
   type LevelStatus,
   SituationStatus,
@@ -26,11 +27,13 @@ export default class Level extends Model {
   static associations: Associations = {
     games: { type: "belongs_to", key: "game_id" },
     situations: { type: "has_many", foreignKey: "start_level_id" },
+    questions: { type: "has_many", foreignKey: "level_id" },
   };
 
   @relation("games", "game_id") game!: Relation<Game>;
 
   @children("situations") situations!: Query<Situation>;
+  @children("questions") questions!: Query<Question>;
   @field("year") year!: number;
   @field("month") month!: number;
   @text("status") status!: LevelStatus;

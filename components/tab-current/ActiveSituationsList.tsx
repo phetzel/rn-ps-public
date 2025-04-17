@@ -24,7 +24,7 @@ const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
   }
 
   return (
-    <View className="py-4 gap-2">
+    <View className="py-4 gap-2 flex-1">
       <Text className="text-2xl font-semibold">Active Situations</Text>
       <FlatList
         data={situations}
@@ -32,6 +32,7 @@ const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
         renderItem={({ item }) => <SituationCard situation={item} />}
         ItemSeparatorComponent={() => <View className="h-4" />}
         contentContainerStyle={{ paddingVertical: 8 }}
+        style={{ flexGrow: 1 }}
       />
     </View>
   );

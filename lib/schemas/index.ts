@@ -39,3 +39,33 @@ export const situationProgressSchema = z.object({
   stage: z.number(),
   preferences: z.record(z.coerce.number(), stagePreferencesSchema).optional(),
 });
+
+// Question Data Schema
+export const questionAnswerImpactSchema = z.object({
+  weight: z.number(),
+  reaction: z.string().optional(),
+});
+
+export const questionAnswerSchema = z.object({
+  text: z.string(),
+  impacts: z.object({
+    president: questionAnswerImpactSchema.optional(),
+    cabinet: z.record(z.string(), questionAnswerImpactSchema).optional(),
+    publications: z.record(z.string(), questionAnswerImpactSchema).optional(),
+    subgroups: z.record(z.string(), questionAnswerImpactSchema).optional(),
+  }),
+});
+
+export const questionFollowUpSchema = z.object({
+  text: z.string(),
+  answers: z.array(questionAnswerSchema),
+  selectedAnswerIndex: z.number().optional(),
+});
+
+export const questionDataSchema = z.object({
+  text: z.string(),
+  situationStage: z.number(),
+  answers: z.array(questionAnswerSchema),
+  selectedAnswerIndex: z.number().optional(),
+  followUps: z.record(z.coerce.number(), questionFollowUpSchema).optional(),
+});
