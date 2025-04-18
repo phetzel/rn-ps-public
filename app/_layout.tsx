@@ -11,10 +11,11 @@ import { StatusBar } from "expo-status-bar";
 import * as React from "react";
 import { Platform, View } from "react-native";
 import { PortalHost } from "@rn-primitives/portal";
-import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider"; // Import WDB Provider
+import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider";
+import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet";
 
 import { database } from "~/lib/db";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore"; // Import new store
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
@@ -96,22 +97,24 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={LIGHT_THEME}>
       <DatabaseProvider database={database}>
-        <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-        <Stack>
-          <Stack.Screen
-            name="index"
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="games"
-            options={{
-              headerShown: false,
-            }}
-          />
-        </Stack>
-        <PortalHost />
+        <BottomSheetModalProvider>
+          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <Stack>
+            <Stack.Screen
+              name="index"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="games"
+              options={{
+                headerShown: false,
+              }}
+            />
+          </Stack>
+          <PortalHost />
+        </BottomSheetModalProvider>
       </DatabaseProvider>
     </ThemeProvider>
   );

@@ -37,7 +37,6 @@ export async function createQuestionsForPressConference(
           q.questionText = preparedQuestion.questionText;
           q.data = preparedQuestion.questionData;
           q.status = QuestionStatus.Pending;
-          q.selectedAnswerIndex = null;
         });
 
         return question;

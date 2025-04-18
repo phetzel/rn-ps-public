@@ -8,7 +8,8 @@ export default function GamesLayout() {
   const router = useRouter();
 
   const handleBack = () => {
-    router.replace("/");
+    // router.replace("/");
+    router.back();
   };
 
   return (

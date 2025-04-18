@@ -9,9 +9,6 @@ export default function BriefingScreen() {
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 
-  console.log("currentLevelId", currentLevelId);
-  console.log("currentGameId", currentGameId);
-
   return (
     <ParallaxScrollView
       headerImage={

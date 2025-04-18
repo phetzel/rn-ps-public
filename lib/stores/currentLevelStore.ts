@@ -17,7 +17,7 @@ import {
 } from "~/lib/db/helpers";
 import { Game, Level, Question, Situation, Journalist } from "~/lib/db/models";
 import { mockSituationData } from "~/lib/data/mockSituationData";
-import { useGameManagerStore } from "./gameManagerStore";
+import { QUESTIONS_PER_LEVEL } from "~/lib/constants";
 import { ActiveSituationInfo, LevelStatus } from "~/types";
 import { mockQuestions } from "../data/mockQuestionData";
 
@@ -166,13 +166,10 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       situations: Situation[];
       journalists: Journalist[];
     }) => {
-      // Determine how many questions to generate (max: 8)
-      const maxQuestions = 8;
-
       // Select a subset of journalists for this press conference
       const selectedJournalists = journalists
         .sort(() => 0.5 - Math.random())
-        .slice(0, Math.min(journalists.length, maxQuestions));
+        .slice(0, Math.min(journalists.length, QUESTIONS_PER_LEVEL));
 
       // Prepare question data for each selected journalist
       const preparedQuestions = selectedJournalists.map((journalist, index) => {

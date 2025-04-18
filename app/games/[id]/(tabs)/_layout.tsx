@@ -10,12 +10,14 @@ import { HeaderBackIcon } from "~/components/HeaderBackIcon";
 export default function GameTabLayout() {
   const router = useRouter();
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <Tabs
       screenOptions={{
-        headerLeft: () => (
-          <HeaderBackIcon onPress={() => router.push("/games")} />
-        ),
+        headerLeft: () => <HeaderBackIcon onPress={handleGoBack} />,
       }}
     >
       <Tabs.Screen

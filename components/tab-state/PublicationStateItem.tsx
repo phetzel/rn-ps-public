@@ -4,18 +4,19 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeJournalistsForPublication } from "~/lib/db/helpers";
 import type Publication from "~/lib/db/models/Publication";
 import type Journalist from "~/lib/db/models/Journalist";
+import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
 import { Text } from "~/components/ui/text";
 import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "~/components/ui/accordion";
-import { Badge } from "~/components/ui/badge";
+
 import { Separator } from "~/components/ui/separator";
 import { Progress } from "~/components/ui/progress";
-import { PoliticalLeaning } from "~/types";
 import { TrendingUp } from "~/lib/icons/TrendingUp";
 import { Users } from "~/lib/icons/Users";
+import { PoliticalLeaning } from "~/types";
 
 interface PublicationStateItemProps {
   publication: Publication;
@@ -26,53 +27,18 @@ const PublicationStateItem = ({
   publication,
   journalists,
 }: PublicationStateItemProps) => {
-  const getPoliticalLeaningBGColor = (leaning: PoliticalLeaning): string => {
-    switch (leaning) {
-      case PoliticalLeaning.Liberal:
-        return "bg-blue-100";
-      case PoliticalLeaning.Conservative:
-        return "bg-red-100";
-      case PoliticalLeaning.Neutral:
-      default:
-        return "bg-gray-100";
-    }
-  };
-
-  const getPoliticalLeaningTextColor = (leaning: PoliticalLeaning): string => {
-    switch (leaning) {
-      case PoliticalLeaning.Liberal:
-        return "text-blue-800";
-      case PoliticalLeaning.Conservative:
-        return "text-red-800";
-      case PoliticalLeaning.Neutral:
-      default:
-        return "text-gray-800";
-    }
-  };
-
   const formatPoliticalLeaning = (leaning: PoliticalLeaning): string => {
     return leaning.charAt(0).toUpperCase() + leaning.slice(1);
   };
-
   return (
     <AccordionItem key={publication.id} value={publication.id}>
       <AccordionTrigger className="py-3">
         <View className="flex flex-col items-start text-left">
           <View className="flex-row items-center gap-2">
             <Text className="font-medium">{publication.name}</Text>
-            <Badge
-              className={getPoliticalLeaningBGColor(
-                publication.politicalLeaning
-              )}
-            >
-              <Text
-                className={getPoliticalLeaningTextColor(
-                  publication.politicalLeaning
-                )}
-              >
-                {formatPoliticalLeaning(publication.politicalLeaning)}
-              </Text>
-            </Badge>
+            <PoliticalLeaningBadge
+              politicalLeaning={publication.politicalLeaning}
+            />
           </View>
         </View>
       </AccordionTrigger>

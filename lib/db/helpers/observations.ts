@@ -1,6 +1,6 @@
 import { Q } from "@nozbe/watermelondb";
 import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, switchMap } from "rxjs/operators";
 
 // Import collections
 import {
@@ -12,6 +12,8 @@ import {
   subgroupCollection,
   situationCollection,
   levelsCollection,
+  questionCollection,
+  journalistCollection,
 } from "./collections";
 // Import model types
 import {
@@ -24,6 +26,7 @@ import {
   SubgroupApproval,
   Situation,
   Level,
+  Question,
 } from "~/lib/db/models";
 // Import types
 import { SituationStatus } from "~/types";
@@ -72,10 +75,36 @@ export function observePublications(gameId: string): Observable<Publication[]> {
     .observe();
 }
 
+export function observePublicationForJournalistId(
+  journalistId: string
+): Observable<Publication | null> {
+  return observeJournalist(journalistId).pipe(
+    map((journalist) => {
+      if (!journalist) return null;
+      return journalist.publication.observe();
+    }),
+    // We need to flatten the nested observable
+    switchMap((publicationObservable) => {
+      if (!publicationObservable)
+        return new Observable<null>((observer) => {
+          observer.next(null);
+          observer.complete();
+        });
+      return publicationObservable;
+    })
+  );
+}
+
 export function observeJournalistsForPublication(
   publication: Publication
 ): Observable<Journalist[]> {
   return publication.journalists.observe();
+}
+
+export function observeJournalist(
+  journalistId: string
+): Observable<Journalist | null> {
+  return journalistCollection.findAndObserve(journalistId);
 }
 
 export function observeActiveSituationsForGame(
@@ -91,4 +120,10 @@ export function observeActiveSituationsForGame(
 
 export function observeLevel(levelId: string): Observable<Level> {
   return levelsCollection.findAndObserve(levelId);
+}
+
+export function observeQuestionsForLevel(
+  levelId: string
+): Observable<Question[]> {
+  return questionCollection.query(Q.where("level_id", levelId)).observe();
 }

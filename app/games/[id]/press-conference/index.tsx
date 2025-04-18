@@ -1,15 +1,15 @@
-import { View, Image } from "react-native";
+import { Image } from "react-native";
 import { useRouter } from "expo-router";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
+import ConferenceContent from "~/components/press-conference/ConferenceContent";
 
 export default function PressConferenceScreen() {
   const router = useRouter();
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
-
+  const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
   return (
     <ParallaxScrollView
       headerImage={
@@ -26,16 +26,7 @@ export default function PressConferenceScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <View>
-        <Text>Press Conference</Text>
-        <Button
-          onPress={() =>
-            router.replace(`/games/${currentGameId}/(tabs)/current`)
-          }
-        >
-          Back
-        </Button>
-      </View>
+      <ConferenceContent levelId={currentLevelId} />
     </ParallaxScrollView>
   );
 }
