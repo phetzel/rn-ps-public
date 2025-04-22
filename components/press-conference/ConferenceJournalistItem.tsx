@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Pressable } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
@@ -8,39 +8,39 @@ import {
 } from "~/lib/db/helpers/observations";
 import type Journalist from "~/lib/db/models/Journalist";
 import type Publication from "~/lib/db/models/Publication";
-import type Question from "~/lib/db/models/Question";
+import type PressExchange from "~/lib/db/models/PressExchange";
 import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
 import { Card, CardContent } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { User } from "~/lib/icons/User";
 import { ChevronRight } from "~/lib/icons/ChevronRight";
-import { QuestionStatus } from "~/types";
 
 interface ConferenceJournalistItemProps {
-  journalistId: string;
-  question: Question;
+  pressExchange: PressExchange;
   journalist: Journalist | null;
   publication: Publication | null;
-  onSelect: (question: Question) => void;
+  onSelect: (exchange: PressExchange) => void;
 }
 
 const ConferenceJournalistItem = ({
+  pressExchange,
   journalist,
   publication,
-  question,
   onSelect,
 }: ConferenceJournalistItemProps) => {
   if (!journalist) return null;
 
-  const isDisabled = [
-    QuestionStatus.Skipped,
-    QuestionStatus.FollowUpSkipped,
-    QuestionStatus.FollowUpAnswered,
-  ].includes(question.status as QuestionStatus);
+  // Determine exchange status from progress
+  const exchangeProgress = pressExchange.parseProgress;
+
+  // Check if exchange is complete (no current question)
+  const isDisabled = useMemo(() => {
+    return exchangeProgress && exchangeProgress.currentQuestionId === null;
+  }, [exchangeProgress]);
 
   return (
     <Pressable
-      onPress={() => !isDisabled && onSelect(question)}
+      onPress={() => !isDisabled && onSelect(pressExchange)}
       disabled={isDisabled}
       className={`${isDisabled ? "opacity-50" : ""}`}
     >
@@ -72,9 +72,9 @@ const ConferenceJournalistItem = ({
 };
 
 // Enhance with observables
-const enhance = withObservables(["journalistId"], ({ journalistId }) => ({
-  journalist: observeJournalist(journalistId),
-  publication: observePublicationForJournalistId(journalistId),
+const enhance = withObservables(["pressExchange"], ({ pressExchange }) => ({
+  journalist: observeJournalist(pressExchange.journalist_id),
+  publication: observePublicationForJournalistId(pressExchange.journalist_id),
 }));
 
 export default enhance(ConferenceJournalistItem);

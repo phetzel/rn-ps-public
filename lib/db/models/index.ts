@@ -7,7 +7,7 @@ import President from "./President";
 import Publication from "./Publication";
 import Situation from "./Situation";
 import SubgroupApproval from "./SubgroupApproval";
-import Question from "./Question";
+import PressExchange from "./PressExchange";
 
 export {
   CabinetMember,
@@ -19,5 +19,5 @@ export {
   Publication,
   Situation,
   SubgroupApproval,
-  Question,
+  PressExchange,
 };

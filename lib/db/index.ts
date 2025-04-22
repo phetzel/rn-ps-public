@@ -15,7 +15,7 @@ import {
   SubgroupApproval,
   PressSecretary,
   President,
-  Question,
+  PressExchange,
 } from "./models";
 
 const adapter = new SQLiteAdapter({
@@ -40,6 +40,6 @@ export const database = new Database({
     PressSecretary,
     President,
     Situation,
-    Question,
+    PressExchange,
   ],
 });

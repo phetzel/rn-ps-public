@@ -105,6 +105,7 @@ export const myAppSchema = appSchema({
         { name: "month", type: "number" },
         { name: "status", type: "string" },
         { name: "active_situations", type: "string", isOptional: true },
+        { name: "outcome_snapshot", type: "string", isOptional: true },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
@@ -125,15 +126,13 @@ export const myAppSchema = appSchema({
     }),
 
     tableSchema({
-      name: "questions",
+      name: "press_exchanges",
       columns: [
         { name: "level_id", type: "string", isIndexed: true },
         { name: "situation_id", type: "string", isIndexed: true },
         { name: "journalist_id", type: "string", isIndexed: true },
-        { name: "question_text", type: "string" },
-        { name: "data", type: "string" },
-        { name: "status", type: "string" },
-        { name: "selected_answer_index", type: "number", isOptional: true },
+        { name: "content", type: "string" },
+        { name: "progress", type: "string" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],

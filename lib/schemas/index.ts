@@ -17,12 +17,54 @@ export const createGameSchema = z.object({
 export type CreateGameFormData = z.infer<typeof createGameSchema>;
 
 // Model JSON Schemas
-// Level Active Situations Schema
+// Level Schemas
 export const activeSituationInfoSchema = z.object({
   id: z.string(),
   status: z.nativeEnum(SituationStatus),
 });
 export const levelActiveSituationsSchema = z.array(activeSituationInfoSchema);
+
+export const relationshipSnapshotSchema = z.object({
+  president: z.object({
+    approvalRating: z.number(),
+    psRelationship: z.number(),
+  }),
+  cabinetMembers: z.record(
+    z.string(),
+    z.object({
+      approvalRating: z.number(),
+      psRelationship: z.number(),
+    })
+  ),
+  publications: z.record(
+    z.string(),
+    z.object({
+      approvalRating: z.number(),
+    })
+  ),
+  journalists: z.record(
+    z.string(),
+    z.object({
+      reputation: z.number(),
+      relationship: z.number(),
+    })
+  ),
+  subgroups: z.record(
+    z.string(),
+    z.object({
+      approvalRating: z.number(),
+    })
+  ),
+  pressSecretary: z.object({
+    approvalRating: z.number(),
+    credibility: z.number(),
+  }),
+});
+
+export const outcomeSnapshotSchema = z.object({
+  initial: relationshipSnapshotSchema,
+  final: relationshipSnapshotSchema,
+});
 
 // Situation Progress Schema
 export const preferenceSchema = z.object({
@@ -41,31 +83,46 @@ export const situationProgressSchema = z.object({
 });
 
 // Question Data Schema
-export const questionAnswerImpactSchema = z.object({
+// Press Exchange Schemas
+export const exchangeImpactSchema = z.object({
   weight: z.number(),
   reaction: z.string().optional(),
 });
 
-export const questionAnswerSchema = z.object({
-  text: z.string(),
-  impacts: z.object({
-    president: questionAnswerImpactSchema.optional(),
-    cabinet: z.record(z.string(), questionAnswerImpactSchema).optional(),
-    publications: z.record(z.string(), questionAnswerImpactSchema).optional(),
-    subgroups: z.record(z.string(), questionAnswerImpactSchema).optional(),
-  }),
+export const exchangeImpactsSchema = z.object({
+  president: exchangeImpactSchema.optional(),
+  cabinet: z.record(z.string(), exchangeImpactSchema).optional(),
+  publications: z.record(z.string(), exchangeImpactSchema).optional(),
+  subgroups: z.record(z.string(), exchangeImpactSchema).optional(),
 });
 
-export const questionFollowUpSchema = z.object({
+export const answerSchema = z.object({
+  id: z.string(),
   text: z.string(),
-  answers: z.array(questionAnswerSchema),
-  selectedAnswerIndex: z.number().optional(),
+  impacts: exchangeImpactsSchema,
+  followUpId: z.string().optional(),
 });
 
-export const questionDataSchema = z.object({
+export const questionSchema = z.object({
+  id: z.string(),
   text: z.string(),
+  depth: z.number(),
+  answers: z.array(answerSchema),
+});
+
+export const exchangeContentSchema = z.object({
   situationStage: z.number(),
-  answers: z.array(questionAnswerSchema),
-  selectedAnswerIndex: z.number().optional(),
-  followUps: z.record(z.coerce.number(), questionFollowUpSchema).optional(),
+  questions: z.record(z.string(), questionSchema),
+  rootQuestionId: z.string(),
+});
+
+export const historyItemSchema = z.object({
+  questionId: z.string(),
+  answerId: z.string().optional(),
+  skipped: z.boolean(),
+});
+
+export const exchangeProgressSchema = z.object({
+  history: z.array(historyItemSchema),
+  currentQuestionId: z.string().nullable(),
 });

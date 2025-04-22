@@ -13,7 +13,7 @@ import type { Associations } from "@nozbe/watermelondb/Model";
 // Models
 import type Game from "./Game";
 import type Publication from "./Publication";
-import type Question from "./Question";
+import type PressExchange from "./PressExchange";
 // Enums
 import type { PoliticalLeaning } from "~/types";
 
@@ -23,13 +23,13 @@ export default class Journalist extends Model {
   static associations: Associations = {
     games: { type: "belongs_to", key: "game_id" },
     publications: { type: "belongs_to", key: "publication_id" },
-    questions: { type: "has_many", foreignKey: "journalist_id" },
+    press_exchanges: { type: "has_many", foreignKey: "journalist_id" },
   };
 
   @relation("games", "game_id") game!: Relation<Game>;
   @relation("publications", "publication_id")
   publication!: Relation<Publication>;
-  @children("questions") questions!: Query<Question>;
+  @children("press_exchanges") pressExchanges!: Query<PressExchange>;
 
   @text("name") name!: string;
   @text("bias") bias!: PoliticalLeaning | null;

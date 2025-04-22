@@ -7,7 +7,7 @@ import {
   observeJournalist,
   observePublicationForJournalistId,
 } from "~/lib/db/helpers/observations";
-import { Question, Journalist } from "~/lib/db/models";
+import { PressExchange, Journalist } from "~/lib/db/models";
 import type Publication from "~/lib/db/models/Publication";
 import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
 import {
@@ -21,27 +21,43 @@ import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { MessageSquare } from "~/lib/icons/MessageSquare";
 import { cn } from "~/lib/utils";
+import { Question, Answer, ExchangeContent, ExchangeProgress } from "~/types";
 
 interface ConferenceQuestionAnswerProps {
-  question: Question;
+  pressExchange: PressExchange;
   journalist: Journalist | null;
   publication: Publication | null;
-  onAnswerQuestion: (questionId: string, answerIndex: number) => void;
-  onSkipQuestion: (questionId: string) => void;
+  handleClear: () => void;
 }
 
 const ConferenceQuestionAnswer = ({
-  question,
+  pressExchange,
   journalist,
   publication,
-  onAnswerQuestion,
-  onSkipQuestion,
+  handleClear,
 }: ConferenceQuestionAnswerProps) => {
-  if (!question || !journalist) return null;
+  const currentQuestion = pressExchange.currentQuestion;
+  if (!currentQuestion || !journalist) return null;
 
-  const questionData = question.parseData;
+  const { text, answers } = currentQuestion;
 
-  if (!questionData) return null;
+  const handleAnswerQuestion = async (answerId: string) => {
+    try {
+      await pressExchange.answerQuestion(answerId);
+      handleClear();
+    } catch (error) {
+      console.error("Error answering question:", error);
+    }
+  };
+
+  const handleSkipQuestion = async () => {
+    try {
+      await pressExchange.skipQuestion();
+      handleClear();
+    } catch (error) {
+      console.error("Error skipping question:", error);
+    }
+  };
 
   return (
     <Card className="border-l-4 border-l-primary">
@@ -66,15 +82,13 @@ const ConferenceQuestionAnswer = ({
       </CardHeader>
 
       <CardContent className="gap-4">
-        <Text className="font-semibold text-center">
-          {question.questionText}
-        </Text>
+        <Text className="font-semibold text-center">{text}</Text>
 
         <View className="gap-2">
-          {questionData.answers.map((answer, index) => (
+          {answers.map((answer, index) => (
             <Pressable
               key={index}
-              onPress={() => onAnswerQuestion(question.id, index)}
+              onPress={() => handleAnswerQuestion(answer.id)}
             >
               {({ pressed }) => (
                 <View
@@ -96,7 +110,7 @@ const ConferenceQuestionAnswer = ({
       <CardFooter className="justify-center">
         <Button
           variant="ghost"
-          onPress={() => onSkipQuestion(question.id)}
+          onPress={handleSkipQuestion}
           className="text-muted-foreground"
         >
           <Text className="text-muted-foreground">Skip Question</Text>
@@ -107,10 +121,9 @@ const ConferenceQuestionAnswer = ({
 };
 
 // Enhance with observables
-const enhance = withObservables(["question"], ({ question }) => ({
-  question,
-  journalist: observeJournalist(question.journalist_id),
-  publication: observePublicationForJournalistId(question.journalist_id),
+const enhance = withObservables(["pressExchange"], ({ pressExchange }) => ({
+  journalist: observeJournalist(pressExchange.journalist_id),
+  publication: observePublicationForJournalistId(pressExchange.journalist_id),
 }));
 
 export default enhance(ConferenceQuestionAnswer);

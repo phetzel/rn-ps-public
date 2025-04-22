@@ -90,41 +90,87 @@ export enum SubgroupKey {
   FinancialMarket = "financial_market",
 }
 
-export enum QuestionStatus {
-  Pending = "pending",
-  Skipped = "skipped",
-  Answered = "answered",
-  FollowUpAnswered = "followup_answered",
-  FollowUpSkipped = "followup_skipped",
-  Ignored = "ignored",
+// Press Exchange Types
+export interface ExchangeImpact {
+  weight: number;
+  reaction?: string;
 }
 
-export interface QuestionAnswer {
-  text: string;
-  impacts: {
-    president?: { weight: number; reaction?: string };
-    cabinet?: { [role: string]: { weight: number; reaction?: string } };
-    publications?: {
-      [publicationId: string]: { weight: number; reaction?: string };
-    };
-    subgroups?: {
-      [subgroupKey: string]: { weight: number; reaction?: string };
-    };
-  };
+export interface ExchangeImpacts {
+  president?: ExchangeImpact;
+  cabinet?: Record<string, ExchangeImpact>;
+  publications?: Record<string, ExchangeImpact>;
+  subgroups?: Record<string, ExchangeImpact>;
 }
 
-export interface QuestionData {
+export interface Answer {
+  id: string;
   text: string;
+  impacts: ExchangeImpacts;
+  followUpId?: string;
+}
+
+export interface Question {
+  id: string;
+  text: string;
+  depth: number; // 0 for main questions, 1+ for follow-ups
+  answers: Answer[];
+}
+
+export interface ExchangeContent {
+  // Static JSON data
   situationStage: number;
-  answers: QuestionAnswer[];
-  selectedAnswerIndex?: number; // Track which answer was selected
-  followUps?: {
-    [answerId: number]: {
-      text: string;
-      answers: QuestionAnswer[];
-      selectedAnswerIndex?: number; // Track which follow-up answer was selected
+  questions: Record<string, Question>; // Map of questions by ID
+  rootQuestionId: string; // The starting question ID
+}
+
+export interface ExchangeProgress {
+  // User progress/choices
+  history: Array<{
+    questionId: string;
+    answerId?: string; // undefined if skipped
+    skipped: boolean;
+  }>;
+  currentQuestionId: string | null; // Current question the user is on, null if complete
+}
+
+// Relationship Snapshot
+export interface RelationshipSnapshot {
+  president: {
+    approvalRating: number;
+    psRelationship: number;
+  };
+  cabinetMembers: {
+    [cabinetMemberId: string]: {
+      approvalRating: number;
+      psRelationship: number;
     };
   };
+  publications: {
+    [publicationId: string]: {
+      approvalRating: number;
+    };
+  };
+  journalists: {
+    [journalistId: string]: {
+      reputation: number;
+      relationship: number;
+    };
+  };
+  subgroups: {
+    [subgroupKey: string]: {
+      approvalRating: number;
+    };
+  };
+  pressSecretary: {
+    approvalRating: number;
+    credibility: number;
+  };
+}
+
+export interface OutcomeSnapshotType {
+  initial: RelationshipSnapshot;
+  final: RelationshipSnapshot;
 }
 
 // Create Game

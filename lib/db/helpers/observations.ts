@@ -12,8 +12,8 @@ import {
   subgroupCollection,
   situationCollection,
   levelsCollection,
-  questionCollection,
   journalistCollection,
+  pressExchangeCollection,
 } from "./collections";
 // Import model types
 import {
@@ -26,7 +26,7 @@ import {
   SubgroupApproval,
   Situation,
   Level,
-  Question,
+  PressExchange,
 } from "~/lib/db/models";
 // Import types
 import { SituationStatus } from "~/types";
@@ -122,8 +122,16 @@ export function observeLevel(levelId: string): Observable<Level> {
   return levelsCollection.findAndObserve(levelId);
 }
 
-export function observeQuestionsForLevel(
+export function observePressExchangesForLevel(
   levelId: string
-): Observable<Question[]> {
-  return questionCollection.query(Q.where("level_id", levelId)).observe();
+): Observable<PressExchange[]> {
+  return pressExchangeCollection
+    .query(Q.where("level_id", levelId), Q.sortBy("journalist_id", Q.asc))
+    .observe();
+}
+
+export function observePressExchange(
+  exchangeId: string
+): Observable<PressExchange | null> {
+  return pressExchangeCollection.findAndObserve(exchangeId);
 }

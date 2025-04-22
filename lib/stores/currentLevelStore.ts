@@ -6,20 +6,41 @@ import {
   fetchLevel,
   fetchLastLevel,
   updateLevelStatus,
+  updateRelationships,
+  // Press Conference API
+  createPressExchangesForConference,
+  fetchPressExchangesForLevel,
   // Situation API
   fetchActiveSituationsForGame,
   fetchSituationById,
   createSituationsForLevel,
-  // Question API
-  createQuestionsForPressConference,
   // Journalist API
   fetchActiveJournalistsForGame,
+  // Entity API
+  fetchGameEntities,
 } from "~/lib/db/helpers";
-import { Game, Level, Question, Situation, Journalist } from "~/lib/db/models";
+import {
+  Game,
+  Level,
+  Situation,
+  Journalist,
+  President,
+  CabinetMember,
+  Publication,
+  SubgroupApproval,
+  PressSecretary,
+  PressExchange,
+} from "~/lib/db/models";
 import { mockSituationData } from "~/lib/data/mockSituationData";
 import { QUESTIONS_PER_LEVEL } from "~/lib/constants";
-import { ActiveSituationInfo, LevelStatus } from "~/types";
-import { mockQuestions } from "../data/mockQuestionData";
+import {
+  ActiveSituationInfo,
+  LevelStatus,
+  RelationshipSnapshot,
+  OutcomeSnapshotType,
+  ExchangeContent,
+} from "~/types";
+import { mockExchanges } from "../data/mockQuestionData";
 
 interface CurrentLevelStoreState {
   currentLevelId: string | null;
@@ -37,15 +58,23 @@ interface CurrentLevelStoreState {
 
   // --- Press Conference Actions ---
   progressCurrentLevel: () => Promise<Level | null>;
-  generateQuestions: ({
-    level,
-    situations,
+  generateExchanges: ({ level }: { level: Level }) => Promise<PressExchange[]>;
+  applyOutcomes: ({ level }: { level: Level }) => Promise<void>;
+  formatRelationshipSnapshot: ({
+    president,
+    cabinetMembers,
+    publications,
     journalists,
+    subgroups,
+    pressSecretary,
   }: {
-    level: Level;
-    situations: Situation[];
+    president: President;
+    cabinetMembers: CabinetMember[];
+    publications: Publication[];
     journalists: Journalist[];
-  }) => Promise<Question[]>;
+    subgroups: SubgroupApproval[];
+    pressSecretary: PressSecretary;
+  }) => RelationshipSnapshot;
 }
 
 export const useCurrentLevelStore = create<CurrentLevelStoreState>(
@@ -157,65 +186,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
     },
 
     // Level Progression
-    generateQuestions: async ({
-      level,
-      situations,
-      journalists,
-    }: {
-      level: Level;
-      situations: Situation[];
-      journalists: Journalist[];
-    }) => {
-      // Select a subset of journalists for this press conference
-      const selectedJournalists = journalists
-        .sort(() => 0.5 - Math.random())
-        .slice(0, Math.min(journalists.length, QUESTIONS_PER_LEVEL));
-
-      // Prepare question data for each selected journalist
-      const preparedQuestions = selectedJournalists.map((journalist, index) => {
-        // Randomly assign a situation to this question
-        const situation =
-          situations[Math.floor(Math.random() * situations.length)];
-
-        // Find mock questions appropriate for this situation type
-        const mockQuestionsForType = mockQuestions.filter(
-          (q) => q.situationType === situation.type
-        );
-
-        // Select a random mock question or fallback to a generic one
-        const mockQuestion =
-          mockQuestionsForType.length > 0
-            ? mockQuestionsForType[
-                Math.floor(Math.random() * mockQuestionsForType.length)
-              ]
-            : mockQuestions[0];
-
-        // Format the question text with situation details
-        const questionText = mockQuestion.text
-          .replace("{situation_title}", situation.title)
-          .replace("{situation_description}", situation.description);
-
-        // Format the question data with situation details
-        const questionData = JSON.parse(JSON.stringify(mockQuestion.data));
-        questionData.text = questionText;
-
-        // Prepare the question record data
-        return {
-          level,
-          situation,
-          journalist,
-          questionText,
-          questionData: JSON.stringify(questionData),
-          displayOrder: index,
-        };
-      });
-
-      const questions = await createQuestionsForPressConference(
-        preparedQuestions
-      );
-      return questions;
-    },
-
     progressCurrentLevel: async () => {
       const currentLevelId = get().currentLevelId;
       if (!currentLevelId) {
@@ -230,26 +200,12 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
           throw new Error(`Level with ID ${currentLevelId} not found`);
         }
 
-        // Get Situations Info
-        const activeSituationsInfo = level.parseActiveSituations;
-        if (!activeSituationsInfo || activeSituationsInfo.length === 0) {
-          throw new Error("No active situations found for this level");
-        }
-        const situationPromises = activeSituationsInfo.map(
-          async (info) => await fetchSituationById(info.id)
-        );
-        const situations = await Promise.all(situationPromises);
-        console.log("situations", situations);
-
-        // Get Journalists Info
-        const journalists = await fetchActiveJournalistsForGame(level.game_id);
-        if (!journalists || journalists.length === 0) {
-          throw new Error("No active journalists found for this game");
-        }
-        console.log("journalists", journalists);
         if (level.status === LevelStatus.Briefing) {
-          await get().generateQuestions({ level, situations, journalists });
+          await get().generateExchanges({ level });
           await updateLevelStatus(currentLevelId, LevelStatus.PressConference);
+        } else if (level.status === LevelStatus.PressConference) {
+          await get().applyOutcomes({ level });
+          await updateLevelStatus(currentLevelId, LevelStatus.Outcome);
         }
 
         set({ isLoading: false, error: null });
@@ -259,6 +215,276 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         set({ isLoading: false, error: String(error) });
         return null;
       }
+    },
+
+    // --- Press Conference Progression ---
+    generateExchanges: async ({ level }: { level: Level }) => {
+      // Get Situations Info
+      const activeSituationsInfo = level.parseActiveSituations;
+      if (!activeSituationsInfo || activeSituationsInfo.length === 0) {
+        throw new Error("No active situations found for this level");
+      }
+      const situationPromises = activeSituationsInfo.map(
+        async (info) => await fetchSituationById(info.id)
+      );
+      const situations = await Promise.all(situationPromises);
+
+      // Get Journalists Info
+      const journalists = await fetchActiveJournalistsForGame(level.game_id);
+      if (!journalists || journalists.length === 0) {
+        throw new Error("No active journalists found for this game");
+      }
+
+      // Select a subset of journalists for this press conference
+      const selectedJournalists = journalists
+        .sort(() => 0.5 - Math.random())
+        .slice(0, Math.min(journalists.length, QUESTIONS_PER_LEVEL));
+
+      // Prepare question data for each selected journalist
+      const preparedExchanges = selectedJournalists.map((journalist, index) => {
+        // Randomly assign a situation to this question
+        const situation =
+          situations[Math.floor(Math.random() * situations.length)];
+
+        // Find mock questions appropriate for this situation type
+        const mockExchangesForType = mockExchanges.filter(
+          (e) => e.situationType === situation.type
+        );
+
+        // Select a random mock question or fallback to a generic one
+        const mockExchange =
+          mockExchangesForType.length > 0
+            ? mockExchangesForType[
+                Math.floor(Math.random() * mockExchangesForType.length)
+              ]
+            : mockExchanges[0];
+
+        const content: ExchangeContent = JSON.parse(
+          JSON.stringify(mockExchange.content)
+        );
+
+        // Replace situation placeholders in all question texts
+        Object.values(content.questions).forEach((question) => {
+          question.text = question.text
+            .replace(/{situation_title}/g, situation.title)
+            .replace(/{situation_description}/g, situation.description);
+        });
+
+        // Prepare the question record data
+        return {
+          level,
+          situation,
+          journalist,
+          content: JSON.stringify(content),
+          progress: null,
+          displayOrder: index,
+        };
+      });
+
+      const exchanges = await createPressExchangesForConference(
+        preparedExchanges
+      );
+      return exchanges;
+    },
+
+    // --- Outcome Progression ---
+    applyOutcomes: async ({ level }: { level: Level }) => {
+      // 1. Fetch all game entities
+      const {
+        pressSecretary,
+        president,
+        cabinetMembers,
+        publications,
+        journalists,
+        subgroups,
+      } = await fetchGameEntities(level.game_id);
+
+      if (!president || !pressSecretary) {
+        throw new Error("No president or press secretary found for this game");
+      }
+
+      // 2. Format the initial relationship snapshot
+      const initialSnapshot = get().formatRelationshipSnapshot({
+        president,
+        cabinetMembers,
+        publications,
+        journalists,
+        subgroups,
+        pressSecretary,
+      });
+
+      // 3. Fetch all press exchanges for the level
+      const pressExchanges = await fetchPressExchangesForLevel(level.id);
+
+      // 4. Initialize impact object with entity maps for easy access
+      const impacts: RelationshipSnapshot = {
+        president: { approvalRating: 0, psRelationship: 0 },
+        cabinetMembers: {},
+        publications: {},
+        journalists: {},
+        subgroups: {},
+        pressSecretary: { approvalRating: 0, credibility: 0 },
+      };
+
+      // Create maps for faster entity lookup
+      const journalistsMap = Object.fromEntries(
+        journalists.map((j) => [j.id, { reputation: 0, relationship: 0 }])
+      );
+      const cabinetMap = Object.fromEntries(
+        cabinetMembers.map((c) => [
+          c.id,
+          { approvalRating: 0, psRelationship: 0 },
+        ])
+      );
+      const publicationsMap = Object.fromEntries(
+        publications.map((p) => [p.id, { approvalRating: 0 }])
+      );
+      const subgroupsMap = Object.fromEntries(
+        subgroups.map((s) => [s.id, { approvalRating: 0 }])
+      );
+
+      // Assign the maps to our impacts object
+      impacts.journalists = journalistsMap;
+      impacts.cabinetMembers = cabinetMap;
+      impacts.publications = publicationsMap;
+      impacts.subgroups = subgroupsMap;
+
+      // 5. Process each question to calculate impacts
+      for (const exchange of pressExchanges) {
+        const journalist = await exchange.journalist.fetch();
+        const content = exchange.parseContent;
+        const progress = exchange.parseProgress;
+
+        if (!content || !progress) continue;
+
+        // Process each answered question in the exchange history
+        for (const historyItem of progress.history) {
+          if (historyItem.skipped) {
+            // Skipping has a mild negative relationship impact
+            impacts.journalists[journalist.id].relationship -= 1;
+            continue;
+          }
+
+          // Question was answered
+          if (historyItem.questionId && historyItem.answerId) {
+            const question = content.questions[historyItem.questionId];
+            if (!question) continue;
+
+            // Find the selected answer
+            const selectedAnswer = question.answers.find(
+              (a) => a.id === historyItem.answerId
+            );
+            if (!selectedAnswer) continue;
+
+            // Boost journalist relationship for answering their question
+            impacts.journalists[journalist.id].relationship += 1;
+
+            // Apply impacts from the answer
+            if (selectedAnswer.impacts.president) {
+              impacts.president.psRelationship +=
+                selectedAnswer.impacts.president.weight;
+            }
+
+            // Apply cabinet impacts
+            if (selectedAnswer.impacts.cabinet) {
+              Object.entries(selectedAnswer.impacts.cabinet).forEach(
+                ([id, impact]) => {
+                  if (impacts.cabinetMembers[id]) {
+                    impacts.cabinetMembers[id].psRelationship += impact.weight;
+                    impacts.cabinetMembers[id].approvalRating += impact.weight;
+                  }
+                }
+              );
+            }
+          }
+        }
+      }
+
+      // 6. Apply the calculated impacts
+      await updateRelationships(
+        president,
+        cabinetMembers,
+        publications,
+        journalists,
+        subgroups,
+        pressSecretary,
+        impacts
+      );
+
+      // 7. Create final snapshot
+      const finalSnapshot = get().formatRelationshipSnapshot({
+        president,
+        cabinetMembers,
+        publications,
+        journalists,
+        subgroups,
+        pressSecretary,
+      });
+
+      // 8. Save outcome snapshot to level
+      const outcomeSnapshot: OutcomeSnapshotType = {
+        initial: initialSnapshot,
+        final: finalSnapshot,
+      };
+
+      await level.updateOutcomeSnapshot(outcomeSnapshot);
+    },
+
+    formatRelationshipSnapshot: ({
+      president,
+      cabinetMembers,
+      publications,
+      journalists,
+      subgroups,
+      pressSecretary,
+    }: {
+      president: President;
+      cabinetMembers: CabinetMember[];
+      publications: Publication[];
+      journalists: Journalist[];
+      subgroups: SubgroupApproval[];
+      pressSecretary: PressSecretary;
+    }) => {
+      return {
+        president: {
+          approvalRating: president.approvalRating,
+          psRelationship: president.psRelationship,
+        },
+        cabinetMembers: Object.fromEntries(
+          cabinetMembers.map((member) => [
+            member.id,
+            {
+              approvalRating: member.approvalRating,
+              psRelationship: member.psRelationship,
+            },
+          ])
+        ),
+        publications: Object.fromEntries(
+          publications.map((pub) => [
+            pub.id,
+            { approvalRating: pub.approvalRating },
+          ])
+        ),
+        journalists: Object.fromEntries(
+          journalists.map((journalist) => [
+            journalist.id,
+            {
+              reputation: journalist.reputation,
+              relationship: journalist.relationship,
+            },
+          ])
+        ),
+        subgroups: Object.fromEntries(
+          subgroups.map((subgroup) => [
+            subgroup.id,
+            { approvalRating: subgroup.approvalRating },
+          ])
+        ),
+        pressSecretary: {
+          approvalRating: pressSecretary.approvalRating,
+          credibility: Number(pressSecretary.credibility),
+        },
+      };
     },
   })
 );

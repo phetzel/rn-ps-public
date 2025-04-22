@@ -10,7 +10,7 @@ import {
   Publication,
   Situation,
   SubgroupApproval,
-  Question,
+  PressExchange,
 } from "~/lib/db/models";
 
 // Collections
@@ -25,4 +25,5 @@ export const publicationCollection = database.get<Publication>("publications");
 export const situationCollection = database.get<Situation>("situations");
 export const subgroupCollection =
   database.get<SubgroupApproval>("subgroup_approvals");
-export const questionCollection = database.get<Question>("questions");
+export const pressExchangeCollection =
+  database.get<PressExchange>("press_exchanges");
