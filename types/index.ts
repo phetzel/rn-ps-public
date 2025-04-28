@@ -124,13 +124,15 @@ export interface ExchangeContent {
   rootQuestionId: string; // The starting question ID
 }
 
+export interface ExchangeHistoryItem {
+  questionId: string;
+  answerId?: string;
+  skipped: boolean;
+}
+
 export interface ExchangeProgress {
   // User progress/choices
-  history: Array<{
-    questionId: string;
-    answerId?: string; // undefined if skipped
-    skipped: boolean;
-  }>;
+  history: ExchangeHistoryItem[];
   currentQuestionId: string | null; // Current question the user is on, null if complete
 }
 
@@ -186,4 +188,11 @@ export interface NewSituationData {
   description: string;
   status: SituationStatus;
   progress: string | null;
+}
+
+// Journalist Exchange Types
+export enum JournalistInteractionType {
+  Ignore = "ignore",
+  Skipped = "skipped",
+  Answered = "answered",
 }

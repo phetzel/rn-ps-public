@@ -12,7 +12,7 @@ export default function GameSessionLayout() {
 
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ title: "Current", headerShown: false }} />
       <Stack.Screen
         name="briefing"
         options={{

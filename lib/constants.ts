@@ -10,6 +10,7 @@ import {
   SubgroupCategory,
   SubgroupKey,
   LevelStatus,
+  JournalistInteractionType,
 } from "~/types";
 
 export const NAV_THEME = {
@@ -34,6 +35,12 @@ export const NAV_THEME = {
 export const MAX_ACTIVE_GAMES = 3;
 export const QUESTIONS_PER_LEVEL = 4; // Questions include follow-up questions
 export const QUESTIONS_PER_PRESS_CONFERENCE = 6; // Questions selected during press conference
+
+export const JOURNALIST_INTERACTION_IMPACT = {
+  [JournalistInteractionType.Ignore]: -2,
+  [JournalistInteractionType.Skipped]: -1,
+  [JournalistInteractionType.Answered]: 1,
+};
 
 // Level
 export const LEVEL_STATUS_DISPLAY_NAMES = {

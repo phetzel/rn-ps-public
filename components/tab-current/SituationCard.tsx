@@ -31,12 +31,18 @@ const SituationCard = ({ situation, startLevel }: SituationCardProps) => {
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-2">
-        <View className="flex-row justify-between items-start">
-          <View className="flex-row items-center gap-2 flex-1 mr-2">
-            <Icon className="h-5 w-5 text-primary" />
-            <CardTitle className="text-lg">{situation.title}</CardTitle>
+        <View className=" flex-row justify-between items-center">
+          <View className="flex-1 flex-row items-center gap-2 mr-2">
+            <Icon className="h-5 w-5 text-primary flex-shrink-0" />
+            <CardTitle className="text-lg flex-shrink">
+              {situation.title}
+            </CardTitle>
           </View>
-          <Badge variant={getSituationBadgeVariant(situation.type)}>
+
+          <Badge
+            variant={getSituationBadgeVariant(situation.type)}
+            className="flex-shrink-0"
+          >
             <Text>{formatSituationType(situation.type)}</Text>
           </Badge>
         </View>

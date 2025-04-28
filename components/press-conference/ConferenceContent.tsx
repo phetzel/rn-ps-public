@@ -9,7 +9,6 @@ import ConferenceCompletion from "~/components/press-conference/ConferenceComple
 import ConferenceProgress from "~/components/press-conference/ConferenceProgress";
 import ConferenceQuestionAnswer from "~/components/press-conference/ConferenceQuestionAnswer";
 import ConferenceJournalistSelect from "~/components/press-conference/ConferenceJournalistSelect";
-import { Text } from "~/components/ui/text";
 
 interface ConferenceContentProps {
   levelId: string;

@@ -1,14 +1,20 @@
-import { View, Image } from "react-native";
+import { Image } from "react-native";
 import { useRouter } from "expo-router";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
+import OutcomeContent from "~/components/outcome/OutcomeContent";
 
 export default function OutcomeScreen() {
   const router = useRouter();
-  const currentGameId = useGameManagerStore((state) => state.currentGameId);
+
+  const gameId = useGameManagerStore((state) => state.currentGameId);
+  const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
+
+  if (!gameId || !currentLevelId) {
+    return null;
+  }
 
   return (
     <ParallaxScrollView
@@ -26,16 +32,7 @@ export default function OutcomeScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <View>
-        <Text>Outcome</Text>
-        <Button
-          onPress={() =>
-            router.replace(`/games/${currentGameId}/(tabs)/current`)
-          }
-        >
-          Back
-        </Button>
-      </View>
+      <OutcomeContent gameId={gameId} levelId={currentLevelId} />
     </ParallaxScrollView>
   );
 }
