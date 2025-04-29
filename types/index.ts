@@ -67,6 +67,11 @@ export enum InfluenceArea {
   HomelandSecurity = "homeland_security",
 }
 
+export enum PoliticalParty {
+  Republican = "republican",
+  Democrat = "democrat",
+}
+
 export enum PoliticalLeaning {
   Liberal = "liberal",
   Conservative = "conservative",
@@ -164,10 +169,6 @@ export interface RelationshipSnapshot {
       approvalRating: number;
     };
   };
-  pressSecretary: {
-    approvalRating: number;
-    credibility: number;
-  };
 }
 
 export interface OutcomeSnapshotType {
@@ -179,6 +180,7 @@ export interface OutcomeSnapshotType {
 export interface NewGameDetails {
   pressSecretaryName: string;
   presidentName: string;
+  presidentParty: PoliticalParty;
   // Add party etc. later
 }
 

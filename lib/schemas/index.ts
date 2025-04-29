@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CabinetRole, SituationStatus } from "~/types";
+import { CabinetRole, SituationStatus, PoliticalParty } from "~/types";
 
 // Form Schemas
 // Create Game Schema
@@ -12,6 +12,7 @@ export const createGameSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "President name is required" }),
+  presidentParty: z.nativeEnum(PoliticalParty),
 });
 
 export type CreateGameFormData = z.infer<typeof createGameSchema>;
@@ -55,10 +56,6 @@ export const relationshipSnapshotSchema = z.object({
       approvalRating: z.number(),
     })
   ),
-  pressSecretary: z.object({
-    approvalRating: z.number(),
-    credibility: z.number(),
-  }),
 });
 
 export const outcomeSnapshotSchema = z.object({

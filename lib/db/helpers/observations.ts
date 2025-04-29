@@ -6,8 +6,6 @@ import { map, switchMap } from "rxjs/operators";
 import {
   cabinetCollection,
   gamesCollection,
-  pressSecretaryCollection,
-  presidentCollection,
   publicationCollection,
   subgroupCollection,
   situationCollection,
@@ -20,8 +18,6 @@ import {
   CabinetMember,
   Game,
   Journalist,
-  PressSecretary,
-  President,
   Publication,
   SubgroupApproval,
   Situation,
@@ -35,30 +31,16 @@ export function observeAllGames(): Observable<Game[]> {
   return gamesCollection.query(Q.sortBy("updated_at", Q.desc)).observe();
 }
 
+export function observeGame(gameId: string): Observable<Game | null> {
+  return gamesCollection.findAndObserve(gameId);
+}
+
 export function observeSubgroupApprovals(
   gameId: string
 ): Observable<SubgroupApproval[]> {
   return subgroupCollection
     .query(Q.where("game_id", gameId), Q.sortBy("category", Q.asc))
     .observe();
-}
-
-export function observePressSecretary(
-  gameId: string
-): Observable<PressSecretary | undefined> {
-  return pressSecretaryCollection
-    .query(Q.where("game_id", gameId), Q.take(1))
-    .observe()
-    .pipe(map((secretaries: PressSecretary[]) => secretaries[0]));
-}
-
-export function observePresident(
-  gameId: string
-): Observable<President | undefined> {
-  return presidentCollection
-    .query(Q.where("game_id", gameId), Q.take(1))
-    .observe()
-    .pipe(map((presidents: President[]) => presidents[0]));
 }
 
 export function observeCabinetMembers(

@@ -3,8 +3,6 @@ import {
   cabinetCollection,
   gamesCollection,
   journalistCollection,
-  pressSecretaryCollection,
-  presidentCollection,
   publicationCollection,
   subgroupCollection,
 } from "./collections";
@@ -34,23 +32,12 @@ export async function createGameWithDetails(
       game.status = GameStatus.Active;
       game.currentYear = 1;
       game.currentMonth = 0;
+      game.psName = details.pressSecretaryName;
+      game.presName = details.presidentName;
+      game.presApprovalRating = 50;
+      game.presPsRelationship = 80;
+      game.presParty = details.presidentParty;
       game.startTimestamp = Math.floor(Date.now() / 1000);
-    });
-
-    // 1. Create Press Secretary
-    await pressSecretaryCollection.create((pressSecretary) => {
-      pressSecretary.game.set(newGame);
-      pressSecretary.name = details.pressSecretaryName;
-      pressSecretary.approvalRating = 80;
-      pressSecretary.credibility = 80;
-    });
-
-    // 2. Create President
-    await presidentCollection.create((president) => {
-      president.game.set(newGame);
-      president.name = details.presidentName;
-      president.approvalRating = 80;
-      president.psRelationship = 80;
     });
 
     // 3. Create Cabinet Members

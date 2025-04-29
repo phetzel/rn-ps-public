@@ -9,7 +9,6 @@ import { Briefcase } from "~/lib/icons/Briefcase";
 import ProgressDifference from "~/components/outcome/ProgressDifference";
 import { CABINET_DISPLAY_ROLES } from "~/lib/constants";
 import { observeCabinetMembers } from "~/lib/db/helpers";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import type { CabinetMember } from "~/lib/db/models";
 import type { OutcomeSnapshotType, CabinetRole } from "~/types";
 

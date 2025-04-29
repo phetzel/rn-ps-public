@@ -11,34 +11,18 @@ export const myAppSchema = appSchema({
         { name: "current_month", type: "number" },
         { name: "start_timestamp", type: "number" },
         { name: "end_timestamp", type: "number", isOptional: true },
+        { name: "ps_name", type: "string" },
+        { name: "pres_name", type: "string" },
+        { name: "pres_approval_rating", type: "number" },
+        { name: "pres_ps_relationship", type: "number" },
+        { name: "pres_party", type: "string" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
     }),
 
     // Politicians
-    tableSchema({
-      name: "press_secretaries",
-      columns: [
-        { name: "game_id", type: "string", isIndexed: true },
-        { name: "name", type: "string" },
-        { name: "credibility", type: "number" },
-        { name: "approval_rating", type: "number" },
-        { name: "created_at", type: "number" },
-        { name: "updated_at", type: "number" },
-      ],
-    }),
-    tableSchema({
-      name: "presidents",
-      columns: [
-        { name: "game_id", type: "string", isIndexed: true },
-        { name: "name", type: "string" },
-        { name: "approval_rating", type: "number" },
-        { name: "ps_relationship", type: "number" },
-        { name: "created_at", type: "number" },
-        { name: "updated_at", type: "number" },
-      ],
-    }),
+
     tableSchema({
       name: "cabinet_members",
       columns: [

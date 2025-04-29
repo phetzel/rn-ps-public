@@ -7,10 +7,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // import { useSaveManagerStore } from "~/lib/stores/saveManagerStore";
-import { NewGameDetails } from "~/types";
+import { NewGameDetails, PoliticalParty } from "~/types";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Text } from "~/components/ui/text";
 import {
   Card,
@@ -21,6 +22,8 @@ import {
 } from "~/components/ui/card";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { createGameSchema, type CreateGameFormData } from "~/lib/schemas";
+
+const partyOptions = Object.values(PoliticalParty);
 
 export default function CreateGameScreen() {
   const router = useRouter();
@@ -47,6 +50,7 @@ export default function CreateGameScreen() {
     defaultValues: {
       pressSecretaryName: "",
       presidentName: "",
+      presidentParty: PoliticalParty.Republican,
     },
   });
 
@@ -55,6 +59,7 @@ export default function CreateGameScreen() {
     const details: NewGameDetails = {
       pressSecretaryName: data.pressSecretaryName,
       presidentName: data.presidentName,
+      presidentParty: data.presidentParty,
       // Map other fields later
     };
 
@@ -78,6 +83,10 @@ export default function CreateGameScreen() {
         useGameManagerStore.getState().error
       );
     }
+  };
+
+  const formatParty = (party: PoliticalParty) => {
+    return party.charAt(0).toUpperCase() + party.slice(1);
   };
 
   return (
@@ -171,6 +180,57 @@ export default function CreateGameScreen() {
             {errors.presidentName && (
               <Text className="text-destructive mt-1 text-sm">
                 {errors.presidentName.message}
+              </Text>
+            )}
+          </View>
+
+          {/* President Party Radio Group */}
+          <View>
+            <Label
+              nativeID="presidentPartyLabel"
+              className={errors.presidentParty ? "text-destructive" : ""}
+            >
+              President's Political Party
+            </Label>
+            <Controller
+              control={control}
+              name="presidentParty"
+              render={({ field: { onChange, value } }) => (
+                <RadioGroup
+                  value={value}
+                  onValueChange={onChange}
+                  className="flex flex-col gap-2"
+                  aria-labelledby="presidentPartyLabel"
+                >
+                  {partyOptions.map((party) => (
+                    <View
+                      key={party}
+                      className="flex flex-row items-center gap-2"
+                    >
+                      <RadioGroupItem
+                        value={party}
+                        id={`party-${party}`}
+                        aria-label={party}
+                      />
+                      <Label
+                        nativeID={`party-${party}-label`}
+                        htmlFor={`party-${party}`}
+                        className={`${
+                          party === PoliticalParty.Democrat
+                            ? "text-blue-500"
+                            : "text-red-500"
+                        }`}
+                      >
+                        {formatParty(party)}
+                      </Label>
+                    </View>
+                  ))}
+                </RadioGroup>
+              )}
+            />
+            {errors.presidentParty && (
+              <Text className="text-destructive mt-1 text-sm">
+                {errors.presidentParty.message}
               </Text>
             )}
           </View>

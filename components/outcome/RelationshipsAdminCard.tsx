@@ -45,32 +45,6 @@ export default function AdministrationRelationshipCard({
             />
           </View>
         </View>
-
-        {/* Press Secretary Section */}
-        <View className="gap-4">
-          <View className="flex-row items-center gap-2">
-            <User className="h-5 w-5 text-primary" />
-            <Text className="font-semibold text-lg">Press Secretary</Text>
-          </View>
-
-          <View className="gap-3">
-            <ProgressDifference
-              label="Approval Rating"
-              initialValue={initial.pressSecretary.approvalRating}
-              finalValue={final.pressSecretary.approvalRating}
-              showPercentage={true}
-            />
-
-            <ProgressDifference
-              label="Credibility"
-              initialValue={initial.pressSecretary.credibility}
-              finalValue={final.pressSecretary.credibility}
-              showPercentage={true}
-              minValue={0}
-              maxValue={10}
-            />
-          </View>
-        </View>
       </CardContent>
     </Card>
   );

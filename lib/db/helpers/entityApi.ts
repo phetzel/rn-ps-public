@@ -1,41 +1,18 @@
 // entityApi.ts
 import { Q } from "@nozbe/watermelondb";
 import {
-  pressSecretaryCollection,
-  presidentCollection,
   cabinetCollection,
   publicationCollection,
   journalistCollection,
   subgroupCollection,
 } from "./collections";
 import {
-  PressSecretary,
-  President,
   CabinetMember,
   Publication,
   SubgroupApproval,
   Journalist,
 } from "~/lib/db/models";
-
-// Press Secretary APIs
-export async function fetchPressSecretaryForGame(
-  gameId: string
-): Promise<PressSecretary | null> {
-  return await pressSecretaryCollection
-    .query(Q.where("game_id", gameId))
-    .fetch()
-    .then((results) => results[0]);
-}
-
-// President APIs
-export async function fetchPresidentForGame(
-  gameId: string
-): Promise<President | null> {
-  return await presidentCollection
-    .query(Q.where("game_id", gameId))
-    .fetch()
-    .then((results) => results[0]);
-}
+import { fetchGame } from "./gameApi";
 
 // Cabinet APIs
 export async function fetchCabinetMembersForGame(
@@ -75,25 +52,17 @@ export async function fetchSubgroupsForGame(
 
 // Batch fetch all game entities in a single function
 export async function fetchGameEntities(gameId: string) {
-  const [
-    pressSecretary,
-    president,
-    cabinetMembers,
-    publications,
-    journalists,
-    subgroups,
-  ] = await Promise.all([
-    fetchPressSecretaryForGame(gameId),
-    fetchPresidentForGame(gameId),
-    fetchCabinetMembersForGame(gameId),
-    fetchPublicationsForGame(gameId),
-    fetchActiveJournalistsForGame(gameId),
-    fetchSubgroupsForGame(gameId),
-  ]);
+  const [game, cabinetMembers, publications, journalists, subgroups] =
+    await Promise.all([
+      fetchGame(gameId),
+      fetchCabinetMembersForGame(gameId),
+      fetchPublicationsForGame(gameId),
+      fetchActiveJournalistsForGame(gameId),
+      fetchSubgroupsForGame(gameId),
+    ]);
 
   return {
-    pressSecretary,
-    president,
+    game,
     cabinetMembers,
     publications,
     journalists,

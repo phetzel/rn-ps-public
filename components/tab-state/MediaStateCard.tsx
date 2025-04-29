@@ -2,7 +2,6 @@ import { withObservables } from "@nozbe/watermelondb/react";
 
 import { observePublications } from "~/lib/db/helpers";
 import type Publication from "~/lib/db/models/Publication";
-import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Accordion } from "~/components/ui/accordion";
 import { Newspaper } from "~/lib/icons/Newspaper";

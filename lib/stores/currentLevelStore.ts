@@ -24,11 +24,9 @@ import {
   Level,
   Situation,
   Journalist,
-  President,
   CabinetMember,
   Publication,
   SubgroupApproval,
-  PressSecretary,
   PressExchange,
 } from "~/lib/db/models";
 import { mockSituationData } from "~/lib/data/mockSituationData";
@@ -61,19 +59,17 @@ interface CurrentLevelStoreState {
   generateExchanges: ({ level }: { level: Level }) => Promise<PressExchange[]>;
   applyOutcomes: ({ level }: { level: Level }) => Promise<void>;
   formatRelationshipSnapshot: ({
-    president,
+    game,
     cabinetMembers,
     publications,
     journalists,
     subgroups,
-    pressSecretary,
   }: {
-    president: President;
+    game: Game;
     cabinetMembers: CabinetMember[];
     publications: Publication[];
     journalists: Journalist[];
     subgroups: SubgroupApproval[];
-    pressSecretary: PressSecretary;
   }) => RelationshipSnapshot;
 }
 
@@ -290,27 +286,20 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
     // --- Outcome Progression ---
     applyOutcomes: async ({ level }: { level: Level }) => {
       // 1. Fetch all game entities
-      const {
-        pressSecretary,
-        president,
-        cabinetMembers,
-        publications,
-        journalists,
-        subgroups,
-      } = await fetchGameEntities(level.game_id);
+      const { game, cabinetMembers, publications, journalists, subgroups } =
+        await fetchGameEntities(level.game_id);
 
-      if (!president || !pressSecretary) {
+      if (!game) {
         throw new Error("No president or press secretary found for this game");
       }
 
       // 2. Format the initial relationship snapshot
       const initialSnapshot = get().formatRelationshipSnapshot({
-        president,
+        game,
         cabinetMembers,
         publications,
         journalists,
         subgroups,
-        pressSecretary,
       });
 
       // 3. Fetch all press exchanges for the level
@@ -323,7 +312,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         publications: {},
         journalists: {},
         subgroups: {},
-        pressSecretary: { approvalRating: 0, credibility: 0 },
       };
 
       // Create maps for faster entity lookup
@@ -402,23 +390,21 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
 
       // 6. Apply the calculated impacts
       await updateRelationships(
-        president,
+        game,
         cabinetMembers,
         publications,
         journalists,
         subgroups,
-        pressSecretary,
         impacts
       );
 
       // 7. Create final snapshot
       const finalSnapshot = get().formatRelationshipSnapshot({
-        president,
+        game,
         cabinetMembers,
         publications,
         journalists,
         subgroups,
-        pressSecretary,
       });
 
       // 8. Save outcome snapshot to level
@@ -431,24 +417,22 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
     },
 
     formatRelationshipSnapshot: ({
-      president,
+      game,
       cabinetMembers,
       publications,
       journalists,
       subgroups,
-      pressSecretary,
     }: {
-      president: President;
+      game: Game;
       cabinetMembers: CabinetMember[];
       publications: Publication[];
       journalists: Journalist[];
       subgroups: SubgroupApproval[];
-      pressSecretary: PressSecretary;
     }) => {
       return {
         president: {
-          approvalRating: president.approvalRating,
-          psRelationship: president.psRelationship,
+          approvalRating: game.presApprovalRating,
+          psRelationship: game.presPsRelationship,
         },
         cabinetMembers: Object.fromEntries(
           cabinetMembers.map((member) => [
@@ -480,10 +464,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
             { approvalRating: subgroup.approvalRating },
           ])
         ),
-        pressSecretary: {
-          approvalRating: pressSecretary.approvalRating,
-          credibility: Number(pressSecretary.credibility),
-        },
       };
     },
   })

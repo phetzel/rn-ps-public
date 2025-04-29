@@ -1,19 +1,23 @@
 import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
-import { PoliticalLeaning } from "~/types";
+import { PoliticalLeaning, PoliticalParty } from "~/types";
 
 interface PoliticalLeaningBadgeProps {
-  politicalLeaning: PoliticalLeaning;
+  politicalLeaning: PoliticalLeaning | PoliticalParty;
 }
 
 export default function PoliticalLeaningBadge({
   politicalLeaning,
 }: PoliticalLeaningBadgeProps) {
-  const getPoliticalLeaningBGColor = (leaning: PoliticalLeaning): string => {
+  const getPoliticalLeaningBGColor = (
+    leaning: PoliticalLeaning | PoliticalParty
+  ): string => {
     switch (leaning) {
       case PoliticalLeaning.Liberal:
+      case PoliticalParty.Democrat:
         return "bg-blue-100";
       case PoliticalLeaning.Conservative:
+      case PoliticalParty.Republican:
         return "bg-red-100";
       case PoliticalLeaning.Neutral:
       default:
@@ -21,11 +25,15 @@ export default function PoliticalLeaningBadge({
     }
   };
 
-  const getPoliticalLeaningTextColor = (leaning: PoliticalLeaning): string => {
+  const getPoliticalLeaningTextColor = (
+    leaning: PoliticalLeaning | PoliticalParty
+  ): string => {
     switch (leaning) {
       case PoliticalLeaning.Liberal:
+      case PoliticalParty.Democrat:
         return "text-blue-800";
       case PoliticalLeaning.Conservative:
+      case PoliticalParty.Republican:
         return "text-red-800";
       case PoliticalLeaning.Neutral:
       default:
@@ -33,7 +41,9 @@ export default function PoliticalLeaningBadge({
     }
   };
 
-  const formatPoliticalLeaning = (leaning: PoliticalLeaning): string => {
+  const formatPoliticalLeaning = (
+    leaning: PoliticalLeaning | PoliticalParty
+  ): string => {
     return leaning.charAt(0).toUpperCase() + leaning.slice(1);
   };
 

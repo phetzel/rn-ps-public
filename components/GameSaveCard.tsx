@@ -1,11 +1,8 @@
 import * as React from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
-import { withObservables } from "@nozbe/watermelondb/react";
 
 import type Game from "~/lib/db/models/Game";
-import type PressSecretary from "~/lib/db/models/PressSecretary";
-import type President from "~/lib/db/models/President";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Icons
@@ -36,21 +33,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "~/components/ui/alert-dialog";
+import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
 
 interface GameSaveCardProps {
   game: Game;
-  pressSecretaries?: PressSecretary[];
-  presidents?: President[];
 }
 
-function GameSaveCard({
-  game,
-  pressSecretaries,
-  presidents,
-}: GameSaveCardProps) {
-  const president: President | undefined = presidents?.[0];
-  const pressSecretary: PressSecretary | undefined = pressSecretaries?.[0];
-
+function GameSaveCard({ game }: GameSaveCardProps) {
   const router = useRouter();
   const { setCurrentGameId, deleteGame, isLoading } = useGameManagerStore(
     (state) => ({
@@ -107,28 +96,26 @@ function GameSaveCard({
       </CardHeader>
 
       <CardContent className="gap-4">
-        {pressSecretary && (
-          <View className="flex-row items-center gap-2">
-            <User className="h-3.5 w-3.5 text-muted-foreground" />
-            <Text className="font-medium">{pressSecretary.name}</Text>
-            <Text className="text-xs text-muted-foreground">
-              ({pressSecretary.approvalRating}% approval)
-            </Text>
-          </View>
-        )}
+        <View className="flex-row items-center gap-2">
+          <User className="h-4 w-4 text-muted-foreground" />
+          <Text className="text-xl">{game.presName}</Text>
+        </View>
 
-        {president && (
+        <View className="flex-col gap-2">
           <View className="flex-row items-center gap-2">
-            <Award className="h-3.5 w-3.5 text-muted-foreground" />
-            <Text className="text-sm">President {president.name}</Text>
-            <Text className="text-xs text-muted-foreground">
-              ({president.approvalRating}% approval)
+            <Award className="h-2 w-2 text-muted-foreground" />
+            <Text>President {game.presName}</Text>
+          </View>
+          <View className="flex-row items-center gap-2">
+            <PoliticalLeaningBadge politicalLeaning={game.presParty} />
+            <Text className="text-sm text-muted-foreground">
+              ({game.presApprovalRating}% approval)
             </Text>
           </View>
-        )}
+        </View>
       </CardContent>
 
-      <CardFooter className="flex-row justify-between items-center p-3 bg-muted/30 border-t">
+      <CardFooter className="flex-row justify-between items-center p-3 bg-muted/30 border-t border-border">
         <View className="flex-row items-center">
           <Clock className="h-3 w-3 mr-1 text-xs text-muted-foreground" />
           <View>
@@ -182,10 +169,4 @@ function GameSaveCard({
   );
 }
 
-const enhance = withObservables(["game"], ({ game }) => ({
-  game,
-  pressSecretaries: game.pressSecretaries.observe(),
-  presidents: game.presidents.observe(),
-}));
-
-export default enhance(GameSaveCard);
+export default GameSaveCard;

@@ -8,7 +8,6 @@ import ParallaxScrollView from "~/components/ParallaxScrollView";
 import CabinetStateCard from "~/components/tab-state/CabinetStateCard";
 import MediaStateCard from "~/components/tab-state/MediaStateCard";
 import PresidentStateCard from "~/components/tab-state/PresidentStateCard";
-import PressSecretaryStateCard from "~/components/tab-state/PressSecretaryStateCard";
 import SubgroupState from "~/components/tab-state/SubgroupState";
 
 export default function StateScreen() {
@@ -53,7 +52,6 @@ export default function StateScreen() {
         </TabsList>
 
         <TabsContent value="admin" className="mt-4 gap-4">
-          <PressSecretaryStateCard gameId={currentGameId} />
           <PresidentStateCard gameId={currentGameId} />
           <CabinetStateCard gameId={currentGameId} />
         </TabsContent>

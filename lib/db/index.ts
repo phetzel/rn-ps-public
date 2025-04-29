@@ -13,8 +13,6 @@ import {
   Publication,
   Situation,
   SubgroupApproval,
-  PressSecretary,
-  President,
   PressExchange,
 } from "./models";
 
@@ -37,8 +35,6 @@ export const database = new Database({
     Publication,
     Journalist,
     SubgroupApproval,
-    PressSecretary,
-    President,
     Situation,
     PressExchange,
   ],

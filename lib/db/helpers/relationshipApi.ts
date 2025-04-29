@@ -2,33 +2,28 @@ import { Q } from "@nozbe/watermelondb";
 import { database } from "~/lib/db";
 
 import {
-  President,
+  Game,
   CabinetMember,
   Publication,
   Journalist,
   SubgroupApproval,
-  PressSecretary,
 } from "~/lib/db/models";
 import { RelationshipSnapshot } from "~/types";
+
 export async function updateRelationships(
-  president: President,
+  game: Game,
   cabinetMembers: CabinetMember[],
   publications: Publication[],
   journalists: Journalist[],
   subgroupApprovals: SubgroupApproval[],
-  pressSecretary: PressSecretary,
   impacts: RelationshipSnapshot
 ) {
   return await database.write(async () => {
     // Update president
-    await president.update((p) => {
-      p.approvalRating = Math.max(
+    await game.update((g) => {
+      g.presPsRelationship = Math.max(
         0,
-        Math.min(100, p.approvalRating + impacts.president.approvalRating)
-      );
-      p.psRelationship = Math.max(
-        0,
-        Math.min(100, p.psRelationship + impacts.president.psRelationship)
+        Math.min(100, g.presPsRelationship + impacts.president.psRelationship)
       );
     });
 
@@ -91,20 +86,5 @@ export async function updateRelationships(
         });
       }
     }
-
-    // Update press secretary
-    // await pressSecretary.update((ps) => {
-    //   ps.approvalRating = Math.max(
-    //     0,
-    //     Math.min(100, ps.approvalRating + impacts.pressSecretary.approvalRating)
-    //   );
-    //   ps.credibility = Math.max(
-    //     0,
-    //     Math.min(
-    //       100,
-    //       Number(ps.credibility) + impacts.pressSecretary.credibility
-    //     )
-    //   );
-    // });
   });
 }
