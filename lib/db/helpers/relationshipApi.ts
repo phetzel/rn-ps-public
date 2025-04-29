@@ -44,31 +44,14 @@ export async function updateRelationships(
       }
     }
 
-    // Update publications
-    for (const pub of publications) {
-      const impact = impacts.publications[pub.id];
-      if (impact) {
-        await pub.update((p) => {
-          p.approvalRating = Math.max(
-            0,
-            Math.min(100, p.approvalRating + impact.approvalRating)
-          );
-        });
-      }
-    }
-
     // Update journalists
     for (const journalist of journalists) {
       const impact = impacts.journalists[journalist.id];
       if (impact) {
         await journalist.update((j) => {
-          j.reputation = Math.max(
+          j.psRelationship = Math.max(
             0,
-            Math.min(100, j.reputation + impact.reputation)
-          );
-          j.relationship = Math.max(
-            0,
-            Math.min(100, j.relationship + impact.relationship)
+            Math.min(100, j.psRelationship + impact.psRelationship)
           );
         });
       }

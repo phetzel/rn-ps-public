@@ -37,17 +37,10 @@ export const relationshipSnapshotSchema = z.object({
       psRelationship: z.number(),
     })
   ),
-  publications: z.record(
-    z.string(),
-    z.object({
-      approvalRating: z.number(),
-    })
-  ),
   journalists: z.record(
     z.string(),
     z.object({
-      reputation: z.number(),
-      relationship: z.number(),
+      psRelationship: z.number(),
     })
   ),
   subgroups: z.record(

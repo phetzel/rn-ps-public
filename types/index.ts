@@ -95,6 +95,31 @@ export enum SubgroupKey {
   FinancialMarket = "financial_market",
 }
 
+// Static Data Types
+export enum PublicationStaticId {
+  LibPrimary = "lib_primary",
+  ConPrimary = "con_primary",
+  IndependentPrimary = "independent_primary",
+}
+
+export interface StaticPublication {
+  name: string;
+  politicalLeaning: PoliticalLeaning;
+}
+
+export enum JournalistStaticId {
+  LibPrimaryFirst = "lib_primary_first",
+  LibPrimarySecond = "lib_primary_second",
+  ConPrimaryFirst = "con_primary_first",
+  ConPrimarySecond = "con_primary_second",
+  IndependentPrimaryFirst = "independent_primary_first",
+}
+
+export interface StaticJournalist {
+  publicationStaticId: PublicationStaticId;
+  name: string;
+}
+
 // Press Exchange Types
 export interface ExchangeImpact {
   weight: number;
@@ -153,15 +178,9 @@ export interface RelationshipSnapshot {
       psRelationship: number;
     };
   };
-  publications: {
-    [publicationId: string]: {
-      approvalRating: number;
-    };
-  };
   journalists: {
     [journalistId: string]: {
-      reputation: number;
-      relationship: number;
+      psRelationship: number;
     };
   };
   subgroups: {

@@ -22,7 +22,6 @@ export const myAppSchema = appSchema({
     }),
 
     // Politicians
-
     tableSchema({
       name: "cabinet_members",
       columns: [
@@ -43,10 +42,7 @@ export const myAppSchema = appSchema({
       name: "publications",
       columns: [
         { name: "game_id", type: "string", isIndexed: true },
-        { name: "name", type: "string" },
-        { name: "political_leaning", type: "string" },
-        { name: "reach", type: "number" },
-        { name: "approval_rating", type: "number" },
+        { name: "static_id", type: "string", isIndexed: true },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
@@ -56,12 +52,8 @@ export const myAppSchema = appSchema({
       columns: [
         { name: "game_id", type: "string", isIndexed: true },
         { name: "publication_id", type: "string", isIndexed: true },
-        { name: "name", type: "string" },
-        { name: "bias", type: "string", isOptional: true },
-        { name: "aggressiveness", type: "number" },
-        { name: "reputation", type: "number" },
+        { name: "static_id", type: "string", isIndexed: true },
         { name: "ps_relationship", type: "number" },
-        { name: "is_active", type: "boolean" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],

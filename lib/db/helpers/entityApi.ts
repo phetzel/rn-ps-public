@@ -32,9 +32,7 @@ export async function fetchPublicationsForGame(
 export async function fetchActiveJournalistsForGame(
   gameId: string
 ): Promise<Journalist[]> {
-  return await journalistCollection
-    .query(Q.where("game_id", gameId), Q.where("is_active", true))
-    .fetch();
+  return await journalistCollection.query(Q.where("game_id", gameId)).fetch();
 }
 
 export async function fetchJournalist(

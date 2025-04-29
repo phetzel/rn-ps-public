@@ -30,14 +30,17 @@ const PublicationStateItem = ({
   const formatPoliticalLeaning = (leaning: PoliticalLeaning): string => {
     return leaning.charAt(0).toUpperCase() + leaning.slice(1);
   };
+
+  const pubStaticData = publication.staticData;
+
   return (
     <AccordionItem key={publication.id} value={publication.id}>
       <AccordionTrigger className="py-3">
         <View className="flex flex-col items-start text-left">
           <View className="flex-row items-center gap-2">
-            <Text className="font-medium">{publication.name}</Text>
+            <Text className="font-medium">{pubStaticData.name}</Text>
             <PoliticalLeaningBadge
-              politicalLeaning={publication.politicalLeaning}
+              politicalLeaning={pubStaticData.politicalLeaning}
             />
           </View>
         </View>
@@ -46,18 +49,7 @@ const PublicationStateItem = ({
       {/* Content */}
       <AccordionContent>
         <View className="gap-4">
-          <View className="gap-2">
-            <View className="flex-row justify-between items-center">
-              <View className="flex-row items-center gap-1.5">
-                <TrendingUp className="h-3.5 w-3.5 text-muted-foreground" />
-                <Text className="text-sm">Reach</Text>
-              </View>
-              <Text className="text-sm font-medium">{publication.reach}%</Text>
-            </View>
-            <Progress value={publication.reach} className="h-2" />
-          </View>
-
-          <View className="gap-2">
+          {/* <View className="gap-2">
             <View className="flex-row justify-between items-center">
               <View className="flex-row items-center gap-2">
                 <Users className="h-3.5 w-3.5 text-muted-foreground" />
@@ -70,54 +62,42 @@ const PublicationStateItem = ({
             <Progress value={publication.approvalRating} className="h-2" />
           </View>
 
-          <Separator className="mt-2" />
+          <Separator className="mt-2" /> */}
 
           {/* Journalists */}
           {journalists.length > 0 && (
             <View className="gap-2">
               <Text className="font-medium">Journalists</Text>
 
-              {journalists.map((journalist, idx) => (
-                <View key={journalist.id} className="gap-2">
-                  <View>
-                    <Text className="text-sm font-medium">
-                      {journalist.name}
-                    </Text>
-                    {journalist.bias && (
-                      <Text className="text-xs text-muted-foreground">
-                        {formatPoliticalLeaning(journalist.bias)} Bias
+              {journalists.map((journalist, idx) => {
+                const journoStaticData = journalist.staticData;
+                return (
+                  <View key={journalist.id} className="gap-2">
+                    <View>
+                      <Text className="text-sm font-medium">
+                        {journoStaticData.name}
                       </Text>
+                    </View>
+
+                    <View className="gap-2">
+                      <View className="flex-row justify-between items-center">
+                        <Text className="text-sm">Relationship with You</Text>
+                        <Text className="text-sm font-medium">
+                          {journalist.psRelationship}%
+                        </Text>
+                      </View>
+                      <Progress
+                        value={journalist.psRelationship}
+                        className="h-1.5"
+                      />
+                    </View>
+
+                    {idx !== journalists.length - 1 && (
+                      <Separator className="mt-2" />
                     )}
                   </View>
-
-                  <View className="gap-2">
-                    <View className="flex-row justify-between items-center">
-                      <Text className="text-sm">Reputation</Text>
-                      <Text className="text-sm font-medium">
-                        {journalist.reputation}%
-                      </Text>
-                    </View>
-                    <Progress value={journalist.reputation} className="h-1.5" />
-                  </View>
-
-                  <View className="gap-2">
-                    <View className="flex-row justify-between items-center">
-                      <Text className="text-sm">Relationship with You</Text>
-                      <Text className="text-sm font-medium">
-                        {journalist.relationship}%
-                      </Text>
-                    </View>
-                    <Progress
-                      value={journalist.relationship}
-                      className="h-1.5"
-                    />
-                  </View>
-
-                  {idx !== journalists.length - 1 && (
-                    <Separator className="mt-2" />
-                  )}
-                </View>
-              ))}
+                );
+              })}
             </View>
           )}
         </View>

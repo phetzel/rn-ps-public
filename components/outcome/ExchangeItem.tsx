@@ -28,6 +28,11 @@ function ExchangeItem({
   situation,
   publication,
 }: ExchangeItemProps) {
+  if (!journalist || !publication) return null;
+
+  const journoStaticData = journalist.staticData;
+  const pubStaticData = publication.staticData;
+
   const content = exchange.parseContent;
   const progress = exchange.parseProgress;
 
@@ -40,7 +45,7 @@ function ExchangeItem({
       <CardHeader>
         <View>
           <View className="flex-row items-center gap-2">
-            <CardTitle className="text-lg">{journalist.name}</CardTitle>
+            <CardTitle className="text-lg">{journoStaticData.name}</CardTitle>
             {!wasCalledOn && (
               <MicOff className="h-4 w-4 text-muted-foreground" />
             )}
@@ -48,10 +53,10 @@ function ExchangeItem({
           {publication && (
             <View className="flex-row items-center gap-2">
               <Text className="text-sm text-muted-foreground">
-                {publication.name}
+                {pubStaticData.name}
               </Text>
               <PoliticalLeaningBadge
-                politicalLeaning={publication.politicalLeaning}
+                politicalLeaning={pubStaticData.politicalLeaning}
               />
             </View>
           )}

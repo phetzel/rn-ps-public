@@ -309,14 +309,13 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       const impacts: RelationshipSnapshot = {
         president: { approvalRating: 0, psRelationship: 0 },
         cabinetMembers: {},
-        publications: {},
         journalists: {},
         subgroups: {},
       };
 
       // Create maps for faster entity lookup
       const journalistsMap = Object.fromEntries(
-        journalists.map((j) => [j.id, { reputation: 0, relationship: 0 }])
+        journalists.map((j) => [j.id, { psRelationship: 0 }])
       );
       const cabinetMap = Object.fromEntries(
         cabinetMembers.map((c) => [
@@ -334,7 +333,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       // Assign the maps to our impacts object
       impacts.journalists = journalistsMap;
       impacts.cabinetMembers = cabinetMap;
-      impacts.publications = publicationsMap;
       impacts.subgroups = subgroupsMap;
 
       // 5. Process each question to calculate impacts
@@ -349,7 +347,7 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         for (const historyItem of progress.history) {
           if (historyItem.skipped) {
             // Skipping has a mild negative relationship impact
-            impacts.journalists[journalist.id].relationship -= 1;
+            impacts.journalists[journalist.id].psRelationship -= 1;
             continue;
           }
 
@@ -365,7 +363,7 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
             if (!selectedAnswer) continue;
 
             // Boost journalist relationship for answering their question
-            impacts.journalists[journalist.id].relationship += 1;
+            impacts.journalists[journalist.id].psRelationship += 1;
 
             // Apply impacts from the answer
             if (selectedAnswer.impacts.president) {
@@ -443,18 +441,11 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
             },
           ])
         ),
-        publications: Object.fromEntries(
-          publications.map((pub) => [
-            pub.id,
-            { approvalRating: pub.approvalRating },
-          ])
-        ),
         journalists: Object.fromEntries(
           journalists.map((journalist) => [
             journalist.id,
             {
-              reputation: journalist.reputation,
-              relationship: journalist.relationship,
+              psRelationship: journalist.psRelationship,
             },
           ])
         ),

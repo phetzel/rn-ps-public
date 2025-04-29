@@ -9,13 +9,16 @@ import {
 
 // Types and constants
 import { SUBGROUPS } from "~/lib/constants";
-import { NewGameDetails, GameStatus } from "~/types";
-// Mock Data
 import {
-  DEFAULT_CABINET_MEMBERS,
-  generateMockPublications,
-  generateMockJournalists,
-} from "~/lib/data/mockStateData";
+  NewGameDetails,
+  GameStatus,
+  PublicationStaticId,
+  JournalistStaticId,
+  StaticJournalist,
+} from "~/types";
+// Mock Data
+import { DEFAULT_CABINET_MEMBERS } from "~/lib/data/mockStateData";
+import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
 
 import { Game } from "~/lib/db/models";
 
@@ -26,6 +29,23 @@ export async function fetchGame(gameId: string): Promise<Game | null> {
 export async function createGameWithDetails(
   details: NewGameDetails
 ): Promise<Game> {
+  // Pre-process journalists, grouping them by publicationStaticId
+  const journalistsByPublication = new Map<
+    PublicationStaticId,
+    StaticJournalist[]
+  >();
+  for (const journoData of Object.values(staticJournalists)) {
+    const list =
+      journalistsByPublication.get(journoData.publicationStaticId) || [];
+    list.push(journoData);
+    journalistsByPublication.set(journoData.publicationStaticId, list);
+  }
+  // Find the static ID associated with each StaticJournalist object for later use
+  const journalistStaticIdMap = new Map<StaticJournalist, JournalistStaticId>();
+  for (const [staticId, journoData] of Object.entries(staticJournalists)) {
+    journalistStaticIdMap.set(journoData, staticId as JournalistStaticId);
+  }
+
   return await database.write(async () => {
     // Create the Game
     const newGame = await gamesCollection.create((game) => {
@@ -39,8 +59,9 @@ export async function createGameWithDetails(
       game.presParty = details.presidentParty;
       game.startTimestamp = Math.floor(Date.now() / 1000);
     });
+    const gameId = newGame.id;
 
-    // 3. Create Cabinet Members
+    //Create Cabinet Members
     await Promise.all(
       DEFAULT_CABINET_MEMBERS.map((memberData) =>
         cabinetCollection.create((member) => {
@@ -55,39 +76,37 @@ export async function createGameWithDetails(
       )
     );
 
-    // 4. Create Publications
-    const mockPublicationData = generateMockPublications();
-    const publicationNameIdMap = new Map<string, string>();
-    const createdPublications = await Promise.all(
-      mockPublicationData.map(async (pubData) => {
-        const createdPub = await publicationCollection.create((pub) => {
-          pub.game.set(newGame);
-          pub.name = pubData.name;
-          pub.politicalLeaning = pubData.politicalLeaning;
-          pub.reach = pubData.reach;
-          pub.approvalRating = pubData.approvalRating;
-        });
-        publicationNameIdMap.set(createdPub.name, createdPub.id);
-        return createdPub;
-      })
-    );
+    // Create media
+    for (const [pubStaticId, pubData] of Object.entries(staticPublications)) {
+      // Create Publication DB Record
+      const createdPub = await publicationCollection.create((pub) => {
+        pub.game.id = gameId;
+        pub.staticId = pubStaticId as PublicationStaticId;
+      });
+      const publicationDbId = createdPub.id;
 
-    // 5. Create Journalists
-    const mockJournalistData = generateMockJournalists(createdPublications);
-    await Promise.all(
-      mockJournalistData.map((journoData) =>
-        journalistCollection.create((journalist) => {
-          journalist.game.set(newGame);
-          journalist.publication.set(journoData.publication);
-          journalist.name = journoData.name;
-          journalist.bias = journoData.bias;
-          journalist.aggressiveness = journoData.aggressiveness;
-          journalist.reputation = journoData.reputation;
-          journalist.relationship = journoData.relationship;
-          journalist.isActive = journoData.isActive;
-        })
-      )
-    );
+      const associatedJournalists = journalistsByPublication.get(
+        pubStaticId as PublicationStaticId
+      );
+      if (associatedJournalists && associatedJournalists.length > 0) {
+        for (const journoData of associatedJournalists) {
+          const journalistStaticId = journalistStaticIdMap.get(journoData);
+          if (!journalistStaticId) {
+            console.warn(
+              `Could not find static ID for journalist ${journoData.name}. Skipping.`
+            );
+            continue;
+          }
+
+          await journalistCollection.create((journalist) => {
+            journalist.game.id = gameId;
+            journalist.publication.id = publicationDbId;
+            journalist.staticId = journalistStaticId;
+            journalist.psRelationship = 50;
+          });
+        }
+      }
+    }
 
     // 6. Create Subgroup Approvals
     await Promise.all(

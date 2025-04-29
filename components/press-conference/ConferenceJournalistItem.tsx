@@ -28,7 +28,10 @@ const ConferenceJournalistItem = ({
   publication,
   onSelect,
 }: ConferenceJournalistItemProps) => {
-  if (!journalist) return null;
+  if (!journalist || !publication) return null;
+
+  const journoStaticData = journalist.staticData;
+  const pubStaticData = publication.staticData;
 
   // Determine exchange status from progress
   const exchangeProgress = pressExchange.parseProgress;
@@ -52,13 +55,15 @@ const ConferenceJournalistItem = ({
                 <User className="h-5 w-5 text-primary" />
               </View>
               <View>
-                <Text className="font-medium">{journalist.name}</Text>
+                <Text className="font-medium">{journoStaticData.name}</Text>
                 <View className="flex-row items-center gap-2 mt-1">
-                  {journalist.bias && (
-                    <PoliticalLeaningBadge politicalLeaning={journalist.bias} />
+                  {pubStaticData.politicalLeaning && (
+                    <PoliticalLeaningBadge
+                      politicalLeaning={pubStaticData.politicalLeaning}
+                    />
                   )}
                   <Text className="text-xs text-muted-foreground">
-                    {publication ? publication.name : "Independent"}
+                    {pubStaticData.name}
                   </Text>
                 </View>
               </View>

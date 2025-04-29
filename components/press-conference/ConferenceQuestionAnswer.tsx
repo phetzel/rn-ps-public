@@ -37,7 +37,10 @@ const ConferenceQuestionAnswer = ({
   handleClear,
 }: ConferenceQuestionAnswerProps) => {
   const currentQuestion = pressExchange.currentQuestion;
-  if (!currentQuestion || !journalist) return null;
+  if (!currentQuestion || !journalist || !publication) return null;
+
+  const journoStaticData = journalist.staticData;
+  const pubStaticData = publication.staticData;
 
   const { text, answers } = currentQuestion;
 
@@ -67,14 +70,16 @@ const ConferenceQuestionAnswer = ({
             <MessageSquare className="h-5 w-5 text-primary" />
           </View>
           <View className="gap-2">
-            <CardTitle className="text-base">{journalist.name}</CardTitle>
+            <CardTitle className="text-base">{journoStaticData.name}</CardTitle>
 
             <View className="flex-row items-center gap-2 mb-1">
-              {journalist.bias && (
-                <PoliticalLeaningBadge politicalLeaning={journalist.bias} />
+              {pubStaticData.politicalLeaning && (
+                <PoliticalLeaningBadge
+                  politicalLeaning={pubStaticData.politicalLeaning}
+                />
               )}
               <Text className="text-xs text-muted-foreground">
-                {publication ? publication.name : "Independent"}
+                {pubStaticData.name}
               </Text>
             </View>
           </View>

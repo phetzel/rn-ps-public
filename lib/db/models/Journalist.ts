@@ -14,9 +14,10 @@ import type { Associations } from "@nozbe/watermelondb/Model";
 import type Game from "./Game";
 import type Publication from "./Publication";
 import type PressExchange from "./PressExchange";
+// Data
+import { staticJournalists } from "~/lib/data/staticMedia";
 // Enums
-import type { PoliticalLeaning } from "~/types";
-
+import type { JournalistStaticId, StaticJournalist } from "~/types";
 export default class Journalist extends Model {
   static table = "journalists";
 
@@ -31,16 +32,16 @@ export default class Journalist extends Model {
   publication!: Relation<Publication>;
   @children("press_exchanges") pressExchanges!: Query<PressExchange>;
 
-  @text("name") name!: string;
-  @text("bias") bias!: PoliticalLeaning | null;
-  @field("aggressiveness") aggressiveness!: number;
-  @field("reputation") reputation!: number;
-  @field("ps_relationship") relationship!: number;
-  @field("is_active") isActive!: boolean;
+  @text("static_id") staticId!: JournalistStaticId;
+  @field("ps_relationship") psRelationship!: number;
 
   @field("game_id") game_id!: string;
   @field("publication_id") publication_id!: string;
 
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
+
+  get staticData(): StaticJournalist {
+    return staticJournalists[this.staticId];
+  }
 }

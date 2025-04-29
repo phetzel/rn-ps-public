@@ -52,9 +52,7 @@ export function observeCabinetMembers(
 }
 
 export function observePublications(gameId: string): Observable<Publication[]> {
-  return publicationCollection
-    .query(Q.where("game_id", gameId), Q.sortBy("name", Q.asc))
-    .observe();
+  return publicationCollection.query(Q.where("game_id", gameId)).observe();
 }
 
 export function observePublicationForJournalistId(
