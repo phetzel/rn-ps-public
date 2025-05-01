@@ -11,11 +11,6 @@ export enum LevelStatus {
   Completed = "completed",
 }
 
-export interface ActiveSituationInfo {
-  id: string;
-  status: SituationStatus;
-}
-
 export enum SituationType {
   Domestic = "domestic",
   Foreign = "foreign",
@@ -25,28 +20,20 @@ export enum SituationType {
   PublicSentiment = "public_sentiment",
 }
 
-export enum SituationStatus {
-  Active = "active",
-  Completed = "completed",
-}
-
 export interface Preference {
   weight: number;
   rationale: string; // explanation for the briefing UI
 }
 
-export interface StagePreferences {
+export interface SituationPreferences {
   president?: Preference;
   cabinet?: {
     [key in CabinetStaticId]?: Preference;
   };
 }
 
-export interface SituationProgress {
-  stage: number;
-  preferences?: {
-    [stageNumber: number]: StagePreferences;
-  };
+export interface SituationContent {
+  preferences?: SituationPreferences;
 }
 
 export enum PoliticalParty {
@@ -203,8 +190,7 @@ export interface NewSituationData {
   type: SituationType;
   title: string;
   description: string;
-  status: SituationStatus;
-  progress: string | null;
+  content: string;
 }
 
 // Journalist Exchange Types

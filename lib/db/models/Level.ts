@@ -14,23 +14,15 @@ import type { Associations } from "@nozbe/watermelondb/Model"; // Import for cla
 import type Game from "./Game";
 import type Situation from "./Situation";
 import type PressExchange from "./PressExchange";
-import {
-  type LevelStatus,
-  SituationStatus,
-  type ActiveSituationInfo,
-  type OutcomeSnapshotType,
-} from "~/types";
-import {
-  levelActiveSituationsSchema,
-  outcomeSnapshotSchema,
-} from "~/lib/schemas";
+import { type LevelStatus, type OutcomeSnapshotType } from "~/types";
+import { outcomeSnapshotSchema } from "~/lib/schemas";
 
 export default class Level extends Model {
   static table = "levels";
 
   static associations: Associations = {
     games: { type: "belongs_to", key: "game_id" },
-    situations: { type: "has_many", foreignKey: "start_level_id" },
+    situations: { type: "has_many", foreignKey: "level_id" },
     press_exchanges: { type: "has_many", foreignKey: "level_id" },
   };
 
@@ -41,7 +33,6 @@ export default class Level extends Model {
   @field("year") year!: number;
   @field("month") month!: number;
   @text("status") status!: LevelStatus;
-  @text("active_situations") activeSituations!: string | null;
   @text("outcome_snapshot") outcomeSnapshot!: string | null;
 
   @field("game_id") game_id!: string;
@@ -50,56 +41,6 @@ export default class Level extends Model {
   @readonly @date("updated_at") updatedAt!: Date;
 
   // Actions
-  // --- Active Situations ---
-  get parseActiveSituations(): ActiveSituationInfo[] | null {
-    if (!this.activeSituations) {
-      return null;
-    }
-
-    try {
-      const parsedData = JSON.parse(this.activeSituations);
-      const validationResult =
-        levelActiveSituationsSchema.safeParse(parsedData);
-
-      if (!validationResult.success) {
-        console.warn(
-          "Level.activeSituations getter: Invalid data structure found in DB:",
-          validationResult.error.format()
-        );
-        return null;
-      }
-      return validationResult.data;
-    } catch (e) {
-      console.error(`Error parsing Level ${this.id} activeSituationsJson:`, e);
-      console.error("Invalid JSON string:", this.activeSituations);
-      return null;
-    }
-  }
-
-  @writer async updateActiveSituations(data: ActiveSituationInfo[] | null) {
-    if (data === null) {
-      await this.update((level) => {
-        level.activeSituations = null;
-      });
-      return;
-    }
-
-    const validationResult = levelActiveSituationsSchema.safeParse(data);
-    if (!validationResult.success) {
-      console.error(
-        "Invalid ActiveSituationInfo data:",
-        validationResult.error.format()
-      );
-      throw new Error(
-        `Invalid data structure for Level.activeSituations: ${validationResult.error.message}`
-      );
-    }
-
-    await this.update((level) => {
-      level.activeSituations = JSON.stringify(validationResult.data);
-    });
-  }
-
   // --- Outcome Snapshot ---
   get parseOutcomeSnapshot(): OutcomeSnapshotType | null {
     if (!this.outcomeSnapshot) {

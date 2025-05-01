@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CabinetStaticId, SituationStatus, PoliticalParty } from "~/types";
+import { CabinetStaticId, PoliticalParty } from "~/types";
 
 // Form Schemas
 // Create Game Schema
@@ -19,12 +19,6 @@ export type CreateGameFormData = z.infer<typeof createGameSchema>;
 
 // Model JSON Schemas
 // Level Schemas
-export const activeSituationInfoSchema = z.object({
-  id: z.string(),
-  status: z.nativeEnum(SituationStatus),
-});
-export const levelActiveSituationsSchema = z.array(activeSituationInfoSchema);
-
 export const relationshipSnapshotSchema = z.object({
   president: z.object({
     approvalRating: z.number(),
@@ -62,14 +56,13 @@ export const preferenceSchema = z.object({
   rationale: z.string(),
 });
 
-export const stagePreferencesSchema = z.object({
+export const situationPreferencesSchema = z.object({
   president: preferenceSchema.optional(),
   cabinet: z.record(z.nativeEnum(CabinetStaticId), preferenceSchema).optional(),
 });
 
-export const situationProgressSchema = z.object({
-  stage: z.number(),
-  preferences: z.record(z.coerce.number(), stagePreferencesSchema).optional(),
+export const situationContentSchema = z.object({
+  preferences: situationPreferencesSchema.optional(),
 });
 
 // Question Data Schema

@@ -2,13 +2,13 @@ import React from "react";
 import { FlatList, View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeActiveSituationsForGame } from "~/lib/db/helpers/observations";
+import { observeSituationsByLevelId } from "~/lib/db/helpers/observations";
 import { Situation } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 import SituationCard from "./SituationCard";
 
 interface ActiveSituationsListProps {
-  gameId: string;
+  levelId: string;
   situations: Situation[];
 }
 
@@ -38,8 +38,8 @@ const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
-  situations: observeActiveSituationsForGame(gameId),
+const enhance = withObservables(["levelId"], ({ levelId }) => ({
+  situations: observeSituationsByLevelId(levelId),
 }));
 
 export default enhance(ActiveSituationsList);

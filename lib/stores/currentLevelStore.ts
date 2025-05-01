@@ -11,7 +11,7 @@ import {
   createPressExchangesForConference,
   fetchPressExchangesForLevel,
   // Situation API
-  fetchActiveSituationsForGame,
+  fetchSituationsByLevelId,
   fetchSituationById,
   createSituationsForLevel,
   // Journalist API
@@ -32,7 +32,6 @@ import {
 import { mockSituationData } from "~/lib/data/mockSituationData";
 import { QUESTIONS_PER_LEVEL } from "~/lib/constants";
 import {
-  ActiveSituationInfo,
   LevelStatus,
   RelationshipSnapshot,
   OutcomeSnapshotType,
@@ -135,16 +134,10 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
 
       try {
         await game.advanceMonth();
-        // console.log("game", game);
 
         const newLevel = await createLevel(game);
-        // console.log("newLevel", newLevel);
 
-        // 3. Fetch active situations for the game
-        const ongoingSituations = await fetchActiveSituationsForGame(game.id);
-        // console.log("ongoingSituations", ongoingSituations);
-
-        // 4. Select random mock situations for the new level
+        // Select random mock situations for the new level
         const newSituations = [...mockSituationData]
           .sort(() => 0.5 - Math.random())
           .slice(0, 2);
@@ -154,14 +147,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
           newLevel,
           newSituations
         );
-        // console.log("createdSituations", createdSituations);
-
-        const activeSituations: ActiveSituationInfo[] = [
-          ...ongoingSituations,
-          ...createdSituations,
-        ];
-        // console.log("activeSituations", activeSituations);
-        await newLevel.updateActiveSituations(activeSituations);
 
         if (newLevel) {
           set({ currentLevelId: newLevel.id, isLoading: false, error: null });
@@ -215,15 +200,13 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
 
     // --- Press Conference Progression ---
     generateExchanges: async ({ level }: { level: Level }) => {
-      // Get Situations Info
-      const activeSituationsInfo = level.parseActiveSituations;
-      if (!activeSituationsInfo || activeSituationsInfo.length === 0) {
-        throw new Error("No active situations found for this level");
+      // Fetch situations associated with *this* level
+      const situations = await fetchSituationsByLevelId(level.id);
+
+      if (!situations || situations.length === 0) {
+        console.warn(`No situations found for level ${level.id}`);
+        return [];
       }
-      const situationPromises = activeSituationsInfo.map(
-        async (info) => await fetchSituationById(info.id)
-      );
-      const situations = await Promise.all(situationPromises);
 
       // Get Journalists Info
       const journalists = await fetchActiveJournalistsForGame(level.game_id);

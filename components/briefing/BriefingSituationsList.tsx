@@ -5,7 +5,7 @@ import { useRouter } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
 
 import {
-  observeActiveSituationsForGame,
+  observeSituationsByLevelId,
   observeLevel,
 } from "~/lib/db/helpers/observations";
 import { Situation, Level } from "~/lib/db/models";
@@ -105,12 +105,9 @@ const BriefingSituationsList = ({
   );
 };
 
-const enhance = withObservables(
-  ["gameId", "levelId"],
-  ({ gameId, levelId }) => ({
-    situations: observeActiveSituationsForGame(gameId),
-    level: observeLevel(levelId),
-  })
-);
+const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
+  situations: observeSituationsByLevelId(levelId),
+  level: observeLevel(levelId),
+}));
 
 export default enhance(BriefingSituationsList);

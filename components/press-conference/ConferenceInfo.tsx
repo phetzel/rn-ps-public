@@ -1,19 +1,19 @@
 import { View, ScrollView } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeActiveSituationsForGame } from "~/lib/db/helpers/observations";
+import { observeSituationsByLevelId } from "~/lib/db/helpers/observations";
 import { Situation } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 
 import ConferenceSituationInfo from "~/components/press-conference/ConferenceInfoSituationItem";
 
 interface ConferenceInfoProps {
-  gameId: string;
+  levelId: string;
   situations: Situation[];
 }
 
-const ConferenceInfo = ({ gameId, situations }: ConferenceInfoProps) => {
-  if (!gameId) return null;
+const ConferenceInfo = ({ levelId, situations }: ConferenceInfoProps) => {
+  if (!levelId) return null;
 
   return (
     <View className="gap-4">
@@ -28,8 +28,8 @@ const ConferenceInfo = ({ gameId, situations }: ConferenceInfoProps) => {
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
-  situations: observeActiveSituationsForGame(gameId),
+const enhance = withObservables(["levelId"], ({ levelId }) => ({
+  situations: observeSituationsByLevelId(levelId),
 }));
 
 export default enhance(ConferenceInfo);

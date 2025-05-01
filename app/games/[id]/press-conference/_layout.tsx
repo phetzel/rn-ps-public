@@ -12,7 +12,6 @@ import {
 import ConferenceInfo from "~/components/press-conference/ConferenceInfo";
 import { HeaderBackIcon } from "~/components/HeaderBackIcon";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { Info } from "~/lib/icons/Info";
 import { cn } from "~/lib/utils";
 
@@ -28,8 +27,7 @@ export default function PressConferenceLayout() {
   };
 
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
-  const currentGameId = useGameManagerStore((state) => state.currentGameId);
-  if (!currentLevelId || !currentGameId) {
+  if (!currentLevelId) {
     return null;
   }
 
@@ -96,7 +94,7 @@ export default function PressConferenceLayout() {
               animatedPosition={animatedPosition}
             />
           )}
-          <ConferenceInfo gameId={currentGameId} />
+          <ConferenceInfo levelId={currentLevelId} />
         </BottomSheetView>
       </BottomSheetModal>
     </>

@@ -24,8 +24,6 @@ import {
   Level,
   PressExchange,
 } from "~/lib/db/models";
-// Import types
-import { SituationStatus } from "~/types";
 
 export function observeAllGames(): Observable<Game[]> {
   return gamesCollection.query(Q.sortBy("updated_at", Q.desc)).observe();
@@ -87,15 +85,10 @@ export function observeJournalist(
   return journalistCollection.findAndObserve(journalistId);
 }
 
-export function observeActiveSituationsForGame(
-  gameId: string
+export function observeSituationsByLevelId(
+  levelId: string
 ): Observable<Situation[]> {
-  return situationCollection
-    .query(
-      Q.where("game_id", gameId),
-      Q.where("status", SituationStatus.Active)
-    )
-    .observe();
+  return situationCollection.query(Q.where("level_id", levelId)).observe();
 }
 
 export function observeLevel(levelId: string): Observable<Level> {

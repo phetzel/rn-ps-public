@@ -22,10 +22,10 @@ import {
 
 interface SituationCardProps {
   situation: Situation;
-  startLevel: Level;
+  level: Level;
 }
 
-const SituationCard = ({ situation, startLevel }: SituationCardProps) => {
+const SituationCard = ({ situation, level }: SituationCardProps) => {
   const Icon = getSituationIcon(situation.type);
 
   return (
@@ -60,7 +60,7 @@ const SituationCard = ({ situation, startLevel }: SituationCardProps) => {
           <View>
             <Text className="text-xs text-muted-foreground">Started:</Text>
             <Text className="text-xs text-muted-foreground">
-              Month {startLevel?.month} Year {startLevel?.year}
+              Month {level?.month} Year {level?.year}
             </Text>
           </View>
         </View>
@@ -71,7 +71,7 @@ const SituationCard = ({ situation, startLevel }: SituationCardProps) => {
 
 const enhance = withObservables(["situation"], ({ situation }) => ({
   situation,
-  startLevel: situation.startLevel.observe(),
+  level: situation.level.observe(),
 }));
 
 export default enhance(SituationCard);

@@ -13,17 +13,16 @@ interface ConferenceInfoSituationItemProps {
 const ConferenceInfoSituationItem = ({
   situation,
 }: ConferenceInfoSituationItemProps) => {
-  const progress = situation.parseProgress;
+  const content = situation.parseContent;
 
-  if (!progress || !progress.preferences) {
+  if (!content || !content.preferences) {
     return null;
   }
 
-  const { stage, preferences } = progress;
-  const stagePreferences = preferences[stage];
+  const contentPreferences = content.preferences;
 
-  const presidentPreference = stagePreferences.president;
-  const cabinetPreferences = stagePreferences.cabinet;
+  const presidentPreference = contentPreferences.president;
+  const cabinetPreferences = contentPreferences.cabinet;
 
   return (
     <View className="gap-2 mb-6 px-4">

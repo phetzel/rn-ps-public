@@ -51,18 +51,15 @@ const BriefingSituationItem = ({
   const [isCabinetExpanded, setIsCabinetExpanded] = useState<boolean>(false);
 
   // Get preferences from the situation progress
-  const progress = situation.parseProgress;
+  const content = situation.parseContent;
 
-  if (!progress || !progress.preferences) {
+  if (!content || !content.preferences) {
     return null;
   }
 
-  const { stage, preferences } = progress;
-  const stagePreferences = preferences[stage];
-
-  // This needs to be adjusted based on your actual data structure
-  const presidentPreference = stagePreferences.president;
-  const cabinetPreferences = stagePreferences.cabinet;
+  const contentPreferences = content.preferences;
+  const presidentPreference = contentPreferences.president;
+  const cabinetPreferences = contentPreferences.cabinet;
 
   const Icon = getSituationIcon(situation.type);
 
