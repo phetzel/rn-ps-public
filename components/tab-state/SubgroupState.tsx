@@ -1,7 +1,6 @@
 import { withObservables } from "@nozbe/watermelondb/react";
 import { View } from "react-native";
 
-import { SUBGROUP_DISPLAY_NAMES } from "~/lib/constants";
 import { observeSubgroupApprovals } from "~/lib/db/helpers";
 import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
 import { Briefcase } from "~/lib/icons/Briefcase";
@@ -15,17 +14,20 @@ import { SubgroupCategory } from "~/types";
 interface SubgroupStateProps {
   subgroupApprovals: SubgroupApproval[];
 }
+
 const SubgroupState = ({ subgroupApprovals }: SubgroupStateProps) => {
   // Group subgroups by category
   const groupedApprovals = subgroupApprovals.reduce<
-    Record<SubgroupCategory, SubgroupApproval[]>
+    Record<string, SubgroupApproval[]> // Key is category string
   >((acc, approval) => {
-    if (!acc[approval.category as SubgroupCategory]) {
-      acc[approval.category as SubgroupCategory] = [];
+    const category = approval.staticData.category; // Get category from static data
+    if (!acc[category]) {
+      acc[category] = [];
     }
-    acc[approval.category as SubgroupCategory].push(approval);
+    acc[category].push(approval);
     return acc;
-  }, {} as Record<SubgroupCategory, SubgroupApproval[]>);
+    // Initialize with an empty object
+  }, {} as Record<string, SubgroupApproval[]>);
 
   // Create an ordered list of categories
   const categories = Object.keys(groupedApprovals) as SubgroupCategory[];
@@ -55,19 +57,23 @@ const SubgroupState = ({ subgroupApprovals }: SubgroupStateProps) => {
           </CardHeader>
           <CardContent>
             <View className="gap-4">
-              {groupedApprovals[category].map((subgroup, idx) => (
-                <View key={subgroup.id} className="gap-2">
-                  <View className="flex-row justify-between items-center">
-                    <Text className="text-sm font-medium">
-                      {SUBGROUP_DISPLAY_NAMES[subgroup.subgroupKey]}
-                    </Text>
-                    <Text text-sm font-medium>
-                      {subgroup.approvalRating}%
-                    </Text>
+              {groupedApprovals[category].map((subgroup) => {
+                // Get static data for each subgroup
+                const subgroupStaticData = subgroup.staticData;
+                return (
+                  <View key={subgroup.id} className="gap-2">
+                    <View className="flex-row justify-between items-center">
+                      <Text className="text-sm font-medium">
+                        {subgroupStaticData.name}
+                      </Text>
+                      <Text text-sm font-medium>
+                        {subgroup.approvalRating}%
+                      </Text>
+                    </View>
+                    <Progress value={subgroup.approvalRating} className="h-2" />
                   </View>
-                  <Progress value={subgroup.approvalRating} className="h-2" />
-                </View>
-              ))}
+                );
+              })}
             </View>
           </CardContent>
         </Card>

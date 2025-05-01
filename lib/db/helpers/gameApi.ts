@@ -8,19 +8,27 @@ import {
 } from "./collections";
 
 // Types and constants
-import { SUBGROUPS } from "~/lib/constants";
 import {
   NewGameDetails,
   GameStatus,
   PublicationStaticId,
   JournalistStaticId,
   StaticJournalist,
+  CabinetStaticId,
+  SubgroupStaticId,
+  PoliticalParty,
+  PoliticalLeaning,
 } from "~/types";
-// Mock Data
-import { DEFAULT_CABINET_MEMBERS } from "~/lib/data/mockStateData";
+// Data
 import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
-
+import {
+  staticCabinetMembers,
+  staticSubgroups,
+} from "~/lib/data/staticPolitics";
+// DB Models
 import { Game } from "~/lib/db/models";
+// Utils
+import { generateCabinetMemberName } from "~/lib/utils";
 
 export async function fetchGame(gameId: string): Promise<Game | null> {
   return await gamesCollection.find(gameId);
@@ -61,20 +69,53 @@ export async function createGameWithDetails(
     });
     const gameId = newGame.id;
 
-    //Create Cabinet Members
-    await Promise.all(
-      DEFAULT_CABINET_MEMBERS.map((memberData) =>
-        cabinetCollection.create((member) => {
-          member.game.set(newGame);
-          member.role = memberData.role;
-          member.name = memberData.name;
-          member.influenceArea = memberData.influenceArea;
-          member.approvalRating = memberData.approvalRating;
-          member.psRelationship = memberData.psRelationship;
-          member.isActive = memberData.isActive;
-        })
-      )
-    );
+    // Create Political entities
+    for (const [role, cabinetData] of Object.entries(staticCabinetMembers)) {
+      await cabinetCollection.create((member) => {
+        member.game.id = gameId;
+        member.staticId = role as CabinetStaticId;
+        member.name = generateCabinetMemberName(role as CabinetStaticId);
+        member.approvalRating = 50;
+        member.psRelationship = 50;
+        member.isActive = true;
+      });
+    }
+
+    for (const [key, subData] of Object.entries(staticSubgroups)) {
+      let initialApproval = 50;
+      if (subData.defaultPoliticalLeaning) {
+        const presidentParty = details.presidentParty;
+        const subgroupLeaning = subData.defaultPoliticalLeaning;
+
+        if (
+          presidentParty === PoliticalParty.Republican &&
+          subgroupLeaning === PoliticalLeaning.Liberal
+        ) {
+          initialApproval = 30;
+        } else if (
+          presidentParty === PoliticalParty.Democrat &&
+          subgroupLeaning === PoliticalLeaning.Conservative
+        ) {
+          initialApproval = 30;
+        } else if (
+          presidentParty === PoliticalParty.Democrat &&
+          subgroupLeaning === PoliticalLeaning.Liberal
+        ) {
+          initialApproval = 70;
+        } else if (
+          presidentParty === PoliticalParty.Republican &&
+          subgroupLeaning === PoliticalLeaning.Conservative
+        ) {
+          initialApproval = 70;
+        }
+      }
+
+      await subgroupCollection.create((subgroup) => {
+        subgroup.game.id = gameId;
+        subgroup.staticId = key as SubgroupStaticId;
+        subgroup.approvalRating = initialApproval;
+      });
+    }
 
     // Create media
     for (const [pubStaticId, pubData] of Object.entries(staticPublications)) {
@@ -107,18 +148,6 @@ export async function createGameWithDetails(
         }
       }
     }
-
-    // 6. Create Subgroup Approvals
-    await Promise.all(
-      SUBGROUPS.map((sub) =>
-        subgroupCollection.create((subgroup) => {
-          subgroup.game.set(newGame);
-          subgroup.subgroupKey = sub.key;
-          subgroup.category = sub.category;
-          subgroup.approvalRating = 50;
-        })
-      )
-    );
 
     return newGame;
   });

@@ -38,7 +38,7 @@ export interface Preference {
 export interface StagePreferences {
   president?: Preference;
   cabinet?: {
-    [cabinetMember: string]: Preference;
+    [key in CabinetStaticId]?: Preference;
   };
 }
 
@@ -47,24 +47,6 @@ export interface SituationProgress {
   preferences?: {
     [stageNumber: number]: StagePreferences;
   };
-}
-
-export enum CabinetRole {
-  State = "state",
-  Treasury = "treasury",
-  Defense = "defense",
-  Justice = "justice",
-  HHS = "hhs",
-  Homeland = "homeland",
-}
-
-export enum InfluenceArea {
-  ForeignRelations = "foreign_relations",
-  Economy = "economy",
-  Military = "military",
-  Legal = "legal",
-  Health = "health",
-  HomelandSecurity = "homeland_security",
 }
 
 export enum PoliticalParty {
@@ -84,18 +66,32 @@ export enum SubgroupCategory {
   Sector = "sector",
 }
 
-export enum SubgroupKey {
-  LeftWingBase = "left_wing_base",
-  RightWingBase = "right_wing_base",
-  MiddleClass = "middle_class",
-  UpperClass = "upper_class",
-  LowerClass = "lower_class",
-  MilitaryCommunity = "military_community",
-  TechSector = "tech_sector",
-  FinancialMarket = "financial_market",
+// Static Data Types
+export enum CabinetStaticId {
+  State = "state",
+  Treasury = "treasury",
+  Defense = "defense",
+  Justice = "justice",
+  HHS = "hhs",
+  Homeland = "homeland",
 }
 
-// Static Data Types
+export interface StaticCabinetMember {
+  cabinetName: string;
+}
+
+export enum SubgroupStaticId {
+  LeftWingBase = "left_wing_base",
+  RightWingBase = "right_wing_base",
+  IndependentBase = "independent_base",
+}
+
+export interface StaticSubgroup {
+  category: SubgroupCategory;
+  name: string;
+  defaultPoliticalLeaning?: PoliticalLeaning;
+}
+
 export enum PublicationStaticId {
   LibPrimary = "lib_primary",
   ConPrimary = "con_primary",
@@ -184,7 +180,7 @@ export interface RelationshipSnapshot {
     };
   };
   subgroups: {
-    [subgroupKey: string]: {
+    [key in SubgroupStaticId]?: {
       approvalRating: number;
     };
   };

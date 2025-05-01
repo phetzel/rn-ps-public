@@ -21,17 +21,27 @@ export const myAppSchema = appSchema({
       ],
     }),
 
-    // Politicians
+    // Politics
     tableSchema({
       name: "cabinet_members",
       columns: [
         { name: "game_id", type: "string", isIndexed: true },
-        { name: "role", type: "string" },
+        { name: "static_id", type: "string", isIndexed: true },
         { name: "name", type: "string" },
-        { name: "influence_area", type: "string" },
         { name: "approval_rating", type: "number" },
         { name: "ps_relationship", type: "number" },
         { name: "is_active", type: "boolean" },
+        { name: "created_at", type: "number" },
+        { name: "updated_at", type: "number" },
+      ],
+    }),
+
+    tableSchema({
+      name: "subgroup_approvals",
+      columns: [
+        { name: "game_id", type: "string", isIndexed: true },
+        { name: "static_id", type: "string", isIndexed: true },
+        { name: "approval_rating", type: "number" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],
@@ -54,19 +64,6 @@ export const myAppSchema = appSchema({
         { name: "publication_id", type: "string", isIndexed: true },
         { name: "static_id", type: "string", isIndexed: true },
         { name: "ps_relationship", type: "number" },
-        { name: "created_at", type: "number" },
-        { name: "updated_at", type: "number" },
-      ],
-    }),
-
-    // State
-    tableSchema({
-      name: "subgroup_approvals",
-      columns: [
-        { name: "game_id", type: "string", isIndexed: true },
-        { name: "subgroup_key", type: "string", isIndexed: true }, // Index for lookup
-        { name: "approval_rating", type: "number" },
-        { name: "category", type: "string" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],

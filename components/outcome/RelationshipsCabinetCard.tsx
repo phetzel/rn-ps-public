@@ -7,10 +7,9 @@ import { Separator } from "~/components/ui/separator";
 import { Briefcase } from "~/lib/icons/Briefcase";
 
 import ProgressDifference from "~/components/outcome/ProgressDifference";
-import { CABINET_DISPLAY_ROLES } from "~/lib/constants";
 import { observeCabinetMembers } from "~/lib/db/helpers";
 import type { CabinetMember } from "~/lib/db/models";
-import type { OutcomeSnapshotType, CabinetRole } from "~/types";
+import type { OutcomeSnapshotType, CabinetStaticId } from "~/types";
 
 interface RelationshipsCabinetCardProps {
   gameId: string;
@@ -62,9 +61,7 @@ const RelationshipsCabinetCard = ({
             if (cabinetMember) {
               // We found the cabinet member, use their name and role
               displayName = cabinetMember.name;
-              displayRole =
-                CABINET_DISPLAY_ROLES[cabinetMember.role as CabinetRole] ||
-                cabinetMember.role;
+              displayRole = cabinetMember.staticData.cabinetName;
             }
 
             return (

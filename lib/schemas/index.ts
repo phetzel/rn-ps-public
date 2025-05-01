@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CabinetRole, SituationStatus, PoliticalParty } from "~/types";
+import { CabinetStaticId, SituationStatus, PoliticalParty } from "~/types";
 
 // Form Schemas
 // Create Game Schema
@@ -64,7 +64,7 @@ export const preferenceSchema = z.object({
 
 export const stagePreferencesSchema = z.object({
   president: preferenceSchema.optional(),
-  cabinet: z.record(z.nativeEnum(CabinetRole), preferenceSchema).optional(),
+  cabinet: z.record(z.nativeEnum(CabinetStaticId), preferenceSchema).optional(),
 });
 
 export const situationProgressSchema = z.object({

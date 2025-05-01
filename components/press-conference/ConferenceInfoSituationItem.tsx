@@ -2,9 +2,9 @@ import { View } from "react-native";
 
 import { Text } from "~/components/ui/text";
 import { Situation } from "~/lib/db/models";
-import { CABINET_DISPLAY_ROLES } from "~/lib/constants";
 import { getPreferenceIndicator, getPreferenceColor } from "~/lib/utils";
-import { CabinetRole } from "~/types";
+import { CabinetStaticId } from "~/types";
+import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 
 interface ConferenceInfoSituationItemProps {
   situation: Situation;
@@ -52,24 +52,41 @@ const ConferenceInfoSituationItem = ({
           </View>
         )}
 
+        {/* Cabinet Preferences */}
         {cabinetPreferences &&
-          Object.entries(cabinetPreferences).map(([member, pref], idx) => (
-            <View className="gap-2" key={idx}>
-              <View className="flex-row justify-between items-center">
-                <Text className="text-lg font-semibold">
-                  {CABINET_DISPLAY_ROLES[member as CabinetRole]}
-                </Text>
-                <Text
-                  className={`text-sm font-medium ${getPreferenceColor(
-                    pref.weight
-                  )}`}
-                >
-                  {getPreferenceIndicator(pref.weight)}
-                </Text>
+          // Iterate over cabinet preferences using CabinetStaticId as key
+          Object.entries(cabinetPreferences).map(([staticId, pref], idx) => {
+            // Ensure preference exists (due to optional nature in type)
+            if (!pref) return null;
+
+            // Cast the key to CabinetStaticId
+            const cabinetStaticId = staticId as CabinetStaticId;
+
+            // Get the static data using the static ID
+            const cabinetStaticData = staticCabinetMembers[cabinetStaticId];
+            // Fallback if static data isn't found for some reason
+            const cabinetDisplayName =
+              cabinetStaticData?.cabinetName ?? cabinetStaticId;
+
+            return (
+              <View className="gap-2" key={idx}>
+                <View className="flex-row justify-between items-center">
+                  {/* Display name from static data */}
+                  <Text className="text-lg font-semibold">
+                    {cabinetDisplayName}
+                  </Text>
+                  <Text
+                    className={`text-sm font-medium ${getPreferenceColor(
+                      pref.weight
+                    )}`}
+                  >
+                    {getPreferenceIndicator(pref.weight)}
+                  </Text>
+                </View>
+                <Text className="text-sm">{pref.rationale}</Text>
               </View>
-              <Text className="text-sm">{pref.rationale}</Text>
-            </View>
-          ))}
+            );
+          })}
       </View>
     </View>
   );

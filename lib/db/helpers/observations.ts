@@ -39,7 +39,7 @@ export function observeSubgroupApprovals(
   gameId: string
 ): Observable<SubgroupApproval[]> {
   return subgroupCollection
-    .query(Q.where("game_id", gameId), Q.sortBy("category", Q.asc))
+    .query(Q.where("game_id", gameId), Q.sortBy("approval_rating", Q.desc))
     .observe();
 }
 

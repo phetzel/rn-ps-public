@@ -10,8 +10,10 @@ import { Associations } from "@nozbe/watermelondb/Model";
 
 // Models
 import type Game from "./Game";
+// Data
+import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 // Enums
-import type { CabinetRole, InfluenceArea } from "~/types";
+import type { CabinetStaticId, StaticCabinetMember } from "~/types";
 
 export default class CabinetMember extends Model {
   static table = "cabinet_members";
@@ -22,9 +24,8 @@ export default class CabinetMember extends Model {
 
   @relation("games", "game_id") game!: Relation<Game>;
 
-  @text("role") role!: CabinetRole;
+  @text("static_id") staticId!: CabinetStaticId;
   @text("name") name!: string;
-  @text("influence_area") influenceArea!: InfluenceArea;
   @field("approval_rating") approvalRating!: number;
   @field("ps_relationship") psRelationship!: number;
   @field("is_active") isActive!: boolean;
@@ -33,4 +34,8 @@ export default class CabinetMember extends Model {
 
   @readonly @date("created_at") createdAt!: Date;
   @readonly @date("updated_at") updatedAt!: Date;
+
+  get staticData(): StaticCabinetMember {
+    return staticCabinetMembers[this.staticId];
+  }
 }

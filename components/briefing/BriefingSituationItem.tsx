@@ -21,7 +21,6 @@ import { Text } from "~/components/ui/text";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
 import { Situation } from "~/lib/db/models";
-import { CABINET_DISPLAY_ROLES } from "~/lib/constants";
 import {
   getSituationIcon,
   getSituationBadgeVariant,
@@ -29,7 +28,8 @@ import {
   getPreferenceIndicator,
   getPreferenceColor,
 } from "~/lib/utils";
-import { CabinetRole } from "~/types";
+import { CabinetStaticId } from "~/types";
+import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 
 interface BriefingSituationItemProps {
   situation: Situation;
@@ -134,26 +134,35 @@ const BriefingSituationItem = ({
             {isCabinetExpanded && (
               <View className="gap-4">
                 {Object.entries(cabinetPreferences).map(
-                  ([member, pref], idx) => (
-                    <View key={idx} className="gap-2">
-                      <View className="flex-row justify-between items-center">
-                        <View className="flex-1 mr-2">
-                          <Text className="text-sm font-medium capitalize">
-                            {CABINET_DISPLAY_ROLES[member as CabinetRole]}
+                  ([member, pref], idx) => {
+                    const staticId = member as CabinetStaticId;
+
+                    // Now you can safely use staticId to index staticCabinetMembers
+                    const cabinetStaticData = staticCabinetMembers[staticId]; // <-- This lookup should now work without error
+                    const cabinetDisplayName =
+                      cabinetStaticData?.cabinetName ?? staticId;
+
+                    return (
+                      <View key={idx} className="gap-2">
+                        <View className="flex-row justify-between items-center">
+                          <View className="flex-1 mr-2">
+                            <Text className="text-sm font-medium capitalize">
+                              {cabinetDisplayName}
+                            </Text>
+                          </View>
+                          <Text
+                            className={`text-sm font-medium ${getPreferenceColor(
+                              pref.weight
+                            )}`}
+                          >
+                            {getPreferenceIndicator(pref.weight)}
                           </Text>
                         </View>
-                        <Text
-                          className={`text-sm font-medium ${getPreferenceColor(
-                            pref.weight
-                          )}`}
-                        >
-                          {getPreferenceIndicator(pref.weight)}
-                        </Text>
-                      </View>
 
-                      <Text className="text-sm">{pref.rationale}</Text>
-                    </View>
-                  )
+                        <Text className="text-sm">{pref.rationale}</Text>
+                      </View>
+                    );
+                  }
                 )}
               </View>
             )}

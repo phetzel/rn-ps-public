@@ -1,6 +1,8 @@
-import React from "react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { faker } from "@faker-js/faker";
+
+import { CabinetStaticId } from "~/types";
 
 // Icons
 import { AlertCircle } from "~/lib/icons/AlertCircle";
@@ -77,3 +79,24 @@ export const getPreferenceColor = (weight: number): string => {
   if (weight >= -2) return "text-orange-500";
   return "text-red-500";
 };
+
+// Cabinet Helpers
+export function generateCabinetMemberName(staticId: CabinetStaticId): string {
+  const firstName = faker.person.firstName();
+  const lastName = faker.person.lastName();
+  let prefix = "";
+
+  switch (staticId) {
+    case CabinetStaticId.Defense:
+      prefix = "General ";
+      break;
+    case CabinetStaticId.Justice:
+      prefix = "Judge ";
+      break;
+    // Add other cases if needed for other titles
+    // default:
+    //   prefix = ""; // No prefix for other roles
+  }
+
+  return `${prefix}${firstName} ${lastName}`;
+}
