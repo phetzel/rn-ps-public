@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { CabinetStaticId, PoliticalParty } from "~/types";
+import {
+  CabinetStaticId,
+  SubgroupStaticId,
+  JournalistStaticId,
+  PoliticalParty,
+  PreferenceWeight,
+} from "~/types";
 
 // Form Schemas
 // Create Game Schema
@@ -19,6 +25,11 @@ export type CreateGameFormData = z.infer<typeof createGameSchema>;
 
 // Model JSON Schemas
 // Level Schemas
+const cabinetSnapshotShape = Object.fromEntries(
+  Object.values(CabinetStaticId).map((id) => [id, z.string().min(1)])
+) as Record<CabinetStaticId, z.ZodString>;
+export const cabinetSnapshotSchema = z.object(cabinetSnapshotShape);
+
 export const relationshipSnapshotSchema = z.object({
   president: z.object({
     approvalRating: z.number(),
@@ -52,7 +63,7 @@ export const outcomeSnapshotSchema = z.object({
 
 // Situation Progress Schema
 export const preferenceSchema = z.object({
-  weight: z.number(),
+  weight: z.nativeEnum(PreferenceWeight),
   rationale: z.string(),
 });
 
@@ -74,9 +85,15 @@ export const exchangeImpactSchema = z.object({
 
 export const exchangeImpactsSchema = z.object({
   president: exchangeImpactSchema.optional(),
-  cabinet: z.record(z.string(), exchangeImpactSchema).optional(),
-  publications: z.record(z.string(), exchangeImpactSchema).optional(),
-  subgroups: z.record(z.string(), exchangeImpactSchema).optional(),
+  cabinet: z
+    .record(z.nativeEnum(CabinetStaticId), exchangeImpactSchema)
+    .optional(),
+  subgroups: z
+    .record(z.nativeEnum(SubgroupStaticId), exchangeImpactSchema)
+    .optional(),
+  journalists: z
+    .record(z.nativeEnum(JournalistStaticId), exchangeImpactSchema)
+    .optional(),
 });
 
 export const answerSchema = z.object({

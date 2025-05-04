@@ -6,13 +6,15 @@ import { TrendingDown } from "~/lib/icons/TrendingDown";
 import { Minus } from "~/lib/icons/Minus";
 
 interface ImpactItemProps {
-  entity: string;
+  title: string;
+  name: string;
   reaction: string;
   weight: number;
 }
 
 export default function ImpactItem({
-  entity,
+  title,
+  name,
   reaction,
   weight,
 }: ImpactItemProps) {
@@ -31,10 +33,11 @@ export default function ImpactItem({
   }
 
   return (
-    <View className="flex-row justify-between items-start">
+    <View className="flex-row justify-between items-center">
       <View className="flex-1">
-        <Text className="font-medium">{entity}</Text>
-        <Text className="text-sm">{reaction}</Text>
+        <Text className="text-xs text-muted-foreground">{title}</Text>
+        <Text className="font-semibold">{name}</Text>
+        <Text className="text-sm italic">{reaction}</Text>
       </View>
       <View className="flex-row items-center gap-1">
         {icon}

@@ -7,36 +7,23 @@ import {
   fetchLastLevel,
   updateLevelStatus,
   updateRelationships,
+  calculatePressImpactsForLevel,
   // Press Conference API
   createPressExchangesForConference,
   fetchPressExchangesForLevel,
   // Situation API
   fetchSituationsByLevelId,
-  fetchSituationById,
   createSituationsForLevel,
   // Journalist API
   fetchActiveJournalistsForGame,
   // Entity API
-  fetchGameEntities,
+  takeSnapshot,
 } from "~/lib/db/helpers";
-import {
-  Game,
-  Level,
-  Situation,
-  Journalist,
-  CabinetMember,
-  Publication,
-  SubgroupApproval,
-  PressExchange,
-} from "~/lib/db/models";
+
+import { Game, Level, Situation, PressExchange } from "~/lib/db/models";
 import { mockSituationData } from "~/lib/data/mockSituationData";
 import { QUESTIONS_PER_LEVEL } from "~/lib/constants";
-import {
-  LevelStatus,
-  RelationshipSnapshot,
-  OutcomeSnapshotType,
-  ExchangeContent,
-} from "~/types";
+import { LevelStatus, OutcomeSnapshotType, ExchangeContent } from "~/types";
 import { mockExchanges } from "../data/mockQuestionData";
 
 interface CurrentLevelStoreState {
@@ -57,19 +44,6 @@ interface CurrentLevelStoreState {
   progressCurrentLevel: () => Promise<Level | null>;
   generateExchanges: ({ level }: { level: Level }) => Promise<PressExchange[]>;
   applyOutcomes: ({ level }: { level: Level }) => Promise<void>;
-  formatRelationshipSnapshot: ({
-    game,
-    cabinetMembers,
-    publications,
-    journalists,
-    subgroups,
-  }: {
-    game: Game;
-    cabinetMembers: CabinetMember[];
-    publications: Publication[];
-    journalists: Journalist[];
-    subgroups: SubgroupApproval[];
-  }) => RelationshipSnapshot;
 }
 
 export const useCurrentLevelStore = create<CurrentLevelStoreState>(
@@ -268,177 +242,31 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
 
     // --- Outcome Progression ---
     applyOutcomes: async ({ level }: { level: Level }) => {
-      // 1. Fetch all game entities
-      const { game, cabinetMembers, publications, journalists, subgroups } =
-        await fetchGameEntities(level.game_id);
+      // Get the game ID
+      const gameId = level.game_id;
 
-      if (!game) {
-        throw new Error("No president or press secretary found for this game");
-      }
+      // 1. Take initial snapshot
+      const initialSnapshot = await takeSnapshot(gameId);
 
-      // 2. Format the initial relationship snapshot
-      const initialSnapshot = get().formatRelationshipSnapshot({
-        game,
-        cabinetMembers,
-        publications,
-        journalists,
-        subgroups,
-      });
-
-      // 3. Fetch all press exchanges for the level
+      // 2. Fetch all press exchanges for the level
       const pressExchanges = await fetchPressExchangesForLevel(level.id);
 
-      // 4. Initialize impact object with entity maps for easy access
-      const impacts: RelationshipSnapshot = {
-        president: { approvalRating: 0, psRelationship: 0 },
-        cabinetMembers: {},
-        journalists: {},
-        subgroups: {},
-      };
+      // 3. Calculate impacts from exchanges
+      const impacts = await calculatePressImpactsForLevel(level.id);
 
-      // Create maps for faster entity lookup
-      const journalistsMap = Object.fromEntries(
-        journalists.map((j) => [j.id, { psRelationship: 0 }])
-      );
-      const cabinetMap = Object.fromEntries(
-        cabinetMembers.map((c) => [
-          c.id,
-          { approvalRating: 0, psRelationship: 0 },
-        ])
-      );
-      const publicationsMap = Object.fromEntries(
-        publications.map((p) => [p.id, { approvalRating: 0 }])
-      );
-      const subgroupsMap = Object.fromEntries(
-        subgroups.map((s) => [s.id, { approvalRating: 0 }])
-      );
+      // 4. Apply impacts to game entities
+      await updateRelationships(gameId, impacts);
 
-      // Assign the maps to our impacts object
-      impacts.journalists = journalistsMap;
-      impacts.cabinetMembers = cabinetMap;
-      impacts.subgroups = subgroupsMap;
+      // 5. Take final snapshot
+      const finalSnapshot = await takeSnapshot(gameId);
 
-      // 5. Process each question to calculate impacts
-      for (const exchange of pressExchanges) {
-        const journalist = await exchange.journalist.fetch();
-        const content = exchange.parseContent;
-        const progress = exchange.parseProgress;
-
-        if (!content || !progress) continue;
-
-        // Process each answered question in the exchange history
-        for (const historyItem of progress.history) {
-          if (historyItem.skipped) {
-            // Skipping has a mild negative relationship impact
-            impacts.journalists[journalist.id].psRelationship -= 1;
-            continue;
-          }
-
-          // Question was answered
-          if (historyItem.questionId && historyItem.answerId) {
-            const question = content.questions[historyItem.questionId];
-            if (!question) continue;
-
-            // Find the selected answer
-            const selectedAnswer = question.answers.find(
-              (a) => a.id === historyItem.answerId
-            );
-            if (!selectedAnswer) continue;
-
-            // Boost journalist relationship for answering their question
-            impacts.journalists[journalist.id].psRelationship += 1;
-
-            // Apply impacts from the answer
-            if (selectedAnswer.impacts.president) {
-              impacts.president.psRelationship +=
-                selectedAnswer.impacts.president.weight;
-            }
-
-            // Apply cabinet impacts
-            if (selectedAnswer.impacts.cabinet) {
-              Object.entries(selectedAnswer.impacts.cabinet).forEach(
-                ([id, impact]) => {
-                  if (impacts.cabinetMembers[id]) {
-                    impacts.cabinetMembers[id].psRelationship += impact.weight;
-                    impacts.cabinetMembers[id].approvalRating += impact.weight;
-                  }
-                }
-              );
-            }
-          }
-        }
-      }
-
-      // 6. Apply the calculated impacts
-      await updateRelationships(
-        game,
-        cabinetMembers,
-        publications,
-        journalists,
-        subgroups,
-        impacts
-      );
-
-      // 7. Create final snapshot
-      const finalSnapshot = get().formatRelationshipSnapshot({
-        game,
-        cabinetMembers,
-        publications,
-        journalists,
-        subgroups,
-      });
-
-      // 8. Save outcome snapshot to level
+      // 6. Create outcome snapshot
       const outcomeSnapshot: OutcomeSnapshotType = {
         initial: initialSnapshot,
         final: finalSnapshot,
       };
 
       await level.updateOutcomeSnapshot(outcomeSnapshot);
-    },
-
-    formatRelationshipSnapshot: ({
-      game,
-      cabinetMembers,
-      publications,
-      journalists,
-      subgroups,
-    }: {
-      game: Game;
-      cabinetMembers: CabinetMember[];
-      publications: Publication[];
-      journalists: Journalist[];
-      subgroups: SubgroupApproval[];
-    }) => {
-      return {
-        president: {
-          approvalRating: game.presApprovalRating,
-          psRelationship: game.presPsRelationship,
-        },
-        cabinetMembers: Object.fromEntries(
-          cabinetMembers.map((member) => [
-            member.id,
-            {
-              approvalRating: member.approvalRating,
-              psRelationship: member.psRelationship,
-            },
-          ])
-        ),
-        journalists: Object.fromEntries(
-          journalists.map((journalist) => [
-            journalist.id,
-            {
-              psRelationship: journalist.psRelationship,
-            },
-          ])
-        ),
-        subgroups: Object.fromEntries(
-          subgroups.map((subgroup) => [
-            subgroup.id,
-            { approvalRating: subgroup.approvalRating },
-          ])
-        ),
-      };
     },
   })
 );

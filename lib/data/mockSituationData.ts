@@ -1,4 +1,9 @@
-import { SituationType, NewSituationData } from "~/types";
+import {
+  SituationType,
+  NewSituationData,
+  CabinetStaticId,
+  PreferenceWeight,
+} from "~/types";
 
 export const mockDomesticSituations: NewSituationData[] = [
   {
@@ -10,18 +15,18 @@ export const mockDomesticSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: 2,
+          weight: PreferenceWeight.Positive,
           rationale:
             "Passage is crucial; prioritize moderate bipartisan support.",
         },
         cabinet: {
-          hhs: {
-            weight: 3,
+          [CabinetStaticId.HHS]: {
+            weight: PreferenceWeight.StronglyPositive,
             rationale:
               "Fully supportive; urgent action needed to improve healthcare access.",
           },
-          treasury: {
-            weight: -1,
+          [CabinetStaticId.Treasury]: {
+            weight: PreferenceWeight.Negative,
             rationale:
               "Concerns about budgetary impact; advise fiscal caution.",
           },
@@ -38,13 +43,13 @@ export const mockDomesticSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: 3,
+          weight: PreferenceWeight.StronglyPositive,
           rationale:
             "Infrastructure spending is a key campaign promise; push hard.",
         },
         cabinet: {
-          treasury: {
-            weight: -2,
+          [CabinetStaticId.Treasury]: {
+            weight: PreferenceWeight.Negative,
             rationale: "Budget constraints raise significant concerns.",
           },
         },
@@ -62,16 +67,16 @@ export const mockForeignSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: 1,
+          weight: PreferenceWeight.Positive,
           rationale: "Maintain tough but open negotiation stance.",
         },
         cabinet: {
-          treasury: {
-            weight: 2,
+          [CabinetStaticId.Treasury]: {
+            weight: PreferenceWeight.Positive,
             rationale: "Protect domestic businesses aggressively.",
           },
-          state: {
-            weight: 0,
+          [CabinetStaticId.State]: {
+            weight: PreferenceWeight.Neutral,
             rationale: "",
           },
         },
@@ -87,17 +92,17 @@ export const mockForeignSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: 2,
+          weight: PreferenceWeight.Positive,
           rationale:
             "Support peace talks strongly but remain neutral publicly.",
         },
         cabinet: {
-          state: {
-            weight: 3,
+          [CabinetStaticId.State]: {
+            weight: PreferenceWeight.StronglyPositive,
             rationale: "Fully invested in diplomatic solutions.",
           },
-          defense: {
-            weight: -1,
+          [CabinetStaticId.Defense]: {
+            weight: PreferenceWeight.Negative,
             rationale: "Skeptical; prefer cautious military preparedness.",
           },
         },
@@ -116,16 +121,16 @@ export const mockScandalSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: -2,
+          weight: PreferenceWeight.Negative,
           rationale: "Maintain distance; let the investigation run its course.",
         },
         cabinet: {
-          homeland: {
-            weight: -3,
+          [CabinetStaticId.Homeland]: {
+            weight: PreferenceWeight.StronglyNegative,
             rationale: "Strongly defensive, denies wrongdoing.",
           },
-          justice: {
-            weight: 2,
+          [CabinetStaticId.Justice]: {
+            weight: PreferenceWeight.Positive,
             rationale: "Advocates thorough and transparent investigation.",
           },
         },
@@ -141,13 +146,13 @@ export const mockScandalSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: -3,
+          weight: PreferenceWeight.StronglyNegative,
           rationale:
             "Damage control needed immediately; minimize further fallout.",
         },
         cabinet: {
-          justice: {
-            weight: 3,
+          [CabinetStaticId.Justice]: {
+            weight: PreferenceWeight.StronglyPositive,
             rationale: "Immediate public relations strategy required.",
           },
         },
@@ -166,12 +171,12 @@ export const mockEconomicSituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: 1,
+          weight: PreferenceWeight.Positive,
           rationale: "Calm public statements needed to prevent panic.",
         },
         cabinet: {
-          treasury: {
-            weight: 3,
+          [CabinetStaticId.Treasury]: {
+            weight: PreferenceWeight.StronglyPositive,
             rationale: "Immediate fiscal measures needed to stabilize markets.",
           },
         },
@@ -190,17 +195,17 @@ export const mockSecuritySituations: NewSituationData[] = [
     content: JSON.stringify({
       preferences: {
         president: {
-          weight: 3,
+          weight: PreferenceWeight.StronglyPositive,
           rationale: "Rapid and decisive public response needed.",
         },
         cabinet: {
-          homeland: {
-            weight: 3,
+          [CabinetStaticId.Homeland]: {
+            weight: PreferenceWeight.StronglyPositive,
             rationale:
               "Immediate actions required to secure and restore services.",
           },
-          defense: {
-            weight: 2,
+          [CabinetStaticId.Defense]: {
+            weight: PreferenceWeight.Positive,
             rationale:
               "Military cybersecurity readiness should be highlighted.",
           },

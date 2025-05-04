@@ -1,5 +1,5 @@
 import { Q } from "@nozbe/watermelondb";
-import { Observable } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
 
 // Import collections
@@ -41,12 +41,48 @@ export function observeSubgroupApprovals(
     .observe();
 }
 
-export function observeCabinetMembers(
+export function observeActiveCabinetMembers(
   gameId: string
 ): Observable<CabinetMember[]> {
   return cabinetCollection
-    .query(Q.where("game_id", gameId), Q.sortBy("approval_rating", Q.desc))
+    .query(
+      Q.where("game_id", gameId),
+      Q.where("is_active", true), // Filter for active members
+      Q.sortBy("approval_rating", Q.desc)
+    )
     .observe();
+}
+
+export function observeCabinetMembersByLevel(
+  levelId: string
+): Observable<CabinetMember[]> {
+  // 1. Observe the level itself
+  return observeLevel(levelId).pipe(
+    switchMap((level) => {
+      // 2. If level exists, parse the snapshot
+      if (!level) {
+        return of([]); // Return an observable of an empty array if level not found
+      }
+      const snapshot = level.parseCabinetSnapshot;
+      if (!snapshot) {
+        console.warn(`No valid cabinet snapshot found for level ${levelId}`);
+        return of([]); // Return empty array if snapshot is invalid/missing
+      }
+
+      const memberIds = Object.values(snapshot);
+      if (memberIds.length === 0) {
+        return of([]); // Return empty array if snapshot has no IDs
+      }
+
+      // 3. Query the cabinet collection for members matching the IDs
+      return cabinetCollection
+        .query(
+          Q.where("id", Q.oneOf(memberIds)),
+          Q.sortBy("approval_rating", Q.desc) // Optional: sort results
+        )
+        .observe();
+    })
+  );
 }
 
 export function observePublications(gameId: string): Observable<Publication[]> {

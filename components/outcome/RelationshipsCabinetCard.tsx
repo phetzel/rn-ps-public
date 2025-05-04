@@ -1,18 +1,18 @@
 import React, { useMemo } from "react";
 import { View, FlatList } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
-import { Briefcase } from "~/lib/icons/Briefcase";
-
 import ProgressDifference from "~/components/outcome/ProgressDifference";
-import { observeCabinetMembers } from "~/lib/db/helpers";
+import { Briefcase } from "~/lib/icons/Briefcase";
+import { observeCabinetMembersByLevel } from "~/lib/db/helpers";
 import type { CabinetMember } from "~/lib/db/models";
 import type { OutcomeSnapshotType, CabinetStaticId } from "~/types";
 
 interface RelationshipsCabinetCardProps {
-  gameId: string;
+  levelId: string;
   outcomeSnapshot: OutcomeSnapshotType;
   cabinetMembers?: CabinetMember[];
 }
@@ -22,14 +22,16 @@ const RelationshipsCabinetCard = ({
   cabinetMembers = [],
 }: RelationshipsCabinetCardProps) => {
   const { initial, final } = outcomeSnapshot;
-  const cabinetIds = Object.keys(final.cabinetMembers || {});
 
-  // Create a map of cabinet member IDs to their models for quick lookup
-  const cabinetMemberMap = useMemo(() => {
-    return new Map(cabinetMembers.map((member) => [member.id, member]));
-  }, [cabinetMembers]);
+  const membersToDisplay = useMemo(() => {
+    // Filter to members that have entries in the final snapshot
+    return cabinetMembers.filter(
+      (member) =>
+        final.cabinetMembers[member.staticId as CabinetStaticId] !== undefined
+    );
+  }, [cabinetMembers, final.cabinetMembers]);
 
-  if (cabinetIds.length === 0) {
+  if (membersToDisplay.length === 0) {
     return null;
   }
 
@@ -42,27 +44,19 @@ const RelationshipsCabinetCard = ({
 
       <CardContent>
         <FlatList
-          data={cabinetIds}
-          keyExtractor={(id) => id}
+          data={membersToDisplay}
+          keyExtractor={(member) => member.id}
           scrollEnabled={false}
-          renderItem={({ item: id, index }) => {
-            const initialValues = initial.cabinetMembers[id];
-            const finalValues = final.cabinetMembers[id];
+          renderItem={({ item: member, index }) => {
+            const staticId = member.staticId as CabinetStaticId;
+            const initialValues = initial.cabinetMembers[staticId];
+            const finalValues = final.cabinetMembers[staticId];
 
             if (!initialValues || !finalValues) return null;
 
-            // Look up the cabinet member from our fetched data
-            const cabinetMember = cabinetMemberMap.get(id);
-
-            // Determine display name and role
-            let displayName = `Cabinet Member ${index + 1}`;
-            let displayRole = "";
-
-            if (cabinetMember) {
-              // We found the cabinet member, use their name and role
-              displayName = cabinetMember.name;
-              displayRole = cabinetMember.staticData.cabinetName;
-            }
+            // Get display name and role directly from the member
+            const displayName = member.name;
+            const displayRole = member.staticData.cabinetName;
 
             return (
               <View className="gap-3">
@@ -91,7 +85,7 @@ const RelationshipsCabinetCard = ({
                   />
                 </View>
 
-                {index < cabinetIds.length - 1 && (
+                {index < membersToDisplay.length - 1 && (
                   <Separator className="my-4" />
                 )}
               </View>
@@ -105,9 +99,9 @@ const RelationshipsCabinetCard = ({
 };
 
 const enhance = withObservables(
-  ["gameId"],
-  ({ gameId }: { gameId: string }) => ({
-    cabinetMembers: observeCabinetMembers(gameId),
+  ["levelId"],
+  ({ levelId }: { levelId: string }) => ({
+    cabinetMembers: observeCabinetMembersByLevel(levelId),
   })
 );
 

@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeCabinetMembers } from "~/lib/db/helpers";
+import { observeActiveCabinetMembers } from "~/lib/db/helpers";
 import type CabinetMember from "~/lib/db/models/CabinetMember";
 import { Briefcase } from "~/lib/icons/Briefcase";
 import { Separator } from "~/components/ui/separator";
@@ -71,7 +71,7 @@ const CabinetStateCard = ({ cabinetMembers }: CabinetStateCardProps) => {
 };
 
 const enhance = withObservables(["gameId"], ({ gameId }) => ({
-  cabinetMembers: observeCabinetMembers(gameId),
+  cabinetMembers: observeActiveCabinetMembers(gameId),
 }));
 
 export default enhance(CabinetStateCard);

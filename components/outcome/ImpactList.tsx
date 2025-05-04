@@ -1,25 +1,45 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
+
+import { observeGame, observeCabinetMembersByLevel } from "~/lib/db/helpers";
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
 import ImpactItem from "./ImpactItem";
-import type { ExchangeImpacts, ExchangeImpact } from "~/types";
+import { Game, CabinetMember } from "~/lib/db/models";
+import { createCabinetMemberMap } from "~/lib/utils";
+import type { ExchangeImpacts, CabinetStaticId } from "~/types";
 
 interface ImpactListProps {
+  gameId: string;
+  levelId: string;
   impacts: ExchangeImpacts;
+  game: Game | null | undefined;
+  cabinetMembers: CabinetMember[];
 }
 
-export default function ImpactList({ impacts }: ImpactListProps) {
-  // Helper to check if an impact exists and has a reaction
-  const hasValidImpact = (impact: ExchangeImpact | undefined) =>
-    impact !== undefined;
+const ImpactList = ({ impacts, game, cabinetMembers }: ImpactListProps) => {
+  // Create a map of cabinet member IDs to their models for quick lookup
+  const cabinetMembersMap = useMemo(() => {
+    return createCabinetMemberMap(cabinetMembers);
+  }, [cabinetMembers]);
+
+  // Function to safely get cabinet member name and role
+  const getCabinetDetails = (staticId: CabinetStaticId) => {
+    const member = cabinetMembersMap?.get(staticId);
+    const staticData = member?.staticData ?? null;
+
+    return {
+      name: member?.name ?? "",
+      title: staticData?.cabinetName ?? staticId,
+    };
+  };
 
   // Check if there are any valid impacts to display
   const hasImpacts = !!(
     impacts.president ||
     Object.keys(impacts.cabinet || {}).length > 0 ||
-    Object.keys(impacts.subgroups || {}).length > 0 ||
-    Object.keys(impacts.publications || {}).length > 0
+    Object.keys(impacts.subgroups || {}).length > 0
   );
 
   if (!hasImpacts) {
@@ -30,13 +50,14 @@ export default function ImpactList({ impacts }: ImpactListProps) {
     <View>
       <Separator className="mb-2" />
 
-      <View className="gap-2">
+      <View className="gap-4">
         <Text className="text-sm text-muted-foreground">Impacts</Text>
 
         {/* President Impact */}
         {impacts.president && (
           <ImpactItem
-            entity="President"
+            name={game?.presName ?? "President"} // Use game.presName, fallback needed if game is null
+            title="President"
             reaction={impacts.president.reaction || ""}
             weight={impacts.president.weight}
           />
@@ -44,32 +65,29 @@ export default function ImpactList({ impacts }: ImpactListProps) {
 
         {/* Cabinet Impacts */}
         {impacts.cabinet &&
-          Object.entries(impacts.cabinet).map(([dept, impact]) => (
-            <ImpactItem
-              key={dept}
-              entity={`Cabinet (${dept})`}
-              reaction={impact.reaction || ""}
-              weight={impact.weight}
-            />
-          ))}
+          Object.entries(impacts.cabinet).map(([staticIdString, impact]) => {
+            const staticId = staticIdString as CabinetStaticId;
+            const { name, title } = getCabinetDetails(staticId);
+
+            return (
+              <ImpactItem
+                key={staticId}
+                // Pass cabinet member's name and role(title)
+                name={name}
+                title={title}
+                reaction={impact.reaction || ""}
+                weight={impact.weight}
+              />
+            );
+          })}
 
         {/* Subgroup Impacts */}
         {impacts.subgroups &&
           Object.entries(impacts.subgroups).map(([group, impact]) => (
             <ImpactItem
               key={group}
-              entity={`Public (${group})`}
-              reaction={impact.reaction || ""}
-              weight={impact.weight}
-            />
-          ))}
-
-        {/* Publication Impacts */}
-        {impacts.publications &&
-          Object.entries(impacts.publications).map(([pub, impact]) => (
-            <ImpactItem
-              key={pub}
-              entity={`Publication (${pub})`}
+              name={group}
+              title="Public Group"
               reaction={impact.reaction || ""}
               weight={impact.weight}
             />
@@ -77,4 +95,14 @@ export default function ImpactList({ impacts }: ImpactListProps) {
       </View>
     </View>
   );
-}
+};
+
+const enhance = withObservables(
+  ["gameId", "levelId"],
+  ({ gameId, levelId }: { gameId: string; levelId: string }) => ({
+    game: observeGame(gameId),
+    cabinetMembers: observeCabinetMembersByLevel(levelId),
+  })
+);
+
+export default enhance(ImpactList);

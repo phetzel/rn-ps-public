@@ -1,4 +1,11 @@
-import { ExchangeContent, SituationType } from "~/types";
+import {
+  ExchangeContent,
+  SituationType,
+  // Import the static ID enums
+  CabinetStaticId,
+  SubgroupStaticId,
+  JournalistStaticId, // If you plan to add journalist impacts later
+} from "~/types";
 
 interface MockExchange {
   text: string; // Main question text for easy reference
@@ -28,15 +35,22 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Appreciates the strong support",
                 },
                 cabinet: {
-                  health: { weight: 1, reaction: "Values your public support" },
+                  // Use CabinetStaticId enum
+                  [CabinetStaticId.HHS]: {
+                    weight: 1,
+                    reaction: "Values your public support",
+                  },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  // Use SubgroupStaticId enum
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 0,
                     reaction: "Remains skeptical without details",
                   },
                 },
+                // journalists: {} // Add if needed later
               },
               followUpId: "followup-1-1",
             },
@@ -49,18 +63,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Neutral reaction to balanced answer",
                 },
                 cabinet: {
-                  health: {
+                  [CabinetStaticId.HHS]: {
                     weight: 1,
                     reaction: "Appreciates the measured response",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 1,
                     reaction: "Appreciates the honest assessment",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -72,18 +88,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Disappointed with the deflection",
                 },
                 cabinet: {
-                  health: {
+                  [CabinetStaticId.HHS]: {
                     weight: -1,
                     reaction: "Feels thrown under the bus",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: -1,
                     reaction: "Sees this as typical political evasion",
                   },
                 },
+                // journalists: {}
               },
             },
           ],
@@ -102,12 +120,14 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Satisfied with the detailed response",
                 },
                 cabinet: {
-                  health: {
+                  [CabinetStaticId.HHS]: {
                     weight: 1,
                     reaction: "Pleased with the specific support",
                   },
                 },
-                publications: {},
+                // publications removed
+                // subgroups: {}, // No subgroups specified originally
+                // journalists: {}
               },
             },
             {
@@ -119,12 +139,14 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Concerned about the continued evasion",
                 },
                 cabinet: {
-                  health: {
+                  [CabinetStaticId.HHS]: {
                     weight: -1,
                     reaction: "Frustrated with the lack of support",
                   },
                 },
-                publications: {},
+                // publications removed
+                // subgroups: {},
+                // journalists: {}
               },
             },
           ],
@@ -154,22 +176,23 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Very pleased with the strong defense",
                 },
                 cabinet: {
-                  health: {
+                  [CabinetStaticId.HHS]: {
                     weight: 1,
                     reaction: "Appreciates defense of their work",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  left_wing_base: {
+                  [SubgroupStaticId.LeftWingBase]: {
                     weight: 1,
                     reaction: "Energized by the strong response",
                   },
-                  right_wing_base: {
+                  [SubgroupStaticId.RightWingBase]: {
                     weight: -2,
                     reaction: "Angered by the dismissal of legitimate concerns",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -181,19 +204,23 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Accepts the balanced response",
                 },
                 cabinet: {
-                  health: { weight: 0, reaction: "Neutral reaction" },
+                  [CabinetStaticId.HHS]: {
+                    weight: 0,
+                    reaction: "Neutral reaction",
+                  },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  left_wing_base: {
+                  [SubgroupStaticId.LeftWingBase]: {
                     weight: 0,
                     reaction: "Wishes for stronger defense",
                   },
-                  right_wing_base: {
+                  [SubgroupStaticId.RightWingBase]: {
                     weight: 0,
                     reaction: "Still critical but less enraged",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -205,22 +232,23 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Concerned about implied admission of failure",
                 },
                 cabinet: {
-                  health: {
+                  [CabinetStaticId.HHS]: {
                     weight: 1,
                     reaction: "Glad their concerns are being addressed",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  left_wing_base: {
+                  [SubgroupStaticId.LeftWingBase]: {
                     weight: -1,
                     reaction: "Worried about policy shift",
                   },
-                  right_wing_base: {
+                  [SubgroupStaticId.RightWingBase]: {
                     weight: 1,
                     reaction: "Cautiously optimistic about changes",
                   },
                 },
+                // journalists: {}
               },
             },
           ],
@@ -251,18 +279,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Pleased with the positive framing",
                 },
                 cabinet: {
-                  state: {
+                  [CabinetStaticId.State]: {
                     weight: 1,
                     reaction: "Appreciates highlighting their diplomatic work",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 1,
                     reaction: "Reassured by diplomatic approach",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -274,18 +304,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Neutral reaction to cautious response",
                 },
                 cabinet: {
-                  state: {
+                  [CabinetStaticId.State]: {
                     weight: 0,
                     reaction: "Understanding of the measured approach",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 0,
                     reaction: "Neither reassured nor concerned",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -297,18 +329,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Concerned about appearance of indecision",
                 },
                 cabinet: {
-                  state: {
+                  [CabinetStaticId.State]: {
                     weight: -1,
                     reaction: "Frustrated with lack of clear position",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: -1,
                     reaction: "Worried about lack of direction",
                   },
                 },
+                // journalists: {}
               },
             },
           ],
@@ -338,17 +372,18 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Very pleased with the strong defense",
                 },
                 cabinet: {
-                  state: {
+                  [CabinetStaticId.State]: {
                     weight: 1,
                     reaction: "Appreciates the vote of confidence",
                   },
-                  defense: {
+                  [CabinetStaticId.Defense]: {
                     weight: 1,
                     reaction: "Glad to see public backing",
                   },
                 },
-                publications: {},
-                subgroups: {},
+                // publications removed
+                // subgroups: {}, // No subgroups originally
+                // journalists: {}
               },
             },
             {
@@ -360,10 +395,14 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Wishes for stronger defense but understands",
                 },
                 cabinet: {
-                  state: { weight: 0, reaction: "Neutral reaction" },
+                  [CabinetStaticId.State]: {
+                    weight: 0,
+                    reaction: "Neutral reaction",
+                  },
                 },
-                publications: {},
-                subgroups: {},
+                // publications removed
+                // subgroups: {},
+                // journalists: {}
               },
               followUpId: "followup-4-2",
             },
@@ -376,14 +415,15 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Likes the refusal to engage with criticism",
                 },
                 cabinet: {
-                  state: {
+                  [CabinetStaticId.State]: {
                     weight: -1,
                     reaction:
                       "Concerned about dismissing legitimate policy questions",
                   },
                 },
-                publications: {},
-                subgroups: {},
+                // publications removed
+                // subgroups: {},
+                // journalists: {}
               },
             },
           ],
@@ -399,10 +439,12 @@ export const mockExchanges: MockExchange[] = [
               impacts: {
                 president: { weight: 0 },
                 cabinet: {
-                  state: { weight: 1 },
-                  defense: { weight: 1 },
+                  [CabinetStaticId.State]: { weight: 1 },
+                  [CabinetStaticId.Defense]: { weight: 1 },
                 },
-                publications: {},
+                // publications removed
+                // subgroups: {},
+                // journalists: {}
               },
             },
             {
@@ -411,9 +453,11 @@ export const mockExchanges: MockExchange[] = [
               impacts: {
                 president: { weight: 0 },
                 cabinet: {
-                  state: { weight: -1 },
+                  [CabinetStaticId.State]: { weight: -1 },
                 },
-                publications: {},
+                // publications removed
+                // subgroups: {},
+                // journalists: {}
               },
             },
           ],
@@ -444,18 +488,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Accepts the measured response",
                 },
                 cabinet: {
-                  justice: {
+                  [CabinetStaticId.Justice]: {
                     weight: 1,
                     reaction: "Appreciates the serious approach",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 1,
                     reaction: "Values the transparent approach",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -467,18 +513,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Pleased with deflection of criticism",
                 },
                 cabinet: {
-                  justice: {
+                  [CabinetStaticId.Justice]: {
                     weight: -1,
                     reaction: "Concerned about potential coverup perception",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: -1,
                     reaction: "Skeptical of denial without specifics",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -490,18 +538,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Understands the legal caution",
                 },
                 cabinet: {
-                  justice: {
+                  [CabinetStaticId.Justice]: {
                     weight: 2,
                     reaction: "Very appreciative of respecting legal process",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: -1,
                     reaction: "Frustrated by lack of transparency",
                   },
                 },
+                // journalists: {}
               },
             },
           ],
@@ -532,18 +582,14 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Satisfied with the decisive response",
                 },
                 cabinet: {
-                  treasury: {
+                  [CabinetStaticId.Treasury]: {
                     weight: 2,
                     reaction: "Pleased with the vote of confidence",
                   },
                 },
-                publications: {},
-                subgroups: {
-                  financial_market: {
-                    weight: 2,
-                    reaction: "Reassured by quick action",
-                  },
-                },
+                // publications removed
+                // subgroups: {}, // Note: "financial_market" omitted due to no enum match
+                // journalists: {}
               },
             },
             {
@@ -552,18 +598,14 @@ export const mockExchanges: MockExchange[] = [
               impacts: {
                 president: { weight: 0, reaction: "Accepts cautious approach" },
                 cabinet: {
-                  treasury: {
+                  [CabinetStaticId.Treasury]: {
                     weight: 1,
                     reaction: "Appreciates the measured response",
                   },
                 },
-                publications: {},
-                subgroups: {
-                  financial_market: {
-                    weight: 0,
-                    reaction: "Wants more decisive action",
-                  },
-                },
+                // publications removed
+                // subgroups: {}, // Note: "financial_market" omitted
+                // journalists: {}
               },
             },
             {
@@ -575,23 +617,22 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Concerned about appearing dismissive",
                 },
                 cabinet: {
-                  treasury: {
+                  [CabinetStaticId.Treasury]: {
                     weight: -2,
                     reaction:
                       "Extremely frustrated with dismissal of serious concern",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  financial_market: {
-                    weight: -3,
-                    reaction: "Alarmed by lack of concern",
-                  },
-                  middle_class: {
+                  // Note: "financial_market" omitted
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: -2,
                     reaction: "Worried about their savings and investments",
                   },
                 },
+                // journalists: {}
               },
             },
           ],
@@ -622,22 +663,24 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Pleased with portrayal of leadership",
                 },
                 cabinet: {
-                  homeland: {
+                  [CabinetStaticId.Homeland]: {
                     weight: 1,
                     reaction: "Appreciates highlighting their work",
                   },
-                  defense: {
+                  [CabinetStaticId.Defense]: {
                     weight: 1,
                     reaction: "Satisfied with security focus",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 2,
                     reaction: "Reassured by quick, decisive action",
                   },
                 },
+                // journalists: {}
               },
               followUpId: "followup-7-1",
             },
@@ -650,15 +693,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Accepts the balanced response",
                 },
                 cabinet: {
-                  homeland: { weight: 0, reaction: "Neutral reaction" },
+                  [CabinetStaticId.Homeland]: {
+                    weight: 0,
+                    reaction: "Neutral reaction",
+                  },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 0,
                     reaction: "Neither reassured nor concerned",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -670,18 +718,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Concerned about appearance of secrecy",
                 },
                 cabinet: {
-                  homeland: {
+                  [CabinetStaticId.Homeland]: {
                     weight: 1,
                     reaction: "Appreciates protecting sensitive information",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: -1,
                     reaction: "Worried by lack of transparency",
                   },
                 },
+                // journalists: {}
               },
             },
           ],
@@ -700,18 +750,20 @@ export const mockExchanges: MockExchange[] = [
                   reaction: "Pleased with balanced, informative response",
                 },
                 cabinet: {
-                  homeland: {
+                  [CabinetStaticId.Homeland]: {
                     weight: 2,
                     reaction: "Very satisfied with public guidance",
                   },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 2,
                     reaction: "Appreciates useful information",
                   },
                 },
+                // journalists: {}
               },
             },
             {
@@ -720,15 +772,20 @@ export const mockExchanges: MockExchange[] = [
               impacts: {
                 president: { weight: 0, reaction: "Neutral reaction" },
                 cabinet: {
-                  homeland: { weight: 0, reaction: "Neutral reaction" },
+                  [CabinetStaticId.Homeland]: {
+                    weight: 0,
+                    reaction: "Neutral reaction",
+                  },
                 },
-                publications: {},
+                // publications removed
                 subgroups: {
-                  middle_class: {
+                  [SubgroupStaticId.IndependentBase]: {
+                    // Mapped from "middle_class"
                     weight: 0,
                     reaction: "Somewhat reassured but wants more detail",
                   },
                 },
+                // journalists: {}
               },
             },
           ],

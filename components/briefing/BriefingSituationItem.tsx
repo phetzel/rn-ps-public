@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { View } from "react-native";
 
 // Icons
@@ -20,7 +20,7 @@ import {
 import { Text } from "~/components/ui/text";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
-import { Situation } from "~/lib/db/models";
+import { Situation, CabinetMember } from "~/lib/db/models";
 import {
   getSituationIcon,
   getSituationBadgeVariant,
@@ -33,6 +33,7 @@ import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 
 interface BriefingSituationItemProps {
   situation: Situation;
+  cabinetMembers: CabinetMember[];
   isFirst: boolean;
   handlePrevious: () => void;
   isLast: boolean;
@@ -42,6 +43,7 @@ interface BriefingSituationItemProps {
 
 const BriefingSituationItem = ({
   situation,
+  cabinetMembers,
   isFirst,
   handlePrevious,
   isLast,
@@ -49,6 +51,15 @@ const BriefingSituationItem = ({
   handleComplete,
 }: BriefingSituationItemProps) => {
   const [isCabinetExpanded, setIsCabinetExpanded] = useState<boolean>(false);
+
+  // Create a map for quick lookup: Static ID -> CabinetMember model
+  const cabinetMemberMap = useMemo(() => {
+    const map = new Map<CabinetStaticId, CabinetMember>();
+    for (const member of cabinetMembers) {
+      map.set(member.staticId, member);
+    }
+    return map;
+  }, [cabinetMembers]);
 
   // Get preferences from the situation progress
   const content = situation.parseContent;
@@ -134,18 +145,25 @@ const BriefingSituationItem = ({
                   ([member, pref], idx) => {
                     const staticId = member as CabinetStaticId;
 
-                    // Now you can safely use staticId to index staticCabinetMembers
-                    const cabinetStaticData = staticCabinetMembers[staticId]; // <-- This lookup should now work without error
-                    const cabinetDisplayName =
+                    const cabinetStaticData = staticCabinetMembers[staticId];
+                    const cabinetRoleName =
                       cabinetStaticData?.cabinetName ?? staticId;
+
+                    const cabinetMember = cabinetMemberMap.get(staticId);
+                    const cabinetMemberName = cabinetMember?.name;
 
                     return (
                       <View key={idx} className="gap-2">
                         <View className="flex-row justify-between items-center">
-                          <View className="flex-1 mr-2">
-                            <Text className="text-sm font-medium capitalize">
-                              {cabinetDisplayName}
+                          <View className="flex-1 mr-2 gap-2">
+                            <Text className="text-xs font-medium capitalize text-muted-foreground">
+                              {cabinetRoleName}
                             </Text>
+                            {cabinetMemberName && (
+                              <Text className="text-sm font-semibold">
+                                {cabinetMemberName}
+                              </Text>
+                            )}
                           </View>
                           <Text
                             className={`text-sm font-medium ${getPreferenceColor(

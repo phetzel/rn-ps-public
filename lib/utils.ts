@@ -2,8 +2,8 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { faker } from "@faker-js/faker";
 
-import { CabinetStaticId } from "~/types";
-
+// DB Models
+import { CabinetMember } from "~/lib/db/models";
 // Icons
 import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { Globe } from "~/lib/icons/Globe";
@@ -11,7 +11,7 @@ import { DollarSign } from "~/lib/icons/DollarSign";
 import { Shield } from "~/lib/icons/Shield";
 import { Users } from "~/lib/icons/Users";
 // Types
-import { SituationType, PoliticalLeaning } from "~/types";
+import { SituationType, CabinetStaticId } from "~/types";
 
 // Tailwind Merge
 export function cn(...inputs: ClassValue[]) {
@@ -99,4 +99,20 @@ export function generateCabinetMemberName(staticId: CabinetStaticId): string {
   }
 
   return `${prefix}${firstName} ${lastName}`;
+}
+
+export function createCabinetMemberMap(
+  members: CabinetMember[] = [] // Add default empty array for safety
+): Map<CabinetStaticId, CabinetMember> {
+  const map = new Map<CabinetStaticId, CabinetMember>();
+  if (!members) return map; // Handle null/undefined input gracefully
+  for (const member of members) {
+    // Ensure member and staticId are valid before setting
+    if (member && member.staticId) {
+      map.set(member.staticId, member);
+    } else {
+      console.warn("Attempted to map an invalid CabinetMember:", member);
+    }
+  }
+  return map;
 }

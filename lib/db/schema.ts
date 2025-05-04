@@ -77,6 +77,7 @@ export const myAppSchema = appSchema({
         { name: "year", type: "number" },
         { name: "month", type: "number" },
         { name: "status", type: "string" },
+        { name: "cabinet_snapshot", type: "string" },
         { name: "outcome_snapshot", type: "string", isOptional: true },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },

@@ -11,30 +11,7 @@ export enum LevelStatus {
   Completed = "completed",
 }
 
-export enum SituationType {
-  Domestic = "domestic",
-  Foreign = "foreign",
-  Scandal = "scandal",
-  Economic = "economic",
-  Security = "security",
-  PublicSentiment = "public_sentiment",
-}
-
-export interface Preference {
-  weight: number;
-  rationale: string; // explanation for the briefing UI
-}
-
-export interface SituationPreferences {
-  president?: Preference;
-  cabinet?: {
-    [key in CabinetStaticId]?: Preference;
-  };
-}
-
-export interface SituationContent {
-  preferences?: SituationPreferences;
-}
+export type CabinetSnapshot = Record<CabinetStaticId, string>;
 
 export enum PoliticalParty {
   Republican = "republican",
@@ -103,6 +80,42 @@ export interface StaticJournalist {
   name: string;
 }
 
+// Situation Types
+export enum SituationType {
+  Domestic = "domestic",
+  Foreign = "foreign",
+  Scandal = "scandal",
+  Economic = "economic",
+  Security = "security",
+  PublicSentiment = "public_sentiment",
+}
+
+export enum PreferenceWeight {
+  StronglyPositive = 3,
+  Positive = 2,
+  SlightlyPositive = 1,
+  Neutral = 0,
+  SlightlyNegative = -1,
+  Negative = -2,
+  StronglyNegative = -3,
+}
+
+export interface Preference {
+  weight: PreferenceWeight;
+  rationale: string; // explanation for the briefing UI
+}
+
+export interface SituationPreferences {
+  president?: Preference;
+  cabinet?: {
+    [key in CabinetStaticId]?: Preference;
+  };
+}
+
+export interface SituationContent {
+  preferences?: SituationPreferences;
+}
+
 // Press Exchange Types
 export interface ExchangeImpact {
   weight: number;
@@ -111,9 +124,9 @@ export interface ExchangeImpact {
 
 export interface ExchangeImpacts {
   president?: ExchangeImpact;
-  cabinet?: Record<string, ExchangeImpact>;
-  publications?: Record<string, ExchangeImpact>;
-  subgroups?: Record<string, ExchangeImpact>;
+  cabinet?: Partial<Record<CabinetStaticId, ExchangeImpact>>;
+  subgroups?: Partial<Record<SubgroupStaticId, ExchangeImpact>>;
+  journalists?: Partial<Record<JournalistStaticId, ExchangeImpact>>;
 }
 
 export interface Answer {
@@ -156,13 +169,13 @@ export interface RelationshipSnapshot {
     psRelationship: number;
   };
   cabinetMembers: {
-    [cabinetMemberId: string]: {
+    [key in CabinetStaticId]?: {
       approvalRating: number;
       psRelationship: number;
     };
   };
   journalists: {
-    [journalistId: string]: {
+    [key in JournalistStaticId]?: {
       psRelationship: number;
     };
   };

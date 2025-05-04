@@ -7,8 +7,9 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import {
   observeSituationsByLevelId,
   observeLevel,
+  observeCabinetMembersByLevel,
 } from "~/lib/db/helpers/observations";
-import { Situation, Level } from "~/lib/db/models";
+import { Situation, Level, CabinetMember } from "~/lib/db/models";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
@@ -21,6 +22,7 @@ interface BriefingSituationListProps {
   levelId: string;
   situations: Situation[];
   level: Level;
+  cabinetMembers: CabinetMember[];
 }
 
 const BriefingSituationsList = ({
@@ -28,6 +30,7 @@ const BriefingSituationsList = ({
   levelId,
   situations,
   level,
+  cabinetMembers,
 }: BriefingSituationListProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const router = useRouter();
@@ -95,6 +98,7 @@ const BriefingSituationsList = ({
 
       <BriefingSituationItem
         situation={currentSituation}
+        cabinetMembers={cabinetMembers}
         isFirst={currentIndex === 0}
         handlePrevious={handlePrevious}
         isLast={isLastSituation}
@@ -108,6 +112,7 @@ const BriefingSituationsList = ({
 const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
   situations: observeSituationsByLevelId(levelId),
   level: observeLevel(levelId),
+  cabinetMembers: observeCabinetMembersByLevel(levelId),
 }));
 
 export default enhance(BriefingSituationsList);

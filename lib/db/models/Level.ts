@@ -14,8 +14,12 @@ import type { Associations } from "@nozbe/watermelondb/Model"; // Import for cla
 import type Game from "./Game";
 import type Situation from "./Situation";
 import type PressExchange from "./PressExchange";
-import { type LevelStatus, type OutcomeSnapshotType } from "~/types";
-import { outcomeSnapshotSchema } from "~/lib/schemas";
+import {
+  type LevelStatus,
+  type OutcomeSnapshotType,
+  type CabinetSnapshot,
+} from "~/types";
+import { cabinetSnapshotSchema, outcomeSnapshotSchema } from "~/lib/schemas";
 
 export default class Level extends Model {
   static table = "levels";
@@ -33,6 +37,7 @@ export default class Level extends Model {
   @field("year") year!: number;
   @field("month") month!: number;
   @text("status") status!: LevelStatus;
+  @text("cabinet_snapshot") cabinetSnapshot!: string; // JSON string of CabinetSnapshotType
   @text("outcome_snapshot") outcomeSnapshot!: string | null;
 
   @field("game_id") game_id!: string;
@@ -41,6 +46,31 @@ export default class Level extends Model {
   @readonly @date("updated_at") updatedAt!: Date;
 
   // Actions
+  // --- Cabinet Snapshot ---
+  get parseCabinetSnapshot(): CabinetSnapshot | null {
+    if (!this.cabinetSnapshot) {
+      return null;
+    }
+
+    try {
+      const parsedData = JSON.parse(this.cabinetSnapshot);
+      const validationResult = cabinetSnapshotSchema.safeParse(parsedData);
+
+      if (!validationResult.success) {
+        console.warn(
+          "Level.cabinetSnapshot getter: Invalid data structure found in DB:",
+          validationResult.error.format()
+        );
+        return null;
+      }
+      return validationResult.data;
+    } catch (e) {
+      console.error(`Error parsing Level ${this.id} outcomeSnapshot:`, e);
+      console.error("Invalid JSON string:", this.outcomeSnapshot);
+      return null;
+    }
+  }
+
   // --- Outcome Snapshot ---
   get parseOutcomeSnapshot(): OutcomeSnapshotType | null {
     if (!this.outcomeSnapshot) {

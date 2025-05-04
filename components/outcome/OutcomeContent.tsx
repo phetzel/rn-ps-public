@@ -2,13 +2,17 @@ import { useState, useMemo } from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeLevel } from "~/lib/db/helpers/observations";
-import type { Level } from "~/lib/db/models";
+import {
+  observeLevel,
+  observeCabinetMembersByLevel,
+} from "~/lib/db/helpers/observations";
+import type { Level, CabinetMember } from "~/lib/db/models";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
 import { Text } from "~/components/ui/text";
 import OutcomeExchanges from "~/components/outcome/OutcomeExchanges";
 import RelationshipsAdministrationCard from "./RelationshipsAdminCard";
 import RelationshipsCabinetCard from "./RelationshipsCabinetCard";
+import { CabinetStaticId } from "~/types";
 
 interface OutcomeContentProps {
   gameId: string;
@@ -23,7 +27,6 @@ const OutcomeContent = ({ gameId, levelId, level }: OutcomeContentProps) => {
   if (!outcomeSnapshot) {
     return null;
   }
-
   return (
     <Tabs
       value={currentTab}
@@ -46,7 +49,7 @@ const OutcomeContent = ({ gameId, levelId, level }: OutcomeContentProps) => {
       <TabsContent value="admin" className="gap-4">
         <RelationshipsAdministrationCard outcomeSnapshot={outcomeSnapshot} />
         <RelationshipsCabinetCard
-          gameId={gameId}
+          levelId={levelId}
           outcomeSnapshot={outcomeSnapshot}
         />
       </TabsContent>

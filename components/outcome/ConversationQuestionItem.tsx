@@ -1,6 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
+// Store
+import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
+import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 // Components
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
@@ -25,6 +28,12 @@ export default function ConversationQuestionItem({
   interaction,
   isFirstQuestion,
 }: ConversationQuestionItemProps) {
+  const { currentLevelId } = useCurrentLevelStore();
+  const { currentGameId } = useGameManagerStore();
+  if (!currentLevelId || !currentGameId) {
+    return null;
+  }
+
   const answer = interaction?.answerId
     ? question.answers.find((a) => a.id === interaction.answerId)
     : null;
@@ -136,7 +145,13 @@ export default function ConversationQuestionItem({
       {isAsked && <View>{renderAnswer()}</View>}
 
       {/* Impacts */}
-      {isAsked && answer && <ImpactList impacts={answer.impacts} />}
+      {isAsked && answer && (
+        <ImpactList
+          gameId={currentGameId}
+          levelId={currentLevelId}
+          impacts={answer.impacts}
+        />
+      )}
     </View>
   );
 }
