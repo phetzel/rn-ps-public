@@ -80,6 +80,69 @@ export interface StaticJournalist {
   name: string;
 }
 
+// Press Exchange Types
+export interface ExchangeImpact {
+  weight: number;
+  reaction?: string;
+}
+
+export interface ExchangeImpacts {
+  president?: ExchangeImpact;
+  cabinet?: Partial<Record<CabinetStaticId, ExchangeImpact>>;
+  subgroups?: Partial<Record<SubgroupStaticId, ExchangeImpact>>;
+  journalists?: Partial<Record<JournalistStaticId, ExchangeImpact>>;
+}
+
+export enum AnswerOutcomeModifier {
+  StronglyPositive = 15,
+  Positive = 10,
+  SlightlyPositive = 5,
+  Neutral = 0,
+  SlightlyNegative = -5,
+  Negative = -10,
+  StronglyNegative = -15,
+}
+
+export interface Answer {
+  id: string;
+  text: string;
+  impacts: ExchangeImpacts;
+  outcomeModifiers: {
+    [outcomeId: string]: AnswerOutcomeModifier;
+  };
+  followUpId?: string;
+}
+
+export interface Question {
+  id: string;
+  text: string;
+  depth: number; // 0 for main questions, 1+ for follow-ups
+  answers: Answer[];
+}
+
+export interface ExchangeContent {
+  // Static JSON data
+  questions: Record<string, Question>; // Map of questions by ID
+  rootQuestionId: string; // The starting question ID
+}
+
+export interface ExchangeHistoryItem {
+  questionId: string;
+  answerId?: string;
+  skipped: boolean;
+}
+
+export interface ExchangeProgress {
+  // User progress/choices
+  history: ExchangeHistoryItem[];
+  currentQuestionId: string | null; // Current question the user is on, null if complete
+}
+
+export interface ExchangeData {
+  content: ExchangeContent;
+  journalist: JournalistStaticId;
+}
+
 // Situation Types
 export enum SituationType {
   Domestic = "domestic",
@@ -88,6 +151,39 @@ export enum SituationType {
   Economic = "economic",
   Security = "security",
   PublicSentiment = "public_sentiment",
+}
+
+export interface SituationTrigger {
+  staticKey: string;
+  type: SituationType;
+  requirements: {
+    year?: {
+      min?: number;
+      max?: number;
+    };
+    month?: {
+      min?: number;
+      max?: number;
+    };
+    president?: {
+      minApproval?: number;
+      maxApproval?: number;
+      party?: PoliticalParty;
+    };
+    cabinet?: {
+      [key in CabinetStaticId]?: {
+        minApproval?: number;
+        maxApproval?: number;
+      };
+    };
+    subgroups?: {
+      [key in SubgroupStaticId]?: {
+        minApproval?: number;
+        maxApproval?: number;
+      };
+    };
+  };
+  isFollowUp?: boolean;
 }
 
 export enum PreferenceWeight {
@@ -112,54 +208,54 @@ export interface SituationPreferences {
   };
 }
 
-export interface SituationContent {
-  preferences?: SituationPreferences;
+export enum SituationConsequenceWeight {
+  StronglyPositive = 15,
+  Positive = 10,
+  SlightlyPositive = 5,
+  Neutral = 0,
+  SlightlyNegative = -5,
+  Negative = -10,
+  StronglyNegative = -15,
 }
 
-// Press Exchange Types
-export interface ExchangeImpact {
-  weight: number;
-  reaction?: string;
+export interface SituationConsequence {
+  approvalChanges: {
+    president?: SituationConsequenceWeight;
+    cabinet?: {
+      [key in CabinetStaticId]?: SituationConsequenceWeight;
+    };
+    subgroups?: {
+      [key in SubgroupStaticId]?: SituationConsequenceWeight;
+    };
+  };
+  effects?: {
+    isFiredPresident?: boolean;
+    isFiredPressSecretary?: boolean;
+    firedCabinetMemberId?: CabinetStaticId;
+  };
 }
 
-export interface ExchangeImpacts {
-  president?: ExchangeImpact;
-  cabinet?: Partial<Record<CabinetStaticId, ExchangeImpact>>;
-  subgroups?: Partial<Record<SubgroupStaticId, ExchangeImpact>>;
-  journalists?: Partial<Record<JournalistStaticId, ExchangeImpact>>;
-}
-
-export interface Answer {
+export interface SituationOutcome {
   id: string;
-  text: string;
-  impacts: ExchangeImpacts;
+  title: string;
+  description: string;
+  weight: number;
+  consequences: SituationConsequence;
   followUpId?: string;
 }
 
-export interface Question {
-  id: string;
-  text: string;
-  depth: number; // 0 for main questions, 1+ for follow-ups
-  answers: Answer[];
+export interface SituationContent {
+  preferences: SituationPreferences;
+  outcomes: SituationOutcome[];
 }
 
-export interface ExchangeContent {
-  // Static JSON data
-  situationStage: number;
-  questions: Record<string, Question>; // Map of questions by ID
-  rootQuestionId: string; // The starting question ID
-}
-
-export interface ExchangeHistoryItem {
-  questionId: string;
-  answerId?: string;
-  skipped: boolean;
-}
-
-export interface ExchangeProgress {
-  // User progress/choices
-  history: ExchangeHistoryItem[];
-  currentQuestionId: string | null; // Current question the user is on, null if complete
+export interface SituationData {
+  trigger: SituationTrigger;
+  type: SituationType;
+  title: string;
+  description: string;
+  content: SituationContent;
+  exchanges: ExchangeData[];
 }
 
 // Relationship Snapshot
@@ -196,14 +292,6 @@ export interface NewGameDetails {
   pressSecretaryName: string;
   presidentName: string;
   presidentParty: PoliticalParty;
-  // Add party etc. later
-}
-
-export interface NewSituationData {
-  type: SituationType;
-  title: string;
-  description: string;
-  content: string;
 }
 
 // Journalist Exchange Types

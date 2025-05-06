@@ -20,7 +20,7 @@ import type SubgroupApproval from "./SubgroupApproval";
 import { GameStatus, PoliticalParty } from "~/types";
 
 export default class Game extends Model {
-  static table = "games"; // Corresponds to the table name in the schema
+  static table = "games";
 
   static associations: Associations = {
     levels: { type: "has_many", foreignKey: "game_id" },
@@ -31,8 +31,6 @@ export default class Game extends Model {
     subgroup_approvals: { type: "has_many", foreignKey: "game_id" },
   };
 
-  // Define relations to child tables
-  // @children(tableName) defines a has-many relationship
   @children("levels") levels!: Query<Level>;
   @children("cabinet_members") cabinetMembers!: Query<CabinetMember>;
   @children("publications") publications!: Query<Publication>;
@@ -48,14 +46,14 @@ export default class Game extends Model {
   @field("pres_approval_rating") presApprovalRating!: number;
   @field("pres_ps_relationship") presPsRelationship!: number;
   @text("pres_party") presParty!: PoliticalParty;
+  @text("used_situations") usedSituations!: string; // JSON array of situation ids
   @field("start_timestamp") startTimestamp!: number;
   @field("end_timestamp") endTimestamp!: number | null; // Optional number
 
   @readonly @date("created_at") createdAt!: Date; // WDB manages this
   @readonly @date("updated_at") updatedAt!: Date; // WDB manages this
 
-  // --- Optional: Add Model-specific methods ---
-  // Example: Action to advance time
+  // Action to advance time
   @writer async advanceMonth() {
     await this.update((game) => {
       if (game.currentMonth === 12) {
@@ -65,5 +63,31 @@ export default class Game extends Model {
         game.currentMonth += 1;
       }
     });
+  }
+
+  // --- Helper methods for used situations ---
+  get usedSituationKeys(): string[] {
+    if (!this.usedSituations) {
+      return [];
+    }
+
+    try {
+      return JSON.parse(this.usedSituations);
+    } catch (e) {
+      console.error(`Error parsing usedSituations for game ${this.id}:`, e);
+      return [];
+    }
+  }
+
+  @writer async addUsedSituations(staticKeys: string[]) {
+    const currentKeys = this.usedSituationKeys;
+    const newKeys = staticKeys.filter((key) => !currentKeys.includes(key));
+
+    if (newKeys.length > 0) {
+      const updatedKeys = [...currentKeys, ...newKeys];
+      await this.update((game) => {
+        game.usedSituations = JSON.stringify(updatedKeys);
+      });
+    }
   }
 }

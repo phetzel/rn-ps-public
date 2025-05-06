@@ -5,6 +5,8 @@ import {
   JournalistStaticId,
   PoliticalParty,
   PreferenceWeight,
+  SituationConsequenceWeight,
+  AnswerOutcomeModifier,
 } from "~/types";
 
 // Form Schemas
@@ -61,7 +63,7 @@ export const outcomeSnapshotSchema = z.object({
   final: relationshipSnapshotSchema,
 });
 
-// Situation Progress Schema
+// Situation Schema
 export const preferenceSchema = z.object({
   weight: z.nativeEnum(PreferenceWeight),
   rationale: z.string(),
@@ -72,8 +74,43 @@ export const situationPreferencesSchema = z.object({
   cabinet: z.record(z.nativeEnum(CabinetStaticId), preferenceSchema).optional(),
 });
 
+export const consequenceSchema = z.object({
+  approvalChanges: z.object({
+    president: z.nativeEnum(SituationConsequenceWeight).optional(),
+    cabinet: z
+      .record(
+        z.nativeEnum(CabinetStaticId),
+        z.nativeEnum(SituationConsequenceWeight)
+      )
+      .optional(),
+    subgroups: z
+      .record(
+        z.nativeEnum(SubgroupStaticId),
+        z.nativeEnum(SituationConsequenceWeight)
+      )
+      .optional(),
+  }),
+  effects: z
+    .object({
+      isFiredPresident: z.boolean().optional(),
+      isFiredPressSecretary: z.boolean().optional(),
+      firedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
+    })
+    .optional(),
+});
+
+export const situationOutcomeSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  weight: z.number(),
+  consequences: consequenceSchema,
+  followUpId: z.string().optional(),
+});
+
 export const situationContentSchema = z.object({
-  preferences: situationPreferencesSchema.optional(),
+  preferences: situationPreferencesSchema,
+  outcomes: z.array(situationOutcomeSchema),
 });
 
 // Question Data Schema
@@ -100,6 +137,9 @@ export const answerSchema = z.object({
   id: z.string(),
   text: z.string(),
   impacts: exchangeImpactsSchema,
+  outcomeModifiers: z
+    .record(z.string(), z.nativeEnum(AnswerOutcomeModifier))
+    .optional(),
   followUpId: z.string().optional(),
 });
 
@@ -111,7 +151,6 @@ export const questionSchema = z.object({
 });
 
 export const exchangeContentSchema = z.object({
-  situationStage: z.number(),
   questions: z.record(z.string(), questionSchema),
   rootQuestionId: z.string(),
 });

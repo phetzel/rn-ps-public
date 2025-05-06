@@ -34,6 +34,7 @@ export default class Situation extends Model {
   @text("title") title!: string;
   @text("description") description!: string;
   @text("content") content!: string; // JSON string for static situation data
+  @text("outcome_id") outcomeId?: string;
 
   @field("game_id") game_id!: string;
   @field("level_id") level_id!: string;
@@ -69,6 +70,49 @@ export default class Situation extends Model {
       console.error(`Error parsing Situation ${this.id} content:`, e);
       // Log this.content
       console.error("Invalid JSON string:", this.content);
+      return null;
+    }
+  }
+
+  // Helper method to set the outcome
+  @writer async setOutcome(outcomeId: string) {
+    await this.update((situation) => {
+      situation.outcomeId = outcomeId;
+    });
+  }
+
+  // Helper method to check if this situation has a follow-up
+  get hasFollowUp(): boolean {
+    if (!this.outcomeId || !this.content) {
+      return false;
+    }
+
+    try {
+      const parsedContent = JSON.parse(this.content) as SituationContent;
+      const outcome = parsedContent.outcomes.find(
+        (o) => o.id === this.outcomeId
+      );
+      return !!outcome?.followUpId;
+    } catch (e) {
+      console.error(`Error checking for follow-up in situation ${this.id}:`, e);
+      return false;
+    }
+  }
+
+  // Get the follow-up situation ID if there is one
+  get followUpId(): string | null {
+    if (!this.outcomeId || !this.content) {
+      return null;
+    }
+
+    try {
+      const parsedContent = JSON.parse(this.content) as SituationContent;
+      const outcome = parsedContent.outcomes.find(
+        (o) => o.id === this.outcomeId
+      );
+      return outcome?.followUpId || null;
+    } catch (e) {
+      console.error(`Error getting follow-up ID for situation ${this.id}:`, e);
       return null;
     }
   }

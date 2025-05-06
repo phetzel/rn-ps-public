@@ -65,6 +65,7 @@ export async function createGameWithDetails(
       game.presApprovalRating = 50;
       game.presPsRelationship = 80;
       game.presParty = details.presidentParty;
+      game.usedSituations = JSON.stringify([]);
       game.startTimestamp = Math.floor(Date.now() / 1000);
     });
     const gameId = newGame.id;

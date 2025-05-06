@@ -9,22 +9,18 @@ import {
   updateRelationships,
   calculatePressImpactsForLevel,
   // Press Conference API
-  createPressExchangesForConference,
   fetchPressExchangesForLevel,
   // Situation API
   fetchSituationsByLevelId,
   createSituationsForLevel,
-  // Journalist API
-  fetchActiveJournalistsForGame,
+  selectSituationsForLevel,
   // Entity API
   takeSnapshot,
 } from "~/lib/db/helpers";
 
 import { Game, Level, Situation, PressExchange } from "~/lib/db/models";
-import { mockSituationData } from "~/lib/data/mockSituationData";
 import { QUESTIONS_PER_LEVEL } from "~/lib/constants";
 import { LevelStatus, OutcomeSnapshotType, ExchangeContent } from "~/types";
-import { mockExchanges } from "../data/mockQuestionData";
 
 interface CurrentLevelStoreState {
   currentLevelId: string | null;
@@ -42,7 +38,6 @@ interface CurrentLevelStoreState {
 
   // --- Press Conference Actions ---
   progressCurrentLevel: () => Promise<Level | null>;
-  generateExchanges: ({ level }: { level: Level }) => Promise<PressExchange[]>;
   applyOutcomes: ({ level }: { level: Level }) => Promise<void>;
 }
 
@@ -107,20 +102,29 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       set({ isLoading: true, error: null });
 
       try {
+        // 1. Advance the game month
         await game.advanceMonth();
 
+        // 2. Select situations for the level
+        const selectedSituations = await selectSituationsForLevel(game, 2);
+
+        // 3. Create the level
         const newLevel = await createLevel(game);
 
-        // Select random mock situations for the new level
-        const newSituations = [...mockSituationData]
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 2);
-
+        // 4. Create the situations in the database
         const createdSituations = await createSituationsForLevel(
           game,
           newLevel,
-          newSituations
+          selectedSituations
         );
+
+        // 5. Get the static keys of the selected situations for tracking
+        const situationKeys = selectedSituations
+          .map((situation) => situation.trigger?.staticKey)
+          .filter((key) => key) as string[];
+
+        // 6. Update the game's used situations
+        await game.addUsedSituations(situationKeys);
 
         if (newLevel) {
           set({ currentLevelId: newLevel.id, isLoading: false, error: null });
@@ -156,7 +160,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         }
 
         if (level.status === LevelStatus.Briefing) {
-          await get().generateExchanges({ level });
           await updateLevelStatus(currentLevelId, LevelStatus.PressConference);
         } else if (level.status === LevelStatus.PressConference) {
           await get().applyOutcomes({ level });
@@ -172,74 +175,6 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       }
     },
 
-    // --- Press Conference Progression ---
-    generateExchanges: async ({ level }: { level: Level }) => {
-      // Fetch situations associated with *this* level
-      const situations = await fetchSituationsByLevelId(level.id);
-
-      if (!situations || situations.length === 0) {
-        console.warn(`No situations found for level ${level.id}`);
-        return [];
-      }
-
-      // Get Journalists Info
-      const journalists = await fetchActiveJournalistsForGame(level.game_id);
-      if (!journalists || journalists.length === 0) {
-        throw new Error("No active journalists found for this game");
-      }
-
-      // Select a subset of journalists for this press conference
-      const selectedJournalists = journalists
-        .sort(() => 0.5 - Math.random())
-        .slice(0, Math.min(journalists.length, QUESTIONS_PER_LEVEL));
-
-      // Prepare question data for each selected journalist
-      const preparedExchanges = selectedJournalists.map((journalist, index) => {
-        // Randomly assign a situation to this question
-        const situation =
-          situations[Math.floor(Math.random() * situations.length)];
-
-        // Find mock questions appropriate for this situation type
-        const mockExchangesForType = mockExchanges.filter(
-          (e) => e.situationType === situation.type
-        );
-
-        // Select a random mock question or fallback to a generic one
-        const mockExchange =
-          mockExchangesForType.length > 0
-            ? mockExchangesForType[
-                Math.floor(Math.random() * mockExchangesForType.length)
-              ]
-            : mockExchanges[0];
-
-        const content: ExchangeContent = JSON.parse(
-          JSON.stringify(mockExchange.content)
-        );
-
-        // Replace situation placeholders in all question texts
-        Object.values(content.questions).forEach((question) => {
-          question.text = question.text
-            .replace(/{situation_title}/g, situation.title)
-            .replace(/{situation_description}/g, situation.description);
-        });
-
-        // Prepare the question record data
-        return {
-          level,
-          situation,
-          journalist,
-          content: JSON.stringify(content),
-          progress: null,
-          displayOrder: index,
-        };
-      });
-
-      const exchanges = await createPressExchangesForConference(
-        preparedExchanges
-      );
-      return exchanges;
-    },
-
     // --- Outcome Progression ---
     applyOutcomes: async ({ level }: { level: Level }) => {
       // Get the game ID
@@ -248,19 +183,16 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       // 1. Take initial snapshot
       const initialSnapshot = await takeSnapshot(gameId);
 
-      // 2. Fetch all press exchanges for the level
-      const pressExchanges = await fetchPressExchangesForLevel(level.id);
-
-      // 3. Calculate impacts from exchanges
+      // 2. Calculate impacts from exchanges
       const impacts = await calculatePressImpactsForLevel(level.id);
 
-      // 4. Apply impacts to game entities
+      // 3. Apply impacts to game entities
       await updateRelationships(gameId, impacts);
 
-      // 5. Take final snapshot
+      // 4. Take final snapshot
       const finalSnapshot = await takeSnapshot(gameId);
 
-      // 6. Create outcome snapshot
+      // 5. Create outcome snapshot
       const outcomeSnapshot: OutcomeSnapshotType = {
         initial: initialSnapshot,
         final: finalSnapshot,
