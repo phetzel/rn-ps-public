@@ -258,6 +258,41 @@ export interface SituationData {
   exchanges: ExchangeData[];
 }
 
+// Delta types for outcomes
+export interface PsRelationshipDeltas {
+  president: number;
+  cabinetMembers: {
+    [key in CabinetStaticId]?: number;
+  };
+  journalists: {
+    [key in JournalistStaticId]?: number;
+  };
+}
+export interface ApprovalRatingDeltas {
+  // Note: President's overall approval rating is typically an outcome of general sentiment
+  // or significant situation consequences, rather than direct answer impacts.
+  // If your game design allows single answers to directly impact President's approval,
+  president?: number;
+  cabinetMembers?: {
+    [key in CabinetStaticId]?: number;
+  };
+  subgroups?: {
+    [key in SubgroupStaticId]?: number;
+  };
+}
+
+export interface SituationOutcomeWeightDeltas {
+  [situationId: string]: {
+    [outcomeId: string]: number;
+  };
+}
+
+export interface PressConferenceRawEffects {
+  psRelationshipDeltas: PsRelationshipDeltas;
+  // approvalRatingDeltas: ApprovalRatingDeltas;
+  situationOutcomeWeightDeltas: SituationOutcomeWeightDeltas;
+}
+
 // Relationship Snapshot
 export interface RelationshipSnapshot {
   president: {

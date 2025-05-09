@@ -15,7 +15,11 @@ import type Game from "./Game";
 import type Level from "./Level";
 import type PressExchange from "./PressExchange";
 import { situationContentSchema } from "~/lib/schemas";
-import type { SituationType, SituationContent } from "~/types";
+import type {
+  SituationType,
+  SituationContent,
+  SituationOutcome,
+} from "~/types";
 
 export default class Situation extends Model {
   static table = "situations";
@@ -34,7 +38,7 @@ export default class Situation extends Model {
   @text("title") title!: string;
   @text("description") description!: string;
   @text("content") content!: string; // JSON string for static situation data
-  @text("outcome_id") outcomeId?: string;
+  @text("outcome_id") outcomeId!: string | null;
 
   @field("game_id") game_id!: string;
   @field("level_id") level_id!: string;
@@ -74,14 +78,23 @@ export default class Situation extends Model {
     }
   }
 
-  // Helper method to set the outcome
+  // Helper methods for outcome
   @writer async setOutcome(outcomeId: string) {
     await this.update((situation) => {
       situation.outcomeId = outcomeId;
     });
   }
 
-  // Helper method to check if this situation has a follow-up
+  get outcome(): SituationOutcome | null {
+    const content = this.parseContent;
+    if (!this.outcomeId || !content || !content.outcomes) {
+      return null;
+    }
+
+    return content.outcomes.find((o) => o.id === this.outcomeId) || null;
+  }
+
+  // Helper methods for follow-up
   get hasFollowUp(): boolean {
     if (!this.outcomeId || !this.content) {
       return false;
@@ -99,7 +112,6 @@ export default class Situation extends Model {
     }
   }
 
-  // Get the follow-up situation ID if there is one
   get followUpId(): string | null {
     if (!this.outcomeId || !this.content) {
       return null;

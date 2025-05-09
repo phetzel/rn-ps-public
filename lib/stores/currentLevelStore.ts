@@ -6,21 +6,21 @@ import {
   fetchLevel,
   fetchLastLevel,
   updateLevelStatus,
-  updateRelationships,
-  calculatePressImpactsForLevel,
-  // Press Conference API
-  fetchPressExchangesForLevel,
   // Situation API
-  fetchSituationsByLevelId,
   createSituationsForLevel,
   selectSituationsForLevel,
+  determineSituationOutcomes,
   // Entity API
   takeSnapshot,
+  // Press Conference API
+  calculatePressConferenceRawEffects,
+  // Relationship API
+  applyRelationshipDeltas,
+  applySituationConsequences,
 } from "~/lib/db/helpers";
 
-import { Game, Level, Situation, PressExchange } from "~/lib/db/models";
-import { QUESTIONS_PER_LEVEL } from "~/lib/constants";
-import { LevelStatus, OutcomeSnapshotType, ExchangeContent } from "~/types";
+import { Game, Level, Situation } from "~/lib/db/models";
+import { LevelStatus, OutcomeSnapshotType } from "~/types";
 
 interface CurrentLevelStoreState {
   currentLevelId: string | null;
@@ -184,15 +184,22 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       const initialSnapshot = await takeSnapshot(gameId);
 
       // 2. Calculate impacts from exchanges
-      const impacts = await calculatePressImpactsForLevel(level.id);
+      const { psRelationshipDeltas, situationOutcomeWeightDeltas } =
+        await calculatePressConferenceRawEffects(level.id);
 
       // 3. Apply impacts to game entities
-      await updateRelationships(gameId, impacts);
+      await applyRelationshipDeltas(gameId, psRelationshipDeltas);
 
-      // 4. Take final snapshot
+      // 4. Determine outcomes for situations
+      await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
+
+      // 5. Apply consequences to game entities
+      await applySituationConsequences(gameId, level.id);
+
+      // 6. Take final snapshot
       const finalSnapshot = await takeSnapshot(gameId);
 
-      // 5. Create outcome snapshot
+      // 6. Create outcome snapshot
       const outcomeSnapshot: OutcomeSnapshotType = {
         initial: initialSnapshot,
         final: finalSnapshot,

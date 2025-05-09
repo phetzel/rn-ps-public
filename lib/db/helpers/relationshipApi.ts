@@ -1,17 +1,17 @@
 import { database } from "~/lib/db";
 
-import { CabinetMember, Journalist, SubgroupApproval } from "~/lib/db/models";
+import { fetchSituationsByLevelId } from "./situationApi";
 import { fetchGameEntities } from "./entityApi";
 import {
-  RelationshipSnapshot,
-  CabinetStaticId,
-  JournalistStaticId,
-  SubgroupStaticId,
+  PsRelationshipDeltas,
+  ApprovalRatingDeltas, // We'll use this for the aggregated deltas
+  CabinetStaticId, // Added
+  SubgroupStaticId, // Added
 } from "~/types";
 
-export async function updateRelationships(
+export async function applyRelationshipDeltas(
   gameId: string,
-  impacts: RelationshipSnapshot
+  deltas: PsRelationshipDeltas
 ) {
   // Fetch all needed entities
   const { game, cabinetMembers, publications, journalists, subgroups } =
@@ -21,121 +21,187 @@ export async function updateRelationships(
     throw new Error(`No game found with ID: ${gameId}`);
   }
 
-  // Helper function to format and prepare impacts for processing
-  const formatImpacts = () => {
-    // Create maps for quick lookup by static ID
-    const cabinetMap = new Map(cabinetMembers.map((m) => [m.staticId, m]));
-    const journalistMap = new Map(journalists.map((j) => [j.staticId, j]));
-    const subgroupMap = new Map(subgroups.map((s) => [s.staticId, s]));
+  return await database.write(async () => {
+    // --- Apply President PS Relationship Delta ---
+    if (deltas.president !== 0) {
+      await game.update((g) => {
+        g.presPsRelationship = g.presPsRelationship + deltas.president;
+      });
+    }
 
-    // Format cabinet impacts
-    const formattedCabinetImpacts = Object.entries(impacts.cabinetMembers || {})
-      .map(([staticId, impact]) => {
-        const member = cabinetMap.get(staticId as CabinetStaticId);
-        return {
-          member,
-          staticId: staticId as CabinetStaticId,
-          impact,
-        };
-      })
-      .filter(
-        (
-          item
-        ): item is {
-          member: CabinetMember;
-          staticId: CabinetStaticId;
-          impact: { approvalRating: number; psRelationship: number };
-        } => !!item.member && !!item.impact
-      );
+    // --- Apply Cabinet Member PS Relationship Deltas ---
+    if (deltas.cabinetMembers) {
+      for (const [staticId, deltaValue] of Object.entries(
+        deltas.cabinetMembers
+      )) {
+        if (deltaValue === 0) continue;
 
-    // Format journalist impacts
-    const formattedJournalistImpacts = Object.entries(impacts.journalists || {})
-      .map(([staticId, impact]) => {
-        const journalist = journalistMap.get(staticId as JournalistStaticId);
-        return {
-          journalist,
-          staticId: staticId as JournalistStaticId,
-          impact,
-        };
-      })
-      .filter(
-        (
-          item
-        ): item is {
-          journalist: Journalist;
-          staticId: JournalistStaticId;
-          impact: { psRelationship: number };
-        } => !!item.journalist && !!item.impact
-      );
+        const member = cabinetMembers.find((m) => m.staticId === staticId);
+        if (member) {
+          await member.update((m) => {
+            m.psRelationship = (m.psRelationship || 0) + deltaValue;
+          });
+        } else {
+          console.warn(
+            `Cabinet member with staticId ${staticId} not found for game ${gameId}.`
+          );
+        }
+      }
+    }
 
-    // Format subgroup impacts
-    const formattedSubgroupImpacts = Object.entries(impacts.subgroups || {})
-      .map(([staticId, impact]) => {
-        const subgroup = subgroupMap.get(staticId as SubgroupStaticId);
-        return {
-          subgroup,
-          staticId: staticId as SubgroupStaticId,
-          impact,
-        };
-      })
-      .filter(
-        (
-          item
-        ): item is {
-          subgroup: SubgroupApproval;
-          staticId: SubgroupStaticId;
-          impact: { approvalRating: number };
-        } => !!item.subgroup && !!item.impact
-      );
+    if (deltas.journalists) {
+      for (const [staticId, deltaValue] of Object.entries(deltas.journalists)) {
+        if (deltaValue === 0) continue;
 
-    return {
-      cabinetImpacts: formattedCabinetImpacts,
-      journalistImpacts: formattedJournalistImpacts,
-      subgroupImpacts: formattedSubgroupImpacts,
-    };
+        const journalist = journalists.find((j) => j.staticId === staticId);
+        if (journalist) {
+          await journalist.update((j) => {
+            j.psRelationship = (j.psRelationship || 0) + deltaValue;
+          });
+        } else {
+          console.warn(
+            `Journalist with staticId ${staticId} not found for game ${gameId}.`
+          );
+        }
+      }
+    }
+  });
+}
+
+// Applies the approval rating changes from the consequences of all resolved situation outcomes in a level.
+export async function applySituationConsequences(
+  gameId: string,
+  levelId: string
+): Promise<void> {
+  // 1. Fetch all situations for the level that have a chosen outcome.
+  const resolvedSituations = (await fetchSituationsByLevelId(levelId)).filter(
+    (s) => s.outcomeId !== null
+  );
+
+  if (resolvedSituations.length === 0) {
+    console.log(
+      `No resolved situations with outcomes found in level ${levelId} to apply consequences.`
+    );
+    return;
+  }
+
+  // 2. Aggregate all approval changes from these resolved situations
+  const totalApprovalDeltas: ApprovalRatingDeltas = {
+    // president, cabinetMembers, subgroups will be populated if impacts exist
   };
 
-  return await database.write(async () => {
-    // Update president
-    await game.update((g) => {
-      g.presPsRelationship = Math.max(
-        0,
-        Math.min(100, g.presPsRelationship + impacts.president.psRelationship)
+  for (const situation of resolvedSituations) {
+    const chosenOutcome = situation.outcome;
+
+    if (!chosenOutcome) {
+      console.warn(
+        `Situation ${situation.id} has an outcomeId (${situation.outcomeId}) but its full outcome data could not be retrieved. Skipping its consequences.`
       );
-    });
+      continue;
+    }
+    if (!chosenOutcome.consequences?.approvalChanges) {
+      console.log(
+        `Outcome ${chosenOutcome.id} for situation ${situation.id} has no approvalChanges defined.`
+      );
+      continue;
+    }
 
-    // Format impacts for better processing
-    const { cabinetImpacts, journalistImpacts, subgroupImpacts } =
-      formatImpacts();
+    const approvalChanges = chosenOutcome.consequences.approvalChanges;
 
-    // Update cabinet members
-    for (const { member, impact } of cabinetImpacts) {
-      await member.update((m) => {
-        m.psRelationship = Math.max(
-          0,
-          Math.min(100, m.psRelationship + impact.psRelationship)
-        );
+    // Aggregate President's approval change
+    if (approvalChanges.president !== undefined) {
+      totalApprovalDeltas.president =
+        (totalApprovalDeltas.president || 0) + approvalChanges.president;
+    }
+
+    // Aggregate Cabinet Members' approval changes
+    if (approvalChanges.cabinet) {
+      if (!totalApprovalDeltas.cabinetMembers)
+        totalApprovalDeltas.cabinetMembers = {};
+      for (const [staticId, change] of Object.entries(
+        approvalChanges.cabinet
+      )) {
+        if (change !== undefined) {
+          const cabStaticId = staticId as CabinetStaticId;
+          totalApprovalDeltas.cabinetMembers[cabStaticId] =
+            (totalApprovalDeltas.cabinetMembers[cabStaticId] || 0) + change;
+        }
+      }
+    }
+
+    // Aggregate Subgroups' approval changes
+    if (approvalChanges.subgroups) {
+      if (!totalApprovalDeltas.subgroups) totalApprovalDeltas.subgroups = {};
+      for (const [staticId, change] of Object.entries(
+        approvalChanges.subgroups
+      )) {
+        if (change !== undefined) {
+          const subStaticId = staticId as SubgroupStaticId;
+          totalApprovalDeltas.subgroups[subStaticId] =
+            (totalApprovalDeltas.subgroups[subStaticId] || 0) + change;
+        }
+      }
+    }
+  }
+
+  // 3. Fetch the game entities that will be updated.
+  const { game, cabinetMembers, subgroups } = await fetchGameEntities(gameId);
+
+  if (!game) {
+    throw new Error(`No game found with ID: ${gameId}`);
+  }
+
+  return await database.write(async () => {
+    // Apply President's approval rating delta
+
+    if (
+      totalApprovalDeltas.president !== undefined &&
+      totalApprovalDeltas.president !== 0
+    ) {
+      await game.update((g) => {
+        g.presApprovalRating =
+          (g.presApprovalRating || 0) + totalApprovalDeltas.president!;
       });
     }
 
-    // Update journalists
-    for (const { journalist, impact } of journalistImpacts) {
-      await journalist.update((j) => {
-        j.psRelationship = Math.max(
-          0,
-          Math.min(100, j.psRelationship + impact.psRelationship)
-        );
-      });
+    // Apply Cabinet Members' approval rating deltas
+    if (totalApprovalDeltas.cabinetMembers) {
+      for (const [staticId, deltaValue] of Object.entries(
+        totalApprovalDeltas.cabinetMembers
+      )) {
+        if (deltaValue === undefined || deltaValue === 0) continue;
+
+        const member = cabinetMembers.find((m) => m.staticId === staticId);
+        if (member) {
+          await member.update((m) => {
+            m.approvalRating = (m.approvalRating || 0) + deltaValue;
+          });
+        } else {
+          console.warn(
+            `Cabinet member with staticId ${staticId} not found for game ${gameId} while applying situation consequences.`
+          );
+        }
+      }
     }
 
-    // Update subgroups
-    for (const { subgroup, impact } of subgroupImpacts) {
-      await subgroup.update((s) => {
-        s.approvalRating = Math.max(
-          0,
-          Math.min(100, s.approvalRating + impact.approvalRating)
-        );
-      });
+    // Apply Subgroups' approval rating deltas
+    if (totalApprovalDeltas.subgroups) {
+      for (const [staticId, deltaValue] of Object.entries(
+        totalApprovalDeltas.subgroups
+      )) {
+        if (deltaValue === undefined || deltaValue === 0) continue;
+
+        const subgroupApproval = subgroups.find((s) => s.staticId === staticId);
+        if (subgroupApproval) {
+          await subgroupApproval.update((s) => {
+            s.approvalRating = (s.approvalRating || 0) + deltaValue;
+          });
+        } else {
+          console.warn(
+            `Subgroup with staticId ${staticId} not found for game ${gameId} while applying situation consequences.`
+          );
+        }
+      }
     }
   });
 }
