@@ -5,8 +5,9 @@ import {
   CabinetStaticId,
   SubgroupStaticId,
   SituationConsequenceWeight,
-  JournalistStaticId,
+  PublicationStaticId,
   AnswerOutcomeModifier,
+  JournalistStaticId,
 } from "~/types";
 
 export const infrastructureBill: SituationData = {
@@ -14,10 +15,6 @@ export const infrastructureBill: SituationData = {
     staticKey: "infrastructure_bill",
     type: SituationType.Domestic,
     requirements: {
-      level: {
-        min: 2,
-        max: 6,
-      },
       president: {
         minApproval: 40,
       },
@@ -389,7 +386,7 @@ export const infrastructureBill: SituationData = {
         },
         rootQuestionId: "infra-main",
       },
-      journalist: JournalistStaticId.IndependentPrimaryFirst,
+      publication: PublicationStaticId.IndependentPrimary,
     },
     {
       content: {
@@ -466,7 +463,7 @@ export const infrastructureBill: SituationData = {
         },
         rootQuestionId: "infra-funding",
       },
-      journalist: JournalistStaticId.ConPrimaryFirst,
+      publication: PublicationStaticId.ConPrimary,
     },
     {
       content: {
@@ -534,7 +531,7 @@ export const infrastructureBill: SituationData = {
         },
         rootQuestionId: "infra-economic",
       },
-      journalist: JournalistStaticId.LibPrimaryFirst,
+      publication: PublicationStaticId.LibPrimary,
     },
   ],
 };

@@ -60,19 +60,26 @@ export enum PublicationStaticId {
   LibPrimary = "lib_primary",
   ConPrimary = "con_primary",
   IndependentPrimary = "independent_primary",
+  Investigative = "investigative",
 }
 
 export interface StaticPublication {
   name: string;
+  description: string;
   politicalLeaning: PoliticalLeaning;
 }
 
 export enum JournalistStaticId {
-  LibPrimaryFirst = "lib_primary_first",
-  LibPrimarySecond = "lib_primary_second",
-  ConPrimaryFirst = "con_primary_first",
-  ConPrimarySecond = "con_primary_second",
-  IndependentPrimaryFirst = "independent_primary_first",
+  LibPrimaryA = "lib_primary_a",
+  LibPrimaryB = "lib_primary_b",
+  LibPrimaryC = "lib_primary_c",
+  ConPrimaryA = "con_primary_a",
+  ConPrimaryB = "con_primary_b",
+  ConPrimaryC = "con_primary_c",
+  IndependentA = "independent_a",
+  IndependentB = "independent_b",
+  InvestigativeA = "investigative_a",
+  InvestigativeB = "investigative_b",
 }
 
 export interface StaticJournalist {
@@ -140,7 +147,7 @@ export interface ExchangeProgress {
 
 export interface ExchangeData {
   content: ExchangeContent;
-  journalist: JournalistStaticId;
+  publication: PublicationStaticId;
 }
 
 // Situation Types

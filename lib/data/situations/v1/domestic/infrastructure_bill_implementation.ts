@@ -9,6 +9,7 @@ import {
   JournalistStaticId,
   AnswerOutcomeModifier,
   PoliticalParty,
+  PublicationStaticId,
 } from "~/types";
 
 export const infrastructureBillImplementation: SituationData = {
@@ -243,7 +244,7 @@ export const infrastructureBillImplementation: SituationData = {
         },
         rootQuestionId: "implement-progress",
       },
-      journalist: JournalistStaticId.IndependentPrimaryFirst,
+      publication: PublicationStaticId.IndependentPrimary,
     },
     {
       content: {
@@ -308,7 +309,7 @@ export const infrastructureBillImplementation: SituationData = {
         },
         rootQuestionId: "implement-jobs",
       },
-      journalist: JournalistStaticId.LibPrimaryFirst,
+      publication: PublicationStaticId.LibPrimary,
     },
     {
       content: {
@@ -381,7 +382,7 @@ export const infrastructureBillImplementation: SituationData = {
         },
         rootQuestionId: "implement-delays",
       },
-      journalist: JournalistStaticId.ConPrimaryFirst,
+      publication: PublicationStaticId.ConPrimary,
     },
   ],
 };

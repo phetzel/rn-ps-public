@@ -4,9 +4,9 @@ import { fetchSituationsByLevelId } from "./situationApi";
 import { fetchGameEntities } from "./entityApi";
 import {
   PsRelationshipDeltas,
-  ApprovalRatingDeltas, // We'll use this for the aggregated deltas
-  CabinetStaticId, // Added
-  SubgroupStaticId, // Added
+  ApprovalRatingDeltas,
+  CabinetStaticId,
+  SubgroupStaticId,
 } from "~/types";
 
 export async function applyRelationshipDeltas(

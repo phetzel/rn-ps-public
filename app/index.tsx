@@ -30,7 +30,7 @@ interface ScreenProps {
   games: Game[];
 }
 
-export function Screen({ games }: ScreenProps) {
+export function HomeScreen({ games }: ScreenProps) {
   const router = useRouter();
 
   // Get state and actions from the *new* store
@@ -157,4 +157,4 @@ const enhance = withObservables([], () => ({
 }));
 
 // Export the HOC-wrapped component as the default
-export default enhance(Screen);
+export default enhance(HomeScreen);

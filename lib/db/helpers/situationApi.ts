@@ -4,12 +4,16 @@ import { database } from "~/lib/db";
 import { situationCollection, pressExchangeCollection } from "./collections";
 import { Situation, Game, Level } from "~/lib/db/models";
 import { fetchActiveJournalistsForGame } from "./entityApi";
+import { staticJournalists } from "~/lib/data/staticMedia";
 import { situationsData } from "~/lib/data/situations/v1";
 import {
   SituationData,
   SituationOutcomeWeightDeltas,
   SituationContent,
   SituationOutcome,
+  SituationType,
+  PublicationStaticId,
+  JournalistStaticId,
 } from "~/types";
 
 export async function fetchSituationsByLevelId(
@@ -35,11 +39,26 @@ export async function createSituationsForLevel(
     throw new Error("No active journalists found for this game");
   }
 
-  // Create a map of static journalist IDs to actual models
-  const journalistMap = journalists.reduce((map, journalist) => {
-    map[journalist.staticId] = journalist;
-    return map;
-  }, {} as Record<string, (typeof journalists)[0]>);
+  // Create maps for easier lookup
+  const journalistsByPublication: Partial<
+    Record<PublicationStaticId, typeof journalists>
+  > = {};
+
+  // Group journalists by publication
+  journalists.forEach((journalist) => {
+    const staticJournalist =
+      staticJournalists[journalist.staticId as JournalistStaticId];
+    if (staticJournalist) {
+      const publicationId = staticJournalist.publicationStaticId;
+      if (!journalistsByPublication[publicationId]) {
+        journalistsByPublication[publicationId] = [];
+      }
+      journalistsByPublication[publicationId].push(journalist);
+    }
+  });
+
+  // Track assigned journalists per level
+  const assignedJournalists = new Set<string>();
 
   return await database.write(async () => {
     const createdSituations = await Promise.all(
@@ -65,14 +84,30 @@ export async function createSituationsForLevel(
 
       // Create each exchange for this situation
       for (const exchange of situationData.exchanges) {
-        // Get the journalist model for this exchange
-        const journalist = journalistMap[exchange.journalist];
-        if (!journalist) {
+        // Get publication for this exchange
+        const publicationId = exchange.publication;
+        const availableJournalists = journalistsByPublication[publicationId];
+
+        if (!availableJournalists || availableJournalists.length === 0) {
           console.warn(
-            `Journalist ${exchange.journalist} not found, skipping exchange`
+            `No available journalists for publication ${publicationId}, skipping exchange`
           );
           continue;
         }
+
+        // Filter out already assigned journalists
+        const unassignedJournalists = availableJournalists.filter(
+          (j) => !assignedJournalists.has(j.id)
+        );
+
+        // If no unassigned journalists, try to use any journalist from this publication as fallback
+        const journalist =
+          unassignedJournalists.length > 0
+            ? unassignedJournalists[0]
+            : availableJournalists[0];
+
+        // Mark this journalist as assigned
+        assignedJournalists.add(journalist.id);
 
         // Create initial progress
         const initialProgress = {
@@ -189,21 +224,27 @@ export async function selectSituationsForLevel(
   // 1. Get any follow-up situations from previous level outcomes
   const followUpSituations = await getFollowUpSituations(game);
 
-  // 2. Calculate how many regular situations we need
+  // 2. Filter follow-up situations to ensure only one per type
+  const seenTypes = new Set<SituationType>();
+  followUpSituations.forEach((situation) => {
+    seenTypes.add(situation.type);
+  });
+
+  // 3. Calculate how many regular situations we need
   const neededRegularSituations = Math.max(
     0,
     count - followUpSituations.length
   );
 
-  // 3. If we have enough follow-ups, return them
+  // 4. If we have enough follow-ups, return them
   if (neededRegularSituations <= 0) {
     return followUpSituations.slice(0, count);
   }
 
-  // 4. Get used situation keys
+  // 5. Get used situation keys
   const usedKeys = game.usedSituationKeys;
 
-  // 5. Filter the available situations
+  // 6. Filter the available situations
   let availableSituations = situationsData.filter(
     (situation) =>
       // Must have a trigger
@@ -211,37 +252,63 @@ export async function selectSituationsForLevel(
       // Not already used
       !usedKeys.includes(situation.trigger.staticKey) &&
       // Not a follow-up situation (those are handled separately)
-      !situation.trigger.isFollowUp
+      !situation.trigger.isFollowUp &&
+      // Must not be of a type we've already selected
+      !seenTypes.has(situation.type)
   );
 
-  // 6. Filter by game requirements
+  // 7. Filter by game requirements
   availableSituations = filterSituationsByRequirements(
     availableSituations,
     game,
     currentLevel
   );
 
-  // 7. Handle the case where we don't have enough situations
-  if (availableSituations.length < neededRegularSituations) {
-    console.warn(
-      `Not enough available situations (needed ${neededRegularSituations}, found ${availableSituations.length}). Using random ones.`
+  // 8. Select situations one by one, updating the filter each time
+  const selectedRegularSituations: SituationData[] = [];
+
+  while (
+    selectedRegularSituations.length < neededRegularSituations &&
+    availableSituations.length > 0
+  ) {
+    // Select a random situation
+    const randomIndex = Math.floor(Math.random() * availableSituations.length);
+    const selectedSituation = availableSituations[randomIndex];
+
+    // Add it to our result
+    selectedRegularSituations.push(selectedSituation);
+
+    // Add this type to seen types
+    seenTypes.add(selectedSituation.type);
+
+    // Remove this situation and any others of the same type
+    availableSituations = availableSituations.filter(
+      (s) => s !== selectedSituation && s.type !== selectedSituation.type
     );
-
-    // Fall back to random situations as a last resort
-    const randomSituations = situationsData
-      .filter((s) => !s.trigger?.isFollowUp)
-      .sort(() => 0.5 - Math.random())
-      .slice(0, neededRegularSituations - availableSituations.length);
-
-    availableSituations = [...availableSituations, ...randomSituations];
   }
 
-  // 8. Select random situations from the filtered list
-  const selectedRegularSituations = [...availableSituations]
-    .sort(() => 0.5 - Math.random())
-    .slice(0, neededRegularSituations);
+  // 9. Handle the case where we still don't have enough situations after trying to select one of each type
+  if (selectedRegularSituations.length < neededRegularSituations) {
+    console.warn(
+      `Not enough available situations with unique types (needed ${neededRegularSituations}, found ${selectedRegularSituations.length}). Using random ones.`
+    );
 
-  // 9. Combine follow-ups and regular situations
+    // Fall back to random situations that don't match already used keys
+    const remainingNeeded =
+      neededRegularSituations - selectedRegularSituations.length;
+    const randomSituations = situationsData
+      .filter(
+        (s) =>
+          !s.trigger?.isFollowUp &&
+          !usedKeys.includes(s.trigger?.staticKey || "")
+      )
+      .sort(() => 0.5 - Math.random())
+      .slice(0, remainingNeeded);
+
+    selectedRegularSituations.push(...randomSituations);
+  }
+
+  // 10. Combine follow-ups and regular situations
   return [...followUpSituations, ...selectedRegularSituations];
 }
 

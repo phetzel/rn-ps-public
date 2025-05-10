@@ -6,8 +6,9 @@ import {
   CabinetStaticId,
   SubgroupStaticId,
   SituationConsequenceWeight,
-  JournalistStaticId,
+  PublicationStaticId,
   AnswerOutcomeModifier,
+  JournalistStaticId,
 } from "~/types";
 
 export const inflationConcerns: SituationData = {
@@ -269,7 +270,7 @@ export const inflationConcerns: SituationData = {
         },
         rootQuestionId: "inflation-response",
       },
-      journalist: JournalistStaticId.IndependentPrimaryFirst,
+      publication: PublicationStaticId.IndependentPrimary,
     },
     {
       content: {
@@ -345,7 +346,7 @@ export const inflationConcerns: SituationData = {
         },
         rootQuestionId: "inflation-cause",
       },
-      journalist: JournalistStaticId.ConPrimaryFirst,
+      publication: PublicationStaticId.ConPrimary,
     },
     {
       content: {
@@ -420,7 +421,7 @@ export const inflationConcerns: SituationData = {
         },
         rootQuestionId: "inflation-impact",
       },
-      journalist: JournalistStaticId.LibPrimaryFirst,
+      publication: PublicationStaticId.LibPrimary,
     },
   ],
 };
