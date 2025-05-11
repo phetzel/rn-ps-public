@@ -12,18 +12,21 @@ import { ArrowRight } from "~/lib/icons/ArrowRight";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
 import { Level } from "~/lib/db/models";
-import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers/entityApi";
+import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityApi";
 // Utils
 import { cn, calculateBoost } from "~/lib/utils";
 // Types
 import { EntityWithDelta, LevelStatus } from "~/types";
 
-interface PressResultsProps {
+interface SituationResultsProps {
   gameId: string;
   level: Level;
 }
 
-export default function PressResults({ gameId, level }: PressResultsProps) {
+export default function SituationResults({
+  gameId,
+  level,
+}: SituationResultsProps) {
   const [isAdWatched, setIsAdWatched] = useState<boolean>(false);
   const [enhancedDeltas, setEnhancedDeltas] = useState<
     EntityWithDelta[] | null
@@ -42,23 +45,23 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
     async function loadDeltas() {
       if (!currentLevelId) return;
 
-      const results = await getEnhancedRelationshipDeltas(currentLevelId);
+      const results = await getEnhancedSituationOutcomeDeltas(currentLevelId);
       setEnhancedDeltas(results);
     }
 
     loadDeltas();
   }, [currentLevelId]);
 
-  // Handle complete press results
+  // Handle complete situation results
   const handleComplete = async () => {
     try {
-      if (level.status == LevelStatus.PressResults) {
+      if (level.status === LevelStatus.SituationOutcomes) {
         await progressCurrentLevel();
       }
 
       router.push(`/games/${gameId}/(tabs)/current`);
     } catch (error) {
-      console.error("Failed to start press conference:", error);
+      console.error("Failed to complete situation outcomes:", error);
     }
   };
 
@@ -127,7 +130,7 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
     return {
       president: enhancedDeltas.filter((e) => e.role === "president"),
       cabinet: enhancedDeltas.filter((e) => e.role === "cabinet"),
-      journalists: enhancedDeltas.filter((e) => e.role === "journalist"),
+      subgroups: enhancedDeltas.filter((e) => e.role === "subgroup"),
     };
   };
 
@@ -135,9 +138,9 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
 
   return (
     <ResultsCard
-      title="Boost Your Results"
-      description="Watch a short ad to boost your results"
-      boostedDescription="You've successfully boosted your relationship outcomes!"
+      title="Boost Situation Outcomes"
+      description="Watch a short ad to boost your situation approval changes"
+      boostedDescription="You've successfully boosted your approval outcomes!"
       isAdWatched={isAdWatched}
       onAdComplete={() => setIsAdWatched(true)}
     >
@@ -176,11 +179,11 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
             </>
           )}
 
-        {/* Journalists */}
-        {groupedEntities && groupedEntities.journalists?.length > 0 && (
+        {/* Voter Groups */}
+        {groupedEntities && groupedEntities.subgroups?.length > 0 && (
           <>
-            <Text className="font-bold">Journalists</Text>
-            {groupedEntities.journalists.map(renderEntityRow)}
+            <Text className="font-bold">Groups</Text>
+            {groupedEntities.subgroups.map(renderEntityRow)}
           </>
         )}
       </View>

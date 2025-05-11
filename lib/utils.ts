@@ -116,3 +116,12 @@ export function createCabinetMemberMap(
   }
   return map;
 }
+
+// Boost Helpers
+export const calculateBoost = (delta: number) => {
+  if (delta >= 0) {
+    return delta * 2;
+  } else {
+    return Math.ceil(delta / 2);
+  }
+};

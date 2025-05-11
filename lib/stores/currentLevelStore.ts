@@ -12,7 +12,6 @@ import {
   determineSituationOutcomes,
   // Entity API
   takeSnapshot,
-  fetchGameEntities,
   // Press Conference API
   calculatePressConferenceRawEffects,
   // Relationship API
@@ -31,15 +30,16 @@ interface CurrentLevelStoreState {
   isLoading: boolean;
   error: string | null;
 
-  // --- Actions ---
+  // --- Base Actions ---
   setCurrentLevelId: (id: string | null) => void;
   getCurrentLevel: () => Promise<Level | null>;
   setGameCurrentLevel: (gameId: string) => Promise<Level | null>;
-  createNewLevel: (game: Game) => Promise<Level | null>;
 
-  // --- Press Conference Actions ---
+  // --- Level Progression Actions ---
+  createNewLevel: (game: Game) => Promise<Level | null>;
   progressCurrentLevel: () => Promise<Level | null>;
   applyPressOutcomes: ({ level }: { level: Level }) => Promise<void>;
+  applySituationOutcomes: ({ level }: { level: Level }) => Promise<void>;
 }
 
 export const useCurrentLevelStore = create<CurrentLevelStoreState>(
@@ -180,7 +180,15 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
             LevelStatus.SituationOutcomes
           );
         } else if (level.status === LevelStatus.SituationOutcomes) {
+          await get().applySituationOutcomes({ level });
           await updateLevelStatus(currentLevelId, LevelStatus.Completed);
+        } else if (level.status === LevelStatus.Completed) {
+          const game = await level.game;
+          const newLevel = await get().createNewLevel(game);
+
+          if (newLevel) {
+            await get().setCurrentLevelId(newLevel.id);
+          }
         }
 
         set({ isLoading: false, error: null });
@@ -189,6 +197,8 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         console.error("Failed to update level to press conference:", error);
         set({ isLoading: false, error: String(error) });
         return null;
+      } finally {
+        set({ isLoading: false, error: null });
       }
     },
 
@@ -208,36 +218,24 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
     },
 
-    applyOutcomes: async ({ level }: { level: Level }) => {
+    applySituationOutcomes: async ({ level }: { level: Level }) => {
       // Get the game ID
       const gameId = level.game_id;
 
-      // // 1. Take initial snapshot
-      // const initialSnapshot = await takeSnapshot(gameId);
+      // Apply consequences to game entities
+      await applySituationConsequences(gameId, level.id);
 
-      // 2. Calculate impacts from exchanges
-      // const { psRelationshipDeltas, situationOutcomeWeightDeltas } =
-      //   await calculatePressConferenceRawEffects(level.id);
+      // Take final snapshot
+      const initialSnapshot = level.parseOutcomeSnapshot?.initial;
+      const finalSnapshot = await takeSnapshot(gameId);
 
-      // // 3. Apply impacts to game entities
-      // await applyRelationshipDeltas(gameId, psRelationshipDeltas);
-
-      // 4. Determine outcomes for situations
-      // await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
-
-      // 5. Apply consequences to game entities
-      // await applySituationConsequences(gameId, level.id);
-
-      // 6. Take final snapshot
-      // const finalSnapshot = await takeSnapshot(gameId);
-
-      // 6. Create outcome snapshot
-      // const outcomeSnapshot: OutcomeSnapshotType = {
-      //   initial: initialSnapshot,
-      //   final: finalSnapshot,
-      // };
-
-      // await level.updateOutcomeSnapshot(outcomeSnapshot);
+      if (initialSnapshot && finalSnapshot) {
+        const outcomeSnapshot: OutcomeSnapshotType = {
+          initial: initialSnapshot,
+          final: finalSnapshot,
+        };
+        await level.updateOutcomeSnapshot(outcomeSnapshot);
+      }
     },
   })
 );

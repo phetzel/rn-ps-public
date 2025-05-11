@@ -33,6 +33,8 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
         return "Review the reactions from the press conference.";
       case LevelStatus.SituationOutcomes:
         return "Watch how the situations unfolded.";
+      case LevelStatus.Completed:
+        return "Review this month's results.";
       default:
         return "Unknown status";
     }

@@ -3,9 +3,9 @@ import { Image } from "react-native";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import PressResultsContent from "~/components/press-outcomes/PressOutcomesContent";
+import SituationOutcomesContent from "~/components/situation-outcomes/SituationOutcomesContent";
 
-export default function OutcomeScreen() {
+export default function SituationOutcomesScreen() {
   const gameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 
@@ -29,7 +29,7 @@ export default function OutcomeScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <PressResultsContent gameId={gameId} levelId={currentLevelId} />
+      <SituationOutcomesContent gameId={gameId} levelId={currentLevelId} />
     </ParallaxScrollView>
   );
 }

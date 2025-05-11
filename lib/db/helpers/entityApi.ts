@@ -1,29 +1,27 @@
 // entityApi.ts
 import { Q } from "@nozbe/watermelondb";
 
-import {
-  cabinetCollection,
-  publicationCollection,
-  journalistCollection,
-  subgroupCollection,
-} from "./collections";
+// Models
 import {
   CabinetMember,
   Publication,
   SubgroupApproval,
   Journalist,
 } from "~/lib/db/models";
+// Helpers
+import {
+  cabinetCollection,
+  publicationCollection,
+  journalistCollection,
+  subgroupCollection,
+} from "./collections";
 import { calculatePressConferenceRawEffects } from "./pressConferenceApi";
 import { fetchLevel } from "./levelApi";
 import { fetchGame } from "./gameApi";
+import { fetchSituationsByLevelId } from "./situationApi";
+// Data + Types
 import { staticPublications } from "~/lib/data/staticMedia";
-import {
-  RelationshipSnapshot,
-  CabinetStaticId,
-  JournalistStaticId,
-  SubgroupStaticId,
-  EntityWithDelta,
-} from "~/types";
+import { EntityWithDelta } from "~/types";
 
 // Cabinet APIs
 export async function fetchActiveCabinetMembers(
@@ -78,53 +76,6 @@ export async function fetchGameEntities(gameId: string) {
     publications,
     journalists,
     subgroups,
-  };
-}
-
-// Take a snapshot of the game entities
-export async function takeSnapshot(
-  gameId: string
-): Promise<RelationshipSnapshot> {
-  // Fetch all game entities
-  const { game, cabinetMembers, publications, journalists, subgroups } =
-    await fetchGameEntities(gameId);
-
-  if (!game) {
-    throw new Error("No game found with ID: " + gameId);
-  }
-
-  // Create the snapshot
-  return {
-    president: {
-      approvalRating: game.presApprovalRating,
-      psRelationship: game.presPsRelationship,
-    },
-    cabinetMembers: Object.fromEntries(
-      cabinetMembers.map((member) => [
-        member.staticId as CabinetStaticId,
-        {
-          approvalRating: member.approvalRating,
-          psRelationship: member.psRelationship,
-        },
-      ])
-    ) as Record<
-      CabinetStaticId,
-      { approvalRating: number; psRelationship: number }
-    >,
-    journalists: Object.fromEntries(
-      journalists.map((journalist) => [
-        journalist.staticId as JournalistStaticId,
-        {
-          psRelationship: journalist.psRelationship,
-        },
-      ])
-    ) as Record<JournalistStaticId, { psRelationship: number }>,
-    subgroups: Object.fromEntries(
-      subgroups.map((subgroup) => [
-        subgroup.staticId as SubgroupStaticId,
-        { approvalRating: subgroup.approvalRating },
-      ])
-    ) as Record<SubgroupStaticId, { approvalRating: number }>,
   };
 }
 
@@ -231,6 +182,129 @@ export async function getEnhancedRelationshipDeltas(
     return result;
   } catch (error) {
     console.error("Failed to get enhanced relationship deltas:", error);
+    throw error;
+  }
+}
+
+// Enhance situation outcome deltas with entity data
+export async function getEnhancedSituationOutcomeDeltas(
+  levelId: string
+): Promise<EntityWithDelta[]> {
+  try {
+    // Get all situations for the level
+    const situations = await fetchSituationsByLevelId(levelId);
+
+    // Get the level and game info
+    const level = await fetchLevel(levelId);
+    if (!level) {
+      throw new Error(`Level with ID ${levelId} not found`);
+    }
+
+    const game = await level.game.fetch();
+    const { cabinetMembers, subgroups } = await fetchGameEntities(game.id);
+
+    // Create maps for quick lookups
+    const cabinetMemberMap: Map<string, CabinetMember> = new Map();
+    cabinetMembers.forEach((member) => {
+      cabinetMemberMap.set(member.staticId, member);
+    });
+
+    const subgroupMap: Map<string, SubgroupApproval> = new Map();
+    subgroups.forEach((subgroup) => {
+      subgroupMap.set(subgroup.staticId, subgroup);
+    });
+
+    // Initialize accumulators for deltas
+    let presidentDelta = 0;
+    const cabinetDeltas: Record<string, number> = {};
+    const subgroupDeltas: Record<string, number> = {};
+
+    // Process each situation's outcome consequences
+    for (const situation of situations) {
+      const outcome = situation.outcome;
+      if (
+        !outcome ||
+        !outcome.consequences ||
+        !outcome.consequences.approvalChanges
+      ) {
+        continue;
+      }
+
+      const { approvalChanges } = outcome.consequences;
+
+      // Add president delta if it exists
+      if (approvalChanges.president) {
+        presidentDelta += approvalChanges.president;
+      }
+
+      // Add cabinet member deltas
+      if (approvalChanges.cabinet) {
+        Object.entries(approvalChanges.cabinet).forEach(
+          ([cabinetId, delta]) => {
+            cabinetDeltas[cabinetId] = (cabinetDeltas[cabinetId] || 0) + delta;
+          }
+        );
+      }
+
+      // Add subgroup deltas
+      if (approvalChanges.subgroups) {
+        Object.entries(approvalChanges.subgroups).forEach(
+          ([subgroupId, delta]) => {
+            subgroupDeltas[subgroupId] =
+              (subgroupDeltas[subgroupId] || 0) + delta;
+          }
+        );
+      }
+    }
+
+    const result: EntityWithDelta[] = [];
+
+    // Add president to results if there's a delta
+    if (presidentDelta !== 0) {
+      result.push({
+        id: "president",
+        name: game.presName || "President",
+        role: "president",
+        title: "President",
+        currentValue: game.presApprovalRating,
+        delta: presidentDelta,
+      });
+    }
+
+    // Add cabinet members to results
+    Object.entries(cabinetDeltas).forEach(([cabinetId, delta]) => {
+      const cabinetMember = cabinetMemberMap.get(cabinetId);
+      if (cabinetMember) {
+        const staticCabinetInfo = cabinetMember.staticData;
+        result.push({
+          id: cabinetId,
+          name: cabinetMember.name || cabinetId,
+          role: "cabinet",
+          title: staticCabinetInfo?.cabinetName || "Cabinet Member",
+          currentValue: cabinetMember.approvalRating || 0,
+          delta,
+        });
+      }
+    });
+
+    // Add subgroups to results
+    Object.entries(subgroupDeltas).forEach(([subgroupId, delta]) => {
+      const subgroup = subgroupMap.get(subgroupId);
+      if (subgroup) {
+        result.push({
+          id: subgroupId,
+          name: subgroup.staticData?.name || subgroupId,
+          role: "subgroup",
+          title: "Voter Group",
+          currentValue: subgroup.approvalRating || 0,
+          delta,
+        });
+      }
+    });
+
+    return result;
+  } catch (error) {
+    console.error("Failed to get enhanced situation outcome deltas:", error);
     throw error;
   }
 }
