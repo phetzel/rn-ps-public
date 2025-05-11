@@ -6,14 +6,14 @@ import { observePressExchangesForLevel } from "~/lib/db/helpers/observations";
 import type { PressExchange } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 import { Card, CardHeader, CardContent, CardTitle } from "~/components/ui/card";
-import ExchangeItem from "~/components/outcome/ExchangeItem";
+import ExchangeItem from "~/components/press-outcomes/ExchangeItem";
 
-interface OutcomeExchangesProps {
+interface ExcahngesOutcomesProps {
   levelId: string;
   pressExchanges: PressExchange[];
 }
 
-const OutcomeExchanges = ({ pressExchanges }: OutcomeExchangesProps) => {
+const ExcahngesOutcomes = ({ pressExchanges }: ExcahngesOutcomesProps) => {
   if (pressExchanges.length === 0) {
     return (
       <Card>
@@ -59,4 +59,4 @@ const OutcomeExchanges = ({ pressExchanges }: OutcomeExchangesProps) => {
 
 export default withObservables(["levelId"], ({ levelId }) => ({
   pressExchanges: observePressExchangesForLevel(levelId),
-}))(OutcomeExchanges);
+}))(ExcahngesOutcomes);

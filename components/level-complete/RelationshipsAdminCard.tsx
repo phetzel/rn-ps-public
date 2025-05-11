@@ -4,7 +4,7 @@ import { Text } from "~/components/ui/text";
 import { Award } from "~/lib/icons/Award";
 import { User } from "~/lib/icons/User";
 
-import ProgressDifference from "~/components/outcome/ProgressDifference";
+import ProgressDifference from "~/components/level-complete/ProgressDifference";
 import type { OutcomeSnapshotType } from "~/types";
 
 interface AdministrationRelationshipCardProps {
@@ -15,6 +15,10 @@ export default function AdministrationRelationshipCard({
   outcomeSnapshot,
 }: AdministrationRelationshipCardProps) {
   const { initial, final } = outcomeSnapshot;
+
+  if (!final) {
+    return null;
+  }
 
   return (
     <Card>

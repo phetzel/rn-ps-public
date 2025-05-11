@@ -12,7 +12,10 @@ export default function GameSessionLayout() {
 
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ title: "Current", headerShown: false }} />
+      <Stack.Screen
+        name="(tabs)"
+        options={{ title: "Current", headerShown: false }}
+      />
       <Stack.Screen
         name="briefing"
         options={{
@@ -21,7 +24,15 @@ export default function GameSessionLayout() {
         }}
       />
       <Stack.Screen name="press-conference" options={{ headerShown: false }} />
-      <Stack.Screen name="outcome" options={{ title: "Outcome" }} />
+      <Stack.Screen
+        name="press-outcomes"
+        options={{ title: "Press Results" }}
+      />
+      <Stack.Screen
+        name="situation-outcomes"
+        options={{ title: "Situation Results" }}
+      />
+      <Stack.Screen name="level-complete" options={{ title: "End of Month" }} />
     </Stack>
   );
 }

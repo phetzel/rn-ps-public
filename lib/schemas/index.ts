@@ -60,7 +60,7 @@ export const relationshipSnapshotSchema = z.object({
 
 export const outcomeSnapshotSchema = z.object({
   initial: relationshipSnapshotSchema,
-  final: relationshipSnapshotSchema,
+  final: relationshipSnapshotSchema.optional(),
 });
 
 // Situation Schema

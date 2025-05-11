@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 import type { PressExchange } from "~/lib/db/models";
-import ConversationQuestionItem from "~/components/outcome/ConversationQuestionItem";
+import ConversationQuestionItem from "~/components/press-outcomes/ConversationQuestionItem";
 
 interface ConversationThreadProps {
   exchange: PressExchange;

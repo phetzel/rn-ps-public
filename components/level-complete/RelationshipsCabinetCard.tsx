@@ -5,7 +5,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
-import ProgressDifference from "~/components/outcome/ProgressDifference";
+import ProgressDifference from "~/components/level-complete/ProgressDifference";
 import { Briefcase } from "~/lib/icons/Briefcase";
 import { observeCabinetMembersByLevel } from "~/lib/db/helpers";
 import type { CabinetMember } from "~/lib/db/models";
@@ -22,6 +22,10 @@ const RelationshipsCabinetCard = ({
   cabinetMembers = [],
 }: RelationshipsCabinetCardProps) => {
   const { initial, final } = outcomeSnapshot;
+
+  if (!final) {
+    return null;
+  }
 
   const membersToDisplay = useMemo(() => {
     // Filter to members that have entries in the final snapshot

@@ -12,7 +12,7 @@ import { observePublicationForJournalistId } from "~/lib/db/helpers/observations
 import { MicOff } from "~/lib/icons/MicOff";
 import { Card, CardHeader, CardContent, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
-import ConversationThread from "~/components/outcome/ConversationThread";
+import ConversationThread from "~/components/press-outcomes/ConversationThread";
 import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
 
 interface ExchangeItemProps {
@@ -33,7 +33,6 @@ function ExchangeItem({
   const journoStaticData = journalist.staticData;
   const pubStaticData = publication.staticData;
 
-  const content = exchange.parseContent;
   const progress = exchange.parseProgress;
 
   // Check if journalist was called on

@@ -72,7 +72,6 @@ const BriefingSituationsList = ({
       router.push(`/games/${gameId}/(tabs)/current`);
     } catch (error) {
       console.error("Failed to start press conference:", error);
-      // Show error to user (you could add a toast or alert here)
     }
   };
 

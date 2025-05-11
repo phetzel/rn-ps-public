@@ -8,7 +8,7 @@ import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
 import { Badge } from "~/components/ui/badge";
-import ImpactList from "~/components/outcome/ImpactList";
+import ImpactList from "~/components/ImpactList";
 // Icons
 import { CheckCircle2 } from "~/lib/icons/CheckCircle2";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
@@ -150,6 +150,7 @@ export default function ConversationQuestionItem({
           gameId={currentGameId}
           levelId={currentLevelId}
           impacts={answer.impacts}
+          label={"Relationship Impacts"}
         />
       )}
     </View>

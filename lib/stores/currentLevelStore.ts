@@ -12,6 +12,7 @@ import {
   determineSituationOutcomes,
   // Entity API
   takeSnapshot,
+  fetchGameEntities,
   // Press Conference API
   calculatePressConferenceRawEffects,
   // Relationship API
@@ -38,7 +39,7 @@ interface CurrentLevelStoreState {
 
   // --- Press Conference Actions ---
   progressCurrentLevel: () => Promise<Level | null>;
-  applyOutcomes: ({ level }: { level: Level }) => Promise<void>;
+  applyPressOutcomes: ({ level }: { level: Level }) => Promise<void>;
 }
 
 export const useCurrentLevelStore = create<CurrentLevelStoreState>(
@@ -126,6 +127,15 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         // 6. Update the game's used situations
         await game.addUsedSituations(situationKeys);
 
+        // 7. Take initial snapshot
+        const initialSnapshot = await takeSnapshot(game.id);
+
+        // 6. Create initial level outcome snapshot
+        const outcomeSnapshot: OutcomeSnapshotType = {
+          initial: initialSnapshot,
+        };
+        await newLevel.updateOutcomeSnapshot(outcomeSnapshot);
+
         if (newLevel) {
           set({ currentLevelId: newLevel.id, isLoading: false, error: null });
           return newLevel;
@@ -162,8 +172,15 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         if (level.status === LevelStatus.Briefing) {
           await updateLevelStatus(currentLevelId, LevelStatus.PressConference);
         } else if (level.status === LevelStatus.PressConference) {
-          await get().applyOutcomes({ level });
-          await updateLevelStatus(currentLevelId, LevelStatus.Outcome);
+          await updateLevelStatus(currentLevelId, LevelStatus.PressResults);
+        } else if (level.status === LevelStatus.PressResults) {
+          await get().applyPressOutcomes({ level });
+          await updateLevelStatus(
+            currentLevelId,
+            LevelStatus.SituationOutcomes
+          );
+        } else if (level.status === LevelStatus.SituationOutcomes) {
+          await updateLevelStatus(currentLevelId, LevelStatus.Completed);
         }
 
         set({ isLoading: false, error: null });
@@ -176,36 +193,51 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
     },
 
     // --- Outcome Progression ---
+    applyPressOutcomes: async ({ level }: { level: Level }) => {
+      // Get the game ID
+      const gameId = level.game_id;
+
+      //  Calculate impacts from exchanges
+      const { psRelationshipDeltas, situationOutcomeWeightDeltas } =
+        await calculatePressConferenceRawEffects(level.id);
+
+      // Apply impacts to game entities
+      await applyRelationshipDeltas(gameId, psRelationshipDeltas);
+
+      // Determine outcomes for situations
+      await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
+    },
+
     applyOutcomes: async ({ level }: { level: Level }) => {
       // Get the game ID
       const gameId = level.game_id;
 
-      // 1. Take initial snapshot
-      const initialSnapshot = await takeSnapshot(gameId);
+      // // 1. Take initial snapshot
+      // const initialSnapshot = await takeSnapshot(gameId);
 
       // 2. Calculate impacts from exchanges
-      const { psRelationshipDeltas, situationOutcomeWeightDeltas } =
-        await calculatePressConferenceRawEffects(level.id);
+      // const { psRelationshipDeltas, situationOutcomeWeightDeltas } =
+      //   await calculatePressConferenceRawEffects(level.id);
 
-      // 3. Apply impacts to game entities
-      await applyRelationshipDeltas(gameId, psRelationshipDeltas);
+      // // 3. Apply impacts to game entities
+      // await applyRelationshipDeltas(gameId, psRelationshipDeltas);
 
       // 4. Determine outcomes for situations
-      await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
+      // await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
 
       // 5. Apply consequences to game entities
-      await applySituationConsequences(gameId, level.id);
+      // await applySituationConsequences(gameId, level.id);
 
       // 6. Take final snapshot
-      const finalSnapshot = await takeSnapshot(gameId);
+      // const finalSnapshot = await takeSnapshot(gameId);
 
       // 6. Create outcome snapshot
-      const outcomeSnapshot: OutcomeSnapshotType = {
-        initial: initialSnapshot,
-        final: finalSnapshot,
-      };
+      // const outcomeSnapshot: OutcomeSnapshotType = {
+      //   initial: initialSnapshot,
+      //   final: finalSnapshot,
+      // };
 
-      await level.updateOutcomeSnapshot(outcomeSnapshot);
+      // await level.updateOutcomeSnapshot(outcomeSnapshot);
     },
   })
 );

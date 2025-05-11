@@ -40,6 +40,7 @@ export const JOURNALIST_INTERACTION_IMPACT = {
 export const LEVEL_STATUS_DISPLAY_NAMES = {
   [LevelStatus.Briefing]: "Briefing",
   [LevelStatus.PressConference]: "Press Conference",
-  [LevelStatus.Outcome]: "Outcome",
+  [LevelStatus.PressResults]: "Press Results",
+  [LevelStatus.SituationOutcomes]: "Situation Outcomes",
   [LevelStatus.Completed]: "Completed",
 };

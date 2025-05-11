@@ -1,14 +1,11 @@
 import { Image } from "react-native";
-import { useRouter } from "expo-router";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import OutcomeContent from "~/components/outcome/OutcomeContent";
+import PressResultsContent from "~/components/press-outcomes/PressOutcomesContent";
 
 export default function OutcomeScreen() {
-  const router = useRouter();
-
   const gameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 
@@ -32,7 +29,7 @@ export default function OutcomeScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <OutcomeContent gameId={gameId} levelId={currentLevelId} />
+      <PressResultsContent gameId={gameId} levelId={currentLevelId} />
     </ParallaxScrollView>
   );
 }

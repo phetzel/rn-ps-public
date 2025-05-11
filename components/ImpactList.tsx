@@ -11,14 +11,18 @@ import { createCabinetMemberMap } from "~/lib/utils";
 import type { ExchangeImpacts, CabinetStaticId } from "~/types";
 
 interface ImpactListProps {
-  gameId: string;
-  levelId: string;
   impacts: ExchangeImpacts;
   game: Game | null | undefined;
   cabinetMembers: CabinetMember[];
+  label: string;
 }
 
-const ImpactList = ({ impacts, game, cabinetMembers }: ImpactListProps) => {
+const ImpactList = ({
+  impacts,
+  game,
+  cabinetMembers,
+  label,
+}: ImpactListProps) => {
   // Create a map of cabinet member IDs to their models for quick lookup
   const cabinetMembersMap = useMemo(() => {
     return createCabinetMemberMap(cabinetMembers);
@@ -51,7 +55,7 @@ const ImpactList = ({ impacts, game, cabinetMembers }: ImpactListProps) => {
       <Separator className="mb-2" />
 
       <View className="gap-4">
-        <Text className="text-sm text-muted-foreground">Impacts</Text>
+        <Text className="text-sm text-muted-foreground">{label}</Text>
 
         {/* President Impact */}
         {impacts.president && (

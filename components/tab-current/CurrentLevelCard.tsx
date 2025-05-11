@@ -29,8 +29,10 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
         return "Prepare by reviewing ongoing situations and planning your communication strategy.";
       case LevelStatus.PressConference:
         return "Face the press and carefully manage your responses to their questions.";
-      case LevelStatus.Outcome:
-        return "Review the outcomes of your decisions and their impact on public opinion.";
+      case LevelStatus.PressResults:
+        return "Review the reactions from the press conference.";
+      case LevelStatus.SituationOutcomes:
+        return "Watch how the situations unfolded.";
       default:
         return "Unknown status";
     }
@@ -41,8 +43,12 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
       router.push(`/games/${level.game_id}/briefing`);
     } else if (level.status === LevelStatus.PressConference) {
       router.push(`/games/${level.game_id}/press-conference`);
-    } else if (level.status === LevelStatus.Outcome) {
-      router.push(`/games/${level.game_id}/outcome`);
+    } else if (level.status === LevelStatus.PressResults) {
+      router.push(`/games/${level.game_id}/press-outcomes`);
+    } else if (level.status === LevelStatus.SituationOutcomes) {
+      router.push(`/games/${level.game_id}/situation-outcomes`);
+    } else if (level.status === LevelStatus.Completed) {
+      router.push(`/games/${level.game_id}/level-complete`);
     }
   };
   return (
@@ -73,7 +79,8 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
                 ? "Start"
                 : level.status === LevelStatus.PressConference
                 ? "Start"
-                : level.status === LevelStatus.Outcome
+                : level.status === LevelStatus.PressResults ||
+                  level.status === LevelStatus.SituationOutcomes
                 ? "Review"
                 : "Next"}
             </Text>

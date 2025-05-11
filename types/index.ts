@@ -7,7 +7,8 @@ export enum GameStatus {
 export enum LevelStatus {
   Briefing = "briefing",
   PressConference = "press_conference",
-  Outcome = "outcome",
+  PressResults = "press_results",
+  SituationOutcomes = "situation_outcomes",
   Completed = "completed",
 }
 
@@ -300,6 +301,15 @@ export interface PressConferenceRawEffects {
   situationOutcomeWeightDeltas: SituationOutcomeWeightDeltas;
 }
 
+export interface EntityWithDelta {
+  id: string;
+  name: string;
+  role: "president" | "cabinet" | "journalist" | "publication" | "subgroup";
+  title?: string; // Optional additional title/position info
+  currentValue: number;
+  delta: number;
+}
+
 // Relationship Snapshot
 export interface RelationshipSnapshot {
   president: {
@@ -326,7 +336,7 @@ export interface RelationshipSnapshot {
 
 export interface OutcomeSnapshotType {
   initial: RelationshipSnapshot;
-  final: RelationshipSnapshot;
+  final?: RelationshipSnapshot;
 }
 
 // Create Game
