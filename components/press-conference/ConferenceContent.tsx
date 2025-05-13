@@ -57,7 +57,7 @@ const ConferenceContent = ({
   return (
     <View className="gap-4">
       {isPressConferenceComplete ? (
-        <ConferenceCompletion />
+        <ConferenceCompletion levelId={levelId} />
       ) : (
         <View className="gap-4">
           <ConferenceProgress

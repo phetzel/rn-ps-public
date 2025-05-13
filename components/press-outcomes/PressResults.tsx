@@ -56,7 +56,7 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
         await progressCurrentLevel();
       }
 
-      router.push(`/games/${gameId}/(tabs)/current`);
+      router.replace(`/games/${level.game_id}/situation-outcomes`);
     } catch (error) {
       console.error("Failed to start press conference:", error);
     }

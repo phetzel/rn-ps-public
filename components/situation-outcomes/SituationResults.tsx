@@ -59,7 +59,7 @@ export default function SituationResults({
         await progressCurrentLevel();
       }
 
-      router.push(`/games/${gameId}/(tabs)/current`);
+      router.replace(`/games/${level.game_id}/level-complete`);
     } catch (error) {
       console.error("Failed to complete situation outcomes:", error);
     }

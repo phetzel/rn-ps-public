@@ -23,7 +23,7 @@ export const HeaderBackIcon = ({ onPress }: HeaderBackIconProps) => {
         >
           <ChevronLeft
             className="text-foreground"
-            size={23}
+            size={38}
             strokeWidth={1.25}
           />
         </View>

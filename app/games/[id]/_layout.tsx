@@ -6,8 +6,8 @@ import { HeaderBackIcon } from "~/components/HeaderBackIcon";
 export default function GameSessionLayout() {
   const router = useRouter();
 
-  const handleGoBack = () => {
-    router.back();
+  const handleGoToCurrent = () => {
+    router.dismissTo("/games/(tabs)/current");
   };
 
   return (
@@ -20,19 +20,31 @@ export default function GameSessionLayout() {
         name="briefing"
         options={{
           title: "Briefing",
-          headerLeft: () => <HeaderBackIcon onPress={handleGoBack} />,
+          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
         }}
       />
       <Stack.Screen name="press-conference" options={{ headerShown: false }} />
       <Stack.Screen
         name="press-outcomes"
-        options={{ title: "Press Results" }}
+        options={{
+          title: "Press Results",
+          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+        }}
       />
       <Stack.Screen
         name="situation-outcomes"
-        options={{ title: "Situation Results" }}
+        options={{
+          title: "Situation Results",
+          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+        }}
       />
-      <Stack.Screen name="level-complete" options={{ title: "End of Month" }} />
+      <Stack.Screen
+        name="level-complete"
+        options={{
+          title: "End of Month",
+          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+        }}
+      />
     </Stack>
   );
 }

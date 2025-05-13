@@ -56,7 +56,7 @@ const BriefingSituationsList = ({
         await progressCurrentLevel();
       }
 
-      router.push(`/games/${gameId}/(tabs)/current`);
+      router.push(`/games/${level.game_id}/press-conference`);
     } catch (error) {
       console.error("Failed to start press conference:", error);
     }

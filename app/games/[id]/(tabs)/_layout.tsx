@@ -11,19 +11,20 @@ export default function GameTabLayout() {
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.back();
+    router.dismissTo("/games");
+  };
+
+  const handleGoToCurrent = () => {
+    router.replace("/games/(tabs)/current");
   };
 
   return (
-    <Tabs
-      screenOptions={{
-        headerLeft: () => <HeaderBackIcon onPress={handleGoBack} />,
-      }}
-    >
+    <Tabs>
       <Tabs.Screen
         name="state"
         options={{
           title: "Status",
+          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
           tabBarIcon: ({ color, size }) => (
             <LayoutDashboard color={color} size={size} />
           ),
@@ -33,6 +34,7 @@ export default function GameTabLayout() {
         name="current"
         options={{
           title: "Current Month",
+          headerLeft: () => <HeaderBackIcon onPress={handleGoBack} />,
           tabBarIcon: ({ color, size }) => (
             <FileText color={color} size={size} />
           ),
@@ -42,6 +44,7 @@ export default function GameTabLayout() {
         name="archive"
         options={{
           title: "Archive",
+          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
           tabBarIcon: ({ color, size }) => (
             <History color={color} size={size} />
           ),

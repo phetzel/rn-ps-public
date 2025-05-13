@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
 
+import { fetchLevel } from "~/lib/db/helpers";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 
 interface ConferenceCompletionProps {
-  levelId?: string;
+  levelId: string;
 }
 
 const ConferenceCompletion = ({ levelId }: ConferenceCompletionProps) => {
@@ -18,10 +19,14 @@ const ConferenceCompletion = ({ levelId }: ConferenceCompletionProps) => {
   );
 
   const handleCompleteConference = async () => {
+    if (!levelId) return;
     setIsSubmitting(true);
     try {
+      const level = await fetchLevel(levelId);
+      if (!level) return;
+
       await progressCurrentLevel();
-      router.back();
+      router.replace(`/games/${level.game_id}/press-outcomes`);
     } catch (error) {
       console.error("Error completing press conference:", error);
     } finally {
