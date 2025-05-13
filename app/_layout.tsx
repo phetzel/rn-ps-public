@@ -12,8 +12,8 @@ import * as React from "react";
 import { Platform, View } from "react-native";
 import { PortalHost } from "@rn-primitives/portal";
 import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider";
-import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet";
 
+import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet";
 import { database } from "~/lib/db";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { NAV_THEME } from "~/lib/constants";
