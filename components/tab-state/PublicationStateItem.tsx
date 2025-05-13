@@ -4,7 +4,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeJournalistsForPublication } from "~/lib/db/helpers";
 import type Publication from "~/lib/db/models/Publication";
 import type Journalist from "~/lib/db/models/Journalist";
-import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
 import { Text } from "~/components/ui/text";
 import {
   AccordionContent,

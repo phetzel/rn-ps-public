@@ -16,7 +16,7 @@ import { TrendingDown } from "~/lib/icons/TrendingDown";
 import type { PressExchange, Journalist, Publication } from "~/lib/db/models";
 import type { Question, SituationOutcome } from "~/types";
 import { observePublicationForJournalistId } from "~/lib/db/helpers/observations";
-import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
 // Utils
 import { cn } from "~/lib/utils";
 

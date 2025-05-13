@@ -15,10 +15,10 @@ export default function PoliticalLeaningBadge({
     switch (leaning) {
       case PoliticalLeaning.Liberal:
       case PoliticalParty.Democrat:
-        return "bg-blue-100";
+        return "bg-blue-100 border border-blue-300";
       case PoliticalLeaning.Conservative:
       case PoliticalParty.Republican:
-        return "bg-red-100";
+        return "bg-red-100 border border-red-300";
       case PoliticalLeaning.Neutral:
       default:
         return "bg-gray-100";

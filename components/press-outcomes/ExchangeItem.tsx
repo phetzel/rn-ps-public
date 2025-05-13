@@ -13,7 +13,7 @@ import { MicOff } from "~/lib/icons/MicOff";
 import { Card, CardHeader, CardContent, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import ConversationThread from "~/components/press-outcomes/ConversationThread";
-import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
 
 interface ExchangeItemProps {
   exchange: PressExchange;

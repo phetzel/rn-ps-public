@@ -9,7 +9,7 @@ import {
 import type Journalist from "~/lib/db/models/Journalist";
 import type Publication from "~/lib/db/models/Publication";
 import type PressExchange from "~/lib/db/models/PressExchange";
-import PoliticalLeaningBadge from "~/components/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
 import { Card, CardContent } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { User } from "~/lib/icons/User";
