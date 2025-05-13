@@ -11,9 +11,7 @@ import {
 import { Query } from "@nozbe/watermelondb";
 import type { Associations } from "@nozbe/watermelondb/Model";
 
-import type Game from "./Game";
-import type Level from "./Level";
-import type PressExchange from "./PressExchange";
+import type { Game, Level, PressExchange } from "~/lib/db/models";
 import { situationContentSchema } from "~/lib/schemas";
 import type {
   SituationType,

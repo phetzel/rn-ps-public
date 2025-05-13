@@ -17,7 +17,7 @@ export default function SituationOutcomesScreen() {
     <ParallaxScrollView
       headerImage={
         <Image
-          source={require("~/assets/images/header-outcome.png")}
+          source={require("~/assets/images/header-situation-outcome.png")}
           style={{
             width: "100%",
             height: "100%",

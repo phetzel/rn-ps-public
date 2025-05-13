@@ -8,7 +8,7 @@ import { Minus } from "~/lib/icons/Minus";
 interface ImpactItemProps {
   title: string;
   name: string;
-  reaction: string;
+  reaction?: string;
   weight: number;
 }
 
@@ -37,7 +37,7 @@ export default function ImpactItem({
       <View className="flex-1">
         <Text className="text-xs text-muted-foreground">{title}</Text>
         <Text className="font-semibold">{name}</Text>
-        <Text className="text-sm italic">{reaction}</Text>
+        {reaction && <Text className="text-sm italic">{reaction}</Text>}
       </View>
       <View className="flex-row items-center gap-1">
         {icon}

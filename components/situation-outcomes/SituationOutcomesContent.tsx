@@ -6,6 +6,7 @@ import type { Level } from "~/lib/db/models";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
 import { Text } from "~/components/ui/text";
 
+import SituationOutcomesList from "~/components/situation-outcomes/SituationOutcomesList";
 import SituationResults from "~/components/situation-outcomes/SituationResults";
 
 interface SituationOutcomesContentProps {
@@ -36,7 +37,9 @@ const SituationOutcomesContent = ({
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="situations" className="mt-4"></TabsContent>
+      <TabsContent value="situations" className="gap-4">
+        <SituationOutcomesList gameId={gameId} level={level} />
+      </TabsContent>
 
       <TabsContent value="results" className="gap-4">
         <SituationResults gameId={gameId} level={level} />

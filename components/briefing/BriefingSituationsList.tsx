@@ -38,19 +38,6 @@ const BriefingSituationsList = ({
     (state) => state.progressCurrentLevel
   );
 
-  if (!situations || situations.length === 0) {
-    return (
-      <View className="py-4">
-        <Text className="text-center text-muted-foreground">
-          No active situations to brief on
-        </Text>
-        <Button className="mt-4" onPress={() => handleComplete()}>
-          Proceed to Press Conference
-        </Button>
-      </View>
-    );
-  }
-
   const handleNext = () => {
     if (currentIndex < situations.length - 1) {
       setCurrentIndex(currentIndex + 1);
@@ -74,6 +61,19 @@ const BriefingSituationsList = ({
       console.error("Failed to start press conference:", error);
     }
   };
+
+  if (!situations || situations.length === 0) {
+    return (
+      <View className="py-4">
+        <Text className="text-center text-muted-foreground">
+          No active situations to brief on
+        </Text>
+        <Button className="mt-4" onPress={() => handleComplete()}>
+          <Text>Proceed to Press Conference</Text>
+        </Button>
+      </View>
+    );
+  }
 
   const currentSituation = situations[currentIndex];
   const progressPercentage =

@@ -14,6 +14,7 @@ import {
   SituationType,
   PublicationStaticId,
   JournalistStaticId,
+  SituationOutcomeWeight,
 } from "~/types";
 
 export async function fetchSituationsByLevelId(
@@ -430,5 +431,45 @@ export async function determineSituationOutcomes(
     } else {
       console.warn(`No outcome could be chosen for situation ${situation.id}.`);
     }
+  }
+}
+export async function calculateSituationOutcomeWeights(
+  situation: Situation
+): Promise<SituationOutcomeWeight[]> {
+  const content = situation.parseContent;
+  if (!content || !content.outcomes) {
+    return [];
+  }
+
+  // Import calculatePressConferenceRawEffects directly
+  const {
+    calculatePressConferenceRawEffects,
+  } = require("./pressConferenceApi");
+
+  try {
+    // Get outcome weight deltas
+    const { situationOutcomeWeightDeltas } =
+      await calculatePressConferenceRawEffects(situation.level_id);
+
+    // Get deltas specific to this situation
+    const outcomeDeltas = situationOutcomeWeightDeltas[situation.id] || {};
+
+    // Calculate weights for each outcome
+    return content.outcomes.map((outcome) => {
+      const modifier = outcomeDeltas[outcome.id] || 0;
+      const finalWeight = Math.max(0, outcome.weight + modifier);
+
+      return {
+        id: outcome.id,
+        title: outcome.title,
+        description: outcome.description,
+        baseWeight: outcome.weight,
+        modifier: modifier,
+        finalWeight: finalWeight,
+      };
+    });
+  } catch (error) {
+    console.error("Error calculating outcome weights:", error);
+    return [];
   }
 }

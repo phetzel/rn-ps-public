@@ -123,7 +123,9 @@ const BriefingSituationItem = ({
         {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
           <View className="gap-2">
             <View className="flex-row justify-between items-center">
-              <Text className="font-medium">Cabinet Positions:</Text>
+              <Text className="font-medium">
+                Cabinet Positions: ({Object.keys(cabinetPreferences).length})
+              </Text>
               <Button
                 variant="ghost"
                 size="sm"

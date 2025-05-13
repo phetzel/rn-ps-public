@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 
 // Store
@@ -28,6 +28,8 @@ export default function ConversationQuestionItem({
   interaction,
   isFirstQuestion,
 }: ConversationQuestionItemProps) {
+  const [isImpactsExpanded, setIsImpactsExpanded] = useState<boolean>(true);
+
   const { currentLevelId } = useCurrentLevelStore();
   const { currentGameId } = useGameManagerStore();
   if (!currentLevelId || !currentGameId) {
@@ -150,7 +152,9 @@ export default function ConversationQuestionItem({
           gameId={currentGameId}
           levelId={currentLevelId}
           impacts={answer.impacts}
-          label={"Relationship Impacts"}
+          label={"Relationship Changes"}
+          isExpanded={isImpactsExpanded}
+          setIsExpanded={setIsImpactsExpanded}
         />
       )}
     </View>

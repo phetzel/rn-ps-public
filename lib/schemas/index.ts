@@ -137,9 +137,7 @@ export const answerSchema = z.object({
   id: z.string(),
   text: z.string(),
   impacts: exchangeImpactsSchema,
-  outcomeModifiers: z
-    .record(z.string(), z.nativeEnum(AnswerOutcomeModifier))
-    .optional(),
+  outcomeModifiers: z.record(z.string(), z.nativeEnum(AnswerOutcomeModifier)),
   followUpId: z.string().optional(),
 });
 

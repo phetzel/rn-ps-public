@@ -98,7 +98,7 @@ export default function SituationResults({
                 : "text-muted-foreground"
             )}
           >
-            {entity.delta >= 0 ? "+ " : "- "}
+            {entity.delta >= 0 ? "+" : ""}
             {entity.delta}
           </Text>
         </View>
@@ -115,7 +115,7 @@ export default function SituationResults({
                 : "text-muted-foreground"
             )}
           >
-            {boostedDelta >= 0 ? "+ " : "- "}
+            {boostedDelta >= 0 ? "+" : ""}
             {boostedDelta}
           </Text>
         </View>

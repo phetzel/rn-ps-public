@@ -266,6 +266,15 @@ export interface SituationData {
   exchanges: ExchangeData[];
 }
 
+export interface SituationOutcomeWeight {
+  id: string;
+  title: string;
+  description: string;
+  baseWeight: number; // Original weight from situation data
+  modifier: number; // Modifier from press exchanges
+  finalWeight: number; // baseWeight + modifier (clamped at 0)
+}
+
 // Delta types for outcomes
 export interface PsRelationshipDeltas {
   president: number;

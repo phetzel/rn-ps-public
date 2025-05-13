@@ -96,7 +96,7 @@ export default class PressExchange extends Model {
     return content.questions[progress.currentQuestionId] || null;
   }
 
-  // --- Actions ---
+  // --- Press Conference Actions ---
   @writer async answerQuestion(answerId: string) {
     const content = this.parseContent;
     const progress = this.parseProgress;

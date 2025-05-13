@@ -144,3 +144,11 @@ export function observePressExchange(
 ): Observable<PressExchange | null> {
   return pressExchangeCollection.findAndObserve(exchangeId);
 }
+
+export function observePressExchangesForSituation(
+  situationId: string
+): Observable<PressExchange[]> {
+  return pressExchangeCollection
+    .query(Q.where("situation_id", situationId))
+    .observe();
+}
