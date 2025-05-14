@@ -20,14 +20,10 @@ import {
 import { Text } from "~/components/ui/text";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
+import { SituationStatusBadge } from "~/components/shared/SituationStatusBadge";
+import { SituationTypeIcon } from "~/components/shared/SituationTypeIcon";
 import { Situation, CabinetMember } from "~/lib/db/models";
-import {
-  getSituationIcon,
-  getSituationBadgeVariant,
-  formatSituationType,
-  getPreferenceIndicator,
-  getPreferenceColor,
-} from "~/lib/utils";
+import { getPreferenceIndicator, getPreferenceColor } from "~/lib/utils";
 import { CabinetStaticId } from "~/types";
 import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 
@@ -72,25 +68,18 @@ const BriefingSituationItem = ({
   const presidentPreference = contentPreferences.president;
   const cabinetPreferences = contentPreferences.cabinet;
 
-  const Icon = getSituationIcon(situation.type);
-
   return (
     <Card className="border-l-4 border-l-primary">
       <CardHeader className="gap-2">
         <View className="flex-row justify-between items-center">
           <View className="flex-1 flex-row items-center gap-2 mr-2">
-            <Icon className="h-5 w-5 text-primary flex-shrink-0" />
+            <SituationTypeIcon type={situation.type} />
             <CardTitle className="text-xl flex-shrink">
               {situation.title}
             </CardTitle>
           </View>
 
-          <Badge
-            variant={getSituationBadgeVariant(situation.type)}
-            className="flex-shrink-0"
-          >
-            <Text>{formatSituationType(situation.type)}</Text>
-          </Badge>
+          <SituationStatusBadge status={situation.type} />
         </View>
         <CardDescription>{situation.description}</CardDescription>
       </CardHeader>

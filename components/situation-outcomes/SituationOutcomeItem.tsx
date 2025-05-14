@@ -8,19 +8,15 @@ import { calculateSituationOutcomeWeights } from "~/lib/db/helpers/situationApi"
 import type { Situation, Game, PressExchange } from "~/lib/db/models";
 // Components
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
 import { Progress } from "~/components/ui/progress";
 import SituationOutcomeDetails from "./SituationOutcomeDetails";
 import AlternativeOutcomes from "./AlternativeOutcomes";
+import { SituationStatusBadge } from "~/components/shared/SituationStatusBadge";
+import { SituationTypeIcon } from "~/components/shared/SituationTypeIcon";
 // Types
 import type { SituationOutcomeWeight } from "~/types";
 // Utils
-import {
-  getSituationIcon,
-  getSituationBadgeVariant,
-  formatSituationType,
-} from "~/lib/utils";
 
 interface SituationOutcomeItemProps {
   situation: Situation;
@@ -81,25 +77,18 @@ const SituationOutcomeItem = ({
     return null;
   }
 
-  const Icon = getSituationIcon(situation.type);
-
   return (
     <Card className="overflow-hidden">
       <CardHeader className="pb-2">
         <View className=" flex-row justify-between items-center">
           <View className="flex-1 flex-row items-center gap-2 mr-2">
-            <Icon className="h-5 w-5 text-primary flex-shrink-0" />
+            <SituationTypeIcon type={situation.type} />
             <CardTitle className="text-lg flex-shrink">
               {situation.title}
             </CardTitle>
           </View>
 
-          <Badge
-            variant={getSituationBadgeVariant(situation.type)}
-            className="flex-shrink-0"
-          >
-            <Text>{formatSituationType(situation.type)}</Text>
-          </Badge>
+          <SituationStatusBadge status={situation.type} />
         </View>
       </CardHeader>
 
