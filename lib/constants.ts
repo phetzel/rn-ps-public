@@ -2,8 +2,32 @@
 // The Press Office
 
 // Colors
-// Blue: #113c57
-// Red: #d44c3d
+// Blue:
+// HSL- 203,67%,20%
+// Hex- #113c57
+// Red:
+// HSL- (6,64%,54%)
+// Hex- #d44c3d
+
+// New wait for new build
+// export const NAV_THEME = {
+//   light: {
+//     background: "hsl(40 20% 98%)", // background
+//     border: "hsl(35 15% 85%)", // border
+//     card: "hsl(0 0% 100%)", // card
+//     notification: "hsl(0 70% 40%)", // destructive
+//     primary: "hsl(215 45% 30%)", // primary
+//     text: "hsl (210 30% 15%)", // foreground
+//   },
+//   dark: {
+//     background: "hsl(210 30% 12%;)", // background
+//     border: "hsl(210 30% 20%)", // border
+//     card: "hsl(210 30% 12%)", // card
+//     notification: "hsl(0 70% 45%)", // destructive
+//     primary: "hsl(215 45% 40%)", // primary
+//     text: "hsl(35 20% 90%)", // foreground
+//   },
+// };
 
 import { LevelStatus, JournalistInteractionType } from "~/types";
 
