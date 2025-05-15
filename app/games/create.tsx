@@ -19,12 +19,12 @@ import {
 } from "~/components/ui/card";
 import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
 import { Logo } from "~/components/shared/Logo";
-import { NameField } from "~/components/screens/create-game/NameField";
-import { PartySelect } from "~/components/screens/create-game/PartySelect";
+import { NameField } from "~/components/screens/game-create/NameField";
+import { PartySelect } from "~/components/screens/game-create/PartySelect";
 // Types
 import { NewGameDetails, PoliticalParty } from "~/types";
 
-export default function CreateGameScreen() {
+export default function GameCreateScreen() {
   const { createGame } = useGameNavigation();
   const { isLoading, error: storeError } = useGameManagerStore((state) => ({
     createAndStartGame: state.createAndStartGame,
