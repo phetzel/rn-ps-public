@@ -361,3 +361,11 @@ export enum JournalistInteractionType {
   Skipped = "skipped",
   Answered = "answered",
 }
+
+// Common Types
+export interface TabItem {
+  value: string;
+  label: string;
+  content: React.ReactNode;
+};
+
