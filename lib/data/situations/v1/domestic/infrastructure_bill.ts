@@ -6,8 +6,8 @@ import {
   SubgroupStaticId,
   SituationConsequenceWeight,
   PublicationStaticId,
-  AnswerOutcomeModifier,
   JournalistStaticId,
+  AnswerType,
 } from "~/types";
 
 export const infrastructureBill: SituationData = {
@@ -27,17 +27,20 @@ export const infrastructureBill: SituationData = {
   content: {
     preferences: {
       president: {
+        answerType: AnswerType.Inform,
         weight: PreferenceWeight.StronglyPositive,
         rationale:
           "Signature legislative priority; emphasize job creation and economic benefits.",
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
+          answerType: AnswerType.Reassure,
           weight: PreferenceWeight.SlightlyNegative,
           rationale:
             "Concerned about deficit impact; advises fiscal restraint and phased approach.",
         },
         [CabinetStaticId.State]: {
+          answerType: AnswerType.Inform,
           weight: PreferenceWeight.Positive,
           rationale:
             "Emphasize how infrastructure investment strengthens global competitiveness.",
@@ -50,7 +53,7 @@ export const infrastructureBill: SituationData = {
         title: "Bill Passes with Bipartisan Support",
         description:
           "The infrastructure package passes with support from both parties, marking a major legislative victory.",
-        weight: 30,
+        weight: 20,
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.StronglyPositive,
@@ -75,7 +78,7 @@ export const infrastructureBill: SituationData = {
         title: "Bill Passes Along Party Lines",
         description:
           "The infrastructure package passes through reconciliation with only the President's party supporting it.",
-        weight: 40,
+        weight: 20,
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.Positive,
@@ -100,7 +103,7 @@ export const infrastructureBill: SituationData = {
         title: "Scaled-Back Bill Passes",
         description:
           "A significantly reduced infrastructure package passes after extensive compromise.",
-        weight: 20,
+        weight: 40,
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.SlightlyNegative,
@@ -123,7 +126,7 @@ export const infrastructureBill: SituationData = {
         title: "Infrastructure Bill Fails",
         description:
           "The infrastructure package collapses amid partisan disagreement, dealing a major blow to the administration's agenda.",
-        weight: 10,
+        weight: 20,
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.StronglyNegative,
@@ -153,6 +156,7 @@ export const infrastructureBill: SituationData = {
             answers: [
               {
                 id: "infra-main-ans1",
+                type: AnswerType.Reassure,
                 text: "The President is actively engaging with lawmakers from both parties, focusing on the bill's economic benefits for all Americans.",
                 impacts: {
                   president: {
@@ -178,16 +182,16 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.StronglyPositive,
-                  bill_passes_partisan: AnswerOutcomeModifier.Negative,
-                  bill_scaled_back: AnswerOutcomeModifier.Positive,
-                  bill_fails: AnswerOutcomeModifier.StronglyNegative,
+                  bill_passes_bipartisan: 7,
+                  bill_passes_partisan: -4,
+                  bill_scaled_back: 3,
+                  bill_fails: -6,
                 },
                 followUpId: "infra-bipartisan",
               },
               {
                 id: "infra-main-ans2",
+                type: AnswerType.Challenge,
                 text: "We're prepared to use reconciliation if necessary to deliver this critical investment the American people need.",
                 impacts: {
                   president: {
@@ -212,16 +216,16 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.StronglyNegative,
-                  bill_passes_partisan: AnswerOutcomeModifier.StronglyPositive,
-                  bill_scaled_back: AnswerOutcomeModifier.Negative,
-                  bill_fails: AnswerOutcomeModifier.SlightlyNegative,
+                  bill_passes_bipartisan: -6,
+                  bill_passes_partisan: 9,
+                  bill_scaled_back: -4,
+                  bill_fails: 1,
                 },
                 followUpId: "infra-partisan",
               },
               {
                 id: "infra-main-ans3",
+                type: AnswerType.Reassure,
                 text: "We're focused on finding elements that can gain broad support, even if it means adjusting the scope of the package.",
                 impacts: {
                   president: {
@@ -251,11 +255,10 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.SlightlyPositive,
-                  bill_passes_partisan: AnswerOutcomeModifier.StronglyNegative,
-                  bill_scaled_back: AnswerOutcomeModifier.StronglyPositive,
-                  bill_fails: AnswerOutcomeModifier.Negative,
+                  bill_passes_bipartisan: 3,
+                  bill_passes_partisan: -6,
+                  bill_scaled_back: 7,
+                  bill_fails: -4,
                 },
               },
             ],
@@ -267,6 +270,7 @@ export const infrastructureBill: SituationData = {
             answers: [
               {
                 id: "infra-bipartisan-ans1",
+                type: AnswerType.Reassure,
                 text: "We've already made significant adjustments based on Republican input and remain open to reasonable compromises.",
                 impacts: {
                   president: {
@@ -286,14 +290,15 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan: AnswerOutcomeModifier.Positive,
-                  bill_passes_partisan: AnswerOutcomeModifier.Negative,
-                  bill_scaled_back: AnswerOutcomeModifier.Positive,
-                  bill_fails: AnswerOutcomeModifier.Negative,
+                  bill_passes_bipartisan: 4,
+                  bill_passes_partisan: -4,
+                  bill_scaled_back: 4,
+                  bill_fails: -4,
                 },
               },
               {
                 id: "infra-bipartisan-ans2",
+                type: AnswerType.Challenge,
                 text: "Our priority is delivering results for the American people, not endless negotiations that delay critical infrastructure investments.",
                 impacts: {
                   president: {
@@ -313,11 +318,10 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.StronglyNegative,
-                  bill_passes_partisan: AnswerOutcomeModifier.Positive,
-                  bill_scaled_back: AnswerOutcomeModifier.SlightlyNegative,
-                  bill_fails: AnswerOutcomeModifier.SlightlyPositive,
+                  bill_passes_bipartisan: -6,
+                  bill_passes_partisan: 5,
+                  bill_scaled_back: -2,
+                  bill_fails: 3,
                 },
               },
             ],
@@ -329,6 +333,7 @@ export const infrastructureBill: SituationData = {
             answers: [
               {
                 id: "infra-partisan-ans1",
+                type: AnswerType.Inform,
                 text: "We've attempted bipartisan negotiations for months. The American people can't wait any longer for critical infrastructure improvements.",
                 impacts: {
                   president: {
@@ -347,15 +352,15 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.StronglyNegative,
-                  bill_passes_partisan: AnswerOutcomeModifier.StronglyPositive,
-                  bill_scaled_back: AnswerOutcomeModifier.Negative,
-                  bill_fails: AnswerOutcomeModifier.SlightlyPositive,
+                  bill_passes_bipartisan: -6,
+                  bill_passes_partisan: 7,
+                  bill_scaled_back: -4,
+                  bill_fails: 3,
                 },
               },
               {
                 id: "infra-partisan-ans2",
+                type: AnswerType.Reassure,
                 text: "We remain open to bipartisan solutions but are prepared to move forward if necessary. Many elements have support from both parties.",
                 impacts: {
                   president: {
@@ -374,11 +379,10 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.SlightlyPositive,
-                  bill_passes_partisan: AnswerOutcomeModifier.Negative,
-                  bill_scaled_back: AnswerOutcomeModifier.Positive,
-                  bill_fails: AnswerOutcomeModifier.Negative,
+                  bill_passes_bipartisan: 3,
+                  bill_passes_partisan: -4,
+                  bill_scaled_back: 5,
+                  bill_fails: -4,
                 },
               },
             ],
@@ -398,6 +402,7 @@ export const infrastructureBill: SituationData = {
             answers: [
               {
                 id: "infra-funding-ans1",
+                type: AnswerType.Inform,
                 text: "The plan includes corporate tax increases that ensure the wealthy pay their fair share without raising taxes on anyone making under $400,000.",
                 impacts: {
                   cabinet: {
@@ -419,14 +424,15 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan: AnswerOutcomeModifier.Negative,
-                  bill_passes_partisan: AnswerOutcomeModifier.Positive,
-                  bill_scaled_back: AnswerOutcomeModifier.SlightlyNegative,
-                  bill_fails: AnswerOutcomeModifier.SlightlyPositive,
+                  bill_passes_bipartisan: -4,
+                  bill_passes_partisan: 4,
+                  bill_scaled_back: -2,
+                  bill_fails: 2,
                 },
               },
               {
                 id: "infra-funding-ans2",
+                type: AnswerType.Inform,
                 text: "The bill includes multiple funding mechanisms, including public-private partnerships and redirecting unused funds from previous relief packages.",
                 impacts: {
                   cabinet: {
@@ -452,10 +458,10 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan: AnswerOutcomeModifier.Positive,
-                  bill_passes_partisan: AnswerOutcomeModifier.Negative,
-                  bill_scaled_back: AnswerOutcomeModifier.Positive,
-                  bill_fails: AnswerOutcomeModifier.Negative,
+                  bill_passes_bipartisan: 4,
+                  bill_passes_partisan: -4,
+                  bill_scaled_back: 4,
+                  bill_fails: -4,
                 },
               },
             ],
@@ -475,6 +481,7 @@ export const infrastructureBill: SituationData = {
             answers: [
               {
                 id: "infra-economic-ans1",
+                type: AnswerType.Inform,
                 text: "Economic analysis shows the plan will create over 2 million high-quality jobs across construction, manufacturing, and emerging green sectors.",
                 impacts: {
                   president: {
@@ -493,14 +500,15 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan: AnswerOutcomeModifier.Positive,
-                  bill_passes_partisan: AnswerOutcomeModifier.Positive,
-                  bill_scaled_back: AnswerOutcomeModifier.SlightlyNegative,
-                  bill_fails: AnswerOutcomeModifier.Negative,
+                  bill_passes_bipartisan: 3,
+                  bill_passes_partisan: 3,
+                  bill_scaled_back: -2,
+                  bill_fails: -4,
                 },
               },
               {
                 id: "infra-economic-ans2",
+                type: AnswerType.Inform,
                 text: "We're focusing on quality over quantity, ensuring that the jobs created offer good wages and build skills for the future economy.",
                 impacts: {
                   president: {
@@ -519,11 +527,10 @@ export const infrastructureBill: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  bill_passes_bipartisan:
-                    AnswerOutcomeModifier.SlightlyNegative,
-                  bill_passes_partisan: AnswerOutcomeModifier.SlightlyPositive,
-                  bill_scaled_back: AnswerOutcomeModifier.Neutral,
-                  bill_fails: AnswerOutcomeModifier.SlightlyNegative,
+                  bill_passes_bipartisan: -2,
+                  bill_passes_partisan: 4,
+                  bill_scaled_back: 0,
+                  bill_fails: -2,
                 },
               },
             ],

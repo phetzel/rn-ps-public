@@ -101,22 +101,34 @@ export interface ExchangeImpacts {
   journalists?: Partial<Record<JournalistStaticId, ExchangeImpact>>;
 }
 
-export enum AnswerOutcomeModifier {
-  StronglyPositive = 15,
-  Positive = 10,
-  SlightlyPositive = 5,
-  Neutral = 0,
-  SlightlyNegative = -5,
-  Negative = -10,
-  StronglyNegative = -15,
+// export enum AnswerOutcomeModifier {
+//   StronglyPositive = 6,
+//   Positive = 4,
+//   SlightlyPositive = 2,
+//   Neutral = 0,
+//   SlightlyNegative = -2,
+//   Negative = -4,
+//   StronglyNegative = -6,
+// }
+
+export enum AnswerType {
+  Deflect = "deflect",
+  Reassure = "reassure",
+  Challenge = "challenge",
+  Admit = "admit",
+  Deny = "deny",
+  Inform = "inform",
+  Authorized = "authorized", // Cabinet Relationship based
 }
 
 export interface Answer {
   id: string;
   text: string;
+  type: AnswerType;
+  authorizedCabinetMemberId?: CabinetStaticId;
   impacts: ExchangeImpacts;
   outcomeModifiers: {
-    [outcomeId: string]: AnswerOutcomeModifier;
+    [outcomeId: string]: number;
   };
   followUpId?: string;
 }
@@ -205,8 +217,9 @@ export enum PreferenceWeight {
 }
 
 export interface Preference {
+  answerType: AnswerType;
   weight: PreferenceWeight;
-  rationale: string; // explanation for the briefing UI
+  rationale: string;
 }
 
 export interface SituationPreferences {
@@ -217,18 +230,18 @@ export interface SituationPreferences {
 }
 
 export enum SituationConsequenceWeight {
-  StronglyPositive = 15,
-  Positive = 10,
-  SlightlyPositive = 5,
+  StronglyPositive = 10,
+  Positive = 5,
+  SlightlyPositive = 2,
   Neutral = 0,
-  SlightlyNegative = -5,
-  Negative = -10,
-  StronglyNegative = -15,
+  SlightlyNegative = -2,
+  Negative = -5,
+  StronglyNegative = -10,
 }
 
 export interface SituationConsequence {
   approvalChanges: {
-    president?: SituationConsequenceWeight;
+    president?: number;
     cabinet?: {
       [key in CabinetStaticId]?: SituationConsequenceWeight;
     };
@@ -367,5 +380,4 @@ export interface TabItem {
   value: string;
   label: string;
   content: React.ReactNode;
-};
-
+}

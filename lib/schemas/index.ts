@@ -6,7 +6,8 @@ import {
   PoliticalParty,
   PreferenceWeight,
   SituationConsequenceWeight,
-  AnswerOutcomeModifier,
+  // AnswerOutcomeModifier,
+  AnswerType,
 } from "~/types";
 
 // Form Schemas
@@ -65,6 +66,7 @@ export const outcomeSnapshotSchema = z.object({
 
 // Situation Schema
 export const preferenceSchema = z.object({
+  answerType: z.nativeEnum(AnswerType),
   weight: z.nativeEnum(PreferenceWeight),
   rationale: z.string(),
 });
@@ -136,8 +138,10 @@ export const exchangeImpactsSchema = z.object({
 export const answerSchema = z.object({
   id: z.string(),
   text: z.string(),
+  type: z.nativeEnum(AnswerType),
+  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
   impacts: exchangeImpactsSchema,
-  outcomeModifiers: z.record(z.string(), z.nativeEnum(AnswerOutcomeModifier)),
+  outcomeModifiers: z.record(z.string(), z.number()),
   followUpId: z.string().optional(),
 });
 

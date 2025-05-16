@@ -7,8 +7,7 @@ import {
   SubgroupStaticId,
   SituationConsequenceWeight,
   PublicationStaticId,
-  AnswerOutcomeModifier,
-  JournalistStaticId,
+  AnswerType,
 } from "~/types";
 
 export const inflationConcerns: SituationData = {
@@ -25,12 +24,14 @@ export const inflationConcerns: SituationData = {
   content: {
     preferences: {
       president: {
+        answerType: AnswerType.Reassure,
         weight: PreferenceWeight.SlightlyNegative,
         rationale:
           "Acknowledge concerns without causing panic. Emphasize temporary nature and administration's proactive measures.",
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
+          answerType: AnswerType.Admit,
           weight: PreferenceWeight.StronglyNegative,
           rationale:
             "Extremely concerned; advocates for decisive action to prevent further economic disruption.",
@@ -43,7 +44,7 @@ export const inflationConcerns: SituationData = {
         title: "Inflation Shows Signs of Stabilizing",
         description:
           "Early data suggests inflation may be peaking, with key indicators showing signs of moderation.",
-        weight: 30,
+        weight: 30, // Sum of weights = 30+50+20 = 100
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.Positive,
@@ -66,7 +67,7 @@ export const inflationConcerns: SituationData = {
         title: "Inflation Persists Despite Measures",
         description:
           "Despite administration efforts, inflation remains elevated, continuing to stress household budgets.",
-        weight: 50,
+        weight: 50, // Sum of weights = 30+50+20 = 100
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.Negative,
@@ -90,7 +91,7 @@ export const inflationConcerns: SituationData = {
         title: "Inflation Triggers Recession Fears",
         description:
           "Aggressive anti-inflation measures and persistent price increases spark serious recession concerns.",
-        weight: 20,
+        weight: 20, // Sum of weights = 30+50+20 = 100
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.StronglyNegative,
@@ -122,6 +123,7 @@ export const inflationConcerns: SituationData = {
             answers: [
               {
                 id: "inflation-response-ans1",
+                type: AnswerType.Inform,
                 text: "We're taking a comprehensive approach, including releasing strategic reserves to lower energy prices and addressing supply chain bottlenecks.",
                 impacts: {
                   president: {
@@ -142,14 +144,16 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.Positive,
-                  inflation_persists: AnswerOutcomeModifier.SlightlyNegative,
-                  recession_fears: AnswerOutcomeModifier.Negative,
+                  // 4 - 2 - 2 = 0
+                  inflation_stabilizing: 4,
+                  inflation_persists: -2,
+                  recession_fears: -2,
                 },
                 followUpId: "inflation-timeframe",
               },
               {
                 id: "inflation-response-ans2",
+                type: AnswerType.Reassure,
                 text: "The President is focused on ensuring the Federal Reserve has the independence it needs while advancing policies to reduce costs for families.",
                 impacts: {
                   president: {
@@ -174,13 +178,15 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.SlightlyPositive,
-                  inflation_persists: AnswerOutcomeModifier.Neutral,
-                  recession_fears: AnswerOutcomeModifier.Positive,
+                  // 2 + 0 - 2 = 0
+                  inflation_stabilizing: 2,
+                  inflation_persists: 0,
+                  recession_fears: -2, // Changed from Positive to Negative to balance
                 },
               },
               {
                 id: "inflation-response-ans3",
+                type: AnswerType.Deflect,
                 text: "This inflation is primarily caused by global factors beyond any administration's control. We're doing everything possible within our power.",
                 impacts: {
                   president: {
@@ -199,9 +205,10 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.Negative,
-                  inflation_persists: AnswerOutcomeModifier.Positive,
-                  recession_fears: AnswerOutcomeModifier.SlightlyPositive,
+                  // -4 + 2 + 2 = 0
+                  inflation_stabilizing: -4,
+                  inflation_persists: 2,
+                  recession_fears: 2,
                 },
               },
             ],
@@ -213,6 +220,7 @@ export const inflationConcerns: SituationData = {
             answers: [
               {
                 id: "inflation-timeframe-ans1",
+                type: AnswerType.Inform,
                 text: "Our economists project inflation will begin moderating within the next quarter as our policies take effect and supply chains normalize.",
                 impacts: {
                   president: {
@@ -233,13 +241,15 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.StronglyPositive,
-                  inflation_persists: AnswerOutcomeModifier.StronglyNegative,
-                  recession_fears: AnswerOutcomeModifier.Neutral,
+                  // 6 - 6 + 0 = 0
+                  inflation_stabilizing: 6,
+                  inflation_persists: -6,
+                  recession_fears: 0,
                 },
               },
               {
                 id: "inflation-timeframe-ans2",
+                type: AnswerType.Reassure,
                 text: "While I won't make specific predictions, we're already seeing early indicators that inflation pressures are easing in several sectors.",
                 impacts: {
                   president: {
@@ -260,9 +270,10 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.Positive,
-                  inflation_persists: AnswerOutcomeModifier.SlightlyNegative,
-                  recession_fears: AnswerOutcomeModifier.SlightlyPositive,
+                  // 4 - 2 - 2 = 0
+                  inflation_stabilizing: 4,
+                  inflation_persists: -2,
+                  recession_fears: -2, // Changed from SlightlyPositive to balance
                 },
               },
             ],
@@ -282,6 +293,7 @@ export const inflationConcerns: SituationData = {
             answers: [
               {
                 id: "inflation-cause-ans1",
+                type: AnswerType.Deny,
                 text: "No, economists widely agree this inflation is primarily driven by pandemic disruptions, supply chain issues, and global energy challenges.",
                 impacts: {
                   president: {
@@ -300,13 +312,15 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.SlightlyPositive,
-                  inflation_persists: AnswerOutcomeModifier.Neutral,
-                  recession_fears: AnswerOutcomeModifier.SlightlyNegative,
+                  // 2 + 0 - 2 = 0
+                  inflation_stabilizing: 2,
+                  inflation_persists: 0,
+                  recession_fears: -2,
                 },
               },
               {
                 id: "inflation-cause-ans2",
+                type: AnswerType.Admit,
                 text: "There are multiple factors at play, including fiscal policy. The administration is taking a hard look at all spending to ensure fiscal responsibility.",
                 impacts: {
                   president: {
@@ -336,9 +350,10 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.Positive,
-                  inflation_persists: AnswerOutcomeModifier.SlightlyNegative,
-                  recession_fears: AnswerOutcomeModifier.Negative,
+                  // 4 - 2 - 2 = 0
+                  inflation_stabilizing: 4,
+                  inflation_persists: -2,
+                  recession_fears: -2,
                 },
               },
             ],
@@ -358,6 +373,7 @@ export const inflationConcerns: SituationData = {
             answers: [
               {
                 id: "inflation-impact-ans1",
+                type: AnswerType.Inform,
                 text: "We've expanded tax credits for families, released oil reserves to lower gas prices, and are working to reduce prescription drug and childcare costs.",
                 impacts: {
                   president: {
@@ -380,13 +396,15 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.SlightlyPositive,
-                  inflation_persists: AnswerOutcomeModifier.SlightlyNegative,
-                  recession_fears: AnswerOutcomeModifier.SlightlyPositive,
+                  // 2 - 2 + 0 = 0
+                  inflation_stabilizing: 2,
+                  inflation_persists: -2,
+                  recession_fears: 0, // Changed from SlightlyPositive to balance
                 },
               },
               {
                 id: "inflation-impact-ans2",
+                type: AnswerType.Challenge,
                 text: "The most important thing we can do is get inflation under control. Short-term relief measures that increase spending could make the problem worse.",
                 impacts: {
                   president: {
@@ -411,9 +429,10 @@ export const inflationConcerns: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  inflation_stabilizing: AnswerOutcomeModifier.StronglyPositive,
-                  inflation_persists: AnswerOutcomeModifier.SlightlyPositive,
-                  recession_fears: AnswerOutcomeModifier.Negative,
+                  // 6 + 0 - 6 = 0
+                  inflation_stabilizing: 6,
+                  inflation_persists: 0, // Changed from SlightlyPositive to balance
+                  recession_fears: -6, // Changed from Negative to StronglyNegative to balance
                 },
               },
             ],

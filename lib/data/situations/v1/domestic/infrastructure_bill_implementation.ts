@@ -6,10 +6,8 @@ import {
   CabinetStaticId,
   SubgroupStaticId,
   SituationConsequenceWeight,
-  JournalistStaticId,
-  AnswerOutcomeModifier,
-  PoliticalParty,
   PublicationStaticId,
+  AnswerType,
 } from "~/types";
 
 export const infrastructureBillImplementation: SituationData = {
@@ -26,17 +24,20 @@ export const infrastructureBillImplementation: SituationData = {
   content: {
     preferences: {
       president: {
+        answerType: AnswerType.Inform,
         weight: PreferenceWeight.Positive,
         rationale:
           "Highlight early successes and manage expectations about timeline. Focus on job creation statistics.",
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
+          answerType: AnswerType.Reassure,
           weight: PreferenceWeight.Neutral,
           rationale:
             "Emphasize fiscal oversight and responsible fund allocation.",
         },
         [CabinetStaticId.State]: {
+          answerType: AnswerType.Inform,
           weight: PreferenceWeight.Positive,
           rationale:
             "Emphasize how these projects will strengthen America's global competitiveness.",
@@ -49,7 +50,7 @@ export const infrastructureBillImplementation: SituationData = {
         title: "Smooth Implementation Begins",
         description:
           "Early implementation of the infrastructure bill proceeds smoothly, with projects starting on schedule.",
-        weight: 40,
+        weight: 40, // Sum of weights = 40+40+20 = 100
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.Positive,
@@ -71,7 +72,7 @@ export const infrastructureBillImplementation: SituationData = {
         title: "Implementation Challenges Emerge",
         description:
           "The administration encounters regulatory hurdles and coordination issues in early infrastructure projects.",
-        weight: 40,
+        weight: 40, // Sum of weights = 40+40+20 = 100
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.SlightlyNegative,
@@ -94,7 +95,7 @@ export const infrastructureBillImplementation: SituationData = {
         title: "Projects Face Cost Overruns",
         description:
           "Initial infrastructure projects face significant cost overruns, prompting congressional scrutiny.",
-        weight: 20,
+        weight: 20, // Sum of weights = 40+40+20 = 100
         consequences: {
           approvalChanges: {
             president: SituationConsequenceWeight.Negative,
@@ -125,6 +126,7 @@ export const infrastructureBillImplementation: SituationData = {
             answers: [
               {
                 id: "implement-progress-ans1",
+                type: AnswerType.Inform,
                 text: "Within six months, Americans will see construction begin on major roads and bridges, with thousands of workers already hired across the country.",
                 impacts: {
                   president: {
@@ -143,14 +145,16 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.Positive,
-                  implementation_challenges: AnswerOutcomeModifier.Negative,
-                  cost_overruns: AnswerOutcomeModifier.Negative,
+                  // 6 - 3 - 3 = 0
+                  smooth_implementation: 6,
+                  implementation_challenges: -3,
+                  cost_overruns: -3,
                 },
                 followUpId: "implement-oversight",
               },
               {
                 id: "implement-progress-ans2",
+                type: AnswerType.Reassure,
                 text: "We're focused on getting this right rather than rushing. The first phase involves detailed planning and contractor selection to ensure taxpayer dollars are used efficiently.",
                 impacts: {
                   president: {
@@ -175,10 +179,10 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.Neutral,
-                  implementation_challenges:
-                    AnswerOutcomeModifier.SlightlyPositive,
-                  cost_overruns: AnswerOutcomeModifier.StronglyNegative,
+                  // 2 + 2 - 4 = 0
+                  smooth_implementation: 2,
+                  implementation_challenges: 2,
+                  cost_overruns: -4,
                 },
               },
             ],
@@ -190,6 +194,7 @@ export const infrastructureBillImplementation: SituationData = {
             answers: [
               {
                 id: "implement-oversight-ans1",
+                type: AnswerType.Inform,
                 text: "We've established a dedicated Infrastructure Implementation Task Force to coordinate across agencies and ensure transparency in fund allocation.",
                 impacts: {
                   cabinet: {
@@ -206,14 +211,15 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.Positive,
-                  implementation_challenges:
-                    AnswerOutcomeModifier.SlightlyNegative,
-                  cost_overruns: AnswerOutcomeModifier.StronglyNegative,
+                  // 5 - 2 - 3 = 0
+                  smooth_implementation: 5,
+                  implementation_challenges: -2,
+                  cost_overruns: -3,
                 },
               },
               {
                 id: "implement-oversight-ans2",
+                type: AnswerType.Reassure,
                 text: "We're working with state and local officials who know their communities' needs best, while maintaining federal oversight to prevent waste and abuse.",
                 impacts: {
                   president: {
@@ -234,9 +240,10 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.SlightlyNegative,
-                  implementation_challenges: AnswerOutcomeModifier.Positive,
-                  cost_overruns: AnswerOutcomeModifier.SlightlyNegative,
+                  // -2 + 4 - 2 = 0
+                  smooth_implementation: -2,
+                  implementation_challenges: 4,
+                  cost_overruns: -2,
                 },
               },
             ],
@@ -256,6 +263,7 @@ export const infrastructureBillImplementation: SituationData = {
             answers: [
               {
                 id: "implement-jobs-ans1",
+                type: AnswerType.Inform,
                 text: "In just the first month, we've seen over 50,000 new jobs created across 38 states, primarily in construction and planning roles.",
                 impacts: {
                   president: {
@@ -274,13 +282,15 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.StronglyPositive,
-                  implementation_challenges: AnswerOutcomeModifier.Negative,
-                  cost_overruns: AnswerOutcomeModifier.SlightlyNegative,
+                  // 6 - 4 - 2 = 0
+                  smooth_implementation: 6,
+                  implementation_challenges: -4,
+                  cost_overruns: -2,
                 },
               },
               {
                 id: "implement-jobs-ans2",
+                type: AnswerType.Deflect,
                 text: "It's too early for precise numbers, but hiring is underway across the country, with significant job creation expected as projects move from planning to implementation.",
                 impacts: {
                   president: {
@@ -299,9 +309,10 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.Negative,
-                  implementation_challenges: AnswerOutcomeModifier.Positive,
-                  cost_overruns: AnswerOutcomeModifier.SlightlyPositive,
+                  // -3 + 3 + 0 = 0
+                  smooth_implementation: -3,
+                  implementation_challenges: 3,
+                  cost_overruns: 0,
                 },
               },
             ],
@@ -321,6 +332,7 @@ export const infrastructureBillImplementation: SituationData = {
             answers: [
               {
                 id: "implement-delays-ans1",
+                type: AnswerType.Deny,
                 text: "These reports are exaggerated. All major projects remain on schedule, with some even ahead of our initial projections.",
                 impacts: {
                   president: {
@@ -339,14 +351,15 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.SlightlyPositive,
-                  implementation_challenges:
-                    AnswerOutcomeModifier.StronglyNegative,
-                  cost_overruns: AnswerOutcomeModifier.StronglyPositive,
+                  // 0 - 6 + 6 = 0
+                  smooth_implementation: 0,
+                  implementation_challenges: -6,
+                  cost_overruns: 6,
                 },
               },
               {
                 id: "implement-delays-ans2",
+                type: AnswerType.Reassure,
                 text: "Any project of this scale faces initial adjustments. We're addressing specific challenges transparently while keeping the overall implementation on track.",
                 impacts: {
                   president: {
@@ -372,9 +385,10 @@ export const infrastructureBillImplementation: SituationData = {
                   },
                 },
                 outcomeModifiers: {
-                  smooth_implementation: AnswerOutcomeModifier.SlightlyNegative,
-                  implementation_challenges: AnswerOutcomeModifier.Positive,
-                  cost_overruns: AnswerOutcomeModifier.Negative,
+                  // -1 + 3 - 2 = 0
+                  smooth_implementation: -1,
+                  implementation_challenges: 3,
+                  cost_overruns: -2,
                 },
               },
             ],
