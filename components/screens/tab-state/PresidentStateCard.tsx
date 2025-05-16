@@ -26,7 +26,7 @@ const PresidentStateCard = ({ game }: PresidentStateCardProps) => {
 
       <CardContent className="gap-2">
         <View className="flex-row items-center justify-between gap-2">
-          <Text className="text-3xl font-bold">{game.presName}</Text>
+          <Text className="text-2sxl font-bold">{game.presName}</Text>
           <PoliticalLeaningBadge politicalLeaning={game.presParty} />
         </View>
 

@@ -29,7 +29,7 @@ export function useLevelNavigation() {
       // Type-safe approach to navigate based on status
       switch (status) {
         case LevelStatus.Briefing:
-          router.push(`/games/${currentGameId}/briefing`);
+          router.push(`/games/${currentGameId}/level-briefing`);
           break;
         case LevelStatus.PressConference:
           router.push(`/games/${currentGameId}/press-conference`);

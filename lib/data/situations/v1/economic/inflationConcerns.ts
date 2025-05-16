@@ -31,10 +31,13 @@ export const inflationConcerns: SituationData = {
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
-          answerType: AnswerType.Admit,
-          weight: PreferenceWeight.StronglyNegative,
-          rationale:
-            "Extremely concerned; advocates for decisive action to prevent further economic disruption.",
+          preference: {
+            answerType: AnswerType.Admit,
+            weight: PreferenceWeight.StronglyNegative,
+            rationale:
+              "Extremely concerned; advocates for decisive action to prevent further economic disruption.",
+          },
+          authorizedContent: "1 billion americans will lose their jobs .",
         },
       },
     },

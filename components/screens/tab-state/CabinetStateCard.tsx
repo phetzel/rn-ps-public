@@ -9,6 +9,7 @@ import { Separator } from "~/components/ui/separator";
 import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
+import { CabinetMemberName } from "~/components/shared/CabinetMemberName";
 
 interface CabinetStateCardProps {
   cabinetMembers: CabinetMember[];
@@ -23,37 +24,27 @@ const CabinetStateCard = ({ cabinetMembers }: CabinetStateCardProps) => {
       </CardHeader>
 
       <CardContent className="gap-4">
-        {cabinetMembers.map((member, idx) => {
-          const memberStaticData = member.staticData;
-          return (
-            <View key={member.id} className="gap-2">
-              <View className="flex justify-between items-start">
-                <View>
-                  <Text className="text-xl font-bold">{member.name}</Text>
-                  <Text className="text-lg text-muted-foreground leading-none">
-                    {memberStaticData.cabinetName}
-                  </Text>
-                </View>
-              </View>
+        {cabinetMembers.map((member, idx) => (
+          <View key={member.id} className="gap-2">
+            <CabinetMemberName cabinetMember={member} />
 
-              <View className="gap-2">
-                <StateProgress
-                  label="Approval Rating"
-                  value={member.approvalRating}
-                />
+            <View className="gap-2">
+              <StateProgress
+                label="Approval Rating"
+                value={member.approvalRating}
+              />
 
-                <StateProgress
-                  label="Relationship with You"
-                  value={member.psRelationship}
-                />
-              </View>
-
-              {idx !== cabinetMembers.length - 1 && (
-                <Separator className="mt-4" />
-              )}
+              <StateProgress
+                label="Relationship with You"
+                value={member.psRelationship}
+              />
             </View>
-          );
-        })}
+
+            {idx !== cabinetMembers.length - 1 && (
+              <Separator className="mt-4" />
+            )}
+          </View>
+        ))}
       </CardContent>
     </Card>
   );

@@ -225,7 +225,10 @@ export interface Preference {
 export interface SituationPreferences {
   president?: Preference;
   cabinet?: {
-    [key in CabinetStaticId]?: Preference;
+    [key in CabinetStaticId]?: {
+      preference: Preference;
+      authorizedContent?: string;
+    };
   };
 }
 

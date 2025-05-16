@@ -71,9 +71,16 @@ export const preferenceSchema = z.object({
   rationale: z.string(),
 });
 
+export const cabinetPreferenceSchema = z.object({
+  preference: preferenceSchema,
+  authorizedContent: z.string().optional(),
+});
+
 export const situationPreferencesSchema = z.object({
   president: preferenceSchema.optional(),
-  cabinet: z.record(z.nativeEnum(CabinetStaticId), preferenceSchema).optional(),
+  cabinet: z
+    .record(z.nativeEnum(CabinetStaticId), cabinetPreferenceSchema)
+    .optional(),
 });
 
 export const consequenceSchema = z.object({

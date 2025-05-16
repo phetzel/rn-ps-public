@@ -31,16 +31,20 @@ export const infrastructureBillImplementation: SituationData = {
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
-          answerType: AnswerType.Reassure,
-          weight: PreferenceWeight.Neutral,
-          rationale:
-            "Emphasize fiscal oversight and responsible fund allocation.",
+          preference: {
+            answerType: AnswerType.Reassure,
+            weight: PreferenceWeight.Neutral,
+            rationale:
+              "Emphasize fiscal oversight and responsible fund allocation.",
+          },
         },
         [CabinetStaticId.State]: {
-          answerType: AnswerType.Inform,
-          weight: PreferenceWeight.Positive,
-          rationale:
-            "Emphasize how these projects will strengthen America's global competitiveness.",
+          preference: {
+            answerType: AnswerType.Inform,
+            weight: PreferenceWeight.Positive,
+            rationale:
+              "Emphasize how these projects will strengthen America's global competitiveness.",
+          },
         },
       },
     },

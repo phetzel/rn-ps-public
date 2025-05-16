@@ -51,6 +51,8 @@ export const NAV_THEME = {
 };
 
 export const MAX_ACTIVE_GAMES = 3;
+export const CABINET_PREFERENCE_THRESHOLD = 30;
+export const CABINET_AUTHORIZED_THRESHOLD = 70;
 export const QUESTIONS_PER_LEVEL = 4; // Questions include follow-up questions
 export const QUESTIONS_PER_PRESS_CONFERENCE = 6; // Questions selected during press conference
 

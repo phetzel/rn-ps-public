@@ -34,16 +34,20 @@ export const infrastructureBill: SituationData = {
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
-          answerType: AnswerType.Reassure,
-          weight: PreferenceWeight.SlightlyNegative,
-          rationale:
-            "Concerned about deficit impact; advises fiscal restraint and phased approach.",
+          preference: {
+            answerType: AnswerType.Reassure,
+            weight: PreferenceWeight.SlightlyNegative,
+            rationale:
+              "Concerned about deficit impact; advises fiscal restraint and phased approach.",
+          },
         },
         [CabinetStaticId.State]: {
-          answerType: AnswerType.Inform,
-          weight: PreferenceWeight.Positive,
-          rationale:
-            "Emphasize how infrastructure investment strengthens global competitiveness.",
+          preference: {
+            answerType: AnswerType.Inform,
+            weight: PreferenceWeight.Positive,
+            rationale:
+              "Emphasize how infrastructure investment strengthens global competitiveness.",
+          },
         },
       },
     },

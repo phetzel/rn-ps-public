@@ -17,7 +17,7 @@ export default function GameSessionLayout() {
         options={{ title: "Current", headerShown: false }}
       />
       <Stack.Screen
-        name="briefing"
+        name="level-briefing"
         options={{
           title: "Briefing",
           headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,

@@ -32,7 +32,7 @@ const SituationOutcomesList = ({
 
   if (situations.length === 0) {
     return (
-      <View className="py-12 items-center justify-center border rounded-lg bg-muted/20">
+      <View className="py-12 items-center justify-center border rounded-lg bg-muted/30">
         <View className="w-12 h-12 rounded-full bg-primary/10 items-center justify-center mb-4">
           <AlertCircle className="h-6 w-6 text-primary" />
         </View>

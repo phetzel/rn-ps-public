@@ -3,9 +3,9 @@ import { Image } from "react-native";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import BriefingSituationsList from "~/components/briefing/BriefingSituationsList";
+import BriefingSituationsList from "~/components/screens/level-briefing/BriefingSituationsList";
 
-export default function BriefingScreen() {
+export default function LevelBriefingScreen() {
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 

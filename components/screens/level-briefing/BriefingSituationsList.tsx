@@ -1,28 +1,30 @@
-// components/briefing/BriefingSituationList.tsx
 import React, { useState } from "react";
 import { View } from "react-native";
-import { useRouter } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
 
 import {
   observeSituationsByLevelId,
   observeLevel,
   observeCabinetMembersByLevel,
+  observeGame,
 } from "~/lib/db/helpers/observations";
-import { Situation, Level, CabinetMember } from "~/lib/db/models";
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
+import { Situation, Level, CabinetMember, Game } from "~/lib/db/models";
+import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
+// Components
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
 import { LevelStatus } from "~/types";
-import BriefingSituationItem from "~/components/briefing/BriefingSituationItem";
+import BriefingSituationItem from "~/components/screens/level-briefing/BriefingSituationItem";
+import { EmptyState } from "~/components/shared/EmptyState";
 
-interface BriefingSituationListProps {
+interface BriefingSituationsListProps {
   gameId: string;
   levelId: string;
   situations: Situation[];
   level: Level;
   cabinetMembers: CabinetMember[];
+  game: Game | null;
 }
 
 const BriefingSituationsList = ({
@@ -31,12 +33,11 @@ const BriefingSituationsList = ({
   situations,
   level,
   cabinetMembers,
-}: BriefingSituationListProps) => {
+  game,
+}: BriefingSituationsListProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const router = useRouter();
-  const progressCurrentLevel = useCurrentLevelStore(
-    (state) => state.progressCurrentLevel
-  );
+  const { progressAndNavigate, navigateToCurrentLevelScreen } =
+    useLevelNavigation();
 
   const handleNext = () => {
     if (currentIndex < situations.length - 1) {
@@ -53,10 +54,10 @@ const BriefingSituationsList = ({
   const handleComplete = async () => {
     try {
       if (level.status == LevelStatus.Briefing) {
-        await progressCurrentLevel();
+        await progressAndNavigate();
+      } else {
+        await navigateToCurrentLevelScreen();
       }
-
-      router.push(`/games/${level.game_id}/press-conference`);
     } catch (error) {
       console.error("Failed to start press conference:", error);
     }
@@ -64,10 +65,8 @@ const BriefingSituationsList = ({
 
   if (!situations || situations.length === 0) {
     return (
-      <View className="py-4">
-        <Text className="text-center text-muted-foreground">
-          No active situations to brief on
-        </Text>
+      <View className="py-4 gap-4">
+        <EmptyState message="No active situations to brief on" />
         <Button className="mt-4" onPress={() => handleComplete()}>
           <Text>Proceed to Press Conference</Text>
         </Button>
@@ -98,6 +97,7 @@ const BriefingSituationsList = ({
       <BriefingSituationItem
         situation={currentSituation}
         cabinetMembers={cabinetMembers}
+        presName={game?.presName ?? "President"}
         isFirst={currentIndex === 0}
         handlePrevious={handlePrevious}
         isLast={isLastSituation}
@@ -108,10 +108,14 @@ const BriefingSituationsList = ({
   );
 };
 
-const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
-  situations: observeSituationsByLevelId(levelId),
-  level: observeLevel(levelId),
-  cabinetMembers: observeCabinetMembersByLevel(levelId),
-}));
+const enhance = withObservables(
+  ["gameId", "levelId"],
+  ({ gameId, levelId }) => ({
+    situations: observeSituationsByLevelId(levelId),
+    level: observeLevel(levelId),
+    cabinetMembers: observeCabinetMembersByLevel(levelId),
+    game: observeGame(gameId),
+  })
+);
 
 export default enhance(BriefingSituationsList);

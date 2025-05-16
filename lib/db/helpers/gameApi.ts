@@ -72,11 +72,19 @@ export async function createGameWithDetails(
 
     // Create Political entities
     for (const [role, cabinetData] of Object.entries(staticCabinetMembers)) {
+      // // TEMP
+      // const relationshipValues = [20, 50, 90];
+      // const randomRelationship =
+      //   relationshipValues[
+      //     Math.floor(Math.random() * relationshipValues.length)
+      //   ];
+
       await cabinetCollection.create((member) => {
         member.game.id = gameId;
         member.staticId = role as CabinetStaticId;
         member.name = generateCabinetMemberName(role as CabinetStaticId);
         member.approvalRating = 50;
+        // member.psRelationship = randomRelationship;
         member.psRelationship = 50;
         member.isActive = true;
       });
