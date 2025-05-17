@@ -20,7 +20,6 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "~/components/ui/accordion";
-import BriefingSituationItemHeader from "~/components/screens/level-briefing/BriefingSituationItemHeader";
 import PreferenceDisplay from "~/components/screens/level-briefing/PreferenceDisplay";
 import PreferenceLocked from "~/components/screens/level-briefing/PreferenceLocked";
 import AuthorizedIntel from "~/components/screens/level-briefing/AuthorizedIntel";
@@ -28,11 +27,6 @@ import AuthorizedIntel from "~/components/screens/level-briefing/AuthorizedIntel
 interface BriefingSituationItemProps {
   situation: Situation;
   cabinetMembers: CabinetMember[];
-  isFirst: boolean;
-  handlePrevious: () => void;
-  isLast: boolean;
-  handleNext: () => void;
-  handleComplete: () => void;
   presName: string;
 }
 
@@ -40,11 +34,6 @@ const BriefingSituationItem = ({
   situation,
   cabinetMembers,
   presName,
-  isFirst,
-  handlePrevious,
-  isLast,
-  handleNext,
-  handleComplete,
 }: BriefingSituationItemProps) => {
   // Create a map for quick lookup: Static ID -> CabinetMember model
   const cabinetMemberMap = useMemo(() => {
@@ -67,114 +56,82 @@ const BriefingSituationItem = ({
   const cabinetPreferences = contentPreferences.cabinet;
 
   return (
-    <Card className="border-l-4 border-l-primary">
-      <BriefingSituationItemHeader
-        title={situation.title}
-        description={situation.description}
-        type={situation.type}
-      />
+    // <Card className="border-l-4 border-l-primary">
+    <View className="gap-4">
+      <Separator />
 
-      <CardContent className="gap-4">
-        <Separator />
+      {/* President's Position */}
+      {presidentPreference && presName ? (
+        <View className="gap-2">
+          <Text className="text-lg font-medium">President's Position</Text>
+          <Text className="text-2xl font-bold">{presName}</Text>
+          <PreferenceDisplay preference={presidentPreference} />
+        </View>
+      ) : (
+        <Text className="text-sm">No specific preferences</Text>
+      )}
 
-        {/* President's Position */}
-        {presidentPreference && presName ? (
-          <View className="gap-2">
-            <Text className="text-lg font-medium">President's Position</Text>
-            <Text className="text-2xl font-bold">{presName}</Text>
-            <PreferenceDisplay preference={presidentPreference} />
-          </View>
-        ) : (
-          <Text className="text-sm">No specific preferences</Text>
-        )}
-
-        {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
-          <Accordion type="single" collapsible>
-            <AccordionItem value="cabinet-positions">
-              <AccordionTrigger>
-                <Text className="font-medium">
-                  Cabinet Positions ({Object.keys(cabinetPreferences).length})
-                </Text>
-              </AccordionTrigger>
-              <AccordionContent>
-                <View className="gap-2">
-                  {Object.entries(cabinetPreferences).map(
-                    ([member, cabPref], idx) => {
-                      const staticId = member as CabinetStaticId;
-                      const cabinetMember = cabinetMemberMap.get(staticId);
-                      if (!cabinetMember) {
-                        return null;
-                      }
-
-                      const relationship = cabinetMember.psRelationship;
-
-                      const isPreferenceLocked =
-                        relationship < CABINET_PREFERENCE_THRESHOLD;
-
-                      return (
-                        <View key={idx} className="gap-2">
-                          <CabinetMemberName cabinetMember={cabinetMember} />
-
-                          {isPreferenceLocked ? (
-                            <PreferenceLocked
-                              cabinetMemberName={cabinetMember.name}
-                              relationship={relationship}
-                            />
-                          ) : (
-                            <>
-                              <PreferenceDisplay
-                                preference={cabPref.preference}
-                              />
-
-                              {cabPref.authorizedContent && (
-                                <AuthorizedIntel
-                                  cabinetMemberName={cabinetMember.name}
-                                  relationship={relationship}
-                                  authorizedContent={cabPref.authorizedContent}
-                                />
-                              )}
-                            </>
-                          )}
-
-                          {idx !==
-                            Object.keys(cabinetPreferences).length - 1 && (
-                            <Separator className="mt-2" />
-                          )}
-                        </View>
-                      );
+      {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
+        <Accordion type="single" collapsible>
+          <AccordionItem value="cabinet-positions">
+            <AccordionTrigger>
+              <Text className="font-medium">
+                Cabinet Positions ({Object.keys(cabinetPreferences).length})
+              </Text>
+            </AccordionTrigger>
+            <AccordionContent>
+              <View className="gap-2">
+                {Object.entries(cabinetPreferences).map(
+                  ([member, cabPref], idx) => {
+                    const staticId = member as CabinetStaticId;
+                    const cabinetMember = cabinetMemberMap.get(staticId);
+                    if (!cabinetMember) {
+                      return null;
                     }
-                  )}
-                </View>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        )}
-      </CardContent>
 
-      <CardFooter className="flex-row justify-between">
-        <Button
-          variant="outline"
-          className="flex-row gap-2"
-          onPress={handlePrevious}
-          disabled={isFirst}
-        >
-          <ArrowLeft className="text-foreground" />
-          <Text>Previous</Text>
-        </Button>
+                    const relationship = cabinetMember.psRelationship;
 
-        <Button
-          onPress={isLast ? handleComplete : handleNext}
-          className="flex-row gap-2"
-        >
-          <Text> {isLast ? "Complete" : "Next"} </Text>
-          {isLast ? (
-            <CheckCircle2 className="text-background" />
-          ) : (
-            <ArrowRight className="text-background" />
-          )}
-        </Button>
-      </CardFooter>
-    </Card>
+                    const isPreferenceLocked =
+                      relationship < CABINET_PREFERENCE_THRESHOLD;
+
+                    return (
+                      <View key={idx} className="gap-2">
+                        <CabinetMemberName cabinetMember={cabinetMember} />
+
+                        {isPreferenceLocked ? (
+                          <PreferenceLocked
+                            cabinetMemberName={cabinetMember.name}
+                            relationship={relationship}
+                          />
+                        ) : (
+                          <>
+                            <PreferenceDisplay
+                              preference={cabPref.preference}
+                            />
+
+                            {cabPref.authorizedContent && (
+                              <AuthorizedIntel
+                                cabinetMemberName={cabinetMember.name}
+                                relationship={relationship}
+                                authorizedContent={cabPref.authorizedContent}
+                              />
+                            )}
+                          </>
+                        )}
+
+                        {idx !== Object.keys(cabinetPreferences).length - 1 && (
+                          <Separator className="mt-2" />
+                        )}
+                      </View>
+                    );
+                  }
+                )}
+              </View>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
+    </View>
   );
 };
 

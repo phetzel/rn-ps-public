@@ -1,55 +1,116 @@
 import { useState } from "react";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeLevel } from "~/lib/db/helpers/observations";
-import type { Level } from "~/lib/db/models";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
-import { Text } from "~/components/ui/text";
-
-import SituationOutcomesList from "~/components/situation-outcomes/SituationOutcomesList";
+import {
+  observeGame,
+  observeLevel,
+  observeSituationsByLevelId,
+} from "~/lib/db/helpers/observations";
+import type { Game, Level, Situation } from "~/lib/db/models";
+import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
+import ResultsCardHeader from "~/components/shared/ResultsCardHeader";
+import SituationOutcomeItemHeader from "~/components/situation-outcomes/SituationOutcomeItemHeader";
+import SituationOutcomeItem from "~/components/situation-outcomes/SituationOutcomeItem";
 import SituationResults from "~/components/situation-outcomes/SituationResults";
+import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
+import { cn } from "~/lib/utils";
+import { LevelStatus } from "~/types";
 
 interface SituationOutcomesContentProps {
   gameId: string;
   levelId: string;
+  game: Game | null;
   level: Level;
+  situations: Situation[];
 }
 
 const SituationOutcomesContent = ({
   gameId,
   levelId,
+  game,
   level,
+  situations,
 }: SituationOutcomesContentProps) => {
-  const [currentTab, setCurrentTab] = useState<string>("situations");
+  const [isAdWatched, setIsAdWatched] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const { progressAndNavigate, navigateToCurrentLevelScreen } =
+    useLevelNavigation();
+
+  const handleNext = () => {
+    if (currentIndex < situations.length) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleComplete = async () => {
+    try {
+      if (level.status == LevelStatus.SituationOutcomes) {
+        await progressAndNavigate();
+      } else {
+        await navigateToCurrentLevelScreen();
+      }
+    } catch (error) {
+      console.error("Failed to complete situation outcomes:", error);
+    }
+  };
+
+  const isOnResults = currentIndex === situations.length;
+  const progressLabel = isOnResults
+    ? "Results"
+    : `Situation ${currentIndex + 1} of ${situations.length}`;
+
+  const currentSituation = situations[currentIndex];
 
   return (
-    <Tabs
-      value={currentTab}
-      onValueChange={setCurrentTab}
-      className="w-full max-w-[600px] mx-auto flex-col gap-4"
+    <ProgressNavigator
+      currentIndex={currentIndex}
+      totalItems={situations.length + 1}
+      onPrevious={handlePrevious}
+      onNext={handleNext}
+      onComplete={handleComplete}
+      progressLabel={progressLabel}
+      cardClassName={cn(
+        "border-l-4",
+        isAdWatched ? "border-l-green-500" : "border-l-blue-500"
+      )}
+      headerContent={
+        isOnResults ? (
+          <ResultsCardHeader
+            isAdWatched={isAdWatched}
+            onAdComplete={() => setIsAdWatched(true)}
+          />
+        ) : (
+          <SituationOutcomeItemHeader situation={currentSituation} />
+        )
+      }
     >
-      <TabsList className="flex-row w-full">
-        <TabsTrigger value="situations" className="flex-1">
-          <Text>Situations</Text>
-        </TabsTrigger>
-        <TabsTrigger value="results" className="flex-1">
-          <Text>Results</Text>
-        </TabsTrigger>
-      </TabsList>
-
-      <TabsContent value="situations" className="gap-4">
-        <SituationOutcomesList gameId={gameId} level={level} />
-      </TabsContent>
-
-      <TabsContent value="results" className="gap-4">
-        <SituationResults gameId={gameId} level={level} />
-      </TabsContent>
-    </Tabs>
+      {isOnResults ? (
+        <SituationResults
+          gameId={gameId}
+          level={level}
+          isAdWatched={isAdWatched}
+        />
+      ) : (
+        <SituationOutcomeItem situation={currentSituation} game={game} />
+      )}
+    </ProgressNavigator>
   );
 };
 
-const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
-  level: observeLevel(levelId),
-}));
+const enhance = withObservables(
+  ["gameId", "levelId"],
+  ({ gameId, levelId }) => ({
+    game: observeGame(gameId),
+    level: observeLevel(levelId),
+    situations: observeSituationsByLevelId(levelId),
+  })
+);
 
 export default enhance(SituationOutcomesContent);

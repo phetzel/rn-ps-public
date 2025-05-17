@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { useRouter } from "expo-router";
 
 // Components
-import { Button } from "~/components/ui/button";
-import ResultsCard from "~/components/ResultsCard";
 import { Text } from "~/components/ui/text";
-// Icons
-import { ArrowRight } from "~/lib/icons/ArrowRight";
 // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
@@ -16,7 +11,7 @@ import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityApi";
 // Utils
 import { cn, calculateBoost } from "~/lib/utils";
 // Types
-import { EntityWithDelta, LevelStatus } from "~/types";
+import { EntityWithDelta } from "~/types";
 
 interface SituationResultsProps {
   gameId: string;
@@ -32,14 +27,10 @@ export default function SituationResults({
     EntityWithDelta[] | null
   >(null);
 
-  const router = useRouter();
-
-  const { currentLevelId, progressCurrentLevel } = useCurrentLevelStore(
-    (state) => ({
-      currentLevelId: state.currentLevelId,
-      progressCurrentLevel: state.progressCurrentLevel,
-    })
-  );
+  const { currentLevelId } = useCurrentLevelStore((state) => ({
+    currentLevelId: state.currentLevelId,
+    progressCurrentLevel: state.progressCurrentLevel,
+  }));
 
   useEffect(() => {
     async function loadDeltas() {
@@ -51,19 +42,6 @@ export default function SituationResults({
 
     loadDeltas();
   }, [currentLevelId]);
-
-  // Handle complete situation results
-  const handleComplete = async () => {
-    try {
-      if (level.status === LevelStatus.SituationOutcomes) {
-        await progressCurrentLevel();
-      }
-
-      router.replace(`/games/${level.game_id}/level-complete`);
-    } catch (error) {
-      console.error("Failed to complete situation outcomes:", error);
-    }
-  };
 
   // Render an entity row
   const renderEntityRow = (entity: EntityWithDelta) => {
@@ -137,13 +115,12 @@ export default function SituationResults({
   const groupedEntities = getGroupedEntities();
 
   return (
-    <ResultsCard
-      title="Boost Situation Outcomes"
-      description="Watch a short ad to boost your situation approval changes"
-      boostedDescription="You've successfully boosted your approval outcomes!"
-      isAdWatched={isAdWatched}
-      onAdComplete={() => setIsAdWatched(true)}
-    >
+    <View className="gap-4">
+      <Text className="text-sm text-muted-foreground mt-4">
+        {isAdWatched
+          ? "You've successfully boosted your situation approval changes!"
+          : "Watch a short ad to boost your situation approval changes."}
+      </Text>
       <View className="gap-2 font-medium text-sm">
         {/* Header row */}
         <View className="flex-row border-b-2 border-border pb-2">
@@ -187,14 +164,6 @@ export default function SituationResults({
           </>
         )}
       </View>
-
-      {/* Complete button */}
-      <View className="mt-4">
-        <Button onPress={handleComplete} className="flex-row gap-2">
-          <Text>Complete</Text>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-        </Button>
-      </View>
-    </ResultsCard>
+    </View>
   );
 }

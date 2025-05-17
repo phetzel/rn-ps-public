@@ -7,13 +7,10 @@ import { observePressExchangesForSituation } from "~/lib/db/helpers/observations
 import { calculateSituationOutcomeWeights } from "~/lib/db/helpers/situationApi";
 import type { Situation, Game, PressExchange } from "~/lib/db/models";
 // Components
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { Progress } from "~/components/ui/progress";
 import SituationOutcomeDetails from "./SituationOutcomeDetails";
 import AlternativeOutcomes from "./AlternativeOutcomes";
-import { SituationStatusBadge } from "~/components/shared/SituationStatusBadge";
-import { SituationTypeIcon } from "~/components/shared/SituationTypeIcon";
 // Types
 import type { SituationOutcomeWeight } from "~/types";
 // Utils
@@ -78,59 +75,44 @@ const SituationOutcomeItem = ({
   }
 
   return (
-    <Card className="overflow-hidden">
-      <CardHeader className="pb-2">
-        <View className=" flex-row justify-between items-center">
-          <View className="flex-1 flex-row items-center gap-2 mr-2">
-            <SituationTypeIcon type={situation.type} />
-            <CardTitle className="text-lg flex-shrink">
-              {situation.title}
-            </CardTitle>
-          </View>
+    <View className="pb-4 gap-4">
+      <Text className="text-sm text-muted-foreground">
+        {situation.description}
+      </Text>
 
-          <SituationStatusBadge status={situation.type} />
-        </View>
-      </CardHeader>
-
-      <CardContent className="pb-4 gap-4">
-        <Text className="text-sm text-muted-foreground">
-          {situation.description}
+      {/* Selected Outcome */}
+      <View className="mb-2 p-4 bg-muted rounded-md">
+        <Text className="font-semibold text-lg mb-2">
+          Outcome: {selectedOutcomeWeight.title}
+        </Text>
+        <Text className="text-sm mb-3">
+          {selectedOutcomeWeight.description}
         </Text>
 
-        {/* Selected Outcome */}
-        <View className="mb-2 p-4 bg-muted rounded-md">
-          <Text className="font-semibold text-lg mb-2">
-            Outcome: {selectedOutcomeWeight.title}
+        <View className="flex-row justify-between items-center mb-1">
+          <Text className="text-sm font-medium">Outcome Probability</Text>
+          <Text className="text-sm font-medium">
+            {selectedOutcomeWeight.finalWeight}%
           </Text>
-          <Text className="text-sm mb-3">
-            {selectedOutcomeWeight.description}
-          </Text>
-
-          <View className="flex-row justify-between items-center mb-1">
-            <Text className="text-sm font-medium">Outcome Probability</Text>
-            <Text className="text-sm font-medium">
-              {selectedOutcomeWeight.finalWeight}%
-            </Text>
-          </View>
-
-          <Progress
-            value={selectedOutcomeWeight.finalWeight}
-            className="h-2 mb-4"
-          />
         </View>
 
-        {/* Impact list */}
-        <SituationOutcomeDetails
-          outcome={selectedOutcome}
-          gameId={game.id}
-          levelId={situation.level_id}
-          pressExchanges={pressExchanges}
+        <Progress
+          value={selectedOutcomeWeight.finalWeight}
+          className="h-2 mb-4"
         />
+      </View>
 
-        {/* Alternative Outcomes */}
-        <AlternativeOutcomes outcomes={alternativeOutcomesWeights} />
-      </CardContent>
-    </Card>
+      {/* Impact list */}
+      <SituationOutcomeDetails
+        outcome={selectedOutcome}
+        gameId={game.id}
+        levelId={situation.level_id}
+        pressExchanges={pressExchanges}
+      />
+
+      {/* Alternative Outcomes */}
+      <AlternativeOutcomes outcomes={alternativeOutcomesWeights} />
+    </View>
   );
 };
 

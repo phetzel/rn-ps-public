@@ -1,11 +1,9 @@
-import { Image, View } from "react-native";
+import { Image } from "react-native";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import { Text } from "~/components/ui/text";
 import LevelCompleteContent from "~/components/level-complete/LevelCompleteContent";
-import NextLevelButton from "~/components/level-complete/NextLevelButton";
 
 export default function LevelCompleteScreen() {
   const gameId = useGameManagerStore((state) => state.currentGameId);
@@ -31,12 +29,7 @@ export default function LevelCompleteScreen() {
       }
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
-      <View className="gap-4">
-        <Text className="text-2xl font-bold">Month Complete</Text>
-
-        <LevelCompleteContent gameId={gameId} levelId={currentLevelId} />
-        <NextLevelButton gameId={gameId} levelId={currentLevelId} />
-      </View>
+      <LevelCompleteContent gameId={gameId} levelId={currentLevelId} />
     </ParallaxScrollView>
   );
 }

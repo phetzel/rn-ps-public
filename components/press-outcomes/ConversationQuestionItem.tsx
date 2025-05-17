@@ -28,7 +28,7 @@ export default function ConversationQuestionItem({
   interaction,
   isFirstQuestion,
 }: ConversationQuestionItemProps) {
-  const [isImpactsExpanded, setIsImpactsExpanded] = useState<boolean>(true);
+  const [isImpactsExpanded, setIsImpactsExpanded] = useState<boolean>(false);
 
   const { currentLevelId } = useCurrentLevelStore();
   const { currentGameId } = useGameManagerStore();

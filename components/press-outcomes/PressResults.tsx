@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import { useRouter } from "expo-router";
 
-// Components
-import { Button } from "~/components/ui/button";
-import ResultsCard from "~/components/ResultsCard";
 import { Text } from "~/components/ui/text";
-// Icons
-import { ArrowRight } from "~/lib/icons/ArrowRight";
 // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
@@ -16,20 +11,22 @@ import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers/entityApi";
 // Utils
 import { cn, calculateBoost } from "~/lib/utils";
 // Types
-import { EntityWithDelta, LevelStatus } from "~/types";
+import { EntityWithDelta } from "~/types";
 
 interface PressResultsProps {
   gameId: string;
   level: Level;
+  isAdWatched: boolean;
 }
 
-export default function PressResults({ gameId, level }: PressResultsProps) {
-  const [isAdWatched, setIsAdWatched] = useState<boolean>(false);
+export default function PressResults({
+  gameId,
+  level,
+  isAdWatched,
+}: PressResultsProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
     EntityWithDelta[] | null
   >(null);
-
-  const router = useRouter();
 
   const { currentLevelId, progressCurrentLevel } = useCurrentLevelStore(
     (state) => ({
@@ -48,19 +45,6 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
 
     loadDeltas();
   }, [currentLevelId]);
-
-  // Handle complete press results
-  const handleComplete = async () => {
-    try {
-      if (level.status == LevelStatus.PressResults) {
-        await progressCurrentLevel();
-      }
-
-      router.replace(`/games/${level.game_id}/situation-outcomes`);
-    } catch (error) {
-      console.error("Failed to start press conference:", error);
-    }
-  };
 
   // Render an entity row
   const renderEntityRow = (entity: EntityWithDelta) => {
@@ -134,13 +118,12 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
   const groupedEntities = getGroupedEntities();
 
   return (
-    <ResultsCard
-      title="Boost Your Results"
-      description="Watch a short ad to boost your results"
-      boostedDescription="You've successfully boosted your relationship outcomes!"
-      isAdWatched={isAdWatched}
-      onAdComplete={() => setIsAdWatched(true)}
-    >
+    <View className="gap-4">
+      <Text className="text-sm text-muted-foreground mt-4">
+        {isAdWatched
+          ? "You've successfully boosted your relationship outcomes!"
+          : "Watch a short ad to boost your results."}
+      </Text>
       <View className="gap-2 font-medium text-sm">
         {/* Header row */}
         <View className="flex-row border-b-2 border-border pb-2">
@@ -184,14 +167,6 @@ export default function PressResults({ gameId, level }: PressResultsProps) {
           </>
         )}
       </View>
-
-      {/* Complete button */}
-      <View className="mt-4">
-        <Button onPress={handleComplete} className="flex-row gap-2">
-          <Text>Complete</Text>
-          <ArrowRight className="h-4 w-4 text-muted-foreground" />
-        </Button>
-      </View>
-    </ResultsCard>
+    </View>
   );
 }

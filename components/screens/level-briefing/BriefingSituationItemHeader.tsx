@@ -4,19 +4,18 @@ import { View } from "react-native";
 import { CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
 import { SituationTypeIcon } from "~/components/shared/SituationTypeIcon";
 import { SituationStatusBadge } from "~/components/shared/SituationStatusBadge";
+import type { Situation } from "~/lib/db/models";
 import { SituationType } from "~/types";
 
 interface BriefingSituationItemHeaderProps {
-  title: string;
-  description: string;
-  type: SituationType;
+  situation: Situation;
 }
 
 const BriefingSituationItemHeader = ({
-  title,
-  description,
-  type,
+  situation,
 }: BriefingSituationItemHeaderProps) => {
+  const { title, description, type } = situation;
+
   return (
     <CardHeader className="gap-2">
       <View className="flex-row justify-between items-center">

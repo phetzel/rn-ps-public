@@ -2,84 +2,79 @@ import React from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import type {
-  PressExchange,
-  Journalist,
-  Situation,
-  Publication,
-} from "~/lib/db/models";
-import { observePublicationForJournalistId } from "~/lib/db/helpers/observations";
-import { MicOff } from "~/lib/icons/MicOff";
-import { Card, CardHeader, CardContent, CardTitle } from "~/components/ui/card";
+import type { PressExchange, Situation } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
-import ConversationThread from "~/components/press-outcomes/ConversationThread";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
+import ConversationQuestionItem from "~/components/press-outcomes/ConversationQuestionItem";
 
 interface ExchangeItemProps {
   exchange: PressExchange;
-  journalist: Journalist;
   situation: Situation;
-  publication: Publication | null;
 }
 
-function ExchangeItem({
-  exchange,
-  journalist,
-  situation,
-  publication,
-}: ExchangeItemProps) {
-  if (!journalist || !publication) return null;
-
-  const journoStaticData = journalist.staticData;
-  const pubStaticData = publication.staticData;
-
+function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
+  const content = exchange.parseContent;
   const progress = exchange.parseProgress;
 
-  // Check if journalist was called on
-  const wasCalledOn =
-    progress && progress.history && progress.history.length > 0;
+  if (!content || !progress) {
+    return null;
+  }
+
+  const { history } = progress;
+  const isJournalistCalledOn = history.length > 0;
+  const pendingFollowUpQuestion = !!progress.currentQuestionId
+    ? content.questions[progress.currentQuestionId]
+    : null;
+
+  if (!isJournalistCalledOn) {
+    const rootQuestion = content.questions[content.rootQuestionId];
+    return (
+      <View>
+        <ConversationQuestionItem
+          question={rootQuestion}
+          isFirstQuestion={true}
+        />
+      </View>
+    );
+  }
 
   return (
-    <Card>
-      <CardHeader>
-        <View>
-          <View className="flex-row items-center gap-2">
-            <CardTitle className="text-lg">{journoStaticData.name}</CardTitle>
-            {!wasCalledOn && (
-              <MicOff className="h-4 w-4 text-muted-foreground" />
-            )}
-          </View>
-          {publication && (
-            <View className="flex-row items-center gap-2">
-              <Text className="text-sm text-muted-foreground">
-                {pubStaticData.name}
-              </Text>
-              <PoliticalLeaningBadge
-                politicalLeaning={pubStaticData.politicalLeaning}
-              />
-            </View>
-          )}
-        </View>
-      </CardHeader>
+    <View className="gap-2">
+      {/* Situation Context */}
+      <View className="bg-muted p-3 rounded-md">
+        <Text className="text-sm text-muted-foreground mb-1">Context</Text>
+        <Text className="font-semibold">{situation.title}</Text>
+      </View>
 
-      <CardContent>
-        <View className="gap-2">
-          {/* Situation Context */}
-          <View className="bg-muted p-3 rounded-md">
-            <Text className="text-sm text-muted-foreground mb-1">Context</Text>
-            <Text className="font-semibold">{situation.title}</Text>
-          </View>
+      <View className="gap-4">
+        {/* Map through the history array to display the conversation flow */}
+        {history.map((interaction, index) => {
+          const question = content.questions[interaction.questionId];
+          if (!question) return null;
 
-          <ConversationThread exchange={exchange} />
-        </View>
-      </CardContent>
-    </Card>
+          return (
+            <ConversationQuestionItem
+              key={`${interaction.questionId}-${index}`}
+              question={question}
+              interaction={interaction}
+              isFirstQuestion={index === 0}
+            />
+          );
+        })}
+
+        {/* Display potential follow-up that wasn't addressed */}
+        {pendingFollowUpQuestion && (
+          <ConversationQuestionItem
+            question={pendingFollowUpQuestion}
+            isFirstQuestion={false}
+          />
+        )}
+      </View>
+    </View>
   );
 }
 
 export default withObservables(["exchange"], ({ exchange }) => ({
   exchange,
-  publication: observePublicationForJournalistId(exchange.journalist_id),
-  journalist: exchange.journalist.observe(),
+
   situation: exchange.situation.observe(),
 }))(ExchangeItem);

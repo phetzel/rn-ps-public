@@ -16,7 +16,9 @@ import { Button } from "~/components/ui/button";
 import { Progress } from "~/components/ui/progress";
 import { LevelStatus } from "~/types";
 import BriefingSituationItem from "~/components/screens/level-briefing/BriefingSituationItem";
+import BriefingSituationItemHeader from "~/components/screens/level-briefing/BriefingSituationItemHeader";
 import { EmptyState } from "~/components/shared/EmptyState";
+import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
 
 interface BriefingSituationsListProps {
   gameId: string;
@@ -75,36 +77,26 @@ const BriefingSituationsList = ({
   }
 
   const currentSituation = situations[currentIndex];
-  const progressPercentage =
-    situations.length > 0 ? ((currentIndex + 1) / situations.length) * 100 : 0;
-  const isLastSituation = currentIndex === situations.length - 1;
 
   return (
-    <View className="py-4 gap-4">
-      {/* Progress Bar */}
-      <View className="gap-2">
-        <View className="flex-row justify-between items-center">
-          <Text className="text-md font-medium">
-            Situation {currentIndex + 1} of {situations.length}
-          </Text>
-          <Text className="text-md text-muted-foreground">
-            {Math.round(progressPercentage)}% Complete
-          </Text>
-        </View>
-        <Progress value={progressPercentage} className="h-2" />
-      </View>
-
+    <ProgressNavigator
+      currentIndex={currentIndex}
+      totalItems={situations.length}
+      onPrevious={handlePrevious}
+      onNext={handleNext}
+      onComplete={handleComplete}
+      progressLabel={`Situation ${currentIndex + 1} of ${situations.length}`}
+      cardClassName="border-l-4 border-l-primary"
+      headerContent={
+        <BriefingSituationItemHeader situation={currentSituation} />
+      }
+    >
       <BriefingSituationItem
         situation={currentSituation}
         cabinetMembers={cabinetMembers}
         presName={game?.presName ?? "President"}
-        isFirst={currentIndex === 0}
-        handlePrevious={handlePrevious}
-        isLast={isLastSituation}
-        handleNext={handleNext}
-        handleComplete={handleComplete}
       />
-    </View>
+    </ProgressNavigator>
   );
 };
 
