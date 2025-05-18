@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 
-import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
-import ImpactList from "~/components/ImpactList";
+import ImpactList from "~/components/shared/ImpactList";
 import SituationOutcomeExchanges from "~/components/situation-outcomes/SituationOutcomeExchanges";
 import type { PressExchange } from "~/lib/db/models";
 import type {
@@ -26,8 +25,6 @@ const SituationOutcomeDetails = ({
   levelId,
   pressExchanges,
 }: SituationOutcomeDetailsProps) => {
-  const [isImpactsExpanded, setIsImpactsExpanded] = useState<boolean>(false);
-
   const formatImpacts = (): ExchangeImpacts => {
     const impacts: ExchangeImpacts = {};
     const consequences = outcome.consequences;
@@ -81,8 +78,6 @@ const SituationOutcomeDetails = ({
         gameId={gameId}
         levelId={levelId}
         label="Approval Changes"
-        isExpanded={isImpactsExpanded}
-        setIsExpanded={setIsImpactsExpanded}
       />
 
       <Separator />

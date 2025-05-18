@@ -4,7 +4,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 
 import type { PressExchange, Situation } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
-import ConversationQuestionItem from "~/components/press-outcomes/ConversationQuestionItem";
+import QuestionItem from "~/components/screens/level-press-outcomes/QuestionItem";
 
 interface ExchangeItemProps {
   exchange: PressExchange;
@@ -29,10 +29,7 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
     const rootQuestion = content.questions[content.rootQuestionId];
     return (
       <View>
-        <ConversationQuestionItem
-          question={rootQuestion}
-          isFirstQuestion={true}
-        />
+        <QuestionItem question={rootQuestion} isFirstQuestion={true} />
       </View>
     );
   }
@@ -52,7 +49,7 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
           if (!question) return null;
 
           return (
-            <ConversationQuestionItem
+            <QuestionItem
               key={`${interaction.questionId}-${index}`}
               question={question}
               interaction={interaction}
@@ -63,7 +60,7 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
 
         {/* Display potential follow-up that wasn't addressed */}
         {pendingFollowUpQuestion && (
-          <ConversationQuestionItem
+          <QuestionItem
             question={pendingFollowUpQuestion}
             isFirstQuestion={false}
           />
@@ -75,6 +72,5 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
 
 export default withObservables(["exchange"], ({ exchange }) => ({
   exchange,
-
   situation: exchange.situation.observe(),
 }))(ExchangeItem);

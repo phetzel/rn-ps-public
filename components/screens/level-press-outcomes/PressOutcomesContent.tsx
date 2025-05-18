@@ -6,15 +6,13 @@ import {
   observePressExchangesForLevel,
 } from "~/lib/db/helpers/observations";
 import type { Level, PressExchange } from "~/lib/db/models";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
-import { Text } from "~/components/ui/text";
 
-import ExchangeItemHeader from "~/components/press-outcomes/ExchangeItemHeader";
-import ExchangeItem from "~/components/press-outcomes/ExchangeItem";
-import PressResults from "~/components/press-outcomes/PressResults";
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
-import ResultsCardHeader from "~/components/shared/ResultsCardHeader";
 import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
+import ResultsCardHeader from "~/components/shared/ResultsCardHeader";
+import ExchangeItemHeader from "~/components/screens/level-press-outcomes/ExchangeItemHeader";
+import ExchangeItem from "~/components/screens/level-press-outcomes/ExchangeItem";
+import PressResults from "~/components/screens/level-press-outcomes/PressResults";
+import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 import { LevelStatus } from "~/types";
 import { cn } from "~/lib/utils";
 
@@ -90,6 +88,7 @@ const PressOutcomesContent = ({
           <ExchangeItemHeader exchange={currentExchange} />
         )
       }
+      showPercentage={false}
     >
       {isOnResults ? (
         <PressResults gameId={gameId} level={level} isAdWatched={isAdWatched} />

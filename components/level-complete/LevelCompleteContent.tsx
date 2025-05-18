@@ -55,7 +55,7 @@ const LevelCompleteContent = ({
 
   const handleComplete = async () => {
     try {
-      if (level.status == LevelStatus.SituationOutcomes) {
+      if (level.status == LevelStatus.Completed) {
         await progressAndNavigate();
       } else {
         await navigateToCurrentLevelScreen();
@@ -78,7 +78,6 @@ const LevelCompleteContent = ({
         onNext={handleNext}
         onComplete={handleComplete}
         progressLabel={isShowingAdmin ? "Administration" : "Cabinet"}
-        completeButtonText="Return to Game"
         headerContent={
           <CardHeader className="flex-row items-center gap-2">
             {isShowingAdmin ? (

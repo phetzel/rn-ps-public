@@ -3,9 +3,9 @@ import { Image } from "react-native";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import PressOutcomesContent from "~/components/press-outcomes/PressOutcomesContent";
+import PressOutcomesContent from "~/components/screens/level-press-outcomes/PressOutcomesContent";
 
-export default function PressOutcomesScreen() {
+export default function LevelPressOutcomesScreen() {
   const gameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 

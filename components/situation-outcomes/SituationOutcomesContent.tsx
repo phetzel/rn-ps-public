@@ -90,6 +90,7 @@ const SituationOutcomesContent = ({
           <SituationOutcomeItemHeader situation={currentSituation} />
         )
       }
+      showPercentage={false}
     >
       {isOnResults ? (
         <SituationResults

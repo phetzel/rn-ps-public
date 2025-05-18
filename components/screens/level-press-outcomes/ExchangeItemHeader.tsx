@@ -25,22 +25,15 @@ function ExchangeItemHeader({
   const journoStaticData = journalist.staticData;
   const pubStaticData = publication.staticData;
 
-  const progress = exchange.parseProgress;
-
-  // Check if journalist was called on
-  const wasCalledOn =
-    progress && progress.history && progress.history.length > 0;
-
   return (
     <CardHeader>
       <View>
         <View className="flex-row items-center gap-2">
           <CardTitle className="text-lg">{journoStaticData.name}</CardTitle>
-          {!wasCalledOn && <MicOff className="h-4 w-4 text-muted-foreground" />}
         </View>
         {publication && (
           <View className="flex-row items-center gap-2">
-            <Text className="text-sm text-muted-foreground">
+            <Text className="text-base text-muted-foreground">
               {pubStaticData.name}
             </Text>
             <PoliticalLeaningBadge
