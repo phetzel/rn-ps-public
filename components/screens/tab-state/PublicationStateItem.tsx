@@ -7,7 +7,7 @@ import { observeJournalistsForPublication } from "~/lib/db/helpers";
 import type Publication from "~/lib/db/models/Publication";
 import type Journalist from "~/lib/db/models/Journalist";
 import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import {
   AccordionContent,
   AccordionItem,
@@ -36,7 +36,7 @@ export function PublicationStateItem({
       <AccordionTrigger className="py-3">
         <View className="flex flex-col items-start text-left">
           <View className="flex-row items-center gap-2">
-            <Text className="font-medium">{pubStaticData.name}</Text>
+            <Text>{pubStaticData.name}</Text>
             <PoliticalLeaningBadge
               politicalLeaning={pubStaticData.politicalLeaning}
             />
@@ -49,18 +49,16 @@ export function PublicationStateItem({
           {/* Journalists */}
           {journalists?.length > 0 ? (
             <View className="gap-2">
-              <TextClassContext.Provider value="text-xl font-medium">
-                <Text>Journalists</Text>
-              </TextClassContext.Provider>
+              <Text className="text-xl font-medium">Journalists</Text>
 
               {journalists.map((journalist, idx) => {
                 const journoStaticData = journalist.staticData;
                 return (
                   <View key={journalist.id} className="gap-2">
                     <View>
-                      <TextClassContext.Provider value="text-xl font-bold leading-tight">
-                        <Text>{journoStaticData.name}</Text>
-                      </TextClassContext.Provider>
+                      <Text className="text-xl font-bold leading-tight">
+                        {journoStaticData.name}
+                      </Text>
                     </View>
 
                     <StateProgress

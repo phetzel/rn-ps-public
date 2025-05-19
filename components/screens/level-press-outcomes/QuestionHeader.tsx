@@ -3,9 +3,8 @@ import React from "react";
 import { View } from "react-native";
 
 import { Text } from "~/components/ui/text";
-import { Badge } from "~/components/ui/badge";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
-import { MessageSquare } from "~/lib/icons/MessageSquare";
+import { QuestionDisplay } from "~/components/shared/QuestionDisplay";
 import type { Question } from "~/types";
 
 interface QuestionHeaderProps {
@@ -54,19 +53,10 @@ export default function QuestionHeader({
   } else {
     // Question was asked
     return (
-      <View className="flex-row items-center gap-2">
-        <View className="bg-primary/10 rounded-full p-2">
-          <MessageSquare className="text-primary" />
-        </View>
-        <View className="flex-1">
-          {!isFirstQuestion && (
-            <Badge className="mt-1 self-start" variant="outline">
-              <Text className="text-xs">Follow-up Question</Text>
-            </Badge>
-          )}
-          <Text className="text-base font-medium">{question.text}</Text>
-        </View>
-      </View>
+      <QuestionDisplay
+        question={question.text}
+        isFollowUpQuestion={!isFirstQuestion}
+      />
     );
   }
 }

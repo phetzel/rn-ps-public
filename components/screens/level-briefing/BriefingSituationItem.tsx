@@ -1,13 +1,7 @@
 import React, { useMemo } from "react";
 import { View } from "react-native";
 
-// Icons
-import { ArrowLeft } from "~/lib/icons/ArrowLeft";
-import { ArrowRight } from "~/lib/icons/ArrowRight";
-import { CheckCircle2 } from "~/lib/icons/CheckCircle2";
 // Components
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardFooter } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
 import { Situation, CabinetMember } from "~/lib/db/models";
@@ -75,7 +69,7 @@ const BriefingSituationItem = ({
         <Accordion type="single" collapsible>
           <AccordionItem value="cabinet-positions">
             <AccordionTrigger>
-              <Text className="font-medium">
+              <Text>
                 Cabinet Positions ({Object.keys(cabinetPreferences).length})
               </Text>
             </AccordionTrigger>

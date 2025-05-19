@@ -14,6 +14,7 @@ import { Card, CardContent } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import { User } from "~/lib/icons/User";
 import { ChevronRight } from "~/lib/icons/ChevronRight";
+import JournalistDisplay from "~/components/shared/JournalistDisplay";
 
 interface ConferenceJournalistItemProps {
   pressExchange: PressExchange;
@@ -50,7 +51,7 @@ const ConferenceJournalistItem = ({
       <Card>
         <CardContent className="p-4">
           <View className="flex-row justify-between items-center">
-            <View className="flex-row items-center gap-2">
+            {/* <View className="flex-row items-center gap-2">
               <View className="bg-muted rounded-full p-2">
                 <User className="h-5 w-5 text-primary" />
               </View>
@@ -67,7 +68,8 @@ const ConferenceJournalistItem = ({
                   </Text>
                 </View>
               </View>
-            </View>
+            </View> */}
+            <JournalistDisplay journalistId={journalist.id} />
             <ChevronRight className="h-5 w-5 text-muted-foreground" />
           </View>
         </CardContent>

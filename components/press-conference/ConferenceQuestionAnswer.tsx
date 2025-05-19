@@ -21,6 +21,7 @@ import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { MessageSquare } from "~/lib/icons/MessageSquare";
 import { cn } from "~/lib/utils";
+import JournalistDisplay from "~/components/shared/JournalistDisplay";
 import { Question, Answer, ExchangeContent, ExchangeProgress } from "~/types";
 
 interface ConferenceQuestionAnswerProps {
@@ -69,7 +70,8 @@ const ConferenceQuestionAnswer = ({
           <View className="bg-primary/10 rounded-full p-2 mt-1">
             <MessageSquare className="h-5 w-5 text-primary" />
           </View>
-          <View className="gap-2">
+          <JournalistDisplay journalistId={journalist.id} />
+          {/* <View className="gap-2">
             <CardTitle className="text-base">{journoStaticData.name}</CardTitle>
 
             <View className="flex-row items-center gap-2 mb-1">
@@ -82,7 +84,7 @@ const ConferenceQuestionAnswer = ({
                 {pubStaticData.name}
               </Text>
             </View>
-          </View>
+          </View> */}
         </View>
       </CardHeader>
 

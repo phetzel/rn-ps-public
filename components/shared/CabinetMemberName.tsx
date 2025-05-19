@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 import { CabinetMember } from "~/lib/db/models";
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 
 interface CabinetMemberNameProps {
   cabinetMember: CabinetMember;
@@ -14,12 +14,10 @@ export function CabinetMemberName({ cabinetMember }: CabinetMemberNameProps) {
 
   return (
     <View>
-      <TextClassContext.Provider value="text-lg font-bold">
-        <Text>{name}</Text>
-      </TextClassContext.Provider>
-      <TextClassContext.Provider value="text-base text-muted-foreground leading-none">
-        <Text>{cabinetName}</Text>
-      </TextClassContext.Provider>
+      <Text className="text-lg font-bold">{name}</Text>
+      <Text className="text-base text-muted-foreground leading-none">
+        {cabinetName}
+      </Text>
     </View>
   );
 }

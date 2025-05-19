@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import { Progress } from "~/components/ui/progress";
 
 interface StateProgressProps {
@@ -29,12 +29,8 @@ export function StateProgress({
   return (
     <View className="gap-1">
       <View className={`flex-row justify-between items-center`}>
-        <TextClassContext.Provider value={labelSize}>
-          <Text>{label}</Text>
-        </TextClassContext.Provider>
-        <TextClassContext.Provider value={labelSize}>
-          <Text>{value}%</Text>
-        </TextClassContext.Provider>
+        <Text className={labelSize}>{label}</Text>
+        <Text className={labelSize}>{value}%</Text>
       </View>
       <Progress value={value} className={progressHeight} />
     </View>

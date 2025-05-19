@@ -26,7 +26,7 @@ const ConferenceCompletion = ({ levelId }: ConferenceCompletionProps) => {
       if (!level) return;
 
       await progressCurrentLevel();
-      router.replace(`/games/${level.game_id}/press-outcomes`);
+      router.replace(`/games/${level.game_id}/level-press-outcomes`);
     } catch (error) {
       console.error("Error completing press conference:", error);
     } finally {

@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 import { Text } from "~/components/ui/text";
-import { CheckCircle2 } from "~/lib/icons/CheckCircle2";
+import { AnswerDisplay } from "~/components/shared/AnswerDisplay";
 import { SkipForward } from "~/lib/icons/SkipForward";
 import type { Question } from "~/types";
 
@@ -32,19 +32,7 @@ export default function QuestionAnswer({
     );
   } else if (answer) {
     // Question was answered
-    return (
-      <View className="flex-row items-center">
-        <View className="bg-green-100 rounded-full p-2 mr-3">
-          <CheckCircle2 className="text-green-600" />
-        </View>
-        <View className="flex-1">
-          <Text className="text-sm text-muted-foreground mb-1">
-            Your Response
-          </Text>
-          <Text className="text-base">{answer.text}</Text>
-        </View>
-      </View>
-    );
+    return <AnswerDisplay answer={answer.text} />;
   }
 
   return null;

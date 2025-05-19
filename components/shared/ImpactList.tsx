@@ -14,7 +14,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "~/components/ui/accordion";
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import ImpactItem from "./ImpactItem";
 import { createCabinetMemberMap } from "~/lib/utils";
 import { Separator } from "~/components/ui/separator";
@@ -98,11 +98,9 @@ const ImpactList = ({
     >
       <AccordionItem value="impacts" className="border-0">
         <AccordionTrigger>
-          <TextClassContext.Provider value="font-medium">
-            <Text>
-              {label} ({impactCount})
-            </Text>
-          </TextClassContext.Provider>
+          <Text>
+            {label} ({impactCount})
+          </Text>
         </AccordionTrigger>
         <AccordionContent>
           <View className="gap-4">

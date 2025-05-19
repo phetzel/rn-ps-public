@@ -20,7 +20,7 @@ const SituationOutcomeItemHeader = ({
       <View className=" flex-row justify-between items-center">
         <View className="flex-1 flex-row items-center gap-2 mr-2">
           <SituationTypeIcon type={situation.type} />
-          <CardTitle className="text-lg flex-shrink">
+          <CardTitle className="text-xl flex-shrink">
             {situation.title}
           </CardTitle>
         </View>

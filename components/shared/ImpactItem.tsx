@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import { TrendingUp } from "~/lib/icons/TrendingUp";
 import { TrendingDown } from "~/lib/icons/TrendingDown";
 import { Minus } from "~/lib/icons/Minus";
@@ -66,12 +66,10 @@ export default function ImpactItem({
         <View className="flex-row items-center flex-1">
           {entityIcon}
           <View>
-            <TextClassContext.Provider value="text-sm text-muted-foreground leading-none">
-              <Text>{title}</Text>
-            </TextClassContext.Provider>
-            <TextClassContext.Provider value="text-base font-bold">
-              <Text>{name}</Text>
-            </TextClassContext.Provider>
+            <Text className="text-sm text-muted-foreground leading-none">
+              {title}
+            </Text>
+            <Text className="text-base font-bold">{name}</Text>
           </View>
         </View>
 
@@ -82,11 +80,7 @@ export default function ImpactItem({
           </Text>
         </View>
       </View>
-      {reaction && (
-        <TextClassContext.Provider value="text-sm italic">
-          <Text>{reaction}</Text>
-        </TextClassContext.Provider>
-      )}
+      {reaction && <Text className="text-sm italic">{reaction}</Text>}
     </View>
   );
 }

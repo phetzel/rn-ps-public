@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
 
 // Components
 import { ResultsTable } from "~/components/shared/ResultsTable";
@@ -8,8 +7,6 @@ import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
 import { Level } from "~/lib/db/models";
 import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityApi";
-// Utils
-import { cn, calculateBoost } from "~/lib/utils";
 // Typess
 import { EntityWithDelta } from "~/types";
 

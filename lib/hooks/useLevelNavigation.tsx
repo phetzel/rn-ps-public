@@ -35,10 +35,10 @@ export function useLevelNavigation() {
           router.push(`/games/${currentGameId}/press-conference`);
           break;
         case LevelStatus.PressResults:
-          router.push(`/games/${currentGameId}/press-outcomes`);
+          router.push(`/games/${currentGameId}/level-press-outcomes`);
           break;
         case LevelStatus.SituationOutcomes:
-          router.push(`/games/${currentGameId}/situation-outcomes`);
+          router.push(`/games/${currentGameId}/level-situation-outcomes`);
           break;
         case LevelStatus.Completed:
           router.push(`/games/${currentGameId}/level-complete`);
@@ -83,7 +83,11 @@ export function useLevelNavigation() {
         return false;
       }
 
-      return navigateToLevelScreen(updatedLevel.status);
+      if (updatedLevel.status == LevelStatus.SituationOutcomes) {
+        return navigateToTabs("current");
+      } else {
+        return navigateToLevelScreen(updatedLevel.status);
+      }
     } catch (error) {
       console.error("Failed to progress and navigate:", error);
       return false;

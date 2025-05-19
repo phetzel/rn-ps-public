@@ -5,7 +5,7 @@ import { Lock } from "~/lib/icons/Lock";
 import { FileText } from "~/lib/icons/FileText";
 import { CABINET_AUTHORIZED_THRESHOLD } from "~/lib/constants";
 import { Separator } from "~/components/ui/separator";
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import BriefingTooltip from "~/components/screens/level-briefing/BriefingTooltip";
 import { cn } from "~/lib/utils";
 
@@ -31,16 +31,14 @@ const AuthorizedIntel: React.FC<AuthorizedIntelProps> = ({
       )}
 
       <View className="flex-row items-center gap-2">
-        <TextClassContext.Provider
-          value={cn(
+        <Text
+          className={cn(
             "text-base text-gray-500 font-medium",
             isAuthorized && "text-primary font-bold"
           )}
         >
-          <Text>
-            Classified Info {isAuthorized ? "Authorized" : "Withheld"}
-          </Text>
-        </TextClassContext.Provider>
+          Classified Info {isAuthorized ? "Authorized" : "Withheld"}
+        </Text>
 
         <BriefingTooltip>
           <View className="gap-2">
@@ -67,9 +65,7 @@ const AuthorizedIntel: React.FC<AuthorizedIntelProps> = ({
       {isAuthorized && (
         <>
           <Separator />
-          <TextClassContext.Provider value="text-xs text-center">
-            <Text>{authorizedContent}</Text>
-          </TextClassContext.Provider>
+          <Text className="text-xs text-center">{authorizedContent}</Text>
         </>
       )}
     </View>

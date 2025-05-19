@@ -32,7 +32,7 @@ export default function GameSessionLayout() {
         }}
       />
       <Stack.Screen
-        name="situation-outcomes"
+        name="level-situation-outcomes"
         options={{
           title: "Situation Results",
           headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,

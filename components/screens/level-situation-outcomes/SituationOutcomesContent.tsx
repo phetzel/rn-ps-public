@@ -9,9 +9,9 @@ import {
 import type { Game, Level, Situation } from "~/lib/db/models";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 import ResultsCardHeader from "~/components/shared/ResultsCardHeader";
-import SituationOutcomeItemHeader from "~/components/situation-outcomes/SituationOutcomeItemHeader";
-import SituationOutcomeItem from "~/components/situation-outcomes/SituationOutcomeItem";
-import SituationResults from "~/components/situation-outcomes/SituationResults";
+import SituationOutcomeItemHeader from "~/components/screens/level-situation-outcomes/SituationOutcomeItemHeader";
+import SituationOutcomeItem from "~/components/screens/level-situation-outcomes/SituationOutcomeItem";
+import SituationResults from "~/components/screens/level-situation-outcomes/SituationResults";
 import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
 import { cn } from "~/lib/utils";
 import { LevelStatus } from "~/types";

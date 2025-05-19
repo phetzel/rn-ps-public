@@ -3,7 +3,7 @@ import { View } from "react-native";
 
 import { Lock } from "~/lib/icons/Lock";
 import { CABINET_PREFERENCE_THRESHOLD } from "~/lib/constants";
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import BriefingTooltip from "~/components/screens/level-briefing/BriefingTooltip";
 
 interface PreferenceLockedProps {
@@ -20,9 +20,9 @@ const PreferenceLocked: React.FC<PreferenceLockedProps> = ({
       <Lock className="h-4 w-4 text-gray-500" />
 
       <View className="flex-row items-center gap-2">
-        <TextClassContext.Provider value="text-base text-gray-500 font-medium">
-          <Text>Preference Locked</Text>
-        </TextClassContext.Provider>
+        <Text className="text-base text-gray-500 font-medium">
+          Preference Locked
+        </Text>
 
         <BriefingTooltip>
           <View className="gap-2">

@@ -3,9 +3,9 @@ import { Image } from "react-native";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import SituationOutcomesContent from "~/components/situation-outcomes/SituationOutcomesContent";
+import SituationOutcomesContent from "~/components/screens/level-situation-outcomes/SituationOutcomesContent";
 
-export default function SituationOutcomesScreen() {
+export default function LevelSituationOutcomesScreen() {
   const gameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 

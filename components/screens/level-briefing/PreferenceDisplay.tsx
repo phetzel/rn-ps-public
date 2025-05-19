@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Text, TextClassContext } from "~/components/ui/text";
+import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
 import { AnswerType, Preference } from "~/types";
 
@@ -64,24 +64,21 @@ const PreferenceDisplay = ({ preference }: PreferenceDisplayProps) => {
     <View className="bg-muted/30 p-3 rounded-md gap-2">
       <View className="gap-2">
         <View className="flex-row justify-between items-center">
-          <TextClassContext.Provider value="text-base font-medium font-bold">
-            <Text>Approach:</Text>
-          </TextClassContext.Provider>
-          <TextClassContext.Provider
-            value={`text-sm font-medium px-2 py-0.5 rounded-full ${getApproachColor(
+          <Text className="text-base font-medium font-bold">Approach:</Text>
+
+          <Text
+            className={`text-sm font-medium px-2 py-0.5 rounded-full ${getApproachColor(
               preference.answerType
             )}`}
           >
-            <Text>{getApproachLabel(preference.answerType)}</Text>
-          </TextClassContext.Provider>
+            {getApproachLabel(preference.answerType)}
+          </Text>
         </View>
       </View>
 
       <Separator />
 
-      <TextClassContext.Provider value="text-sm">
-        <Text>{preference.rationale}</Text>
-      </TextClassContext.Provider>
+      <Text className="text-sm">{preference.rationale}</Text>
     </View>
   );
 };
