@@ -4,8 +4,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeSituationsByLevelId } from "~/lib/db/helpers/observations";
 import { Situation } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
-
-import ConferenceSituationInfo from "~/components/press-conference/ConferenceInfoSituationItem";
+import ConferenceInfoSituationItem from "~/components/screens/level-press-conference/ConferenceInfoSituationItem";
 
 interface ConferenceInfoProps {
   levelId: string;
@@ -21,7 +20,10 @@ const ConferenceInfo = ({ levelId, situations }: ConferenceInfoProps) => {
 
       <ScrollView>
         {situations.map((situation) => (
-          <ConferenceSituationInfo key={situation.id} situation={situation} />
+          <ConferenceInfoSituationItem
+            key={situation.id}
+            situation={situation}
+          />
         ))}
       </ScrollView>
     </View>

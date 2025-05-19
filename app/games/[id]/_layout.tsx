@@ -23,7 +23,10 @@ export default function GameSessionLayout() {
           headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
         }}
       />
-      <Stack.Screen name="press-conference" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="level-press-conference"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="level-press-outcomes"
         options={{

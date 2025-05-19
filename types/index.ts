@@ -222,13 +222,15 @@ export interface Preference {
   rationale: string;
 }
 
+export interface CabinetPreference {
+  preference: Preference;
+  authorizedContent?: string;
+}
+
 export interface SituationPreferences {
   president?: Preference;
   cabinet?: {
-    [key in CabinetStaticId]?: {
-      preference: Preference;
-      authorizedContent?: string;
-    };
+    [key in CabinetStaticId]?: CabinetPreference;
   };
 }
 

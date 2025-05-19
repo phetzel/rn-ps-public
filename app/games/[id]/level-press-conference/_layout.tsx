@@ -9,13 +9,13 @@ import {
   BottomSheetView,
   BottomSheetHandle,
 } from "~/components/ui/bottom-sheet";
-import ConferenceInfo from "~/components/press-conference/ConferenceInfo";
+import ConferenceInfo from "~/components/screens/level-press-conference/ConferenceInfo";
 import { HeaderBackIcon } from "~/components/HeaderBackIcon";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { Info } from "~/lib/icons/Info";
 import { cn } from "~/lib/utils";
 
-export default function PressConferenceLayout() {
+export default function LevelPressConferenceLayout() {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);

@@ -5,37 +5,28 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import {
   observeSituationsByLevelId,
   observeLevel,
-  observeCabinetMembersByLevel,
-  observeGame,
 } from "~/lib/db/helpers/observations";
-import { Situation, Level, CabinetMember, Game } from "~/lib/db/models";
+import { Situation, Level } from "~/lib/db/models";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 // Components
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
-import { Progress } from "~/components/ui/progress";
 import { LevelStatus } from "~/types";
-import BriefingSituationItem from "~/components/screens/level-briefing/BriefingSituationItem";
+import SituationPreferences from "~/components/shared/preference/SituationPreferences";
 import BriefingSituationItemHeader from "~/components/screens/level-briefing/BriefingSituationItemHeader";
 import { EmptyState } from "~/components/shared/EmptyState";
 import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
 
 interface BriefingSituationsListProps {
-  gameId: string;
   levelId: string;
   situations: Situation[];
   level: Level;
-  cabinetMembers: CabinetMember[];
-  game: Game | null;
 }
 
 const BriefingSituationsList = ({
-  gameId,
   levelId,
   situations,
   level,
-  cabinetMembers,
-  game,
 }: BriefingSituationsListProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { progressAndNavigate, navigateToCurrentLevelScreen } =
@@ -91,23 +82,14 @@ const BriefingSituationsList = ({
         <BriefingSituationItemHeader situation={currentSituation} />
       }
     >
-      <BriefingSituationItem
-        situation={currentSituation}
-        cabinetMembers={cabinetMembers}
-        presName={game?.presName ?? "President"}
-      />
+      <SituationPreferences situation={currentSituation} />
     </ProgressNavigator>
   );
 };
 
-const enhance = withObservables(
-  ["gameId", "levelId"],
-  ({ gameId, levelId }) => ({
-    situations: observeSituationsByLevelId(levelId),
-    level: observeLevel(levelId),
-    cabinetMembers: observeCabinetMembersByLevel(levelId),
-    game: observeGame(gameId),
-  })
-);
+const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
+  situations: observeSituationsByLevelId(levelId),
+  level: observeLevel(levelId),
+}));
 
 export default enhance(BriefingSituationsList);

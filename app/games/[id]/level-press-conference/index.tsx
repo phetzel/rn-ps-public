@@ -6,7 +6,7 @@ import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
 import ConferenceContent from "~/components/press-conference/ConferenceContent";
 
-export default function PressConferenceScreen() {
+export default function LevelPressConferenceScreen() {
   const router = useRouter();
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);

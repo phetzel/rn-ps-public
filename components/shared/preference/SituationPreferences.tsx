@@ -1,34 +1,31 @@
 import React, { useMemo } from "react";
 import { View } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
 
+import { observeCabinetMembersByLevel } from "~/lib/db/helpers/observations";
 // Components
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
 import { Situation, CabinetMember } from "~/lib/db/models";
 import { CabinetStaticId } from "~/types";
-import { CabinetMemberName } from "~/components/shared/CabinetMemberName";
-import { CABINET_PREFERENCE_THRESHOLD } from "~/lib/constants";
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
 } from "~/components/ui/accordion";
-import PreferenceDisplay from "~/components/screens/level-briefing/PreferenceDisplay";
-import PreferenceLocked from "~/components/screens/level-briefing/PreferenceLocked";
-import AuthorizedIntel from "~/components/screens/level-briefing/AuthorizedIntel";
+import CabinetMemberPreference from "~/components/shared/preference/CabinetMemberPreference";
+import PresidentPreference from "~/components/shared/preference/PresidentPreference";
 
-interface BriefingSituationItemProps {
+interface SituationPreferencesProps {
   situation: Situation;
   cabinetMembers: CabinetMember[];
-  presName: string;
 }
 
-const BriefingSituationItem = ({
+const SituationPreferences = ({
   situation,
   cabinetMembers,
-  presName,
-}: BriefingSituationItemProps) => {
+}: SituationPreferencesProps) => {
   // Create a map for quick lookup: Static ID -> CabinetMember model
   const cabinetMemberMap = useMemo(() => {
     const map = new Map<CabinetStaticId, CabinetMember>();
@@ -50,19 +47,15 @@ const BriefingSituationItem = ({
   const cabinetPreferences = contentPreferences.cabinet;
 
   return (
-    // <Card className="border-l-4 border-l-primary">
     <View className="gap-4">
       <Separator />
 
       {/* President's Position */}
-      {presidentPreference && presName ? (
-        <View className="gap-2">
-          <Text className="text-lg font-medium">President's Position</Text>
-          <Text className="text-2xl font-bold">{presName}</Text>
-          <PreferenceDisplay preference={presidentPreference} />
-        </View>
-      ) : (
-        <Text className="text-sm">No specific preferences</Text>
+      {presidentPreference && (
+        <PresidentPreference
+          gameId={situation.game_id}
+          preference={presidentPreference}
+        />
       )}
 
       {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
@@ -83,35 +76,12 @@ const BriefingSituationItem = ({
                       return null;
                     }
 
-                    const relationship = cabinetMember.psRelationship;
-
-                    const isPreferenceLocked =
-                      relationship < CABINET_PREFERENCE_THRESHOLD;
-
                     return (
                       <View key={idx} className="gap-2">
-                        <CabinetMemberName cabinetMember={cabinetMember} />
-
-                        {isPreferenceLocked ? (
-                          <PreferenceLocked
-                            cabinetMemberName={cabinetMember.name}
-                            relationship={relationship}
-                          />
-                        ) : (
-                          <>
-                            <PreferenceDisplay
-                              preference={cabPref.preference}
-                            />
-
-                            {cabPref.authorizedContent && (
-                              <AuthorizedIntel
-                                cabinetMemberName={cabinetMember.name}
-                                relationship={relationship}
-                                authorizedContent={cabPref.authorizedContent}
-                              />
-                            )}
-                          </>
-                        )}
+                        <CabinetMemberPreference
+                          cabinetMember={cabinetMember}
+                          cabinetPreference={cabPref}
+                        />
 
                         {idx !== Object.keys(cabinetPreferences).length - 1 && (
                           <Separator className="mt-2" />
@@ -129,4 +99,8 @@ const BriefingSituationItem = ({
   );
 };
 
-export default BriefingSituationItem;
+const enhance = withObservables(["situation"], ({ situation }) => ({
+  cabinetMembers: observeCabinetMembersByLevel(situation.level_id),
+}));
+
+export default enhance(SituationPreferences);

@@ -5,6 +5,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observePressExchangesForLevel } from "~/lib/db/helpers/observations";
 import { PressExchange } from "~/lib/db/models";
 import { QUESTIONS_PER_PRESS_CONFERENCE } from "~/lib/constants";
+import { usePressConferenceState } from "~/lib/hooks/usePressConferenceState";
 import ConferenceCompletion from "~/components/press-conference/ConferenceCompletion";
 import ConferenceProgress from "~/components/press-conference/ConferenceProgress";
 import ConferenceQuestionAnswer from "~/components/press-conference/ConferenceQuestionAnswer";
@@ -23,6 +24,10 @@ const ConferenceContent = ({
     null
   );
 
+  const { questionsTakenCount, isPressConferenceComplete } =
+    usePressConferenceState(pressExchanges);
+  console.log("Component rendering, questionsTakenCount:", questionsTakenCount);
+
   const handleSelectExchange = (exchange: PressExchange) => {
     setSelectedExchangeId(exchange.id);
   };
@@ -31,28 +36,12 @@ const ConferenceContent = ({
     setSelectedExchangeId(null);
   };
 
-  const questionsTakenCount = pressExchanges.reduce((total, exchange) => {
-    const progress = exchange.parseProgress;
-    return total + (progress?.history.length || 0);
-  }, 0);
-
-  const hasMoreQuestions = pressExchanges.some((exchange) => {
-    const progress = exchange.parseProgress;
-    return progress && progress.currentQuestionId !== null;
-  });
-
   const selectedExchange = useMemo(() => {
     if (!selectedExchangeId) return null;
     return pressExchanges.find(
       (exchange) => exchange.id === selectedExchangeId
     );
   }, [pressExchanges, selectedExchangeId]);
-
-  const isPressConferenceComplete = useMemo(() => {
-    return (
-      questionsTakenCount >= QUESTIONS_PER_PRESS_CONFERENCE || !hasMoreQuestions
-    );
-  }, [questionsTakenCount, hasMoreQuestions]);
 
   return (
     <View className="gap-4">

@@ -32,7 +32,7 @@ export function useLevelNavigation() {
           router.push(`/games/${currentGameId}/level-briefing`);
           break;
         case LevelStatus.PressConference:
-          router.push(`/games/${currentGameId}/press-conference`);
+          router.push(`/games/${currentGameId}/level-press-conference`);
           break;
         case LevelStatus.PressResults:
           router.push(`/games/${currentGameId}/level-press-outcomes`);
@@ -83,7 +83,7 @@ export function useLevelNavigation() {
         return false;
       }
 
-      if (updatedLevel.status == LevelStatus.SituationOutcomes) {
+      if (updatedLevel.status == LevelStatus.Briefing) {
         return navigateToTabs("current");
       } else {
         return navigateToLevelScreen(updatedLevel.status);
