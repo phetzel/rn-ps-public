@@ -44,20 +44,20 @@ export default function ImpactItem({
 
   switch (entityType) {
     case "president":
-      entityIcon = <Award className="text-primary mr-2" />;
+      entityIcon = <Award className="text-primary mr-2" size={28} />;
       break;
     case "cabinet":
-      entityIcon = <Briefcase className="text-primary mr-2" />;
+      entityIcon = <Briefcase className="text-primary mr-2" size={28} />;
       break;
     case "journalist":
-      entityIcon = <Newspaper className="text-primary mr-2" />;
+      entityIcon = <Newspaper className="text-primary mr-2" size={28} />;
       break;
     // subgroup
     case "political":
-      entityIcon = <Landmark className="text-primary mr-2" />;
+      entityIcon = <Landmark className="text-primary mr-2" size={28} />;
       break;
     default:
-      entityIcon = <Briefcase className="text-primary mr-2" />;
+      entityIcon = <Briefcase className="text-primary mr-2" size={28} />;
   }
 
   return (
@@ -65,7 +65,7 @@ export default function ImpactItem({
       <View className="flex-row justify-between items-center">
         <View className="flex-row items-center flex-1">
           {entityIcon}
-          <View>
+          <View className="flex-shrink">
             <Text className="text-sm text-muted-foreground leading-none">
               {title}
             </Text>
@@ -73,7 +73,7 @@ export default function ImpactItem({
           </View>
         </View>
 
-        <View className="flex-row items-center gap-1">
+        <View className="flex-row items-center gap-2 flex-shrink-0">
           {icon}
           <Text className={`${textColor} font-medium`}>
             {weight > 0 ? `+${weight}` : weight}

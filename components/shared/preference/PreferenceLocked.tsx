@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { Lock } from "~/lib/icons/Lock";
 import { CABINET_PREFERENCE_THRESHOLD } from "~/lib/constants";
 import { Text } from "~/components/ui/text";
-import BriefingTooltip from "~/components/screens/level-briefing/BriefingTooltip";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 interface PreferenceLockedProps {
   cabinetMemberName: string;
@@ -24,7 +24,7 @@ const PreferenceLocked: React.FC<PreferenceLockedProps> = ({
           Preference Locked
         </Text>
 
-        <BriefingTooltip>
+        <InfoTooltip>
           <View className="gap-2">
             <Text className="text-xs text-center">
               <Text className="font-bold">{cabinetMemberName}</Text> needs a
@@ -38,7 +38,7 @@ const PreferenceLocked: React.FC<PreferenceLockedProps> = ({
               <Text className="font-bold">{relationship}</Text>
             </Text>
           </View>
-        </BriefingTooltip>
+        </InfoTooltip>
       </View>
     </View>
   );

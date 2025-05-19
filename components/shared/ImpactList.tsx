@@ -41,7 +41,6 @@ const ImpactList = ({
   subgroupApprovals,
   isInitExpanded = true,
 }: ImpactListProps) => {
-  console.log("impacts", impacts);
   // Create a map of cabinet member IDs to their models for quick lookup
   const cabinetMembersMap = useMemo(() => {
     return createCabinetMemberMap(cabinetMembers);

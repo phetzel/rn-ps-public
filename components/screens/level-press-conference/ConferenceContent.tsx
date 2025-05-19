@@ -6,10 +6,10 @@ import { observePressExchangesForLevel } from "~/lib/db/helpers/observations";
 import { PressExchange } from "~/lib/db/models";
 import { QUESTIONS_PER_PRESS_CONFERENCE } from "~/lib/constants";
 import { usePressConferenceState } from "~/lib/hooks/usePressConferenceState";
-import ConferenceCompletion from "~/components/press-conference/ConferenceCompletion";
-import ConferenceProgress from "~/components/press-conference/ConferenceProgress";
-import ConferenceQuestionAnswer from "~/components/press-conference/ConferenceQuestionAnswer";
-import ConferenceJournalistSelect from "~/components/press-conference/ConferenceJournalistSelect";
+import ConferenceCompletion from "~/components/screens/level-press-conference/ConferenceCompletion";
+import ConferenceProgress from "~/components/screens/level-press-conference/ConferenceProgress";
+import ConferenceQuestionAnswer from "~/components/screens/level-press-conference/ConferenceQuestion";
+import ConferenceJournalistSelect from "~/components/screens/level-press-conference/ConferenceJournalistSelect";
 
 interface ConferenceContentProps {
   levelId: string;
@@ -26,7 +26,6 @@ const ConferenceContent = ({
 
   const { questionsTakenCount, isPressConferenceComplete } =
     usePressConferenceState(pressExchanges);
-  console.log("Component rendering, questionsTakenCount:", questionsTakenCount);
 
   const handleSelectExchange = (exchange: PressExchange) => {
     setSelectedExchangeId(exchange.id);

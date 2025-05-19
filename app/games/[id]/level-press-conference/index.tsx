@@ -1,14 +1,10 @@
 import { Image } from "react-native";
-import { useRouter } from "expo-router";
 
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import ConferenceContent from "~/components/press-conference/ConferenceContent";
+import ConferenceContent from "~/components/screens/level-press-conference/ConferenceContent";
 
 export default function LevelPressConferenceScreen() {
-  const router = useRouter();
-  const currentGameId = useGameManagerStore((state) => state.currentGameId);
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
   return (
     <ParallaxScrollView

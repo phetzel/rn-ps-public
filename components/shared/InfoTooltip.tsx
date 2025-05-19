@@ -8,10 +8,11 @@ import {
   TooltipContent,
 } from "~/components/ui/tooltip";
 
-interface BriefingTooltipProps {
+interface InfoTooltipProps {
   children: React.ReactNode;
 }
-const BriefingTooltip: React.FC<BriefingTooltipProps> = ({ children }) => {
+
+const InfoTooltip: React.FC<InfoTooltipProps> = ({ children }) => {
   return (
     <Tooltip>
       <TooltipTrigger>
@@ -25,4 +26,4 @@ const BriefingTooltip: React.FC<BriefingTooltipProps> = ({ children }) => {
   );
 };
 
-export default BriefingTooltip;
+export default InfoTooltip;
