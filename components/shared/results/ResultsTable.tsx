@@ -3,7 +3,7 @@ import React from "react";
 import { View } from "react-native";
 import { Text } from "~/components/ui/text";
 import { cn, calculateBoost } from "~/lib/utils";
-import { ResultsEntityRow } from "~/components/shared/ResultsEntityRow";
+import { ResultsEntityRow } from "~/components/shared/results/ResultsEntityRow";
 import type { EntityWithDelta } from "~/types";
 
 export interface GroupedEntities {

@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import ParallaxScrollView from "~/components/ParallaxScrollView";
-import LevelCompleteContent from "~/components/level-complete/LevelCompleteContent";
+import LevelCompleteContent from "~/components/screens/level-complete/LevelCompleteContent";
 
 export default function LevelCompleteScreen() {
   const gameId = useGameManagerStore((state) => state.currentGameId);

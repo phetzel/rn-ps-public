@@ -1,25 +1,33 @@
-import { withObservables } from "@nozbe/watermelondb/react";
+import React from "react";
 import { View } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
 
-// Lib
 import { observeSubgroupApprovals } from "~/lib/db/helpers";
 import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
-// Components
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { Text } from "~/components/ui/text";
-import { StateProgress } from "~/components/screens/tab-state/StateProgress";
 import { SubgroupCategoryIcon } from "~/components/shared/SubgroupCategoryIcon";
-// Types
+import { Text } from "~/components/ui/text";
+import LevelProgress from "~/components/screens/level-complete/LevelProgress";
 import { SubgroupCategory } from "~/types";
+import { Users } from "~/lib/icons/Users";
+import type { OutcomeSnapshotType } from "~/types";
 
-interface SubgroupStateCardProps {
+interface SubgroupLevelStateProps {
+  outcomeSnapshot: OutcomeSnapshotType;
+  gameId: string;
   subgroupApprovals: SubgroupApproval[];
 }
 
-export function SubgroupStateCard({
+const SubgroupLevelState = ({
+  outcomeSnapshot,
   subgroupApprovals,
-}: SubgroupStateCardProps) {
+}: SubgroupLevelStateProps) => {
+  const { initial, final } = outcomeSnapshot;
+
+  if (!initial || !final) {
+    return null;
+  }
+
   // Group subgroups by category
   const groupedApprovals = subgroupApprovals.reduce<
     Record<string, SubgroupApproval[]>
@@ -38,27 +46,30 @@ export function SubgroupStateCard({
   return (
     <View className="gap-4">
       {categories.map((category, categoryIdx) => (
-        <Card key={categoryIdx}>
-          <CardHeader className="pb-4 flex-row items-center gap-2">
+        <View key={categoryIdx} className="gap-4">
+          <View className="flex-row items-center gap-2">
             <SubgroupCategoryIcon category={category} />
-            <CardTitle>
+            <Text className="font-semibold">
               {category.charAt(0).toUpperCase() + category.slice(1)} Groups
-            </CardTitle>
-          </CardHeader>
+            </Text>
+          </View>
 
-          <CardContent className="gap-2">
+          <View className="gap-4">
             {groupedApprovals[category].map((subgroup, subgroupIdx) => {
-              // Get static data for each subgroup
               const subgroupStaticData = subgroup.staticData;
+              const initialValues = initial.subgroups[subgroup.staticId];
+              const finalValues = final.subgroups[subgroup.staticId];
+
+              if (!initialValues || !finalValues) return null;
+
               return (
                 <View key={subgroup.id} className="gap-2">
-                  <Text className="text-xl font-bold leading-tight">
-                    {subgroupStaticData.name}
-                  </Text>
+                  <Text className="font-bold">{subgroupStaticData.name}</Text>
 
-                  <StateProgress
+                  <LevelProgress
                     label="Approval Rating"
-                    value={subgroup.approvalRating}
+                    initialValue={initialValues.approvalRating}
+                    finalValue={finalValues.approvalRating}
                   />
 
                   {subgroupIdx !== groupedApprovals[category].length - 1 && (
@@ -67,15 +78,19 @@ export function SubgroupStateCard({
                 </View>
               );
             })}
-          </CardContent>
-        </Card>
+          </View>
+
+          {categoryIdx !== categories.length - 1 && (
+            <Separator className="mt-4" />
+          )}
+        </View>
       ))}
     </View>
   );
-}
+};
 
 const enhance = withObservables(["gameId"], ({ gameId }) => ({
   subgroupApprovals: observeSubgroupApprovals(gameId),
 }));
 
-export default enhance(SubgroupStateCard);
+export default enhance(SubgroupLevelState);

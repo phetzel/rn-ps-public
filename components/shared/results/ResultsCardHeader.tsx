@@ -25,13 +25,6 @@ export default function ResultsCardHeader({
   };
 
   return (
-    // <Card
-    //   className={cn(
-    //     "border-l-4",
-    //     isAdWatched ? "border-l-green-500" : "border-l-blue-500",
-    //     className
-    //   )}
-    // >
     <CardHeader
       className={cn(
         "flex-row justify-between items-center gap-2",

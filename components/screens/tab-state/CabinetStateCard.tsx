@@ -6,7 +6,6 @@ import { observeActiveCabinetMembers } from "~/lib/db/helpers";
 import type CabinetMember from "~/lib/db/models/CabinetMember";
 import { Briefcase } from "~/lib/icons/Briefcase";
 import { Separator } from "~/components/ui/separator";
-import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
 import { CabinetMemberName } from "~/components/shared/CabinetMemberName";

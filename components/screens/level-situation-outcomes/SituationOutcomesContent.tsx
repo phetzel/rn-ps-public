@@ -8,7 +8,7 @@ import {
 } from "~/lib/db/helpers/observations";
 import type { Game, Level, Situation } from "~/lib/db/models";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
-import ResultsCardHeader from "~/components/shared/ResultsCardHeader";
+import ResultsCardHeader from "~/components/shared/results/ResultsCardHeader";
 import SituationOutcomeItemHeader from "~/components/screens/level-situation-outcomes/SituationOutcomeItemHeader";
 import SituationOutcomeItem from "~/components/screens/level-situation-outcomes/SituationOutcomeItem";
 import SituationResults from "~/components/screens/level-situation-outcomes/SituationResults";

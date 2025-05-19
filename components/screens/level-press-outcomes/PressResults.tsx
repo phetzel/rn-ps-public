@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 
 // Components
-import { ResultsTable } from "~/components/shared/ResultsTable";
+import { ResultsTable } from "~/components/shared/results/ResultsTable";
 // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models

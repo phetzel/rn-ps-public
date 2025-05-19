@@ -8,7 +8,7 @@ import {
 import type { Level, PressExchange } from "~/lib/db/models";
 
 import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
-import ResultsCardHeader from "~/components/shared/ResultsCardHeader";
+import ResultsCardHeader from "~/components/shared/results/ResultsCardHeader";
 import ExchangeItemHeader from "~/components/screens/level-press-outcomes/ExchangeItemHeader";
 import ExchangeItem from "~/components/screens/level-press-outcomes/ExchangeItem";
 import PressResults from "~/components/screens/level-press-outcomes/PressResults";
