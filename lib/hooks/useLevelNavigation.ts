@@ -29,19 +29,19 @@ export function useLevelNavigation() {
       // Type-safe approach to navigate based on status
       switch (status) {
         case LevelStatus.Briefing:
-          router.push(`/games/${currentGameId}/level-briefing`);
+          router.replace(`/games/${currentGameId}/level-briefing`);
           break;
         case LevelStatus.PressConference:
-          router.push(`/games/${currentGameId}/level-press-conference`);
+          router.replace(`/games/${currentGameId}/level-press-conference`);
           break;
         case LevelStatus.PressResults:
-          router.push(`/games/${currentGameId}/level-press-outcomes`);
+          router.replace(`/games/${currentGameId}/level-press-outcomes`);
           break;
         case LevelStatus.SituationOutcomes:
-          router.push(`/games/${currentGameId}/level-situation-outcomes`);
+          router.replace(`/games/${currentGameId}/level-situation-outcomes`);
           break;
         case LevelStatus.Completed:
-          router.push(`/games/${currentGameId}/level-complete`);
+          router.replace(`/games/${currentGameId}/level-complete`);
           break;
         default:
           console.warn(`Unknown level status: ${status}`);
@@ -83,8 +83,10 @@ export function useLevelNavigation() {
         return false;
       }
 
+      console.log("updatedLevel status", updatedLevel.status);
+
       if (updatedLevel.status == LevelStatus.Briefing) {
-        return navigateToTabs("current");
+        return backToCurrentTab();
       } else {
         return navigateToLevelScreen(updatedLevel.status);
       }
@@ -103,7 +105,20 @@ export function useLevelNavigation() {
       return false;
     }
 
-    router.push(`/games/${currentGameId}/(tabs)/${tab}`);
+    router.replace(`/games/${currentGameId}/(tabs)/${tab}`);
+    return true;
+  };
+
+  /**
+   * Go back to current tab from level screens
+   */
+  const backToCurrentTab = () => {
+    if (!currentGameId) {
+      console.warn("No game ID available");
+      return false;
+    }
+
+    router.navigate(`/games/${currentGameId}/(tabs)/current`);
     return true;
   };
 
@@ -112,6 +127,7 @@ export function useLevelNavigation() {
     navigateToCurrentTab: () => navigateToTabs("current"),
     navigateToStateTab: () => navigateToTabs("state"),
     navigateToArchiveTab: () => navigateToTabs("archive"),
+    backToCurrentTab,
 
     // Level flow navigation
     navigateToBriefing: () => navigateToLevelScreen(LevelStatus.Briefing),

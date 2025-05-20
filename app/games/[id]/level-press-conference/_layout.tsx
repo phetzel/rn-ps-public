@@ -12,6 +12,7 @@ import {
 import ConferenceInfo from "~/components/screens/level-press-conference/ConferenceInfo";
 import { HeaderBackIcon } from "~/components/HeaderBackIcon";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
+import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 import { Info } from "~/lib/icons/Info";
 import { cn } from "~/lib/utils";
 
@@ -20,10 +21,10 @@ export default function LevelPressConferenceLayout() {
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const router = useRouter();
+  const { backToCurrentTab } = useLevelNavigation();
 
   const handleGoBack = () => {
-    router.back();
+    backToCurrentTab();
   };
 
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);

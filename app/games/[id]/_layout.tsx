@@ -2,12 +2,13 @@ import React from "react";
 import { Stack, useRouter } from "expo-router";
 
 import { HeaderBackIcon } from "~/components/HeaderBackIcon";
+import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 
 export default function GameSessionLayout() {
-  const router = useRouter();
+  const { backToCurrentTab } = useLevelNavigation();
 
   const handleGoToCurrent = () => {
-    router.dismissTo("/games/(tabs)/current");
+    backToCurrentTab();
   };
 
   return (

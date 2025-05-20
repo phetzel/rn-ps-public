@@ -8,7 +8,7 @@ export default function GamesLayout() {
   const router = useRouter();
 
   const handleBack = () => {
-    router.dismissTo("/");
+    router.navigate("/");
   };
 
   return (

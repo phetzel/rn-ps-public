@@ -9,6 +9,11 @@ interface ExchangeItemHeaderProps {
 }
 
 function ExchangeItemHeader({ exchange }: ExchangeItemHeaderProps) {
+  const journalist = exchange?.journalist_id;
+  if (!journalist) {
+    return null;
+  }
+
   return (
     <CardHeader>
       <JournalistDisplay

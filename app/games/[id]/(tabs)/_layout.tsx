@@ -11,11 +11,11 @@ export default function GameTabLayout() {
   const router = useRouter();
 
   const handleGoBack = () => {
-    router.dismissTo("/games");
+    router.navigate("/games");
   };
 
   const handleGoToCurrent = () => {
-    router.replace("/games/(tabs)/current");
+    router.replace("./current");
   };
 
   return (

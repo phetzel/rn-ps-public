@@ -46,7 +46,7 @@ export function useGameNavigation() {
       const level = await setGameCurrentLevel(targetGameId);
 
       if (level) {
-        router.push(`/games/${targetGameId}/(tabs)/current`);
+        router.replace(`/games/${targetGameId}/(tabs)/current`);
         return true;
       } else {
         console.warn("No level found for game", targetGameId);
@@ -82,9 +82,9 @@ export function useGameNavigation() {
 
   return {
     // Navigation functions
-    goToHome: () => router.push("/"),
-    goToGamesList: () => router.push("/games"),
-    goToCreateGame: () => router.push("/games/create"),
+    goToHome: () => router.navigate("/"),
+    goToGamesList: () => router.navigate("/games"),
+    goToCreateGame: () => router.navigate("/games/create"),
     continueGame,
     createGame,
   };
