@@ -21,7 +21,6 @@ export default function LevelBriefingScreen() {
           }}
         />
       }
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <BriefingSituationsList levelId={currentLevelId} />
     </ParallaxScrollView>

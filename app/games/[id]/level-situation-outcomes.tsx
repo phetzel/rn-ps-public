@@ -27,7 +27,6 @@ export default function LevelSituationOutcomesScreen() {
           }}
         />
       }
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <SituationOutcomesContent gameId={gameId} levelId={currentLevelId} />
     </ParallaxScrollView>

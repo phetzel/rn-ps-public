@@ -26,7 +26,6 @@ export default function StateScreen() {
           }}
         />
       }
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <TabStateContent gameId={currentGameId} />
     </ParallaxScrollView>

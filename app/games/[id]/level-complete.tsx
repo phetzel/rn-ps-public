@@ -27,7 +27,6 @@ export default function LevelCompleteScreen() {
           }}
         />
       }
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <LevelCompleteContent gameId={gameId} levelId={currentLevelId} />
     </ParallaxScrollView>

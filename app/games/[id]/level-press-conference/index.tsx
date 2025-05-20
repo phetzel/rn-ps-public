@@ -20,7 +20,6 @@ export default function LevelPressConferenceScreen() {
           }}
         />
       }
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <ConferenceContent levelId={currentLevelId} />
     </ParallaxScrollView>

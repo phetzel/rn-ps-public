@@ -24,7 +24,6 @@ export default function ArchiveScreen() {
           }}
         />
       }
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
     >
       <Text>Archive Screen</Text>
     </ParallaxScrollView>
