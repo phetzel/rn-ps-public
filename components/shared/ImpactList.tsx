@@ -18,10 +18,12 @@ import { Text } from "~/components/ui/text";
 import ImpactItem from "./ImpactItem";
 import { createCabinetMemberMap } from "~/lib/utils";
 import { Separator } from "~/components/ui/separator";
+import { staticJournalists, staticPublications } from "~/lib/data/staticMedia";
 import type {
   ExchangeImpacts,
   CabinetStaticId,
   SubgroupStaticId,
+  JournalistStaticId,
 } from "~/types";
 
 interface ImpactListProps {
@@ -46,7 +48,7 @@ const ImpactList = ({
     return createCabinetMemberMap(cabinetMembers);
   }, [cabinetMembers]);
 
-  // Function to safely get cabinet member / subgroup name and role
+  // Function to safely get cabinet member / subgroup / journalist name and title
   const getCabinetDetails = (staticId: CabinetStaticId) => {
     const member = cabinetMembersMap?.get(staticId);
     const staticData = member?.staticData ?? null;
@@ -74,11 +76,32 @@ const ImpactList = ({
     };
   };
 
+  const getJournalistDetails = (staticId: JournalistStaticId) => {
+    // Get journalist data from static data
+    const journalist = staticJournalists[staticId];
+    if (!journalist) {
+      return {
+        name: staticId,
+        title: "Media",
+      };
+    }
+
+    // Get publication name from static data
+    const publication = staticPublications[journalist.publicationStaticId];
+    const publicationName = publication?.name || "Media";
+
+    return {
+      name: journalist.name,
+      title: publicationName,
+    };
+  };
+
   // Check if there are any valid impacts to display
   const impactCount =
     (impacts.president ? 1 : 0) +
     Object.keys(impacts.cabinet || {}).length +
-    Object.keys(impacts.subgroups || {}).length;
+    Object.keys(impacts.subgroups || {}).length +
+    Object.keys(impacts.journalists || {}).length;
 
   // Return null if there are no impacts
   if (impactCount === 0) {
@@ -156,6 +179,8 @@ const ImpactList = ({
                   const staticId = staticIdString as SubgroupStaticId;
                   const { name, title } = getSubgroupDetails(staticId);
                   const isLastSubgroupImpact = index === array.length - 1;
+                  const hasMoreImpacts =
+                    Object.keys(impacts.journalists || {}).length > 0;
 
                   return (
                     <React.Fragment key={staticId}>
@@ -167,7 +192,33 @@ const ImpactList = ({
                         entityType="political"
                       />
                       {/* Add separator if not the last impact */}
-                      {!isLastSubgroupImpact && <Separator />}
+                      {(!isLastSubgroupImpact || hasMoreImpacts) && (
+                        <Separator />
+                      )}
+                    </React.Fragment>
+                  );
+                }
+              )}
+
+            {/* Journalist Impacts */}
+            {impacts.journalists &&
+              Object.entries(impacts.journalists).map(
+                ([staticIdString, impact], index, array) => {
+                  const staticId = staticIdString as JournalistStaticId;
+                  const { name, title } = getJournalistDetails(staticId);
+                  const isLastJournalistImpact = index === array.length - 1;
+
+                  return (
+                    <React.Fragment key={staticId}>
+                      <ImpactItem
+                        name={name}
+                        title={title}
+                        reaction={impact.reaction || ""}
+                        weight={impact.weight}
+                        entityType="journalist"
+                      />
+                      {/* Add separator if not the last impact */}
+                      {!isLastJournalistImpact && <Separator />}
                     </React.Fragment>
                   );
                 }

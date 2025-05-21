@@ -374,10 +374,12 @@ export interface NewGameDetails {
 }
 
 // Journalist Exchange Types
-export enum JournalistInteractionType {
-  Ignore = "ignore",
-  Skipped = "skipped",
-  Answered = "answered",
+export enum JournalistInteractionImpact {
+  Ignore = -5,
+  Skipped = -3,
+  HadFollowUp = -1,
+  Answered = 1,
+  AuthorizedAnswer = 3,
 }
 
 // Common Types

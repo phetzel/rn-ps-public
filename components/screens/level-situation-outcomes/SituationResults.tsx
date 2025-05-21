@@ -50,7 +50,6 @@ export default function SituationResults({
         notWatched:
           "Watch a short ad to boost your situation approval changes.",
       }}
-      usePlusMinusFormat={false}
     />
   );
 }

@@ -9,14 +9,12 @@ interface ResultsEntityRowProps {
   entity: EntityWithDelta;
   boostedDelta: number;
   isAdWatched: boolean;
-  usePlusMinusFormat?: boolean;
 }
 
 export function ResultsEntityRow({
   entity,
   boostedDelta,
   isAdWatched,
-  usePlusMinusFormat = true,
 }: ResultsEntityRowProps) {
   return (
     <View className="flex-row border-b border-border pb-2">
@@ -47,13 +45,7 @@ export function ResultsEntityRow({
               : "text-muted-foreground"
           )}
         >
-          {usePlusMinusFormat
-            ? entity.delta >= 0
-              ? "+ "
-              : "- "
-            : entity.delta >= 0
-            ? "+"
-            : ""}
+          {entity.delta >= 0 ? "+" : "-"}
           {Math.abs(entity.delta)}
         </Text>
       </View>
@@ -70,13 +62,7 @@ export function ResultsEntityRow({
               : "text-muted-foreground"
           )}
         >
-          {usePlusMinusFormat
-            ? boostedDelta >= 0
-              ? "+ "
-              : "- "
-            : boostedDelta >= 0
-            ? "+"
-            : ""}
+          {boostedDelta >= 0 ? "+" : "-"}
           {Math.abs(boostedDelta)}
         </Text>
       </View>

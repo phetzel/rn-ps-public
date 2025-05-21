@@ -50,7 +50,6 @@ export default function PressResults({
         watched: "You've successfully boosted your relationship outcomes!",
         notWatched: "Watch a short ad to boost your results.",
       }}
-      usePlusMinusFormat={true}
     />
   );
 }

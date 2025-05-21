@@ -16,11 +16,7 @@ function ExchangeItemHeader({ exchange }: ExchangeItemHeaderProps) {
 
   return (
     <CardHeader>
-      <JournalistDisplay
-        journalistId={exchange.journalist_id}
-        nameClassName="text-lg font-medium"
-        pubClassName="text-base text-muted-foreground"
-      />
+      <JournalistDisplay journalistId={exchange.journalist_id} />
     </CardHeader>
   );
 }

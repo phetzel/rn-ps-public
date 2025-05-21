@@ -20,14 +20,12 @@ interface ResultsTableProps {
     watched: string;
     notWatched: string;
   };
-  usePlusMinusFormat?: boolean;
 }
 
 export function ResultsTable({
   enhancedDeltas,
   isAdWatched,
   adMessage,
-  usePlusMinusFormat = true,
 }: ResultsTableProps) {
   // Group entities by role
   const getGroupedEntities = (): GroupedEntities | null => {
@@ -71,22 +69,22 @@ export function ResultsTable({
         {/* Header row */}
         <View className="flex-row border-b-2 border-border pb-2">
           <View style={{ width: "40%" }}>
-            <Text className="text-xs font-bold">Name</Text>
+            <Text className="text-sm font-bold">Name</Text>
           </View>
           <View style={{ width: "20%" }} className="items-center">
-            <Text className="text-xs font-bold">Current</Text>
+            <Text className="text-sm font-bold">Current</Text>
           </View>
           <View style={{ width: "20%" }} className="items-center">
-            <Text className="text-xs font-bold">Change</Text>
+            <Text className="text-sm font-bold">Change</Text>
           </View>
           <View style={{ width: "20%" }} className="items-center">
             <Text
               className={cn(
-                "text-xs font-bold",
+                "text-sm font-bold",
                 !isAdWatched && "text-muted-foreground"
               )}
             >
-              {isAdWatched ? "Boosted" : "Potential"}
+              Boosted
             </Text>
           </View>
         </View>
@@ -94,14 +92,13 @@ export function ResultsTable({
         {/* Admin */}
         {hasAdminEntities && (
           <>
-            <Text className="text-sm font-bold">Admin</Text>
+            <Text className="text-lg font-bold">Admin</Text>
             {groupedEntities.president?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
                 boostedDelta={calculateBoost(entity.delta)}
                 isAdWatched={isAdWatched}
-                usePlusMinusFormat={usePlusMinusFormat}
               />
             ))}
             {groupedEntities.cabinet?.map((entity) => (
@@ -110,7 +107,6 @@ export function ResultsTable({
                 entity={entity}
                 boostedDelta={calculateBoost(entity.delta)}
                 isAdWatched={isAdWatched}
-                usePlusMinusFormat={usePlusMinusFormat}
               />
             ))}
           </>
@@ -119,14 +115,13 @@ export function ResultsTable({
         {/* Journalists (only in Press Results) */}
         {hasJournalists && (
           <>
-            <Text className="text-sm font-bold">Journalists</Text>
+            <Text className="text-lg font-bold">Journalists</Text>
             {groupedEntities?.journalists?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
                 boostedDelta={calculateBoost(entity.delta)}
                 isAdWatched={isAdWatched}
-                usePlusMinusFormat={usePlusMinusFormat}
               />
             ))}
           </>
@@ -135,14 +130,13 @@ export function ResultsTable({
         {/* Subgroups (only in Situation Results) */}
         {hasSubgroups && (
           <>
-            <Text className="text-sm font-bold">Groups</Text>
+            <Text className="text-lg font-bold">Groups</Text>
             {groupedEntities?.subgroups?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
                 boostedDelta={calculateBoost(entity.delta)}
                 isAdWatched={isAdWatched}
-                usePlusMinusFormat={usePlusMinusFormat}
               />
             ))}
           </>

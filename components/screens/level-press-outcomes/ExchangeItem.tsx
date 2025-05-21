@@ -2,16 +2,17 @@ import React from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import type { PressExchange, Situation } from "~/lib/db/models";
+import type { PressExchange, Situation, Journalist } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 import QuestionItem from "~/components/screens/level-press-outcomes/QuestionItem";
 
 interface ExchangeItemProps {
   exchange: PressExchange;
   situation: Situation;
+  journalist: Journalist;
 }
 
-function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
+function ExchangeItem({ exchange, situation, journalist }: ExchangeItemProps) {
   const content = exchange.parseContent;
   const progress = exchange.parseProgress;
 
@@ -29,7 +30,11 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
     const rootQuestion = content.questions[content.rootQuestionId];
     return (
       <View>
-        <QuestionItem question={rootQuestion} isFirstQuestion={true} />
+        <QuestionItem
+          question={rootQuestion}
+          isFirstQuestion={true}
+          journalistStaticId={journalist.staticId}
+        />
       </View>
     );
   }
@@ -54,6 +59,7 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
               question={question}
               interaction={interaction}
               isFirstQuestion={index === 0}
+              journalistStaticId={journalist.staticId}
             />
           );
         })}
@@ -63,6 +69,7 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
           <QuestionItem
             question={pendingFollowUpQuestion}
             isFirstQuestion={false}
+            journalistStaticId={journalist.staticId}
           />
         )}
       </View>
@@ -73,4 +80,5 @@ function ExchangeItem({ exchange, situation }: ExchangeItemProps) {
 export default withObservables(["exchange"], ({ exchange }) => ({
   exchange,
   situation: exchange.situation.observe(),
+  journalist: exchange.journalist.observe(),
 }))(ExchangeItem);

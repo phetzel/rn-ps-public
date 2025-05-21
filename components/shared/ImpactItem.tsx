@@ -8,7 +8,7 @@ import { Minus } from "~/lib/icons/Minus";
 import { Award } from "~/lib/icons/Award";
 import { Briefcase } from "~/lib/icons/Briefcase";
 import { Landmark } from "~/lib/icons/Landmark";
-import { Newspaper } from "~/lib/icons/Newspaper";
+import { User } from "~/lib/icons/User";
 
 interface ImpactItemProps {
   title: string;
@@ -50,7 +50,7 @@ export default function ImpactItem({
       entityIcon = <Briefcase className="text-primary mr-2" size={28} />;
       break;
     case "journalist":
-      entityIcon = <Newspaper className="text-primary mr-2" size={28} />;
+      entityIcon = <User className="text-primary mr-2" size={28} />;
       break;
     // subgroup
     case "political":
