@@ -3,10 +3,10 @@ import {
   CabinetStaticId,
   SubgroupStaticId,
   JournalistStaticId,
+  PublicationStaticId,
   PoliticalParty,
   PreferenceWeight,
   SituationConsequenceWeight,
-  // AnswerOutcomeModifier,
   AnswerType,
 } from "~/types";
 
@@ -45,13 +45,19 @@ export const relationshipSnapshotSchema = z.object({
       psRelationship: z.number(),
     })
   ),
+  subgroups: z.record(
+    z.string(),
+    z.object({
+      approvalRating: z.number(),
+    })
+  ),
   journalists: z.record(
     z.string(),
     z.object({
       psRelationship: z.number(),
     })
   ),
-  subgroups: z.record(
+  publications: z.record(
     z.string(),
     z.object({
       approvalRating: z.number(),

@@ -12,6 +12,7 @@ import {
   CabinetStaticId,
   JournalistStaticId,
   SubgroupStaticId,
+  PublicationStaticId,
 } from "~/types";
 
 // Level CRUD operations
@@ -94,12 +95,21 @@ export async function takeSnapshot(
   gameId: string
 ): Promise<RelationshipSnapshot> {
   // Fetch all game entities
-  const { game, cabinetMembers, journalists, subgroups } =
+  const { game, cabinetMembers, journalists, subgroups, publications } =
     await fetchGameEntities(gameId);
 
   if (!game) {
     throw new Error("No game found with ID: " + gameId);
   }
+
+  // Calculate publication approval ratings
+  const publicationApprovals = await Promise.all(
+    publications.map(async (publication) => [
+      publication.staticId as PublicationStaticId,
+      { approvalRating: await publication.getApprovalRating() },
+    ])
+  );
+  console.log("publicationApprovals", publicationApprovals);
 
   // Create the snapshot
   return {
@@ -133,5 +143,9 @@ export async function takeSnapshot(
         { approvalRating: subgroup.approvalRating },
       ])
     ) as Record<SubgroupStaticId, { approvalRating: number }>,
+    publications: Object.fromEntries(publicationApprovals) as Record<
+      PublicationStaticId,
+      { approvalRating: number }
+    >,
   };
 }

@@ -353,13 +353,18 @@ export interface RelationshipSnapshot {
       psRelationship: number;
     };
   };
+  subgroups: {
+    [key in SubgroupStaticId]?: {
+      approvalRating: number;
+    };
+  };
   journalists: {
     [key in JournalistStaticId]?: {
       psRelationship: number;
     };
   };
-  subgroups: {
-    [key in SubgroupStaticId]?: {
+  publications?: {
+    [key in PublicationStaticId]?: {
       approvalRating: number;
     };
   };

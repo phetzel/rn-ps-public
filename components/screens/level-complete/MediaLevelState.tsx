@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/accordion";
 import { Separator } from "~/components/ui/separator";
 import LevelProgress from "~/components/screens/level-complete/LevelProgress";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
+import { PublicationStateHeader } from "~/components/shared/PublicationStateHeader";
 import { PublicationStaticId, JournalistStaticId } from "~/types";
 import type { OutcomeSnapshotType } from "~/types";
 
@@ -45,9 +45,17 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
     >
   );
 
-  // Get publications that have journalists with data in the snapshot
+  // Get publications with data (either approval ratings or journalist data)
   const publicationsWithData = Object.entries(staticPublications)
     .filter(([pubId]) => {
+      // Include if we have approval data OR journalist data
+      const hasApprovalData =
+        initial.publications?.[pubId as PublicationStaticId] ||
+        final.publications?.[pubId as PublicationStaticId];
+
+      if (hasApprovalData) return true;
+
+      // Fallback to journalist data check
       const pubJournalists =
         journalistsByPublication[pubId as PublicationStaticId] || [];
       return pubJournalists.some(
@@ -55,72 +63,102 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
           initial.journalists[journalist.id] && final.journalists[journalist.id]
       );
     })
-    .map(([id, pub]) => ({ id: id as PublicationStaticId, ...pub }));
+    .map(([id, pub]) => ({
+      id: id as PublicationStaticId,
+      ...pub,
+      initialApproval:
+        initial.publications?.[id as PublicationStaticId]?.approvalRating ?? 0,
+      finalApproval:
+        final.publications?.[id as PublicationStaticId]?.approvalRating ?? 0,
+      hasApprovalData: !!(
+        initial.publications?.[id as PublicationStaticId] ||
+        final.publications?.[id as PublicationStaticId]
+      ),
+    }));
 
   return (
-    <View>
-      <Accordion type="multiple" className="w-full">
-        {publicationsWithData.map((publication) => {
-          const publicationJournalists =
-            journalistsByPublication[publication.id] || [];
+    <View className="gap-2">
+      {publicationsWithData.map((publication) => {
+        const publicationJournalists =
+          journalistsByPublication[publication.id] || [];
 
-          return (
-            <AccordionItem key={publication.id} value={publication.id}>
-              <AccordionTrigger className="py-3">
-                <View className="flex flex-col items-start text-left">
-                  <View className="flex-row items-center gap-2">
-                    <Text>{publication.name}</Text>
-                    <PoliticalLeaningBadge
-                      politicalLeaning={publication.politicalLeaning}
-                    />
-                  </View>
-                </View>
-              </AccordionTrigger>
+        return (
+          <View key={publication.id} className="gap-4">
+            <View className="gap-2">
+              {/* Publication Header */}
+              <PublicationStateHeader
+                name={publication.name}
+                politicalLeaning={publication.politicalLeaning}
+              />
 
-              <AccordionContent>
-                <View className="gap-4">
-                  {publicationJournalists.length > 0 ? (
-                    <View className="gap-2">
-                      <Text className="text-xl font-medium">Journalists</Text>
+              {/* Publication Approval Rating Progress */}
+              {publication.hasApprovalData && (
+                <LevelProgress
+                  label="Approval Rating"
+                  initialValue={publication.initialApproval}
+                  finalValue={publication.finalApproval}
+                />
+              )}
 
-                      {publicationJournalists.map((journalist, journoIdx) => {
-                        const initialValues =
-                          initial.journalists[journalist.id];
-                        const finalValues = final.journalists[journalist.id];
+              {/* Journalists Accordion */}
+              {publicationJournalists.length > 0 && (
+                <Accordion type="single">
+                  <AccordionItem value={publication.id}>
+                    <AccordionTrigger className="py-3">
+                      <Text>Journalists ({publicationJournalists.length})</Text>
+                    </AccordionTrigger>
 
-                        if (!initialValues || !finalValues) return null;
+                    <AccordionContent>
+                      <View className="gap-4">
+                        <View className="gap-2">
+                          <Text className="text-xl font-medium">
+                            Journalists
+                          </Text>
 
-                        return (
-                          <View key={journalist.id} className="gap-2">
-                            <Text className="text-xl font-bold leading-tight">
-                              {journalist.name}
-                            </Text>
+                          {publicationJournalists.map(
+                            (journalist, journoIdx) => {
+                              const initialValues =
+                                initial.journalists[journalist.id];
+                              const finalValues =
+                                final.journalists[journalist.id];
 
-                            <LevelProgress
-                              label="Relationship with You"
-                              initialValue={initialValues.psRelationship}
-                              finalValue={finalValues.psRelationship}
-                            />
+                              if (!initialValues || !finalValues) return null;
 
-                            {journoIdx !==
-                              publicationJournalists.length - 1 && (
-                              <Separator className="mt-2" />
-                            )}
-                          </View>
-                        );
-                      })}
-                    </View>
-                  ) : (
-                    <Text className="text-muted-foreground">
-                      No journalists available
-                    </Text>
-                  )}
-                </View>
-              </AccordionContent>
-            </AccordionItem>
-          );
-        })}
-      </Accordion>
+                              return (
+                                <View key={journalist.id} className="gap-2">
+                                  <Text className="text-xl font-bold leading-tight">
+                                    {journalist.name}
+                                  </Text>
+
+                                  <LevelProgress
+                                    label="Relationship with You"
+                                    initialValue={initialValues.psRelationship}
+                                    finalValue={finalValues.psRelationship}
+                                  />
+
+                                  {journoIdx !==
+                                    publicationJournalists.length - 1 && (
+                                    <Separator className="mt-2" />
+                                  )}
+                                </View>
+                              );
+                            }
+                          )}
+                        </View>
+                      </View>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              )}
+            </View>
+            {/* Add separator between publications */}
+            {publication !==
+              publicationsWithData[publicationsWithData.length - 1] && (
+              <Separator className="my-4" />
+            )}
+          </View>
+        );
+      })}
     </View>
   );
 };

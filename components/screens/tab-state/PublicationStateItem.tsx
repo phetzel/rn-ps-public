@@ -5,7 +5,6 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeJournalistsForPublication } from "~/lib/db/helpers";
 import type Publication from "~/lib/db/models/Publication";
 import type Journalist from "~/lib/db/models/Journalist";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
 import { Text } from "~/components/ui/text";
 import {
   Accordion,
@@ -15,6 +14,7 @@ import {
 } from "~/components/ui/accordion";
 import { Separator } from "~/components/ui/separator";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
+import { PublicationStateHeader } from "~/components/shared/PublicationStateHeader";
 
 interface PublicationStateItemProps {
   publication: Publication;
@@ -46,17 +46,11 @@ export function PublicationStateItem({
 
   return (
     <View className="gap-2 px-4">
-      <View className="flex-row items-center justify-between">
-        <Text className="text-lg font-bold">{pubStaticData.name}</Text>
-        <PoliticalLeaningBadge
-          politicalLeaning={pubStaticData.politicalLeaning}
-        />
-      </View>
-
-      {/* Description */}
-      <Text className="text-sm text-muted-foreground">
-        {pubStaticData.description}
-      </Text>
+      <PublicationStateHeader
+        name={pubStaticData.name}
+        politicalLeaning={pubStaticData.politicalLeaning}
+        description={pubStaticData.description}
+      />
 
       {/* Approval Rating */}
       {approvalRating && (

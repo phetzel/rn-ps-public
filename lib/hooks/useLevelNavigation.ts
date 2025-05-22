@@ -83,13 +83,7 @@ export function useLevelNavigation() {
         return false;
       }
 
-      console.log("updatedLevel status", updatedLevel.status);
-
-      if (updatedLevel.status == LevelStatus.Briefing) {
-        return backToCurrentTab();
-      } else {
-        return navigateToLevelScreen(updatedLevel.status);
-      }
+      return navigateToLevelScreen(updatedLevel.status);
     } catch (error) {
       console.error("Failed to progress and navigate:", error);
       return false;

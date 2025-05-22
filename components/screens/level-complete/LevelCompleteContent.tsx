@@ -42,8 +42,11 @@ const LevelCompleteContent = ({
 }: LevelCompleteContentProps) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const { progressAndNavigate, navigateToCurrentLevelScreen } =
-    useLevelNavigation();
+  const {
+    progressAndNavigate,
+    navigateToCurrentLevelScreen,
+    navigateToCurrentTab,
+  } = useLevelNavigation();
 
   const snapshot = level.parseOutcomeSnapshot;
 
@@ -99,6 +102,7 @@ const LevelCompleteContent = ({
     try {
       if (level.status == LevelStatus.Completed) {
         await progressAndNavigate();
+        await navigateToCurrentTab();
       } else {
         await navigateToCurrentLevelScreen();
       }
@@ -118,7 +122,9 @@ const LevelCompleteContent = ({
         onPrevious={handlePrevious}
         onNext={handleNext}
         onComplete={handleComplete}
-        progressLabel={currentTab.label}
+        progressLabel={`${currentTab.label} (${currentIndex + 1} of ${
+          tabs.length
+        })`}
         headerContent={
           <CardHeader className="flex-row items-center gap-2">
             {currentTab.icon}
