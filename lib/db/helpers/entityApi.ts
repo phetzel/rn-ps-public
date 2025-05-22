@@ -1,4 +1,3 @@
-// entityApi.ts
 import { Q } from "@nozbe/watermelondb";
 
 // Models
@@ -21,7 +20,12 @@ import { fetchGame } from "./gameApi";
 import { fetchSituationsByLevelId } from "./situationApi";
 // Data + Types
 import { staticPublications } from "~/lib/data/staticMedia";
-import { EntityWithDelta } from "~/types";
+import { calculateMediaCoverage } from "~/lib/utils";
+import {
+  EntityWithDelta,
+  EntityWithMediaDelta,
+  LevelPublicationsBoost,
+} from "~/types";
 
 // Cabinet APIs
 export async function fetchActiveCabinetMembers(
@@ -186,10 +190,44 @@ export async function getEnhancedRelationshipDeltas(
   }
 }
 
+// Calculate publication boosts for a level
+export async function computePublicationBoosts(
+  gameId: string
+): Promise<LevelPublicationsBoost> {
+  try {
+    const publications = await fetchPublicationsForGame(gameId);
+
+    // 1. map to approvalRatings & boosts
+    const boosts = await Promise.all(
+      publications.map(async (pub) => {
+        const approvalRating = await pub.getApprovalRating();
+        const boost = await pub.getMediaBoost();
+        return {
+          id: pub.id,
+          name: pub.staticData.name,
+          politicalLeaning: pub.staticData.politicalLeaning,
+          approvalRating,
+          boost,
+        };
+      })
+    );
+
+    // 2. compute the average
+    const total =
+      boosts.reduce((sum, b) => sum + b.boost, 0) / Math.max(1, boosts.length);
+    const totalBoost = Math.round(total * 100) / 100;
+
+    return { boosts, totalBoost };
+  } catch (error) {
+    console.error("Failed to get enhanced situation outcome deltas:", error);
+    throw error;
+  }
+}
+
 // Enhance situation outcome deltas with entity data
 export async function getEnhancedSituationOutcomeDeltas(
   levelId: string
-): Promise<EntityWithDelta[]> {
+): Promise<EntityWithMediaDelta[]> {
   try {
     // Get all situations for the level
     const situations = await fetchSituationsByLevelId(levelId);
@@ -202,6 +240,8 @@ export async function getEnhancedSituationOutcomeDeltas(
 
     const game = await level.game.fetch();
     const { cabinetMembers, subgroups } = await fetchGameEntities(game.id);
+
+    const { totalBoost } = await computePublicationBoosts(game.id);
 
     // Create maps for quick lookups
     const cabinetMemberMap: Map<string, CabinetMember> = new Map();
@@ -257,7 +297,7 @@ export async function getEnhancedSituationOutcomeDeltas(
       }
     }
 
-    const result: EntityWithDelta[] = [];
+    const result: EntityWithMediaDelta[] = [];
 
     // Add president to results if there's a delta
     if (presidentDelta !== 0) {
@@ -267,7 +307,8 @@ export async function getEnhancedSituationOutcomeDeltas(
         role: "president",
         title: "President",
         currentValue: game.presApprovalRating,
-        delta: presidentDelta,
+        preMediaDelta: presidentDelta,
+        delta: calculateMediaCoverage(presidentDelta, totalBoost),
       });
     }
 
@@ -282,7 +323,8 @@ export async function getEnhancedSituationOutcomeDeltas(
           role: "cabinet",
           title: staticCabinetInfo?.cabinetName || "Cabinet Member",
           currentValue: cabinetMember.approvalRating || 0,
-          delta,
+          preMediaDelta: delta,
+          delta: calculateMediaCoverage(delta, totalBoost),
         });
       }
     });
@@ -297,7 +339,8 @@ export async function getEnhancedSituationOutcomeDeltas(
           role: "subgroup",
           title: "Voter Group",
           currentValue: subgroup.approvalRating || 0,
-          delta,
+          preMediaDelta: delta,
+          delta: calculateMediaCoverage(delta, totalBoost),
         });
       }
     });

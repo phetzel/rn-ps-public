@@ -1,10 +1,11 @@
 import React from "react";
+import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
 import { observePublications } from "~/lib/db/helpers";
 import type Publication from "~/lib/db/models/Publication";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Accordion } from "~/components/ui/accordion";
+import { Separator } from "~/components/ui/separator";
 import { Newspaper } from "~/lib/icons/Newspaper";
 
 import PublicationStateItem from "~/components/screens/tab-state/PublicationStateItem";
@@ -28,14 +29,16 @@ export function MediaStateCard({ publications }: MediaStateCardProps) {
       </CardHeader>
 
       <CardContent>
-        <Accordion type="multiple" className="w-full">
-          {publications.map((publication) => (
+        {publications.map((publication, idx) => (
+          <View key={publication.id} className="gap-2">
             <PublicationStateItem
               key={publication.id}
               publication={publication}
             />
-          ))}
-        </Accordion>
+
+            {idx !== publications.length - 1 && <Separator className="my-4" />}
+          </View>
+        ))}
       </CardContent>
     </Card>
   );

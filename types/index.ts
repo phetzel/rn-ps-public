@@ -1,3 +1,10 @@
+// Common Types
+export interface TabItem {
+  value: string;
+  label: string;
+  content: React.ReactNode;
+}
+
 // Modal Column Enums
 export enum GameStatus {
   Active = "active",
@@ -11,8 +18,6 @@ export enum LevelStatus {
   SituationOutcomes = "situation_outcomes",
   Completed = "completed",
 }
-
-export type CabinetSnapshot = Record<CabinetStaticId, string>;
 
 export enum PoliticalParty {
   Republican = "republican",
@@ -30,6 +35,8 @@ export enum SubgroupCategory {
   Socioeconomic = "socioeconomic",
   Sector = "sector",
 }
+
+export type CabinetSnapshot = Record<CabinetStaticId, string>;
 
 // Static Data Types
 export enum CabinetStaticId {
@@ -100,16 +107,6 @@ export interface ExchangeImpacts {
   subgroups?: Partial<Record<SubgroupStaticId, ExchangeImpact>>;
   journalists?: Partial<Record<JournalistStaticId, ExchangeImpact>>;
 }
-
-// export enum AnswerOutcomeModifier {
-//   StronglyPositive = 6,
-//   Positive = 4,
-//   SlightlyPositive = 2,
-//   Neutral = 0,
-//   SlightlyNegative = -2,
-//   Negative = -4,
-//   StronglyNegative = -6,
-// }
 
 export enum AnswerType {
   Deflect = "deflect",
@@ -234,16 +231,6 @@ export interface SituationPreferences {
   };
 }
 
-export enum SituationConsequenceWeight {
-  StronglyPositive = 10,
-  Positive = 5,
-  SlightlyPositive = 2,
-  Neutral = 0,
-  SlightlyNegative = -2,
-  Negative = -5,
-  StronglyNegative = -10,
-}
-
 export interface SituationConsequence {
   approvalChanges: {
     president?: number;
@@ -337,6 +324,23 @@ export interface EntityWithDelta {
   delta: number;
 }
 
+export interface EntityWithMediaDelta extends EntityWithDelta {
+  preMediaDelta: number;
+}
+
+export interface PublicationBoost {
+  id: string;
+  name: string;
+  politicalLeaning: string;
+  approvalRating: number;
+  boost: number;
+}
+
+export interface LevelPublicationsBoost {
+  boosts: PublicationBoost[];
+  totalBoost: number;
+}
+
 // Relationship Snapshot
 export interface RelationshipSnapshot {
   president: {
@@ -366,25 +370,38 @@ export interface OutcomeSnapshotType {
   final?: RelationshipSnapshot;
 }
 
+// Wieghts
+// export enum AnswerOutcomeModifier {
+//   StronglyPositive = 6,
+//   Positive = 4,
+//   SlightlyPositive = 2,
+//   Neutral = 0,
+//   SlightlyNegative = -2,
+//   Negative = -4,
+//   StronglyNegative = -6,
+// }
+
+export enum JournalistInteractionImpact {
+  Ignore = -15,
+  Skipped = -10,
+  HadFollowUp = -5,
+  Answered = 5,
+  AuthorizedAnswer = 10,
+}
+
+export enum SituationConsequenceWeight {
+  StronglyPositive = 15,
+  Positive = 10,
+  SlightlyPositive = 5,
+  Neutral = 0,
+  SlightlyNegative = -5,
+  Negative = -10,
+  StronglyNegative = -15,
+}
+
 // Create Game
 export interface NewGameDetails {
   pressSecretaryName: string;
   presidentName: string;
   presidentParty: PoliticalParty;
-}
-
-// Journalist Exchange Types
-export enum JournalistInteractionImpact {
-  Ignore = -5,
-  Skipped = -3,
-  HadFollowUp = -1,
-  Answered = 1,
-  AuthorizedAnswer = 3,
-}
-
-// Common Types
-export interface TabItem {
-  value: string;
-  label: string;
-  content: React.ReactNode;
 }

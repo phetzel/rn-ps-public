@@ -1,5 +1,4 @@
-// components/screens/tab-state/PublicationStateItem.tsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
@@ -9,6 +8,7 @@ import type Journalist from "~/lib/db/models/Journalist";
 import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
 import { Text } from "~/components/ui/text";
 import {
+  Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
@@ -26,61 +26,89 @@ export function PublicationStateItem({
   journalists,
 }: PublicationStateItemProps) {
   const pubStaticData = publication.staticData;
+  const [approvalRating, setApprovalRating] = useState<number | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    // Fetch approval rating asynchronously
+    publication.getApprovalRating().then((rating) => {
+      if (isMounted) setApprovalRating(rating);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [publication]);
 
   if (!publication) {
     return null;
   }
 
   return (
-    <AccordionItem value={publication.id}>
-      <AccordionTrigger className="py-3">
-        <View className="flex flex-col items-start text-left">
-          <View className="flex-row items-center gap-2">
-            <Text>{pubStaticData.name}</Text>
-            <PoliticalLeaningBadge
-              politicalLeaning={pubStaticData.politicalLeaning}
-            />
-          </View>
-        </View>
-      </AccordionTrigger>
+    <View className="gap-2 px-4">
+      <View className="flex-row items-center justify-between">
+        <Text className="text-lg font-bold">{pubStaticData.name}</Text>
+        <PoliticalLeaningBadge
+          politicalLeaning={pubStaticData.politicalLeaning}
+        />
+      </View>
 
-      <AccordionContent>
-        <View className="gap-4">
-          {/* Journalists */}
-          {journalists?.length > 0 ? (
-            <View className="gap-2">
-              <Text className="text-xl font-medium">Journalists</Text>
+      {/* Description */}
+      <Text className="text-sm text-muted-foreground">
+        {pubStaticData.description}
+      </Text>
 
-              {journalists.map((journalist, idx) => {
-                const journoStaticData = journalist.staticData;
-                return (
-                  <View key={journalist.id} className="gap-2">
-                    <View>
-                      <Text className="text-xl font-bold leading-tight">
-                        {journoStaticData.name}
-                      </Text>
-                    </View>
+      {/* Approval Rating */}
+      {approvalRating && (
+        <StateProgress label="Approval Rating" value={approvalRating} />
+      )}
 
-                    <StateProgress
-                      label="Relationship with You"
-                      value={journalist.psRelationship}
-                    />
+      {/* Journalists */}
+      <Accordion type="single" className="w-full">
+        <AccordionItem value={publication.id}>
+          <AccordionTrigger className="py-3">
+            <Text>Journalists ({journalists?.length})</Text>
+          </AccordionTrigger>
 
-                    {idx !== journalists.length - 1 && (
-                      <Separator className="mt-2" />
-                    )}
-                  </View>
-                );
-              })}
+          <AccordionContent>
+            <View className="gap-4">
+              {/* Journalists */}
+              {journalists?.length > 0 ? (
+                <View className="gap-2">
+                  <Text className="text-xl font-medium">Journalists</Text>
+
+                  {journalists.map((journalist, idx) => {
+                    const journoStaticData = journalist.staticData;
+                    return (
+                      <View key={journalist.id} className="gap-2">
+                        <View>
+                          <Text className="text-xl font-bold leading-tight">
+                            {journoStaticData.name}
+                          </Text>
+                        </View>
+
+                        <StateProgress
+                          label="Relationship with You"
+                          value={journalist.psRelationship}
+                        />
+
+                        {idx !== journalists.length - 1 && (
+                          <Separator className="mt-2" />
+                        )}
+                      </View>
+                    );
+                  })}
+                </View>
+              ) : (
+                <Text className="text-muted-foreground">
+                  No journalists available
+                </Text>
+              )}
             </View>
-          ) : (
-            <Text className="text-muted-foreground">
-              No journalists available
-            </Text>
-          )}
-        </View>
-      </AccordionContent>
-    </AccordionItem>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    </View>
   );
 }
 

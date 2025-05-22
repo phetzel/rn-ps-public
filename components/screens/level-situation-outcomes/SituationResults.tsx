@@ -8,7 +8,7 @@ import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { Level } from "~/lib/db/models";
 import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityApi";
 // Typess
-import { EntityWithDelta } from "~/types";
+import { EntityWithMediaDelta } from "~/types";
 
 interface SituationResultsProps {
   gameId: string;
@@ -22,7 +22,7 @@ export default function SituationResults({
   isAdWatched,
 }: SituationResultsProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
-    EntityWithDelta[] | null
+    EntityWithMediaDelta[] | null
   >(null);
 
   const { currentLevelId } = useCurrentLevelStore((state) => ({

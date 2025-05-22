@@ -19,6 +19,7 @@ import {
   PoliticalParty,
   PoliticalLeaning,
 } from "~/types";
+import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
 // Data
 import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
 import {
@@ -97,25 +98,19 @@ export async function createGameWithDetails(
         const subgroupLeaning = subData.defaultPoliticalLeaning;
 
         if (
-          presidentParty === PoliticalParty.Republican &&
-          subgroupLeaning === PoliticalLeaning.Liberal
+          (presidentParty === PoliticalParty.Republican &&
+            subgroupLeaning === PoliticalLeaning.Liberal) ||
+          (presidentParty === PoliticalParty.Democrat &&
+            subgroupLeaning === PoliticalLeaning.Conservative)
         ) {
-          initialApproval = 30;
+          initialApproval -= POLITICAL_ALIGNMENT_WEIGHT;
         } else if (
-          presidentParty === PoliticalParty.Democrat &&
-          subgroupLeaning === PoliticalLeaning.Conservative
+          (presidentParty === PoliticalParty.Democrat &&
+            subgroupLeaning === PoliticalLeaning.Liberal) ||
+          (presidentParty === PoliticalParty.Republican &&
+            subgroupLeaning === PoliticalLeaning.Conservative)
         ) {
-          initialApproval = 30;
-        } else if (
-          presidentParty === PoliticalParty.Democrat &&
-          subgroupLeaning === PoliticalLeaning.Liberal
-        ) {
-          initialApproval = 70;
-        } else if (
-          presidentParty === PoliticalParty.Republican &&
-          subgroupLeaning === PoliticalLeaning.Conservative
-        ) {
-          initialApproval = 70;
+          initialApproval += POLITICAL_ALIGNMENT_WEIGHT;
         }
       }
 

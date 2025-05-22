@@ -2,7 +2,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Text } from "~/components/ui/text";
-import { cn, calculateBoost } from "~/lib/utils";
+import { cn, calculateAdBoost } from "~/lib/utils";
 import { ResultsEntityRow } from "~/components/shared/results/ResultsEntityRow";
 import type { EntityWithDelta } from "~/types";
 
@@ -97,7 +97,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateBoost(entity.delta)}
+                boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -105,7 +105,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateBoost(entity.delta)}
+                boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -120,7 +120,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateBoost(entity.delta)}
+                boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -135,7 +135,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateBoost(entity.delta)}
+                boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}

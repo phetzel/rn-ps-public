@@ -69,10 +69,27 @@ export function createCabinetMemberMap(
 }
 
 // Boost Helpers
-export const calculateBoost = (delta: number) => {
+export const calculateAdBoost = (delta: number) => {
   if (delta >= 0) {
     return delta * 2;
   } else {
     return Math.ceil(delta / 2);
   }
+};
+
+export const calculateMediaCoverage = (
+  impactValue: number,
+  totalMediaBoost: number
+): number => {
+  let modifiedImpact = impactValue;
+
+  if (impactValue > 0) {
+    // Positive impact amplified by positive coverage (>1), reduced by negative coverage (<1)
+    modifiedImpact = impactValue * totalMediaBoost;
+  } else if (impactValue < 0) {
+    // Negative impact amplified by negative coverage (<1 means greater negativity), reduced by positive (>1 means softened negativity)
+    modifiedImpact = impactValue * (2 - totalMediaBoost);
+  }
+
+  return Math.round(modifiedImpact);
 };

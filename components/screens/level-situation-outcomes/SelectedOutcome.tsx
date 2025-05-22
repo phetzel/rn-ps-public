@@ -12,7 +12,10 @@ interface SelectedOutcomeProps {
 export function SelectedOutcome({ outcome }: SelectedOutcomeProps) {
   return (
     <View className="p-4 bg-muted rounded-md gap-2">
-      <Text className="font-semibold text-lg">Outcome: {outcome.title}</Text>
+      <View>
+        <Text className="text-base">Situation Outcome:</Text>
+        <Text className="text-xl font-bold">{outcome.title}</Text>
+      </View>
 
       <Text className="text-sm">{outcome.description}</Text>
 

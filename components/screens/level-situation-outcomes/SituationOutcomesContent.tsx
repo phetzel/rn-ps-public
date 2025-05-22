@@ -12,6 +12,8 @@ import ResultsCardHeader from "~/components/shared/results/ResultsCardHeader";
 import SituationOutcomeItemHeader from "~/components/screens/level-situation-outcomes/SituationOutcomeItemHeader";
 import SituationOutcomeItem from "~/components/screens/level-situation-outcomes/SituationOutcomeItem";
 import SituationResults from "~/components/screens/level-situation-outcomes/SituationResults";
+import MediaCoverage from "~/components/screens/level-situation-outcomes/MediaCoverage";
+import MediaCoverageHeader from "~/components/screens/level-situation-outcomes/MediaCoverageHeader";
 import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
 import { cn } from "~/lib/utils";
 import { LevelStatus } from "~/types";
@@ -38,7 +40,7 @@ const SituationOutcomesContent = ({
     useLevelNavigation();
 
   const handleNext = () => {
-    if (currentIndex < situations.length) {
+    if (currentIndex < situations.length + 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -61,8 +63,11 @@ const SituationOutcomesContent = ({
     }
   };
 
-  const isOnResults = currentIndex === situations.length;
-  const progressLabel = isOnResults
+  const isOnMediaCoverage = currentIndex === situations.length;
+  const isOnResults = currentIndex === situations.length + 1;
+  const progressLabel = isOnMediaCoverage
+    ? "Media Coverage"
+    : isOnResults
     ? "Results"
     : `Situation ${currentIndex + 1} of ${situations.length}`;
 
@@ -71,7 +76,7 @@ const SituationOutcomesContent = ({
   return (
     <ProgressNavigator
       currentIndex={currentIndex}
-      totalItems={situations.length + 1}
+      totalItems={situations.length + 2}
       onPrevious={handlePrevious}
       onNext={handleNext}
       onComplete={handleComplete}
@@ -81,7 +86,9 @@ const SituationOutcomesContent = ({
         isAdWatched ? "border-l-green-500" : "border-l-blue-500"
       )}
       headerContent={
-        isOnResults ? (
+        isOnMediaCoverage ? (
+          <MediaCoverageHeader />
+        ) : isOnResults ? (
           <ResultsCardHeader
             isAdWatched={isAdWatched}
             onAdComplete={() => setIsAdWatched(true)}
@@ -92,7 +99,9 @@ const SituationOutcomesContent = ({
       }
       showPercentage={false}
     >
-      {isOnResults ? (
+      {isOnMediaCoverage ? (
+        <MediaCoverage gameId={gameId} levelId={levelId} />
+      ) : isOnResults ? (
         <SituationResults
           gameId={gameId}
           level={level}
