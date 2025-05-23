@@ -1,11 +1,23 @@
 import { database } from "~/lib/db";
 import { Game, Level } from "~/lib/db/models";
-import { levelsCollection, fetchActiveCabinetMembers } from "~/lib/db/helpers";
+import { levelsCollection } from "~/lib/db/helpers/collections";
+import { fetchActiveCabinetMembers } from "~/lib/db/helpers/fetchApi";
 import { cabinetSnapshotSchema } from "~/lib/schemas";
-import { CabinetSnapshot, LevelStatus } from "~/types";
+import { CabinetSnapshot, LevelStatus, GameStatus } from "~/types";
+
+export function isGameEnded(gameStatus: GameStatus): boolean {
+  return gameStatus === GameStatus.Impeached || gameStatus === GameStatus.Fired;
+}
 
 // Level CRUD operations
 export async function createLevel(game: Game): Promise<Level> {
+  // Check if game has ended
+  if (isGameEnded(game.status)) {
+    throw new Error(
+      `Cannot create new level: Game has ended due to ${game.status}`
+    );
+  }
+
   return await database.write(async () => {
     // 1. Fetch ACTIVE cabinet members for the game
     const activeCabinetMembers = await fetchActiveCabinetMembers(game.id);

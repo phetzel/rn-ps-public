@@ -4,10 +4,10 @@ import { CabinetMember, SubgroupApproval, Journalist } from "~/lib/db/models";
 import {
   fetchGameEntities,
   fetchPublicationsForGame,
-  calculatePressConferenceRawEffects,
   fetchLevel,
   fetchSituationsByLevelId,
-} from "~/lib/db/helpers";
+} from "~/lib/db/helpers/fetchApi";
+import { calculatePressConferenceRawEffects } from "~/lib/db/helpers/pressConferenceApi";
 // Data + Types
 import { staticPublications } from "~/lib/data/staticMedia";
 import { calculateMediaCoverage } from "~/lib/utils";

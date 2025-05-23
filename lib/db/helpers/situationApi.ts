@@ -4,9 +4,11 @@ import { database } from "~/lib/db";
 import {
   situationCollection,
   pressExchangeCollection,
+} from "~/lib/db/helpers/collections";
+import {
   fetchSituationsByLevelId,
   fetchActiveJournalistsForGame,
-} from "~/lib/db/helpers";
+} from "~/lib/db/helpers/fetchApi";
 import { Situation, Game, Level } from "~/lib/db/models";
 import { staticJournalists } from "~/lib/data/staticMedia";
 import { situationsData } from "~/lib/data/situations/v1";

@@ -21,7 +21,7 @@ import {
   levelsCollection,
   pressExchangeCollection,
   situationCollection,
-} from "~/lib/db/helpers";
+} from "~/lib/db/helpers/collections";
 
 // Game APIs
 export async function fetchGame(gameId: string): Promise<Game | null> {

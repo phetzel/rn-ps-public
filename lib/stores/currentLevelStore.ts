@@ -1,26 +1,31 @@
 import { create } from "zustand";
 
 import {
-  // Level API
-  createLevel,
+  // Fetch API
   fetchLevel,
   fetchLastLevel,
+  // Level API
+  isGameEnded,
+  createLevel,
   updateLevelStatus,
   // Situation API
   createSituationsForLevel,
   selectSituationsForLevel,
   determineSituationOutcomes,
-  // Entity API
+  // Snapshot API
   takeSnapshot,
   // Press Conference API
   calculatePressConferenceRawEffects,
   // Relationship API
   applyRelationshipDeltas,
   applySituationConsequences,
+  // Consequence API
+  calculateAndApplyConsequences,
+  hireReplacementCabinetMembers,
 } from "~/lib/db/helpers";
 
 import { Game, Level, Situation } from "~/lib/db/models";
-import { LevelStatus, OutcomeSnapshotType } from "~/types";
+import { LevelStatus, OutcomeSnapshotType, GameStatus } from "~/types";
 
 interface CurrentLevelStoreState {
   currentLevelId: string | null;
@@ -103,34 +108,57 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       set({ isLoading: true, error: null });
 
       try {
-        // 1. Advance the game month
+        // Check if game has ended
+        if (isGameEnded(game.status)) {
+          const endReason =
+            game.status === GameStatus.Impeached ? "impeachment" : "firing";
+          set({
+            isLoading: false,
+            error: `Cannot create new level: Game has ended due to ${endReason}.`,
+          });
+          return null;
+        }
+
+        // 1. Check if we need to hire replacement cabinet members
+        const previousLevel = await fetchLastLevel(game.id);
+        if (previousLevel) {
+          const consequences = previousLevel.parseOutcomeSnapshot?.consequences;
+          if (consequences && consequences.cabinetMembersFired.length > 0) {
+            await hireReplacementCabinetMembers(
+              game.id,
+              consequences.cabinetMembersFired
+            );
+          }
+        }
+
+        // 2. Advance the game month
         await game.advanceMonth();
 
-        // 2. Select situations for the level
+        // 3. Select situations for the level
         const selectedSituations = await selectSituationsForLevel(game, 2);
 
-        // 3. Create the level
+        // 4. Create the level
         const newLevel = await createLevel(game);
 
-        // 4. Create the situations in the database
+        // 5. Create the situations in the database
         const createdSituations = await createSituationsForLevel(
           game,
           newLevel,
           selectedSituations
         );
 
-        // 5. Get the static keys of the selected situations for tracking
+        // 6. Get the static keys of the selected situations for tracking
         const situationKeys = selectedSituations
           .map((situation) => situation.trigger?.staticKey)
           .filter((key) => key) as string[];
 
-        // 6. Update the game's used situations
+        // 7. Update the game's used situations
         await game.addUsedSituations(situationKeys);
 
         // 7. Take initial snapshot
         const initialSnapshot = await takeSnapshot(game.id);
 
-        // 6. Create initial level outcome snapshot
+        // 8. Create initial level outcome snapshot
         const outcomeSnapshot: OutcomeSnapshotType = {
           initial: initialSnapshot,
         };
@@ -225,6 +253,8 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       // Apply consequences to game entities
       await applySituationConsequences(gameId, level.id);
 
+      const consequenceResult = await calculateAndApplyConsequences(gameId);
+
       // Take final snapshot
       const initialSnapshot = level.parseOutcomeSnapshot?.initial;
       const finalSnapshot = await takeSnapshot(gameId);
@@ -233,6 +263,7 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         const outcomeSnapshot: OutcomeSnapshotType = {
           initial: initialSnapshot,
           final: finalSnapshot,
+          consequences: consequenceResult,
         };
         await level.updateOutcomeSnapshot(outcomeSnapshot);
       }

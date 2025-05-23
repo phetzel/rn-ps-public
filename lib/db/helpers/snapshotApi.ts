@@ -1,4 +1,4 @@
-import { fetchGameEntities } from "~/lib/db/helpers";
+import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
 import {
   RelationshipSnapshot,
   CabinetStaticId,

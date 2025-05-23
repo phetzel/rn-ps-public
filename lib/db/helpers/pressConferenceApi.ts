@@ -1,4 +1,4 @@
-import { fetchPressExchangesForLevel } from "~/lib/db/helpers";
+import { fetchPressExchangesForLevel } from "~/lib/db/helpers/fetchApi";
 import {
   CabinetStaticId,
   JournalistStaticId,

@@ -13,11 +13,9 @@ import CabinetLevelState from "~/components/screens/level-complete/CabinetLevelS
 import PresidentLevelState from "~/components/screens/level-complete/PresidentLevelState";
 import MediaLevelState from "~/components/screens/level-complete/MediaLevelState";
 import SubgroupLevelState from "~/components/screens/level-complete/SubgroupLevelState";
+import LevelConsequences from "~/components/screens/level-complete/LevelConsequences";
 // Icons
-import { Award } from "~/lib/icons/Award";
-import { Briefcase } from "~/lib/icons/Briefcase";
-import { Newspaper } from "~/lib/icons/Newspaper";
-import { Users } from "~/lib/icons/Users";
+import { Award, Briefcase, Newspaper, Shield, Users } from "~/lib/icons";
 // Types
 import { LevelStatus } from "~/types";
 
@@ -84,6 +82,13 @@ const LevelCompleteContent = ({
       component: SubgroupLevelState,
       props: { gameId, levelId, outcomeSnapshot: snapshot },
     },
+    {
+      id: "consequences",
+      label: "Level Consequences",
+      icon: <Shield className="text-primary" />,
+      component: LevelConsequences,
+      props: { levelId, outcomeSnapshot: snapshot },
+    },
   ];
 
   const handlePrevious = () => {
@@ -100,11 +105,16 @@ const LevelCompleteContent = ({
 
   const handleComplete = async () => {
     try {
-      if (level.status == LevelStatus.Completed) {
-        await progressAndNavigate();
-        await navigateToCurrentTab();
+      const isLevelGameOver = snapshot.consequences?.gameEnded || false;
+      if (isLevelGameOver) {
+        return await navigateToCurrentTab();
       } else {
-        await navigateToCurrentLevelScreen();
+        if (level.status == LevelStatus.Completed) {
+          await progressAndNavigate();
+          await navigateToCurrentTab();
+        } else {
+          await navigateToCurrentLevelScreen();
+        }
       }
     } catch (error) {
       console.error("Failed to complete situation outcomes:", error);

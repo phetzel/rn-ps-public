@@ -1,9 +1,6 @@
 import { database } from "~/lib/db";
-
-import {
-  fetchGameEntities,
-  getEnhancedSituationOutcomeDeltas,
-} from "~/lib/db/helpers";
+import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
+import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityEnhancementApi";
 import { PsRelationshipDeltas, EntityWithMediaDelta } from "~/types";
 
 export async function applyRelationshipDeltas(

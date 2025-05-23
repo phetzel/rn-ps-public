@@ -1,5 +1,6 @@
 // Re-export everything from the individual modules
 export * from "./collections";
+export * from "./consequenceApi";
 export * from "./fetchApi";
 export * from "./entityEnhancementApi";
 export * from "./gameApi";

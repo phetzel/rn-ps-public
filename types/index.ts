@@ -9,6 +9,8 @@ export interface TabItem {
 export enum GameStatus {
   Active = "active",
   Completed = "completed",
+  Impeached = "impeached",
+  Fired = "fired",
 }
 
 export enum LevelStatus {
@@ -370,9 +372,17 @@ export interface RelationshipSnapshot {
   };
 }
 
+export interface ConsequenceResult {
+  gameEnded: boolean;
+  gameEndReason?: "impeached" | "fired";
+  cabinetMembersFired: CabinetStaticId[];
+  presidentApprovalPenalty: number;
+}
+
 export interface OutcomeSnapshotType {
   initial: RelationshipSnapshot;
   final?: RelationshipSnapshot;
+  consequences?: ConsequenceResult;
 }
 
 // Wieghts

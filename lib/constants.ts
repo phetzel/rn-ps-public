@@ -56,6 +56,8 @@ export const CABINET_PREFERENCE_THRESHOLD = 30;
 export const CABINET_AUTHORIZED_THRESHOLD = 70;
 export const QUESTIONS_PER_LEVEL = 4; // Questions include follow-up questions
 export const QUESTIONS_PER_PRESS_CONFERENCE = 6; // Questions selected during press conference
+export const CONSEQUENCE_THRESHOLD = 25; // Approval/relationship below this increases risk
+export const CONSEQUENCE_RISK_PER_LEVEL = 0.04; // 4% increased risk per level below threshold
 
 // Level
 export const LEVEL_STATUS_DISPLAY_NAMES = {

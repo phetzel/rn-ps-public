@@ -5,7 +5,7 @@ import {
   journalistCollection,
   publicationCollection,
   subgroupCollection,
-} from "~/lib/db/helpers";
+} from "~/lib/db/helpers/collections";
 // DB Models
 import { Game } from "~/lib/db/models";
 // Utils

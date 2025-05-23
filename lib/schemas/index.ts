@@ -65,9 +65,17 @@ export const relationshipSnapshotSchema = z.object({
   ),
 });
 
+export const consequenceResultSchema = z.object({
+  gameEnded: z.boolean(),
+  gameEndReason: z.enum(["impeached", "fired"]).optional(),
+  cabinetMembersFired: z.array(z.nativeEnum(CabinetStaticId)),
+  presidentApprovalPenalty: z.number(),
+});
+
 export const outcomeSnapshotSchema = z.object({
   initial: relationshipSnapshotSchema,
   final: relationshipSnapshotSchema.optional(),
+  consequences: consequenceResultSchema.optional(), // NEW
 });
 
 // Situation Schema
