@@ -2,7 +2,7 @@ import { Image } from "react-native";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { Text } from "~/components/ui/text";
-import ParallaxScrollView from "~/components/ParallaxScrollView";
+import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
 import { TabStateContent } from "~/components/screens/tab-state/TabStateContent";
 
 export default function StateScreen() {

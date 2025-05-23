@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Text } from "~/components/ui/text";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
 import { PoliticalLeaning } from "~/types";
 
 interface PublicationStateHeaderProps {

@@ -3,9 +3,9 @@ import { View } from "react-native";
 
 // Components
 import { Separator } from "~/components/ui/separator";
-import JournalistDisplay from "~/components/shared/JournalistDisplay";
-import { QuestionDisplay } from "~/components/shared/QuestionDisplay";
-import { AnswerDisplay } from "~/components/shared/AnswerDisplay";
+import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
+import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
+import { AnswerDisplay } from "~/components/shared/entity/AnswerDisplay";
 import { SituationOutcomeExchangeImpactList } from "~/components/screens/level-situation-outcomes/SituationOutcomeExchangeImpactList";
 // Types
 import type { PressExchange } from "~/lib/db/models";

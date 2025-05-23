@@ -1,7 +1,7 @@
 import React from "react";
 import { Stack, useRouter } from "expo-router";
 
-import { HeaderBackIcon } from "~/components/HeaderBackIcon";
+import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 
 export default function GameSessionLayout() {

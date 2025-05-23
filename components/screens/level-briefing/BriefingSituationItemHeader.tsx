@@ -2,8 +2,8 @@ import React from "react";
 import { View } from "react-native";
 
 import { CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
-import { SituationTypeIcon } from "~/components/shared/SituationTypeIcon";
-import { SituationStatusBadge } from "~/components/shared/SituationStatusBadge";
+import { SituationTypeIcon } from "~/components/shared/entity/SituationTypeIcon";
+import { SituationStatusBadge } from "~/components/shared/entity/SituationStatusBadge";
 import type { Situation } from "~/lib/db/models";
 import { SituationType } from "~/types";
 

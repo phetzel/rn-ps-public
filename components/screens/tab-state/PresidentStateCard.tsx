@@ -5,7 +5,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeGame } from "~/lib/db/helpers";
 import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
 import { Game } from "~/lib/db/models";
 import { Award } from "~/lib/icons/Award";

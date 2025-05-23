@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
 import { Text } from "~/components/ui/text";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
-import { SubgroupCategoryIcon } from "~/components/shared/SubgroupCategoryIcon";
+import { SubgroupCategoryIcon } from "~/components/shared/entity/SubgroupCategoryIcon";
 // Types
 import { SubgroupCategory } from "~/types";
 

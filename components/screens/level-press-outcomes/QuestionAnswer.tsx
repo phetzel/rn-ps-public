@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 import { Text } from "~/components/ui/text";
-import { AnswerDisplay } from "~/components/shared/AnswerDisplay";
+import { AnswerDisplay } from "~/components/shared/entity/AnswerDisplay";
 import { SkipForward } from "~/lib/icons/SkipForward";
 import type { Question } from "~/types";
 

@@ -10,7 +10,7 @@ import type Game from "~/lib/db/models/Game";
 import { observeAllGames } from "~/lib/db/helpers";
 import { HomeHeader } from "~/components/screens/home/HomeHeader";
 import { HomeMenuCard } from "~/components/screens/home/HomeMenuCard";
-import { ThemedView } from "~/components/ThemedView";
+import { ThemedView } from "~/components/shared/layout/ThemedView";
 
 interface ScreenProps {
   games: Game[];

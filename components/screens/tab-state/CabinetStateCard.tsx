@@ -8,7 +8,7 @@ import { Briefcase } from "~/lib/icons/Briefcase";
 import { Separator } from "~/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
-import { CabinetMemberName } from "~/components/shared/CabinetMemberName";
+import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
 
 interface CabinetStateCardProps {
   cabinetMembers: CabinetMember[];

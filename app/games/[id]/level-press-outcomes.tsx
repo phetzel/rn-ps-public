@@ -2,7 +2,7 @@ import { Image } from "react-native";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import ParallaxScrollView from "~/components/ParallaxScrollView";
+import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
 import PressOutcomesContent from "~/components/screens/level-press-outcomes/PressOutcomesContent";
 
 export default function LevelPressOutcomesScreen() {

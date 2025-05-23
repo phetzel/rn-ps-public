@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/accordion";
 import { Separator } from "~/components/ui/separator";
 import LevelProgress from "~/components/screens/level-complete/LevelProgress";
-import { PublicationStateHeader } from "~/components/shared/PublicationStateHeader";
+import { PublicationStateHeader } from "~/components/shared/entity/PublicationStateHeader";
 import { PublicationStaticId, JournalistStaticId } from "~/types";
 import type { OutcomeSnapshotType } from "~/types";
 

@@ -4,7 +4,7 @@ import { View } from "react-native";
 import { User } from "~/lib/icons/User";
 import { Award } from "~/lib/icons/Award";
 import { Text } from "~/components/ui/text";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
 import type Game from "~/lib/db/models/Game";
 
 interface GameMetadataProps {

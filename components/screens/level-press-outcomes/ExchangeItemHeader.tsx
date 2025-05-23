@@ -2,7 +2,7 @@ import React from "react";
 
 import type { PressExchange } from "~/lib/db/models";
 import { CardHeader } from "~/components/ui/card";
-import JournalistDisplay from "~/components/shared/JournalistDisplay";
+import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 
 interface ExchangeItemHeaderProps {
   exchange: PressExchange;

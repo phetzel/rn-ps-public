@@ -8,7 +8,7 @@ import {
 } from "~/lib/db/helpers/observations";
 import type { Journalist, Publication } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
-import PoliticalLeaningBadge from "~/components/shared/PoliticalLeaningBadge";
+import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
 import { User } from "~/lib/icons/User";
 
 interface JournalistDisplayProps {

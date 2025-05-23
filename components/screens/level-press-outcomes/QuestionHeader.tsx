@@ -4,7 +4,7 @@ import { View } from "react-native";
 
 import { Text } from "~/components/ui/text";
 import { AlertCircle } from "~/lib/icons/AlertCircle";
-import { QuestionDisplay } from "~/components/shared/QuestionDisplay";
+import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
 import type { Question } from "~/types";
 
 interface QuestionHeaderProps {

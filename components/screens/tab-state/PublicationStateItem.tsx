@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/accordion";
 import { Separator } from "~/components/ui/separator";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
-import { PublicationStateHeader } from "~/components/shared/PublicationStateHeader";
+import { PublicationStateHeader } from "~/components/shared/entity/PublicationStateHeader";
 
 interface PublicationStateItemProps {
   publication: Publication;

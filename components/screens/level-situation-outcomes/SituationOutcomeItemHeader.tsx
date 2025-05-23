@@ -5,8 +5,8 @@ import { View } from "react-native";
 import type { Situation } from "~/lib/db/models";
 // Components
 import { CardHeader, CardTitle } from "~/components/ui/card";
-import { SituationStatusBadge } from "~/components/shared/SituationStatusBadge";
-import { SituationTypeIcon } from "~/components/shared/SituationTypeIcon";
+import { SituationStatusBadge } from "~/components/shared/entity/SituationStatusBadge";
+import { SituationTypeIcon } from "~/components/shared/entity/SituationTypeIcon";
 
 interface SituationOutcomeItemHeaderProps {
   situation: Situation;

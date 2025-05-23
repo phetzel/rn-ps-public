@@ -2,7 +2,7 @@ import { Image } from "react-native";
 
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import ParallaxScrollView from "~/components/ParallaxScrollView";
+import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
 import SituationOutcomesContent from "~/components/screens/level-situation-outcomes/SituationOutcomesContent";
 
 export default function LevelSituationOutcomesScreen() {

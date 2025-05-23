@@ -17,9 +17,9 @@ import {
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import { Separator } from "~/components/ui/separator";
-import JournalistDisplay from "~/components/shared/JournalistDisplay";
+import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 import ConferenceAnswer from "~/components/screens/level-press-conference/ConferenceAnswer";
-import { QuestionDisplay } from "~/components/shared/QuestionDisplay";
+import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
 import { CabinetStaticId, AnswerType } from "~/types";
 
 interface ConferenceQuestionProps {

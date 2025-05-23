@@ -7,7 +7,7 @@ import { observeAllGames } from "~/lib/db/helpers";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 // Components
 import GameCard from "~/components/screens/games/GameCard";
-import { ThemedView } from "~/components/ThemedView";
+import { ThemedView } from "~/components/shared/layout/ThemedView";
 import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
 import { EmptyState } from "~/components/shared/EmptyState";
 

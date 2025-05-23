@@ -10,7 +10,7 @@ import {
   BottomSheetHandle,
 } from "~/components/ui/bottom-sheet";
 import ConferenceInfo from "~/components/screens/level-press-conference/ConferenceInfo";
-import { HeaderBackIcon } from "~/components/HeaderBackIcon";
+import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 import { Info } from "~/lib/icons/Info";

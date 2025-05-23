@@ -1,7 +1,7 @@
 import { Image } from "react-native";
 
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import ParallaxScrollView from "~/components/ParallaxScrollView";
+import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
 import BriefingSituationsList from "~/components/screens/level-briefing/BriefingSituationsList";
 
 export default function LevelBriefingScreen() {

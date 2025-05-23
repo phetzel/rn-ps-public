@@ -2,7 +2,7 @@ import { Stack } from "expo-router";
 import * as React from "react";
 import { useRouter } from "expo-router";
 
-import { HeaderBackIcon } from "~/components/HeaderBackIcon";
+import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
 
 export default function GamesLayout() {
   const router = useRouter();

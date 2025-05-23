@@ -5,7 +5,7 @@ import { LayoutDashboard } from "~/lib/icons/LayoutDashboard";
 import { FileText } from "~/lib/icons/FileText";
 import { History } from "~/lib/icons/History";
 
-import { HeaderBackIcon } from "~/components/HeaderBackIcon";
+import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
 
 export default function GameTabLayout() {
   const router = useRouter();

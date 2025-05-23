@@ -5,7 +5,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeSubgroupApprovals } from "~/lib/db/helpers";
 import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
 import { Separator } from "~/components/ui/separator";
-import { SubgroupCategoryIcon } from "~/components/shared/SubgroupCategoryIcon";
+import { SubgroupCategoryIcon } from "~/components/shared/entity/SubgroupCategoryIcon";
 import { Text } from "~/components/ui/text";
 import LevelProgress from "~/components/screens/level-complete/LevelProgress";
 import { SubgroupCategory } from "~/types";

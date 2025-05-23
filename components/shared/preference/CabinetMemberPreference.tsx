@@ -6,7 +6,7 @@ import { CABINET_PREFERENCE_THRESHOLD } from "~/lib/constants";
 import PreferenceDisplay from "~/components/shared/preference/PreferenceDisplay";
 import PreferenceLocked from "~/components/shared/preference/PreferenceLocked";
 import AuthorizedIntel from "~/components/shared/preference/AuthorizedIntel";
-import { CabinetMemberName } from "~/components/shared/CabinetMemberName";
+import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
 import { CabinetPreference } from "~/types";
 
 interface CabinetMemberPreferenceProps {

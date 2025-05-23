@@ -4,7 +4,7 @@ import { View, Pressable } from "react-native";
 import type PressExchange from "~/lib/db/models/PressExchange";
 import { Card, CardContent } from "~/components/ui/card";
 import { ChevronRight } from "~/lib/icons/ChevronRight";
-import JournalistDisplay from "~/components/shared/JournalistDisplay";
+import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 import InfoTooltip from "~/components/shared/InfoTooltip";
 import { Text } from "~/components/ui/text";
 
