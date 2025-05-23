@@ -1,23 +1,13 @@
-import { Q } from "@nozbe/watermelondb";
-
 // Models
-import {
-  CabinetMember,
-  Publication,
-  SubgroupApproval,
-  Journalist,
-} from "~/lib/db/models";
+import { CabinetMember, SubgroupApproval, Journalist } from "~/lib/db/models";
 // Helpers
 import {
-  cabinetCollection,
-  publicationCollection,
-  journalistCollection,
-  subgroupCollection,
-} from "./collections";
-import { calculatePressConferenceRawEffects } from "./pressConferenceApi";
-import { fetchLevel } from "./levelApi";
-import { fetchGame } from "./gameApi";
-import { fetchSituationsByLevelId } from "./situationApi";
+  fetchGameEntities,
+  fetchPublicationsForGame,
+  calculatePressConferenceRawEffects,
+  fetchLevel,
+  fetchSituationsByLevelId,
+} from "~/lib/db/helpers";
 // Data + Types
 import { staticPublications } from "~/lib/data/staticMedia";
 import { calculateMediaCoverage } from "~/lib/utils";
@@ -26,62 +16,6 @@ import {
   EntityWithMediaDelta,
   LevelPublicationsBoost,
 } from "~/types";
-
-// Cabinet APIs
-export async function fetchActiveCabinetMembers(
-  gameId: string
-): Promise<CabinetMember[]> {
-  return await cabinetCollection
-    .query(Q.where("game_id", gameId), Q.where("is_active", true))
-    .fetch();
-}
-
-// Publication APIs
-export async function fetchPublicationsForGame(
-  gameId: string
-): Promise<Publication[]> {
-  return await publicationCollection.query(Q.where("game_id", gameId)).fetch();
-}
-
-// Journalist APIs
-export async function fetchActiveJournalistsForGame(
-  gameId: string
-): Promise<Journalist[]> {
-  return await journalistCollection.query(Q.where("game_id", gameId)).fetch();
-}
-
-export async function fetchJournalist(
-  journalistId: string
-): Promise<Journalist | null> {
-  return await journalistCollection.find(journalistId);
-}
-
-// Subgroup APIs
-export async function fetchSubgroupsForGame(
-  gameId: string
-): Promise<SubgroupApproval[]> {
-  return await subgroupCollection.query(Q.where("game_id", gameId)).fetch();
-}
-
-// Batch fetch all game entities in a single function
-export async function fetchGameEntities(gameId: string) {
-  const [game, cabinetMembers, publications, journalists, subgroups] =
-    await Promise.all([
-      fetchGame(gameId),
-      fetchActiveCabinetMembers(gameId),
-      fetchPublicationsForGame(gameId),
-      fetchActiveJournalistsForGame(gameId),
-      fetchSubgroupsForGame(gameId),
-    ]);
-
-  return {
-    game,
-    cabinetMembers,
-    publications,
-    journalists,
-    subgroups,
-  };
-}
 
 // Enhance relationship deltas with entity data
 export async function getEnhancedRelationshipDeltas(

@@ -3,7 +3,7 @@ import { database } from "~/lib/db";
 import {
   fetchGameEntities,
   getEnhancedSituationOutcomeDeltas,
-} from "./entityApi";
+} from "~/lib/db/helpers";
 import { PsRelationshipDeltas, EntityWithMediaDelta } from "~/types";
 
 export async function applyRelationshipDeltas(

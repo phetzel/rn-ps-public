@@ -6,7 +6,7 @@ import { ResultsTable } from "~/components/shared/results/ResultsTable";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
 import { Level } from "~/lib/db/models";
-import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityApi";
+import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers";
 // Typess
 import { EntityWithMediaDelta } from "~/types";
 

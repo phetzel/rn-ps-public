@@ -5,9 +5,12 @@ import {
   journalistCollection,
   publicationCollection,
   subgroupCollection,
-} from "./collections";
-
-// Types and constants
+} from "~/lib/db/helpers";
+// DB Models
+import { Game } from "~/lib/db/models";
+// Utils
+import { generateCabinetMemberName } from "~/lib/utils";
+// Types, Data, and constants
 import {
   NewGameDetails,
   GameStatus,
@@ -20,20 +23,11 @@ import {
   PoliticalLeaning,
 } from "~/types";
 import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
-// Data
 import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
 import {
   staticCabinetMembers,
   staticSubgroups,
 } from "~/lib/data/staticPolitics";
-// DB Models
-import { Game } from "~/lib/db/models";
-// Utils
-import { generateCabinetMemberName } from "~/lib/utils";
-
-export async function fetchGame(gameId: string): Promise<Game | null> {
-  return await gamesCollection.find(gameId);
-}
 
 export async function createGameWithDetails(
   details: NewGameDetails

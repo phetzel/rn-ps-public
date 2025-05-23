@@ -1,9 +1,13 @@
 import { Q } from "@nozbe/watermelondb";
 
 import { database } from "~/lib/db";
-import { situationCollection, pressExchangeCollection } from "./collections";
+import {
+  situationCollection,
+  pressExchangeCollection,
+  fetchSituationsByLevelId,
+  fetchActiveJournalistsForGame,
+} from "~/lib/db/helpers";
 import { Situation, Game, Level } from "~/lib/db/models";
-import { fetchActiveJournalistsForGame } from "./entityApi";
 import { staticJournalists } from "~/lib/data/staticMedia";
 import { situationsData } from "~/lib/data/situations/v1";
 import {
@@ -16,18 +20,6 @@ import {
   JournalistStaticId,
   SituationOutcomeWeight,
 } from "~/types";
-
-export async function fetchSituationsByLevelId(
-  levelId: string
-): Promise<Situation[]> {
-  return await situationCollection.query(Q.where("level_id", levelId)).fetch();
-}
-
-export async function fetchSituationById(
-  situationId: string
-): Promise<Situation> {
-  return await situationCollection.find(situationId);
-}
 
 export async function createSituationsForLevel(
   game: Game,

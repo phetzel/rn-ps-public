@@ -8,7 +8,7 @@ import { ResultsTable } from "~/components/shared/results/ResultsTable";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
 import { Level } from "~/lib/db/models";
-import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers/entityApi";
+import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers";
 // Types
 import { EntityWithDelta } from "~/types";
 
