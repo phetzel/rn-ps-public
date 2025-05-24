@@ -24,6 +24,7 @@ import {
   Level,
   PressExchange,
 } from "~/lib/db/models";
+import { LevelStatus } from "~/types";
 
 export function observeAllGames(): Observable<Game[]> {
   return gamesCollection.query(Q.sortBy("updated_at", Q.desc)).observe();
@@ -31,6 +32,17 @@ export function observeAllGames(): Observable<Game[]> {
 
 export function observeGame(gameId: string): Observable<Game | null> {
   return gamesCollection.findAndObserve(gameId);
+}
+
+export function observeCompletedLevels(gameId: string): Observable<Level[]> {
+  return levelsCollection
+    .query(
+      Q.where("game_id", gameId),
+      Q.where("status", LevelStatus.Completed),
+      Q.sortBy("year", Q.asc),
+      Q.sortBy("month", Q.asc)
+    )
+    .observe();
 }
 
 export function observeSubgroupApprovals(

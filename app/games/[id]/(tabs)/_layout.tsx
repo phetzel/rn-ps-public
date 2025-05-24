@@ -43,8 +43,7 @@ export default function GameTabLayout() {
       <Tabs.Screen
         name="archive"
         options={{
-          title: "Archive",
-          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <History color={color} size={size} />
           ),
