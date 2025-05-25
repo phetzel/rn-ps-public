@@ -24,10 +24,8 @@ const ExchangesOutcomeList = ({
   }
 
   return (
-    <View>
-      <Text className="text-center text-2xl font-semibold">
-        Press Exchanges
-      </Text>
+    <View className="gap-2">
+      <Text className="text-2xl font-semibold">Press Exchanges</Text>
       <Accordion type="single" collapsible>
         {pressExchanges.map((exchange, index) => (
           <View key={exchange.id}>

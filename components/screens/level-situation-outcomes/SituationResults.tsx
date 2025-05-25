@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 
 // Components
-import { ResultsTable } from "~/components/shared/results/ResultsTable";
-// Store
+import { ResultsCard } from "~/components/shared/results/ResultsCard"; // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
-import { Level } from "~/lib/db/models";
 import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers";
 // Typess
 import { EntityWithMediaDelta } from "~/types";
 
 interface SituationResultsProps {
-  gameId: string;
-  level: Level;
   isAdWatched: boolean;
+  onComplete: () => void;
+  onAdComplete: () => void;
 }
 
 export default function SituationResults({
-  gameId,
-  level,
   isAdWatched,
+  onComplete,
+  onAdComplete,
 }: SituationResultsProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
     EntityWithMediaDelta[] | null
@@ -35,21 +33,19 @@ export default function SituationResults({
       if (!currentLevelId) return;
 
       const results = await getEnhancedSituationOutcomeDeltas(currentLevelId);
-      setEnhancedDeltas(results);
+      setEnhancedDeltas(results.deltas);
     }
 
     loadDeltas();
   }, [currentLevelId]);
 
   return (
-    <ResultsTable
+    <ResultsCard
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
-      adMessage={{
-        watched: "You've successfully boosted your situation approval changes!",
-        notWatched:
-          "Watch a short ad to boost your situation approval changes.",
-      }}
+      onAdComplete={onAdComplete}
+      adWatchMessage="You've successfully boosted your situation approval changes!"
+      onComplete={onComplete}
     />
   );
 }

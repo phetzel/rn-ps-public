@@ -71,6 +71,44 @@ export async function fetchActiveCabinetMembers(
     .fetch();
 }
 
+export async function fetchCabinetMembersByLevelId(
+  levelId: string
+): Promise<CabinetMember[]> {
+  try {
+    // Get the level to access its cabinet snapshot
+    const level = await fetchLevel(levelId);
+    if (!level) {
+      throw new Error(`Level with ID ${levelId} not found`);
+    }
+
+    // Parse the cabinet snapshot to get member IDs
+    const snapshot = level.parseCabinetSnapshot;
+    if (!snapshot) {
+      console.warn(`No valid cabinet snapshot found for level ${levelId}`);
+      return [];
+    }
+
+    const memberIds = Object.values(snapshot);
+    if (memberIds.length === 0) {
+      return [];
+    }
+
+    // Fetch the cabinet members by their IDs
+    return await cabinetCollection
+      .query(
+        Q.where("id", Q.oneOf(memberIds)),
+        Q.sortBy("approval_rating", Q.desc)
+      )
+      .fetch();
+  } catch (error) {
+    console.error(
+      `Error fetching cabinet members for level ${levelId}:`,
+      error
+    );
+    return [];
+  }
+}
+
 // Publication APIs
 export async function fetchPublicationsForGame(
   gameId: string

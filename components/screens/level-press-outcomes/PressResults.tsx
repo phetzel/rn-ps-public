@@ -6,7 +6,6 @@ import { ResultsCard } from "~/components/shared/results/ResultsCard";
 // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
-import { Level } from "~/lib/db/models";
 import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers";
 // Types
 import { EntityWithDelta } from "~/types";

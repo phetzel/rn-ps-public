@@ -8,7 +8,6 @@ import type { Level } from "~/lib/db/models";
 // Hooks
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 // Components
-import { Button } from "~/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { Text } from "~/components/ui/text";
 import ExchangesOutcomeList from "~/components/shared/exchanges-outcome-list/ExchangesOutcomeList";

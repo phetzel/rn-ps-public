@@ -3,18 +3,23 @@ import { CabinetMember, SubgroupApproval, Journalist } from "~/lib/db/models";
 // Helpers
 import {
   fetchGameEntities,
-  fetchPublicationsForGame,
+  fetchCabinetMembersByLevelId,
   fetchLevel,
   fetchSituationsByLevelId,
 } from "~/lib/db/helpers/fetchApi";
 import { calculatePressConferenceRawEffects } from "~/lib/db/helpers/pressConferenceApi";
+import {
+  computePublicationBoosts,
+  getArchivedPublicationBoosts,
+} from "~/lib/db/helpers/publicationBoostApi";
 // Data + Types
 import { staticPublications } from "~/lib/data/staticMedia";
 import { calculateMediaCoverage } from "~/lib/utils";
 import {
   EntityWithDelta,
   EntityWithMediaDelta,
-  LevelPublicationsBoost,
+  PublicationBoost,
+  LevelStatus,
 } from "~/types";
 
 // Enhance relationship deltas with entity data
@@ -34,7 +39,8 @@ export async function getEnhancedRelationshipDeltas(
     }
 
     const game = await level.game.fetch();
-    const { cabinetMembers, journalists } = await fetchGameEntities(game.id);
+    const { journalists } = await fetchGameEntities(game.id);
+    const cabinetMembers = await fetchCabinetMembersByLevelId(levelId);
 
     // Create maps for quick lookup
     const cabinetMemberMap: Map<string, CabinetMember> = new Map();
@@ -124,44 +130,14 @@ export async function getEnhancedRelationshipDeltas(
   }
 }
 
-// Calculate publication boosts for a level
-export async function computePublicationBoosts(
-  gameId: string
-): Promise<LevelPublicationsBoost> {
-  try {
-    const publications = await fetchPublicationsForGame(gameId);
-
-    // 1. map to approvalRatings & boosts
-    const boosts = await Promise.all(
-      publications.map(async (pub) => {
-        const approvalRating = await pub.getApprovalRating();
-        const boost = await pub.getMediaBoost();
-        return {
-          id: pub.id,
-          name: pub.staticData.name,
-          politicalLeaning: pub.staticData.politicalLeaning,
-          approvalRating,
-          boost,
-        };
-      })
-    );
-
-    // 2. compute the average
-    const total =
-      boosts.reduce((sum, b) => sum + b.boost, 0) / Math.max(1, boosts.length);
-    const totalBoost = Math.round(total * 100) / 100;
-
-    return { boosts, totalBoost };
-  } catch (error) {
-    console.error("Failed to get enhanced situation outcome deltas:", error);
-    throw error;
-  }
-}
-
 // Enhance situation outcome deltas with entity data
 export async function getEnhancedSituationOutcomeDeltas(
   levelId: string
-): Promise<EntityWithMediaDelta[]> {
+): Promise<{
+  deltas: EntityWithMediaDelta[];
+  boosts: PublicationBoost[];
+  totalBoost: number;
+}> {
   try {
     // Get all situations for the level
     const situations = await fetchSituationsByLevelId(levelId);
@@ -173,9 +149,14 @@ export async function getEnhancedSituationOutcomeDeltas(
     }
 
     const game = await level.game.fetch();
-    const { cabinetMembers, subgroups } = await fetchGameEntities(game.id);
+    const { subgroups } = await fetchGameEntities(game.id);
+    const cabinetMembers = await fetchCabinetMembersByLevelId(levelId);
 
-    const { totalBoost } = await computePublicationBoosts(game.id);
+    // Check if level is complete to determine which publication boost function to use
+    const isLevelComplete = level.status === LevelStatus.Completed;
+    const { boosts, totalBoost } = isLevelComplete
+      ? await getArchivedPublicationBoosts(levelId)
+      : await computePublicationBoosts(game.id);
 
     // Create maps for quick lookups
     const cabinetMemberMap: Map<string, CabinetMember> = new Map();
@@ -279,7 +260,7 @@ export async function getEnhancedSituationOutcomeDeltas(
       }
     });
 
-    return result;
+    return { deltas: result, boosts, totalBoost };
   } catch (error) {
     console.error("Failed to get enhanced situation outcome deltas:", error);
     throw error;

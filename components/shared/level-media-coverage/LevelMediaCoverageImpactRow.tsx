@@ -4,13 +4,13 @@ import { Text } from "~/components/ui/text";
 import { cn } from "~/lib/utils";
 import { EntityWithMediaDelta } from "~/types";
 
-interface MediaCoverageImpactRowProps {
+interface LevelMediaCoverageImpactRowProps {
   entity: EntityWithMediaDelta;
 }
 
-export function MediaCoverageImpactRow({
+export function LevelMediaCoverageImpactRow({
   entity,
-}: MediaCoverageImpactRowProps) {
+}: LevelMediaCoverageImpactRowProps) {
   const { name, title, role, currentValue, delta, preMediaDelta } = entity;
 
   return (

@@ -1,15 +1,11 @@
 import React, { useMemo } from "react";
 import { View } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
 
+import { observePressExchangesForSituation } from "~/lib/db/helpers/observations";
 // Components
 import { Text } from "~/components/ui/text";
-import SituationOutcomeExchangeItem from "~/components/screens/level-situation-outcomes/SituationOutcomeExchangeItem";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "~/components/ui/accordion";
+import SituationOutcomeExchangeItem from "~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem";
 // Types
 import type { PressExchange } from "~/lib/db/models";
 import type { SituationOutcome } from "~/types";
@@ -20,11 +16,11 @@ interface SituationOutcomeExchangesProps {
   allOutcomes: SituationOutcome[];
 }
 
-export default function SituationOutcomeExchanges({
+const SituationOutcomeExchanges = ({
   pressExchanges,
   selectedOutcome,
   allOutcomes,
-}: SituationOutcomeExchangesProps) {
+}: SituationOutcomeExchangesProps) => {
   // Filter exchanges that affected ANY outcome using useMemo
   const filteredExchanges = useMemo(() => {
     return pressExchanges.filter((exchange) => {
@@ -64,25 +60,21 @@ export default function SituationOutcomeExchanges({
   }
 
   return (
-    <Accordion type="single" collapsible className="px-4">
-      <AccordionItem value="press-exchanges" className="border-0">
-        <AccordionTrigger>
-          <Text>Press Exchanges: ({filteredExchanges.length})</Text>
-        </AccordionTrigger>
-
-        <AccordionContent>
-          <View className="gap-2">
-            {filteredExchanges.map((exchange, index) => (
-              <SituationOutcomeExchangeItem
-                key={`${exchange.id}-${index}`}
-                exchange={exchange}
-                allOutcomes={allOutcomes}
-                selectedOutcomeId={selectedOutcome.id}
-              />
-            ))}
-          </View>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <View className="gap-2">
+      {filteredExchanges.map((exchange, index) => (
+        <SituationOutcomeExchangeItem
+          key={`${exchange.id}-${index}`}
+          exchange={exchange}
+          allOutcomes={allOutcomes}
+          selectedOutcomeId={selectedOutcome.id}
+        />
+      ))}
+    </View>
   );
-}
+};
+
+const enhance = withObservables(["situationId"], ({ situationId }) => ({
+  pressExchanges: observePressExchangesForSituation(situationId),
+}));
+
+export default enhance(SituationOutcomeExchanges);

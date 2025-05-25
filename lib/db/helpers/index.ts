@@ -7,6 +7,7 @@ export * from "./gameApi";
 export * from "./levelApi";
 export * from "./observations";
 export * from "./pressConferenceApi";
+export * from "./publicationBoostApi";
 export * from "./relationshipApi";
 export * from "./situationApi";
 export * from "./snapshotApi";

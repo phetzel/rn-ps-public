@@ -2,18 +2,19 @@
 import React from "react";
 import { View } from "react-native";
 import { Text } from "~/components/ui/text";
+
 import { cn } from "~/lib/utils";
 import { PublicationBoost } from "~/types";
 
-interface MediaCoverageContentProps {
+interface LevelMediaCoverageContentProps {
   mediaBoosts: PublicationBoost[];
   totalBoost: number;
 }
 
-function MediaCoverageContent({
+function LevelMediaCoverageContent({
   mediaBoosts,
   totalBoost,
-}: MediaCoverageContentProps) {
+}: LevelMediaCoverageContentProps) {
   return (
     <View className="gap-2">
       {/* Header */}
@@ -71,4 +72,4 @@ function MediaCoverageContent({
   );
 }
 
-export default MediaCoverageContent;
+export default LevelMediaCoverageContent;

@@ -6,7 +6,7 @@ import { Separator } from "~/components/ui/separator";
 import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
 import { AnswerDisplay } from "~/components/shared/entity/AnswerDisplay";
-import { SituationOutcomeExchangeImpactList } from "~/components/screens/level-situation-outcomes/SituationOutcomeExchangeImpactList";
+import { SituationOutcomeExchangeImpactList } from "~/components/shared/situations-outcome-list/SituationOutcomeExchangeImpactList";
 // Types
 import type { PressExchange } from "~/lib/db/models";
 import type { SituationOutcome } from "~/types";

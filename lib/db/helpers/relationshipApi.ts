@@ -69,7 +69,9 @@ export async function applySituationConsequences(
 ): Promise<void> {
   try {
     // Get media-adjusted deltas directly from getEnhancedSituationOutcomeDeltas
-    const enhancedDeltas = await getEnhancedSituationOutcomeDeltas(levelId);
+    const { deltas: enhancedDeltas } = await getEnhancedSituationOutcomeDeltas(
+      levelId
+    );
 
     // Fetch the game entities that will be updated
     const { game, cabinetMembers, subgroups } = await fetchGameEntities(gameId);

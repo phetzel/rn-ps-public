@@ -5,11 +5,13 @@ import { Text } from "~/components/ui/text";
 import { Progress } from "~/components/ui/progress";
 import type { SituationOutcomeWeight } from "~/types";
 
-interface SelectedOutcomeProps {
+interface SituationSelectedOutcomeProps {
   outcome: SituationOutcomeWeight;
 }
 
-export function SelectedOutcome({ outcome }: SelectedOutcomeProps) {
+export function SituationSelectedOutcome({
+  outcome,
+}: SituationSelectedOutcomeProps) {
   return (
     <View className="p-4 bg-muted rounded-md gap-2">
       <View>
