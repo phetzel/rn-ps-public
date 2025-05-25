@@ -6,15 +6,15 @@ import { AnswerDisplay } from "~/components/shared/entity/AnswerDisplay";
 import { SkipForward } from "~/lib/icons/SkipForward";
 import type { Question } from "~/types";
 
-interface QuestionAnswerProps {
+interface ExchangeQuestionAnswerProps {
   answer: Question["answers"][0] | null;
   isSkipped: boolean;
 }
 
-export default function QuestionAnswer({
+export default function ExchangeQuestionAnswer({
   answer,
   isSkipped,
-}: QuestionAnswerProps) {
+}: ExchangeQuestionAnswerProps) {
   if (isSkipped) {
     // Question was skipped
     return (

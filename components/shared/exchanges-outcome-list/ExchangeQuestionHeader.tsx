@@ -1,4 +1,4 @@
-// components/press-outcomes/QuestionHeader.tsx
+// components/press-outcomes/ExchangeQuestionHeader.tsx
 import React from "react";
 import { View } from "react-native";
 
@@ -7,17 +7,17 @@ import { AlertCircle } from "~/lib/icons/AlertCircle";
 import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
 import type { Question } from "~/types";
 
-interface QuestionHeaderProps {
+interface ExchangeQuestionHeaderProps {
   question: Question;
   isFirstQuestion: boolean;
   isAsked: boolean;
 }
 
-export default function QuestionHeader({
+export default function ExchangeQuestionHeader({
   question,
   isFirstQuestion,
   isAsked,
-}: QuestionHeaderProps) {
+}: ExchangeQuestionHeaderProps) {
   if (!isAsked && isFirstQuestion) {
     // Journalist was completely ignored
     return (

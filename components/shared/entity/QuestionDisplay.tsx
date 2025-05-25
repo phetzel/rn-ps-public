@@ -15,17 +15,20 @@ export function QuestionDisplay({
   isFollowUpQuestion = false,
 }: QuestionDisplayProps) {
   return (
-    <View className="flex-row items-center gap-2">
-      <View className="bg-primary/10 rounded-full p-2">
-        <MessageSquare className="text-primary" />
-      </View>
-      <View className="flex-1">
-        {isFollowUpQuestion && (
-          <Badge className="mt-1 self-start" variant="outline">
-            <Text className="text-xs">Follow-up Question</Text>
-          </Badge>
-        )}
-        <Text className="text-base font-medium">{question}</Text>
+    <View>
+      {isFollowUpQuestion && (
+        <Badge className="my-2 self-center">
+          <Text className="text-xs">Follow-up Question</Text>
+        </Badge>
+      )}
+
+      <View className="flex-row items-center gap-2">
+        <View className="bg-primary/10 rounded-full p-2">
+          <MessageSquare className="text-primary" />
+        </View>
+        <View className="flex-1">
+          <Text className="text-base font-medium">{question}</Text>
+        </View>
       </View>
     </View>
   );

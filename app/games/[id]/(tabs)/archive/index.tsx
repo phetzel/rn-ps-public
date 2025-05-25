@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 import { FlatList } from "react-native";
 
@@ -9,7 +9,6 @@ import { Level } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
 import ArchivedLevelCard from "~/components/screens/tab-archive/ArchivedLevelCard";
-import { Image } from "react-native";
 
 interface ArchiveIndexScreenProps {
   completedLevels: Level[];

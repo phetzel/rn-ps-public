@@ -10,7 +10,7 @@ import { useSituationOutcomeData } from "~/lib/hooks/useSituationOutcomeData";
 // Components
 import { Text } from "~/components/ui/text";
 import { Separator } from "~/components/ui/separator";
-import ImpactList from "~/components/shared/ImpactList";
+import ImpactAccordion from "~/components/shared/impact/ImpactAccordion";
 import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
 import { EmptyState } from "~/components/shared/EmptyState";
 import SituationOutcomeExchanges from "~/components/screens/level-situation-outcomes/SituationOutcomeExchanges";
@@ -66,7 +66,7 @@ const SituationOutcomeItem = ({
       <SelectedOutcome outcome={selectedOutcomeWeight} />
 
       {/* Impact list */}
-      <ImpactList
+      <ImpactAccordion
         impacts={formattedImpacts}
         gameId={game.id}
         levelId={situation.level_id}

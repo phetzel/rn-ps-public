@@ -1,9 +1,8 @@
 // components/press-outcomes/PressResults.tsx
 import React, { useEffect, useState } from "react";
-import { useRouter } from "expo-router";
 
 // Components
-import { ResultsTable } from "~/components/shared/results/ResultsTable";
+import { ResultsCard } from "~/components/shared/results/ResultsCard";
 // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
@@ -13,15 +12,15 @@ import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers";
 import { EntityWithDelta } from "~/types";
 
 interface PressResultsProps {
-  gameId: string;
-  level: Level;
   isAdWatched: boolean;
+  onComplete: () => void;
+  onAdComplete: () => void;
 }
 
 export default function PressResults({
-  gameId,
-  level,
   isAdWatched,
+  onComplete,
+  onAdComplete,
 }: PressResultsProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
     EntityWithDelta[] | null
@@ -43,13 +42,12 @@ export default function PressResults({
   }, [currentLevelId]);
 
   return (
-    <ResultsTable
+    <ResultsCard
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
-      adMessage={{
-        watched: "You've successfully boosted your relationship outcomes!",
-        notWatched: "Watch a short ad to boost your results.",
-      }}
+      onAdComplete={onAdComplete}
+      adWatchMessage="You've successfully boosted your relationship outcomes!"
+      onComplete={onComplete}
     />
   );
 }

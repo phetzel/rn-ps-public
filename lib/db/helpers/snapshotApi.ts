@@ -26,7 +26,6 @@ export async function takeSnapshot(
       { approvalRating: await publication.getApprovalRating() },
     ])
   );
-  console.log("publicationApprovals", publicationApprovals);
 
   // Create the snapshot
   return {

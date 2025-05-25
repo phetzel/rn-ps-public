@@ -419,9 +419,6 @@ export async function determineSituationOutcomes(
     if (chosenOutcomeData) {
       // Use the model's @writer action to set the outcome
       await situation.setOutcome(chosenOutcomeData.id);
-      console.log(
-        `Situation ${situation.id} resolved with outcome via setChosenOutcome: ${chosenOutcomeData.title} (ID: ${chosenOutcomeData.id})`
-      );
     } else {
       console.warn(`No outcome could be chosen for situation ${situation.id}.`);
     }

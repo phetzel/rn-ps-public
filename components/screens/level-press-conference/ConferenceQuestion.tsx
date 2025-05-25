@@ -82,8 +82,6 @@ const ConferenceQuestion = ({
           {answers.map((answer, index) => {
             let cabinetMember;
 
-            console.log(`Answer ${index}: `, answer);
-
             if (
               answer.type === AnswerType.Authorized &&
               answer.authorizedCabinetMemberId
