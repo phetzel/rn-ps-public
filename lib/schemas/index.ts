@@ -8,6 +8,7 @@ import {
   PreferenceWeight,
   SituationConsequenceWeight,
   AnswerType,
+  SituationType,
 } from "~/types";
 
 // Form Schemas
@@ -188,3 +189,65 @@ export const exchangeProgressSchema = z.object({
   history: z.array(historyItemSchema),
   currentQuestionId: z.string().nullable(),
 });
+
+// Static Situation Schema
+export const situationTriggerSchema = z.object({
+  staticKey: z.string().min(1),
+  type: z.nativeEnum(SituationType),
+  requirements: z.object({
+    year: z
+      .object({
+        min: z.number().optional(),
+        max: z.number().optional(),
+      })
+      .optional(),
+    month: z
+      .object({
+        min: z.number().min(1).max(12).optional(),
+        max: z.number().min(1).max(12).optional(),
+      })
+      .optional(),
+    president: z
+      .object({
+        minApproval: z.number().min(0).max(100).optional(),
+        maxApproval: z.number().min(0).max(100).optional(),
+        party: z.nativeEnum(PoliticalParty).optional(),
+      })
+      .optional(),
+    cabinet: z
+      .record(
+        z.nativeEnum(CabinetStaticId),
+        z.object({
+          minApproval: z.number().min(0).max(100).optional(),
+          maxApproval: z.number().min(0).max(100).optional(),
+        })
+      )
+      .optional(),
+    subgroups: z
+      .record(
+        z.nativeEnum(SubgroupStaticId),
+        z.object({
+          minApproval: z.number().min(0).max(100).optional(),
+          maxApproval: z.number().min(0).max(100).optional(),
+        })
+      )
+      .optional(),
+  }),
+  isFollowUp: z.boolean().optional(),
+});
+
+export const exchangeDataSchema = z.object({
+  content: exchangeContentSchema,
+  publication: z.nativeEnum(PublicationStaticId),
+});
+
+export const situationDataSchema = z.object({
+  trigger: situationTriggerSchema,
+  type: z.nativeEnum(SituationType),
+  title: z.string().min(1),
+  description: z.string().min(1),
+  content: situationContentSchema,
+  exchanges: z.array(exchangeDataSchema),
+});
+
+export type SituationDataType = z.infer<typeof situationDataSchema>;

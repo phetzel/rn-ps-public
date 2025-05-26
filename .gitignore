@@ -42,3 +42,11 @@ expo-env.d.ts
 
 /ios
 /android
+
+# jest
+coverage/**/*
+/coverage
+
+# Cursor
+.cursor/
+.notes/
