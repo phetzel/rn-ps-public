@@ -34,8 +34,8 @@ export enum PoliticalLeaning {
 
 export enum SubgroupCategory {
   Political = "political",
-  Socioeconomic = "socioeconomic",
-  Sector = "sector",
+  Demographic = "demographic",
+  Economic = "economic",
 }
 
 export type CabinetSnapshot = Record<CabinetStaticId, string>;
@@ -55,9 +55,19 @@ export interface StaticCabinetMember {
 }
 
 export enum SubgroupStaticId {
+  // political
   LeftWingBase = "left_wing_base",
   RightWingBase = "right_wing_base",
   IndependentBase = "independent_base",
+  // demographic
+  YouthVoters = "youth_voters",
+  SeniorsCitizens = "seniors_citizens",
+  RuralResidents = "rural_residents",
+  UrbanResidents = "urban_residents",
+  // economic
+  LaborUnions = "labor_unions",
+  BusinessLeaders = "business_leaders",
+  TechIndustry = "tech_industry",
 }
 
 export interface StaticSubgroup {
