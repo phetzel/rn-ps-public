@@ -19,7 +19,8 @@ export async function takeSnapshot(
     throw new Error("No game found with ID: " + gameId);
   }
 
-  // Calculate publication approval ratings
+  // Calculate approval ratings
+  const currentPresApproval = await game.getPresApprovalRating();
   const publicationApprovals = await Promise.all(
     publications.map(async (publication) => [
       publication.staticId as PublicationStaticId,
@@ -30,7 +31,7 @@ export async function takeSnapshot(
   // Create the snapshot
   return {
     president: {
-      approvalRating: game.presApprovalRating,
+      approvalRating: currentPresApproval,
       psRelationship: game.presPsRelationship,
     },
     cabinetMembers: Object.fromEntries(

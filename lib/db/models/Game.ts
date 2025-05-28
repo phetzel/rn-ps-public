@@ -17,7 +17,9 @@ import type Publication from "./Publication";
 import type Journalist from "./Journalist";
 import type SubgroupApproval from "./SubgroupApproval";
 // Enums
-import { GameStatus, PoliticalParty } from "~/types";
+import { GameStatus, PoliticalLeaning } from "~/types";
+// Utils
+import { calculatePresidentApprovalRating } from "~/lib/utils";
 
 export default class Game extends Model {
   static table = "games";
@@ -43,9 +45,8 @@ export default class Game extends Model {
   @field("current_month") currentMonth!: number;
   @text("ps_name") psName!: string;
   @text("pres_name") presName!: string;
-  @field("pres_approval_rating") presApprovalRating!: number;
   @field("pres_ps_relationship") presPsRelationship!: number;
-  @text("pres_party") presParty!: PoliticalParty;
+  @text("pres_leaning") presLeaning!: PoliticalLeaning;
   @text("used_situations") usedSituations!: string; // JSON array of situation ids
   @field("start_timestamp") startTimestamp!: number;
   @field("end_timestamp") endTimestamp!: number | null; // Optional number
@@ -63,6 +64,12 @@ export default class Game extends Model {
         game.currentMonth += 1;
       }
     });
+  }
+
+  // Helper method to get president's approval rating from subgroups
+  async getPresApprovalRating(): Promise<number> {
+    const subgroups = await this.subgroupApprovals.fetch();
+    return calculatePresidentApprovalRating(subgroups);
   }
 
   // --- Helper methods for used situations ---

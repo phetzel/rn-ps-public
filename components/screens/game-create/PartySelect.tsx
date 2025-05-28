@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Control, Controller, FieldError } from "react-hook-form";
-import { PoliticalParty } from "~/types";
+import { PoliticalLeaning } from "~/types";
 import { Label } from "~/components/ui/label";
 import { Text } from "~/components/ui/text";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
@@ -18,29 +18,29 @@ export function PartySelect({
   error,
   disabled = false,
 }: PartySelectProps) {
-  const partyOptions = Object.values(PoliticalParty);
+  const partyOptions = Object.values(PoliticalLeaning);
 
-  const formatParty = (party: PoliticalParty) => {
+  const formatParty = (party: PoliticalLeaning) => {
     return party.charAt(0).toUpperCase() + party.slice(1);
   };
 
   return (
     <View>
       <Label
-        nativeID="presidentPartyLabel"
+        nativeID="presidentLeaningLabel"
         className={error ? "text-destructive" : ""}
       >
         President's Political Party
       </Label>
       <Controller
         control={control}
-        name="presidentParty"
+        name="presidentLeaning"
         render={({ field: { onChange, value } }) => (
           <RadioGroup
             value={value}
             onValueChange={onChange}
             className="flex-row justify-between"
-            aria-labelledby="presidentPartyLabel"
+            aria-labelledby="presidentLeaningLabel"
           >
             {partyOptions.map((party) => (
               <View key={party} className="flex flex-row items-center gap-2">
@@ -54,7 +54,7 @@ export function PartySelect({
                   nativeID={`party-${party}-label`}
                   htmlFor={`party-${party}`}
                   className={`${
-                    party === PoliticalParty.Democrat
+                    party === PoliticalLeaning.Liberal
                       ? "text-blue-500"
                       : "text-red-500"
                   }`}

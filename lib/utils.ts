@@ -93,3 +93,21 @@ export const calculateMediaCoverage = (
 
   return Math.round(modifiedImpact);
 };
+
+// President Approval Rating Helpers
+export function calculatePresidentApprovalRating(
+  subgroupApprovals: { approvalRating: number }[]
+): number {
+  if (!subgroupApprovals || subgroupApprovals.length === 0) {
+    return 50; // Default neutral approval rating if no data
+  }
+
+  const total = subgroupApprovals.reduce(
+    (sum, subgroup) => sum + subgroup.approvalRating,
+    0
+  );
+  const average = total / subgroupApprovals.length;
+
+  // Round to nearest integer and ensure it's within 0-100 range
+  return Math.max(0, Math.min(100, Math.round(average)));
+}

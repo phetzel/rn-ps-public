@@ -78,43 +78,6 @@ const SituationOutcomesContent = ({
         </TabsContent>
       </Tabs>
     </View>
-    // <ProgressNavigator
-    //   currentIndex={currentIndex}
-    //   totalItems={situations.length + 2}
-    //   onPrevious={handlePrevious}
-    //   onNext={handleNext}
-    //   onComplete={handleComplete}
-    //   progressLabel={progressLabel}
-    //   cardClassName={cn(
-    //     "border-l-4",
-    //     isAdWatched ? "border-l-green-500" : "border-l-blue-500"
-    //   )}
-    //   headerContent={
-    //     isOnMediaCoverage ? (
-    //       <MediaCoverageHeader />
-    //     ) : isOnResults ? (
-    //       <ResultsCardHeader
-    //         isAdWatched={isAdWatched}
-    //         onAdComplete={() => setIsAdWatched(true)}
-    //       />
-    //     ) : (
-    //       <SituationOutcomeItemHeader situation={currentSituation} />
-    //     )
-    //   }
-    //   showPercentage={false}
-    // >
-    //   {isOnMediaCoverage ? (
-    //     <MediaCoverage gameId={gameId} levelId={levelId} />
-    //   ) : isOnResults ? (
-    //     <SituationResults
-    //       gameId={gameId}
-    //       level={level}
-    //       isAdWatched={isAdWatched}
-    //     />
-    //   ) : (
-    //     <SituationOutcomeItem situation={currentSituation} game={game} />
-    //   )}
-    // </ProgressNavigator>
   );
 };
 

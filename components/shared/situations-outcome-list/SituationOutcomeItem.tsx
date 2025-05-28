@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 
 // DB
-import type { Situation, Game, PressExchange } from "~/lib/db/models";
+import type { Situation } from "~/lib/db/models";
 // Hooks
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useSituationOutcomeData } from "~/lib/hooks/useSituationOutcomeData";

@@ -19,7 +19,6 @@ import {
   StaticJournalist,
   CabinetStaticId,
   SubgroupStaticId,
-  PoliticalParty,
   PoliticalLeaning,
 } from "~/types";
 import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
@@ -57,9 +56,8 @@ export async function createGameWithDetails(
       game.currentMonth = 0;
       game.psName = details.pressSecretaryName;
       game.presName = details.presidentName;
-      game.presApprovalRating = 50;
       game.presPsRelationship = 80;
-      game.presParty = details.presidentParty;
+      game.presLeaning = details.presidentLeaning;
       game.usedSituations = JSON.stringify([]);
       game.startTimestamp = Math.floor(Date.now() / 1000);
     });
@@ -88,22 +86,17 @@ export async function createGameWithDetails(
     for (const [key, subData] of Object.entries(staticSubgroups)) {
       let initialApproval = 50;
       if (subData.defaultPoliticalLeaning) {
-        const presidentParty = details.presidentParty;
+        const presidentLeaning = details.presidentLeaning;
         const subgroupLeaning = subData.defaultPoliticalLeaning;
 
         if (
-          (presidentParty === PoliticalParty.Republican &&
+          (presidentLeaning === PoliticalLeaning.Conservative &&
             subgroupLeaning === PoliticalLeaning.Liberal) ||
-          (presidentParty === PoliticalParty.Democrat &&
+          (presidentLeaning === PoliticalLeaning.Liberal &&
             subgroupLeaning === PoliticalLeaning.Conservative)
         ) {
           initialApproval -= POLITICAL_ALIGNMENT_WEIGHT;
-        } else if (
-          (presidentParty === PoliticalParty.Democrat &&
-            subgroupLeaning === PoliticalLeaning.Liberal) ||
-          (presidentParty === PoliticalParty.Republican &&
-            subgroupLeaning === PoliticalLeaning.Conservative)
-        ) {
+        } else if (presidentLeaning === subgroupLeaning) {
           initialApproval += POLITICAL_ALIGNMENT_WEIGHT;
         }
       }

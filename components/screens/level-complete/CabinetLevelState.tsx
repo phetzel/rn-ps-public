@@ -4,9 +4,7 @@ import { withObservables } from "@nozbe/watermelondb/react";
 
 import { observeCabinetMembersByLevel } from "~/lib/db/helpers";
 import type CabinetMember from "~/lib/db/models/CabinetMember";
-import { Briefcase } from "~/lib/icons/Briefcase";
 import { Separator } from "~/components/ui/separator";
-import { Text } from "~/components/ui/text";
 import LevelProgress from "~/components/screens/level-complete/LevelProgress";
 import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
 import type { OutcomeSnapshotType } from "~/types";

@@ -1,4 +1,3 @@
-// components/screens/games/GameSaveCard.tsx
 import * as React from "react";
 import { useRouter } from "expo-router";
 
@@ -7,7 +6,7 @@ import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 import { Card, CardContent, CardFooter } from "~/components/ui/card";
 import { GameCardHeader } from "./GameCardHeader";
-import { GameMetadata } from "./GameMetadata";
+import GameMetadata from "./GameMetadata";
 import { GameTimeInfo } from "./GameTimeInfo";
 import { GameActions } from "./GameActions";
 

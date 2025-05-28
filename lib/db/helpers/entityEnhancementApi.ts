@@ -170,7 +170,7 @@ export async function getEnhancedSituationOutcomeDeltas(
     });
 
     // Initialize accumulators for deltas
-    let presidentDelta = 0;
+    // let presidentDelta = 0;
     const cabinetDeltas: Record<string, number> = {};
     const subgroupDeltas: Record<string, number> = {};
 
@@ -187,10 +187,10 @@ export async function getEnhancedSituationOutcomeDeltas(
 
       const { approvalChanges } = outcome.consequences;
 
-      // Add president delta if it exists
-      if (approvalChanges.president) {
-        presidentDelta += approvalChanges.president;
-      }
+      // // Add president delta if it exists
+      // if (approvalChanges.president) {
+      //   presidentDelta += approvalChanges.president;
+      // }
 
       // Add cabinet member deltas
       if (approvalChanges.cabinet) {
@@ -214,18 +214,18 @@ export async function getEnhancedSituationOutcomeDeltas(
 
     const result: EntityWithMediaDelta[] = [];
 
-    // Add president to results if there's a delta
-    if (presidentDelta !== 0) {
-      result.push({
-        id: "president",
-        name: game.presName || "President",
-        role: "president",
-        title: "President",
-        currentValue: game.presApprovalRating,
-        preMediaDelta: presidentDelta,
-        delta: calculateMediaCoverage(presidentDelta, totalBoost),
-      });
-    }
+    // // Add president to results if there's a delta
+    // if (presidentDelta !== 0) {
+    //   result.push({
+    //     id: "president",
+    //     name: game.presName || "President",
+    //     role: "president",
+    //     title: "President",
+    //     currentValue: game.presApprovalRating,
+    //     preMediaDelta: presidentDelta,
+    //     delta: calculateMediaCoverage(presidentDelta, totalBoost),
+    //   });
+    // }
 
     // Add cabinet members to results
     Object.entries(cabinetDeltas).forEach(([cabinetId, delta]) => {

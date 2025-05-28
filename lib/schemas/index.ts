@@ -4,7 +4,7 @@ import {
   SubgroupStaticId,
   JournalistStaticId,
   PublicationStaticId,
-  PoliticalParty,
+  PoliticalLeaning,
   PreferenceWeight,
   SituationConsequenceWeight,
   AnswerType,
@@ -22,7 +22,7 @@ export const createGameSchema = z.object({
     .string()
     .trim()
     .min(1, { message: "President name is required" }),
-  presidentParty: z.nativeEnum(PoliticalParty),
+  presidentLeaning: z.nativeEnum(PoliticalLeaning),
 });
 
 export type CreateGameFormData = z.infer<typeof createGameSchema>;
@@ -70,7 +70,6 @@ export const consequenceResultSchema = z.object({
   gameEnded: z.boolean(),
   gameEndReason: z.enum(["impeached", "fired"]).optional(),
   cabinetMembersFired: z.array(z.nativeEnum(CabinetStaticId)),
-  presidentApprovalPenalty: z.number(),
 });
 
 export const outcomeSnapshotSchema = z.object({
@@ -100,7 +99,6 @@ export const situationPreferencesSchema = z.object({
 
 export const consequenceSchema = z.object({
   approvalChanges: z.object({
-    president: z.nativeEnum(SituationConsequenceWeight).optional(),
     cabinet: z
       .record(
         z.nativeEnum(CabinetStaticId),
@@ -114,13 +112,6 @@ export const consequenceSchema = z.object({
       )
       .optional(),
   }),
-  effects: z
-    .object({
-      isFiredPresident: z.boolean().optional(),
-      isFiredPressSecretary: z.boolean().optional(),
-      firedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
-    })
-    .optional(),
 });
 
 export const situationOutcomeSchema = z.object({
@@ -211,7 +202,7 @@ export const situationTriggerSchema = z.object({
       .object({
         minApproval: z.number().min(0).max(100).optional(),
         maxApproval: z.number().min(0).max(100).optional(),
-        party: z.nativeEnum(PoliticalParty).optional(),
+        leaning: z.nativeEnum(PoliticalLeaning).optional(), // Changed from party
       })
       .optional(),
     cabinet: z

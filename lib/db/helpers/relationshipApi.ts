@@ -92,14 +92,14 @@ export async function applySituationConsequences(
     );
 
     return await database.write(async () => {
-      // Apply President's approval rating delta (with media impact)
-      if (presidentDeltas.length > 0) {
-        const presidentialDelta = presidentDeltas[0].delta;
-        await game.update((g) => {
-          g.presApprovalRating =
-            (g.presApprovalRating || 0) + presidentialDelta;
-        });
-      }
+      // // Apply President's approval rating delta (with media impact)
+      // if (presidentDeltas.length > 0) {
+      //   const presidentialDelta = presidentDeltas[0].delta;
+      //   await game.update((g) => {
+      //     g.presApprovalRating =
+      //       (g.presApprovalRating || 0) + presidentialDelta;
+      //   });
+      // }
 
       // Apply Cabinet Members' approval rating deltas (with media impact)
       for (const delta of cabinetDeltas) {

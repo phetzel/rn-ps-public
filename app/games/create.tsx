@@ -22,7 +22,7 @@ import { Logo } from "~/components/shared/Logo";
 import { NameField } from "~/components/screens/game-create/NameField";
 import { PartySelect } from "~/components/screens/game-create/PartySelect";
 // Types
-import { NewGameDetails, PoliticalParty } from "~/types";
+import { NewGameDetails, PoliticalLeaning } from "~/types";
 
 export default function GameCreateScreen() {
   const { createGame } = useGameNavigation();
@@ -42,7 +42,7 @@ export default function GameCreateScreen() {
     defaultValues: {
       pressSecretaryName: "",
       presidentName: "",
-      presidentParty: PoliticalParty.Republican,
+      presidentLeaning: PoliticalLeaning.Liberal,
     },
   });
 
@@ -51,7 +51,7 @@ export default function GameCreateScreen() {
     const details: NewGameDetails = {
       pressSecretaryName: data.pressSecretaryName,
       presidentName: data.presidentName,
-      presidentParty: data.presidentParty,
+      presidentLeaning: data.presidentLeaning,
     };
 
     const success = await createGame(details);
@@ -110,7 +110,7 @@ export default function GameCreateScreen() {
           {/* President Party Radio Group */}
           <PartySelect
             control={control}
-            error={errors.presidentParty}
+            error={errors.presidentLeaning}
             disabled={isLoading}
           />
         </CardContent>

@@ -27,7 +27,7 @@ const PresidentLevelCard = ({
     <View className="gap-2">
       <View className="flex-row items-center justify-between gap-2">
         <Text className="text-2xl font-bold">{game.presName}</Text>
-        <PoliticalLeaningBadge politicalLeaning={game.presParty} />
+        <PoliticalLeaningBadge politicalLeaning={game.presLeaning} />
       </View>
 
       <View className="gap-2">

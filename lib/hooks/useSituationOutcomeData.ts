@@ -39,13 +39,6 @@ export function useSituationOutcomeData(situation: Situation) {
     const impacts: ExchangeImpacts = {};
     const consequences = selectedOutcome.consequences;
 
-    if (consequences.approvalChanges.president !== undefined) {
-      impacts.president = {
-        weight: consequences.approvalChanges.president,
-        reaction: "",
-      };
-    }
-
     // Add cabinet impacts
     if (consequences.approvalChanges.cabinet) {
       Object.entries(consequences.approvalChanges.cabinet).forEach(

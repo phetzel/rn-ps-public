@@ -5,7 +5,6 @@ import { withObservables } from "@nozbe/watermelondb/react";
 import { observeSituationsByLevelId } from "~/lib/db/helpers/observations";
 import { Situation } from "~/lib/db/models";
 import { Accordion } from "~/components/ui/accordion";
-import { Separator } from "~/components/ui/separator";
 import { EmptyState } from "~/components/shared/EmptyState";
 import { Text } from "~/components/ui/text";
 import SituationOutcomeItem from "~/components/shared/situations-outcome-list/SituationOutcomeItem";

@@ -1,4 +1,3 @@
-// components/press-outcomes/ExchangeQuestionHeader.tsx
 import React from "react";
 import { View } from "react-native";
 

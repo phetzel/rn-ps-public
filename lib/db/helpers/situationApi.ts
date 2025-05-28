@@ -163,11 +163,13 @@ async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
   return followUps;
 }
 
-function filterSituationsByRequirements(
+async function filterSituationsByRequirements(
   situations: SituationData[],
   game: Game,
   currentLevel: number
-): SituationData[] {
+): Promise<SituationData[]> {
+  const currentPresApproval = await game.getPresApprovalRating();
+
   return situations.filter((situation) => {
     const trigger = situation.trigger;
     if (!trigger) return false;
@@ -188,8 +190,8 @@ function filterSituationsByRequirements(
 
     // President party requirement
     if (
-      trigger.requirements?.president?.party &&
-      trigger.requirements.president.party !== game.presParty
+      trigger.requirements?.president?.leaning &&
+      trigger.requirements.president.leaning !== game.presLeaning
     ) {
       return false;
     }
@@ -197,9 +199,9 @@ function filterSituationsByRequirements(
     // President approval requirement
     if (trigger.requirements?.president) {
       const { minApproval, maxApproval } = trigger.requirements.president;
-      if (minApproval !== undefined && game.presApprovalRating < minApproval)
+      if (minApproval !== undefined && currentPresApproval < minApproval)
         return false;
-      if (maxApproval !== undefined && game.presApprovalRating > maxApproval)
+      if (maxApproval !== undefined && currentPresApproval > maxApproval)
         return false;
     }
 
@@ -253,7 +255,7 @@ export async function selectSituationsForLevel(
   );
 
   // 7. Filter by game requirements
-  availableSituations = filterSituationsByRequirements(
+  availableSituations = await filterSituationsByRequirements(
     availableSituations,
     game,
     currentLevel

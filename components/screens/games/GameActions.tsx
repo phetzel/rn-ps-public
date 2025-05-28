@@ -1,4 +1,3 @@
-// components/screens/games/GameActions.tsx
 import * as React from "react";
 import { View } from "react-native";
 import { Trash2 } from "~/lib/icons/Trash2";

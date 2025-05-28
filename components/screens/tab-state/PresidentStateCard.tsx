@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeGame } from "~/lib/db/helpers";
+import { observeGameWithApprovalRating } from "~/lib/db/helpers";
 import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
@@ -12,9 +12,13 @@ import { Award } from "~/lib/icons/Award";
 
 interface PresidentStateCardProps {
   game: Game | null;
+  presApprovalRating: number;
 }
 
-const PresidentStateCard = ({ game }: PresidentStateCardProps) => {
+const PresidentStateCard = ({
+  game,
+  presApprovalRating,
+}: PresidentStateCardProps) => {
   if (!game) return null;
 
   return (
@@ -27,13 +31,13 @@ const PresidentStateCard = ({ game }: PresidentStateCardProps) => {
       <CardContent className="gap-2">
         <View className="flex-row items-center justify-between gap-2">
           <Text className="text-2xl font-bold">{game.presName}</Text>
-          <PoliticalLeaningBadge politicalLeaning={game.presParty} />
+          <PoliticalLeaningBadge politicalLeaning={game.presLeaning} />
         </View>
 
         <View className="gap-2">
           <StateProgress
             label="Approval Rating"
-            value={game.presApprovalRating}
+            value={presApprovalRating}
             size="medium"
           />
 
@@ -48,8 +52,8 @@ const PresidentStateCard = ({ game }: PresidentStateCardProps) => {
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
-  game: observeGame(gameId),
-}));
+const enhance = withObservables(["gameId"], ({ gameId }) =>
+  observeGameWithApprovalRating(gameId)
+);
 
 export default enhance(PresidentStateCard);

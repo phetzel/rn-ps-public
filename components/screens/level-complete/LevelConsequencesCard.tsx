@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
 import { UserX, Shield, CheckCircle2, AlertCircle } from "~/lib/icons";
-
+import { CABINET_PENALTY_PER_FIRED_MEMBER } from "~/lib/constants";
 import { ConsequenceResult } from "~/types";
 
 interface LevelConsequencesCardProps {
@@ -73,6 +73,10 @@ export default function LevelConsequencesCard({
   };
 
   const renderCabinetMembersFired = () => {
+    const totalPenalty =
+      consequences.cabinetMembersFired.length *
+      CABINET_PENALTY_PER_FIRED_MEMBER;
+
     return (
       <View className="gap-3">
         <View className="p-4 rounded-lg bg-amber-50 border border-amber-200">
@@ -109,12 +113,16 @@ export default function LevelConsequencesCard({
         </View>
         <View className="p-3 bg-red-50 rounded-lg border border-red-100 flex-row items-center">
           <AlertCircle className="text-red-500 mr-2 flex-shrink-0" size={16} />
-          <Text className="text-sm text-red-700">
-            President's approval rating decreased by{" "}
-            <Text className="font-bold">
-              {consequences.presidentApprovalPenalty}%
+          <View className="flex-1">
+            <Text className="text-sm text-red-700">
+              All voter groups' approval decreased by{" "}
+              <Text className="font-bold">{totalPenalty}%</Text> due to cabinet
+              instability
             </Text>
-          </Text>
+            <Text className="text-xs text-red-600 mt-1">
+              This affects the President's overall approval rating
+            </Text>
+          </View>
         </View>
       </View>
     );

@@ -21,11 +21,6 @@ export enum LevelStatus {
   Completed = "completed",
 }
 
-export enum PoliticalParty {
-  Republican = "republican",
-  Democrat = "democrat",
-}
-
 export enum PoliticalLeaning {
   Liberal = "liberal",
   Conservative = "conservative",
@@ -197,7 +192,7 @@ export interface SituationTrigger {
     president?: {
       minApproval?: number;
       maxApproval?: number;
-      party?: PoliticalParty;
+      leaning?: PoliticalLeaning;
     };
     cabinet?: {
       [key in CabinetStaticId]?: {
@@ -245,7 +240,7 @@ export interface SituationPreferences {
 
 export interface SituationConsequence {
   approvalChanges: {
-    president?: number;
+    // president?: number;
     cabinet?: {
       [key in CabinetStaticId]?: SituationConsequenceWeight;
     };
@@ -253,11 +248,11 @@ export interface SituationConsequence {
       [key in SubgroupStaticId]?: SituationConsequenceWeight;
     };
   };
-  effects?: {
-    isFiredPresident?: boolean;
-    isFiredPressSecretary?: boolean;
-    firedCabinetMemberId?: CabinetStaticId;
-  };
+  // effects?: {
+  //   isFiredPresident?: boolean;
+  //   isFiredPressSecretary?: boolean;
+  //   firedCabinetMemberId?: CabinetStaticId;
+  // };
 }
 
 export interface SituationOutcome {
@@ -306,7 +301,7 @@ export interface ApprovalRatingDeltas {
   // Note: President's overall approval rating is typically an outcome of general sentiment
   // or significant situation consequences, rather than direct answer impacts.
   // If your game design allows single answers to directly impact President's approval,
-  president?: number;
+  // president?: number;
   cabinetMembers?: {
     [key in CabinetStaticId]?: number;
   };
@@ -386,7 +381,6 @@ export interface ConsequenceResult {
   gameEnded: boolean;
   gameEndReason?: "impeached" | "fired";
   cabinetMembersFired: CabinetStaticId[];
-  presidentApprovalPenalty: number;
 }
 
 export interface OutcomeSnapshotType {
@@ -428,5 +422,5 @@ export enum SituationConsequenceWeight {
 export interface NewGameDetails {
   pressSecretaryName: string;
   presidentName: string;
-  presidentParty: PoliticalParty;
+  presidentLeaning: PoliticalLeaning;
 }

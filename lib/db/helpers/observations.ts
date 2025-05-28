@@ -1,5 +1,5 @@
 import { Q } from "@nozbe/watermelondb";
-import { Observable, of } from "rxjs";
+import { Observable, of, combineLatest } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
 
 // Import collections
@@ -24,6 +24,7 @@ import {
   Level,
   PressExchange,
 } from "~/lib/db/models";
+import { calculatePresidentApprovalRating } from "~/lib/utils";
 import { LevelStatus } from "~/types";
 
 export function observeAllGames(): Observable<Game[]> {
@@ -34,15 +35,13 @@ export function observeGame(gameId: string): Observable<Game | null> {
   return gamesCollection.findAndObserve(gameId);
 }
 
-export function observeCompletedLevels(gameId: string): Observable<Level[]> {
-  return levelsCollection
-    .query(
-      Q.where("game_id", gameId),
-      Q.where("status", LevelStatus.Completed),
-      Q.sortBy("year", Q.asc),
-      Q.sortBy("month", Q.asc)
-    )
-    .observe();
+export function observeGameWithApprovalRating(
+  gameId: string
+): Observable<{ game: Game | null; presApprovalRating: number }> {
+  return combineLatest([
+    observeGame(gameId),
+    observePresidentApprovalRating(gameId),
+  ]).pipe(map(([game, presApprovalRating]) => ({ game, presApprovalRating })));
 }
 
 export function observeSubgroupApprovals(
@@ -51,6 +50,14 @@ export function observeSubgroupApprovals(
   return subgroupCollection
     .query(Q.where("game_id", gameId), Q.sortBy("approval_rating", Q.desc))
     .observe();
+}
+
+export function observePresidentApprovalRating(
+  gameId: string
+): Observable<number> {
+  return observeSubgroupApprovals(gameId).pipe(
+    map((subgroups) => calculatePresidentApprovalRating(subgroups))
+  );
 }
 
 export function observeActiveCabinetMembers(
@@ -141,6 +148,17 @@ export function observeSituationsByLevelId(
 
 export function observeLevel(levelId: string): Observable<Level> {
   return levelsCollection.findAndObserve(levelId);
+}
+
+export function observeCompletedLevels(gameId: string): Observable<Level[]> {
+  return levelsCollection
+    .query(
+      Q.where("game_id", gameId),
+      Q.where("status", LevelStatus.Completed),
+      Q.sortBy("year", Q.asc),
+      Q.sortBy("month", Q.asc)
+    )
+    .observe();
 }
 
 export function observePressExchangesForLevel(

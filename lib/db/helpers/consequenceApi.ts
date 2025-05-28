@@ -2,6 +2,7 @@ import { database } from "~/lib/db";
 import { cabinetCollection } from "~/lib/db/helpers/collections";
 import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
 import {
+  CABINET_PENALTY_PER_FIRED_MEMBER,
   CONSEQUENCE_THRESHOLD,
   CONSEQUENCE_RISK_PER_LEVEL,
 } from "~/lib/constants";
@@ -33,7 +34,7 @@ function rollForEvent(probability: number): boolean {
 export async function calculateAndApplyConsequences(
   gameId: string
 ): Promise<ConsequenceResult> {
-  const { game, cabinetMembers } = await fetchGameEntities(gameId);
+  const { game, cabinetMembers, subgroups } = await fetchGameEntities(gameId);
 
   if (!game) {
     throw new Error(`No game found with ID: ${gameId}`);
@@ -42,13 +43,12 @@ export async function calculateAndApplyConsequences(
   const result: ConsequenceResult = {
     gameEnded: false,
     cabinetMembersFired: [],
-    presidentApprovalPenalty: 0,
   };
 
   // 1. Check for impeachment (most severe) - based on president approval
-  const impeachmentProbability = calculateRiskProbability(
-    game.presApprovalRating
-  );
+  // Get current president approval rating from subgroups
+  const currentPresApproval = await game.getPresApprovalRating();
+  const impeachmentProbability = calculateRiskProbability(currentPresApproval);
 
   if (rollForEvent(impeachmentProbability)) {
     result.gameEnded = true;
@@ -94,8 +94,6 @@ export async function calculateAndApplyConsequences(
 
   // 4. Apply cabinet firings if any
   if (cabinetMembersToFire.length > 0) {
-    const approvalPenaltyPerFiring = 8; // President loses 8 approval per firing
-
     await database.write(async () => {
       // Fire the cabinet members
       for (const staticId of cabinetMembersToFire) {
@@ -107,16 +105,17 @@ export async function calculateAndApplyConsequences(
         }
       }
 
-      // Apply president approval penalty
+      // Apply president approval penalty to subgroups
       const totalPenalty =
-        cabinetMembersToFire.length * approvalPenaltyPerFiring;
+        cabinetMembersToFire.length * CABINET_PENALTY_PER_FIRED_MEMBER;
 
-      await game.update((g) => {
-        g.presApprovalRating = Math.max(0, g.presApprovalRating - totalPenalty);
-      });
+      for (const subgroup of subgroups) {
+        await subgroup.update((s) => {
+          s.approvalRating = Math.max(0, s.approvalRating - totalPenalty);
+        });
+      }
 
       result.cabinetMembersFired = cabinetMembersToFire;
-      result.presidentApprovalPenalty = totalPenalty;
     });
   }
 
