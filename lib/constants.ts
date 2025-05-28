@@ -31,6 +31,7 @@ export const QUESTIONS_PER_LEVEL = 4; // Questions include follow-up questions
 export const QUESTIONS_PER_PRESS_CONFERENCE = 6; // Questions selected during press conference
 export const CONSEQUENCE_THRESHOLD = 25; // Approval/relationship below this increases risk
 export const CONSEQUENCE_RISK_PER_LEVEL = 0.04; // 4% increased risk per level below threshold
+export const AD_BOOST_MULTIPLIER = 1.5;
 
 // Level
 export const LEVEL_STATUS_DISPLAY_NAMES = {

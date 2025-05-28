@@ -2,14 +2,15 @@ import { database } from "~/lib/db";
 import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
 import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityEnhancementApi";
 import { PsRelationshipDeltas, EntityWithMediaDelta } from "~/types";
+import { calculateAdBoost } from "~/lib/utils";
 
 export async function applyRelationshipDeltas(
   gameId: string,
-  deltas: PsRelationshipDeltas
+  deltas: PsRelationshipDeltas,
+  useAdBoost: boolean = false
 ) {
   // Fetch all needed entities
-  const { game, cabinetMembers, publications, journalists, subgroups } =
-    await fetchGameEntities(gameId);
+  const { game, cabinetMembers, journalists } = await fetchGameEntities(gameId);
 
   if (!game) {
     throw new Error(`No game found with ID: ${gameId}`);
@@ -18,8 +19,12 @@ export async function applyRelationshipDeltas(
   return await database.write(async () => {
     // --- Apply President PS Relationship Delta ---
     if (deltas.president !== 0) {
+      const boostedDelta = useAdBoost
+        ? calculateAdBoost(deltas.president)
+        : deltas.president;
+
       await game.update((g) => {
-        g.presPsRelationship = g.presPsRelationship + deltas.president;
+        g.presPsRelationship = g.presPsRelationship + boostedDelta;
       });
     }
 
@@ -32,8 +37,12 @@ export async function applyRelationshipDeltas(
 
         const member = cabinetMembers.find((m) => m.staticId === staticId);
         if (member) {
+          const boostedDelta = useAdBoost
+            ? calculateAdBoost(deltaValue)
+            : deltaValue;
+
           await member.update((m) => {
-            m.psRelationship = (m.psRelationship || 0) + deltaValue;
+            m.psRelationship = (m.psRelationship || 0) + boostedDelta;
           });
         } else {
           console.warn(
@@ -49,8 +58,12 @@ export async function applyRelationshipDeltas(
 
         const journalist = journalists.find((j) => j.staticId === staticId);
         if (journalist) {
+          const boostedDelta = useAdBoost
+            ? calculateAdBoost(deltaValue)
+            : deltaValue;
+
           await journalist.update((j) => {
-            j.psRelationship = (j.psRelationship || 0) + deltaValue;
+            j.psRelationship = (j.psRelationship || 0) + boostedDelta;
           });
         } else {
           console.warn(
@@ -65,7 +78,8 @@ export async function applyRelationshipDeltas(
 // Applies the approval rating changes from the consequences of all resolved situation outcomes in a level.
 export async function applySituationConsequences(
   gameId: string,
-  levelId: string
+  levelId: string,
+  useAdBoost: boolean = false
 ): Promise<void> {
   try {
     // Get media-adjusted deltas directly from getEnhancedSituationOutcomeDeltas
@@ -92,21 +106,14 @@ export async function applySituationConsequences(
     );
 
     return await database.write(async () => {
-      // // Apply President's approval rating delta (with media impact)
-      // if (presidentDeltas.length > 0) {
-      //   const presidentialDelta = presidentDeltas[0].delta;
-      //   await game.update((g) => {
-      //     g.presApprovalRating =
-      //       (g.presApprovalRating || 0) + presidentialDelta;
-      //   });
-      // }
-
       // Apply Cabinet Members' approval rating deltas (with media impact)
       for (const delta of cabinetDeltas) {
         const member = cabinetMembers.find((m) => m.staticId === delta.id);
         if (member) {
+          const boostedDelta = useAdBoost ? delta.adBoostedDelta : delta.delta;
+
           await member.update((m) => {
-            m.approvalRating = (m.approvalRating || 0) + delta.delta;
+            m.approvalRating = (m.approvalRating || 0) + boostedDelta;
           });
         } else {
           console.warn(
@@ -118,8 +125,10 @@ export async function applySituationConsequences(
       for (const delta of subgroupDeltas) {
         const subgroupApproval = subgroups.find((s) => s.staticId === delta.id);
         if (subgroupApproval) {
+          const boostedDelta = useAdBoost ? delta.adBoostedDelta : delta.delta;
+
           await subgroupApproval.update((s) => {
-            s.approvalRating = (s.approvalRating || 0) + delta.delta;
+            s.approvalRating = (s.approvalRating || 0) + boostedDelta;
           });
         } else {
           console.warn(

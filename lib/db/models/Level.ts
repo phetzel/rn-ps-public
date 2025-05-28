@@ -39,6 +39,8 @@ export default class Level extends Model {
   @text("status") status!: LevelStatus;
   @text("cabinet_snapshot") cabinetSnapshot!: string; // JSON string of CabinetSnapshotType
   @text("outcome_snapshot") outcomeSnapshot!: string | null;
+  @field("press_ad_watched") pressAdWatched!: boolean;
+  @field("situation_ad_watched") situationAdWatched!: boolean;
 
   @field("game_id") game_id!: string;
 
@@ -117,6 +119,19 @@ export default class Level extends Model {
 
     await this.update((level) => {
       level.outcomeSnapshot = JSON.stringify(validationResult.data);
+    });
+  }
+
+  //  Ad actions
+  @writer async markPressAdWatched() {
+    await this.update((level) => {
+      level.pressAdWatched = true;
+    });
+  }
+
+  @writer async markSituationAdWatched() {
+    await this.update((level) => {
+      level.situationAdWatched = true;
     });
   }
 }

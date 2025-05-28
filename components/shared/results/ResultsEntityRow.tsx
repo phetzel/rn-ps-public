@@ -7,13 +7,13 @@ import type { EntityWithDelta } from "~/types";
 
 interface ResultsEntityRowProps {
   entity: EntityWithDelta;
-  boostedDelta: number;
+  // boostedDelta: number;
   isAdWatched: boolean;
 }
 
 export function ResultsEntityRow({
   entity,
-  boostedDelta,
+  // boostedDelta,
   isAdWatched,
 }: ResultsEntityRowProps) {
   return (
@@ -56,14 +56,14 @@ export function ResultsEntityRow({
           className={cn(
             "text-lg",
             isAdWatched
-              ? boostedDelta >= 0
+              ? entity.adBoostedDelta >= 0
                 ? "text-green-600 font-bold"
                 : "text-red-600 font-bold"
               : "text-muted-foreground"
           )}
         >
-          {boostedDelta >= 0 ? "+" : "-"}
-          {Math.abs(boostedDelta)}
+          {entity.adBoostedDelta >= 0 ? "+" : "-"}
+          {Math.abs(entity.adBoostedDelta)}
         </Text>
       </View>
     </View>

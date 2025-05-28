@@ -298,10 +298,6 @@ export interface PsRelationshipDeltas {
   };
 }
 export interface ApprovalRatingDeltas {
-  // Note: President's overall approval rating is typically an outcome of general sentiment
-  // or significant situation consequences, rather than direct answer impacts.
-  // If your game design allows single answers to directly impact President's approval,
-  // president?: number;
   cabinetMembers?: {
     [key in CabinetStaticId]?: number;
   };
@@ -318,7 +314,6 @@ export interface SituationOutcomeWeightDeltas {
 
 export interface PressConferenceRawEffects {
   psRelationshipDeltas: PsRelationshipDeltas;
-  // approvalRatingDeltas: ApprovalRatingDeltas;
   situationOutcomeWeightDeltas: SituationOutcomeWeightDeltas;
 }
 
@@ -329,6 +324,7 @@ export interface EntityWithDelta {
   title?: string; // Optional additional title/position info
   currentValue: number;
   delta: number;
+  adBoostedDelta: number;
 }
 
 export interface EntityWithMediaDelta extends EntityWithDelta {

@@ -79,6 +79,8 @@ export const myAppSchema = appSchema({
         { name: "status", type: "string" },
         { name: "cabinet_snapshot", type: "string" },
         { name: "outcome_snapshot", type: "string", isOptional: true },
+        { name: "press_ad_watched", type: "boolean" },
+        { name: "situation_ad_watched", type: "boolean" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },
       ],

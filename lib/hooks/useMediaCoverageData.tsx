@@ -19,12 +19,12 @@ export function useMediaCoverageData({ levelId }: { levelId: string }) {
       setError(null);
       try {
         // Single function call that returns everything we need
-        const { deltas, boosts, totalBoost } =
+        const { deltas, publicationBoosts, totalPublicationBoost } =
           await getEnhancedSituationOutcomeDeltas(levelId);
 
         if (!isMounted) return;
-        setMediaBoosts(boosts);
-        setTotalBoost(totalBoost);
+        setMediaBoosts(publicationBoosts);
+        setTotalBoost(totalPublicationBoost);
         setEnhancedDeltas(deltas);
       } catch (err) {
         console.error("Error loading media boosts:", err);

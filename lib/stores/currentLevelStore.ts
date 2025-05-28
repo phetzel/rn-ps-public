@@ -240,7 +240,11 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         await calculatePressConferenceRawEffects(level.id);
 
       // Apply impacts to game entities
-      await applyRelationshipDeltas(gameId, psRelationshipDeltas);
+      await applyRelationshipDeltas(
+        gameId,
+        psRelationshipDeltas,
+        level.pressAdWatched
+      );
 
       // Determine outcomes for situations
       await determineSituationOutcomes(level.id, situationOutcomeWeightDeltas);
@@ -251,7 +255,11 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
       const gameId = level.game_id;
 
       // Apply consequences to game entities
-      await applySituationConsequences(gameId, level.id);
+      await applySituationConsequences(
+        gameId,
+        level.id,
+        level.situationAdWatched
+      );
 
       const consequenceResult = await calculateAndApplyConsequences(gameId);
 

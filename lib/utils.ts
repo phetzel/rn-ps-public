@@ -2,6 +2,8 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { faker } from "@faker-js/faker";
 
+// Constants
+import { AD_BOOST_MULTIPLIER } from "~/lib/constants";
 // DB Models
 import { CabinetMember } from "~/lib/db/models";
 // Types
@@ -71,9 +73,11 @@ export function createCabinetMemberMap(
 // Boost Helpers
 export const calculateAdBoost = (delta: number) => {
   if (delta >= 0) {
-    return delta * 2;
+    // Positive values get amplified: 10 -> 15
+    return Math.round(delta * AD_BOOST_MULTIPLIER);
   } else {
-    return Math.ceil(delta / 2);
+    // Negative values move toward positive: -10 -> -7 (reduced magnitude)
+    return Math.round(delta / AD_BOOST_MULTIPLIER);
   }
 };
 

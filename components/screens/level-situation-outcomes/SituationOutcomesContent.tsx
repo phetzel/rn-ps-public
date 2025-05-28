@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
@@ -33,6 +33,23 @@ const SituationOutcomesContent = ({
 
   const { progressAndNavigate, navigateToCurrentLevelScreen } =
     useLevelNavigation();
+
+  // Set initial ad watched state from level
+  useEffect(() => {
+    if (level) {
+      setIsAdWatched(level.situationAdWatched);
+    }
+  }, [level?.situationAdWatched]);
+
+  const handleAdComplete = async () => {
+    try {
+      // Mark ad as watched in the level
+      await level.markSituationAdWatched();
+      setIsAdWatched(true);
+    } catch (error) {
+      console.error("Failed to mark situation ad as watched:", error);
+    }
+  };
 
   const handleComplete = async () => {
     try {
@@ -72,7 +89,7 @@ const SituationOutcomesContent = ({
         <TabsContent value="relationships" className="mt-4">
           <SituationResults
             isAdWatched={isAdWatched}
-            onAdComplete={() => setIsAdWatched(true)}
+            onAdComplete={handleAdComplete}
             onComplete={handleComplete}
           />
         </TabsContent>

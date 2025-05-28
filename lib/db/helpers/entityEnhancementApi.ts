@@ -14,7 +14,7 @@ import {
 } from "~/lib/db/helpers/publicationBoostApi";
 // Data + Types
 import { staticPublications } from "~/lib/data/staticMedia";
-import { calculateMediaCoverage } from "~/lib/utils";
+import { calculateAdBoost, calculateMediaCoverage } from "~/lib/utils";
 import {
   EntityWithDelta,
   EntityWithMediaDelta,
@@ -64,6 +64,7 @@ export async function getEnhancedRelationshipDeltas(
         title: "President",
         currentValue: game.presPsRelationship,
         delta: psRelationshipDeltas.president,
+        adBoostedDelta: calculateAdBoost(psRelationshipDeltas.president),
       });
     }
 
@@ -85,6 +86,7 @@ export async function getEnhancedRelationshipDeltas(
               title: staticCabinetInfo?.cabinetName || "Cabinet Member",
               currentValue: cabinetMember.psRelationship || 0,
               delta,
+              adBoostedDelta: calculateAdBoost(delta),
             });
           }
         }
@@ -117,6 +119,7 @@ export async function getEnhancedRelationshipDeltas(
               title: publicationName,
               currentValue: journalist.psRelationship || 0,
               delta,
+              adBoostedDelta: calculateAdBoost(delta),
             });
           }
         }
@@ -135,8 +138,8 @@ export async function getEnhancedSituationOutcomeDeltas(
   levelId: string
 ): Promise<{
   deltas: EntityWithMediaDelta[];
-  boosts: PublicationBoost[];
-  totalBoost: number;
+  publicationBoosts: PublicationBoost[];
+  totalPublicationBoost: number;
 }> {
   try {
     // Get all situations for the level
@@ -187,11 +190,6 @@ export async function getEnhancedSituationOutcomeDeltas(
 
       const { approvalChanges } = outcome.consequences;
 
-      // // Add president delta if it exists
-      // if (approvalChanges.president) {
-      //   presidentDelta += approvalChanges.president;
-      // }
-
       // Add cabinet member deltas
       if (approvalChanges.cabinet) {
         Object.entries(approvalChanges.cabinet).forEach(
@@ -214,24 +212,12 @@ export async function getEnhancedSituationOutcomeDeltas(
 
     const result: EntityWithMediaDelta[] = [];
 
-    // // Add president to results if there's a delta
-    // if (presidentDelta !== 0) {
-    //   result.push({
-    //     id: "president",
-    //     name: game.presName || "President",
-    //     role: "president",
-    //     title: "President",
-    //     currentValue: game.presApprovalRating,
-    //     preMediaDelta: presidentDelta,
-    //     delta: calculateMediaCoverage(presidentDelta, totalBoost),
-    //   });
-    // }
-
     // Add cabinet members to results
     Object.entries(cabinetDeltas).forEach(([cabinetId, delta]) => {
       const cabinetMember = cabinetMemberMap.get(cabinetId);
       if (cabinetMember) {
         const staticCabinetInfo = cabinetMember.staticData;
+        const mediaDelta = calculateMediaCoverage(delta, totalBoost);
         result.push({
           id: cabinetId,
           name: cabinetMember.name || cabinetId,
@@ -239,7 +225,8 @@ export async function getEnhancedSituationOutcomeDeltas(
           title: staticCabinetInfo?.cabinetName || "Cabinet Member",
           currentValue: cabinetMember.approvalRating || 0,
           preMediaDelta: delta,
-          delta: calculateMediaCoverage(delta, totalBoost),
+          delta: mediaDelta,
+          adBoostedDelta: calculateAdBoost(mediaDelta),
         });
       }
     });
@@ -248,6 +235,7 @@ export async function getEnhancedSituationOutcomeDeltas(
     Object.entries(subgroupDeltas).forEach(([subgroupId, delta]) => {
       const subgroup = subgroupMap.get(subgroupId);
       if (subgroup) {
+        const mediaDelta = calculateMediaCoverage(delta, totalBoost);
         result.push({
           id: subgroupId,
           name: subgroup.staticData?.name || subgroupId,
@@ -255,12 +243,17 @@ export async function getEnhancedSituationOutcomeDeltas(
           title: "Voter Group",
           currentValue: subgroup.approvalRating || 0,
           preMediaDelta: delta,
-          delta: calculateMediaCoverage(delta, totalBoost),
+          delta: mediaDelta,
+          adBoostedDelta: calculateAdBoost(mediaDelta),
         });
       }
     });
 
-    return { deltas: result, boosts, totalBoost };
+    return {
+      deltas: result,
+      publicationBoosts: boosts,
+      totalPublicationBoost: totalBoost,
+    };
   } catch (error) {
     console.error("Failed to get enhanced situation outcome deltas:", error);
     throw error;

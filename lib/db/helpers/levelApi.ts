@@ -52,6 +52,8 @@ export async function createLevel(game: Game): Promise<Level> {
       level.month = game.currentMonth;
       level.year = game.currentYear;
       level.cabinetSnapshot = cabinetSnapshotJson;
+      level.pressAdWatched = false;
+      level.situationAdWatched = false;
     });
 
     return newLevel;

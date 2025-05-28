@@ -96,7 +96,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateAdBoost(entity.delta)}
+                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -104,7 +104,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateAdBoost(entity.delta)}
+                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -119,7 +119,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateAdBoost(entity.delta)}
+                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -134,7 +134,7 @@ export function ResultsTable({
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                boostedDelta={calculateAdBoost(entity.delta)}
+                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}

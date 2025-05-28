@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
@@ -29,6 +29,22 @@ const PressOutcomesContent = ({
 
   const { progressAndNavigate, navigateToCurrentLevelScreen } =
     useLevelNavigation();
+
+  useEffect(() => {
+    if (level) {
+      setIsAdWatched(level.pressAdWatched);
+    }
+  }, [level?.pressAdWatched]);
+
+  const handleAdComplete = async () => {
+    try {
+      // Mark ad as watched in the level
+      await level.markPressAdWatched();
+      setIsAdWatched(true);
+    } catch (error) {
+      console.error("Failed to mark press ad as watched:", error);
+    }
+  };
 
   const handleComplete = async () => {
     try {
@@ -61,7 +77,7 @@ const PressOutcomesContent = ({
         <TabsContent value="relationships" className="mt-4">
           <PressResults
             isAdWatched={isAdWatched}
-            onAdComplete={() => setIsAdWatched(true)}
+            onAdComplete={handleAdComplete}
             onComplete={handleComplete}
           />
         </TabsContent>
