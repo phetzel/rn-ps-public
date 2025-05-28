@@ -18,7 +18,9 @@ export function PartySelect({
   error,
   disabled = false,
 }: PartySelectProps) {
-  const partyOptions = Object.values(PoliticalLeaning);
+  const partyOptions = Object.values(PoliticalLeaning).filter(
+    (party) => party !== PoliticalLeaning.Neutral
+  );
 
   const formatParty = (party: PoliticalLeaning) => {
     return party.charAt(0).toUpperCase() + party.slice(1);
@@ -30,7 +32,7 @@ export function PartySelect({
         nativeID="presidentLeaningLabel"
         className={error ? "text-destructive" : ""}
       >
-        President's Political Party
+        President's Political Leaning
       </Label>
       <Controller
         control={control}

@@ -1,5 +1,5 @@
 import { Q } from "@nozbe/watermelondb";
-import { Observable, of, combineLatest } from "rxjs";
+import { Observable, of } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
 
 // Import collections
@@ -33,15 +33,6 @@ export function observeAllGames(): Observable<Game[]> {
 
 export function observeGame(gameId: string): Observable<Game | null> {
   return gamesCollection.findAndObserve(gameId);
-}
-
-export function observeGameWithApprovalRating(
-  gameId: string
-): Observable<{ game: Game | null; presApprovalRating: number }> {
-  return combineLatest([
-    observeGame(gameId),
-    observePresidentApprovalRating(gameId),
-  ]).pipe(map(([game, presApprovalRating]) => ({ game, presApprovalRating })));
 }
 
 export function observeSubgroupApprovals(

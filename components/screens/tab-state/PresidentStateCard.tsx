@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeGameWithApprovalRating } from "~/lib/db/helpers";
+import { observeGame, observePresidentApprovalRating } from "~/lib/db/helpers";
 import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
@@ -52,8 +52,9 @@ const PresidentStateCard = ({
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) =>
-  observeGameWithApprovalRating(gameId)
-);
+const enhance = withObservables(["gameId"], ({ gameId }) => ({
+  game: observeGame(gameId),
+  presApprovalRating: observePresidentApprovalRating(gameId),
+}));
 
 export default enhance(PresidentStateCard);
