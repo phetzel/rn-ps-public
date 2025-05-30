@@ -17,8 +17,10 @@ import { Globe } from "./Globe";
 import { HelpCircle } from "./HelpCircle";
 import { History } from "./History";
 import { Info } from "./Info";
+import { Leaf } from "./Leaf";
 import { Landmark } from "./Landmark";
 import { LayoutDashboard } from "./LayoutDashboard";
+import { Library } from "./Library";
 import { Lock } from "./Lock";
 import { MessageSquare } from "./MessageSquare";
 import { MicOff } from "./MicOff";
@@ -58,8 +60,10 @@ export {
   HelpCircle,
   History,
   Info,
+  Leaf,
   Landmark,
   LayoutDashboard,
+  Library,
   Lock,
   MessageSquare,
   MicOff,

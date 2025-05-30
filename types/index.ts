@@ -103,8 +103,18 @@ export interface StaticJournalist {
 }
 
 // Press Exchange Types
+export enum ExchangeImpactWeight {
+  StronglyPositive = 6,
+  Positive = 4,
+  SlightlyPositive = 2,
+  Neutral = 0,
+  SlightlyNegative = -2,
+  Negative = -4,
+  StronglyNegative = -6,
+}
+
 export interface ExchangeImpact {
-  weight: number;
+  weight: ExchangeImpactWeight;
   reaction?: string;
 }
 
@@ -122,7 +132,7 @@ export enum AnswerType {
   Admit = "admit",
   Deny = "deny",
   Inform = "inform",
-  Authorized = "authorized", // Cabinet Relationship based
+  Authorized = "authorized", // Cabinet Relationship based classified intel
 }
 
 export interface Answer {
@@ -169,12 +179,13 @@ export interface ExchangeData {
 
 // Situation Types
 export enum SituationType {
-  Domestic = "domestic",
-  Foreign = "foreign",
-  Scandal = "scandal",
-  Economic = "economic",
+  DomesticPolicy = "domestic_policy",
+  ForeignAffairs = "foreign_affairs",
+  Economy = "economy",
   Security = "security",
-  PublicSentiment = "public_sentiment",
+  Environment = "environment",
+  Ethics = "ethics",
+  Governance = "governance",
 }
 
 export interface SituationTrigger {
@@ -210,19 +221,8 @@ export interface SituationTrigger {
   isFollowUp?: boolean;
 }
 
-export enum PreferenceWeight {
-  StronglyPositive = 3,
-  Positive = 2,
-  SlightlyPositive = 1,
-  Neutral = 0,
-  SlightlyNegative = -1,
-  Negative = -2,
-  StronglyNegative = -3,
-}
-
 export interface Preference {
   answerType: AnswerType;
-  weight: PreferenceWeight;
   rationale: string;
 }
 

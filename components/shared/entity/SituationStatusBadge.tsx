@@ -11,17 +11,19 @@ interface SituationStatusBadgeProps {
 export function SituationStatusBadge({ status }: SituationStatusBadgeProps) {
   const getSituationBadgeVariant = () => {
     switch (status) {
-      case SituationType.Domestic:
+      case SituationType.DomesticPolicy:
         return "default";
-      case SituationType.Foreign:
+      case SituationType.ForeignAffairs:
         return "secondary";
-      case SituationType.Scandal:
-        return "destructive";
-      case SituationType.Economic:
-        return "outline";
+      case SituationType.Economy:
+        return "default";
+      case SituationType.Environment:
+        return "secondary";
       case SituationType.Security:
         return "destructive";
-      case SituationType.PublicSentiment:
+      case SituationType.Ethics:
+        return "destructive";
+      case SituationType.Governance:
         return "default";
       default:
         return "default";

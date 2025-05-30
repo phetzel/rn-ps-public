@@ -1,11 +1,15 @@
 import React from "react";
 
 // Icons
-import { AlertCircle } from "~/lib/icons/AlertCircle";
-import { Globe } from "~/lib/icons/Globe";
-import { DollarSign } from "~/lib/icons/DollarSign";
-import { Shield } from "~/lib/icons/Shield";
-import { Users } from "~/lib/icons/Users";
+import {
+  AlertCircle,
+  Globe,
+  DollarSign,
+  Shield,
+  Users,
+  Leaf,
+  Library,
+} from "~/lib/icons";
 // Types
 import { SituationType } from "~/types";
 
@@ -17,18 +21,20 @@ interface SituationTypeIconProps {
 export function SituationTypeIcon({ type, size = 32 }: SituationTypeIconProps) {
   const getSituationIcon = () => {
     switch (type) {
-      case SituationType.Domestic:
+      case SituationType.DomesticPolicy:
         return Users;
-      case SituationType.Foreign:
+      case SituationType.ForeignAffairs:
         return Globe;
-      case SituationType.Scandal:
-        return AlertCircle;
-      case SituationType.Economic:
+      case SituationType.Economy:
         return DollarSign;
+      case SituationType.Environment:
+        return Leaf;
       case SituationType.Security:
         return Shield;
-      case SituationType.PublicSentiment:
-        return Users;
+      case SituationType.Ethics:
+        return AlertCircle;
+      case SituationType.Governance:
+        return Library;
       default:
         return AlertCircle;
     }

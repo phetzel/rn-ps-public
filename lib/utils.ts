@@ -14,25 +14,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// Situation Progress Helpers
-// Helper function to get preference indicator
-export const getPreferenceIndicator = (weight: number) => {
-  if (weight >= 3) return "Strongly Supports";
-  if (weight >= 1) return "Supports";
-  if (weight === 0) return "Neutral";
-  if (weight >= -2) return "Opposes";
-  return "Strongly Opposes";
-};
-
-// Helper function to get preference color
-export const getPreferenceColor = (weight: number): string => {
-  if (weight >= 3) return "text-green-600";
-  if (weight >= 1) return "text-green-500";
-  if (weight === 0) return "text-gray-500";
-  if (weight >= -2) return "text-orange-500";
-  return "text-red-500";
-};
-
 // Cabinet Helpers
 export function generateCabinetMemberName(staticId: CabinetStaticId): string {
   const firstName = faker.person.firstName();

@@ -2,48 +2,50 @@
 import {
   SituationType,
   SituationData,
-  PreferenceWeight,
   CabinetStaticId,
   SubgroupStaticId,
   SituationConsequenceWeight,
   PublicationStaticId,
+  JournalistStaticId,
   AnswerType,
+  ExchangeImpactWeight,
 } from "~/types";
 
 export const infrastructureBillImplementation: SituationData = {
   trigger: {
     staticKey: "infrastructure_bill_implementation",
-    type: SituationType.Domestic,
-    requirements: {},
+    type: SituationType.DomesticPolicy,
+    requirements: {
+      president: {
+        minApproval: 35,
+      },
+    },
     isFollowUp: true,
   },
-  type: SituationType.Domestic,
-  title: "Infrastructure Bill Implementation",
+  type: SituationType.DomesticPolicy,
+  title: "Infrastructure Implementation Progress",
   description:
-    "The administration faces challenges and scrutiny as it begins implementing the major infrastructure package.",
+    "Six months after passage, questions arise about the pace and effectiveness of infrastructure project rollouts.",
   content: {
     preferences: {
       president: {
         answerType: AnswerType.Inform,
-        weight: PreferenceWeight.Positive,
         rationale:
-          "Highlight early successes and manage expectations about timeline. Focus on job creation statistics.",
+          "Emphasize progress while acknowledging challenges; maintain confidence in the program.",
       },
       cabinet: {
         [CabinetStaticId.Treasury]: {
           preference: {
             answerType: AnswerType.Reassure,
-            weight: PreferenceWeight.Neutral,
             rationale:
-              "Emphasize fiscal oversight and responsible fund allocation.",
+              "Focus on fiscal responsibility and proper oversight of spending.",
           },
         },
         [CabinetStaticId.State]: {
           preference: {
             answerType: AnswerType.Inform,
-            weight: PreferenceWeight.Positive,
             rationale:
-              "Emphasize how these projects will strengthen America's global competitiveness.",
+              "Highlight international competitiveness benefits and global infrastructure comparisons.",
           },
         },
       },
@@ -57,7 +59,6 @@ export const infrastructureBillImplementation: SituationData = {
         weight: 40, // Sum of weights = 40+40+20 = 100
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.Positive,
             cabinet: {
               [CabinetStaticId.Treasury]:
                 SituationConsequenceWeight.SlightlyPositive,
@@ -79,7 +80,6 @@ export const infrastructureBillImplementation: SituationData = {
         weight: 40, // Sum of weights = 40+40+20 = 100
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.SlightlyNegative,
             cabinet: {
               [CabinetStaticId.Treasury]: SituationConsequenceWeight.Neutral,
             },
@@ -102,7 +102,6 @@ export const infrastructureBillImplementation: SituationData = {
         weight: 20, // Sum of weights = 40+40+20 = 100
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.Negative,
             cabinet: {
               [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
             },
@@ -134,16 +133,16 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "Within six months, Americans will see construction begin on major roads and bridges, with thousands of workers already hired across the country.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction: "Pleased with the specific, positive messaging",
                   },
                   subgroups: {
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the concrete timeline",
                     },
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Pleased with the rapid implementation",
                     },
                   },
@@ -162,22 +161,22 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "We're focused on getting this right rather than rushing. The first phase involves detailed planning and contractor selection to ensure taxpayer dollars are used efficiently.",
                 impacts: {
                   president: {
-                    weight: 0,
+                    weight: ExchangeImpactWeight.Neutral,
                     reaction: "Accepts the measured approach",
                   },
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 2,
+                      weight: ExchangeImpactWeight.Positive,
                       reaction: "Strongly approves of the prudent approach",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the fiscal responsibility",
                     },
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about potential delays",
                     },
                   },
@@ -203,13 +202,13 @@ export const infrastructureBillImplementation: SituationData = {
                 impacts: {
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Approves of the oversight mechanism",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Values the accountability measures",
                     },
                   },
@@ -227,18 +226,18 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "We're working with state and local officials who know their communities' needs best, while maintaining federal oversight to prevent waste and abuse.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction:
                       "Pleased with balancing local control and oversight",
                   },
                   subgroups: {
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction:
                         "Appreciates empowering state/local governments",
                     },
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about inconsistent implementation",
                     },
                   },
@@ -271,16 +270,16 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "In just the first month, we've seen over 50,000 new jobs created across 38 states, primarily in construction and planning roles.",
                 impacts: {
                   president: {
-                    weight: 2,
+                    weight: ExchangeImpactWeight.Positive,
                     reaction: "Very pleased with the impressive statistics",
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Excited about job creation",
                     },
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Impressed by the specific numbers",
                     },
                   },
@@ -298,16 +297,16 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "It's too early for precise numbers, but hiring is underway across the country, with significant job creation expected as projects move from planning to implementation.",
                 impacts: {
                   president: {
-                    weight: -1,
+                    weight: ExchangeImpactWeight.SlightlyNegative,
                     reaction: "Concerned about the lack of specific metrics",
                   },
                   subgroups: {
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Skeptical about promised job creation",
                     },
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Disappointed by the vague response",
                     },
                   },
@@ -340,16 +339,16 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "These reports are exaggerated. All major projects remain on schedule, with some even ahead of our initial projections.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction: "Pleased with the positive counter-narrative",
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Reassured by the confidence",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: -2,
+                      weight: ExchangeImpactWeight.Negative,
                       reaction: "Deeply skeptical of the claim",
                     },
                   },
@@ -367,22 +366,22 @@ export const infrastructureBillImplementation: SituationData = {
                 text: "Any project of this scale faces initial adjustments. We're addressing specific challenges transparently while keeping the overall implementation on track.",
                 impacts: {
                   president: {
-                    weight: 0,
+                    weight: ExchangeImpactWeight.Neutral,
                     reaction: "Appreciates the balanced, honest approach",
                   },
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the transparency",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Values the honest assessment",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 0,
+                      weight: ExchangeImpactWeight.Neutral,
                       reaction:
                         "Still skeptical but appreciates acknowledgment",
                     },

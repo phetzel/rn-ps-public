@@ -1,26 +1,26 @@
 import {
   SituationType,
   SituationData,
-  PreferenceWeight,
   CabinetStaticId,
   SubgroupStaticId,
   SituationConsequenceWeight,
   PublicationStaticId,
   JournalistStaticId,
   AnswerType,
+  ExchangeImpactWeight,
 } from "~/types";
 
 export const infrastructureBill: SituationData = {
   trigger: {
     staticKey: "infrastructure_bill",
-    type: SituationType.Domestic,
+    type: SituationType.DomesticPolicy,
     requirements: {
       president: {
         minApproval: 40,
       },
     },
   },
-  type: SituationType.Domestic,
+  type: SituationType.DomesticPolicy,
   title: "Major Infrastructure Package",
   description:
     "The administration pushes a $1.2 trillion infrastructure bill amid congressional gridlock and budget concerns.",
@@ -28,7 +28,6 @@ export const infrastructureBill: SituationData = {
     preferences: {
       president: {
         answerType: AnswerType.Inform,
-        weight: PreferenceWeight.StronglyPositive,
         rationale:
           "Signature legislative priority; emphasize job creation and economic benefits.",
       },
@@ -36,7 +35,6 @@ export const infrastructureBill: SituationData = {
         [CabinetStaticId.Treasury]: {
           preference: {
             answerType: AnswerType.Reassure,
-            weight: PreferenceWeight.SlightlyNegative,
             rationale:
               "Concerned about deficit impact; advises fiscal restraint and phased approach.",
           },
@@ -44,7 +42,6 @@ export const infrastructureBill: SituationData = {
         [CabinetStaticId.State]: {
           preference: {
             answerType: AnswerType.Inform,
-            weight: PreferenceWeight.Positive,
             rationale:
               "Emphasize how infrastructure investment strengthens global competitiveness.",
           },
@@ -60,7 +57,6 @@ export const infrastructureBill: SituationData = {
         weight: 20,
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.StronglyPositive,
             cabinet: {
               [CabinetStaticId.Treasury]:
                 SituationConsequenceWeight.SlightlyPositive,
@@ -85,7 +81,6 @@ export const infrastructureBill: SituationData = {
         weight: 20,
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.Positive,
             cabinet: {
               [CabinetStaticId.Treasury]:
                 SituationConsequenceWeight.SlightlyNegative,
@@ -110,7 +105,6 @@ export const infrastructureBill: SituationData = {
         weight: 40,
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.SlightlyNegative,
             cabinet: {
               [CabinetStaticId.Treasury]: SituationConsequenceWeight.Positive,
             },
@@ -133,7 +127,6 @@ export const infrastructureBill: SituationData = {
         weight: 20,
         consequences: {
           approvalChanges: {
-            president: SituationConsequenceWeight.StronglyNegative,
             cabinet: {
               [CabinetStaticId.Treasury]:
                 SituationConsequenceWeight.SlightlyPositive,
@@ -164,22 +157,22 @@ export const infrastructureBill: SituationData = {
                 text: "The President is actively engaging with lawmakers from both parties, focusing on the bill's economic benefits for all Americans.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction: "Pleased with the bipartisan messaging",
                   },
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the pragmatic approach",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Values the collaborative approach",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction:
                         "Cautiously optimistic about bipartisan efforts",
                     },
@@ -199,22 +192,22 @@ export const infrastructureBill: SituationData = {
                 text: "We're prepared to use reconciliation if necessary to deliver this critical investment the American people need.",
                 impacts: {
                   president: {
-                    weight: 2,
+                    weight: ExchangeImpactWeight.Positive,
                     reaction: "Very pleased with the decisive approach",
                   },
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about partisan strategy",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 2,
+                      weight: ExchangeImpactWeight.Positive,
                       reaction: "Strongly supports using all available tools",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: -2,
+                      weight: ExchangeImpactWeight.Negative,
                       reaction: "Strongly opposes partisan tactics",
                     },
                   },
@@ -233,26 +226,26 @@ export const infrastructureBill: SituationData = {
                 text: "We're focused on finding elements that can gain broad support, even if it means adjusting the scope of the package.",
                 impacts: {
                   president: {
-                    weight: -1,
+                    weight: ExchangeImpactWeight.SlightlyNegative,
                     reaction: "Concerned about potential compromises",
                   },
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 2,
+                      weight: ExchangeImpactWeight.Positive,
                       reaction: "Strongly approves of the fiscal prudence",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: -2,
+                      weight: ExchangeImpactWeight.Negative,
                       reaction: "Disappointed by willingness to scale back",
                     },
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the pragmatic approach",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction:
                         "Cautiously approves of willingness to compromise",
                     },
@@ -278,17 +271,17 @@ export const infrastructureBill: SituationData = {
                 text: "We've already made significant adjustments based on Republican input and remain open to reasonable compromises.",
                 impacts: {
                   president: {
-                    weight: 0,
+                    weight: ExchangeImpactWeight.Neutral,
                     reaction: "Neutral about the balanced messaging",
                   },
                   subgroups: {
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction:
                         "Cautiously appreciates acknowledgment of input",
                     },
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about too many concessions",
                     },
                   },
@@ -306,16 +299,16 @@ export const infrastructureBill: SituationData = {
                 text: "Our priority is delivering results for the American people, not endless negotiations that delay critical infrastructure investments.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction: "Pleased with the strong messaging",
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 2,
+                      weight: ExchangeImpactWeight.Positive,
                       reaction: "Strongly supports the assertive stance",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: -2,
+                      weight: ExchangeImpactWeight.Negative,
                       reaction:
                         "Views this as rejecting good faith negotiation",
                     },
@@ -341,16 +334,16 @@ export const infrastructureBill: SituationData = {
                 text: "We've attempted bipartisan negotiations for months. The American people can't wait any longer for critical infrastructure improvements.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction: "Appreciates defending the strategy",
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Supports the decisive action",
                     },
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about increasing polarization",
                     },
                   },
@@ -368,16 +361,16 @@ export const infrastructureBill: SituationData = {
                 text: "We remain open to bipartisan solutions but are prepared to move forward if necessary. Many elements have support from both parties.",
                 impacts: {
                   president: {
-                    weight: -1,
+                    weight: ExchangeImpactWeight.SlightlyNegative,
                     reaction: "Concerned about walking back the strong stance",
                   },
                   subgroups: {
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the more balanced approach",
                     },
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about perceived weakness",
                     },
                   },
@@ -411,18 +404,18 @@ export const infrastructureBill: SituationData = {
                 impacts: {
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Supports the revenue-raising approach",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 2,
+                      weight: ExchangeImpactWeight.Positive,
                       reaction:
                         "Strongly supports tax increases on corporations",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: -2,
+                      weight: ExchangeImpactWeight.Negative,
                       reaction: "Strongly opposes any tax increases",
                     },
                   },
@@ -441,22 +434,22 @@ export const infrastructureBill: SituationData = {
                 impacts: {
                   cabinet: {
                     [CabinetStaticId.Treasury]: {
-                      weight: 2,
+                      weight: ExchangeImpactWeight.Positive,
                       reaction:
                         "Very pleased with the fiscally responsible approach",
                     },
                   },
                   subgroups: {
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the creative funding approach",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Cautiously approves of the approach",
                     },
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Concerned about insufficient funding",
                     },
                   },
@@ -489,16 +482,16 @@ export const infrastructureBill: SituationData = {
                 text: "Economic analysis shows the plan will create over 2 million high-quality jobs across construction, manufacturing, and emerging green sectors.",
                 impacts: {
                   president: {
-                    weight: 1,
+                    weight: ExchangeImpactWeight.SlightlyPositive,
                     reaction: "Pleased with the strong economic messaging",
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Supports the jobs focus",
                     },
                     [SubgroupStaticId.IndependentBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Appreciates the concrete numbers",
                     },
                   },
@@ -516,16 +509,16 @@ export const infrastructureBill: SituationData = {
                 text: "We're focusing on quality over quantity, ensuring that the jobs created offer good wages and build skills for the future economy.",
                 impacts: {
                   president: {
-                    weight: 0,
+                    weight: ExchangeImpactWeight.Neutral,
                     reaction: "Neutral about the measured response",
                   },
                   subgroups: {
                     [SubgroupStaticId.LeftWingBase]: {
-                      weight: 1,
+                      weight: ExchangeImpactWeight.SlightlyPositive,
                       reaction: "Supports the quality jobs focus",
                     },
                     [SubgroupStaticId.RightWingBase]: {
-                      weight: -1,
+                      weight: ExchangeImpactWeight.SlightlyNegative,
                       reaction: "Skeptical of government job creation",
                     },
                   },

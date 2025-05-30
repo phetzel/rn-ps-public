@@ -1,7 +1,7 @@
-import { domesticSituationsData } from "./domestic";
-import { economicSituationsData } from "./economic";
-import { foreignSituationsData } from "./foreign";
-import { scandalSituationsData } from "./scandal";
+import { domesticSituationsData } from "./domestic-policy";
+import { economicSituationsData } from "./economy";
+import { foreignSituationsData } from "./foreign-affairs";
+import { scandalSituationsData } from "./ethics";
 import { securitySituationsData } from "./security";
 
 export const situationsData = [
