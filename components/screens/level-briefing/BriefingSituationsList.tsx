@@ -60,7 +60,12 @@ const BriefingSituationsList = ({
     return (
       <View className="py-4 gap-4">
         <EmptyState message="No active situations to brief on" />
-        <Button className="mt-4" onPress={() => handleComplete()}>
+        <Button
+          className="mt-4"
+          onPress={() => handleComplete()}
+          accessibilityLabel="Proceed to Press Conference"
+          accessibilityHint="Skip briefing and go directly to the press conference"
+        >
           <Text>Proceed to Press Conference</Text>
         </Button>
       </View>
@@ -70,20 +75,27 @@ const BriefingSituationsList = ({
   const currentSituation = situations[currentIndex];
 
   return (
-    <ProgressNavigator
-      currentIndex={currentIndex}
-      totalItems={situations.length}
-      onPrevious={handlePrevious}
-      onNext={handleNext}
-      onComplete={handleComplete}
-      progressLabel={`Situation ${currentIndex + 1} of ${situations.length}`}
-      cardClassName="border-l-4 border-l-primary"
-      headerContent={
-        <BriefingSituationItemHeader situation={currentSituation} />
-      }
+    <View
+      accessible={true}
+      accessibilityLabel={`Situation briefing ${currentIndex + 1} of ${
+        situations.length
+      }: ${currentSituation.title}`}
     >
-      <SituationPreferences situation={currentSituation} />
-    </ProgressNavigator>
+      <ProgressNavigator
+        currentIndex={currentIndex}
+        totalItems={situations.length}
+        onPrevious={handlePrevious}
+        onNext={handleNext}
+        onComplete={handleComplete}
+        progressLabel={`Situation ${currentIndex + 1} of ${situations.length}`}
+        cardClassName="border-l-4 border-l-primary"
+        headerContent={
+          <BriefingSituationItemHeader situation={currentSituation} />
+        }
+      >
+        <SituationPreferences situation={currentSituation} />
+      </ProgressNavigator>
+    </View>
   );
 };
 

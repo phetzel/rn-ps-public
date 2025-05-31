@@ -59,13 +59,30 @@ const PressOutcomesContent = ({
   };
 
   return (
-    <View className="gap-4">
-      <Tabs value={currentTab} onValueChange={setCurrentTab}>
+    <View
+      className="gap-4"
+      accessibilityLabel="Press conference results and relationship changes"
+    >
+      <Tabs
+        value={currentTab}
+        onValueChange={setCurrentTab}
+        accessibilityLabel="Press conference results sections"
+      >
         <TabsList className="flex-row w-full">
-          <TabsTrigger value="exchanges" className="flex-1">
+          <TabsTrigger
+            value="exchanges"
+            className="flex-1"
+            accessibilityLabel="Press exchanges"
+            accessibilityHint="View questions asked and answers given during the press conference"
+          >
             <Text>Exchanges</Text>
           </TabsTrigger>
-          <TabsTrigger value="relationships" className="flex-1">
+          <TabsTrigger
+            value="relationships"
+            className="flex-1"
+            accessibilityLabel="Relationship changes"
+            accessibilityHint="See how your press conference performance affected relationships"
+          >
             <Text>Relationships</Text>
           </TabsTrigger>
         </TabsList>

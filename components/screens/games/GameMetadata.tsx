@@ -17,18 +17,29 @@ interface GameMetadataProps {
 function GameMetadata({ game, presApprovalRating }: GameMetadataProps) {
   return (
     <View className="gap-2">
-      <View className="flex-row items-center gap-2">
+      <View
+        className="flex-row items-center gap-2"
+        accessible={true}
+        accessibilityLabel={`President: ${game.presName}`}
+      >
         <User className="text-muted-foreground" size={32} />
         <Text className="text-xl font-medium">{game.presName}</Text>
       </View>
 
-      <View className="flex-row items-center gap-2">
+      <View
+        className="flex-row items-center gap-2"
+        accessible={true}
+        accessibilityLabel={`President ${game.presName}, ${game.presLeaning} party, ${presApprovalRating}% approval rating`}
+      >
         <Award className="text-muted-foreground" size={32} />
         <View>
           <Text>President {game.presName}</Text>
           <View className="flex-row items-center gap-2">
             <PoliticalLeaningBadge politicalLeaning={game.presLeaning} />
-            <Text className="text-sm text-muted-foreground">
+            <Text
+              className="text-sm text-muted-foreground"
+              accessibilityLabel={`${presApprovalRating} percent approval rating`}
+            >
               ({presApprovalRating}% approval)
             </Text>
           </View>

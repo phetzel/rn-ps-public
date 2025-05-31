@@ -24,13 +24,22 @@ const PresidentLevelCard = ({
   if (!game || !initial || !final) return null;
 
   return (
-    <View className="gap-2">
-      <View className="flex-row items-center justify-between gap-2">
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`President ${game.presName}.`}
+    >
+      <View
+        className="flex-row items-center justify-between gap-2"
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel={`President ${game.presName}, ${game.presLeaning} political leaning`}
+      >
         <Text className="text-2xl font-bold">{game.presName}</Text>
         <PoliticalLeaningBadge politicalLeaning={game.presLeaning} />
       </View>
 
-      <View className="gap-2">
+      <View className="gap-2" accessible={false}>
         <LevelProgress
           label="Approval Rating"
           initialValue={initial.president.approvalRating}

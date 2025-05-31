@@ -22,7 +22,10 @@ const PresidentStateCard = ({
   if (!game) return null;
 
   return (
-    <Card>
+    <Card
+      accessible={true}
+      accessibilityLabel={`President ${game.presName}, ${game.presLeaning} party. Approval: ${presApprovalRating}%. Relationship: ${game.presPsRelationship}%`}
+    >
       <CardHeader className="pb-4 flex-row items-center gap-2">
         <Award className="text-primary" />
         <CardTitle>President</CardTitle>

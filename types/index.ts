@@ -103,16 +103,6 @@ export interface StaticJournalist {
 }
 
 // Press Exchange Types
-export enum ExchangeImpactWeight {
-  StronglyPositive = 6,
-  Positive = 4,
-  SlightlyPositive = 2,
-  Neutral = 0,
-  SlightlyNegative = -2,
-  Negative = -4,
-  StronglyNegative = -6,
-}
-
 export interface ExchangeImpact {
   weight: ExchangeImpactWeight;
   reaction?: string;
@@ -121,9 +111,20 @@ export interface ExchangeImpact {
 export interface ExchangeImpacts {
   president?: ExchangeImpact;
   cabinet?: Partial<Record<CabinetStaticId, ExchangeImpact>>;
-  subgroups?: Partial<Record<SubgroupStaticId, ExchangeImpact>>;
   journalists?: Partial<Record<JournalistStaticId, ExchangeImpact>>;
 }
+
+export interface SituationImpact {
+  weight: SituationConsequenceWeight; // Use the correct weight type
+  reaction?: string;
+}
+
+export interface SituationImpacts {
+  cabinet?: Partial<Record<CabinetStaticId, SituationImpact>>;
+  subgroups?: Partial<Record<SubgroupStaticId, SituationImpact>>;
+}
+
+export type DisplayImpacts = ExchangeImpacts | SituationImpacts;
 
 export enum AnswerType {
   Deflect = "deflect",
@@ -132,7 +133,7 @@ export enum AnswerType {
   Admit = "admit",
   Deny = "deny",
   Inform = "inform",
-  Authorized = "authorized", // Cabinet Relationship based classified intel
+  Authorized = "authorized", // Cabinet Relationship based classified intel, not availible for preferences
 }
 
 export interface Answer {
@@ -142,7 +143,7 @@ export interface Answer {
   authorizedCabinetMemberId?: CabinetStaticId;
   impacts: ExchangeImpacts;
   outcomeModifiers: {
-    [outcomeId: string]: number;
+    [outcomeId: string]: OutcomeModifierWeight;
   };
   followUpId?: string;
 }
@@ -240,7 +241,6 @@ export interface SituationPreferences {
 
 export interface SituationConsequence {
   approvalChanges: {
-    // president?: number;
     cabinet?: {
       [key in CabinetStaticId]?: SituationConsequenceWeight;
     };
@@ -248,11 +248,6 @@ export interface SituationConsequence {
       [key in SubgroupStaticId]?: SituationConsequenceWeight;
     };
   };
-  // effects?: {
-  //   isFiredPresident?: boolean;
-  //   isFiredPressSecretary?: boolean;
-  //   firedCabinetMemberId?: CabinetStaticId;
-  // };
 }
 
 export interface SituationOutcome {
@@ -386,15 +381,27 @@ export interface OutcomeSnapshotType {
 }
 
 // Wieghts
-// export enum AnswerOutcomeModifier {
-//   StronglyPositive = 6,
-//   Positive = 4,
-//   SlightlyPositive = 2,
-//   Neutral = 0,
-//   SlightlyNegative = -2,
-//   Negative = -4,
-//   StronglyNegative = -6,
-// }
+export enum OutcomeModifierWeight {
+  MajorPositive = 12,
+  StrongPositive = 8,
+  ModeratePositive = 6,
+  SlightPositive = 4,
+  Neutral = 0,
+  SlightNegative = -4,
+  ModerateNegative = -6,
+  StrongNegative = -8,
+  MajorNegative = -12,
+}
+
+export enum ExchangeImpactWeight {
+  StronglyPositive = 6,
+  Positive = 4,
+  SlightlyPositive = 2,
+  Neutral = 0,
+  SlightlyNegative = -2,
+  Negative = -4,
+  StronglyNegative = -6,
+}
 
 export enum JournalistInteractionImpact {
   Ignore = -15,

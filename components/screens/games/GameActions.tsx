@@ -31,26 +31,45 @@ export function GameActions({
   onLoad,
 }: GameActionsProps) {
   return (
-    <View className="flex-row gap-2">
+    <View
+      className="flex-row gap-2"
+      accessibilityLabel={`Actions for ${game.presName} game`}
+    >
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="destructive" size="icon" disabled={isLoading}>
+          <Button
+            variant="destructive"
+            size="icon"
+            disabled={isLoading}
+            accessibilityLabel={`Delete ${game.presName} game`}
+            accessibilityHint="Opens confirmation dialog to permanently delete this game"
+          >
             <Trash2 className="text-white" size={18} />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle accessibilityRole="header">
+              Are you sure?
+            </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone. This will permanently delete this
               game save.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>
+            <AlertDialogCancel
+              accessibilityLabel="Cancel deletion"
+              accessibilityHint="Closes dialog without deleting the game"
+            >
               <Text>Cancel</Text>
             </AlertDialogCancel>
-            <AlertDialogAction onPress={onDelete} className="bg-destructive">
+            <AlertDialogAction
+              onPress={onDelete}
+              className="bg-destructive"
+              accessibilityLabel={`Confirm delete ${game.presName} game`}
+              accessibilityHint="Permanently deletes this game save"
+            >
               <Text>Delete</Text>
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -62,6 +81,17 @@ export function GameActions({
         size="icon"
         disabled={game.status !== "active" || isLoading}
         onPress={onLoad}
+        accessibilityLabel={
+          game.status !== "active"
+            ? `Cannot load completed game for ${game.presName}`
+            : `Load ${game.presName} game`
+        }
+        accessibilityHint={
+          game.status !== "active"
+            ? "This game has been completed and cannot be loaded"
+            : "Continue playing this Press Secretary game"
+        }
+        accessibilityState={{ disabled: game.status !== "active" || isLoading }}
       >
         <Play className="text-background" size={18} />
       </Button>

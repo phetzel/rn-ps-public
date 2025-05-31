@@ -36,15 +36,31 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
       }
     >
       <View className="gap-4">
-        <Tabs value={currentTab} onValueChange={setCurrentTab}>
+        <Tabs
+          value={currentTab}
+          onValueChange={setCurrentTab}
+          accessibilityLabel="Archive sections"
+        >
           <TabsList className="flex-row">
-            <TabsTrigger value="exchanges" className="flex-1">
+            <TabsTrigger
+              value="exchanges"
+              className="flex-1"
+              accessibilityLabel="Press exchanges"
+            >
               <Text>Exchanges</Text>
             </TabsTrigger>
-            <TabsTrigger value="situations" className="flex-1">
+            <TabsTrigger
+              value="situations"
+              className="flex-1"
+              accessibilityLabel="Press exchanges"
+            >
               <Text>Situations</Text>
             </TabsTrigger>
-            <TabsTrigger value="outcomes" className="flex-1">
+            <TabsTrigger
+              value="outcomes"
+              className="flex-1"
+              accessibilityLabel="Level outcomes"
+            >
               <Text>Outcomes</Text>
             </TabsTrigger>
           </TabsList>

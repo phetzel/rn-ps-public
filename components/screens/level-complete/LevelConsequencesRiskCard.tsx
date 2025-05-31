@@ -66,16 +66,24 @@ export default function LevelConsequencesRiskCard({
   );
 
   return (
-    <Card className="mb-4">
-      <CardHeader>
+    <Card
+      className="mb-4"
+      accessible={true}
+      accessibilityLabel={`Risk assessment card. ${cabinetRisks.length} cabinet members assessed.`}
+    >
+      <CardHeader accessible={true} accessibilityRole="header">
         <CardTitle className="text-lg">Risk Assessment</CardTitle>
         <Text className="text-sm text-muted-foreground">
           Probability calculations based on final level values
         </Text>
       </CardHeader>
-      <CardContent className="gap-4">
+      <CardContent className="gap-4" accessible={false}>
         {/* President and PS Risks */}
-        <View className="gap-4 mb-6">
+        <View
+          className="gap-4 mb-6"
+          accessible={true}
+          accessibilityLabel="Presidential and Press Secretary risks"
+        >
           <PresidentialRiskItem
             title="Impeachment Risk"
             risk={impeachmentRisk}
@@ -87,8 +95,12 @@ export default function LevelConsequencesRiskCard({
         </View>
 
         {/* Cabinet Member Risks */}
-        <View className="gap-3">
-          <Text className="text-base font-medium">
+        <View
+          className="gap-3"
+          accessible={true}
+          accessibilityLabel={`Cabinet member firing risks: ${cabinetRisks.length} members. ${firedMembers.length} were fired this month.`}
+        >
+          <Text className="text-base font-medium" accessibilityRole="header">
             Cabinet Member Firing Risks
           </Text>
           {cabinetRisks.map((cabinetMember) => (

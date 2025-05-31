@@ -18,14 +18,26 @@ const BriefingSituationItemHeader = ({
 
   return (
     <CardHeader className="gap-2">
-      <View className="flex-row justify-between items-center">
-        <View className="flex-1 flex-row items-center gap-2 mr-2">
+      <View
+        className="flex-row justify-between items-center"
+        accessible={true}
+        accessibilityLabel={`${type} situation: ${title}`}
+      >
+        <View
+          className="flex-1 flex-row items-center gap-2 mr-2"
+          accessible={true}
+          accessibilityLabel={`Situation title: ${title}`}
+        >
           <SituationTypeIcon type={type} />
           <CardTitle className="text-xl flex-shrink">{title}</CardTitle>
         </View>
         <SituationStatusBadge status={type} />
       </View>
-      <CardDescription>{description}</CardDescription>
+      <CardDescription
+        accessibilityLabel={`Situation description: ${description}`}
+      >
+        {description}
+      </CardDescription>
     </CardHeader>
   );
 };

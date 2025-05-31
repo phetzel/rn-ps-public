@@ -12,12 +12,23 @@ const ConferenceInfoSituationItem = ({
   situation,
 }: ConferenceInfoSituationItemProps) => {
   return (
-    <View className="gap-4 mb-6 px-8 pb-8 border-b border-border">
-      <View className="gap-4">
-        <Text className="text-2xl font-bold text-center">
+    <View
+      className="gap-4 mb-6 px-8 pb-8 border-b border-border"
+      accessible={true}
+      accessibilityLabel={`Situation: ${situation.title}. ${situation.description}`}
+    >
+      <View className="gap-4" accessible={false}>
+        <Text
+          className="text-2xl font-bold text-center"
+          accessibilityRole="header"
+          accessibilityLabel={`Situation title: ${situation.title}`}
+        >
           {situation.title}
         </Text>
-        <Text className="text-base text-muted-foreground text-center">
+        <Text
+          className="text-base text-muted-foreground text-center"
+          accessibilityLabel={`Situation description: ${situation.description}`}
+        >
           {situation.description}
         </Text>
       </View>

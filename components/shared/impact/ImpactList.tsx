@@ -13,14 +13,14 @@ import { createCabinetMemberMap } from "~/lib/utils";
 import { Separator } from "~/components/ui/separator";
 import { staticJournalists, staticPublications } from "~/lib/data/staticMedia";
 import type {
-  ExchangeImpacts,
+  DisplayImpacts,
   CabinetStaticId,
   SubgroupStaticId,
   JournalistStaticId,
 } from "~/types";
 
 interface ImpactListProps {
-  impacts: ExchangeImpacts;
+  impacts: DisplayImpacts;
   game: Game | null | undefined;
   cabinetMembers: CabinetMember[];
   subgroupApprovals: SubgroupApproval[];
@@ -85,10 +85,13 @@ const ImpactList = ({
     };
   };
 
+  const isExchangeImpacts = "president" in impacts || "journalists" in impacts;
+  const isSituationImpacts = "subgroups" in impacts;
+
   return (
     <View className="gap-4 px-4">
       {/* President Impact */}
-      {impacts.president && (
+      {isExchangeImpacts && impacts.president && (
         <>
           <ImpactItem
             name={game?.presName ?? "President"}
@@ -98,8 +101,7 @@ const ImpactList = ({
             entityType="president"
           />
           {/* Add separator if there are more impacts after this */}
-          {(Object.keys(impacts.cabinet || {}).length > 0 ||
-            Object.keys(impacts.subgroups || {}).length > 0) && <Separator />}
+          {Object.keys(impacts.cabinet || {}).length > 0 && <Separator />}
         </>
       )}
 
@@ -111,6 +113,7 @@ const ImpactList = ({
             const { name, title } = getCabinetDetails(staticId);
             const isLastCabinetImpact = index === array.length - 1;
             const hasMoreImpacts =
+              isSituationImpacts &&
               Object.keys(impacts.subgroups || {}).length > 0;
 
             return (
@@ -130,14 +133,13 @@ const ImpactList = ({
         )}
 
       {/* Subgroup Impacts */}
-      {impacts.subgroups &&
+      {isSituationImpacts &&
+        impacts.subgroups &&
         Object.entries(impacts.subgroups).map(
           ([staticIdString, impact], index, array) => {
             const staticId = staticIdString as SubgroupStaticId;
             const { name, title } = getSubgroupDetails(staticId);
             const isLastSubgroupImpact = index === array.length - 1;
-            const hasMoreImpacts =
-              Object.keys(impacts.journalists || {}).length > 0;
 
             return (
               <React.Fragment key={staticId}>
@@ -149,14 +151,15 @@ const ImpactList = ({
                   entityType="political"
                 />
                 {/* Add separator if not the last impact */}
-                {(!isLastSubgroupImpact || hasMoreImpacts) && <Separator />}
+                {!isLastSubgroupImpact && <Separator />}
               </React.Fragment>
             );
           }
         )}
 
       {/* Journalist Impacts */}
-      {impacts.journalists &&
+      {isExchangeImpacts &&
+        impacts.journalists &&
         Object.entries(impacts.journalists).map(
           ([staticIdString, impact], index, array) => {
             const staticId = staticIdString as JournalistStaticId;

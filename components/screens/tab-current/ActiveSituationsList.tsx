@@ -14,7 +14,11 @@ interface ActiveSituationsListProps {
 
 const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
   return (
-    <View className="gap-2 flex-1">
+    <View
+      className="gap-2 flex-1"
+      accessible={true}
+      accessibilityLabel={`Active situations: ${situations?.length || 0} total`}
+    >
       <Text className="text-2xl font-semibold">Active Situations</Text>
 
       {!situations?.length ? (
@@ -27,6 +31,8 @@ const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
           ItemSeparatorComponent={() => <View className="h-4" />}
           contentContainerStyle={{ paddingVertical: 8 }}
           style={{ flexGrow: 1 }}
+          accessibilityLabel={`List of ${situations.length} active situations`}
+          accessible={false}
         />
       )}
     </View>

@@ -15,11 +15,25 @@ const ConferenceInfo = ({ levelId, situations }: ConferenceInfoProps) => {
   if (!levelId) return null;
 
   return (
-    <View className="gap-4">
-      <Text className="text-3xl font-bold text-center">Briefing Notes</Text>
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Briefing notes: ${situations.length} active situations to review`}
+    >
+      <Text
+        className="text-3xl font-bold text-center"
+        accessibilityRole="header"
+        accessibilityLabel="Briefing Notes section"
+      >
+        Briefing Notes
+      </Text>
 
-      <ScrollView>
-        {situations.map((situation) => (
+      <ScrollView
+        accessible={true}
+        accessibilityLabel="Situation details"
+        accessibilityHint="Scroll to review all active situations and their details"
+      >
+        {situations.map((situation, index) => (
           <ConferenceInfoSituationItem
             key={situation.id}
             situation={situation}

@@ -77,14 +77,32 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
     }));
 
   return (
-    <View className="gap-2">
-      {publicationsWithData.map((publication) => {
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`Media monthly update: ${publicationsWithData.length} publications`}
+    >
+      {publicationsWithData.map((publication, pubIndex) => {
         const publicationJournalists =
           journalistsByPublication[publication.id] || [];
 
+        const approvalChange =
+          publication.finalApproval - publication.initialApproval;
+
         return (
-          <View key={publication.id} className="gap-4">
-            <View className="gap-2">
+          <View
+            key={publication.id}
+            className="gap-4"
+            accessible={true}
+            accessibilityLabel={`${publication.name}. ${
+              publication.hasApprovalData
+                ? `Approval changed by ${
+                    approvalChange > 0 ? "+" : ""
+                  }${approvalChange}%.`
+                : ""
+            } ${publicationJournalists.length} journalists.`}
+          >
+            <View className="gap-2" accessible={false}>
               {/* Publication Header */}
               <PublicationStateHeader
                 name={publication.name}
@@ -104,14 +122,25 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
               {publicationJournalists.length > 0 && (
                 <Accordion type="single">
                   <AccordionItem value={publication.id}>
-                    <AccordionTrigger className="py-3">
+                    <AccordionTrigger
+                      className="py-3"
+                      accessibilityLabel={`View ${publicationJournalists.length} journalists from ${publication.name}`}
+                      accessibilityHint="Expand to see individual journalist relationship changes"
+                    >
                       <Text>Journalists ({publicationJournalists.length})</Text>
                     </AccordionTrigger>
 
                     <AccordionContent>
-                      <View className="gap-4">
-                        <View className="gap-2">
-                          <Text className="text-xl font-medium">
+                      <View
+                        className="gap-4"
+                        accessible={true}
+                        accessibilityLabel={`${publication.name} journalists: ${publicationJournalists.length} total`}
+                      >
+                        <View className="gap-2" accessible={false}>
+                          <Text
+                            className="text-xl font-medium"
+                            accessibilityRole="header"
+                          >
                             Journalists
                           </Text>
 
@@ -124,8 +153,21 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
 
                               if (!initialValues || !finalValues) return null;
 
+                              const relationshipChange =
+                                finalValues.psRelationship -
+                                initialValues.psRelationship;
+
                               return (
-                                <View key={journalist.id} className="gap-2">
+                                <View
+                                  key={journalist.id}
+                                  className="gap-2"
+                                  accessible={true}
+                                  accessibilityLabel={`${
+                                    journalist.name
+                                  }. Relationship changed by ${
+                                    relationshipChange > 0 ? "+" : ""
+                                  }${relationshipChange}%.`}
+                                >
                                   <Text className="text-xl font-bold leading-tight">
                                     {journalist.name}
                                   </Text>

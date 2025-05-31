@@ -29,11 +29,30 @@ const ConferenceAnswer = ({
 
   const isDisabled = isClassified && !isAuthorized;
 
+  // Generate accessibility label based on answer state
+  const getAccessibilityLabel = () => {
+    if (isClassified && isDisabled) {
+      return `Classified answer option unavailable. Requires authorization from ${
+        authorizedCabinetMember?.name || "cabinet member"
+      }.`;
+    }
+    if (isClassified && isAuthorized) {
+      return `Classified answer option: ${answer.text}`;
+    }
+    return `Answer option: ${answer.text}`;
+  };
+
   return (
     <Pressable
       key={answer.id}
       onPress={() => !isDisabled && onPress(answer.id)}
       disabled={isDisabled}
+      accessibilityRole="button"
+      accessibilityLabel={getAccessibilityLabel()}
+      accessibilityHint={
+        isDisabled ? undefined : "Double tap to select this answer"
+      }
+      accessibilityState={{ disabled: isDisabled }}
     >
       {({ pressed }) => (
         <View
@@ -43,24 +62,39 @@ const ConferenceAnswer = ({
             pressed && !isDisabled && "bg-accent",
             isDisabled && "opacity-50"
           )}
+          accessible={false}
         >
           {isClassified && !isDisabled && (
-            <View className="flex-1 justify-center items-center py-2">
+            <View
+              className="flex-1 justify-center items-center py-2"
+              accessible={true}
+              accessibilityLabel="Classified information indicator"
+            >
               <FileText className="text-primary" />
             </View>
           )}
 
-          <View className="flex-row justify-between items-center">
+          <View
+            className="flex-row justify-between items-center"
+            accessible={false}
+          >
             <View className="flex-1">
               {isClassified && isDisabled ? (
-                <View className="items-center gap-2 py-2">
+                <View
+                  className="items-center gap-2 py-2"
+                  accessible={true}
+                  accessibilityLabel="Locked classified answer - requires cabinet authorization"
+                >
                   <Lock className="text-muted-foreground" />
                   <Text className="text-muted-foreground text-center">
                     This answer requires classified information.
                   </Text>
                 </View>
               ) : (
-                <Text className="text-foreground text-left flex-wrap">
+                <Text
+                  className="text-foreground text-left flex-wrap"
+                  accessible={false}
+                >
                   {answer.text}
                 </Text>
               )}
@@ -73,7 +107,10 @@ const ConferenceAnswer = ({
                   cabinetMemberName={authorizedCabinetMember.name}
                 />
               ) : (
-                <ChevronRight className="text-muted-foreground" />
+                <ChevronRight
+                  className="text-muted-foreground"
+                  accessibilityLabel="Select this answer"
+                />
               )}
             </View>
           </View>

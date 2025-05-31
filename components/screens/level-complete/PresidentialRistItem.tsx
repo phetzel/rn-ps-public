@@ -34,16 +34,58 @@ export default function PresidentialRiskItem({
 }: PresidentialRiskItemProps) {
   const riskLevel = getRiskLevel(risk);
   const textColor = getRiskTextColor(riskLevel);
+  const formattedRisk = formatProbability(risk);
+
+  // Generate comprehensive accessibility description
+  const getRiskDescription = () => {
+    switch (riskLevel) {
+      case "safe":
+        return "No risk";
+      case "low":
+        return "Low risk";
+      case "medium":
+        return "Medium risk";
+      case "high":
+        return "High risk";
+      default:
+        return "Unknown risk";
+    }
+  };
 
   return (
-    <View className="gap-2">
-      <View className="flex-row justify-between items-center">
-        <Text className="text-sm font-medium">{title}</Text>
-        <Text className={`text-sm font-bold ${textColor}`}>
-          {formatProbability(risk)}
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`${title}: ${getRiskDescription()} at ${formattedRisk}`}
+    >
+      <View
+        className="flex-row justify-between items-center"
+        accessible={false}
+      >
+        <Text
+          className="text-sm font-medium"
+          accessibilityLabel={`Risk category: ${title}`}
+        >
+          {title}
+        </Text>
+        <Text
+          className={`text-sm font-bold ${textColor}`}
+          accessibilityLabel={`Risk level: ${getRiskDescription()} at ${formattedRisk}`}
+        >
+          {formattedRisk}
         </Text>
       </View>
-      <Progress value={risk * 100} className="h-2" />
+      <Progress
+        value={risk * 100}
+        className="h-2"
+        accessibilityLabel={`${title} risk indicator: ${formattedRisk}`}
+        accessibilityValue={{
+          min: 0,
+          max: 100,
+          now: risk * 100,
+          text: `${formattedRisk} risk`,
+        }}
+      />
     </View>
   );
 }

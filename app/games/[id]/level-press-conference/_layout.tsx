@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { Stack } from "expo-router";
 import { Pressable, Platform, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
-import { useRouter } from "expo-router";
 
 import {
   BottomSheetModal,
@@ -53,6 +52,13 @@ export default function LevelPressConferenceLayout() {
           headerRight: () => (
             <Pressable
               onPress={handleInfo}
+              accessibilityRole="button"
+              accessibilityLabel={
+                isBottomSheetOpen
+                  ? "Close game information"
+                  : "Open game information"
+              }
+              accessibilityHint="Shows current relationships and approval ratings"
               className="web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2"
             >
               {({ pressed }) => (

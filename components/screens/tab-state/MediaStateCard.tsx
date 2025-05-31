@@ -22,7 +22,10 @@ interface MediaStateCardProps {
 
 export function MediaStateCard({ publications }: MediaStateCardProps) {
   return (
-    <Card>
+    <Card
+      accessible={true}
+      accessibilityLabel={`Media outlets: ${publications.length} publications tracked`}
+    >
       <CardHeader className="pb-4 flex-row items-center gap-2">
         <Newspaper className="text-primary" />
         <CardTitle>Media Outlets</CardTitle>

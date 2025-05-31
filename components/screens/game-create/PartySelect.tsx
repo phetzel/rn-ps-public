@@ -26,6 +26,9 @@ export function PartySelect({
     return party.charAt(0).toUpperCase() + party.slice(1);
   };
 
+  const groupId = "presidentLeaningGroup";
+  const errorId = "presidentLeaningError";
+
   return (
     <View>
       <Label
@@ -42,7 +45,9 @@ export function PartySelect({
             value={value}
             onValueChange={onChange}
             className="flex-row justify-between"
-            aria-labelledby="presidentLeaningLabel"
+            accessibilityRole="radiogroup" // Explicit role
+            accessibilityLabelledBy="presidentLeaningLabel"
+            aria-describedby={error ? errorId : undefined}
           >
             {partyOptions.map((party) => (
               <View key={party} className="flex flex-row items-center gap-2">
@@ -69,7 +74,13 @@ export function PartySelect({
         )}
       />
       {error && (
-        <Text className="text-destructive mt-1 text-sm">{error.message}</Text>
+        <Text
+          nativeID={errorId}
+          accessibilityRole="alert"
+          className="text-destructive mt-1 text-sm"
+        >
+          {error.message}
+        </Text>
       )}
     </View>
   );

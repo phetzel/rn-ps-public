@@ -15,8 +15,15 @@ export function GameTimeInfo({ lastPlayed }: GameTimeInfoProps) {
     minute: "2-digit",
   });
 
+  const accessibilityTimeLabel = `Last played on ${lastPlayedDate} at ${lastPlayedTime}`;
+
   return (
-    <View className="flex-row items-center">
+    <View
+      className="flex-row items-center"
+      accessible={true}
+      accessibilityRole="text"
+      accessibilityLabel={accessibilityTimeLabel}
+    >
       <Clock className="mr-1 text-muted-foreground" />
       <View>
         <Text className="text-xs text-muted-foreground">Last played:</Text>

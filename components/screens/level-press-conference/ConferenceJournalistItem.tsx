@@ -59,10 +59,23 @@ const ConferenceJournalistItem = ({
       onPress={() => !isDisabled && onSelect(pressExchange)}
       disabled={isDisabled}
       className={`${isDisabled ? "opacity-50" : ""}`}
+      accessibilityRole="button"
+      accessibilityLabel={
+        isDisabled
+          ? `Journalist unavailable: ${disabledReason}`
+          : "Select this journalist to see their question"
+      }
+      accessibilityHint={
+        isDisabled ? undefined : "Double tap to view this journalist's question"
+      }
+      accessibilityState={{ disabled: isDisabled }}
     >
       <Card>
         <CardContent className="p-4">
-          <View className="flex-row justify-between items-center">
+          <View
+            className="flex-row justify-between items-center"
+            accessible={false}
+          >
             <View className="flex-1">
               <JournalistDisplay journalistId={pressExchange.journalist_id} />
             </View>
@@ -72,7 +85,10 @@ const ConferenceJournalistItem = ({
                   <Text className="text-xs text-center">{disabledReason}</Text>
                 </InfoTooltip>
               ) : (
-                <ChevronRight className="text-muted-foreground" />
+                <ChevronRight
+                  className="text-muted-foreground"
+                  accessibilityLabel="Available to select"
+                />
               )}
             </View>
           </View>

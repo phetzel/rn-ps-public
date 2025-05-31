@@ -43,15 +43,40 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
     }
   };
 
+  const getActionLabel = (status: LevelStatus) => {
+    switch (status) {
+      case LevelStatus.Briefing:
+        return "Start briefing to review situations and prepare for press conference";
+      case LevelStatus.PressConference:
+        return "Start press conference to answer journalist questions";
+      case LevelStatus.PressResults:
+        return "Review press conference results and relationship changes";
+      case LevelStatus.SituationOutcomes:
+        return "Review situation outcomes and their consequences";
+      case LevelStatus.Completed:
+        return "Proceed to next month";
+      default:
+        return "Continue current level";
+    }
+  };
+
   const handleNavigate = async () => {
     await navigateToCurrentLevelScreen();
   };
 
   return (
-    <Card className="border-l-4 border-l-primary">
+    <Card
+      className="border-l-4 border-l-primary"
+      accessible={true}
+      accessibilityLabel={`Current level: Month ${level.month}, Year ${level.year}. Status: ${level.status}`}
+    >
       <CardHeader className="flex-row items-center justify-between gap-2">
         <View className="gap-2">
-          <View className="flex-row items-center gap-2">
+          <View
+            className="flex-row items-center gap-2"
+            accessible={true}
+            accessibilityLabel={`Month ${level.month}, Year ${level.year}`}
+          >
             <CalendarClock className="h-5 w-5 text-primary" />
             <CardTitle className="text-xl font-bold">
               Month {level.month} Year {level.year}
@@ -60,7 +85,13 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
           <LevelStatusBadge status={level.status} />
         </View>
 
-        <Button onPress={handleNavigate} className="flex-row gap-2">
+        <Button
+          onPress={handleNavigate}
+          className="flex-row gap-2"
+          accessible={true}
+          accessibilityLabel={getActionLabel(level.status)}
+          accessibilityHint="Navigate to the current step in this month's activities"
+        >
           <Text>
             {level.status === LevelStatus.Briefing
               ? "Start"
@@ -77,7 +108,12 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
 
       <CardContent className="flex-row items-center justify-between gap-2">
         <View className="flex-1 justify-center gap-2">
-          <Text className="text-sm text-muted-foreground">
+          <Text
+            className="text-sm text-muted-foreground"
+            accessibilityLabel={`Current status: ${renderStatusText(
+              level.status
+            )}`}
+          >
             {renderStatusText(level.status)}
           </Text>
         </View>

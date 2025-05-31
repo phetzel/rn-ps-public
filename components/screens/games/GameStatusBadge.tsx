@@ -9,15 +9,24 @@ interface GameStatusBadgeProps {
 }
 
 export function GameStatusBadge({ status }: GameStatusBadgeProps) {
+  const isActive = status === "active";
+
   return (
-    <Badge variant={status === "active" ? "default" : "secondary"}>
+    <Badge
+      variant={status === "active" ? "default" : "secondary"}
+      accessible={true}
+      accessibilityLabel={`Game status: ${isActive ? "Active" : "Completed"}`}
+      accessibilityHint={
+        isActive ? "This game can be continued" : "This game has been finished"
+      }
+    >
       <Text
         className={cn(
           "text-base font-medium",
           status === "active" ? "text-background" : "text-secondary-foreground"
         )}
       >
-        {status === "active" ? "Active" : "Completed"}
+        {isActive ? "Active" : "Completed"}
       </Text>
     </Badge>
   );

@@ -64,16 +64,38 @@ const SituationOutcomesContent = ({
   };
 
   return (
-    <View className="gap-4">
-      <Tabs value={currentTab} onValueChange={setCurrentTab}>
+    <View
+      className="gap-4"
+      accessibilityLabel="Situation outcomes, media coverage, and relationship changes"
+    >
+      <Tabs
+        value={currentTab}
+        onValueChange={setCurrentTab}
+        accessibilityLabel="Situation results sections"
+      >
         <TabsList className="flex-row w-full">
-          <TabsTrigger value="situations" className="flex-1">
+          <TabsTrigger
+            value="situations"
+            className="flex-1"
+            accessibilityLabel="Situation outcomes"
+            accessibilityHint="View how situations were resolved and their impacts"
+          >
             <Text>Situations</Text>
           </TabsTrigger>
-          <TabsTrigger value="media" className="flex-1">
+          <TabsTrigger
+            value="media"
+            className="flex-1"
+            accessibilityLabel="Media coverage"
+            accessibilityHint="See how media reported on the situations and events"
+          >
             <Text>Media</Text>
           </TabsTrigger>
-          <TabsTrigger value="relationships" className="flex-1">
+          <TabsTrigger
+            value="relationships"
+            className="flex-1"
+            accessibilityLabel="Relationship impacts"
+            accessibilityHint="Review how situation outcomes affected your relationships"
+          >
             <Text>Relationships</Text>
           </TabsTrigger>
         </TabsList>

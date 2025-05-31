@@ -43,11 +43,20 @@ const ConferenceContent = ({
   }, [pressExchanges, selectedExchangeId]);
 
   return (
-    <View className="gap-4">
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel="Press conference interface"
+      accessibilityHint="Navigate through press conference questions and answers"
+    >
       {isPressConferenceComplete ? (
         <ConferenceCompletion levelId={levelId} />
       ) : (
-        <View className="gap-4">
+        <View
+          className="gap-4"
+          accessible={true}
+          accessibilityLabel={`Press conference in progress. ${questionsTakenCount} of ${QUESTIONS_PER_PRESS_CONFERENCE} questions answered`}
+        >
           <ConferenceProgress
             maxQuestions={QUESTIONS_PER_PRESS_CONFERENCE}
             answeredCount={questionsTakenCount}
@@ -58,7 +67,11 @@ const ConferenceContent = ({
               onSelectExchange={handleSelectExchange}
             />
           ) : (
-            <View>
+            <View
+              accessible={true}
+              accessibilityLabel="Question and answer interface"
+              accessibilityHint="Review the question and select your response"
+            >
               <ConferenceQuestionAnswer
                 pressExchange={selectedExchange}
                 handleClear={handleClearSelectedExchange}

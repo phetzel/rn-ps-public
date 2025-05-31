@@ -25,9 +25,17 @@ const ConferenceJournalistSelect = ({
     });
   }, [pressExchanges]);
 
+  const availableJournalists = sortedExchanges.filter(
+    (exchange) => exchange.parseProgress?.currentQuestionId !== null
+  );
+
   return (
-    <View className="gap-4">
-      <View className="mb-4">
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Journalist selection screen. ${availableJournalists.length} journalists available out of ${sortedExchanges.length} total.`}
+    >
+      <View className="mb-4" accessible={true} accessibilityRole="header">
         <Text className="text-xl font-bold text-center">
           Select a Journalist
         </Text>
@@ -36,13 +44,20 @@ const ConferenceJournalistSelect = ({
         </Text>
       </View>
 
-      {sortedExchanges.map((exchange) => (
-        <ConferenceJournalistItem
-          key={exchange.id}
-          pressExchange={exchange}
-          onSelect={onSelectExchange}
-        />
-      ))}
+      <View
+        accessible={true}
+        accessibilityLabel="List of journalists"
+        accessibilityHint="Select a journalist to see their question"
+        className="gap-4"
+      >
+        {sortedExchanges.map((exchange, index) => (
+          <ConferenceJournalistItem
+            key={exchange.id}
+            pressExchange={exchange}
+            onSelect={onSelectExchange}
+          />
+        ))}
+      </View>
     </View>
   );
 };

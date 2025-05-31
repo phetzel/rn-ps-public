@@ -51,7 +51,13 @@ function GameCard({ game }: GameCardProps) {
   };
 
   return (
-    <Card className="w-full overflow-hidden border-l-4 border-l-primary">
+    <Card
+      className="w-full overflow-hidden border-l-4 border-l-primary"
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${game.presName} Press Secretary game. Year ${game.currentYear}, Month ${game.currentMonth}. Status: ${game.status}`}
+      accessibilityHint="Double tap to view game details and actions"
+    >
       <GameCardHeader game={game} />
       <CardContent>
         <GameMetadata game={game} />

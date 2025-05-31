@@ -35,8 +35,17 @@ const ConferenceCompletion = ({
   };
 
   return (
-    <View className="flex-1 justify-center items-center gap-6 py-24">
-      <View className="items-center">
+    <View
+      className="flex-1 justify-center items-center gap-6 py-24"
+      accessible={true}
+      accessibilityLabel="Press conference completed successfully"
+    >
+      <View
+        className="items-center"
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel="Press conference completion message"
+      >
         <Text className="text-2xl font-bold text-center mb-2">
           Press Conference Complete
         </Text>
@@ -45,7 +54,12 @@ const ConferenceCompletion = ({
         </Text>
       </View>
 
-      <Button onPress={handleComplete} className="px-8 py-3">
+      <Button
+        onPress={handleComplete}
+        className="px-8 py-3"
+        accessibilityLabel="Complete press conference and proceed to results"
+        accessibilityHint="Navigate to see the outcomes of your press conference answers"
+      >
         <Text className="text-white font-semibold">Complete</Text>
       </Button>
     </View>

@@ -36,40 +36,61 @@ export function SubgroupStateCard({
   const categories = Object.keys(groupedApprovals) as SubgroupCategory[];
 
   return (
-    <View className="gap-4">
-      {categories.map((category, categoryIdx) => (
-        <Card key={categoryIdx}>
-          <CardHeader className="pb-4 flex-row items-center gap-2">
-            <SubgroupCategoryIcon category={category} />
-            <CardTitle>
-              {category.charAt(0).toUpperCase() + category.slice(1)} Groups
-            </CardTitle>
-          </CardHeader>
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Public opinion groups: ${subgroupApprovals.length} demographic groups across ${categories.length} categories`}
+    >
+      {categories.map((category, categoryIdx) => {
+        const categoryGroups = groupedApprovals[category];
+        const categoryAverage = Math.round(
+          categoryGroups.reduce((sum, group) => sum + group.approvalRating, 0) /
+            categoryGroups.length
+        );
 
-          <CardContent className="gap-2">
-            {groupedApprovals[category].map((subgroup, subgroupIdx) => {
-              // Get static data for each subgroup
-              const subgroupStaticData = subgroup.staticData;
-              return (
-                <View key={subgroup.id} className="gap-2">
-                  <Text className="text-xl font-bold leading-tight">
-                    {subgroupStaticData.name}
-                  </Text>
+        return (
+          <Card
+            key={categoryIdx}
+            accessible={true}
+            accessibilityLabel={`${category} groups: ${categoryGroups.length} groups, average approval ${categoryAverage}%`}
+          >
+            <CardHeader className="pb-4 flex-row items-center gap-2">
+              <SubgroupCategoryIcon category={category} />
+              <CardTitle>
+                {category.charAt(0).toUpperCase() + category.slice(1)} Groups
+              </CardTitle>
+            </CardHeader>
 
-                  <StateProgress
-                    label="Approval Rating"
-                    value={subgroup.approvalRating}
-                  />
+            <CardContent className="gap-2">
+              {groupedApprovals[category].map((subgroup, subgroupIdx) => {
+                // Get static data for each subgroup
+                const subgroupStaticData = subgroup.staticData;
+                return (
+                  <View
+                    key={subgroup.id}
+                    className="gap-2"
+                    accessible={true}
+                    accessibilityLabel={`${subgroupStaticData.name}: ${subgroup.approvalRating}% approval`}
+                  >
+                    <Text className="text-xl font-bold leading-tight">
+                      {subgroupStaticData.name}
+                    </Text>
 
-                  {subgroupIdx !== groupedApprovals[category].length - 1 && (
-                    <Separator className="mt-2" />
-                  )}
-                </View>
-              );
-            })}
-          </CardContent>
-        </Card>
-      ))}
+                    <StateProgress
+                      label="Approval Rating"
+                      value={subgroup.approvalRating}
+                    />
+
+                    {subgroupIdx !== groupedApprovals[category].length - 1 && (
+                      <Separator className="mt-2" />
+                    )}
+                  </View>
+                );
+              })}
+            </CardContent>
+          </Card>
+        );
+      })}
     </View>
   );
 }

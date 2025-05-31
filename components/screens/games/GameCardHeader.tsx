@@ -11,9 +11,16 @@ interface GameCardHeaderProps {
 export function GameCardHeader({ game }: GameCardHeaderProps) {
   return (
     <CardHeader>
-      <View className="flex-row items-center gap-2">
+      <View
+        className="flex-row items-center gap-2"
+        accessible={true}
+        accessibilityLabel={`Game progress and status`}
+      >
         <GameStatusBadge status={game.status} />
-        <CardDescription className="text-lg text-muted-foreground">
+        <CardDescription
+          className="text-lg text-muted-foreground"
+          accessibilityLabel={`Currently in Year ${game.currentYear}, Month ${game.currentMonth}`}
+        >
           Year {game.currentYear}, Month {game.currentMonth}
         </CardDescription>
       </View>

@@ -86,9 +86,13 @@ export default function RootLayout() {
             padding: 20,
           }}
         >
-          <Text>Critical Error:</Text>
+          <Text accessibilityRole="alert" accessibilityLiveRegion="assertive">
+            Critical Error:
+          </Text>
           <Text>{dbError}</Text>
-          <Text>Please restart the application.</Text>
+          <Text accessibilityHint="Please restart the application to resolve this issue">
+            Please restart the application.
+          </Text>
         </View>
       </ThemeProvider>
     );

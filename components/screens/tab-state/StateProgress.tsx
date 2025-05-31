@@ -27,12 +27,28 @@ export function StateProgress({
   }[size];
 
   return (
-    <View className="gap-1">
+    <View
+      className="gap-1"
+      accessible={true}
+      accessibilityLabel={`${label}: ${value}%`}
+    >
       <View className={`flex-row justify-between items-center`}>
         <Text className={labelSize}>{label}</Text>
-        <Text className={labelSize}>{value}%</Text>
+        <Text className={labelSize} accessibilityLabel={`${value} percent`}>
+          {value}%
+        </Text>
       </View>
-      <Progress value={value} className={progressHeight} />
+      <Progress
+        value={value}
+        className={progressHeight}
+        accessibilityLabel={`${label} progress bar at ${value} percent`}
+        accessibilityValue={{
+          min: 0,
+          max: 100,
+          now: value,
+          text: `${value}%`,
+        }}
+      />
     </View>
   );
 }

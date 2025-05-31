@@ -22,7 +22,11 @@ const LevelConsequences = ({
 
   if (!final || !consequences) {
     return (
-      <View className="p-4">
+      <View
+        className="p-4"
+        accessible={true}
+        accessibilityLabel="Consequence data not available - level may not be complete"
+      >
         <Text className="text-muted-foreground">
           Consequence data not available - level may not be complete.
         </Text>
@@ -31,7 +35,11 @@ const LevelConsequences = ({
   }
 
   return (
-    <View className="gap-4">
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Level consequences and risk assessment.`}
+    >
       <LevelConsequencesRiskCard
         finalSnapshot={final}
         cabinetMembers={cabinetMembers}

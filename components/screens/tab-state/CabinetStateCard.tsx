@@ -16,34 +16,45 @@ interface CabinetStateCardProps {
 
 const CabinetStateCard = ({ cabinetMembers }: CabinetStateCardProps) => {
   return (
-    <Card>
+    <Card
+      accessible={true}
+      accessibilityLabel={`Cabinet members: ${cabinetMembers.length} total`}
+    >
       <CardHeader className="pb-4 flex-row items-center gap-2">
         <Briefcase className="text-primary" />
         <CardTitle>Cabinet</CardTitle>
       </CardHeader>
 
       <CardContent className="gap-4">
-        {cabinetMembers.map((member, idx) => (
-          <View key={member.id} className="gap-2">
-            <CabinetMemberName cabinetMember={member} />
+        {cabinetMembers.map((member, idx) => {
+          const memberStaticData = member.staticData;
+          return (
+            <View
+              key={member.id}
+              className="gap-2"
+              accessible={true}
+              accessibilityLabel={`${memberStaticData.cabinetName}. Approval: ${member.approvalRating}%. Relationship: ${member.psRelationship}%`}
+            >
+              <CabinetMemberName cabinetMember={member} />
 
-            <View className="gap-2">
-              <StateProgress
-                label="Approval Rating"
-                value={member.approvalRating}
-              />
+              <View className="gap-2">
+                <StateProgress
+                  label="Approval Rating"
+                  value={member.approvalRating}
+                />
 
-              <StateProgress
-                label="Relationship with You"
-                value={member.psRelationship}
-              />
+                <StateProgress
+                  label="Relationship with You"
+                  value={member.psRelationship}
+                />
+              </View>
+
+              {idx !== cabinetMembers.length - 1 && (
+                <Separator className="mt-4" />
+              )}
             </View>
-
-            {idx !== cabinetMembers.length - 1 && (
-              <Separator className="mt-4" />
-            )}
-          </View>
-        ))}
+          );
+        })}
       </CardContent>
     </Card>
   );

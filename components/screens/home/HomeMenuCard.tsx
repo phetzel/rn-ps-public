@@ -50,10 +50,17 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
   return (
     <Card className="w-full max-w-sm">
       <CardHeader className="items-center gap-2">
-        <CardTitle className="text-center">
+        <CardTitle
+          className="text-center"
+          accessibilityRole="header"
+          accessibilityLabel="Your Press Secretary Career - Main Menu"
+        >
           Your Press Secretary Career
         </CardTitle>
-        <CardDescription className="text-center">
+        <CardDescription
+          className="text-center"
+          accessibilityLabel="Choose to continue an existing game, start a new career, or manage your saved games"
+        >
           Pick up where you left off, start a new career, or browse your
           previous sessions
         </CardDescription>
@@ -61,7 +68,12 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
 
       <CardContent className="gap-4">
         {(isLoading || isGameListLoading) && (
-          <ActivityIndicator size="large" className="my-4" />
+          <ActivityIndicator
+            size="large"
+            className="my-4"
+            accessibilityLabel="Loading games"
+            accessibilityHint="Please wait while your games are being loaded"
+          />
         )}
 
         {error && !isLoading && <ErrorDisplay message={error} />}
@@ -80,6 +92,16 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             onPress={handleNavigateToCreate}
             disabled={!canStartNewGame || isLoading}
             className="flex-row"
+            accessibilityLabel={
+              canStartNewGame
+                ? `Start new Press Secretary game. ${games.length} of ${MAX_ACTIVE_GAMES} game slots used.`
+                : `Cannot start new game. All ${MAX_ACTIVE_GAMES} game slots are full.`
+            }
+            accessibilityHint={
+              canStartNewGame
+                ? "Creates a new 4-year Press Secretary career simulation"
+                : "Delete an existing game to free up a slot for a new game"
+            }
           >
             <Plus className="mr-2 text-foreground" />
             <Text>
@@ -94,6 +116,8 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             variant="secondary"
             onPress={goToGamesList}
             className="flex-row"
+            accessibilityLabel={`Load or manage games. You have ${games.length} total games.`}
+            accessibilityHint="View all your saved games, load a different game, or delete games to free up space"
           >
             <FileText className="mr-2 text-secondary-foreground" />
             <Text>Load / Manage Games</Text>

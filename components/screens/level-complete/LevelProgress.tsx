@@ -50,20 +50,44 @@ export default function LevelProgress({
     medium: "text-base",
   }[size];
 
+  // Generate comprehensive accessibility label
+  const getAccessibilityLabel = () => {
+    if (isNeutral) {
+      return `${label}: No change. Remains at ${finalValue}%.`;
+    }
+    const direction = isPositive ? "increased" : "decreased";
+    return `${label}: ${direction} from ${initialValue}% to ${finalValue}%. Change of ${formattedDifference}.`;
+  };
+
   return (
-    <View className="gap-1">
-      <View className="flex-row justify-between items-center">
+    <View
+      className="gap-1"
+      accessible={true}
+      accessibilityLabel={getAccessibilityLabel()}
+    >
+      <View
+        className="flex-row justify-between items-center"
+        accessible={false}
+      >
         <Text className="font-medium">{label}</Text>
         {!isNeutral &&
           (isPositive ? (
-            <View className="flex-row items-center gap-1">
+            <View
+              className="flex-row items-center gap-1"
+              accessible={true}
+              accessibilityLabel={`Positive change: ${formattedDifference}`}
+            >
               <TrendingUp className={cn("text-green-500", labelSize)} />
               <Text className={cn("text-green-500", labelSize)}>
                 {formattedDifference}
               </Text>
             </View>
           ) : (
-            <View className="flex-row items-center gap-1">
+            <View
+              className="flex-row items-center gap-1"
+              accessible={true}
+              accessibilityLabel={`Negative change: ${formattedDifference}`}
+            >
               <TrendingDown className={cn("text-red-500", labelSize)} />
               <Text className={cn("text-red-500", labelSize)}>
                 {formattedDifference}
@@ -72,7 +96,11 @@ export default function LevelProgress({
           ))}
       </View>
 
-      <View className={cn("relative w-full", progressHeight)}>
+      <View
+        className={cn("relative w-full", progressHeight)}
+        accessible={true}
+        accessibilityLabel={`Progress visualization for ${label}`}
+      >
         <Progress
           value={initialPercentage}
           className={cn(
@@ -80,6 +108,7 @@ export default function LevelProgress({
             progressHeight
           )}
           indicatorClassName={"bg-gray-500"}
+          accessibilityLabel={`Initial value: ${formattedInitial}`}
         />
 
         {!isNeutral && (
@@ -93,15 +122,23 @@ export default function LevelProgress({
               width: `${differencePercentage}%`,
               left: `${initialPercentage}%`,
             }}
+            accessible={true}
+            accessibilityLabel={`Change indicator: ${formattedDifference}`}
           />
         )}
       </View>
 
-      <View className="flex-row justify-between">
-        <Text className={cn("text-muted-foreground", labelSize)}>
+      <View className="flex-row justify-between" accessible={false}>
+        <Text
+          className={cn("text-muted-foreground", labelSize)}
+          accessibilityLabel={`Before: ${formattedInitial}`}
+        >
           Before: {formattedInitial}
         </Text>
-        <Text className={cn("text-muted-foreground", labelSize)}>
+        <Text
+          className={cn("text-muted-foreground", labelSize)}
+          accessibilityLabel={`After: ${formattedFinal}`}
+        >
           After: {formattedFinal}
         </Text>
       </View>

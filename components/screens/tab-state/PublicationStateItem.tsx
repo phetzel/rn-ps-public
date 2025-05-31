@@ -44,8 +44,18 @@ export function PublicationStateItem({
     return null;
   }
 
+  const publicationAccessibilityLabel = `${pubStaticData.name}, ${
+    pubStaticData.politicalLeaning
+  } leaning publication. ${
+    approvalRating ? `Approval rating: ${approvalRating}%.` : ""
+  } ${journalists?.length || 0} journalists.`;
+
   return (
-    <View className="gap-2 px-4">
+    <View
+      className="gap-2 px-4"
+      accessible={true}
+      accessibilityLabel={publicationAccessibilityLabel}
+    >
       <PublicationStateHeader
         name={pubStaticData.name}
         politicalLeaning={pubStaticData.politicalLeaning}
@@ -60,7 +70,13 @@ export function PublicationStateItem({
       {/* Journalists */}
       <Accordion type="single" className="w-full">
         <AccordionItem value={publication.id}>
-          <AccordionTrigger className="py-3">
+          <AccordionTrigger
+            className="py-3"
+            accessibilityLabel={`${journalists?.length || 0} journalists from ${
+              pubStaticData.name
+            }`}
+            accessibilityHint="Expand to see individual journalist relationships"
+          >
             <Text>Journalists ({journalists?.length})</Text>
           </AccordionTrigger>
 
@@ -74,7 +90,12 @@ export function PublicationStateItem({
                   {journalists.map((journalist, idx) => {
                     const journoStaticData = journalist.staticData;
                     return (
-                      <View key={journalist.id} className="gap-2">
+                      <View
+                        key={journalist.id}
+                        className="gap-2"
+                        accessible={true}
+                        accessibilityLabel={`${journoStaticData.name}, relationship: ${journalist.psRelationship}%`}
+                      >
                         <View>
                           <Text className="text-xl font-bold leading-tight">
                             {journoStaticData.name}
@@ -94,7 +115,10 @@ export function PublicationStateItem({
                   })}
                 </View>
               ) : (
-                <Text className="text-muted-foreground">
+                <Text
+                  className="text-muted-foreground"
+                  accessibilityLabel="No journalists available for this publication"
+                >
                   No journalists available
                 </Text>
               )}

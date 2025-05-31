@@ -125,7 +125,13 @@ const LevelCompleteContent = ({
   const TabComponent = currentTab.component;
 
   return (
-    <View className="gap-4">
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Level complete summary: ${
+        currentTab.label
+      }. Section ${currentIndex + 1} of ${tabs.length}.`}
+    >
       <ProgressNavigator
         currentIndex={currentIndex}
         totalItems={tabs.length}
@@ -136,7 +142,12 @@ const LevelCompleteContent = ({
           tabs.length
         })`}
         headerContent={
-          <CardHeader className="flex-row items-center gap-2">
+          <CardHeader
+            className="flex-row items-center gap-2"
+            accessible={true}
+            accessibilityRole="header"
+            accessibilityLabel={`Current section: ${currentTab.label}`}
+          >
             {currentTab.icon}
             <CardTitle>{currentTab.label}</CardTitle>
           </CardHeader>

@@ -24,6 +24,7 @@ export function NameField({
   disabled = false,
 }: NameFieldProps) {
   const labelId = `${name}Label`;
+  const errorId = `${name}Error`;
 
   return (
     <View>
@@ -43,7 +44,8 @@ export function NameField({
             onChangeText={onChange}
             onBlur={onBlur}
             autoCapitalize="words"
-            aria-labelledbyledby={labelId}
+            accessibilityLabelledBy={labelId}
+            aria-describedby={fieldError ? errorId : undefined}
             aria-invalid={fieldError ? "true" : "false"}
             editable={!disabled}
             className={fieldError ? "border-destructive" : ""}
@@ -51,7 +53,13 @@ export function NameField({
         )}
       />
       {error && (
-        <Text className="text-destructive mt-1 text-sm">{error.message}</Text>
+        <Text
+          nativeID={errorId}
+          accessibilityRole="alert"
+          className="text-destructive mt-1 text-sm"
+        >
+          {error.message}
+        </Text>
       )}
     </View>
   );

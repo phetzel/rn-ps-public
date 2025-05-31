@@ -68,17 +68,37 @@ const ConferenceQuestion = ({
   };
 
   return (
-    <Card className="border-l-4 border-l-primary">
-      <CardHeader className="pb-2">
+    <Card
+      className="border-l-4 border-l-primary"
+      accessible={true}
+      accessibilityLabel={`Question from ${journalist.staticData.name}.`}
+    >
+      <CardHeader
+        className="pb-2"
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel={`Question from journalist: ${journalist.staticData.name}`}
+      >
         <JournalistDisplay journalistId={journalist.id} />
       </CardHeader>
 
-      <CardContent className="gap-4">
+      <CardContent className="gap-4" accessible={false}>
         <Separator className="mt-4" />
 
-        <QuestionDisplay question={text} />
+        <View
+          accessible={true}
+          accessibilityLabel={`Question: ${text}`}
+          accessibilityRole="text"
+        >
+          <QuestionDisplay question={text} />
+        </View>
 
-        <View className="gap-2">
+        <View
+          className="gap-2"
+          accessible={true}
+          accessibilityLabel={`Answer options: ${answers.length} available`}
+          accessibilityHint="Select an answer to respond to the question"
+        >
           {answers.map((answer, index) => {
             let cabinetMember;
 
@@ -102,11 +122,13 @@ const ConferenceQuestion = ({
           })}
         </View>
       </CardContent>
-      <CardFooter className="justify-center">
+      <CardFooter className="justify-center" accessible={false}>
         <Button
           variant="ghost"
           onPress={handleSkipQuestion}
           className="text-muted-foreground"
+          accessibilityLabel="Skip this question"
+          accessibilityHint="Move to the next journalist without answering this question"
         >
           <Text className="text-muted-foreground">Skip Question</Text>
         </Button>

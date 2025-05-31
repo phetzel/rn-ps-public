@@ -56,10 +56,25 @@ const ArchivedLevelCard = ({
     router.push(`./archive/${levelId}`);
   };
 
+  const cardAccessibilityLabel = `Archived month ${level.month}, year ${
+    level.year
+  }. President approval: ${finalApproval}%. President relationship: ${finalPresRelationship}%. ${
+    situations.length
+  } situations. ${hasConsequences ? "Had consequences" : "No consequences"}.`;
+
   return (
-    <Card className="border-l-4 border-l-muted">
+    <Card
+      className="border-l-4 border-l-muted"
+      accessible={true}
+      accessibilityLabel={cardAccessibilityLabel}
+      accessibilityHint="Double tap to view detailed breakdown of this month"
+    >
       <CardHeader className="flex-row items-center justify-between gap-2">
-        <View className="flex-row items-center gap-2">
+        <View
+          className="flex-row items-center gap-2"
+          accessible={true}
+          accessibilityLabel={`Month ${level.month}, Year ${level.year}`}
+        >
           <CalendarClock className="text-muted-foreground" />
           <CardTitle>
             Month: {level.month} Year: {level.year}
@@ -68,28 +83,50 @@ const ArchivedLevelCard = ({
       </CardHeader>
 
       <CardContent className="gap-2">
-        <View className="flex-row gap-2 justify-between">
+        <View
+          className="flex-row gap-2 justify-between"
+          accessible={true}
+          accessibilityLabel={`President approval rating: ${finalApproval}%. President relationship with you: ${finalPresRelationship}%`}
+        >
           <View>
             <Text className="text-sm font-medium">President Approval:</Text>
-            <Text className="text-xl text-center font-bold">
+            <Text
+              className="text-xl text-center font-bold"
+              accessibilityLabel={`${finalApproval} percent`}
+            >
               {finalApproval}
             </Text>
           </View>
           <View>
             <Text className="text-sm font-medium">President Relationship:</Text>
-            <Text className="text-xl text-center font-bold">
+            <Text
+              className="text-xl text-center font-bold"
+              accessibilityLabel={`${finalPresRelationship} percent`}
+            >
               {finalPresRelationship}
             </Text>
           </View>
         </View>
 
         <View className="flex-row gap-2 justify-between">
-          <View className="flex-1 items-center gap-2 p-3 bg-muted/30 rounded-md">
+          <View
+            className="flex-1 items-center gap-2 p-3 bg-muted/30 rounded-md"
+            accessible={true}
+            accessibilityLabel={`${situations.length} situations occurred this month`}
+          >
             <Text className="text-lg font-medium">Situations</Text>
             <Text className="text-2xl font-bold">{situations.length}</Text>
           </View>
 
-          <View className="flex-1 items-center gap-2 p-3 bg-muted/30 rounded-md">
+          <View
+            className="flex-1 items-center gap-2 p-3 bg-muted/30 rounded-md"
+            accessible={true}
+            accessibilityLabel={
+              hasConsequences
+                ? "This month had serious consequences"
+                : "This month had no major consequences"
+            }
+          >
             <Text className="text-lg font-medium">Consequences</Text>
             <View className="items-center">
               {hasConsequences ? (
@@ -110,6 +147,8 @@ const ArchivedLevelCard = ({
           onPress={handleViewDetails}
           variant="ghost"
           className="flex-row gap-2"
+          accessibilityLabel={`View detailed breakdown for month ${level.month}, year ${level.year}`}
+          accessibilityHint="Shows press exchanges, situation outcomes, and media coverage for this month"
         >
           <Text className="text-sm font-bold">View Details</Text>
           <ArrowRight className="text-foreground" />
