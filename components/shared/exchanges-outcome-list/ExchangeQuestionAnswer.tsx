@@ -18,13 +18,25 @@ export default function ExchangeQuestionAnswer({
   if (isSkipped) {
     // Question was skipped
     return (
-      <View className="flex-row items-center">
+      <View
+        className="flex-row items-center"
+        accessible={true}
+        accessibilityLabel="Question was skipped during the press conference"
+      >
         <View className="bg-amber-100 rounded-full p-2 mr-3">
-          <SkipForward className="text-amber-500" />
+          <SkipForward
+            className="text-amber-500"
+            accessibilityLabel="Skip indicator"
+          />
         </View>
-        <View className="flex-1">
-          <Text className="font-medium">Question Skipped</Text>
-          <Text className="text-sm text-muted-foreground mt-1">
+        <View className="flex-1" accessible={false}>
+          <Text className="font-medium" accessible={false}>
+            Question Skipped
+          </Text>
+          <Text
+            className="text-sm text-muted-foreground mt-1"
+            accessible={false}
+          >
             You chose to skip this question during the press conference.
           </Text>
         </View>

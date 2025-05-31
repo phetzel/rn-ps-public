@@ -16,26 +16,46 @@ const PreferenceLocked: React.FC<PreferenceLockedProps> = ({
   relationship,
 }) => {
   return (
-    <View className="bg-muted/30 p-3 rounded-md gap-2 items-center">
-      <Lock className="h-4 w-4 text-gray-500" />
+    <View
+      className="bg-muted/30 p-3 rounded-md gap-2 items-center"
+      accessible={true}
+      accessibilityLabel={`${cabinetMemberName}'s preference is locked. Current relationship: ${relationship}. Need minimum ${CABINET_PREFERENCE_THRESHOLD} to unlock.`}
+    >
+      <Lock
+        className="h-4 w-4 text-gray-500"
+        accessibilityLabel="Locked preference indicator"
+      />
 
-      <View className="flex-row items-center gap-2">
-        <Text className="text-base text-gray-500 font-medium">
+      <View className="flex-row items-center gap-2" accessible={false}>
+        <Text
+          className="text-base text-gray-500 font-medium"
+          accessible={false}
+        >
           Preference Locked
         </Text>
 
         <InfoTooltip>
-          <View className="gap-2">
-            <Text className="text-xs text-center">
-              <Text className="font-bold">{cabinetMemberName}</Text> needs a
-              relationship of at least{" "}
-              <Text className="font-bold">{CABINET_PREFERENCE_THRESHOLD}</Text>{" "}
+          <View
+            className="gap-2"
+            accessibilityLabel={`Details about ${cabinetMemberName}'s preference lock`}
+            accessibilityHint="Shows relationship requirements and current status"
+          >
+            <Text className="text-xs text-center" accessible={false}>
+              <Text className="font-bold" accessible={false}>
+                {cabinetMemberName}
+              </Text>{" "}
+              needs a relationship of at least{" "}
+              <Text className="font-bold" accessible={false}>
+                {CABINET_PREFERENCE_THRESHOLD}
+              </Text>{" "}
               to share their preference with you.
             </Text>
 
-            <Text className="text-xs text-center">
+            <Text className="text-xs text-center" accessible={false}>
               Current relationship:{" "}
-              <Text className="font-bold">{relationship}</Text>
+              <Text className="font-bold" accessible={false}>
+                {relationship}
+              </Text>
             </Text>
           </View>
         </InfoTooltip>

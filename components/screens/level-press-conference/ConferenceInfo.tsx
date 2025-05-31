@@ -33,7 +33,7 @@ const ConferenceInfo = ({ levelId, situations }: ConferenceInfoProps) => {
         accessibilityLabel="Situation details"
         accessibilityHint="Scroll to review all active situations and their details"
       >
-        {situations.map((situation, index) => (
+        {situations.map((situation) => (
           <ConferenceInfoSituationItem
             key={situation.id}
             situation={situation}

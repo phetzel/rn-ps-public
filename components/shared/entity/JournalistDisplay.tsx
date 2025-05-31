@@ -28,14 +28,24 @@ function JournalistDisplay({
   const pubStaticData = publication.staticData;
 
   return (
-    <View className="flex-row items-center gap-2">
+    <View
+      className="flex-row items-center gap-2"
+      accessible={true}
+      accessibilityLabel={`Journalist ${journoStaticData.name} from ${pubStaticData.name}, ${pubStaticData.politicalLeaning} leaning publication`}
+    >
       <View className="bg-muted rounded-full p-2">
-        <User className="text-primary" size={32} />
+        <User
+          className="text-primary"
+          size={32}
+          accessibilityLabel="Journalist avatar"
+        />
       </View>
 
-      <View className="flex-1">
-        <Text className="text-lg font-bold">{journoStaticData.name}</Text>
-        <View className="flex-row items-center gap-2 mt-1">
+      <View className="flex-1" accessible={false}>
+        <Text className="text-lg font-bold" accessibilityRole="header">
+          {journoStaticData.name}
+        </Text>
+        <View className="flex-row items-center gap-2 mt-1" accessible={false}>
           <PoliticalLeaningBadge
             politicalLeaning={pubStaticData.politicalLeaning}
           />
@@ -43,6 +53,7 @@ function JournalistDisplay({
           <Text
             className="text-xs text-muted-foreground flex-1"
             numberOfLines={2}
+            accessible={false}
           >
             {pubStaticData.name}
           </Text>

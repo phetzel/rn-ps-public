@@ -15,12 +15,27 @@ export const SubgroupCategoryIcon = ({
 }: SubgroupCategoryIconProps) => {
   switch (category) {
     case SubgroupCategory.Political:
-      return <Landmark className={className} />;
+      return (
+        <Landmark
+          className={className}
+          accessibilityLabel="Political voter groups"
+        />
+      );
     case SubgroupCategory.Demographic:
-      return <Users className={className} />;
+      return (
+        <Users
+          className={className}
+          accessibilityLabel="Demographic voter groups"
+        />
+      );
     case SubgroupCategory.Economic:
-      return <Briefcase className={className} />;
+      return (
+        <Briefcase
+          className={className}
+          accessibilityLabel="Economic voter groups"
+        />
+      );
     default:
-      return <Users className={className} />;
+      return <Users className={className} accessibilityLabel="Voter groups" />;
   }
 };

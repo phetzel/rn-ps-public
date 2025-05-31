@@ -30,16 +30,30 @@ export default function ResultsCardHeader({
         "flex-row justify-between items-center gap-2",
         isAdWatched ? "bg-green-50" : "bg-blue-50"
       )}
+      accessible={true}
+      accessibilityLabel={`Ad boost section: ${
+        isAdWatched
+          ? "Ad boost has been applied to your results"
+          : "Ad boost available to enhance your results"
+      }`}
     >
       {isAdWatched ? (
-        <View className="flex-row items-center gap-2">
-          <CheckCircle2 className="text-green-500" size={32} />
-          <CardTitle>Ad Boost Applied!</CardTitle>
+        <View className="flex-row items-center gap-2" accessible={false}>
+          <CheckCircle2
+            className="text-green-500"
+            size={32}
+            accessibilityLabel="Success checkmark"
+          />
+          <CardTitle accessible={false}>Ad Boost Applied!</CardTitle>
         </View>
       ) : (
-        <View className="flex-row items-center gap-2 flex-1">
-          <Film className="text-blue-500" size={32} />
-          <CardTitle>Boost Your Results</CardTitle>
+        <View className="flex-row items-center gap-2 flex-1" accessible={false}>
+          <Film
+            className="text-blue-500"
+            size={32}
+            accessibilityLabel="Video ad icon"
+          />
+          <CardTitle accessible={false}>Boost Your Results</CardTitle>
         </View>
       )}
 
@@ -48,9 +62,13 @@ export default function ResultsCardHeader({
           onPress={handleWatchAd}
           className="gap-2 flex-row"
           variant="outline"
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Watch advertisement to boost results"
+          accessibilityHint="Plays a short ad that will increase your approval rating changes"
         >
-          <Play className="h-4 w-4" />
-          <Text>Watch Ad</Text>
+          <Play className="h-4 w-4" accessibilityLabel="Play button" />
+          <Text accessible={false}>Watch Ad</Text>
         </Button>
       )}
     </CardHeader>

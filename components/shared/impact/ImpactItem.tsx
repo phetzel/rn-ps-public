@@ -27,16 +27,20 @@ export default function ImpactItem({
 }: ImpactItemProps) {
   let icon = null;
   let textColor = "";
+  let impactDirection = "";
 
   if (weight > 0) {
     icon = <TrendingUp className="text-green-500" />;
     textColor = "text-green-500";
+    impactDirection = "positive";
   } else if (weight < 0) {
     icon = <TrendingDown className="text-red-500" />;
     textColor = "text-red-500";
+    impactDirection = "negative";
   } else {
     icon = <Minus className="text-muted-foreground" />;
     textColor = "text-muted-foreground";
+    impactDirection = "no change";
   }
 
   // Determine the entity icon
@@ -60,27 +64,51 @@ export default function ImpactItem({
       entityIcon = <Briefcase className="text-primary mr-2" size={28} />;
   }
 
+  const impactValue = weight > 0 ? `+${weight}` : `${weight}`;
+  const accessibilityLabel = `${name}, ${title}. ${impactDirection} impact: ${impactValue} points${
+    reaction ? `. Reaction: ${reaction}` : ""
+  }`;
+
   return (
-    <View className="gap-1">
-      <View className="flex-row justify-between items-center">
-        <View className="flex-row items-center flex-1">
+    <View
+      className="gap-1"
+      accessible={true}
+      accessibilityLabel={accessibilityLabel}
+    >
+      <View
+        className="flex-row justify-between items-center"
+        accessible={false}
+      >
+        <View className="flex-row items-center flex-1" accessible={false}>
           {entityIcon}
-          <View className="flex-shrink">
-            <Text className="text-sm text-muted-foreground leading-none">
+          <View className="flex-shrink" accessible={false}>
+            <Text
+              className="text-sm text-muted-foreground leading-none"
+              accessible={false}
+            >
               {title}
             </Text>
-            <Text className="text-base font-bold">{name}</Text>
+            <Text className="text-base font-bold" accessible={false}>
+              {name}
+            </Text>
           </View>
         </View>
 
-        <View className="flex-row items-center gap-2 flex-shrink-0">
+        <View
+          className="flex-row items-center gap-2 flex-shrink-0"
+          accessible={false}
+        >
           {icon}
-          <Text className={`${textColor} font-medium`}>
-            {weight > 0 ? `+${weight}` : weight}
+          <Text className={`${textColor} font-medium`} accessible={false}>
+            {impactValue}
           </Text>
         </View>
       </View>
-      {reaction && <Text className="text-sm italic">{reaction}</Text>}
+      {reaction && (
+        <Text className="text-sm italic" accessible={false}>
+          {reaction}
+        </Text>
+      )}
     </View>
   );
 }

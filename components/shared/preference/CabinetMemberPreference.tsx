@@ -22,7 +22,21 @@ const CabinetMemberPreference = ({
     cabinetMember.psRelationship < CABINET_PREFERENCE_THRESHOLD;
 
   return (
-    <View className="gap-2">
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`${cabinetMember.name}, ${
+        cabinetMember.staticData.cabinetName
+      }. ${
+        isPreferenceLocked
+          ? `Preference locked due to low relationship (${cabinetMember.psRelationship}). Need ${CABINET_PREFERENCE_THRESHOLD} minimum.`
+          : `Preference available: ${cabinetPreference.preference.rationale}${
+              cabinetPreference.authorizedContent
+                ? ` Includes classified intel.`
+                : ``
+            }`
+      }`}
+    >
       <CabinetMemberName cabinetMember={cabinetMember} />
 
       {isPreferenceLocked ? (

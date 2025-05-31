@@ -16,14 +16,27 @@ export function PublicationStateHeader({
   description,
 }: PublicationStateHeaderProps) {
   return (
-    <View className="gap-2">
-      <View className="flex-row items-center justify-between">
-        <Text className="text-lg font-bold">{name}</Text>
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`Publication: ${name}, ${politicalLeaning} leaning${
+        description ? `. ${description}` : ""
+      }`}
+    >
+      <View
+        className="flex-row items-center justify-between"
+        accessible={false}
+      >
+        <Text className="text-lg font-bold" accessibilityRole="header">
+          {name}
+        </Text>
         <PoliticalLeaningBadge politicalLeaning={politicalLeaning} />
       </View>
 
       {description && (
-        <Text className="text-sm text-muted-foreground">{description}</Text>
+        <Text className="text-sm text-muted-foreground" accessible={false}>
+          {description}
+        </Text>
       )}
     </View>
   );

@@ -20,13 +20,22 @@ export default function ExchangeQuestionHeader({
   if (!isAsked && isFirstQuestion) {
     // Journalist was completely ignored
     return (
-      <View className="flex-row items-center gap-2">
+      <View
+        className="flex-row items-center gap-2"
+        accessible={true}
+        accessibilityLabel="Journalist was ignored - not called on during the press conference"
+      >
         <View className="bg-red-100 rounded-full p-2">
-          <AlertCircle className="text-red-600" />
+          <AlertCircle
+            className="text-red-600"
+            accessibilityLabel="Warning indicator"
+          />
         </View>
-        <View className="flex-1">
-          <Text className="text-base font-medium">Journalist Ignored</Text>
-          <Text className="text-sm text-muted-foreground">
+        <View className="flex-1" accessible={false}>
+          <Text className="text-base font-medium" accessible={false}>
+            Journalist Ignored
+          </Text>
+          <Text className="text-sm text-muted-foreground" accessible={false}>
             You did not call on this journalist during the press conference.
           </Text>
         </View>
@@ -35,15 +44,22 @@ export default function ExchangeQuestionHeader({
   } else if (!isAsked) {
     // Unanswered follow-up
     return (
-      <View className="flex-row items-center gap-2">
+      <View
+        className="flex-row items-center gap-2"
+        accessible={true}
+        accessibilityLabel="Follow-up question was ignored and not addressed"
+      >
         <View className="bg-red-100 rounded-full p-2">
-          <AlertCircle className="text-red-600" />
+          <AlertCircle
+            className="text-red-600"
+            accessibilityLabel="Warning indicator"
+          />
         </View>
-        <View className="flex-1">
-          <Text className="text-base font-medium">
+        <View className="flex-1" accessible={false}>
+          <Text className="text-base font-medium" accessible={false}>
             Follow-up Question Ignored
           </Text>
-          <Text className="text-sm text-muted-foreground">
+          <Text className="text-sm text-muted-foreground" accessible={false}>
             The journalist had a follow-up question that was not addressed.
           </Text>
         </View>

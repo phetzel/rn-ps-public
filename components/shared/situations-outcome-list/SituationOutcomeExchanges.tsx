@@ -52,7 +52,11 @@ const SituationOutcomeExchanges = ({
   if (filteredExchanges.length === 0) {
     return (
       <View className="py-2">
-        <Text className="text-sm text-muted-foreground">
+        <Text
+          className="text-sm text-muted-foreground"
+          accessible={true}
+          accessibilityLabel="No press conference responses affected this outcome"
+        >
           No press conference responses affected this outcome.
         </Text>
       </View>
@@ -60,7 +64,11 @@ const SituationOutcomeExchanges = ({
   }
 
   return (
-    <View className="gap-2">
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`${filteredExchanges.length} press exchanges that influenced outcome probabilities`}
+    >
       {filteredExchanges.map((exchange, index) => (
         <SituationOutcomeExchangeItem
           key={`${exchange.id}-${index}`}

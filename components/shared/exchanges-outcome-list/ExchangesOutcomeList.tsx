@@ -24,9 +24,21 @@ const ExchangesOutcomeList = ({
   }
 
   return (
-    <View className="gap-2">
-      <Text className="text-2xl font-semibold">Press Exchanges</Text>
-      <Accordion type="single" collapsible>
+    <View
+      className="gap-2"
+      accessible={true}
+      accessibilityLabel={`Press exchanges: ${pressExchanges.length} journalists interacted with during the press conference`}
+    >
+      <Text className="text-2xl font-semibold" accessibilityRole="header">
+        Press Exchanges
+      </Text>
+      <Accordion
+        type="single"
+        collapsible
+        accessible={true}
+        accessibilityLabel="Expandable list of press exchanges"
+        accessibilityHint="Each item shows a journalist and their questions/answers"
+      >
         {pressExchanges.map((exchange, index) => (
           <View key={exchange.id}>
             <ExchangeOutcomeItem key={exchange.id} exchange={exchange} />

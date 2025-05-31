@@ -61,16 +61,25 @@ function SituationOutcomeExchangeItem({
   if (relevantExchanges.length === 0) return null;
 
   return (
-    <View className="p-3 border border-border rounded-md gap-4">
+    <View
+      className="p-3 border border-border rounded-md gap-4"
+      accessible={true}
+      accessibilityLabel={`Press exchange with ${relevantExchanges.length} questions that affected outcomes`}
+    >
       {/* Journalist info */}
       <JournalistDisplay journalistId={exchange.journalist_id} />
 
       <Separator />
 
       {/* Relevant exchanges */}
-      <View className="gap-2">
+      <View className="gap-2" accessible={false}>
         {relevantExchanges.map((item, index) => (
-          <View key={`${item.question.id}-${index}`} className="gap-2">
+          <View
+            key={`${item.question.id}-${index}`}
+            className="gap-2"
+            accessible={true}
+            accessibilityLabel={`Question ${index + 1}: ${item.question.text}`}
+          >
             {index > 0 && <Separator />}
 
             {/* Question */}

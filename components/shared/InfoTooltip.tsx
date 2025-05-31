@@ -15,12 +15,19 @@ interface InfoTooltipProps {
 const InfoTooltip: React.FC<InfoTooltipProps> = ({ children }) => {
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={"Information"}
+        accessibilityHint={"Additional information available"}
+      >
         <Info className="text-gray-500" size={20} />
       </TooltipTrigger>
 
       <TooltipContent className="rounded-md border border-border">
-        <View className="max-w-[250px] p-2">{children}</View>
+        <View className="max-w-[250px] p-2" accessible={false}>
+          {children}
+        </View>
       </TooltipContent>
     </Tooltip>
   );

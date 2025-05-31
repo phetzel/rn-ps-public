@@ -41,5 +41,13 @@ export function SituationTypeIcon({ type, size = 32 }: SituationTypeIconProps) {
   };
   const Icon = getSituationIcon();
 
-  return <Icon size={size} className="text-primary flex-shrink-0" />;
+  return (
+    <Icon
+      size={size}
+      className="text-primary flex-shrink-0"
+      accessibilityLabel={`${type
+        .replace(/([A-Z])/g, " $1")
+        .trim()} situation type`}
+    />
+  );
 }

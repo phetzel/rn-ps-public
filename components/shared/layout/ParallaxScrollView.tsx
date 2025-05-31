@@ -42,14 +42,28 @@ export default function ParallaxScrollView({ children, headerImage }: Props) {
 
   return (
     <ThemedView>
-      <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
+      <Animated.ScrollView
+        ref={scrollRef}
+        scrollEventThrottle={16}
+        accessible={true}
+        accessibilityLabel="Scrollable content with parallax header"
+        accessibilityRole="scrollbar"
+      >
         <Animated.View
           style={[styles.header, headerAnimatedStyle]}
           className="bg-muted"
+          accessible={true}
+          accessibilityLabel="Header image with parallax scrolling effect"
         >
           {headerImage}
         </Animated.View>
-        <ThemedView style={styles.content}>{children}</ThemedView>
+        <ThemedView
+          style={styles.content}
+          accessible={true}
+          accessibilityLabel="Main content area"
+        >
+          {children}
+        </ThemedView>
       </Animated.ScrollView>
     </ThemedView>
   );

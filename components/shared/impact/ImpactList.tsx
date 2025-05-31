@@ -89,7 +89,11 @@ const ImpactList = ({
   const isSituationImpacts = "subgroups" in impacts;
 
   return (
-    <View className="gap-4 px-4">
+    <View
+      className="gap-4 px-4"
+      accessible={true}
+      accessibilityLabel={`Impact list`}
+    >
       {/* President Impact */}
       {isExchangeImpacts && impacts.president && (
         <>

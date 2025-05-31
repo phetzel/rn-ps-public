@@ -57,18 +57,41 @@ export function ProgressNavigator({
   const displayProgressLabel = progressLabel || defaultProgressLabel;
 
   return (
-    <View className="gap-4">
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Progress navigator: ${displayProgressLabel}, ${Math.round(
+        progressPercentage
+      )}% complete`}
+    >
       {/* Progress Bar */}
-      <View className="gap-2">
-        <View className="flex-row justify-between items-center">
-          <Text className="text-md font-medium">{displayProgressLabel}</Text>
+      <View className="gap-2" accessible={false}>
+        <View
+          className="flex-row justify-between items-center"
+          accessible={false}
+        >
+          <Text className="text-md font-medium" accessible={false}>
+            {displayProgressLabel}
+          </Text>
           {showPercentage && (
-            <Text className="text-md text-muted-foreground">
+            <Text className="text-md text-muted-foreground" accessible={false}>
               {Math.round(progressPercentage)}% Complete
             </Text>
           )}
         </View>
-        <Progress value={progressPercentage} className="h-2" />
+        <Progress
+          value={progressPercentage}
+          className="h-2"
+          accessible={true}
+          accessibilityLabel={`Progress: ${Math.round(
+            progressPercentage
+          )}% complete`}
+          accessibilityValue={{
+            min: 0,
+            max: 100,
+            now: Math.round(progressPercentage),
+          }}
+        />
       </View>
 
       {/* Content Card */}
@@ -82,16 +105,33 @@ export function ProgressNavigator({
             className="flex-row gap-2"
             onPress={onPrevious}
             disabled={isFirst}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={
+              isFirst
+                ? `${previousButtonText} (disabled, first item)`
+                : `${previousButtonText} to previous item`
+            }
+            accessibilityState={{ disabled: isFirst }}
           >
             <ArrowLeft className="text-foreground" />
-            <Text>{previousButtonText}</Text>
+            <Text accessible={false}>{previousButtonText}</Text>
           </Button>
 
           <Button
             onPress={isLast ? onComplete : onNext}
             className="flex-row gap-2"
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={
+              isLast
+                ? `${completeButtonText} the process`
+                : `${nextButtonText} to next item`
+            }
           >
-            <Text>{isLast ? completeButtonText : nextButtonText}</Text>
+            <Text accessible={false}>
+              {isLast ? completeButtonText : nextButtonText}
+            </Text>
             {isLast ? (
               <CheckCircle2 className="text-background" />
             ) : (

@@ -16,11 +16,16 @@ export function Logo({ size = "medium" }: LogoProps) {
   const height = dimensions[size];
 
   return (
-    <View className="items-center justify-center">
+    <View
+      className="items-center justify-center"
+      accessible={true}
+      accessibilityLabel={`Press Secretary app logo, ${size} size`}
+    >
       <Image
         source={require("../../assets/images/splash-icon.png")}
         style={{ width, height }}
         resizeMode="contain"
+        accessible={false}
       />
     </View>
   );

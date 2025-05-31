@@ -22,15 +22,24 @@ const AuthorizedIntel: React.FC<AuthorizedIntelProps> = ({
   const isAuthorized = relationship >= CABINET_AUTHORIZED_THRESHOLD;
 
   return (
-    <View className="bg-muted/30 p-3 rounded-md gap-2 items-center">
+    <View
+      className="bg-muted/30 p-3 rounded-md gap-2 items-center"
+      accessible={true}
+      accessibilityLabel={`Classified information from ${cabinetMemberName}: ${
+        isAuthorized
+          ? `Authorized and available. ${authorizedContent}`
+          : `Withheld due to insufficient relationship. Need ${CABINET_AUTHORIZED_THRESHOLD} relationship, currently ${relationship}.`
+      }`}
+    >
       <AuthorizedIcon isAuthorized={isAuthorized} />
 
-      <View className="flex-row items-center gap-2">
+      <View className="flex-row items-center gap-2" accessible={false}>
         <Text
           className={cn(
             "text-base text-gray-500 font-medium",
             isAuthorized && "text-primary font-bold"
           )}
+          accessible={false}
         >
           Classified Info {isAuthorized ? "Authorized" : "Withheld"}
         </Text>
@@ -44,7 +53,9 @@ const AuthorizedIntel: React.FC<AuthorizedIntelProps> = ({
       {isAuthorized && (
         <>
           <Separator />
-          <Text className="text-xs text-center">{authorizedContent}</Text>
+          <Text className="text-xs text-center" accessible={false}>
+            {authorizedContent}
+          </Text>
         </>
       )}
     </View>

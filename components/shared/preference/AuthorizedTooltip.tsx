@@ -16,19 +16,29 @@ const AuthorizedTooltip: React.FC<AuthorizedTooltipProps> = ({
 }) => {
   return (
     <InfoTooltip>
-      <View className="gap-2">
+      <View
+        className="gap-2"
+        accessibilityHint="Explains relationship requirements for accessing classified information"
+        accessibilityLabel={`Information about ${cabinetMemberName}'s classified intel authorization`}
+      >
         {isAuthorized ? (
-          <Text className="text-xs text-center">
-            <Text className="font-bold">{cabinetMemberName}</Text> has
-            authorized you to view their classified intel due to positive
+          <Text className="text-xs text-center" accessible={false}>
+            <Text className="font-bold" accessible={false}>
+              {cabinetMemberName}
+            </Text>{" "}
+            has authorized you to view their classified intel due to positive
             relationship.
           </Text>
         ) : (
-          <Text className="text-xs text-center">
-            <Text className="font-bold">{cabinetMemberName}</Text> needs a
-            relationship of at least{" "}
-            <Text className="font-bold">{CABINET_AUTHORIZED_THRESHOLD}</Text> to
-            share their classified intel with you.
+          <Text className="text-xs text-center" accessible={false}>
+            <Text className="font-bold" accessible={false}>
+              {cabinetMemberName}
+            </Text>{" "}
+            needs a relationship of at least{" "}
+            <Text className="font-bold" accessible={false}>
+              {CABINET_AUTHORIZED_THRESHOLD}
+            </Text>{" "}
+            to share their classified intel with you.
           </Text>
         )}
       </View>

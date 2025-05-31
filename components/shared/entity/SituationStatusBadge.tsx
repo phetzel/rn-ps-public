@@ -34,12 +34,12 @@ export function SituationStatusBadge({ status }: SituationStatusBadgeProps) {
     return status.replace("_", " ").replace(/\b\w/g, (l) => l.toUpperCase());
   };
 
-  const getDisplayName = () => {
-    return status.charAt(0).toUpperCase() + status.slice(1);
-  };
-
   return (
-    <Badge variant={getSituationBadgeVariant()} className="flex-shrink-0">
+    <Badge
+      variant={getSituationBadgeVariant()}
+      className="flex-shrink-0"
+      accessibilityLabel={`Situation type: ${formatSituationType()}`}
+    >
       <Text>{formatSituationType()}</Text>
     </Badge>
   );

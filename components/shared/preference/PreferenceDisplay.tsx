@@ -60,25 +60,39 @@ const PreferenceDisplay = ({ preference }: PreferenceDisplayProps) => {
     }
   };
 
+  const approachLabel = getApproachLabel(preference.answerType);
+
   return (
-    <View className="bg-muted/30 p-3 rounded-md gap-2">
-      <View className="gap-2">
-        <View className="flex-row justify-between items-center">
-          <Text className="text-base font-medium font-bold">Approach:</Text>
+    <View
+      className="bg-muted/30 p-3 rounded-md gap-2"
+      accessible={true}
+      accessibilityLabel={`Preferred approach: ${approachLabel}. Rationale: ${preference.rationale}`}
+    >
+      <View className="gap-2" accessible={false}>
+        <View
+          className="flex-row justify-between items-center"
+          accessible={false}
+        >
+          <Text className="text-base font-medium font-bold" accessible={false}>
+            Approach:
+          </Text>
 
           <Text
             className={`text-sm font-medium px-2 py-0.5 rounded-full ${getApproachColor(
               preference.answerType
             )}`}
+            accessible={false}
           >
-            {getApproachLabel(preference.answerType)}
+            {approachLabel}
           </Text>
         </View>
       </View>
 
       <Separator />
 
-      <Text className="text-sm">{preference.rationale}</Text>
+      <Text className="text-sm" accessible={false}>
+        {preference.rationale}
+      </Text>
     </View>
   );
 };

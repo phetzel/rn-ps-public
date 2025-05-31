@@ -43,7 +43,15 @@ export default function ExchangeQuestionItem({
   }
 
   return (
-    <View className="border border-border rounded-md p-2 gap-2">
+    <View
+      className="border border-border rounded-md p-2 gap-2"
+      accessible={true}
+      accessibilityLabel={`${
+        isFirstQuestion ? "Initial" : "Follow-up"
+      } question. ${
+        isAsked ? (isSkipped ? "Skipped" : "Answered") : "Ignored"
+      }.`}
+    >
       {/* Question Header */}
       <ExchangeQuestionHeader
         question={question}
@@ -61,9 +69,16 @@ export default function ExchangeQuestionItem({
       )}
 
       {/* Impacts */}
-      <View className="gap-2">
+      <View
+        className="gap-2"
+        accessible={true}
+        accessibilityLabel={`Relationship change impacts from this interaction`}
+      >
         <Separator />
-        <Text className="text-center text-lg font-semibold">
+        <Text
+          className="text-center text-lg font-semibold"
+          accessibilityRole="header"
+        >
           Relationship Changes
         </Text>
         <ImpactList

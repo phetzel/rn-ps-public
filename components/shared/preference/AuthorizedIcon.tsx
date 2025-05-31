@@ -9,9 +9,15 @@ interface AuthorizedIconProps {
 
 const AuthorizedIcon: React.FC<AuthorizedIconProps> = ({ isAuthorized }) => {
   return isAuthorized ? (
-    <FileText className="text-primary" />
+    <FileText
+      className="text-primary"
+      accessibilityLabel="Authorized: classified information available"
+    />
   ) : (
-    <Lock className="text-gray-500" />
+    <Lock
+      className="text-gray-500"
+      accessibilityLabel="Locked: classified information withheld"
+    />
   );
 };
 

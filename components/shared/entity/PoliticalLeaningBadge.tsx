@@ -38,7 +38,12 @@ export default function PoliticalLeaningBadge({
   };
 
   return (
-    <Badge className={getPoliticalLeaningBGColor(politicalLeaning)}>
+    <Badge
+      className={getPoliticalLeaningBGColor(politicalLeaning)}
+      accessibilityLabel={`Political leaning: ${formatPoliticalLeaning(
+        politicalLeaning
+      )}`}
+    >
       <Text className={getPoliticalLeaningTextColor(politicalLeaning)}>
         {formatPoliticalLeaning(politicalLeaning)}
       </Text>

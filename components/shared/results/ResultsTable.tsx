@@ -58,30 +58,70 @@ export function ResultsTable({
     groupedEntities.subgroups &&
     groupedEntities.subgroups.length > 0;
 
+  const adStatusMessage = isAdWatched
+    ? adMessage.watched
+    : adMessage.notWatched;
+
   return (
-    <View className="gap-4">
-      <Text className="text-sm text-muted-foreground mt-4">
-        {isAdWatched ? adMessage.watched : adMessage.notWatched}
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Results table. ${adStatusMessage}`}
+    >
+      <Text
+        className="text-sm text-muted-foreground mt-4"
+        accessible={true}
+        accessibilityLiveRegion="polite"
+        accessibilityLabel={adStatusMessage}
+      >
+        {adStatusMessage}
       </Text>
 
-      <View className="gap-2 font-medium text-sm">
+      <View
+        className="gap-2 font-medium text-sm"
+        accessible={true}
+        accessibilityLabel="Results comparison table showing current values, base changes, and ad-boosted changes"
+      >
         {/* Header row */}
-        <View className="flex-row border-b-2 border-border pb-2">
-          <View style={{ width: "40%" }}>
-            <Text className="text-sm font-bold">Name</Text>
+        <View
+          className="flex-row border-b-2 border-border pb-2"
+          accessible={true}
+          accessibilityLabel="Table columns: Entity name, Current value, Base change, Ad boosted change"
+        >
+          <View style={{ width: "40%" }} accessible={false}>
+            <Text className="text-sm font-bold" accessible={false}>
+              Name
+            </Text>
           </View>
-          <View style={{ width: "20%" }} className="items-center">
-            <Text className="text-sm font-bold">Current</Text>
+          <View
+            style={{ width: "20%" }}
+            className="items-center"
+            accessible={false}
+          >
+            <Text className="text-sm font-bold" accessible={false}>
+              Current
+            </Text>
           </View>
-          <View style={{ width: "20%" }} className="items-center">
-            <Text className="text-sm font-bold">Change</Text>
+          <View
+            style={{ width: "20%" }}
+            className="items-center"
+            accessible={false}
+          >
+            <Text className="text-sm font-bold" accessible={false}>
+              Change
+            </Text>
           </View>
-          <View style={{ width: "20%" }} className="items-center">
+          <View
+            style={{ width: "20%" }}
+            className="items-center"
+            accessible={false}
+          >
             <Text
               className={cn(
                 "text-sm font-bold",
                 !isAdWatched && "text-muted-foreground"
               )}
+              accessible={false}
             >
               Boosted
             </Text>
@@ -91,20 +131,28 @@ export function ResultsTable({
         {/* Admin */}
         {hasAdminEntities && (
           <>
-            <Text className="text-lg font-bold">Admin</Text>
-            {groupedEntities.president?.map((entity) => (
+            <Text
+              className="text-lg font-bold"
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={`Administration section with ${
+                (groupedEntities?.president?.length || 0) +
+                (groupedEntities?.cabinet?.length || 0)
+              } entities`}
+            >
+              Admin
+            </Text>
+            {groupedEntities?.president?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
-            {groupedEntities.cabinet?.map((entity) => (
+            {groupedEntities?.cabinet?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -114,12 +162,20 @@ export function ResultsTable({
         {/* Journalists (only in Press Results) */}
         {hasJournalists && (
           <>
-            <Text className="text-lg font-bold">Journalists</Text>
+            <Text
+              className="text-lg font-bold"
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={`Journalists section with ${
+                groupedEntities?.journalists?.length || 0
+              } entities`}
+            >
+              Journalists
+            </Text>
             {groupedEntities?.journalists?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}
@@ -129,12 +185,20 @@ export function ResultsTable({
         {/* Subgroups (only in Situation Results) */}
         {hasSubgroups && (
           <>
-            <Text className="text-lg font-bold">Groups</Text>
+            <Text
+              className="text-lg font-bold"
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={`Voter groups section with ${
+                groupedEntities?.subgroups?.length || 0
+              } entities`}
+            >
+              Groups
+            </Text>
             {groupedEntities?.subgroups?.map((entity) => (
               <ResultsEntityRow
                 key={entity.id}
                 entity={entity}
-                // boostedDelta={calculateAdBoost(entity.delta)}
                 isAdWatched={isAdWatched}
               />
             ))}

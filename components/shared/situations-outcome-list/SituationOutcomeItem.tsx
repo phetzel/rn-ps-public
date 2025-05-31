@@ -64,12 +64,25 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
   }
 
   return (
-    <Card>
+    <Card
+      accessible={true}
+      accessibilityLabel={`Situation: ${situation.title}. Outcome: ${selectedOutcomeWeight.title} with ${selectedOutcomeWeight.finalWeight}% probability`}
+    >
       <CardHeader className="pb-2">
-        <View className=" flex-row justify-between items-center">
-          <View className="flex-1 flex-row items-center gap-2 mr-2">
+        <View
+          className=" flex-row justify-between items-center"
+          accessible={false}
+        >
+          <View
+            className="flex-1 flex-row items-center gap-2 mr-2"
+            accessible={false}
+          >
             <SituationTypeIcon type={situation.type} />
-            <CardTitle className="text-xl flex-shrink">
+            <CardTitle
+              className="text-xl flex-shrink"
+              accessibilityRole="header"
+              accessible={false}
+            >
               {situation.title}
             </CardTitle>
           </View>
@@ -79,7 +92,7 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
       </CardHeader>
 
       <CardContent className="gap-4">
-        <Text className="text-sm text-muted-foreground">
+        <Text className="text-sm text-muted-foreground" accessible={false}>
           {situation.description}
         </Text>
 
@@ -89,11 +102,20 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
         <SituationSelectedOutcome outcome={selectedOutcomeWeight} />
 
         {/* Single Accordion with three sections */}
-        <Accordion type="single" collapsible>
+        <Accordion
+          type="single"
+          collapsible
+          accessible={true}
+          accessibilityLabel="Situation details sections"
+          accessibilityHint="Expandable sections for approval changes, alternative outcomes, and press exchanges"
+        >
           {/* Approval Changes */}
           <AccordionItem value="approval-changes">
-            <AccordionTrigger>
-              <Text>Approval Changes</Text>
+            <AccordionTrigger
+              accessibilityLabel="Approval changes from this situation outcome"
+              accessibilityHint="Shows how this outcome affected approval ratings"
+            >
+              <Text accessible={false}>Approval Changes</Text>
             </AccordionTrigger>
             <AccordionContent>
               <ImpactList
@@ -106,8 +128,11 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
 
           {/* Alternative Outcomes */}
           <AccordionItem value="alternative-outcomes">
-            <AccordionTrigger>
-              <Text>Alternative Outcomes</Text>
+            <AccordionTrigger
+              accessibilityLabel={`Alternative outcomes: ${alternativeOutcomesWeights.length} other possible results`}
+              accessibilityHint="Shows other outcomes that could have occurred with their probabilities"
+            >
+              <Text accessible={false}>Alternative Outcomes</Text>
             </AccordionTrigger>
             <AccordionContent>
               <SituationAlternativeOutcomes
@@ -118,8 +143,11 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
 
           {/* Press Exchanges */}
           <AccordionItem value="press-exchanges">
-            <AccordionTrigger>
-              <Text>Press Exchanges</Text>
+            <AccordionTrigger
+              accessibilityLabel="Press exchanges that influenced this outcome"
+              accessibilityHint="Shows which press conference responses affected the outcome probabilities"
+            >
+              <Text accessible={false}>Press Exchanges</Text>
             </AccordionTrigger>
             <AccordionContent>
               <SituationOutcomeExchanges

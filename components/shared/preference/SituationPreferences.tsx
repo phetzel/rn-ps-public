@@ -47,7 +47,11 @@ const SituationPreferences = ({
   const cabinetPreferences = contentPreferences.cabinet;
 
   return (
-    <View className="gap-4">
+    <View
+      className="gap-4"
+      accessible={true}
+      accessibilityLabel={`Situation preferences section`}
+    >
       <Separator />
 
       {/* President's Position */}
@@ -59,15 +63,32 @@ const SituationPreferences = ({
       )}
 
       {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
-        <Accordion type="single" collapsible>
+        <Accordion
+          type="single"
+          collapsible
+          accessible={true}
+          accessibilityLabel="Cabinet positions section"
+          accessibilityHint="Expandable section containing individual cabinet member preferences"
+        >
           <AccordionItem value="cabinet-positions">
-            <AccordionTrigger>
-              <Text>
+            <AccordionTrigger
+              accessibilityLabel={`Cabinet positions: ${
+                Object.keys(cabinetPreferences).length
+              } members have preferences`}
+              accessibilityHint="Expand to view individual cabinet member preferences and classified intel"
+            >
+              <Text accessible={false}>
                 Cabinet Positions ({Object.keys(cabinetPreferences).length})
               </Text>
             </AccordionTrigger>
             <AccordionContent>
-              <View className="gap-2">
+              <View
+                className="gap-2"
+                accessible={true}
+                accessibilityLabel={`${
+                  Object.keys(cabinetPreferences).length
+                } cabinet member preferences`}
+              >
                 {Object.entries(cabinetPreferences).map(
                   ([member, cabPref], idx) => {
                     const staticId = member as CabinetStaticId;
@@ -77,7 +98,7 @@ const SituationPreferences = ({
                     }
 
                     return (
-                      <View key={idx} className="gap-2">
+                      <View key={idx} className="gap-2" accessible={false}>
                         <CabinetMemberPreference
                           cabinetMember={cabinetMember}
                           cabinetPreference={cabPref}

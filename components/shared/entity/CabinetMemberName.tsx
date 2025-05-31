@@ -13,9 +13,18 @@ export function CabinetMemberName({ cabinetMember }: CabinetMemberNameProps) {
   const { cabinetName } = cabinetMember.staticData;
 
   return (
-    <View>
-      <Text className="text-lg font-bold">{name}</Text>
-      <Text className="text-base text-muted-foreground leading-none">
+    <View
+      accessible={true}
+      accessibilityLabel={`${name}, ${cabinetName}`}
+      accessibilityRole="header"
+    >
+      <Text className="text-lg font-bold" accessible={false}>
+        {name}
+      </Text>
+      <Text
+        className="text-base text-muted-foreground leading-none"
+        accessible={false}
+      >
         {cabinetName}
       </Text>
     </View>

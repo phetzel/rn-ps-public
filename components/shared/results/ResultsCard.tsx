@@ -27,6 +27,9 @@ export function ResultsCard({
   adNotWatchMessage,
   className,
 }: ResultsCardProps) {
+  const entityCount = enhancedDeltas?.length || 0;
+  const adStatus = isAdWatched ? "Ad boost applied" : "Ad boost available";
+
   return (
     <Card
       className={cn(
@@ -34,6 +37,8 @@ export function ResultsCard({
         isAdWatched ? "border-l-green-500" : "border-l-blue-500",
         className
       )}
+      accessible={true}
+      accessibilityLabel={`Results summary with ${entityCount} entities. ${adStatus}.`}
     >
       <ResultsCardHeader
         isAdWatched={isAdWatched}
@@ -51,8 +56,15 @@ export function ResultsCard({
           }}
         />
         {onComplete && (
-          <Button onPress={onComplete} className="self-end">
-            <Text>Continue</Text>
+          <Button
+            onPress={onComplete}
+            className="self-end"
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Continue to next screen"
+            accessibilityHint="Proceeds to the next section after reviewing results"
+          >
+            <Text accessible={false}>Continue</Text>
           </Button>
         )}
       </CardContent>
