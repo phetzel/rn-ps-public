@@ -3,7 +3,7 @@ import { calculateSituationOutcomeWeights } from "~/lib/db/helpers/situationApi"
 import type { Situation } from "~/lib/db/models";
 import type {
   SituationOutcomeWeight,
-  ExchangeImpacts,
+  SituationImpacts,
   CabinetStaticId,
   SubgroupStaticId,
 } from "~/types";
@@ -36,7 +36,7 @@ export function useSituationOutcomeData(situation: Situation) {
   const formattedImpacts = useMemo(() => {
     if (!selectedOutcome) return {};
 
-    const impacts: ExchangeImpacts = {};
+    const impacts: SituationImpacts = {};
     const consequences = selectedOutcome.consequences;
 
     // Add cabinet impacts

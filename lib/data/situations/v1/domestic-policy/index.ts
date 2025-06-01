@@ -1,7 +1,3 @@
-import { infrastructureBill } from "./infrastructure_bill";
-import { infrastructureBillImplementation } from "./infrastructure_bill_implementation";
+import { mandatoryMoodForms } from "./mandatory-mood-forms";
 
-export const domesticSituationsData = [
-  infrastructureBill,
-  infrastructureBillImplementation,
-];
+export const domesticPolicySituationsData = [mandatoryMoodForms];

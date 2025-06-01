@@ -21,9 +21,6 @@ export const exchangeImpactsSchema = z.object({
   cabinet: z
     .record(z.nativeEnum(CabinetStaticId), exchangeImpactSchema)
     .optional(),
-  subgroups: z
-    .record(z.nativeEnum(SubgroupStaticId), exchangeImpactSchema)
-    .optional(),
   journalists: z
     .record(z.nativeEnum(JournalistStaticId), exchangeImpactSchema)
     .optional(),

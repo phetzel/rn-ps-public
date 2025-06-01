@@ -1,3 +1,3 @@
-import { dataBreach } from "./data_breach";
+import { cousinBecomesCzar } from "./cousin-becomes-czar";
 
-export const scandalSituationsData = [dataBreach];
+export const ethicsSituationsData = [cousinBecomesCzar];

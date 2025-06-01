@@ -1,3 +1,4 @@
-import { borderSecurityCrisis } from "./border_crises";
+import { alienBroadcastHijack } from "./alien-broadcast-hack";
+import { droneHackScandal } from "./drone-hack-scandal";
 
-export const securitySituationsData = [borderSecurityCrisis];
+export const securitySituationsData = [alienBroadcastHijack, droneHackScandal];

@@ -1,13 +1,15 @@
-import { domesticSituationsData } from "./domestic-policy";
-import { economicSituationsData } from "./economy";
-import { foreignSituationsData } from "./foreign-affairs";
-import { scandalSituationsData } from "./ethics";
+import { domesticPolicySituationsData } from "./domestic-policy";
+import { economySituationsData } from "./economy";
+import { foreignAffairsSituationsData } from "./foreign-affairs";
+import { ethicsSituationsData } from "./ethics";
 import { securitySituationsData } from "./security";
+import { governanceSituationsData } from "./governance";
 
 export const situationsData = [
-  ...domesticSituationsData,
-  ...economicSituationsData,
-  ...foreignSituationsData,
-  ...scandalSituationsData,
+  ...domesticPolicySituationsData,
+  ...economySituationsData,
+  ...foreignAffairsSituationsData,
+  ...ethicsSituationsData,
   ...securitySituationsData,
+  ...governanceSituationsData,
 ];
