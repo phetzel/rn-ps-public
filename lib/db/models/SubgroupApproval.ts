@@ -35,4 +35,22 @@ export default class SubgroupApproval extends Model {
   get staticData(): StaticSubgroup {
     return staticSubgroups[this.staticId];
   }
+
+  // Validation helpers
+  private validateRating(value: number): number {
+    return Math.max(0, Math.min(100, Math.round(value)));
+  }
+
+  // Override update to ensure clean values
+  async update(recordUpdater?: (record: this) => void): Promise<this> {
+    return super.update((record) => {
+      // Apply user updates first
+      if (recordUpdater) {
+        recordUpdater(record);
+      }
+
+      // Then validate and clean the data
+      record.approvalRating = this.validateRating(record.approvalRating);
+    });
+  }
 }

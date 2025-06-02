@@ -63,18 +63,19 @@ export default class Publication extends Model {
 
     // Apply political alignment adjustment
     const politicalLeaning = this.staticData.politicalLeaning;
-    const presidentParty = game.presParty;
+    const presidentLeaning = game.presLeaning;
 
     // Apply alignment bonus/penalty
     if (
-      (politicalLeaning === "liberal" && presidentParty === "democrat") ||
-      (politicalLeaning === "conservative" && presidentParty === "republican")
+      (politicalLeaning === "liberal" && presidentLeaning === "liberal") ||
+      (politicalLeaning === "conservative" &&
+        presidentLeaning === "conservative")
     ) {
       // Publication aligns with president's party
       totalApproval += POLITICAL_ALIGNMENT_WEIGHT;
     } else if (
-      (politicalLeaning === "liberal" && presidentParty === "republican") ||
-      (politicalLeaning === "conservative" && presidentParty === "democrat")
+      (politicalLeaning === "liberal" && presidentLeaning === "conservative") ||
+      (politicalLeaning === "conservative" && presidentLeaning === "liberal")
     ) {
       // Publication doesn't align with president's party
       totalApproval -= POLITICAL_ALIGNMENT_WEIGHT;

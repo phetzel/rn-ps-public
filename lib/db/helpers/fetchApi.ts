@@ -156,6 +156,31 @@ export async function fetchPressExchangeById(
   }
 }
 
+export async function fetchPressExchangeForJournalistLevel(
+  levelId: string,
+  journalistId: string
+): Promise<PressExchange | null> {
+  const exchanges = await pressExchangeCollection
+    .query(
+      Q.where("level_id", levelId),
+      Q.where("journalist_id", journalistId),
+      Q.take(1)
+    )
+    .fetch();
+
+  return exchanges.length > 0 ? exchanges[0] : null;
+}
+
+export async function fetchExistingJournalistIdsForLevel(
+  levelId: string
+): Promise<string[]> {
+  const exchanges = await pressExchangeCollection
+    .query(Q.where("level_id", levelId))
+    .fetch();
+
+  return exchanges.map((exchange) => exchange.journalist_id);
+}
+
 // Batch fetch all game entities in a single function
 export async function fetchGameEntities(gameId: string) {
   const [game, cabinetMembers, publications, journalists, subgroups] =

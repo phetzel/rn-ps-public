@@ -8,6 +8,7 @@ import {
 import {
   fetchSituationsByLevelId,
   fetchActiveJournalistsForGame,
+  fetchPressExchangeForJournalistLevel,
 } from "~/lib/db/helpers/fetchApi";
 import { Situation, Game, Level } from "~/lib/db/models";
 import { staticJournalists } from "~/lib/data/staticMedia";
@@ -109,6 +110,18 @@ export async function createSituationsForLevel(
           history: [],
           currentQuestionId: exchange.content.rootQuestionId,
         };
+
+        // Check if journalist already has an exchange for this level
+        const existingExchange = await fetchPressExchangeForJournalistLevel(
+          level.id,
+          journalist.id
+        );
+
+        if (existingExchange) {
+          throw new Error(
+            `Journalist ${journalist.id} already has a press exchange for level ${level.id}`
+          );
+        }
 
         // Create the exchange
         await pressExchangeCollection.create((e) => {
