@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { calculateSituationOutcomeWeights } from "~/lib/db/helpers/situationApi";
+import { calculateSituationOutcomeWeights } from "~/lib/db/helpers";
 import type { Situation } from "~/lib/db/models";
 import type {
   SituationOutcomeWeight,
