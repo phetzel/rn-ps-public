@@ -41,13 +41,18 @@ export function SituationTypeIcon({ type, size = 32 }: SituationTypeIconProps) {
   };
   const Icon = getSituationIcon();
 
+  // Convert snake_case to Title Case for accessibility label
+  const formatAccessibilityLabel = (type: string): string => {
+    return type
+      .replace(/_/g, " ") // Replace underscores with spaces
+      .replace(/\b\w/g, (l) => l.toUpperCase()); // Capitalize first letter of each word
+  };
+
   return (
     <Icon
       size={size}
       className="text-primary flex-shrink-0"
-      accessibilityLabel={`${type
-        .replace(/([A-Z])/g, " $1")
-        .trim()} situation type`}
+      accessibilityLabel={`${formatAccessibilityLabel(type)} situation type`}
     />
   );
 }
