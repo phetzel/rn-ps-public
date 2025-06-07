@@ -370,7 +370,7 @@ export interface RelationshipSnapshot {
 
 export interface ConsequenceResult {
   gameEnded: boolean;
-  gameEndReason?: "impeached" | "fired";
+  gameEndReason?: "impeached" | "fired" | "completed";
   cabinetMembersFired: CabinetStaticId[];
 }
 

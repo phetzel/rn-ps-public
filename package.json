@@ -93,8 +93,8 @@
     ],
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/setup.ts",
-      "<rootDir>/__tests__/lib/db/fixtures.ts",
-      "<rootDir>/__tests__/lib/db/index.ts"
+      "<rootDir>/__tests__/lib/db/index.ts",
+      "<rootDir>/__tests__/lib/db/fixtures/*"
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|@rn-primitives/.*|@nozbe/watermelondb|better-sqlite3)"

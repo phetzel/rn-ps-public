@@ -233,6 +233,119 @@ export async function createSubgroupFloorScenario(
   );
 }
 
+export async function createCompletionScenario(
+  database: Database,
+  options: {
+    currentYear?: number;
+    currentMonth?: number;
+    presApprovalRating?: number;
+    presPsRelationship?: number;
+    cabinetApprovals?: { staticId: CabinetStaticId; approvalRating: number }[];
+  } = {},
+  mockFetchGameEntities?: jest.MockedFunction<any>
+) {
+  const { game, cabinetMembers, subgroups } =
+    await createConsequenceTestScenario(
+      database,
+      {
+        presApprovalRating: options.presApprovalRating ?? 60, // Safe from impeachment
+        presPsRelationship: options.presPsRelationship ?? 70, // Safe from firing
+        cabinetApprovals: options.cabinetApprovals ?? [
+          { staticId: CabinetStaticId.State, approvalRating: 50 }, // Safe
+          { staticId: CabinetStaticId.Defense, approvalRating: 45 }, // Safe
+        ],
+      },
+      mockFetchGameEntities
+    );
+
+  // Set the game to the specified year/month (defaults to term limit)
+  await database.write(async () => {
+    await game.update((g) => {
+      g.currentYear = options.currentYear ?? 4;
+      g.currentMonth = options.currentMonth ?? 12;
+    });
+  });
+
+  return { game, cabinetMembers, subgroups };
+}
+
+export async function createTermLimitCompletionScenario(
+  database: Database,
+  mockFetchGameEntities?: jest.MockedFunction<any>
+) {
+  return createCompletionScenario(
+    database,
+    {
+      currentYear: 4,
+      currentMonth: 12,
+      presApprovalRating: 60, // Safe from impeachment
+      presPsRelationship: 70, // Safe from firing
+      cabinetApprovals: [
+        { staticId: CabinetStaticId.State, approvalRating: 50 }, // Safe
+        { staticId: CabinetStaticId.Defense, approvalRating: 45 }, // Safe
+      ],
+    },
+    mockFetchGameEntities
+  );
+}
+
+export async function createTermLimitImpeachmentScenario(
+  database: Database,
+  mockFetchGameEntities?: jest.MockedFunction<any>
+) {
+  return createCompletionScenario(
+    database,
+    {
+      currentYear: 4,
+      currentMonth: 12,
+      presApprovalRating: 10, // High impeachment risk
+      presPsRelationship: 70, // Safe from firing
+      cabinetApprovals: [
+        { staticId: CabinetStaticId.State, approvalRating: 50 },
+      ],
+    },
+    mockFetchGameEntities
+  );
+}
+
+export async function createTermLimitFiringScenario(
+  database: Database,
+  mockFetchGameEntities?: jest.MockedFunction<any>
+) {
+  return createCompletionScenario(
+    database,
+    {
+      currentYear: 4,
+      currentMonth: 12,
+      presApprovalRating: 60, // Safe from impeachment
+      presPsRelationship: 10, // High firing risk
+      cabinetApprovals: [
+        { staticId: CabinetStaticId.State, approvalRating: 50 },
+      ],
+    },
+    mockFetchGameEntities
+  );
+}
+
+export async function createNonTermLimitScenario(
+  database: Database,
+  mockFetchGameEntities?: jest.MockedFunction<any>
+) {
+  return createCompletionScenario(
+    database,
+    {
+      currentYear: 4,
+      currentMonth: 11, // Not December - not at term limit
+      presApprovalRating: 60, // Safe from impeachment
+      presPsRelationship: 70, // Safe from firing
+      cabinetApprovals: [
+        { staticId: CabinetStaticId.State, approvalRating: 50 },
+      ],
+    },
+    mockFetchGameEntities
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // RANDOM PROVIDER HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════

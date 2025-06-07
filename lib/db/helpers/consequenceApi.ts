@@ -74,11 +74,12 @@ function calculateCabinetFirings(
  */
 async function applyGameEndingConsequence(
   game: Game,
-  gameEndReason: "impeached" | "fired"
+  gameEndReason: "impeached" | "fired" | "completed"
 ): Promise<void> {
   const statusMap = {
     impeached: GameStatus.Impeached,
     fired: GameStatus.Fired,
+    completed: GameStatus.Completed,
   };
 
   await database.write(async () => {
@@ -165,6 +166,15 @@ export async function calculateAndApplyConsequences(
   if (cabinetMembersToFire.length > 0) {
     await applyCabinetFirings(cabinetMembers, subgroups, cabinetMembersToFire);
     result.cabinetMembersFired = cabinetMembersToFire;
+  }
+
+  // Check for game completion AFTER all other consequences
+  // Only complete if at term limit AND no other game-ending event occurred
+  if (game.isAtTermLimit()) {
+    result.gameEnded = true;
+    result.gameEndReason = "completed";
+
+    await applyGameEndingConsequence(game, "completed");
   }
 
   return result;

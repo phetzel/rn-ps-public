@@ -30,6 +30,10 @@ import {
   createSubgroupPenaltyScenario,
   createSubgroupFloorScenario,
   createConsequenceTestScenario,
+  createTermLimitCompletionScenario,
+  createTermLimitImpeachmentScenario,
+  createTermLimitFiringScenario,
+  createNonTermLimitScenario,
   createDeterministicRandom,
   createPredictableRandom,
   IMPEACHMENT_TEST_CASES,
@@ -379,6 +383,78 @@ describe("Consequence API", () => {
 
       expect(result.gameEnded).toBe(false);
       expect(result.cabinetMembersFired).toEqual([]);
+    });
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // GAME COMPLETION LOGIC
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  describe("Game Completion", () => {
+    it("should complete game when at term limit with no other consequences", async () => {
+      const { game } = await createTermLimitCompletionScenario(
+        database,
+        mockFetchGameEntities
+      );
+
+      const result = await calculateAndApplyConsequences(
+        game.id,
+        createPredictableRandom(0.1) // Low random values - no other consequences
+      );
+
+      expect(result.gameEnded).toBe(true);
+      expect(result.gameEndReason).toBe("completed");
+      expect(result.cabinetMembersFired).toEqual([]);
+
+      // Verify game status was updated
+      const reloadedGame = await database.get<Game>("games").find(game.id);
+      expect(reloadedGame.status).toBe(GameStatus.Completed);
+      expect(reloadedGame.endTimestamp).toBeTruthy();
+    });
+
+    it("should not complete game if impeachment occurs at term limit", async () => {
+      const { game } = await createTermLimitImpeachmentScenario(
+        database,
+        mockFetchGameEntities
+      );
+
+      const result = await calculateAndApplyConsequences(
+        game.id,
+        createPredictableRandom(0.1) // Low enough to trigger impeachment
+      );
+
+      expect(result.gameEnded).toBe(true);
+      expect(result.gameEndReason).toBe("impeached"); // Not completed
+    });
+
+    it("should not complete game if firing occurs at term limit", async () => {
+      const { game } = await createTermLimitFiringScenario(
+        database,
+        mockFetchGameEntities
+      );
+
+      const result = await calculateAndApplyConsequences(
+        game.id,
+        createPredictableRandom(0.1) // Low enough to trigger firing
+      );
+
+      expect(result.gameEnded).toBe(true);
+      expect(result.gameEndReason).toBe("fired"); // Not completed
+    });
+
+    it("should not complete game when not at term limit", async () => {
+      const { game } = await createNonTermLimitScenario(
+        database,
+        mockFetchGameEntities
+      );
+
+      const result = await calculateAndApplyConsequences(
+        game.id,
+        createPredictableRandom(0.1)
+      );
+
+      expect(result.gameEnded).toBe(false);
+      expect(result.gameEndReason).toBeUndefined();
     });
   });
 });
