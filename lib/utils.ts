@@ -3,7 +3,11 @@ import { twMerge } from "tailwind-merge";
 import { faker } from "@faker-js/faker";
 
 // Constants
-import { AD_BOOST_MULTIPLIER } from "~/lib/constants";
+import {
+  AD_BOOST_MULTIPLIER,
+  CONSEQUENCE_THRESHOLD,
+  CONSEQUENCE_RISK_PER_LEVEL,
+} from "~/lib/constants";
 // DB Models
 import { CabinetMember } from "~/lib/db/models";
 // Types
@@ -95,4 +99,14 @@ export function calculatePresidentApprovalRating(
 
   // Round to nearest integer and ensure it's within 0-100 range
   return Math.max(0, Math.min(100, Math.round(average)));
+}
+
+// Consequence Helpers
+export function calculateRiskProbability(currentValue: number): number {
+  if (currentValue >= CONSEQUENCE_THRESHOLD) {
+    return 0; // No risk above threshold
+  }
+
+  const pointsBelowThreshold = CONSEQUENCE_THRESHOLD - currentValue;
+  return Math.min(1.0, pointsBelowThreshold * CONSEQUENCE_RISK_PER_LEVEL);
 }

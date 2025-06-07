@@ -3,12 +3,9 @@ import { View } from "react-native";
 import { CabinetMember } from "~/lib/db/models";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
-import {
-  CONSEQUENCE_THRESHOLD,
-  CONSEQUENCE_RISK_PER_LEVEL,
-} from "~/lib/constants";
 import PresidentialRiskItem from "./PresidentialRistItem";
 import CabinetRiskItem from "./CabinetRiskItem";
+import { calculateRiskProbability } from "~/lib/utils";
 import { CabinetStaticId, RelationshipSnapshot } from "~/types";
 
 interface LevelConsequencesRiskCardProps {
@@ -22,15 +19,6 @@ export default function LevelConsequencesRiskCard({
   cabinetMembers,
   firedMembers,
 }: LevelConsequencesRiskCardProps) {
-  const calculateRiskProbability = (currentValue: number): number => {
-    if (currentValue >= CONSEQUENCE_THRESHOLD) {
-      return 0;
-    }
-
-    const pointsBelowThreshold = CONSEQUENCE_THRESHOLD - currentValue;
-    return Math.min(1.0, pointsBelowThreshold * CONSEQUENCE_RISK_PER_LEVEL);
-  };
-
   const impeachmentRisk = calculateRiskProbability(
     finalSnapshot.president.approvalRating
   );
