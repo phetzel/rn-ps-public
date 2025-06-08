@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen, act, waitFor } from "@testing-library/react-native";
 import { of, BehaviorSubject } from "rxjs";
 
 import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
@@ -72,7 +72,7 @@ describe("JournalistDisplay", () => {
     expect(screen.queryByText("Daily Herald")).toBeNull();
   });
 
-  it("updates when journalist data changes", () => {
+  it("updates when journalist data changes", async () => {
     const journalistSubject = new BehaviorSubject(mockJournalist);
     const publicationSubject = new BehaviorSubject(mockPublication);
 
@@ -81,22 +81,25 @@ describe("JournalistDisplay", () => {
       publicationSubject
     );
 
-    const { rerender } = render(
-      <JournalistDisplay journalistId="journalist-1" />
-    );
+    render(<JournalistDisplay journalistId="journalist-1" />);
     expect(screen.getByText("Sarah Johnson")).toBeTruthy();
 
-    // Update the journalist observable
+    // Update the journalist observable wrapped in act()
     const updatedJournalist = {
       staticData: { name: "John Smith" },
     } as any;
-    journalistSubject.next(updatedJournalist);
 
-    rerender(<JournalistDisplay journalistId="journalist-1" />);
-    expect(screen.getByText("John Smith")).toBeTruthy();
+    act(() => {
+      journalistSubject.next(updatedJournalist);
+    });
+
+    // Wait for the component to update
+    await waitFor(() => {
+      expect(screen.getByText("John Smith")).toBeTruthy();
+    });
   });
 
-  it("updates when publication data changes", () => {
+  it("updates when publication data changes", async () => {
     const journalistSubject = new BehaviorSubject(mockJournalist);
     const publicationSubject = new BehaviorSubject(mockPublication);
 
@@ -105,22 +108,25 @@ describe("JournalistDisplay", () => {
       publicationSubject
     );
 
-    const { rerender } = render(
-      <JournalistDisplay journalistId="journalist-1" />
-    );
+    render(<JournalistDisplay journalistId="journalist-1" />);
     expect(screen.getByText("Daily Herald")).toBeTruthy();
 
-    // Update the publication observable
+    // Update the publication observable wrapped in act()
     const updatedPublication = {
       staticData: {
         name: "Evening News",
         politicalLeaning: PoliticalLeaning.Conservative,
       },
     } as any;
-    publicationSubject.next(updatedPublication);
 
-    rerender(<JournalistDisplay journalistId="journalist-1" />);
-    expect(screen.getByText("Evening News")).toBeTruthy();
+    act(() => {
+      publicationSubject.next(updatedPublication);
+    });
+
+    // Wait for the component to update
+    await waitFor(() => {
+      expect(screen.getByText("Evening News")).toBeTruthy();
+    });
   });
 
   it("renders correctly with different political leanings", () => {
