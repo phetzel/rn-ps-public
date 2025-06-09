@@ -15,7 +15,6 @@ describe("EmptyState", () => {
 
   it("has correct accessibility properties", () => {
     renderWithMessage("Empty state message");
-    renderWithMessage("Empty state message");
     const container = screen.getByRole("text");
     expect(container).toBeTruthy();
     expect(container).toHaveProp(
