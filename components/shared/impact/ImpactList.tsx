@@ -88,6 +88,21 @@ const ImpactList = ({
   const isExchangeImpacts = "president" in impacts || "journalists" in impacts;
   const isSituationImpacts = "subgroups" in impacts;
 
+  const hasImpacts =
+    (isExchangeImpacts && impacts.president) ||
+    (impacts.cabinet && Object.keys(impacts.cabinet).length > 0) ||
+    (isSituationImpacts &&
+      impacts.subgroups &&
+      Object.keys(impacts.subgroups || {}).length > 0) ||
+    (isExchangeImpacts &&
+      impacts.journalists &&
+      Object.keys(impacts.journalists || {}).length > 0);
+
+  // Don't render anything if there are no impacts
+  if (!hasImpacts) {
+    return null;
+  }
+
   return (
     <View
       className="gap-4 px-4"

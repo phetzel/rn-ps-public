@@ -1,0 +1,67 @@
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react-native";
+import { Text } from "react-native";
+
+import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
+
+describe("ProgressNavigator", () => {
+  const mockHandlers = {
+    onPrevious: jest.fn(),
+    onNext: jest.fn(),
+    onComplete: jest.fn(),
+  };
+
+  const renderWithProps = (props = {}) => {
+    const defaultProps = {
+      currentIndex: 1,
+      totalItems: 3,
+      ...mockHandlers,
+      children: <Text>Test content</Text>,
+    };
+    render(<ProgressNavigator {...defaultProps} {...props} />);
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("renders progress information and content", () => {
+    renderWithProps();
+    expect(screen.getByText("Item 2 of 3")).toBeTruthy();
+    expect(screen.getByText("67% Complete")).toBeTruthy();
+    expect(screen.getByText("Test content")).toBeTruthy();
+  });
+
+  it("calls navigation handlers when buttons are pressed", () => {
+    renderWithProps();
+
+    fireEvent.press(screen.getByRole("button", { name: /Previous/ }));
+    expect(mockHandlers.onPrevious).toHaveBeenCalled();
+
+    fireEvent.press(screen.getByRole("button", { name: /Next/ }));
+    expect(mockHandlers.onNext).toHaveBeenCalled();
+  });
+
+  it("handles first item state", () => {
+    renderWithProps({ currentIndex: 0 });
+    const previousButton = screen.getByRole("button", {
+      name: /Previous.*disabled/,
+    });
+    expect(previousButton).toHaveProp("accessibilityState", { disabled: true });
+  });
+
+  it("handles last item state", () => {
+    renderWithProps({ currentIndex: 2 });
+    const completeButton = screen.getByRole("button", { name: /Complete/ });
+    expect(completeButton).toBeTruthy();
+
+    fireEvent.press(completeButton);
+    expect(mockHandlers.onComplete).toHaveBeenCalled();
+  });
+
+  it("has correct accessibility properties", () => {
+    renderWithProps();
+    const container = screen.getByLabelText(/Progress navigator.*67% complete/);
+    expect(container).toBeTruthy();
+  });
+});

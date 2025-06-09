@@ -18,7 +18,6 @@ const SituationsOutcomeList = ({
   levelId,
   situations,
 }: SituationsOutcomeListProps) => {
-  console.log("situations", situations);
   if (!situations || situations.length === 0) {
     return <EmptyState message="No situations found for this level." />;
   }
@@ -29,11 +28,7 @@ const SituationsOutcomeList = ({
       accessible={true}
       accessibilityLabel={`Situations outcomes: ${situations.length} situations with their results and consequences`}
     >
-      <Text
-        className="text-2xl font-semibold"
-        accessibilityRole="header"
-        accessible={false}
-      >
+      <Text className="text-2xl font-semibold" accessibilityRole="header">
         Situations
       </Text>
       <Accordion
