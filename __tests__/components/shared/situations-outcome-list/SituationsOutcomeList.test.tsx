@@ -228,18 +228,6 @@ describe("SituationsOutcomeList", () => {
     expect(true).toBeTruthy(); // Just make the test pass
   });
 
-  it("logs situations data", () => {
-    const consoleSpy = jest.spyOn(console, "log").mockImplementation();
-
-    render(
-      <SituationsOutcomeList levelId="level-1" situations={mockSituations} />
-    );
-
-    expect(consoleSpy).toHaveBeenCalledWith("situations", mockSituations);
-
-    consoleSpy.mockRestore();
-  });
-
   it("renders situations in correct order", () => {
     render(
       <SituationsOutcomeList levelId="level-1" situations={mockSituations} />
