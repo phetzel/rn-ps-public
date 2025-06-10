@@ -6,8 +6,8 @@ import type CabinetMember from "~/lib/db/models/CabinetMember";
 
 import { Text } from "~/components/ui/text";
 import { OutcomeSnapshotType } from "~/types";
-import LevelConsequencesCard from "./LevelConsequencesCard";
-import LevelConsequencesRiskCard from "./LevelConsequencesRiskCard";
+import LevelConsequencesCard from "~/components/shared/level-consequences/LevelConsequencesCard";
+import LevelConsequencesRiskCard from "~/components/shared/level-consequences/LevelConsequencesRiskCard";
 
 interface LevelConsequencesProps {
   outcomeSnapshot: OutcomeSnapshotType;
@@ -40,14 +40,14 @@ const LevelConsequences = ({
       accessible={true}
       accessibilityLabel={`Level consequences and risk assessment.`}
     >
+      <LevelConsequencesCard
+        consequences={consequences}
+        cabinetMembers={cabinetMembers}
+      />
       <LevelConsequencesRiskCard
         finalSnapshot={final}
         cabinetMembers={cabinetMembers}
         firedMembers={consequences?.cabinetMembersFired || []}
-      />
-      <LevelConsequencesCard
-        consequences={consequences}
-        cabinetMembers={cabinetMembers}
       />
     </View>
   );

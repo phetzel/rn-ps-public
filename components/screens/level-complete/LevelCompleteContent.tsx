@@ -13,7 +13,7 @@ import CabinetLevelState from "~/components/screens/level-complete/CabinetLevelS
 import PresidentLevelState from "~/components/screens/level-complete/PresidentLevelState";
 import MediaLevelState from "~/components/screens/level-complete/MediaLevelState";
 import SubgroupLevelState from "~/components/screens/level-complete/SubgroupLevelState";
-import LevelConsequences from "~/components/screens/level-complete/LevelConsequences";
+import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
 // Icons
 import { Award, Briefcase, Newspaper, Shield, Users } from "~/lib/icons";
 // Types
