@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react-native";
 
 import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
-import { CabinetMember } from "~/lib/db/models";
+import { CabinetMember, Level } from "~/lib/db/models";
 import {
   OutcomeSnapshotType,
   ConsequenceResult,
@@ -65,23 +65,33 @@ jest.mock("~/lib/constants", () => ({
   CABINET_PENALTY_PER_FIRED_MEMBER: 10,
 }));
 
-// Mock WatermelonDB observer - return the mock cabinet members
+// Mock WatermelonDB observer - return the props passed in
 jest.mock("@nozbe/watermelondb/react", () => ({
   withObservables: (deps: any, observablesFactory: any) => (Component: any) => {
     return (props: any) => {
-      // Return the cabinet members that are passed in the test
-      const observables = { cabinetMembers: props.testCabinetMembers || [] };
+      const observables = {
+        level: props.testLevel || null,
+        cabinetMembers: props.testCabinetMembers || [],
+      };
       return <Component {...props} {...observables} />;
     };
   },
 }));
 
-// Mock observations helper
+// Mock observations helpers
 jest.mock("~/lib/db/helpers", () => ({
+  observeLevel: (levelId: string) => null,
   observeCabinetMembersByLevel: (levelId: string) => [],
 }));
 
 describe("LevelConsequences", () => {
+  const mockLevel: Level = {
+    id: "level-1",
+    game_id: "game-1",
+    year: 1,
+    month: 6,
+  } as Level;
+
   const mockCabinetMembers: CabinetMember[] = [
     {
       id: "1",
@@ -123,7 +133,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={mockCompleteOutcomeSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -137,7 +149,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={mockCompleteOutcomeSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -159,7 +173,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={outcomesWithFiredMembers}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -182,7 +198,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={incompleteSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -205,7 +223,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={incompleteSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -224,7 +244,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={mockCompleteOutcomeSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -245,7 +267,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={incompleteSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -273,7 +297,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={gameEndedSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -296,7 +322,9 @@ describe("LevelConsequences", () => {
 
       render(
         <EnhancedComponent
+          levelId="level-1"
           outcomeSnapshot={gameEndedSnapshot}
+          testLevel={mockLevel}
           testCabinetMembers={mockCabinetMembers}
         />
       );

@@ -1,20 +1,21 @@
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
-import { observeCabinetMembersByLevel } from "~/lib/db/helpers";
-import type CabinetMember from "~/lib/db/models/CabinetMember";
-
+import { observeLevel, observeCabinetMembersByLevel } from "~/lib/db/helpers";
+import type { CabinetMember, Level } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 import { OutcomeSnapshotType } from "~/types";
 import LevelConsequencesCard from "~/components/shared/level-consequences/LevelConsequencesCard";
 import LevelConsequencesRiskCard from "~/components/shared/level-consequences/LevelConsequencesRiskCard";
 
 interface LevelConsequencesProps {
+  level: Level;
   outcomeSnapshot: OutcomeSnapshotType;
   cabinetMembers: CabinetMember[];
 }
 
 const LevelConsequences = ({
+  level,
   outcomeSnapshot,
   cabinetMembers,
 }: LevelConsequencesProps) => {
@@ -41,6 +42,7 @@ const LevelConsequences = ({
       accessibilityLabel={`Level consequences and risk assessment.`}
     >
       <LevelConsequencesCard
+        gameId={level.game_id}
         consequences={consequences}
         cabinetMembers={cabinetMembers}
       />
@@ -54,6 +56,7 @@ const LevelConsequences = ({
 };
 
 const enhance = withObservables(["levelId"], ({ levelId }) => ({
+  level: observeLevel(levelId),
   cabinetMembers: observeCabinetMembersByLevel(levelId),
 }));
 

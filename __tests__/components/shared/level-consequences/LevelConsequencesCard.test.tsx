@@ -5,6 +5,31 @@ import LevelConsequencesCard from "~/components/shared/level-consequences/LevelC
 import { CabinetMember } from "~/lib/db/models";
 import { ConsequenceResult, CabinetStaticId } from "~/types";
 
+// Mock WatermelonDB withObservables for ConsequenceGameComplete
+jest.mock("@nozbe/watermelondb/react", () => ({
+  withObservables: (deps: any, observablesFactory: any) => (Component: any) => {
+    return (props: any) => {
+      // Mock the data that ConsequenceGameComplete would receive
+      const mockObservables = {
+        game: {
+          id: "game-1",
+          psName: "Test PS",
+          presName: "Test President",
+          presPsRelationship: 75,
+        },
+        presApprovalRating: 65,
+      };
+      return <Component {...props} {...mockObservables} />;
+    };
+  },
+}));
+
+// Mock database helpers
+jest.mock("~/lib/db/helpers", () => ({
+  observeGame: jest.fn(),
+  observePresidentApprovalRating: jest.fn(),
+}));
+
 describe("LevelConsequencesCard", () => {
   const mockCabinetMembers: CabinetMember[] = [
     {
@@ -30,6 +55,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -48,6 +74,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -66,6 +93,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -83,6 +111,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -91,12 +120,60 @@ describe("LevelConsequencesCard", () => {
       expect(screen.getByText("Cabinet Members Fired")).toBeTruthy();
       expect(screen.getByText("Month Complete")).toBeTruthy();
     });
+
+    it("should render ConsequenceGameComplete when game ends due to completion", () => {
+      const consequences: ConsequenceResult = {
+        gameEnded: true,
+        gameEndReason: "completed",
+        cabinetMembersFired: [],
+      };
+
+      render(
+        <LevelConsequencesCard
+          gameId="game-1"
+          consequences={consequences}
+          cabinetMembers={mockCabinetMembers}
+        />
+      );
+
+      expect(screen.getByText("Term Completed!")).toBeTruthy();
+      expect(screen.getByText("Term Complete")).toBeTruthy();
+      expect(screen.getByText("4-Year Survivor")).toBeTruthy();
+      expect(screen.getByText("Presidential Approval:")).toBeTruthy();
+      expect(screen.getByText("65%")).toBeTruthy();
+      expect(screen.getByText("President-PS Relationship:")).toBeTruthy();
+      expect(screen.getByText("75%")).toBeTruthy();
+    });
+
+    it("should show mock data when game completion renders", () => {
+      const consequences: ConsequenceResult = {
+        gameEnded: true,
+        gameEndReason: "completed",
+        cabinetMembersFired: [],
+      };
+
+      render(
+        <LevelConsequencesCard
+          gameId="game-1"
+          consequences={consequences}
+          cabinetMembers={mockCabinetMembers}
+        />
+      );
+
+      expect(screen.getByText("Term Completed!")).toBeTruthy();
+      // Names are rendered within sentences, not standalone
+      expect(screen.getByText(/Congratulations, Test PS!/)).toBeTruthy();
+      expect(screen.getByText(/President Test President/)).toBeTruthy();
+      expect(screen.getByText("65%")).toBeTruthy(); // Mock presApprovalRating
+      expect(screen.getByText("75%")).toBeTruthy(); // Mock presPsRelationship
+    });
   });
 
   describe("unavailable consequences state", () => {
     it("should render error message when consequences is undefined", () => {
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={undefined}
           cabinetMembers={mockCabinetMembers}
         />
@@ -111,6 +188,7 @@ describe("LevelConsequencesCard", () => {
     it("should not render Card wrapper when consequences is undefined", () => {
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={undefined}
           cabinetMembers={mockCabinetMembers}
         />
@@ -131,6 +209,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -147,6 +226,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -164,6 +244,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -181,12 +262,31 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
       );
 
       expect(screen.getByText("Game Over")).toBeTruthy();
+    });
+
+    it("should display 'Term Complete' title for completion", () => {
+      const consequences: ConsequenceResult = {
+        gameEnded: true,
+        gameEndReason: "completed",
+        cabinetMembersFired: [],
+      };
+
+      render(
+        <LevelConsequencesCard
+          gameId="game-1"
+          consequences={consequences}
+          cabinetMembers={mockCabinetMembers}
+        />
+      );
+
+      expect(screen.getByText("Term Complete")).toBeTruthy();
     });
   });
 
@@ -199,6 +299,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -218,6 +319,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -240,6 +342,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -258,6 +361,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -280,6 +384,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -296,6 +401,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -312,6 +418,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -331,6 +438,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
@@ -348,6 +456,7 @@ describe("LevelConsequencesCard", () => {
 
       render(
         <LevelConsequencesCard
+          gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
         />
