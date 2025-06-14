@@ -38,7 +38,7 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               impacts: { president: { weight: ExchangeImpactWeight.Positive } },
               followUpId: "ecm_inv_q1_f1",
               outcomeModifiers: {
-                ecm_correction_ties_hold: OutcomeModifierWeight.SlightPositive,
+                ecm_correction_ties_hold: OutcomeModifierWeight.SlightlyPositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.SlightNegative,
                 ecm_disinfo_spreads: OutcomeModifierWeight.Neutral,
               },
