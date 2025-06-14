@@ -5,6 +5,7 @@ import {
   SituationType,
   AnswerType,
   SubgroupStaticId,
+  JournalistStaticId,
 } from "~/types";
 
 export interface BalanceReport {
@@ -50,6 +51,38 @@ export interface BalanceReport {
       averageImpact: number;
     }>;
   };
+  answerEffectsAnalysis: {
+    presidentEffects: {
+      positiveCount: number;
+      negativeCount: number;
+      neutralCount: number;
+      totalImpact: number;
+      averageImpact: number;
+    };
+    cabinetEffects: Array<{
+      cabinetId: CabinetStaticId;
+      positiveCount: number;
+      negativeCount: number;
+      neutralCount: number;
+      totalImpact: number;
+      averageImpact: number;
+    }>;
+    journalistEffects: Array<{
+      journalistId: JournalistStaticId;
+      positiveCount: number;
+      negativeCount: number;
+      neutralCount: number;
+      totalImpact: number;
+      averageImpact: number;
+    }>;
+    balanceMetrics: {
+      overallPositiveCount: number;
+      overallNegativeCount: number;
+      overallNeutralCount: number;
+      balanceRatio: number;
+      impactRange: { min: number; max: number };
+    };
+  };
 }
 
 export class ContentBalanceAnalyzer {
@@ -71,6 +104,36 @@ export class ContentBalanceAnalyzer {
       string,
       { positive: number; negative: number; total: number; count: number }
     > = {};
+
+    // NEW: For answer effects analysis
+    const presidentAnswerEffects = {
+      positive: 0,
+      negative: 0,
+      neutral: 0,
+      total: 0,
+      count: 0,
+    };
+    const cabinetAnswerEffects: Record<
+      string,
+      {
+        positive: number;
+        negative: number;
+        neutral: number;
+        total: number;
+        count: number;
+      }
+    > = {};
+    const journalistAnswerEffects: Record<
+      string,
+      {
+        positive: number;
+        negative: number;
+        neutral: number;
+        total: number;
+        count: number;
+      }
+    > = {};
+    const allAnswerImpacts: number[] = [];
 
     let totalExchanges = 0;
     let totalQuestions = 0;
@@ -173,6 +236,91 @@ export class ContentBalanceAnalyzer {
           question.answers.forEach((answer) => {
             answerTypeDistribution[answer.type] =
               (answerTypeDistribution[answer.type] || 0) + 1;
+
+            // NEW: Analyze answer impacts
+            if (answer.impacts) {
+              // President impacts
+              if (answer.impacts.president?.weight !== undefined) {
+                const weight = answer.impacts.president.weight;
+                presidentAnswerEffects.count++;
+                presidentAnswerEffects.total += weight;
+                allAnswerImpacts.push(weight);
+
+                if (weight > 0) {
+                  presidentAnswerEffects.positive++;
+                } else if (weight < 0) {
+                  presidentAnswerEffects.negative++;
+                } else {
+                  presidentAnswerEffects.neutral++;
+                }
+              }
+
+              // Cabinet impacts
+              if (answer.impacts.cabinet) {
+                Object.entries(answer.impacts.cabinet).forEach(
+                  ([cabinetId, impact]) => {
+                    if (impact?.weight !== undefined) {
+                      const weight = impact.weight;
+
+                      if (!cabinetAnswerEffects[cabinetId]) {
+                        cabinetAnswerEffects[cabinetId] = {
+                          positive: 0,
+                          negative: 0,
+                          neutral: 0,
+                          total: 0,
+                          count: 0,
+                        };
+                      }
+
+                      cabinetAnswerEffects[cabinetId].count++;
+                      cabinetAnswerEffects[cabinetId].total += weight;
+                      allAnswerImpacts.push(weight);
+
+                      if (weight > 0) {
+                        cabinetAnswerEffects[cabinetId].positive++;
+                      } else if (weight < 0) {
+                        cabinetAnswerEffects[cabinetId].negative++;
+                      } else {
+                        cabinetAnswerEffects[cabinetId].neutral++;
+                      }
+                    }
+                  }
+                );
+              }
+
+              // Journalist impacts
+              if (answer.impacts.journalists) {
+                Object.entries(answer.impacts.journalists).forEach(
+                  ([journalistId, impact]) => {
+                    if (impact?.weight !== undefined) {
+                      const weight = impact.weight;
+
+                      if (!journalistAnswerEffects[journalistId]) {
+                        journalistAnswerEffects[journalistId] = {
+                          positive: 0,
+                          negative: 0,
+                          neutral: 0,
+                          total: 0,
+                          count: 0,
+                        };
+                      }
+
+                      journalistAnswerEffects[journalistId].count++;
+                      journalistAnswerEffects[journalistId].total += weight;
+                      allAnswerImpacts.push(weight);
+
+                      if (weight > 0) {
+                        journalistAnswerEffects[journalistId].positive++;
+                      } else if (weight < 0) {
+                        journalistAnswerEffects[journalistId].negative++;
+                      } else {
+                        journalistAnswerEffects[journalistId].neutral++;
+                      }
+                    }
+                  }
+                );
+              }
+            }
           });
         });
       });
@@ -258,6 +406,75 @@ export class ContentBalanceAnalyzer {
       })
     );
 
+    // NEW: Process answer effects analysis
+    const cabinetAnswerEffectsAnalysis = Object.entries(
+      cabinetAnswerEffects
+    ).map(([cabinetId, data]) => ({
+      cabinetId: cabinetId as CabinetStaticId,
+      positiveCount: data.positive,
+      negativeCount: data.negative,
+      neutralCount: data.neutral,
+      totalImpact: data.total,
+      averageImpact: data.count > 0 ? data.total / data.count : 0,
+    }));
+
+    const journalistAnswerEffectsAnalysis = Object.entries(
+      journalistAnswerEffects
+    ).map(([journalistId, data]) => ({
+      journalistId: journalistId as JournalistStaticId,
+      positiveCount: data.positive,
+      negativeCount: data.negative,
+      neutralCount: data.neutral,
+      totalImpact: data.total,
+      averageImpact: data.count > 0 ? data.total / data.count : 0,
+    }));
+
+    // Calculate overall balance metrics
+    const overallPositiveCount =
+      presidentAnswerEffects.positive +
+      Object.values(cabinetAnswerEffects).reduce(
+        (sum, data) => sum + data.positive,
+        0
+      ) +
+      Object.values(journalistAnswerEffects).reduce(
+        (sum, data) => sum + data.positive,
+        0
+      );
+
+    const overallNegativeCount =
+      presidentAnswerEffects.negative +
+      Object.values(cabinetAnswerEffects).reduce(
+        (sum, data) => sum + data.negative,
+        0
+      ) +
+      Object.values(journalistAnswerEffects).reduce(
+        (sum, data) => sum + data.negative,
+        0
+      );
+
+    const overallNeutralCount =
+      presidentAnswerEffects.neutral +
+      Object.values(cabinetAnswerEffects).reduce(
+        (sum, data) => sum + data.neutral,
+        0
+      ) +
+      Object.values(journalistAnswerEffects).reduce(
+        (sum, data) => sum + data.neutral,
+        0
+      );
+
+    const balanceRatio =
+      overallNegativeCount > 0
+        ? overallPositiveCount / overallNegativeCount
+        : 0;
+    const impactRange =
+      allAnswerImpacts.length > 0
+        ? {
+            min: Math.min(...allAnswerImpacts),
+            max: Math.max(...allAnswerImpacts),
+          }
+        : { min: 0, max: 0 };
+
     return {
       publicationDistribution: publicationDistribution as Record<
         PublicationStaticId,
@@ -301,6 +518,27 @@ export class ContentBalanceAnalyzer {
       consequenceAnalysis: {
         cabinetConsequences: cabinetConsequenceAnalysis,
         subgroupConsequences: subgroupConsequenceAnalysis,
+      },
+      answerEffectsAnalysis: {
+        presidentEffects: {
+          positiveCount: presidentAnswerEffects.positive,
+          negativeCount: presidentAnswerEffects.negative,
+          neutralCount: presidentAnswerEffects.neutral,
+          totalImpact: presidentAnswerEffects.total,
+          averageImpact:
+            presidentAnswerEffects.count > 0
+              ? presidentAnswerEffects.total / presidentAnswerEffects.count
+              : 0,
+        },
+        cabinetEffects: cabinetAnswerEffectsAnalysis,
+        journalistEffects: journalistAnswerEffectsAnalysis,
+        balanceMetrics: {
+          overallPositiveCount,
+          overallNegativeCount,
+          overallNeutralCount,
+          balanceRatio,
+          impactRange,
+        },
       },
     };
   }

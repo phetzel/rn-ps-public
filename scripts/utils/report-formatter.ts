@@ -219,6 +219,104 @@ export class ReportFormatter {
       lines.push("     No subgroup consequences found");
     }
 
+    // NEW: Answer Effects Analysis
+    lines.push(`\n💬 Answer Effects Balance Analysis:`);
+
+    // Overall balance metrics
+    lines.push(`\n   📊 Overall Balance:`);
+    const { balanceMetrics } = report.answerEffectsAnalysis;
+    lines.push(`     Positive Effects: ${balanceMetrics.overallPositiveCount}`);
+    lines.push(`     Negative Effects: ${balanceMetrics.overallNegativeCount}`);
+    lines.push(`     Neutral Effects: ${balanceMetrics.overallNeutralCount}`);
+    lines.push(
+      `     Balance Ratio: ${balanceMetrics.balanceRatio.toFixed(2)} (pos/neg)`
+    );
+    lines.push(
+      `     Impact Range: ${balanceMetrics.impactRange.min} to ${balanceMetrics.impactRange.max}`
+    );
+
+    // President effects
+    lines.push(`\n   🎩 President Effects:`);
+    const presEffects = report.answerEffectsAnalysis.presidentEffects;
+    if (
+      presEffects.positiveCount +
+        presEffects.negativeCount +
+        presEffects.neutralCount >
+      0
+    ) {
+      const balanceIndicator =
+        presEffects.totalImpact > 0
+          ? "📈"
+          : presEffects.totalImpact < 0
+          ? "📉"
+          : "➖";
+      lines.push(
+        `     ${balanceIndicator} Total: ${
+          presEffects.totalImpact > 0 ? "+" : ""
+        }${presEffects.totalImpact.toFixed(1)} | ` +
+          `Avg: ${
+            presEffects.averageImpact > 0 ? "+" : ""
+          }${presEffects.averageImpact.toFixed(1)} | ` +
+          `+${presEffects.positiveCount}/-${presEffects.negativeCount}/=${presEffects.neutralCount}`
+      );
+    } else {
+      lines.push("     No president effects found");
+    }
+
+    // Cabinet effects
+    lines.push(`\n   🏛️ Cabinet Effects:`);
+    if (report.answerEffectsAnalysis.cabinetEffects.length > 0) {
+      report.answerEffectsAnalysis.cabinetEffects
+        .sort((a, b) => Math.abs(b.totalImpact) - Math.abs(a.totalImpact))
+        .forEach((cabinet) => {
+          const balanceIndicator =
+            cabinet.totalImpact > 0
+              ? "📈"
+              : cabinet.totalImpact < 0
+              ? "📉"
+              : "➖";
+          lines.push(
+            `     ${cabinet.cabinetId.padEnd(20)} ${balanceIndicator} Total: ${
+              cabinet.totalImpact > 0 ? "+" : ""
+            }${cabinet.totalImpact.toFixed(1)} | ` +
+              `Avg: ${
+                cabinet.averageImpact > 0 ? "+" : ""
+              }${cabinet.averageImpact.toFixed(1)} | ` +
+              `+${cabinet.positiveCount}/-${cabinet.negativeCount}/=${cabinet.neutralCount}`
+          );
+        });
+    } else {
+      lines.push("     No cabinet effects found");
+    }
+
+    // Journalist effects
+    lines.push(`\n   📰 Journalist Effects:`);
+    if (report.answerEffectsAnalysis.journalistEffects.length > 0) {
+      report.answerEffectsAnalysis.journalistEffects
+        .sort((a, b) => Math.abs(b.totalImpact) - Math.abs(a.totalImpact))
+        .forEach((journalist) => {
+          const balanceIndicator =
+            journalist.totalImpact > 0
+              ? "📈"
+              : journalist.totalImpact < 0
+              ? "📉"
+              : "➖";
+          lines.push(
+            `     ${journalist.journalistId.padEnd(
+              20
+            )} ${balanceIndicator} Total: ${
+              journalist.totalImpact > 0 ? "+" : ""
+            }${journalist.totalImpact.toFixed(1)} | ` +
+              `Avg: ${
+                journalist.averageImpact > 0 ? "+" : ""
+              }${journalist.averageImpact.toFixed(1)} | ` +
+              `+${journalist.positiveCount}/-${journalist.negativeCount}/=${journalist.neutralCount}`
+          );
+        });
+    } else {
+      lines.push("     No journalist effects found");
+    }
+
     // Question depth
     lines.push(`\n🔍 Question Depth Analysis:`);
     lines.push(`   Max Depth: ${report.questionDepthStats.maxDepth}`);
