@@ -11,7 +11,7 @@ export const reallyfarawaystanAlliancePreferences: SituationPreferences = {
       preference: {
         answerType: AnswerType.Challenge,
         rationale:
-          "Explain the alliance grants rights to a crucial refueling point and expands drone surveillance, despite the nation's size.",
+          "Explain the alliance grants rights to a crucial refueling point and expands drone surveillance, despite nation size.",
       },
       authorizedContent:
         "Classified survey shows the island’s short runway offers mid-ocean refueling potential for rescue missions. Satellite images confirm no other nation has similar access.",

@@ -26,7 +26,8 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
               impacts: { president: { weight: ExchangeImpactWeight.Positive } },
               followUpId: "vzd_lib_q1_f1",
               outcomeModifiers: {
-                vzd_meetings_rescheduled: OutcomeModifierWeight.ModeratePositive,
+                vzd_meetings_rescheduled:
+                  OutcomeModifierWeight.ModeratePositive,
                 vzd_deal_lost: OutcomeModifierWeight.ModerateNegative,
                 vzd_panda_soft_power: OutcomeModifierWeight.Neutral,
               },
@@ -35,7 +36,13 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
               id: "vzd_lib_q1_a2",
               type: AnswerType.Deflect,
               text: "The panda stop was a goodwill gesture offered by hosts. Nothing important was dropped, and it cost taxpayers nothing.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               followUpId: "vzd_lib_q1_f1",
               outcomeModifiers: {
                 vzd_panda_soft_power: OutcomeModifierWeight.SlightPositive,
@@ -48,7 +55,13 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
               type: AnswerType.Authorized,
               authorizedCabinetMemberId: CabinetStaticId.State,
               text: "Official schedule shows the panda visit was built in by the host, with all talks rescheduled and fully attended.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.StronglyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
+              },
               followUpId: "vzd_lib_q1_f1",
               outcomeModifiers: {
                 vzd_meetings_rescheduled: OutcomeModifierWeight.MajorPositive,
@@ -67,9 +80,16 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
               id: "vzd_lib_q1_f1_a1",
               type: AnswerType.Inform,
               text: "The trade deal meeting took place later that day. Negotiators confirm no delay to signing.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
-                vzd_meetings_rescheduled: OutcomeModifierWeight.ModeratePositive,
+                vzd_meetings_rescheduled:
+                  OutcomeModifierWeight.ModeratePositive,
                 vzd_deal_lost: OutcomeModifierWeight.ModerateNegative,
                 vzd_panda_soft_power: OutcomeModifierWeight.Neutral,
               },
@@ -116,8 +136,14 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
             {
               id: "vzd_con_q1_a2",
               type: AnswerType.Deflect,
-              text: "Leaders often share cultural moments. This visit cost us no deals or dollars.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              text: "Leaders often share cultural moments during diplomatic visits. This panda visit cost us no deals or taxpayer dollars.",
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 vzd_panda_soft_power: OutcomeModifierWeight.SlightPositive,
                 vzd_deal_lost: OutcomeModifierWeight.SlightNegative,
@@ -128,9 +154,16 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
               id: "vzd_con_q1_a3",
               type: AnswerType.Reassure,
               text: "Trade negotiators were on site all day. The photos simply filled a short gap in the schedule.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
-                vzd_meetings_rescheduled: OutcomeModifierWeight.ModeratePositive,
+                vzd_meetings_rescheduled:
+                  OutcomeModifierWeight.ModeratePositive,
                 vzd_deal_lost: OutcomeModifierWeight.ModerateNegative,
                 vzd_panda_soft_power: OutcomeModifierWeight.Neutral,
               },
@@ -167,7 +200,9 @@ export const vipZooDiplomacyExchanges: ExchangeData[] = [
               id: "vzd_ind_q1_a2",
               type: AnswerType.Deflect,
               text: "Everyone loves pandas. The tour didn't stop any deals, and it boosted local media coverage.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
                 vzd_panda_soft_power: OutcomeModifierWeight.SlightPositive,
                 vzd_deal_lost: OutcomeModifierWeight.SlightNegative,

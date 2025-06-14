@@ -23,10 +23,17 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               id: "ecm_inv_q1_a1",
               type: AnswerType.Admit,
               text: "It was an unfortunate mistake. Staff gave the President outdated results, and he corrected the record as soon as we realized.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               followUpId: "ecm_inv_q1_f1",
               outcomeModifiers: {
-                ecm_correction_ties_hold: OutcomeModifierWeight.ModeratePositive,
+                ecm_correction_ties_hold:
+                  OutcomeModifierWeight.ModeratePositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.ModerateNegative,
                 ecm_disinfo_spreads: OutcomeModifierWeight.Neutral,
               },
@@ -38,7 +45,7 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               impacts: { president: { weight: ExchangeImpactWeight.Positive } },
               followUpId: "ecm_inv_q1_f1",
               outcomeModifiers: {
-                ecm_correction_ties_hold: OutcomeModifierWeight.SlightlyPositive,
+                ecm_correction_ties_hold: OutcomeModifierWeight.SlightPositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.SlightNegative,
                 ecm_disinfo_spreads: OutcomeModifierWeight.Neutral,
               },
@@ -48,7 +55,13 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               type: AnswerType.Authorized,
               authorizedCabinetMemberId: CabinetStaticId.State,
               text: "The transcript shows he read from an outdated briefing. A correction cable went out within minutes to the rightful winner.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.StronglyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
+              },
               followUpId: "ecm_inv_q1_f1",
               outcomeModifiers: {
                 ecm_correction_ties_hold: OutcomeModifierWeight.MajorPositive,
@@ -67,9 +80,16 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               id: "ecm_inv_q1_f1_a1",
               type: AnswerType.Reassure,
               text: "Our ambassador is already meeting with the elected administration to reaffirm respect. We expect relations to remain solid.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
-                ecm_correction_ties_hold: OutcomeModifierWeight.ModeratePositive,
+                ecm_correction_ties_hold:
+                  OutcomeModifierWeight.ModeratePositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.ModerateNegative,
                 ecm_disinfo_spreads: OutcomeModifierWeight.Neutral,
               },
@@ -117,7 +137,9 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               id: "ecm_con_q1_a2",
               type: AnswerType.Deflect,
               text: "We congratulated the people for turning out. Let's not misrepresent that as taking sides.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
                 ecm_correction_ties_hold: OutcomeModifierWeight.SlightPositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.SlightNegative,
@@ -128,9 +150,16 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               id: "ecm_con_q1_a3",
               type: AnswerType.Inform,
               text: "Justice officials confirm there is no evidence of fraud. We acknowledged the correct winner immediately.",
-              impacts: { cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
-                ecm_correction_ties_hold: OutcomeModifierWeight.ModeratePositive,
+                ecm_correction_ties_hold:
+                  OutcomeModifierWeight.ModeratePositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.ModerateNegative,
                 ecm_disinfo_spreads: OutcomeModifierWeight.Neutral,
               },
@@ -156,9 +185,16 @@ export const electionCongratsMishapExchanges: ExchangeData[] = [
               id: "ecm_lib_q1_a1",
               type: AnswerType.Admit,
               text: "We issued an apology to the rightful leader and reaffirmed our respect for their democratic choice.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
-                ecm_correction_ties_hold: OutcomeModifierWeight.ModeratePositive,
+                ecm_correction_ties_hold:
+                  OutcomeModifierWeight.ModeratePositive,
                 ecm_ambassador_recalled: OutcomeModifierWeight.ModerateNegative,
                 ecm_disinfo_spreads: OutcomeModifierWeight.Neutral,
               },

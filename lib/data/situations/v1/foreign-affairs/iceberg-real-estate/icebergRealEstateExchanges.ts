@@ -35,7 +35,13 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
               id: "ire_con_q1_a2",
               type: AnswerType.Inform,
               text: "Treasury is reviewing cost models. Early numbers show profits could offset purchase and towing expenses.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               followUpId: "ire_con_q1_f1",
               outcomeModifiers: {
                 iceberg_water_venture: OutcomeModifierWeight.ModeratePositive,
@@ -47,7 +53,9 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
               id: "ire_con_q1_a3",
               type: AnswerType.Deflect,
               text: "We're exploring many ideas to secure clean water. Purchasing icebergs is only one option under consideration.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               followUpId: "ire_con_q1_f1",
               outcomeModifiers: {
                 iceberg_water_venture: OutcomeModifierWeight.SlightPositive,
@@ -59,14 +67,20 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
         },
         ire_con_q1_f1: {
           id: "ire_con_q1_f1",
-          text: "Would you push forward even if environmental groups sue?",
+          text: "Would the administration push forward with this plan even if environmental groups sue?",
           depth: 1,
           answers: [
             {
               id: "ire_con_q1_f1_a1",
               type: AnswerType.Challenge,
               text: "Lawsuits won't stop us from exploring innovative ways to provide affordable water and create jobs.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 iceberg_water_venture: OutcomeModifierWeight.ModeratePositive,
                 iceberg_lawsuit: OutcomeModifierWeight.ModerateNegative,
@@ -77,7 +91,13 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
               id: "ire_con_q1_f1_a2",
               type: AnswerType.Reassure,
               text: "We'll consult experts and comply with environmental laws. If lawsuits arise, we'll adjust the plan accordingly.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 iceberg_water_venture: OutcomeModifierWeight.SlightPositive,
                 iceberg_plan_mocked: OutcomeModifierWeight.SlightNegative,
@@ -128,7 +148,13 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
               type: AnswerType.Authorized,
               authorizedCabinetMemberId: CabinetStaticId.State,
               text: "Our memo shows several icebergs drift through unclaimed waters. Purchasing them could open new diplomatic partnerships.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.StronglyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 iceberg_water_venture: OutcomeModifierWeight.MajorPositive,
                 iceberg_plan_mocked: OutcomeModifierWeight.MajorNegative,
@@ -156,7 +182,13 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
               id: "ire_inv_q1_a1",
               type: AnswerType.Inform,
               text: "We'd conduct full environmental studies before any purchase. No plan would proceed without safeguards.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 iceberg_lawsuit: OutcomeModifierWeight.ModerateNegative,
                 iceberg_water_venture: OutcomeModifierWeight.ModeratePositive,
@@ -178,7 +210,9 @@ export const icebergRealEstateExchanges: ExchangeData[] = [
               id: "ire_inv_q1_a3",
               type: AnswerType.Deflect,
               text: "The proposal is in early stages, so critics are getting ahead of the facts. We'll review all impacts first.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
                 iceberg_water_venture: OutcomeModifierWeight.SlightPositive,
                 iceberg_plan_mocked: OutcomeModifierWeight.SlightNegative,

@@ -35,7 +35,13 @@ export const carnivalSanctionsExchanges: ExchangeData[] = [
               id: "cs_con_q1_a2",
               type: AnswerType.Reassure,
               text: "State has already apologized for the misunderstanding. We expect the carnival to welcome our clowns back shortly.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               followUpId: "cs_con_q1_f1",
               outcomeModifiers: {
                 cs_apology_restores: OutcomeModifierWeight.ModeratePositive,
@@ -47,7 +53,13 @@ export const carnivalSanctionsExchanges: ExchangeData[] = [
               id: "cs_con_q1_a3",
               type: AnswerType.Deflect,
               text: "The carnival brings in good money for Mirth. We're confident cooler heads will prevail without heavy-handed threats.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               followUpId: "cs_con_q1_f1",
               outcomeModifiers: {
                 cs_apology_restores: OutcomeModifierWeight.SlightPositive,
@@ -59,14 +71,20 @@ export const carnivalSanctionsExchanges: ExchangeData[] = [
         },
         cs_con_q1_f1: {
           id: "cs_con_q1_f1",
-          text: "Will you retaliate economically if the clown ban stays?",
+          text: "Will the administration retaliate economically if the clown ban stays in place?",
           depth: 1,
           answers: [
             {
               id: "cs_con_q1_f1_a1",
               type: AnswerType.Reassure,
               text: "We're confident diplomacy will fix this. Sanctions aren't on the table as long as talks continue.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 cs_apology_restores: OutcomeModifierWeight.ModeratePositive,
                 cs_visa_bans: OutcomeModifierWeight.ModerateNegative,
@@ -117,7 +135,13 @@ export const carnivalSanctionsExchanges: ExchangeData[] = [
               type: AnswerType.Authorized,
               authorizedCabinetMemberId: CabinetStaticId.State,
               text: "Tourism data shows the carnival relies heavily on U.S. visitors. Both sides want this resolved so nobody misses out.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.StronglyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 cs_apology_restores: OutcomeModifierWeight.MajorPositive,
                 cs_visa_bans: OutcomeModifierWeight.MajorNegative,
@@ -156,7 +180,13 @@ export const carnivalSanctionsExchanges: ExchangeData[] = [
               id: "cs_ind_q1_a1",
               type: AnswerType.Inform,
               text: "Tour operators report early cancellations, but we're encouraging both sides to settle so travel plans can resume.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 cs_apology_restores: OutcomeModifierWeight.ModeratePositive,
                 cs_visa_bans: OutcomeModifierWeight.ModerateNegative,
@@ -167,7 +197,9 @@ export const carnivalSanctionsExchanges: ExchangeData[] = [
               id: "cs_ind_q1_a2",
               type: AnswerType.Deflect,
               text: "It's a temporary spat. Many visitors travel for the beaches, not just clowns, so the overall impact will be limited.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
                 cs_apology_restores: OutcomeModifierWeight.SlightPositive,
                 cs_visa_bans: OutcomeModifierWeight.SlightNegative,

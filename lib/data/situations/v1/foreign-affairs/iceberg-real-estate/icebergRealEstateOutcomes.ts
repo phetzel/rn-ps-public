@@ -8,18 +8,21 @@ import {
 export const icebergRealEstateOutcomes: SituationOutcome[] = [
   {
     id: "iceberg_water_venture",
-    title: "Novel Water Venture",
+    title: "Novel Water Venture Success",
     description:
       "Some investors embrace the plan as a quirky opportunity, seeing potential profit from premium iceberg water.",
     weight: 40,
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -37,7 +40,8 @@ export const icebergRealEstateOutcomes: SituationOutcome[] = [
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.Negative,
         },
       },
@@ -55,8 +59,10 @@ export const icebergRealEstateOutcomes: SituationOutcome[] = [
           [CabinetStaticId.State]: SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

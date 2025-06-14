@@ -26,7 +26,7 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               impacts: { president: { weight: ExchangeImpactWeight.Positive } },
               followUpId: "ccc_inv_q1_f1",
               outcomeModifiers: {
-                ccc_leaders_laugh: OutcomeModifierWeight.SlightlyPositive,
+                ccc_leaders_laugh: OutcomeModifierWeight.SlightPositive,
                 ccc_markets_jitter: OutcomeModifierWeight.SlightNegative,
                 ccc_pirate_meme: OutcomeModifierWeight.Neutral,
               },
@@ -35,7 +35,13 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               id: "ccc_inv_q1_a2",
               type: AnswerType.Reassure,
               text: "Our tech team says the filter was triggered by a misconfigured plugin, not a cyberattack, so markets should stay calm.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               followUpId: "ccc_inv_q1_f1",
               outcomeModifiers: {
                 ccc_leaders_laugh: OutcomeModifierWeight.ModeratePositive,
@@ -48,7 +54,13 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               type: AnswerType.Authorized,
               authorizedCabinetMemberId: CabinetStaticId.State,
               text: "The video log confirms the filter came from outdated software, not sabotage. We've shared the clip privately with all participants.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.StronglyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
+              },
               followUpId: "ccc_inv_q1_f1",
               outcomeModifiers: {
                 ccc_leaders_laugh: OutcomeModifierWeight.MajorPositive,
@@ -67,7 +79,13 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               id: "ccc_inv_q1_f1_a1",
               type: AnswerType.Inform,
               text: "Security teams confirm it was internal. Markets can relax; we've patched the software and updated protocols.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 ccc_leaders_laugh: OutcomeModifierWeight.ModeratePositive,
                 ccc_markets_jitter: OutcomeModifierWeight.ModerateNegative,
@@ -117,7 +135,9 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               id: "ccc_con_q1_a2",
               type: AnswerType.Deflect,
               text: "Plenty of world leaders have tech mishaps. We're focused on diplomacy, not digital fashion.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
                 ccc_pirate_meme: OutcomeModifierWeight.SlightPositive,
                 ccc_markets_jitter: OutcomeModifierWeight.SlightNegative,
@@ -128,7 +148,13 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               id: "ccc_con_q1_a3",
               type: AnswerType.Reassure,
               text: "The President apologized immediately. Leaders stayed on the line and finished agreements despite the silly filter.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 ccc_leaders_laugh: OutcomeModifierWeight.ModeratePositive,
                 ccc_markets_jitter: OutcomeModifierWeight.ModerateNegative,
@@ -156,7 +182,13 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               id: "ccc_lib_q1_a1",
               type: AnswerType.Reassure,
               text: "Testing happened, but an automatic update triggered the filter last minute. We're improving checks for future calls.",
-              impacts: { cabinet: { [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 ccc_leaders_laugh: OutcomeModifierWeight.ModeratePositive,
                 ccc_markets_jitter: OutcomeModifierWeight.ModerateNegative,
@@ -178,7 +210,13 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               id: "ccc_lib_q1_a3",
               type: AnswerType.Inform,
               text: "Treasury analysis shows only a minor stock wobble. Investors know a pirate filter is not a policy shift.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 ccc_leaders_laugh: OutcomeModifierWeight.ModeratePositive,
                 ccc_markets_jitter: OutcomeModifierWeight.ModerateNegative,
