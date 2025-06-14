@@ -26,7 +26,7 @@ export const conferenceCallChaosExchanges: ExchangeData[] = [
               impacts: { president: { weight: ExchangeImpactWeight.Positive } },
               followUpId: "ccc_inv_q1_f1",
               outcomeModifiers: {
-                ccc_leaders_laugh: OutcomeModifierWeight.SlightPositive,
+                ccc_leaders_laugh: OutcomeModifierWeight.SlightlyPositive,
                 ccc_markets_jitter: OutcomeModifierWeight.SlightNegative,
                 ccc_pirate_meme: OutcomeModifierWeight.Neutral,
               },
