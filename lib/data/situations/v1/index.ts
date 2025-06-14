@@ -4,6 +4,7 @@ import { foreignAffairsSituationsData } from "./foreign-affairs";
 import { ethicsSituationsData } from "./ethics";
 import { securitySituationsData } from "./security";
 import { governanceSituationsData } from "./governance";
+import { environmentSituationsData } from "./environment";
 
 export const situationsData = [
   ...domesticPolicySituationsData,
@@ -12,4 +13,5 @@ export const situationsData = [
   ...ethicsSituationsData,
   ...securitySituationsData,
   ...governanceSituationsData,
+  ...environmentSituationsData,
 ];
