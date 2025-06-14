@@ -25,13 +25,17 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Yes, a small portion was reallocated under discretionary authority. Treasury will reimburse the education account immediately.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "pmtr_lib_q1_f1",
               outcomeModifiers: {
-                theater_funds_repurposed: OutcomeModifierWeight.ModeratePositive,
-                theater_oversight_hearings: OutcomeModifierWeight.ModerateNegative,
+                theater_funds_repurposed:
+                  OutcomeModifierWeight.ModeratePositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.ModerateNegative,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -44,8 +48,10 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               },
               followUpId: "pmtr_lib_q1_f1",
               outcomeModifiers: {
-                theater_funds_repurposed: OutcomeModifierWeight.ModeratePositive,
-                theater_oversight_hearings: OutcomeModifierWeight.ModerateNegative,
+                theater_funds_repurposed:
+                  OutcomeModifierWeight.ModeratePositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.ModerateNegative,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -55,13 +61,16 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Theater upgrades also allow educational film events for students. Let's not exaggerate this routine maintenance.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Education]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Education]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               followUpId: "pmtr_lib_q1_f1",
               outcomeModifiers: {
                 theater_funds_repurposed: OutcomeModifierWeight.SlightNegative,
-                theater_oversight_hearings: OutcomeModifierWeight.SlightPositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.SlightPositive,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -69,7 +78,7 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
         },
         pmtr_lib_q1_f1: {
           id: "pmtr_lib_q1_f1",
-          text: "Will the White House reimburse the education department?",
+          text: "Will the White House administration reimburse the education department fully?",
           depth: 1,
           answers: [
             {
@@ -78,12 +87,16 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Treasury confirms repayment is scheduled this quarter and budget adjustments will be published online.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                theater_funds_repurposed: OutcomeModifierWeight.ModeratePositive,
-                theater_oversight_hearings: OutcomeModifierWeight.ModerateNegative,
+                theater_funds_repurposed:
+                  OutcomeModifierWeight.ModeratePositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.ModerateNegative,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -93,12 +106,15 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "The repayment schedule is being finalized. We'll share details once agencies sign off.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Education]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Education]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {
                 theater_funds_repurposed: OutcomeModifierWeight.SlightNegative,
-                theater_oversight_hearings: OutcomeModifierWeight.SlightPositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.SlightPositive,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -125,12 +141,16 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Theater upgrades will be covered by private donations moving forward. No future education funds are at risk.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                theater_funds_repurposed: OutcomeModifierWeight.ModerateNegative,
-                theater_oversight_hearings: OutcomeModifierWeight.ModeratePositive,
+                theater_funds_repurposed:
+                  OutcomeModifierWeight.ModerateNegative,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.ModeratePositive,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -150,13 +170,15 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
             {
               id: "pmtr_con_q1_a3",
               type: AnswerType.Challenge,
-              text: "Why not pay for this out of pocket instead of redirecting education grants?",
+              text: "Why not pay for this out of pocket instead of redirecting education grants for personal use?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Negative },
               },
               outcomeModifiers: {
-                theater_funds_repurposed: OutcomeModifierWeight.ModeratePositive,
-                theater_oversight_hearings: OutcomeModifierWeight.ModerateNegative,
+                theater_funds_repurposed:
+                  OutcomeModifierWeight.ModeratePositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.ModerateNegative,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -183,12 +205,15 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Safeguards are already in place. This reallocation was a one-time oversight that we are correcting.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Education]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Education]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
                 theater_funds_repurposed: OutcomeModifierWeight.SlightNegative,
-                theater_oversight_hearings: OutcomeModifierWeight.SlightPositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.SlightPositive,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },
@@ -198,12 +223,16 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Treasury's budget note shows the amount and the repayment plan, ensuring no ongoing impact on school programs.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                theater_funds_repurposed: OutcomeModifierWeight.ModeratePositive,
-                theater_oversight_hearings: OutcomeModifierWeight.ModerateNegative,
+                theater_funds_repurposed:
+                  OutcomeModifierWeight.ModeratePositive,
+                theater_oversight_hearings:
+                  OutcomeModifierWeight.ModerateNegative,
                 theater_story_dies: OutcomeModifierWeight.Neutral,
               },
             },

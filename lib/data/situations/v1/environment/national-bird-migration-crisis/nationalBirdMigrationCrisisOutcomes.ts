@@ -16,12 +16,15 @@ export const nationalBirdMigrationCrisisOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Interior]: SituationConsequenceWeight.Positive,
-          [CabinetStaticId.Agriculture]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.UrbanResidents]: SituationConsequenceWeight.Positive,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.UrbanResidents]:
+            SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -35,13 +38,16 @@ export const nationalBirdMigrationCrisisOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Agriculture]: SituationConsequenceWeight.StronglyNegative,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.StronglyNegative,
           [CabinetStaticId.Interior]: SituationConsequenceWeight.Negative,
         },
         subgroups: {
-          [SubgroupStaticId.RuralResidents]: SituationConsequenceWeight.StronglyNegative,
-          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.RuralResidents]:
+            SituationConsequenceWeight.StronglyNegative,
+          [SubgroupStaticId.SeniorsCitizens]:
+            SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.Negative,
         },
       },
     },
@@ -55,13 +61,17 @@ export const nationalBirdMigrationCrisisOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Interior]: SituationConsequenceWeight.SlightlyNegative,
-          [CabinetStaticId.Agriculture]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Interior]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Defense]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
           [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

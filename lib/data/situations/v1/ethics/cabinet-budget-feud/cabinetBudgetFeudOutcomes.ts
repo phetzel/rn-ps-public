@@ -15,18 +15,21 @@ export const cabinetBudgetFeudOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Defense]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
   },
   {
     id: "cbf_pr_war",
-    title: "PR War Hurts Both",
+    title: "Public PR War Hurts Both",
     description:
       "Ongoing public sniping drains credibility from Treasury and Defense alike, fueling press coverage of dysfunction.",
     weight: 35,
@@ -52,11 +55,14 @@ export const cabinetBudgetFeudOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Defense]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

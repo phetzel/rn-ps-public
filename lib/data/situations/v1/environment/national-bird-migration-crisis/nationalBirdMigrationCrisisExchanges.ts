@@ -24,7 +24,11 @@ export const nationalBirdMigrationCrisisExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Weather shifts and light pollution confuse them. We're coordinating with airports and farmers to track paths daily.",
               impacts: {
-                cabinet: { [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "nbmc_ind_q1_f1",
               outcomeModifiers: {
@@ -38,7 +42,11 @@ export const nationalBirdMigrationCrisisExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "Birds are resilient. We'll adjust flight advisories and encourage farmers to use temporary netting until patterns settle.",
               impacts: {
-                cabinet: { [CabinetStaticId.Agriculture]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
               },
               followUpId: "nbmc_ind_q1_f1",
               outcomeModifiers: {
@@ -73,7 +81,11 @@ export const nationalBirdMigrationCrisisExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "We'll tap disaster reserves and help farmers adapt while the Interior Department adjusts guidance.",
               impacts: {
-                cabinet: { [CabinetStaticId.Agriculture]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 nbmc_lights_out_success: OutcomeModifierWeight.ModeratePositive,
@@ -129,7 +141,11 @@ export const nationalBirdMigrationCrisisExchanges: ExchangeData[] = [
               type: AnswerType.Admit,
               text: "Climate shifts play a role. We're boosting conservation funding and studying long-term solutions alongside immediate fixes.",
               impacts: {
-                cabinet: { [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 nbmc_lights_out_success: OutcomeModifierWeight.ModeratePositive,
@@ -198,7 +214,11 @@ export const nationalBirdMigrationCrisisExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Interior is updating radar and issuing voluntary lights-out advisories to cut risks to planes and crops.",
               impacts: {
-                cabinet: { [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 nbmc_lights_out_success: OutcomeModifierWeight.ModeratePositive,

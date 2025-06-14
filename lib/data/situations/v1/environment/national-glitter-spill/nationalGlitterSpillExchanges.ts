@@ -23,7 +23,7 @@ export const nationalGlitterSpillExchanges: ExchangeData[] = [
             {
               id: "ngs_lib_q1_a1",
               type: AnswerType.Inform,
-              text: "Extensive cleanup crews are deployed, and we’re tracing responsibility. Fines and criminal referrals will follow wherever evidence leads.",
+              text: "Extensive cleanup crews are deployed, and we're tracing responsibility. Fines and criminal referrals will follow wherever evidence leads.",
               impacts: {
                 cabinet: {
                   [CabinetStaticId.HHS]: {
@@ -165,7 +165,7 @@ export const nationalGlitterSpillExchanges: ExchangeData[] = [
                 glitter_spill_disaster_contained_quickly:
                   OutcomeModifierWeight.StrongPositive, // +8
                 glitter_spill_disaster_ecological_mess:
-                  OutcomeModifierWeight.SlightNegative, // −4
+                  OutcomeModifierWeight.Neutral, // 0
                 glitter_spill_disaster_becomes_tourist_attraction:
                   OutcomeModifierWeight.StrongNegative, // −8
               },

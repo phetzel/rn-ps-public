@@ -24,7 +24,11 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               type: AnswerType.Admit,
               text: "The wellness pilot went too far. Costs will be reimbursed and the spa shut down pending a full review.",
               impacts: {
-                cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "lps_lib_q1_f1",
               outcomeModifiers: {
@@ -37,7 +41,9 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_lib_q1_a2",
               type: AnswerType.Deflect,
               text: "It's a small line item for animal therapy research. Let's not blow it out of proportion when real health issues remain.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               followUpId: "lps_lib_q1_f1",
               outcomeModifiers: {
                 pet_spa_public_cam: OutcomeModifierWeight.SlightPositive,
@@ -51,7 +57,11 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               authorizedCabinetMemberId: CabinetStaticId.HHS,
               text: "The wellness memo shows the program targeted service animal stress studies. Excess spending is being clawed back.",
               impacts: {
-                cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.StronglyPositive } },
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
               },
               followUpId: "lps_lib_q1_f1",
               outcomeModifiers: {
@@ -64,17 +74,24 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
         },
         lps_lib_q1_f1: {
           id: "lps_lib_q1_f1",
-          text: "Will anyone face discipline for approving this spa?",
+          text: "Will anyone face discipline for approving this taxpayer-funded luxury pet spa?",
           depth: 1,
           answers: [
             {
               id: "lps_lib_q1_f1_a1",
               type: AnswerType.Reassure,
               text: "Yes. Staff who authorized the spending are under review, and future wellness pilots require Treasury approval.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 pet_spa_defunded: OutcomeModifierWeight.ModeratePositive,
-                pet_spa_initiative_expands: OutcomeModifierWeight.ModerateNegative,
+                pet_spa_initiative_expands:
+                  OutcomeModifierWeight.ModerateNegative,
                 pet_spa_public_cam: OutcomeModifierWeight.Neutral,
               },
             },
@@ -82,9 +99,12 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_lib_q1_f1_a2",
               type: AnswerType.Challenge,
               text: "Isn't this symptomatic of elite perks? Shouldn't funding go directly to public clinics instead?",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyNegative } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
               outcomeModifiers: {
-                pet_spa_initiative_expands: OutcomeModifierWeight.SlightPositive,
+                pet_spa_initiative_expands:
+                  OutcomeModifierWeight.SlightPositive,
                 pet_spa_defunded: OutcomeModifierWeight.SlightNegative,
                 pet_spa_public_cam: OutcomeModifierWeight.Neutral,
               },
@@ -110,7 +130,13 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_con_q1_a1",
               type: AnswerType.Reassure,
               text: "Funds are being repaid. The spa was an overreach and is now cancelled. Wellness efforts will focus on humans first.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 pet_spa_defunded: OutcomeModifierWeight.ModeratePositive,
                 pet_spa_public_cam: OutcomeModifierWeight.ModerateNegative,
@@ -121,7 +147,13 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_con_q1_a2",
               type: AnswerType.Deny,
               text: "The spa served therapy animals for veterans. Any luxuries were exaggerated in early invoices now corrected.",
-              impacts: { cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 pet_spa_public_cam: OutcomeModifierWeight.SlightPositive,
                 pet_spa_defunded: OutcomeModifierWeight.SlightNegative,
@@ -132,9 +164,12 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_con_q1_a3",
               type: AnswerType.Deflect,
               text: "Past presidents pampered pets too. Let's address rising healthcare costs rather than spa gossip.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
-                pet_spa_initiative_expands: OutcomeModifierWeight.SlightPositive,
+                pet_spa_initiative_expands:
+                  OutcomeModifierWeight.SlightPositive,
                 pet_spa_defunded: OutcomeModifierWeight.SlightNegative,
                 pet_spa_public_cam: OutcomeModifierWeight.Neutral,
               },
@@ -160,9 +195,16 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_ind_q1_a1",
               type: AnswerType.Inform,
               text: "Other pet wellness programs are under review. No decision has been made on continuing the initiative beyond this year.",
-              impacts: { cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
-                pet_spa_initiative_expands: OutcomeModifierWeight.ModeratePositive,
+                pet_spa_initiative_expands:
+                  OutcomeModifierWeight.ModeratePositive,
                 pet_spa_defunded: OutcomeModifierWeight.ModerateNegative,
                 pet_spa_public_cam: OutcomeModifierWeight.Neutral,
               },
@@ -171,7 +213,9 @@ export const luxuryPetSpaExchanges: ExchangeData[] = [
               id: "lps_ind_q1_a2",
               type: AnswerType.Challenge,
               text: "If the public loves the pet cam, why not keep the spa open through donations instead of taxes?",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyNegative } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
               outcomeModifiers: {
                 pet_spa_public_cam: OutcomeModifierWeight.SlightPositive,
                 pet_spa_defunded: OutcomeModifierWeight.SlightNegative,

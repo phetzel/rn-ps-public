@@ -24,7 +24,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Rangers are already out collecting gnomes with local volunteers. We expect major sites cleared within a week.",
               impacts: {
-                cabinet: { [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "igg_lib_q1_f1",
               outcomeModifiers: {
@@ -52,7 +56,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               type: AnswerType.Challenge,
               text: "We welcome citizen cleanup. Anyone who planted these gnomes will face justice for littering natural treasures.",
               impacts: {
-                cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "igg_lib_q1_f1",
               outcomeModifiers: {
@@ -65,7 +73,7 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
         },
         igg_lib_q1_f1: {
           id: "igg_lib_q1_f1",
-          text: "Will fines or jail time be pursued against pranksters?",
+          text: "Will fines or potential jail time be pursued against these environmental pranksters?",
           depth: 1,
           answers: [
             {
@@ -74,7 +82,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               authorizedCabinetMemberId: CabinetStaticId.Justice,
               text: "Arrest warrants are in motion. Suspects planned more drops, so penalties will be stiff.",
               impacts: {
-                cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.StronglyPositive } },
+                cabinet: {
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
               },
               outcomeModifiers: {
                 igg_gnomes_recycled: OutcomeModifierWeight.ModeratePositive,
@@ -87,7 +99,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "Courts will decide punishment. The focus now is clearing habitats and preventing further damage.",
               impacts: {
-                cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 igg_gnomes_recycled: OutcomeModifierWeight.SlightPositive,
@@ -143,7 +159,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               type: AnswerType.Deflect,
               text: "It's hard to guard every flower bed. We're focusing resources on real threats, not plastic mischief.",
               impacts: {
-                cabinet: { [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.SlightlyNegative } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.SlightlyNegative,
+                  },
+                },
               },
               outcomeModifiers: {
                 igg_gnomes_public_art: OutcomeModifierWeight.SlightPositive,
@@ -156,7 +176,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Justice is tracing purchases of bulk gnomes and reviewing surveillance footage to identify culprits.",
               impacts: {
-                cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 igg_gnomes_recycled: OutcomeModifierWeight.ModeratePositive,
@@ -187,7 +211,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               authorizedCabinetMemberId: CabinetStaticId.Justice,
               text: "Lab tests confirm lead levels. We're seizing stockpiles and coordinating arrests with local police.",
               impacts: {
-                cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.StronglyPositive } },
+                cabinet: {
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
               },
               outcomeModifiers: {
                 igg_gnomes_recycled: OutcomeModifierWeight.StrongPositive,
@@ -200,7 +228,11 @@ export const invasiveGardenGnomesExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Teams are testing soil and setting up drop-off bins. We urge the public to report any suspicious bulk purchases.",
               impacts: {
-                cabinet: { [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 igg_gnomes_recycled: OutcomeModifierWeight.ModeratePositive,

@@ -22,10 +22,12 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
             {
               id: "frfl_inv_q1_a1",
               type: AnswerType.Admit,
-              text: "Yes, the lease was expedited to promote \"eco tourism." The family's interest was noted but we believed it would boost local jobs.",
+              text: "Yes, the lease was expedited to promote 'eco tourism'. The family's interest was noted but we believed it would boost local jobs.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "frfl_inv_q1_f1",
@@ -42,7 +44,9 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
               text: "Lease documents show a 99-year term at nominal rent with private road access for the President's family. Interior admits this should have been disclosed.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               followUpId: "frfl_inv_q1_f1",
@@ -80,7 +84,9 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
               text: "Yes. The documents detail the 99-year lease and private road. We'll post them online this week for full transparency.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -138,7 +144,9 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
               text: "We acknowledge the optics are poor. The lease is being re-evaluated, and construction is paused pending environmental review.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -153,7 +161,9 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
               text: "Any public funds used will be transparently accounted for, and local revenue projections could benefit the park service.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -198,7 +208,9 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
               text: "Tax dollars are not funding the resort. It's leased to a private developer who covers costs and shares revenue with the park.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -226,7 +238,9 @@ export const familyResortFederalLandExchanges: ExchangeData[] = [
               text: "The site remains federal land. Let's focus on bigger issues facing our parks system.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Interior]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Interior]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {

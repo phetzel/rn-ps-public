@@ -16,7 +16,7 @@ export const nationalBirdMigrationCrisisPreferences: SituationPreferences = {
       authorizedContent:
         "GPS tag data shows detours near bright stadiums and unexpected ocean currents. New flight corridors under review.",
     },
-    [CabinetStaticId.Agriculture]: {
+    [CabinetStaticId.HHS]: {
       preference: {
         answerType: AnswerType.Reassure,
         rationale:

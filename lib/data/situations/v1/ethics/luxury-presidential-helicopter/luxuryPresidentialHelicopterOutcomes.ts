@@ -8,19 +8,23 @@ import {
 export const luxuryPresidentialHelicopterOutcomes: SituationOutcome[] = [
   {
     id: "helicopter_order_cancelled",
-    title: "Order Cancelled",
+    title: "Helicopter Order Cancelled",
     description:
       "Public outrage forces cancellation, leaving suppliers furious and the president promising thriftier travel.",
     weight: 40,
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyNegative,
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Defense]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.RightWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -35,11 +39,14 @@ export const luxuryPresidentialHelicopterOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Defense]: SituationConsequenceWeight.Neutral,
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -57,8 +64,10 @@ export const luxuryPresidentialHelicopterOutcomes: SituationOutcome[] = [
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

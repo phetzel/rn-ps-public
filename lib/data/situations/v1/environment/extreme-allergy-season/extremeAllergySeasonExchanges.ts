@@ -24,7 +24,11 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "Subsidies for medication and workplace filters are on the table. No heavy-handed rules yet.",
               impacts: {
-                cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "eas_con_q1_f1",
               outcomeModifiers: {
@@ -38,7 +42,11 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Treasury is drafting tax credits for pollen control gear while HHS tracks supply chains.",
               impacts: {
-                cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "eas_con_q1_f1",
               outcomeModifiers: {
@@ -50,7 +58,7 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
             {
               id: "eas_con_q1_a3",
               type: AnswerType.Deflect,
-              text: "Pollen happens every year; we trust companies to keep tissues handy.",
+              text: "Pollen happens every year and we trust companies to keep tissues handy and workers comfortable during allergy season.",
               impacts: {
                 president: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
@@ -71,7 +79,7 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
             {
               id: "eas_con_q1_f1_a1",
               type: AnswerType.Challenge,
-              text: "We'll tax greedy suppliers before taxing flowers. Rationing is a last resort.",
+              text: "We'll tax greedy suppliers before taxing flowers or natural pollen. Rationing is always a last resort for any administration.",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Positive },
               },
@@ -86,7 +94,11 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
               type: AnswerType.Admit,
               text: "Rationing medications is on the table if supplies collapse, though we hope it doesn't come to that.",
               impacts: {
-                cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Negative } },
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Negative,
+                  },
+                },
               },
               outcomeModifiers: {
                 eas_drug_shortages_fury: OutcomeModifierWeight.ModeratePositive,
@@ -97,7 +109,7 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
             {
               id: "eas_con_q1_f1_a3",
               type: AnswerType.Deflect,
-              text: "We're exploring all options, but let's not sneeze on policy just yet.",
+              text: "We're exploring all options carefully, but let's not sneeze on policy just yet when solutions need time to develop properly.",
               impacts: {
                 president: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
@@ -129,7 +141,11 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "HHS funds both medical research and pollen-reducing landscaping programs, so it's not just about big pharma.",
               impacts: {
-                cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 eas_subsidized_meds: OutcomeModifierWeight.ModeratePositive,
@@ -155,7 +171,11 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "Subsidies ensure no one suffers for lack of medicine while we ramp up green initiatives.",
               impacts: {
-                cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 eas_subsidized_meds: OutcomeModifierWeight.SlightPositive,
@@ -185,7 +205,11 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "We're coordinating nationwide forecasts and distributing free masks to high-risk groups.",
               impacts: {
-                cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
                 eas_subsidized_meds: OutcomeModifierWeight.ModeratePositive,
@@ -209,7 +233,7 @@ export const extremeAllergySeasonExchanges: ExchangeData[] = [
             {
               id: "eas_ind_q1_a3",
               type: AnswerType.Deflect,
-              text: "We survived worse flu seasons. Let's not cancel spring just yet.",
+              text: "We survived worse flu seasons without major disruptions. Let's not cancel spring just yet when nature always finds balance.",
               impacts: {
                 president: { weight: ExchangeImpactWeight.SlightlyNegative },
               },

@@ -25,12 +25,15 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "These aircraft improve safety and will be funded within the existing defense budget, not new taxes.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "lph_con_q1_f1",
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.ModerateNegative,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.ModerateNegative,
                 helicopter_reduced_spec: OutcomeModifierWeight.ModeratePositive,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -42,12 +45,15 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "Spec sheet reveals the helicopters include gold-plated fixtures and custom lounge seating, costing double the standard model.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Defense]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               followUpId: "lph_con_q1_f1",
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.StrongPositive,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.StrongPositive,
                 helicopter_reduced_spec: OutcomeModifierWeight.StrongNegative,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -55,13 +61,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
             {
               id: "lph_con_q1_a3",
               type: AnswerType.Challenge,
-              text: "Why order luxury aircraft at all when cheaper models exist?",
+              text: "Why order luxury aircraft at all when cheaper models exist for presidential transportation?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Negative },
               },
               followUpId: "lph_con_q1_f1",
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.ModeratePositive,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.ModeratePositive,
                 helicopter_reduced_spec: OutcomeModifierWeight.ModerateNegative,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -70,7 +77,7 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
         },
         lph_con_q1_f1: {
           id: "lph_con_q1_f1",
-          text: "Will defense cancel the order or negotiate cheaper specs?",
+          text: "Will defense cancel the helicopter order or negotiate cheaper specifications?",
           depth: 1,
           answers: [
             {
@@ -79,11 +86,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "Discussions with suppliers are ongoing. We're reviewing cost options to ensure fiscal responsibility.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Defense]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.SlightNegative,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.SlightNegative,
                 helicopter_reduced_spec: OutcomeModifierWeight.SlightPositive,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -94,11 +104,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "If costs remain high, the contract allows cancellation with minimal penalty. Treasury is monitoring closely.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.ModeratePositive,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.ModeratePositive,
                 helicopter_reduced_spec: OutcomeModifierWeight.ModerateNegative,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -126,11 +139,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "These helicopters replace aging models. Any decorative features are a small part of the contract.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Defense]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.SlightNegative,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.SlightNegative,
                 helicopter_reduced_spec: OutcomeModifierWeight.Neutral,
                 helicopter_cost_overrun: OutcomeModifierWeight.SlightPositive,
               },
@@ -141,11 +157,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "Funding comes from existing defense allocations and won't touch social programs or domestic budgets.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.ModerateNegative,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.ModerateNegative,
                 helicopter_reduced_spec: OutcomeModifierWeight.ModeratePositive,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -153,12 +172,13 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
             {
               id: "lph_lib_q1_a3",
               type: AnswerType.Challenge,
-              text: "Wouldn't a commercial lease be cheaper and avoid luxury upgrades altogether?",
+              text: "Wouldn't a commercial lease or rental arrangement be significantly cheaper and help avoid these costly luxury upgrades altogether for hardworking taxpayers?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Negative },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.ModeratePositive,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.ModeratePositive,
                 helicopter_reduced_spec: OutcomeModifierWeight.ModerateNegative,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -186,11 +206,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "The design was approved before any controversy. We're focusing on performance and safety, not decoration.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Defense]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.SlightNegative,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.SlightNegative,
                 helicopter_reduced_spec: OutcomeModifierWeight.SlightPositive,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
@@ -201,11 +224,14 @@ export const luxuryPresidentialHelicopterExchanges: ExchangeData[] = [
               text: "If costs escalate, the administration will consider returning to standard models to respect taxpayer funds.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
-                helicopter_order_cancelled: OutcomeModifierWeight.ModeratePositive,
+                helicopter_order_cancelled:
+                  OutcomeModifierWeight.ModeratePositive,
                 helicopter_reduced_spec: OutcomeModifierWeight.ModerateNegative,
                 helicopter_cost_overrun: OutcomeModifierWeight.Neutral,
               },
