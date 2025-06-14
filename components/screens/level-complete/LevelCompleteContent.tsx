@@ -52,6 +52,8 @@ const LevelCompleteContent = ({
     return null;
   }
 
+  const isLevelGameOver = snapshot.consequences?.gameEnded || false;
+
   // Define all tabs with their configs
   const tabs: TabConfig[] = [
     {
@@ -105,7 +107,6 @@ const LevelCompleteContent = ({
 
   const handleComplete = async () => {
     try {
-      const isLevelGameOver = snapshot.consequences?.gameEnded || false;
       if (isLevelGameOver) {
         return await navigateToCurrentTab();
       } else {
@@ -137,7 +138,7 @@ const LevelCompleteContent = ({
         totalItems={tabs.length}
         onPrevious={handlePrevious}
         onNext={handleNext}
-        onComplete={handleComplete}
+        onComplete={isLevelGameOver ? undefined : handleComplete}
         progressLabel={`${currentTab.label} (${currentIndex + 1} of ${
           tabs.length
         })`}

@@ -111,7 +111,11 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>(
         // Check if game has ended
         if (isGameEnded(game.status)) {
           const endReason =
-            game.status === GameStatus.Impeached ? "impeachment" : "firing";
+            game.status === GameStatus.Impeached
+              ? "impeachment"
+              : game.status === GameStatus.Fired
+                ? "firing"
+                : "completion";
           set({
             isLoading: false,
             error: `Cannot create new level: Game has ended due to ${endReason}.`,

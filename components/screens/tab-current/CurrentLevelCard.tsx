@@ -54,7 +54,7 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
       case LevelStatus.SituationOutcomes:
         return "Review situation outcomes and their consequences";
       case LevelStatus.Completed:
-        return "Proceed to next month";
+        return "Proceed";
       default:
         return "Continue current level";
     }

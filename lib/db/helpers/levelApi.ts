@@ -6,7 +6,11 @@ import { cabinetSnapshotSchema } from "~/lib/schemas";
 import { CabinetSnapshot, LevelStatus, GameStatus } from "~/types";
 
 export function isGameEnded(gameStatus: GameStatus): boolean {
-  return gameStatus === GameStatus.Impeached || gameStatus === GameStatus.Fired;
+  return (
+    gameStatus === GameStatus.Impeached ||
+    gameStatus === GameStatus.Fired ||
+    gameStatus === GameStatus.Completed
+  );
 }
 
 // Level CRUD operations
