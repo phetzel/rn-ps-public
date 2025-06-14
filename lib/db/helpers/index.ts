@@ -1,4 +1,5 @@
 // Re-export everything from the individual modules
+export * from "./cabinetMembersApi";
 export * from "./collections";
 export * from "./consequenceApi";
 export * from "./fetchApi";

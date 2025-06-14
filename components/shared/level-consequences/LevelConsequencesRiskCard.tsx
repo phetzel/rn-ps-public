@@ -3,13 +3,15 @@ import { View } from "react-native";
 import { CabinetMember } from "~/lib/db/models";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
+import RiskItemPresidential from "~/components/shared/level-consequences/RiskItemPresidential";
+import RiskItemCabinet from "~/components/shared/level-consequences/RiskItemCabinet";
+import { calculateRiskProbability } from "~/lib/utils";
+import { CONSEQUENCE_THRESHOLD } from "~/lib/constants";
 import {
-  CONSEQUENCE_THRESHOLD,
-  CONSEQUENCE_RISK_PER_LEVEL,
-} from "~/lib/constants";
-import PresidentialRiskItem from "./PresidentialRistItem";
-import CabinetRiskItem from "./CabinetRiskItem";
-import { CabinetStaticId, RelationshipSnapshot } from "~/types";
+  CabinetStaticId,
+  RelationshipSnapshot,
+  CabinetRiskDisplayData,
+} from "~/types";
 
 interface LevelConsequencesRiskCardProps {
   finalSnapshot: RelationshipSnapshot;
@@ -22,15 +24,6 @@ export default function LevelConsequencesRiskCard({
   cabinetMembers,
   firedMembers,
 }: LevelConsequencesRiskCardProps) {
-  const calculateRiskProbability = (currentValue: number): number => {
-    if (currentValue >= CONSEQUENCE_THRESHOLD) {
-      return 0;
-    }
-
-    const pointsBelowThreshold = CONSEQUENCE_THRESHOLD - currentValue;
-    return Math.min(1.0, pointsBelowThreshold * CONSEQUENCE_RISK_PER_LEVEL);
-  };
-
   const impeachmentRisk = calculateRiskProbability(
     finalSnapshot.president.approvalRating
   );
@@ -39,12 +32,7 @@ export default function LevelConsequencesRiskCard({
   );
 
   // Get cabinet member risks with actual member data
-  const cabinetRisks: Array<{
-    staticId: CabinetStaticId;
-    name: string;
-    position: string;
-    risk: number;
-  }> = [];
+  const cabinetRisks: CabinetRiskDisplayData[] = [];
 
   Object.entries(finalSnapshot.cabinetMembers || {}).forEach(
     ([staticId, memberData]) => {
@@ -55,11 +43,17 @@ export default function LevelConsequencesRiskCard({
       );
 
       if (finalMemberData && actualMember) {
+        const currentValue = finalMemberData.approvalRating;
+        const riskPercentage = calculateRiskProbability(currentValue);
+
         cabinetRisks.push({
+          title: `${actualMember.name} Firing Risk`,
           staticId: cabinetStaticId,
           name: actualMember.name,
           position: actualMember.staticData.cabinetName,
-          risk: calculateRiskProbability(finalMemberData.approvalRating),
+          currentValue,
+          threshold: CONSEQUENCE_THRESHOLD,
+          riskPercentage,
         });
       }
     }
@@ -74,7 +68,7 @@ export default function LevelConsequencesRiskCard({
       <CardHeader accessible={true} accessibilityRole="header">
         <CardTitle className="text-lg">Risk Assessment</CardTitle>
         <Text className="text-sm text-muted-foreground">
-          Probability calculations based on final level values
+          Approval ratings and firing risk probabilities
         </Text>
       </CardHeader>
       <CardContent className="gap-4" accessible={false}>
@@ -84,13 +78,15 @@ export default function LevelConsequencesRiskCard({
           accessible={true}
           accessibilityLabel="Presidential and Press Secretary risks"
         >
-          <PresidentialRiskItem
+          <RiskItemPresidential
             title="Impeachment Risk"
-            risk={impeachmentRisk}
+            currentValue={finalSnapshot.president.approvalRating}
+            riskPercentage={impeachmentRisk}
           />
-          <PresidentialRiskItem
+          <RiskItemPresidential
             title="Press Secretary Firing Risk"
-            risk={firingRisk}
+            currentValue={finalSnapshot.president.psRelationship}
+            riskPercentage={firingRisk}
           />
         </View>
 
@@ -104,7 +100,7 @@ export default function LevelConsequencesRiskCard({
             Cabinet Member Firing Risks
           </Text>
           {cabinetRisks.map((cabinetMember) => (
-            <CabinetRiskItem
+            <RiskItemCabinet
               key={cabinetMember.staticId}
               cabinetMember={cabinetMember}
               wasFired={firedMembers.includes(cabinetMember.staticId)}

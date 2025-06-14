@@ -50,13 +50,34 @@ describe("ProgressNavigator", () => {
     expect(previousButton).toHaveProp("accessibilityState", { disabled: true });
   });
 
-  it("handles last item state", () => {
+  it("handles last item state with onComplete provided", () => {
     renderWithProps({ currentIndex: 2 });
     const completeButton = screen.getByRole("button", { name: /Complete/ });
     expect(completeButton).toBeTruthy();
+    expect(completeButton).toHaveProp("accessibilityState", {
+      disabled: false,
+    });
 
     fireEvent.press(completeButton);
     expect(mockHandlers.onComplete).toHaveBeenCalled();
+  });
+
+  it("handles last item state without onComplete - button should be disabled", () => {
+    const propsWithoutComplete = {
+      currentIndex: 2,
+      onPrevious: mockHandlers.onPrevious,
+      onNext: mockHandlers.onNext,
+      onComplete: undefined, // Explicitly set to undefined
+    };
+    renderWithProps(propsWithoutComplete);
+
+    const completeButton = screen.getByRole("button", { name: /Complete/ });
+    expect(completeButton).toBeTruthy();
+    expect(completeButton).toHaveProp("accessibilityState", { disabled: true });
+
+    // Should not call onComplete when pressed (since it's disabled)
+    fireEvent.press(completeButton);
+    expect(mockHandlers.onComplete).not.toHaveBeenCalled();
   });
 
   it("has correct accessibility properties", () => {

@@ -370,7 +370,7 @@ export interface RelationshipSnapshot {
 
 export interface ConsequenceResult {
   gameEnded: boolean;
-  gameEndReason?: "impeached" | "fired";
+  gameEndReason?: "impeached" | "fired" | "completed";
   cabinetMembersFired: CabinetStaticId[];
 }
 
@@ -378,6 +378,23 @@ export interface OutcomeSnapshotType {
   initial: RelationshipSnapshot;
   final?: RelationshipSnapshot;
   consequences?: ConsequenceResult;
+}
+
+// Risk Types
+export type RiskLevel = "safe" | "low" | "medium" | "high";
+
+export interface RiskDisplayData {
+  title: string;
+  currentValue: number; // Actual approval/relationship (0-100)
+  threshold: number; // Danger threshold (25)
+  riskPercentage: number; // Calculated risk (0-100%)
+}
+
+export interface CabinetRiskDisplayData extends RiskDisplayData {
+  staticId: CabinetStaticId;
+  name: string;
+  position: string;
+  wasFired?: boolean;
 }
 
 // Wieghts

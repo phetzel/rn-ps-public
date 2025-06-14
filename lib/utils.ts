@@ -3,11 +3,15 @@ import { twMerge } from "tailwind-merge";
 import { faker } from "@faker-js/faker";
 
 // Constants
-import { AD_BOOST_MULTIPLIER } from "~/lib/constants";
+import {
+  AD_BOOST_MULTIPLIER,
+  CONSEQUENCE_THRESHOLD,
+  CONSEQUENCE_RISK_PER_LEVEL,
+} from "~/lib/constants";
 // DB Models
 import { CabinetMember } from "~/lib/db/models";
 // Types
-import { CabinetStaticId } from "~/types";
+import { CabinetStaticId, RiskLevel } from "~/types";
 
 // Tailwind Merge
 export function cn(...inputs: ClassValue[]) {
@@ -95,4 +99,50 @@ export function calculatePresidentApprovalRating(
 
   // Round to nearest integer and ensure it's within 0-100 range
   return Math.max(0, Math.min(100, Math.round(average)));
+}
+
+// Consequence Helpers
+export function calculateRiskProbability(currentValue: number): number {
+  if (currentValue >= CONSEQUENCE_THRESHOLD) {
+    return 0; // No risk above threshold
+  }
+
+  const pointsBelowThreshold = CONSEQUENCE_THRESHOLD - currentValue;
+  return Math.min(1.0, pointsBelowThreshold * CONSEQUENCE_RISK_PER_LEVEL);
+}
+
+export function getRiskLevel(probability: number): RiskLevel {
+  if (probability === 0) return "safe";
+  if (probability < 0.25) return "low";
+  if (probability < 0.5) return "medium";
+  return "high";
+}
+
+export function getRiskTextColor(risk: RiskLevel): string {
+  const colors = {
+    safe: "text-green-700",
+    low: "text-yellow-700",
+    medium: "text-orange-700",
+    high: "text-red-700",
+  };
+  return colors[risk];
+}
+
+export const getRiskDescription = (riskLevel: RiskLevel): string => {
+  switch (riskLevel) {
+    case "safe":
+      return "No risk";
+    case "low":
+      return "Low risk";
+    case "medium":
+      return "Medium risk";
+    case "high":
+      return "High risk";
+    default:
+      return "Unknown risk";
+  }
+};
+
+export function formatRiskProbability(probability: number): string {
+  return `${Math.round(probability * 100)}%`;
 }

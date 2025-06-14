@@ -15,7 +15,7 @@ interface ProgressNavigatorProps {
   // Navigation handlers
   onPrevious: () => void;
   onNext: () => void;
-  onComplete: () => void;
+  onComplete?: () => void;
 
   // Content
   children: React.ReactNode;
@@ -128,6 +128,8 @@ export function ProgressNavigator({
                 ? `${completeButtonText} the process`
                 : `${nextButtonText} to next item`
             }
+            disabled={isLast && !onComplete}
+            accessibilityState={{ disabled: isLast && !onComplete }}
           >
             <Text accessible={false}>
               {isLast ? completeButtonText : nextButtonText}

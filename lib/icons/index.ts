@@ -36,6 +36,7 @@ import { Sun } from "./Sun";
 import { Trash2 } from "./Trash2";
 import { TrendingDown } from "./TrendingDown";
 import { TrendingUp } from "./TrendingUp";
+import { Trophy } from "./Trophy";
 import { User } from "./User";
 import { UserX } from "./UserX";
 import { Users } from "./Users";
@@ -79,6 +80,7 @@ export {
   Trash2,
   TrendingDown,
   TrendingUp,
+  Trophy,
   User,
   UserX,
   Users,

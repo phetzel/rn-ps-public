@@ -596,4 +596,92 @@ describe("Game Model", () => {
       expect(endTime - startTime).toBeLessThan(500); // Should complete within 500ms
     });
   });
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // GAME COMPLETION LOGIC
+  // ═══════════════════════════════════════════════════════════════════════════════
+
+  describe("Game Completion", () => {
+    it("should detect when at final month of term (year 4, month 12)", async () => {
+      const game = await createTestGame(database, {
+        currentYear: 4,
+        currentMonth: 12,
+      });
+
+      expect(game.isAtTermLimit()).toBe(true);
+    });
+
+    it("should detect when not at final month (year 4, month 11)", async () => {
+      const game = await createTestGame(database, {
+        currentYear: 4,
+        currentMonth: 11,
+      });
+
+      expect(game.isAtTermLimit()).toBe(false);
+    });
+
+    it("should detect when not at final year (year 3, month 12)", async () => {
+      const game = await createTestGame(database, {
+        currentYear: 3,
+        currentMonth: 12,
+      });
+
+      expect(game.isAtTermLimit()).toBe(false);
+    });
+
+    it("should not advance month beyond term limit (year 4, month 12)", async () => {
+      const game = await createTestGame(database, {
+        currentYear: 4,
+        currentMonth: 12,
+        status: GameStatus.Active,
+      });
+
+      await expect(game.advanceMonth()).rejects.toThrow(
+        "Cannot advance month: Game has reached term limit"
+      );
+    });
+
+    it("should mark game as completed when term ends", async () => {
+      const game = await createTestGame(database, {
+        currentYear: 4,
+        currentMonth: 12,
+        status: GameStatus.Active,
+      });
+
+      await game.markAsCompleted();
+
+      expect(game.status).toBe(GameStatus.Completed);
+      expect(game.endTimestamp).toBeTruthy();
+    });
+
+    it("should not allow month advancement after completion", async () => {
+      const game = await createTestGame(database, {
+        status: GameStatus.Completed,
+      });
+
+      await expect(game.advanceMonth()).rejects.toThrow(
+        "Cannot advance month: Game has ended (completed)"
+      );
+    });
+
+    it("should not allow month advancement after firing", async () => {
+      const game = await createTestGame(database, {
+        status: GameStatus.Fired,
+      });
+
+      await expect(game.advanceMonth()).rejects.toThrow(
+        "Cannot advance month: Game has ended (fired)"
+      );
+    });
+
+    it("should not allow month advancement after impeachment", async () => {
+      const game = await createTestGame(database, {
+        status: GameStatus.Impeached,
+      });
+
+      await expect(game.advanceMonth()).rejects.toThrow(
+        "Cannot advance month: Game has ended (impeached)"
+      );
+    });
+  });
 });

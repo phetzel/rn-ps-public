@@ -20,6 +20,8 @@ import type SubgroupApproval from "./SubgroupApproval";
 import { GameStatus, PoliticalLeaning } from "~/types";
 // Utils
 import { calculatePresidentApprovalRating } from "~/lib/utils";
+// Constants
+import { PRESIDENTIAL_TERM_YEARS } from "~/lib/constants";
 
 export default class Game extends Model {
   static table = "games";
@@ -56,6 +58,20 @@ export default class Game extends Model {
 
   // Action to advance time
   @writer async advanceMonth() {
+    // Prevent advancement if game has ended (any end state)
+    if (
+      this.status === GameStatus.Completed ||
+      this.status === GameStatus.Fired ||
+      this.status === GameStatus.Impeached
+    ) {
+      throw new Error(`Cannot advance month: Game has ended (${this.status})`);
+    }
+
+    // Prevent advancement beyond term limit
+    if (this.isAtTermLimit()) {
+      throw new Error("Cannot advance month: Game has reached term limit");
+    }
+
     await this.update((game) => {
       if (game.currentMonth === 12) {
         game.currentMonth = 1;
@@ -70,6 +86,20 @@ export default class Game extends Model {
   async getPresApprovalRating(): Promise<number> {
     const subgroups = await this.subgroupApprovals.fetch();
     return calculatePresidentApprovalRating(subgroups);
+  }
+
+  // Game completion methods
+  isAtTermLimit(): boolean {
+    return (
+      this.currentYear === PRESIDENTIAL_TERM_YEARS && this.currentMonth === 12
+    );
+  }
+
+  @writer async markAsCompleted() {
+    await this.update((game) => {
+      game.status = GameStatus.Completed;
+      game.endTimestamp = Math.floor(Date.now() / 1000);
+    });
   }
 
   // --- Helper methods for used situations ---
