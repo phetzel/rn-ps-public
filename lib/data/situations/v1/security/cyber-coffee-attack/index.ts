@@ -5,7 +5,7 @@ import { cyberCoffeeAttackExchanges } from "./cyberCoffeeAttackExchanges";
 
 export const cyberCoffeeAttack: SituationData = {
   trigger: {
-    staticKey: "coffee_supply_hacked",
+    staticKey: "cyber_coffee_attack",
     type: SituationType.Security,
     requirements: {
       // Could happen any time caffeine is short
