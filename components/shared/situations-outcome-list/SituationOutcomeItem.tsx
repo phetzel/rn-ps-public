@@ -32,7 +32,6 @@ interface SituationOutcomeItemProps {
 const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
   const { currentGameId } = useGameManagerStore();
 
-  console.log("currentGameId", currentGameId);
   if (!currentGameId) {
     return null;
   }
