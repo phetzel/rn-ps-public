@@ -61,7 +61,7 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Theater upgrades also allow educational film events for students. Let's not exaggerate this routine maintenance.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Education]: {
+                  [CabinetStaticId.HHS]: {
                     weight: ExchangeImpactWeight.SlightlyPositive,
                   },
                 },
@@ -106,7 +106,7 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "The repayment schedule is being finalized. We'll share details once agencies sign off.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Education]: {
+                  [CabinetStaticId.HHS]: {
                     weight: ExchangeImpactWeight.SlightlyPositive,
                   },
                 },
@@ -205,7 +205,7 @@ export const privateMovieTheaterRenovationExchanges: ExchangeData[] = [
               text: "Safeguards are already in place. This reallocation was a one-time oversight that we are correcting.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Education]: {
+                  [CabinetStaticId.HHS]: {
                     weight: ExchangeImpactWeight.Positive,
                   },
                 },

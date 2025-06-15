@@ -67,8 +67,8 @@ export default class Level extends Model {
       }
       return validationResult.data;
     } catch (e) {
-      console.error(`Error parsing Level ${this.id} outcomeSnapshot:`, e);
-      console.error("Invalid JSON string:", this.outcomeSnapshot);
+      console.error(`Error parsing Level ${this.id} cabinetSnapshot:`, e);
+      console.error("Invalid JSON string:", this.cabinetSnapshot);
       return null;
     }
   }

@@ -23,7 +23,13 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_lib_q1_a1",
               type: AnswerType.Inform,
               text: "HHS inspected distributors yesterday and found shipments normal. We'll publish supply updates daily. No rationing needed at this time.",
-              impacts: { cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               followUpId: "tps_lib_q1_f1",
               outcomeModifiers: {
                 tps_hoax_exposed: OutcomeModifierWeight.ModeratePositive,
@@ -47,7 +53,9 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_lib_q1_a3",
               type: AnswerType.Deflect,
               text: "If folks believe internet gossip, no amount of regulation will stop them from panic-buying. Maybe consider reusable cloths?",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyNegative } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
               followUpId: "tps_lib_q1_f1",
               outcomeModifiers: {
                 tps_hoax_exposed: OutcomeModifierWeight.SlightNegative,
@@ -77,7 +85,13 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_lib_q1_f1_a2",
               type: AnswerType.Admit,
               text: "If supply does tighten, we may consider temporary price caps, though it is too early to predict such measures.",
-              impacts: { cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Negative } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Negative,
+                  },
+                },
+              },
               outcomeModifiers: {
                 tps_shortage_persists: OutcomeModifierWeight.ModeratePositive,
                 tps_hoax_exposed: OutcomeModifierWeight.ModerateNegative,
@@ -88,7 +102,9 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_lib_q1_f1_a3",
               type: AnswerType.Deflect,
               text: "Maybe we should all learn to conserve rather than waiting for the government to save our behinds from paper panic.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyNegative } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
               outcomeModifiers: {
                 tps_stockpile_revealed: OutcomeModifierWeight.SlightPositive,
                 tps_hoax_exposed: OutcomeModifierWeight.SlightNegative,
@@ -127,7 +143,13 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_con_q1_a2",
               type: AnswerType.Reassure,
               text: "Treasury is watching the market and expects normal pricing soon. There's no evidence of actual shortage, just overbuying.",
-              impacts: { cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 tps_hoax_exposed: OutcomeModifierWeight.ModeratePositive,
                 tps_shortage_persists: OutcomeModifierWeight.ModerateNegative,
@@ -137,8 +159,10 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
             {
               id: "tps_con_q1_a3",
               type: AnswerType.Deflect,
-              text: "Maybe folks should use fewer squares. Toilet paper isn't our national currency.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyNegative } },
+              text: "Maybe folks should use fewer squares per visit. Toilet paper isn't our national currency, after all.",
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
               outcomeModifiers: {
                 tps_stockpile_revealed: OutcomeModifierWeight.SlightPositive,
                 tps_hoax_exposed: OutcomeModifierWeight.SlightNegative,
@@ -166,7 +190,13 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_ind_q1_a1",
               type: AnswerType.Inform,
               text: "Supply chains are diversified and warehouses report months of inventory. We'll reroute shipments if certain regions face shortages.",
-              impacts: { cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 tps_hoax_exposed: OutcomeModifierWeight.StrongPositive,
                 tps_shortage_persists: OutcomeModifierWeight.StrongNegative,
@@ -177,7 +207,9 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               id: "tps_ind_q1_a2",
               type: AnswerType.Deny,
               text: "There is no credible threat to supplies. Panic buying is the only reason shelves look empty.",
-              impacts: { president: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              impacts: {
+                president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
               outcomeModifiers: {
                 tps_shortage_persists: OutcomeModifierWeight.SlightNegative,
                 tps_hoax_exposed: OutcomeModifierWeight.SlightPositive,
@@ -189,7 +221,13 @@ export const toiletPaperSupplyThreatExchanges: ExchangeData[] = [
               type: AnswerType.Authorized,
               authorizedCabinetMemberId: CabinetStaticId.HHS,
               text: "Supply audit reveals full warehouses. HHS has contingency contracts to redirect distribution if hoarding persists.",
-              impacts: { cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.StronglyPositive } } },
+              impacts: {
+                cabinet: {
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
+              },
               outcomeModifiers: {
                 tps_hoax_exposed: OutcomeModifierWeight.StrongPositive,
                 tps_shortage_persists: OutcomeModifierWeight.StrongNegative,

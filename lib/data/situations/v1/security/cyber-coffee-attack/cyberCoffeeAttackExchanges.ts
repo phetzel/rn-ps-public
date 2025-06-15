@@ -24,11 +24,16 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Homeland traced the breach to a spoofed logistics app. Servers are rebooting now and deliveries should resume within 48 hours.",
               impacts: {
-                cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "cca_lib_q1_f1",
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.ModeratePositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.ModeratePositive,
                 cca_shortage_drags_out: OutcomeModifierWeight.ModerateNegative,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },
@@ -38,11 +43,16 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "We’re coordinating with grocers and roasters to keep beans flowing. This is a temporary hiccup, not a coffee apocalypse.",
               impacts: {
-                cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               followUpId: "cca_lib_q1_f1",
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.SlightPositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.SlightPositive,
                 cca_shortage_drags_out: OutcomeModifierWeight.SlightNegative,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },
@@ -57,7 +67,8 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               followUpId: "cca_lib_q1_f1",
               outcomeModifiers: {
                 cca_caffeine_rationing: OutcomeModifierWeight.SlightPositive,
-                cca_supply_restored_quickly: OutcomeModifierWeight.SlightNegative,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.SlightNegative,
                 cca_shortage_drags_out: OutcomeModifierWeight.Neutral,
               },
             },
@@ -74,10 +85,14 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               text: "Any profiteering will be punished. We’re deploying inspectors and fines for retailers exploiting the shortage.",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Positive },
-                cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
               },
               outcomeModifiers: {
-                cca_shortage_drags_out: OutcomeModifierWeight.SlightPositive,
+                cca_shortage_drags_out: OutcomeModifierWeight.ModeratePositive,
                 cca_caffeine_rationing: OutcomeModifierWeight.ModerateNegative,
                 cca_supply_restored_quickly: OutcomeModifierWeight.Neutral,
               },
@@ -87,11 +102,16 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               type: AnswerType.Admit,
               text: "We can’t cap every cup. If the market overreacts we may consider subsidies, but for now we urge patience.",
               impacts: {
-                cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Negative } },
+                cabinet: {
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Negative,
+                  },
+                },
               },
               outcomeModifiers: {
                 cca_caffeine_rationing: OutcomeModifierWeight.ModeratePositive,
-                cca_supply_restored_quickly: OutcomeModifierWeight.ModerateNegative,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.ModerateNegative,
                 cca_shortage_drags_out: OutcomeModifierWeight.Neutral,
               },
             },
@@ -103,7 +123,8 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
                 president: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.SlightNegative,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.SlightNegative,
                 cca_shortage_drags_out: OutcomeModifierWeight.SlightPositive,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },
@@ -131,7 +152,8 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               text: "No. Hackers targeted private software, not federal red tape. We’re working with industry to harden systems without new burdens.",
               impacts: { president: { weight: ExchangeImpactWeight.Positive } },
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.SlightPositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.SlightPositive,
                 cca_shortage_drags_out: OutcomeModifierWeight.Neutral,
                 cca_caffeine_rationing: OutcomeModifierWeight.SlightNegative,
               },
@@ -141,10 +163,15 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               type: AnswerType.Reassure,
               text: "Treasury and Homeland are coordinating to keep imports flowing. We anticipate normal shelves before next week.",
               impacts: {
-                cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+                cabinet: {
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
+                },
               },
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.ModeratePositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.ModeratePositive,
                 cca_shortage_drags_out: OutcomeModifierWeight.ModerateNegative,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },
@@ -158,7 +185,8 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               },
               outcomeModifiers: {
                 cca_caffeine_rationing: OutcomeModifierWeight.SlightPositive,
-                cca_supply_restored_quickly: OutcomeModifierWeight.SlightNegative,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.SlightNegative,
                 cca_shortage_drags_out: OutcomeModifierWeight.Neutral,
               },
             },
@@ -184,10 +212,15 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               type: AnswerType.Inform,
               text: "Teams are patching the routing software and installing redundant servers. We expect normal deliveries in three days.",
               impacts: {
-                cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive } },
+                cabinet: {
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
+                },
               },
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.StrongPositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.StrongPositive,
                 cca_shortage_drags_out: OutcomeModifierWeight.StrongNegative,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },
@@ -201,7 +234,8 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               },
               outcomeModifiers: {
                 cca_shortage_drags_out: OutcomeModifierWeight.SlightNegative,
-                cca_supply_restored_quickly: OutcomeModifierWeight.SlightPositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.SlightPositive,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },
             },
@@ -211,10 +245,15 @@ export const cyberCoffeeAttackExchanges: ExchangeData[] = [
               authorizedCabinetMemberId: CabinetStaticId.Homeland,
               text: "Breach logs reveal a small overseas syndicate testing ransomware. We seized their servers and secured the shipment network within hours.",
               impacts: {
-                cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.StronglyPositive } },
+                cabinet: {
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
+                },
               },
               outcomeModifiers: {
-                cca_supply_restored_quickly: OutcomeModifierWeight.StrongPositive,
+                cca_supply_restored_quickly:
+                  OutcomeModifierWeight.StrongPositive,
                 cca_shortage_drags_out: OutcomeModifierWeight.StrongNegative,
                 cca_caffeine_rationing: OutcomeModifierWeight.Neutral,
               },

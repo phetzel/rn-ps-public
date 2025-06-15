@@ -4,7 +4,6 @@ import { cyberCoffeeAttack } from "./cyber-coffee-attack";
 import { celebrityIdentityBreach } from "./celebrity-identity-breach";
 import { pandemicPizzaShortage } from "./pandemic-pizza-shortage";
 import { biometricDataLeak } from "./biometric-data-leak";
-import { electionCongratsMishap } from "./election-congrats-mishap";
 import { internetOutagePanic } from "./internet-outage-panic";
 import { socialMediaMindControlFear } from "./social-media-mind-control-fear";
 import { autonomousCarsRebellion } from "./autonomous-cars-rebellion";
@@ -21,7 +20,6 @@ export const securitySituationsData = [
   celebrityIdentityBreach,
   pandemicPizzaShortage,
   biometricDataLeak,
-  electionCongratsMishap,
   internetOutagePanic,
   socialMediaMindControlFear,
   autonomousCarsRebellion,
