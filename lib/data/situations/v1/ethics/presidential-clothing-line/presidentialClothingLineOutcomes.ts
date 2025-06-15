@@ -8,7 +8,7 @@ import {
 export const presidentialClothingLineOutcomes: SituationOutcome[] = [
   {
     id: "clothing_brand_shut_down",
-    title: "Brand Shut Down",
+    title: "Clothing Brand Shut Down",
     description:
       "Facing bipartisan outrage, the clothing line is dissolved and the president vows to stay out of business ventures.",
     weight: 40,
@@ -16,11 +16,14 @@ export const presidentialClothingLineOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Justice]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Justice]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.RightWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -34,12 +37,16 @@ export const presidentialClothingLineOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Justice]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Justice]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -56,7 +63,8 @@ export const presidentialClothingLineOutcomes: SituationOutcome[] = [
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Neutral,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.Neutral,
         },
       },

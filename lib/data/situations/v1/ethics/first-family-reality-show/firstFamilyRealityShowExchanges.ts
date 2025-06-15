@@ -25,7 +25,9 @@ export const firstFamilyRealityShowExchanges: ExchangeData[] = [
               text: "Justice is reviewing the agreements. If any clauses violated ethics rules, the show will halt and penalties will follow.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "ffrs_inv_q1_f1",
@@ -52,7 +54,7 @@ export const firstFamilyRealityShowExchanges: ExchangeData[] = [
             {
               id: "ffrs_inv_q1_a3",
               type: AnswerType.Challenge,
-              text: "Isn't turning the residence into a TV set a blatant conflict of interest?",
+              text: "Isn't turning the residence into a TV set a blatant conflict of interest for public officials?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Negative },
               },
@@ -77,7 +79,9 @@ export const firstFamilyRealityShowExchanges: ExchangeData[] = [
               text: "Contract terms show per-episode honoraria, which DOJ now flags as potential conflicts. Refunds may be required.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -119,7 +123,7 @@ export const firstFamilyRealityShowExchanges: ExchangeData[] = [
             {
               id: "ffrs_con_q1_a1",
               type: AnswerType.Challenge,
-              text: "Isn't this show just self-promotion on the taxpayers' dime?",
+              text: "Isn't this show just self-promotion on the taxpayers' dime while governing suffers?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Negative },
               },
@@ -135,7 +139,9 @@ export const firstFamilyRealityShowExchanges: ExchangeData[] = [
               text: "If reviews find violations, the show will end immediately and any profits will be refunded to the treasury.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -180,7 +186,9 @@ export const firstFamilyRealityShowExchanges: ExchangeData[] = [
               text: "The show is under strict review. We aim to showcase government transparently while ensuring no conflicts with official work.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {

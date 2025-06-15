@@ -25,7 +25,9 @@ export const presidentialPortraitExtravaganceExchanges: ExchangeData[] = [
               text: "State has reviewed the purchases and is working with Treasury to recover overcharges. Future art buys will follow stricter rules.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "ppe_lib_q1_f1",
@@ -77,7 +79,9 @@ export const presidentialPortraitExtravaganceExchanges: ExchangeData[] = [
               text: "Invoices show a single vendor overbilled the government. Treasury is clawing back payments and introducing competitive bids.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -122,7 +126,9 @@ export const presidentialPortraitExtravaganceExchanges: ExchangeData[] = [
               text: "Treasury is recouping funds and reinforcing spending limits. Those responsible will be disciplined according to policy.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -147,7 +153,7 @@ export const presidentialPortraitExtravaganceExchanges: ExchangeData[] = [
             {
               id: "ppe_con_q1_a3",
               type: AnswerType.Challenge,
-              text: "How can citizens trust fiscal discipline when officials splurge on vanity art?",
+              text: "How can citizens trust fiscal discipline when officials splurge on vanity art projects?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.Negative },
               },
@@ -180,7 +186,9 @@ export const presidentialPortraitExtravaganceExchanges: ExchangeData[] = [
               text: "Refunds are underway and spending guidelines are being updated. The portraits will be reviewed for cultural value and cost.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.State]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {

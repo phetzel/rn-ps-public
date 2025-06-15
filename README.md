@@ -34,6 +34,7 @@ Survive a presidential term as Press Secretary by managing relationships with th
 - Attorney General
 - Secretary of Health and Human Services
 - Secretary of Homeland Security
+- Secretary of the Interior
 
 _Cabinet members provide classified intel if relationship is strong enough. If fired, all subgroups lose approval._
 

@@ -18,7 +18,7 @@ export const firstFamilyRealityShowPreferences: SituationPreferences = {
       preference: {
         answerType: AnswerType.Inform,
         rationale:
-          "Explain that contract terms are under review and any violations will trigger penalties, ensuring ethics rules are observed.",
+          "Explain contract terms are under review and any violations will trigger penalties, ensuring ethics compliance.",
       },
       authorizedContent:
         "Contracts include confidentiality clauses and revenue sharing. DOJ evaluations indicate possible conflict-of-interest waivers were signed.",

@@ -25,7 +25,9 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
               text: "The cellar dates back years for receptions. We're cataloging bottles now and will auction them for charity.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "sdwc_lib_q1_f1",
@@ -42,7 +44,9 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
               text: "Inventory logs show a curated vault under a DOJ annex stocked for private receptions. It's now sealed pending auction.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               followUpId: "sdwc_lib_q1_f1",
@@ -70,7 +74,7 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
         },
         sdwc_lib_q1_f1: {
           id: "sdwc_lib_q1_f1",
-          text: "Will the wine be sold or kept for future private events?",
+          text: "Will the wine collection be sold to the public or kept for future private government events?",
           depth: 1,
           answers: [
             {
@@ -79,7 +83,9 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
               text: "All bottles will be auctioned with proceeds returned to the treasury. No one will keep private stock.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -124,7 +130,9 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
               text: "An internal audit is underway to identify any other perks. Findings will be released alongside new oversight rules.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -136,7 +144,7 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
             {
               id: "sdwc_ind_q1_a2",
               type: AnswerType.Challenge,
-              text: "Isn't this another sign the department is out of touch with regular citizens?",
+              text: "This isn't just another sign of the department being out of touch with regular citizens and their daily struggles?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
@@ -169,7 +177,9 @@ export const secretDojWineCellarExchanges: ExchangeData[] = [
               text: "The cellar is being emptied and oversight tightened. Any officials who misused funds will face disciplinary action.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {

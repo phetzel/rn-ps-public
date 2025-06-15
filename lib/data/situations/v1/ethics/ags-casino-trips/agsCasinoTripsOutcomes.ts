@@ -8,17 +8,19 @@ import {
 export const agsCasinoTripsOutcomes: SituationOutcome[] = [
   {
     id: "casino_flights_repaid",
-    title: "Pays Back Flights",
+    title: "AG Pays Back Flight Costs",
     description:
       "The AG reimburses taxpayers for the Vegas trips and apologizes, calming most of the outrage.",
     weight: 40,
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Justice]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Justice]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -36,7 +38,8 @@ export const agsCasinoTripsOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -50,10 +53,12 @@ export const agsCasinoTripsOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Justice]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Justice]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

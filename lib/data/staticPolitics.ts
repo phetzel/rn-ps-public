@@ -30,6 +30,9 @@ export const staticCabinetMembers: Record<
   [CabinetStaticId.Homeland]: {
     cabinetName: "Secretary of Homeland Security",
   },
+  [CabinetStaticId.Interior]: {
+    cabinetName: "Secretary of the Interior",
+  },
 };
 
 export const staticSubgroups: Record<SubgroupStaticId, StaticSubgroup> = {

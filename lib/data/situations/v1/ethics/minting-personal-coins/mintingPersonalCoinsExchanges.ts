@@ -25,7 +25,9 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
               text: "Yes, a small commemorative batch was produced for a charity auction. Costs are repaid and the coins will be melted.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "mpc_lib_q1_f1",
@@ -56,7 +58,9 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
               text: "Mint documents show this was an approved test batch tied to a museum exhibit, not a vanity profit scheme.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               followUpId: "mpc_lib_q1_f1",
@@ -70,7 +74,7 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
         },
         mpc_lib_q1_f1: {
           id: "mpc_lib_q1_f1",
-          text: "Will the Secretary keep any of the coins as souvenirs?",
+          text: "Will the Treasury Secretary keep any of these commemorative coins as personal souvenirs?",
           depth: 1,
           answers: [
             {
@@ -79,7 +83,9 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
               text: "No coins will remain in personal hands. They're being melted and the metal recycled to close the matter.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -124,7 +130,9 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
               text: "An internal review is under way. Any public funds will be repaid and procedures tightened to avoid repeat mistakes.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -139,7 +147,9 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
               text: "No penalty is warranted. The coins were part of normal outreach and did not cost taxpayers in the end.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -184,7 +194,9 @@ export const mintingPersonalCoinsExchanges: ExchangeData[] = [
               text: "Treasury is drafting guidelines restricting commemorative runs to historic figures only, preventing personal portraits.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.SlightlyPositive,
+                  },
                 },
               },
               outcomeModifiers: {

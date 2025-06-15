@@ -25,7 +25,9 @@ export const privateJetVacationsExchanges: ExchangeData[] = [
               text: "Yes. The Secretary will repay the flights and new approval rules are being issued to prevent future misuse.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "pjv_con_q1_f1",
@@ -67,7 +69,7 @@ export const privateJetVacationsExchanges: ExchangeData[] = [
         },
         pjv_con_q1_f1: {
           id: "pjv_con_q1_f1",
-          text: "Who approved these luxury trips on the department's budget?",
+          text: "Who specifically approved these luxury vacation trips on the department's budget?",
           depth: 1,
           answers: [
             {
@@ -76,7 +78,9 @@ export const privateJetVacationsExchanges: ExchangeData[] = [
               text: "Budget officials approved them under loose guidelines. Those guidelines are now tightened and reimbursements are underway.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -134,7 +138,9 @@ export const privateJetVacationsExchanges: ExchangeData[] = [
               text: "Reimbursements are happening and new oversight is in place. We'll ensure every flight serves the public interest.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Treasury]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -192,7 +198,9 @@ export const privateJetVacationsExchanges: ExchangeData[] = [
               text: "The Secretary is repaying costs and supports tougher guidelines. This administration takes ethical travel seriously.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.HHS]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {

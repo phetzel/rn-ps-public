@@ -15,12 +15,15 @@ export const privateMovieTheaterRenovationOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Education]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.Neutral,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.Neutral,
         },
       },
     },
@@ -35,11 +38,12 @@ export const privateMovieTheaterRenovationOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Education]: SituationConsequenceWeight.Negative,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
         },
         subgroups: {
           [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -53,11 +57,13 @@ export const privateMovieTheaterRenovationOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
           [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.Neutral,
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

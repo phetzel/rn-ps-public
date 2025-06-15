@@ -110,7 +110,7 @@ export async function determineSituationOutcomes(
         chosenOutcomeData = outcomesWithEffectiveWeights.sort(
           (a, b) => b.effectiveWeight - a.effectiveWeight
         )[0];
-        console.log(
+        console.warn(
           `Situation ${situation.id}: No outcomes with positive effective weight. Fallback to highest effective weight: ${chosenOutcomeData?.title}`
         );
       }

@@ -16,11 +16,11 @@ export const privateMovieTheaterRenovationPreferences: SituationPreferences = {
       authorizedContent:
         "Budget note shows $1.2M shifted from a digital literacy grant to upgrade seating and add a private snack bar in the White House theater.",
     },
-    [CabinetStaticId.Education]: {
+    [CabinetStaticId.HHS]: {
       preference: {
         answerType: AnswerType.Deflect,
         rationale:
-          "Deflect by emphasizing commitments to classroom technology and downplay the theater as minor maintenance.",
+          "Deflect by emphasizing the theater will host health education screenings and downplay it as facility maintenance.",
       },
     },
   },

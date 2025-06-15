@@ -25,7 +25,9 @@ export const homelandCasinoScandalExchanges: ExchangeData[] = [
               text: "Any leisure time was incidental to official meetings. The chief will fully cooperate with reviews of travel logs.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               followUpId: "hcs_inv_q1_f1",
@@ -42,7 +44,9 @@ export const homelandCasinoScandalExchanges: ExchangeData[] = [
               text: "Surveillance logs show repeated casino visits using government drivers. Investigators are evaluating potential misuse charges.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.StronglyPositive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.StronglyPositive,
+                  },
                 },
               },
               followUpId: "hcs_inv_q1_f1",
@@ -79,7 +83,9 @@ export const homelandCasinoScandalExchanges: ExchangeData[] = [
               text: "Justice is compiling the logs now. Once legal reviews finish, summaries will be public along with any disciplinary action.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -124,7 +130,9 @@ export const homelandCasinoScandalExchanges: ExchangeData[] = [
               text: "The review will hold officials accountable. New travel rules are being put in place to prevent misuse going forward.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Homeland]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
@@ -136,7 +144,7 @@ export const homelandCasinoScandalExchanges: ExchangeData[] = [
             {
               id: "hcs_con_q1_a2",
               type: AnswerType.Challenge,
-              text: "Will the chief face criminal charges for wasting resources on gambling trips?",
+              text: "Will the Homeland Security chief face criminal charges for wasting taxpayer resources on gambling trips?",
               impacts: {
                 president: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
@@ -195,7 +203,9 @@ export const homelandCasinoScandalExchanges: ExchangeData[] = [
               text: "The president expects full accountability. Pending the investigation, appropriate disciplinary actions will follow.",
               impacts: {
                 cabinet: {
-                  [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive },
+                  [CabinetStaticId.Justice]: {
+                    weight: ExchangeImpactWeight.Positive,
+                  },
                 },
               },
               outcomeModifiers: {
