@@ -1,10 +1,3 @@
-// Re-export all fixtures from domain-specific files
-export * from "./gameFixtures";
-export * from "./levelFixtures";
-export * from "./mediaFixtures";
-export * from "./testUtils";
-
-// Keep the bulk creation helpers here
 import { Database } from "@nozbe/watermelondb";
 import {
   Game,
@@ -22,25 +15,22 @@ import {
   JournalistStaticId,
   SubgroupStaticId,
 } from "~/types";
-import {
-  createTestGame,
-  createTestCabinetMember,
-  createTestSubgroupApproval,
-  GameFixtureOptions,
-} from "./gameFixtures";
-import {
-  createTestLevel,
-  createTestSituation,
-  createTestPressExchange,
-} from "./levelFixtures";
-import { createTestPublication, createTestJournalist } from "./mediaFixtures";
+import { createGame } from "~/__tests__/support/factories/gameFactory";
+import { createCabinetMember } from "~/__tests__/support/factories/cabinetMemberFactory";
+import { createPublication } from "~/__tests__/support/factories/publicationFactory";
+import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
+import { createSubgroupApproval } from "~/__tests__/support/factories/subgroupApprovalFactory";
+import { createLevel } from "~/__tests__/support/factories/levelFactory";
+import { createSituation } from "~/__tests__/support/factories/situationFactory";
+import { createPressExchange } from "~/__tests__/support/factories/pressExchangeFactory";
+import { GameFactoryOptions } from "~/__tests__/support/scenarios/types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // BULK CREATION HELPERS
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export interface GameScenarioOptions {
-  gameOptions?: GameFixtureOptions;
+  gameOptions?: GameFactoryOptions;
   cabinetMemberCount?: number;
   publicationCount?: number;
   journalistCount?: number;
@@ -63,7 +53,7 @@ export async function createGameScenario(
   levels: Level[];
 }> {
   // Create the game first
-  const game = await createTestGame(database, options.gameOptions);
+  const game = await createGame(database, options.gameOptions);
 
   // Create cabinet members
   const cabinetMembers: CabinetMember[] = [];
@@ -71,7 +61,7 @@ export async function createGameScenario(
   const cabinetIds = Object.values(CabinetStaticId).slice(0, cabinetCount);
 
   for (const staticId of cabinetIds) {
-    const member = await createTestCabinetMember(database, {
+    const member = await createCabinetMember(database, {
       gameId: game.id,
       staticId,
     });
@@ -84,7 +74,7 @@ export async function createGameScenario(
   const pubIds = Object.values(PublicationStaticId).slice(0, pubCount);
 
   for (const staticId of pubIds) {
-    const publication = await createTestPublication(database, {
+    const publication = await createPublication(database, {
       gameId: game.id,
       staticId,
     });
@@ -103,7 +93,7 @@ export async function createGameScenario(
     const staticId = journalistIds[i];
     const publication = publications[i % publications.length]; // Distribute across publications
 
-    const journalist = await createTestJournalist(database, {
+    const journalist = await createJournalist(database, {
       gameId: game.id,
       publicationId: publication.id,
       staticId,
@@ -117,7 +107,7 @@ export async function createGameScenario(
   const subgroupIds = Object.values(SubgroupStaticId).slice(0, subgroupCount);
 
   for (const staticId of subgroupIds) {
-    const subgroup = await createTestSubgroupApproval(database, {
+    const subgroup = await createSubgroupApproval(database, {
       gameId: game.id,
       staticId,
     });
@@ -129,7 +119,7 @@ export async function createGameScenario(
   const levelCount = options.levelCount ?? 2;
 
   for (let i = 0; i < levelCount; i++) {
-    const level = await createTestLevel(database, {
+    const level = await createLevel(database, {
       gameId: game.id,
       year: 1,
       month: i + 1,
@@ -159,21 +149,39 @@ export async function createPressConferenceScenario(
   situation: Situation;
   journalist: Journalist;
   pressExchange: PressExchange;
+  publication: Publication;
 }> {
-  const gameId = options.gameId ?? (await createTestGame(database)).id;
-  const levelId =
-    options.levelId ?? (await createTestLevel(database, { gameId })).id;
+  let game: Game;
+  if (options.gameId) {
+    game = await database.get<Game>("games").find(options.gameId);
+  } else {
+    game = await createGame(database);
+  }
 
-  const situation = await createTestSituation(database, { gameId, levelId });
-  const journalist = await createTestJournalist(database, { gameId });
-  const pressExchange = await createTestPressExchange(database, {
-    levelId,
+  let level: Level;
+  if (options.levelId) {
+    level = await database.get<Level>("levels").find(options.levelId);
+  } else {
+    level = await createLevel(database, { gameId: game.id });
+  }
+
+  const situation = await createSituation(database, {
+    gameId: game.id,
+    levelId: level.id,
+  });
+
+  const publication = await createPublication(database, { gameId: game.id });
+
+  const journalist = await createJournalist(database, {
+    gameId: game.id,
+    publicationId: publication.id,
+  });
+
+  const pressExchange = await createPressExchange(database, {
+    levelId: level.id,
     situationId: situation.id,
     journalistId: journalist.id,
   });
-
-  const game = await database.get<Game>("games").find(gameId);
-  const level = await database.get<Level>("levels").find(levelId);
 
   return {
     game,
@@ -181,5 +189,6 @@ export async function createPressConferenceScenario(
     situation,
     journalist,
     pressExchange,
+    publication,
   };
 }

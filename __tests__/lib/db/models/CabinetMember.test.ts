@@ -19,8 +19,9 @@
  */
 
 import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "../index";
-import { createTestGame, createTestCabinetMember } from "../fixtures";
+import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
+import { createGame } from "~/__tests__/support/factories/gameFactory";
+import { createCabinetMember } from "~/__tests__/support/factories/cabinetMemberFactory";
 import { CabinetMember } from "~/lib/db/models";
 import { CabinetStaticId } from "~/types";
 import { staticCabinetMembers } from "~/lib/data/staticPolitics";
@@ -28,9 +29,12 @@ import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 describe("CabinetMember Model", () => {
   let database: Database;
 
-  beforeEach(async () => {
-    database = testDatabase;
-    await resetTestDatabase(database);
+  beforeAll(() => {
+    database = setupTestDatabase();
+  });
+
+  afterEach(async () => {
+    await resetDatabase(database);
   });
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -47,8 +51,8 @@ describe("CabinetMember Model", () => {
     });
 
     it("should create cabinet member with required properties", async () => {
-      const game = await createTestGame(database);
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.State,
         name: "John Smith",
@@ -68,8 +72,8 @@ describe("CabinetMember Model", () => {
     });
 
     it("should belong to a game and be accessible from game", async () => {
-      const game = await createTestGame(database);
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
         gameId: game.id,
       });
 
@@ -88,6 +92,7 @@ describe("CabinetMember Model", () => {
 
   describe("Static Data Integration", () => {
     it("should return correct static data for all cabinet positions", async () => {
+      const game = await createGame(database);
       const testCases = [
         { staticId: CabinetStaticId.State, expectedName: "Secretary of State" },
         {
@@ -110,7 +115,10 @@ describe("CabinetMember Model", () => {
       ];
 
       for (const { staticId, expectedName } of testCases) {
-        const member = await createTestCabinetMember(database, { staticId });
+        const member = await createCabinetMember(database, {
+          gameId: game.id,
+          staticId,
+        });
 
         expect(member.staticData).toEqual(staticCabinetMembers[staticId]);
         expect(member.staticData.cabinetName).toBe(expectedName);
@@ -124,7 +132,9 @@ describe("CabinetMember Model", () => {
 
   describe("Rating Validation", () => {
     it("should enforce approval rating bounds (0-100)", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         approvalRating: 50,
       });
 
@@ -154,7 +164,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should enforce PS relationship bounds (0-100)", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         psRelationship: 50,
       });
 
@@ -184,7 +196,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should round decimal values to whole numbers", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         approvalRating: 50,
         psRelationship: 60,
       });
@@ -221,7 +235,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should handle edge cases with rounding and bounds", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         approvalRating: 50,
         psRelationship: 60,
       });
@@ -254,7 +270,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should validate both ratings in single update", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         approvalRating: 50,
         psRelationship: 60,
       });
@@ -272,7 +290,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should preserve other properties during validation", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         staticId: CabinetStaticId.Treasury,
         name: "Treasury Secretary",
         approvalRating: 50,
@@ -299,7 +319,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should validate when only one rating is updated", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         approvalRating: 50,
         psRelationship: 60,
       });
@@ -334,7 +356,9 @@ describe("CabinetMember Model", () => {
 
   describe("Activity Status", () => {
     it("should manage active/inactive states", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         isActive: true,
       });
 
@@ -350,10 +374,10 @@ describe("CabinetMember Model", () => {
     });
 
     it("should support cabinet reshuffles", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create initial Secretary of State
-      const originalSecretary = await createTestCabinetMember(database, {
+      const originalSecretary = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.State,
         name: "Original Secretary",
@@ -367,7 +391,7 @@ describe("CabinetMember Model", () => {
         });
       });
 
-      const newSecretary = await createTestCabinetMember(database, {
+      const newSecretary = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.State,
         name: "New Secretary",
@@ -394,13 +418,13 @@ describe("CabinetMember Model", () => {
 
   describe("Game Integration", () => {
     it("should support full cabinet creation", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
       const allPositions = Object.values(CabinetStaticId);
 
       // Create cabinet member for each position
       const members = await Promise.all(
         allPositions.map((staticId, index) =>
-          createTestCabinetMember(database, {
+          createCabinetMember(database, {
             gameId: game.id,
             staticId,
             approvalRating: 50 + index * 5, // Vary ratings realistically
@@ -423,7 +447,9 @@ describe("CabinetMember Model", () => {
     });
 
     it("should maintain data consistency during rating updates with validation", async () => {
-      const member = await createTestCabinetMember(database, {
+      const game = await createGame(database);
+      const member = await createCabinetMember(database, {
+        gameId: game.id,
         staticId: CabinetStaticId.Defense,
         name: "Defense Secretary",
         approvalRating: 60,
@@ -456,7 +482,7 @@ describe("CabinetMember Model", () => {
     });
 
     it("should efficiently query multiple cabinet members", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create realistic cabinet size
       const positions = [
@@ -468,7 +494,7 @@ describe("CabinetMember Model", () => {
 
       await Promise.all(
         positions.map((staticId) =>
-          createTestCabinetMember(database, {
+          createCabinetMember(database, {
             gameId: game.id,
             staticId,
           })

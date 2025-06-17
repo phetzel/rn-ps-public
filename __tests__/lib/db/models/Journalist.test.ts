@@ -14,8 +14,10 @@
  */
 
 import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "../index";
-import { createTestGame, createTestJournalist } from "../fixtures";
+import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
+import { createGame } from "~/__tests__/support/factories/gameFactory";
+import { createPublication } from "~/__tests__/support/factories/publicationFactory";
+import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
 import { Journalist } from "~/lib/db/models";
 import { JournalistStaticId } from "~/types";
 import { staticJournalists } from "~/lib/data/staticMedia";
@@ -23,9 +25,12 @@ import { staticJournalists } from "~/lib/data/staticMedia";
 describe("Journalist Model", () => {
   let database: Database;
 
-  beforeEach(async () => {
-    database = testDatabase;
-    await resetTestDatabase(database);
+  beforeAll(() => {
+    database = setupTestDatabase();
+  });
+
+  afterEach(async () => {
+    await resetDatabase(database);
   });
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -50,15 +55,19 @@ describe("Journalist Model", () => {
     });
 
     it("should create journalist with required properties", async () => {
-      const game = await createTestGame(database);
-      const journalist = await createTestJournalist(database, {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
         gameId: game.id,
+      });
+      const journalist = await createJournalist(database, {
+        gameId: game.id,
+        publicationId: publication.id,
         staticId: JournalistStaticId.LibPrimaryA,
         psRelationship: 65,
       });
 
       expect(journalist.game_id).toBe(game.id);
-      expect(journalist.publication_id).toBeDefined();
+      expect(journalist.publication_id).toBe(publication.id);
       expect(journalist.staticId).toBe(JournalistStaticId.LibPrimaryA);
       expect(journalist.psRelationship).toBe(65);
       expect(journalist.createdAt).toBeInstanceOf(Date);
@@ -66,9 +75,13 @@ describe("Journalist Model", () => {
     });
 
     it("should belong to a game and publication", async () => {
-      const game = await createTestGame(database);
-      const journalist = await createTestJournalist(database, {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
         gameId: game.id,
+      });
+      const journalist = await createJournalist(database, {
+        gameId: game.id,
+        publicationId: publication.id,
       });
 
       // Test game relationship
@@ -93,6 +106,10 @@ describe("Journalist Model", () => {
 
   describe("Static Data Integration", () => {
     it("should return correct static data for different journalists", async () => {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
+        gameId: game.id,
+      });
       const journalistIds = [
         JournalistStaticId.LibPrimaryA,
         JournalistStaticId.ConPrimaryA,
@@ -101,7 +118,11 @@ describe("Journalist Model", () => {
       ];
 
       for (const staticId of journalistIds) {
-        const journalist = await createTestJournalist(database, { staticId });
+        const journalist = await createJournalist(database, {
+          gameId: game.id,
+          publicationId: publication.id,
+          staticId,
+        });
 
         const staticData = journalist.staticData;
         const expectedData = staticJournalists[staticId];
@@ -115,10 +136,18 @@ describe("Journalist Model", () => {
     });
 
     it("should work with all available JournalistStaticId values", async () => {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
+        gameId: game.id,
+      });
       const allJournalistIds = Object.values(JournalistStaticId);
 
       for (const staticId of allJournalistIds) {
-        const journalist = await createTestJournalist(database, { staticId });
+        const journalist = await createJournalist(database, {
+          gameId: game.id,
+          publicationId: publication.id,
+          staticId,
+        });
 
         const staticData = journalist.staticData;
         expect(staticData).toBeDefined();
@@ -130,6 +159,10 @@ describe("Journalist Model", () => {
     });
 
     it("should return specific journalist data correctly", async () => {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
+        gameId: game.id,
+      });
       // Test specific journalists from your static data
       const testCases = [
         {
@@ -151,7 +184,11 @@ describe("Journalist Model", () => {
       ];
 
       for (const { staticId, expectedName } of testCases) {
-        const journalist = await createTestJournalist(database, { staticId });
+        const journalist = await createJournalist(database, {
+          gameId: game.id,
+          publicationId: publication.id,
+          staticId,
+        });
         expect(journalist.staticData.name).toBe(expectedName);
       }
     });
@@ -163,7 +200,13 @@ describe("Journalist Model", () => {
 
   describe("Game Integration", () => {
     it("should maintain data consistency during updates", async () => {
-      const journalist = await createTestJournalist(database, {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
+        gameId: game.id,
+      });
+      const journalist = await createJournalist(database, {
+        gameId: game.id,
+        publicationId: publication.id,
         staticId: JournalistStaticId.ConPrimaryC,
         psRelationship: 55,
       });
@@ -185,7 +228,10 @@ describe("Journalist Model", () => {
     });
 
     it("should efficiently query multiple journalists", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
+        gameId: game.id,
+      });
 
       const journalistConfigs = [
         { staticId: JournalistStaticId.LibPrimaryA, relationship: 65 },
@@ -195,8 +241,9 @@ describe("Journalist Model", () => {
 
       await Promise.all(
         journalistConfigs.map(({ staticId, relationship }) =>
-          createTestJournalist(database, {
+          createJournalist(database, {
             gameId: game.id,
+            publicationId: publication.id,
             staticId,
             psRelationship: relationship,
           })
@@ -220,24 +267,32 @@ describe("Journalist Model", () => {
     });
 
     it("should work with journalists from different publications", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
+      const pub1 = await createPublication(database, { gameId: game.id });
+      const pub2 = await createPublication(database, { gameId: game.id });
+      const pub3 = await createPublication(database, { gameId: game.id });
+      const pub4 = await createPublication(database, { gameId: game.id });
 
       // Create journalists from each publication type
       const journalists = await Promise.all([
-        createTestJournalist(database, {
+        createJournalist(database, {
           gameId: game.id,
+          publicationId: pub1.id,
           staticId: JournalistStaticId.LibPrimaryB, // Zoey Crusade
         }),
-        createTestJournalist(database, {
+        createJournalist(database, {
           gameId: game.id,
+          publicationId: pub2.id,
           staticId: JournalistStaticId.ConPrimaryB, // Hawk Stormwell
         }),
-        createTestJournalist(database, {
+        createJournalist(database, {
           gameId: game.id,
+          publicationId: pub3.id,
           staticId: JournalistStaticId.IndependentB, // Sam Neutrality
         }),
-        createTestJournalist(database, {
+        createJournalist(database, {
           gameId: game.id,
+          publicationId: pub4.id,
           staticId: JournalistStaticId.InvestigativeA, // Morgan Leakerton
         }),
       ]);
