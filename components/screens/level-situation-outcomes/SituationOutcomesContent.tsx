@@ -88,7 +88,7 @@ const SituationOutcomesContent = ({
             accessibilityLabel="Media coverage"
             accessibilityHint="See how media reported on the situations and events"
           >
-            <Text>Media</Text>
+            <Text>Coverage</Text>
           </TabsTrigger>
           <TabsTrigger
             value="relationships"
