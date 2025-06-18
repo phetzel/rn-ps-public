@@ -7,6 +7,7 @@ import { CalendarClock } from "~/lib/icons/CalendarClock";
 import { ArrowRight } from "~/lib/icons/ArrowRight";
 import { observeLevel } from "~/lib/db/helpers";
 import { Level } from "~/lib/db/models";
+import { formatDate } from "~/lib/utils";
 // Components
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Badge } from "~/components/ui/badge";
@@ -68,18 +69,21 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
     <Card
       className="border-l-4 border-l-primary"
       accessible={true}
-      accessibilityLabel={`Current level: Month ${level.month}, Year ${level.year}. Status: ${level.status}`}
+      accessibilityLabel={`Current level: ${formatDate(
+        level.month,
+        level.year
+      )}. Status: ${level.status}`}
     >
       <CardHeader className="flex-row items-center justify-between gap-2">
         <View className="gap-2">
           <View
             className="flex-row items-center gap-2"
             accessible={true}
-            accessibilityLabel={`Month ${level.month}, Year ${level.year}`}
+            accessibilityLabel={formatDate(level.month, level.year)}
           >
             <CalendarClock className="h-5 w-5 text-primary" />
             <CardTitle className="text-xl font-bold">
-              Month {level.month} Year {level.year}
+              {formatDate(level.month, level.year)}
             </CardTitle>
           </View>
           <LevelStatusBadge status={level.status} />

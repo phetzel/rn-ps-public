@@ -7,7 +7,6 @@ import type { Level } from "~/lib/db/models";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 // Components
 import { CardHeader, CardTitle } from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
 import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
 import CabinetLevelState from "~/components/screens/level-complete/CabinetLevelState";
 import PresidentLevelState from "~/components/screens/level-complete/PresidentLevelState";

@@ -146,3 +146,8 @@ export const getRiskDescription = (riskLevel: RiskLevel): string => {
 export function formatRiskProbability(probability: number): string {
   return `${Math.round(probability * 100)}%`;
 }
+
+// Date Formatting Helper
+export function formatDate(month: number, year: number): string {
+  return `Month ${month}, Year ${year}`;
+}
