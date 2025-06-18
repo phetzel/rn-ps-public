@@ -11,6 +11,7 @@ import {
 } from "~/lib/icons";
 import { observeLevel, observeSituationsByLevelId } from "~/lib/db/helpers";
 import { Level, Situation } from "~/lib/db/models";
+import { formatDate } from "~/lib/utils";
 // Components
 import {
   Card,
@@ -56,9 +57,10 @@ const ArchivedLevelCard = ({
     router.push(`./archive/${levelId}`);
   };
 
-  const cardAccessibilityLabel = `Archived month ${level.month}, year ${
+  const cardAccessibilityLabel = `Archived ${formatDate(
+    level.month,
     level.year
-  }. President approval: ${finalApproval}%. President relationship: ${finalPresRelationship}%. ${
+  )}. President approval: ${finalApproval}%. President relationship: ${finalPresRelationship}%. ${
     situations.length
   } situations. ${hasConsequences ? "Had consequences" : "No consequences"}.`;
 
@@ -73,12 +75,10 @@ const ArchivedLevelCard = ({
         <View
           className="flex-row items-center gap-2"
           accessible={true}
-          accessibilityLabel={`Month ${level.month}, Year ${level.year}`}
+          accessibilityLabel={formatDate(level.month, level.year)}
         >
           <CalendarClock className="text-muted-foreground" />
-          <CardTitle>
-            Month: {level.month} Year: {level.year}
-          </CardTitle>
+          <CardTitle>{formatDate(level.month, level.year)}</CardTitle>
         </View>
       </CardHeader>
 
@@ -147,7 +147,10 @@ const ArchivedLevelCard = ({
           onPress={handleViewDetails}
           variant="ghost"
           className="flex-row gap-2"
-          accessibilityLabel={`View detailed breakdown for month ${level.month}, year ${level.year}`}
+          accessibilityLabel={`View detailed breakdown for ${formatDate(
+            level.month,
+            level.year
+          )}`}
           accessibilityHint="Shows press exchanges, situation outcomes, and media coverage for this month"
         >
           <Text className="text-sm font-bold">View Details</Text>

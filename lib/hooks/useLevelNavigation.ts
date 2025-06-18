@@ -20,33 +20,71 @@ export function useLevelNavigation() {
   /**
    * Navigate to specific level screen based on status
    */
-  const navigateToLevelScreen = async (status: LevelStatus) => {
+  const navigateToLevelScreen = async (
+    status: LevelStatus,
+    fromCurrentTab = false
+  ) => {
     if (!currentGameId) {
       console.warn("No game ID available");
       return false;
     }
     try {
-      // Type-safe approach to navigate based on status
       switch (status) {
         case LevelStatus.Briefing:
-          router.replace(`/games/${currentGameId}/level-briefing`);
+          if (fromCurrentTab) {
+            router.push(`/games/${currentGameId}/current/level-briefing`);
+          } else {
+            router.replace(`/games/${currentGameId}/current/level-briefing`);
+          }
           break;
+
         case LevelStatus.PressConference:
-          router.replace(`/games/${currentGameId}/level-press-conference`);
+          if (fromCurrentTab) {
+            router.push(
+              `/games/${currentGameId}/current/level-press-conference`
+            );
+          } else {
+            router.replace(
+              `/games/${currentGameId}/current/level-press-conference`
+            );
+          }
           break;
+
         case LevelStatus.PressResults:
-          router.replace(`/games/${currentGameId}/level-press-outcomes`);
+          if (fromCurrentTab) {
+            router.push(`/games/${currentGameId}/current/level-press-outcomes`);
+          } else {
+            router.replace(
+              `/games/${currentGameId}/current/level-press-outcomes`
+            );
+          }
           break;
+
         case LevelStatus.SituationOutcomes:
-          router.replace(`/games/${currentGameId}/level-situation-outcomes`);
+          if (fromCurrentTab) {
+            router.push(
+              `/games/${currentGameId}/current/level-situation-outcomes`
+            );
+          } else {
+            router.replace(
+              `/games/${currentGameId}/current/level-situation-outcomes`
+            );
+          }
           break;
+
         case LevelStatus.Completed:
-          router.replace(`/games/${currentGameId}/level-complete`);
+          if (fromCurrentTab) {
+            router.push(`/games/${currentGameId}/current/level-complete`);
+          } else {
+            router.replace(`/games/${currentGameId}/current/level-complete`);
+          }
           break;
+
         default:
           console.warn(`Unknown level status: ${status}`);
           return false;
       }
+
       return true;
     } catch (error) {
       console.error("Failed to navigate to level screen:", error);
@@ -57,7 +95,7 @@ export function useLevelNavigation() {
   /**
    * Navigate to the current level's screen based on its status
    */
-  const navigateToCurrentLevelScreen = async () => {
+  const navigateToCurrentLevelScreen = async (fromCurrentTab = false) => {
     try {
       const level = await getCurrentLevel();
       if (!level) {
@@ -65,7 +103,7 @@ export function useLevelNavigation() {
         return false;
       }
 
-      return navigateToLevelScreen(level.status);
+      return navigateToLevelScreen(level.status, fromCurrentTab);
     } catch (error) {
       console.error("Failed to navigate to current level screen:", error);
       return false;
@@ -99,20 +137,7 @@ export function useLevelNavigation() {
       return false;
     }
 
-    router.replace(`/games/${currentGameId}/(tabs)/${tab}`);
-    return true;
-  };
-
-  /**
-   * Go back to current tab from level screens
-   */
-  const backToCurrentTab = () => {
-    if (!currentGameId) {
-      console.warn("No game ID available");
-      return false;
-    }
-
-    router.navigate(`/games/${currentGameId}/(tabs)/current`);
+    router.navigate(`/games/${currentGameId}/${tab}`);
     return true;
   };
 
@@ -121,7 +146,6 @@ export function useLevelNavigation() {
     navigateToCurrentTab: () => navigateToTabs("current"),
     navigateToStateTab: () => navigateToTabs("state"),
     navigateToArchiveTab: () => navigateToTabs("archive"),
-    backToCurrentTab,
 
     // Level flow navigation
     navigateToBriefing: () => navigateToLevelScreen(LevelStatus.Briefing),

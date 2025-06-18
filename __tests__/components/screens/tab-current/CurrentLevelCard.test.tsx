@@ -4,6 +4,7 @@ import { jest } from "@jest/globals";
 import { View, Text } from "react-native";
 
 import { LevelStatus } from "~/types";
+import { formatDate } from "~/lib/utils";
 
 // Simple test component that mimics the core behavior without withObservables
 const TestCurrentLevelCard = ({ level }: { level: any }) => {
@@ -12,9 +13,12 @@ const TestCurrentLevelCard = ({ level }: { level: any }) => {
   return (
     <View
       testID="current-level-card"
-      accessibilityLabel={`Current level: Month ${level.month}, Year ${level.year}. Status: ${level.status}`}
+      accessibilityLabel={`Current level: ${formatDate(
+        level.month,
+        level.year
+      )}. Status: ${level.status}`}
     >
-      <Text testID="level-title">{`Month ${level.month} Year ${level.year}`}</Text>
+      <Text testID="level-title">{formatDate(level.month, level.year)}</Text>
       <Text testID="level-status">{level.status}</Text>
     </View>
   );
@@ -40,7 +44,7 @@ describe("CurrentLevelCard", () => {
 
     render(<TestCurrentLevelCard level={mockLevel} />);
 
-    expect(screen.getByText("Month 3 Year 2024")).toBeTruthy();
+    expect(screen.getByText(formatDate(3, 2024))).toBeTruthy();
     expect(screen.getByText(LevelStatus.PressConference)).toBeTruthy();
   });
 
@@ -78,7 +82,7 @@ describe("CurrentLevelCard", () => {
 
     expect(
       screen.getByLabelText(
-        "Current level: Month 5, Year 2024. Status: briefing"
+        `Current level: ${formatDate(5, 2024)}. Status: briefing`
       )
     ).toBeTruthy();
   });

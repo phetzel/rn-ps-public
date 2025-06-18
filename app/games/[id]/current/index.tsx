@@ -1,4 +1,3 @@
-import { useRouter } from "expo-router";
 import { withObservables } from "@nozbe/watermelondb/react";
 
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
@@ -11,15 +10,12 @@ import ActiveSituationsList from "~/components/screens/tab-current/ActiveSituati
 import CurrentLevelCard from "~/components/screens/tab-current/CurrentLevelCard";
 import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
 import { ThemedView } from "~/components/shared/layout/ThemedView";
-// Types
-import { GameStatus } from "~/types";
 
 interface CurrentScreenProps {
   game: Game | null;
 }
 
 function CurrentScreen({ game }: CurrentScreenProps) {
-  const router = useRouter();
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 
   // Check if game has ended (any end state)

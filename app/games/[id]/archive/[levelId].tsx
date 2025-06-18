@@ -52,7 +52,7 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
             <TabsTrigger
               value="situations"
               className="flex-1"
-              accessibilityLabel="Press exchanges"
+              accessibilityLabel="Level situations"
             >
               <Text>Situations</Text>
             </TabsTrigger>
@@ -78,7 +78,7 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
             </View>
           </TabsContent>
 
-          <TabsContent value="complete" className="mt-4">
+          <TabsContent value="outcomes" className="mt-4">
             <View className="p-4">
               <Text className="text-center text-muted-foreground">
                 Complete content coming soon...

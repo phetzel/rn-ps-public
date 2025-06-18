@@ -2,6 +2,7 @@ import * as React from "react";
 import { View } from "react-native";
 import { CardDescription, CardHeader } from "~/components/ui/card";
 import { GameStatusBadge } from "./GameStatusBadge";
+import { formatDate } from "~/lib/utils";
 import type Game from "~/lib/db/models/Game";
 
 interface GameCardHeaderProps {
@@ -19,9 +20,12 @@ export function GameCardHeader({ game }: GameCardHeaderProps) {
         <GameStatusBadge status={game.status} />
         <CardDescription
           className="text-lg text-muted-foreground"
-          accessibilityLabel={`Currently in Year ${game.currentYear}, Month ${game.currentMonth}`}
+          accessibilityLabel={`Currently in ${formatDate(
+            game.currentMonth,
+            game.currentYear
+          )}`}
         >
-          Year {game.currentYear}, Month {game.currentMonth}
+          {formatDate(game.currentMonth, game.currentYear)}
         </CardDescription>
       </View>
     </CardHeader>

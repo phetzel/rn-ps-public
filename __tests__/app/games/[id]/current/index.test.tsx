@@ -9,7 +9,7 @@ describe("CurrentScreen", () => {
 
   it("renders the current screen without routing errors", () => {
     // Use simple string paths for basic routing test
-    renderRouter(["games/[id]/(tabs)/current"], {
+    renderRouter(["games/[id]/current"], {
       initialUrl: "/games/test-game/current",
     });
 
@@ -21,7 +21,7 @@ describe("CurrentScreen", () => {
   });
 
   it("displays basic routing functionality", () => {
-    renderRouter(["games/[id]/(tabs)/current"], {
+    renderRouter(["games/[id]/current"], {
       initialUrl: "/games/test-game/current",
     });
 

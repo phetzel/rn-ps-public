@@ -1,30 +1,36 @@
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as React from "react";
-import { useRouter } from "expo-router";
 
 import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
 
 export default function GamesLayout() {
   const router = useRouter();
 
-  const handleBack = () => {
-    router.navigate("/");
+  const handleBackToHome = () => {
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace("/");
+    }
   };
 
   return (
-    <Stack screenOptions={{ headerBackTitle: "Back" }}>
+    <Stack
+      screenOptions={{
+        headerBackTitle: "Back",
+        headerLeft: () => <HeaderBackIcon onPress={handleBackToHome} />,
+      }}
+    >
       <Stack.Screen
         name="index"
         options={{
           title: "Saved Games",
-          headerLeft: () => <HeaderBackIcon onPress={handleBack} />,
         }}
       />
       <Stack.Screen
         name="create"
         options={{
           title: "New Game",
-          headerLeft: () => <HeaderBackIcon onPress={handleBack} />,
         }}
       />
       <Stack.Screen
