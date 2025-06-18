@@ -21,6 +21,13 @@ export function useGameNavigation() {
     })
   );
 
+  const goToHome = () => {
+    if (router.canDismiss()) {
+      router.dismissAll(); // Clear all but one route from stack
+    }
+    router.replace("/"); // Replace the last route with home
+  };
+
   /**
    * Navigate to a specific game's current tab
    */
@@ -46,7 +53,7 @@ export function useGameNavigation() {
       const level = await setGameCurrentLevel(targetGameId);
 
       if (level) {
-        router.replace(`/games/${targetGameId}/(tabs)/current`);
+        router.push(`/games/${targetGameId}/current`);
         return true;
       } else {
         console.warn("No level found for game", targetGameId);
@@ -68,7 +75,10 @@ export function useGameNavigation() {
       if (newGame) {
         const newLevel = await createNewLevel(newGame);
         if (newLevel) {
-          router.replace(`/games/${newGame.id}/(tabs)/current`);
+          // Potential fix if back goes to create screen
+          // router.replace("/");
+          // router.push(`/games/${newGame.id}/current`);
+          router.push(`/games/${newGame.id}/current`);
           return true;
         }
       }
@@ -82,9 +92,9 @@ export function useGameNavigation() {
 
   return {
     // Navigation functions
-    goToHome: () => router.navigate("/"),
-    goToGamesList: () => router.navigate("/games"),
-    goToCreateGame: () => router.navigate("/games/create"),
+    goToHome,
+    goToGamesList: () => router.push("/games"),
+    goToCreateGame: () => router.push("/games/create"),
     continueGame,
     createGame,
   };

@@ -62,7 +62,7 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
   };
 
   const handleNavigate = async () => {
-    await navigateToCurrentLevelScreen();
+    await navigateToCurrentLevelScreen(true);
   };
 
   return (

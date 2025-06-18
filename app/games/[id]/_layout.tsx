@@ -1,54 +1,46 @@
 import React from "react";
-import { Stack, useRouter } from "expo-router";
+import { Tabs } from "expo-router";
 
-import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
+import { LayoutDashboard } from "~/lib/icons/LayoutDashboard";
+import { FileText } from "~/lib/icons/FileText";
+import { History } from "~/lib/icons/History";
 
-export default function GameSessionLayout() {
-  const { backToCurrentTab } = useLevelNavigation();
+export const unstable_settings = {
+  initialRouteName: "current",
+};
 
-  const handleGoToCurrent = () => {
-    backToCurrentTab();
-  };
-
+export default function GameTabLayout() {
   return (
-    <Stack>
-      <Stack.Screen
-        name="(tabs)"
-        options={{ title: "Current", headerShown: false }}
-      />
-      <Stack.Screen
-        name="level-briefing"
+    <Tabs>
+      <Tabs.Screen
+        name="state"
         options={{
-          title: "Briefing",
-          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+          title: "Status",
+          tabBarIcon: ({ color, size }) => (
+            <LayoutDashboard color={color} size={size} />
+          ),
         }}
       />
-      <Stack.Screen
-        name="level-press-conference"
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="level-press-outcomes"
+      <Tabs.Screen
+        name="current"
         options={{
-          title: "Press Results",
-          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+          title: "Current Month",
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FileText color={color} size={size} />
+          ),
         }}
       />
-      <Stack.Screen
-        name="level-situation-outcomes"
+      <Tabs.Screen
+        name="archive"
         options={{
-          title: "Situation Results",
-          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
+          title: "Archive",
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <History color={color} size={size} />
+          ),
         }}
       />
-      <Stack.Screen
-        name="level-complete"
-        options={{
-          title: "End of Month",
-          headerLeft: () => <HeaderBackIcon onPress={handleGoToCurrent} />,
-        }}
-      />
-    </Stack>
+    </Tabs>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { Pressable, Platform, View } from "react-native";
 import { useSharedValue } from "react-native-reanimated";
 
@@ -11,25 +11,27 @@ import {
 import ConferenceInfo from "~/components/screens/level-press-conference/ConferenceInfo";
 import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 import { Info } from "~/lib/icons/Info";
 import { cn } from "~/lib/utils";
 
 export default function LevelPressConferenceLayout() {
+  const router = useRouter();
+
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-  const { backToCurrentTab } = useLevelNavigation();
-
-  const handleGoBack = () => {
-    backToCurrentTab();
-  };
 
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
   if (!currentLevelId) {
     return null;
   }
+
+  const handleBack = () => {
+    if (router.canGoBack()) {
+      router.back();
+    }
+  };
 
   const handleInfo = () => {
     if (isBottomSheetOpen) {
@@ -48,7 +50,7 @@ export default function LevelPressConferenceLayout() {
       <Stack
         screenOptions={{
           headerShown: true,
-          headerLeft: () => <HeaderBackIcon onPress={handleGoBack} />,
+          headerLeft: () => <HeaderBackIcon onPress={handleBack} />,
           headerRight: () => (
             <Pressable
               onPress={handleInfo}

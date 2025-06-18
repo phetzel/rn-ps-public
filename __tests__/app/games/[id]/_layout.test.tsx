@@ -21,7 +21,7 @@ describe("GameTabLayout", () => {
 
   it("renders the tab layout without errors", () => {
     // Use simple string paths to create null components for basic routing test
-    renderRouter(["games/[id]/(tabs)/_layout", "games/[id]/(tabs)/current"], {
+    renderRouter(["games/[id]/_layout", "games/[id]/current"], {
       initialUrl: "/games/test-game/current",
     });
 
@@ -30,7 +30,7 @@ describe("GameTabLayout", () => {
   });
 
   it("navigates to correct route", () => {
-    renderRouter(["games/[id]/(tabs)/_layout", "games/[id]/(tabs)/current"], {
+    renderRouter(["games/[id]/_layout", "games/[id]/current"], {
       initialUrl: "/games/test-game/current",
     });
 
