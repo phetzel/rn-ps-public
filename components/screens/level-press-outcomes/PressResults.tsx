@@ -12,13 +12,11 @@ import { EntityWithDelta } from "~/types";
 
 interface PressResultsProps {
   isAdWatched: boolean;
-  onComplete: () => void;
   onAdComplete: () => void;
 }
 
 export default function PressResults({
   isAdWatched,
-  onComplete,
   onAdComplete,
 }: PressResultsProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
@@ -46,7 +44,6 @@ export default function PressResults({
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
       adWatchMessage="You've successfully boosted your relationship outcomes!"
-      onComplete={onComplete}
     />
   );
 }

@@ -20,10 +20,6 @@ export default function ResultsCardHeader({
   onAdComplete,
   isAdWatched,
 }: ResultsCardHeaderProps) {
-  const handleWatchAd = () => {
-    onAdComplete?.();
-  };
-
   return (
     <CardHeader
       className={cn(
@@ -59,15 +55,18 @@ export default function ResultsCardHeader({
 
       {!isAdWatched && (
         <Button
-          onPress={handleWatchAd}
-          className="gap-2 flex-row"
+          onPress={onAdComplete}
+          className="gap-2 flex-row "
           variant="outline"
           accessible={true}
           accessibilityRole="button"
           accessibilityLabel="Watch advertisement to boost results"
           accessibilityHint="Plays a short ad that will increase your approval rating changes"
         >
-          <Play className="h-4 w-4" accessibilityLabel="Play button" />
+          <Play
+            className="h-4 w-4  text-foreground"
+            accessibilityLabel="Play button"
+          />
           <Text accessible={false}>Watch Ad</Text>
         </Button>
       )}

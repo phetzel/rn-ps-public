@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Play } from "~/lib/icons/Play";
 import { Card, CardContent } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
@@ -11,7 +12,6 @@ import { cn } from "~/lib/utils";
 interface ResultsCardProps {
   enhancedDeltas: EntityWithDelta[] | null;
   isAdWatched: boolean;
-  onComplete?: () => void;
   onAdComplete?: () => void;
   adWatchMessage?: string;
   adNotWatchMessage?: string;
@@ -21,7 +21,6 @@ interface ResultsCardProps {
 export function ResultsCard({
   enhancedDeltas,
   isAdWatched,
-  onComplete,
   onAdComplete,
   adWatchMessage,
   adNotWatchMessage,
@@ -55,16 +54,21 @@ export function ResultsCard({
               adNotWatchMessage ?? "Watch a short ad to boost your results.",
           }}
         />
-        {onComplete && (
+
+        {!isAdWatched && onAdComplete && (
           <Button
-            onPress={onComplete}
-            className="self-end"
+            onPress={onAdComplete}
+            className="w-full gap-2 flex-row"
             accessible={true}
             accessibilityRole="button"
-            accessibilityLabel="Continue to next screen"
-            accessibilityHint="Proceeds to the next section after reviewing results"
+            accessibilityLabel="Watch advertisement to boost results"
+            accessibilityHint="Plays a short ad that will increase your approval rating changes"
           >
-            <Text accessible={false}>Continue</Text>
+            <Play
+              className="h-4 w-4  text-background"
+              accessibilityLabel="Play button"
+            />
+            <Text accessible={false}>Watch Ad</Text>
           </Button>
         )}
       </CardContent>
