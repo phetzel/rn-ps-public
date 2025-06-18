@@ -1,9 +1,7 @@
 import { Database } from "@nozbe/watermelondb";
-import {
-  createGameScenario,
-  createTestCabinetMember,
-  createTestSubgroupApproval,
-} from "./index";
+import { createGameScenario } from "~/__tests__/support/scenarios/game";
+import { createCabinetMember } from "~/__tests__/support/factories/cabinetMemberFactory";
+import { createSubgroupApproval } from "~/__tests__/support/factories/subgroupApprovalFactory";
 import { CabinetStaticId, SubgroupStaticId } from "~/types";
 
 export async function createConsequenceTestScenario(
@@ -41,7 +39,7 @@ export async function createConsequenceTestScenario(
   const cabinetApprovals = options.cabinetApprovals ?? defaultCabinetApprovals;
 
   for (const { staticId, approvalRating } of cabinetApprovals) {
-    const member = await createTestCabinetMember(database, {
+    const member = await createCabinetMember(database, {
       gameId: game.id,
       staticId,
       approvalRating,
@@ -72,7 +70,7 @@ export async function createConsequenceTestScenario(
     options.subgroupApprovals ?? defaultSubgroupApprovals;
 
   for (const { staticId, approvalRating } of subgroupApprovals) {
-    const subgroup = await createTestSubgroupApproval(database, {
+    const subgroup = await createSubgroupApproval(database, {
       gameId: game.id,
       staticId,
       approvalRating,

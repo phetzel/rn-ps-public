@@ -20,13 +20,12 @@
  */
 
 import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "../index";
+import { testDatabase, resetTestDatabase } from "~/__tests__/support/db";
 import {
   createImpeachmentScenario,
   createFiringScenario,
   createCabinetCrisisScenario,
   createStableGameScenario,
-  createBoundaryTestScenario,
   createSubgroupPenaltyScenario,
   createSubgroupFloorScenario,
   createConsequenceTestScenario,
@@ -38,19 +37,21 @@ import {
   createPredictableRandom,
   IMPEACHMENT_TEST_CASES,
   FIRING_TEST_CASES,
-} from "../fixtures";
+} from "~/__tests__/support/scenarios/consequences";
 import { calculateAndApplyConsequences } from "~/lib/db/helpers/consequenceApi";
-import { GameStatus, CabinetStaticId, SubgroupStaticId } from "~/types";
+import { GameStatus, CabinetStaticId } from "~/types";
 import type { Game } from "~/lib/db/models";
 
 // Mock the production database to use test database
 jest.mock("~/lib/db", () => ({
-  database: require("../index").testDatabase,
+  database: require("~/__tests__/support/db").testDatabase,
 }));
 
 // Mock the collections to use test database
 jest.mock("~/lib/db/helpers/collections", () => ({
-  cabinetCollection: require("../index").testDatabase.get("cabinet_members"),
+  cabinetCollection: require("~/__tests__/support/db").testDatabase.get(
+    "cabinet_members"
+  ),
 }));
 
 // Mock the fetchApi to use test database

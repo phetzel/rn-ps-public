@@ -10,14 +10,13 @@
  */
 
 import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "../index";
-import {
-  createTestGame,
-  createTestLevel,
-  createTestSituation,
-  createTestJournalist,
-  createTestPressExchange,
-} from "../fixtures";
+import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
+import { createGame } from "~/__tests__/support/factories/gameFactory";
+import { createLevel } from "~/__tests__/support/factories/levelFactory";
+import { createSituation } from "~/__tests__/support/factories/situationFactory";
+import { createPublication } from "~/__tests__/support/factories/publicationFactory";
+import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
+import { createPressExchange } from "~/__tests__/support/factories/pressExchangeFactory";
 
 // Models & Types
 import { Level } from "~/lib/db/models";
@@ -32,9 +31,12 @@ import {
 describe("Level Model", () => {
   let database: Database;
 
-  beforeEach(async () => {
-    database = testDatabase;
-    await resetTestDatabase(database);
+  beforeAll(() => {
+    database = setupTestDatabase();
+  });
+
+  afterEach(async () => {
+    await resetDatabase(database);
   });
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -59,8 +61,8 @@ describe("Level Model", () => {
     });
 
     it("should create level with required properties", async () => {
-      const game = await createTestGame(database);
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
         gameId: game.id,
         year: 2024,
         month: 6,
@@ -79,8 +81,8 @@ describe("Level Model", () => {
     });
 
     it("should belong to a game", async () => {
-      const game = await createTestGame(database);
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
         gameId: game.id,
       });
 
@@ -93,8 +95,8 @@ describe("Level Model", () => {
     });
 
     it("should have situations and press exchanges collections", async () => {
-      const game = await createTestGame(database);
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
         gameId: game.id,
       });
 
@@ -105,16 +107,20 @@ describe("Level Model", () => {
       expect(pressExchanges).toEqual([]);
 
       // Add situation and press exchange
-      const situation = await createTestSituation(database, {
+      const situation = await createSituation(database, {
         gameId: game.id,
         levelId: level.id,
       });
 
-      const journalist = await createTestJournalist(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
       });
+      const journalist = await createJournalist(database, {
+        gameId: game.id,
+        publicationId: publication.id,
+      });
 
-      const pressExchange = await createTestPressExchange(database, {
+      const pressExchange = await createPressExchange(database, {
         levelId: level.id,
         situationId: situation.id,
         journalistId: journalist.id,
@@ -137,6 +143,7 @@ describe("Level Model", () => {
 
   describe("Cabinet Snapshot Parsing", () => {
     it("should parse valid cabinet snapshot JSON", async () => {
+      const game = await createGame(database);
       // Must include ALL cabinet members as required by schema
       const validSnapshot = {
         [CabinetStaticId.State]: "member-id-1",
@@ -148,7 +155,8 @@ describe("Level Model", () => {
         [CabinetStaticId.Interior]: "member-id-7",
       };
 
-      const level = await createTestLevel(database, {
+      const level = await createLevel(database, {
+        gameId: game.id,
         cabinetSnapshot: JSON.stringify(validSnapshot),
       });
 
@@ -157,7 +165,9 @@ describe("Level Model", () => {
     });
 
     it("should return null for empty cabinet snapshot", async () => {
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         cabinetSnapshot: "",
       });
 
@@ -167,8 +177,9 @@ describe("Level Model", () => {
 
     it("should handle invalid JSON in cabinet snapshot", async () => {
       const consoleSpy = jest.spyOn(console, "error").mockImplementation();
-
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         cabinetSnapshot: "invalid json {",
       });
 
@@ -181,12 +192,13 @@ describe("Level Model", () => {
 
     it("should handle JSON that fails schema validation", async () => {
       const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
-
+      const game = await createGame(database);
       const invalidSnapshot = {
         invalidKey: "some-value",
       };
 
-      const level = await createTestLevel(database, {
+      const level = await createLevel(database, {
+        gameId: game.id,
         cabinetSnapshot: JSON.stringify(invalidSnapshot),
       });
 
@@ -199,14 +211,15 @@ describe("Level Model", () => {
 
     it("should handle incomplete cabinet snapshot", async () => {
       const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
-
+      const game = await createGame(database);
       // Missing required cabinet members
       const incompleteSnapshot = {
         [CabinetStaticId.State]: "member-id-1",
         // Missing treasury, defense, justice, hhs, homeland
       };
 
-      const level = await createTestLevel(database, {
+      const level = await createLevel(database, {
+        gameId: game.id,
         cabinetSnapshot: JSON.stringify(incompleteSnapshot),
       });
 
@@ -224,6 +237,7 @@ describe("Level Model", () => {
 
   describe("Outcome Snapshot Management", () => {
     it("should parse valid outcome snapshot JSON", async () => {
+      const game = await createGame(database);
       const validOutcome = {
         initial: {
           president: {
@@ -285,7 +299,8 @@ describe("Level Model", () => {
         },
       };
 
-      const level = await createTestLevel(database, {
+      const level = await createLevel(database, {
+        gameId: game.id,
         outcomeSnapshot: JSON.stringify(validOutcome),
       });
 
@@ -294,7 +309,9 @@ describe("Level Model", () => {
     });
 
     it("should return null for null outcome snapshot", async () => {
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         outcomeSnapshot: null,
       });
 
@@ -304,8 +321,9 @@ describe("Level Model", () => {
 
     it("should handle invalid JSON in outcome snapshot", async () => {
       const consoleSpy = jest.spyOn(console, "error").mockImplementation();
-
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         outcomeSnapshot: "invalid json {",
       });
 
@@ -317,7 +335,9 @@ describe("Level Model", () => {
     });
 
     it("should update outcome snapshot with valid data", async () => {
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         outcomeSnapshot: null,
       });
 
@@ -355,6 +375,7 @@ describe("Level Model", () => {
     });
 
     it("should set outcome snapshot to null", async () => {
+      const game = await createGame(database);
       const initialOutcome = {
         initial: {
           president: {
@@ -368,7 +389,8 @@ describe("Level Model", () => {
         },
       };
 
-      const level = await createTestLevel(database, {
+      const level = await createLevel(database, {
+        gameId: game.id,
         outcomeSnapshot: JSON.stringify(initialOutcome),
       });
 
@@ -383,7 +405,8 @@ describe("Level Model", () => {
     });
 
     it("should reject invalid outcome snapshot data", async () => {
-      const level = await createTestLevel(database);
+      const game = await createGame(database);
+      const level = await createLevel(database, { gameId: game.id });
 
       const invalidOutcome = {
         invalidField: "some value",
@@ -396,7 +419,8 @@ describe("Level Model", () => {
 
     it("should handle schema validation errors in update", async () => {
       const consoleSpy = jest.spyOn(console, "error").mockImplementation();
-      const level = await createTestLevel(database);
+      const game = await createGame(database);
+      const level = await createLevel(database, { gameId: game.id });
 
       const invalidOutcome = {
         initial: "not an object",
@@ -417,7 +441,9 @@ describe("Level Model", () => {
 
   describe("Ad Watching Functionality", () => {
     it("should mark press ad as watched", async () => {
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         pressAdWatched: false,
       });
 
@@ -430,7 +456,9 @@ describe("Level Model", () => {
     });
 
     it("should mark situation ad as watched", async () => {
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         situationAdWatched: false,
       });
 
@@ -443,7 +471,9 @@ describe("Level Model", () => {
     });
 
     it("should handle multiple ad watches", async () => {
-      const level = await createTestLevel(database, {
+      const game = await createGame(database);
+      const level = await createLevel(database, {
+        gameId: game.id,
         pressAdWatched: false,
         situationAdWatched: false,
       });
@@ -464,7 +494,8 @@ describe("Level Model", () => {
     });
 
     it("should update timestamps when marking ads watched", async () => {
-      const level = await createTestLevel(database);
+      const game = await createGame(database);
+      const level = await createLevel(database, { gameId: game.id });
       const originalUpdatedAt = level.updatedAt.getTime();
 
       await new Promise((resolve) => setTimeout(resolve, 10));
@@ -481,10 +512,10 @@ describe("Level Model", () => {
 
   describe("Game Integration Scenarios", () => {
     it("should support complete level lifecycle", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create level in briefing status with complete cabinet snapshot
-      const level = await createTestLevel(database, {
+      const level = await createLevel(database, {
         gameId: game.id,
         year: 2024,
         month: 3,
@@ -564,23 +595,23 @@ describe("Level Model", () => {
     });
 
     it("should handle multiple levels in a game", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create multiple levels for different months
-      const levels = await Promise.all([
-        createTestLevel(database, {
+      await Promise.all([
+        createLevel(database, {
           gameId: game.id,
           year: 2024,
           month: 1,
           status: LevelStatus.Completed,
         }),
-        createTestLevel(database, {
+        createLevel(database, {
           gameId: game.id,
           year: 2024,
           month: 2,
           status: LevelStatus.Completed,
         }),
-        createTestLevel(database, {
+        createLevel(database, {
           gameId: game.id,
           year: 2024,
           month: 3,
@@ -603,16 +634,16 @@ describe("Level Model", () => {
     });
 
     it("should handle year transitions correctly", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create levels spanning year transition
       const levels = await Promise.all([
-        createTestLevel(database, {
+        createLevel(database, {
           gameId: game.id,
           year: 2024,
           month: 12,
         }),
-        createTestLevel(database, {
+        createLevel(database, {
           gameId: game.id,
           year: 2025,
           month: 1,

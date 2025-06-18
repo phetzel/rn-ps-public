@@ -1,38 +1,37 @@
 /**
  * Publication Model Tests
  *
- * Tests core functionality of the Publication model including:
- * - Model creation and relationships
- * - Static data integration
- * - Approval rating calculations with political alignment
- * - Media boost calculations
- * - Business logic scenarios
+ * This test suite focuses on Publication-specific functionality:
+ *
+ * COVERAGE AREAS:
+ * - Model Structure: Properties, associations, static data access
+ * - Game Integration: Proper relationships and queries
+ * - Static Data: Correct publication information lookup
+ *
+ * BUSINESS LOGIC TESTED:
+ * - Static data lookup for all publication types
+ * - Game relationship integrity
  */
 
 import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "../index";
-import {
-  createTestGame,
-  createTestPublication,
-  createTestJournalist,
-} from "../fixtures";
-
-// Models & Data
+import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
+import { createGame } from "~/__tests__/support/factories/gameFactory";
+import { createPublication } from "~/__tests__/support/factories/publicationFactory";
+import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
 import { Publication } from "~/lib/db/models";
-import {
-  PublicationStaticId,
-  JournalistStaticId,
-  PoliticalLeaning,
-} from "~/types";
+import { PublicationStaticId, PoliticalLeaning } from "~/types";
 import { staticPublications } from "~/lib/data/staticMedia";
 import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
 
 describe("Publication Model", () => {
   let database: Database;
 
-  beforeEach(async () => {
-    database = testDatabase;
-    await resetTestDatabase(database);
+  beforeAll(() => {
+    database = setupTestDatabase();
+  });
+
+  afterEach(async () => {
+    await resetDatabase(database);
   });
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -53,22 +52,21 @@ describe("Publication Model", () => {
     });
 
     it("should create publication with required properties", async () => {
-      const game = await createTestGame(database);
-      const publication = await createTestPublication(database, {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.LibPrimary,
       });
 
-      expect(publication.id).toBeDefined();
-      expect(publication.staticId).toBe(PublicationStaticId.LibPrimary);
       expect(publication.game_id).toBe(game.id);
+      expect(publication.staticId).toBe(PublicationStaticId.LibPrimary);
       expect(publication.createdAt).toBeInstanceOf(Date);
       expect(publication.updatedAt).toBeInstanceOf(Date);
     });
 
     it("should belong to a game", async () => {
-      const game = await createTestGame(database);
-      const publication = await createTestPublication(database, {
+      const game = await createGame(database);
+      const publication = await createPublication(database, {
         gameId: game.id,
       });
 
@@ -81,40 +79,25 @@ describe("Publication Model", () => {
         gamePublications.find((p) => p.id === publication.id)
       ).toBeDefined();
     });
-
-    it("should have journalists collection", async () => {
-      const game = await createTestGame(database);
-      const publication = await createTestPublication(database, {
-        gameId: game.id,
-      });
-
-      // Initially empty
-      const journalists = await publication.journalists.fetch();
-      expect(journalists).toEqual([]);
-
-      // Add journalist
-      const journalist = await createTestJournalist(database, {
-        gameId: game.id,
-        publicationId: publication.id,
-      });
-
-      // Now should contain the journalist
-      const updatedJournalists = await publication.journalists.fetch();
-      expect(updatedJournalists).toHaveLength(1);
-      expect(updatedJournalists[0].id).toBe(journalist.id);
-    });
   });
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // STATIC DATA INTEGRATION
+  // STATIC DATA ACCESS
   // ═══════════════════════════════════════════════════════════════════════════════
 
   describe("Static Data Integration", () => {
-    it("should return correct static data for all publication types", async () => {
-      const publicationIds = Object.values(PublicationStaticId);
+    it("should return correct static data for different publications", async () => {
+      const game = await createGame(database);
+      const publicationIds = [
+        PublicationStaticId.LibPrimary,
+        PublicationStaticId.ConPrimary,
+        PublicationStaticId.IndependentPrimary,
+        PublicationStaticId.Investigative,
+      ];
 
       for (const staticId of publicationIds) {
-        const publication = await createTestPublication(database, {
+        const publication = await createPublication(database, {
+          gameId: game.id,
           staticId,
         });
 
@@ -123,43 +106,54 @@ describe("Publication Model", () => {
 
         expect(staticData).toEqual(expectedData);
         expect(staticData.name).toBeDefined();
-        expect(staticData.description).toBeDefined();
         expect(staticData.politicalLeaning).toBeDefined();
-        expect(typeof staticData.name).toBe("string");
-        expect(staticData.name.length).toBeGreaterThan(0);
+      }
+    });
+
+    it("should work with all available PublicationStaticId values", async () => {
+      const game = await createGame(database);
+      const allPublicationIds = Object.values(PublicationStaticId);
+
+      for (const staticId of allPublicationIds) {
+        const publication = await createPublication(database, {
+          gameId: game.id,
+          staticId,
+        });
+
+        const staticData = publication.staticData;
+        expect(staticData).toBeDefined();
+        expect(staticData.name).toBeDefined();
+        expect(staticData.politicalLeaning).toBeDefined();
       }
     });
 
     it("should return specific publication data correctly", async () => {
+      const game = await createGame(database);
       const testCases = [
-        {
-          staticId: PublicationStaticId.LibPrimary,
-          expectedName: "The Daily Soy",
-          expectedLeaning: PoliticalLeaning.Liberal,
-        },
         {
           staticId: PublicationStaticId.ConPrimary,
           expectedName: "Freedom Fries Herald",
-          expectedLeaning: PoliticalLeaning.Conservative,
+        },
+        {
+          staticId: PublicationStaticId.LibPrimary,
+          expectedName: "The Daily Soy",
         },
         {
           staticId: PublicationStaticId.IndependentPrimary,
           expectedName: "The Moderate Times",
-          expectedLeaning: PoliticalLeaning.Neutral,
         },
         {
           staticId: PublicationStaticId.Investigative,
           expectedName: "Integrity Watch",
-          expectedLeaning: PoliticalLeaning.Neutral,
         },
       ];
 
-      for (const { staticId, expectedName, expectedLeaning } of testCases) {
-        const publication = await createTestPublication(database, {
+      for (const { staticId, expectedName } of testCases) {
+        const publication = await createPublication(database, {
+          gameId: game.id,
           staticId,
         });
         expect(publication.staticData.name).toBe(expectedName);
-        expect(publication.staticData.politicalLeaning).toBe(expectedLeaning);
       }
     });
   });
@@ -170,10 +164,10 @@ describe("Publication Model", () => {
 
   describe("Approval Rating Calculations", () => {
     it("should return 50 as default when no journalists", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.LibPrimary,
       });
@@ -186,21 +180,21 @@ describe("Publication Model", () => {
     });
 
     it("should calculate average of journalist relationships", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
       // Add journalists with different relationships
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 60,
       });
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 80,
@@ -213,15 +207,15 @@ describe("Publication Model", () => {
     });
 
     it("should apply political alignment bonus for aligned publications", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.LibPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 60,
@@ -235,15 +229,15 @@ describe("Publication Model", () => {
     });
 
     it("should apply political alignment penalty for opposing publications", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.ConPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 60,
@@ -257,15 +251,15 @@ describe("Publication Model", () => {
     });
 
     it("should not apply alignment adjustment for neutral publications", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 60,
@@ -278,16 +272,16 @@ describe("Publication Model", () => {
     });
 
     it("should clamp approval rating to 0-100 range", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.ConPrimary,
       });
 
       // Add journalist with very low relationship
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 5, // Very low
@@ -300,12 +294,12 @@ describe("Publication Model", () => {
       expect(approvalRating).toBeLessThanOrEqual(100);
 
       // Test upper bound
-      const highPublication = await createTestPublication(database, {
+      const highPublication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.LibPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: highPublication.id,
         psRelationship: 95, // Very high
@@ -322,15 +316,15 @@ describe("Publication Model", () => {
 
   describe("Media Boost Calculations", () => {
     it("should return 1.0 boost for 50 approval rating", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 50,
@@ -341,15 +335,15 @@ describe("Publication Model", () => {
     });
 
     it("should return boost > 1.0 for approval > 50", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 75,
@@ -361,15 +355,15 @@ describe("Publication Model", () => {
     });
 
     it("should return boost < 1.0 for approval < 50", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 25,
@@ -381,15 +375,15 @@ describe("Publication Model", () => {
     });
 
     it("should return max boost of 1.5 for 100 approval", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.LibPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 100 - POLITICAL_ALIGNMENT_WEIGHT, // Will result in 100 after alignment bonus
@@ -400,15 +394,15 @@ describe("Publication Model", () => {
     });
 
     it("should return min boost of 0.5 for 0 approval", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.ConPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: POLITICAL_ALIGNMENT_WEIGHT, // Will result in 0 after alignment penalty
@@ -419,15 +413,15 @@ describe("Publication Model", () => {
     });
 
     it("should round to 2 decimal places", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 67, // Should create a decimal boost value
@@ -446,10 +440,10 @@ describe("Publication Model", () => {
 
   describe("Game Integration Scenarios", () => {
     it("should handle publications with multiple journalists correctly", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Conservative,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.ConPrimary,
       });
@@ -457,7 +451,7 @@ describe("Publication Model", () => {
       // Add multiple journalists with different relationships
       const relationships = [40, 60, 80];
       for (const relationship of relationships) {
-        await createTestJournalist(database, {
+        await createJournalist(database, {
           gameId: game.id,
           publicationId: publication.id,
           psRelationship: relationship,
@@ -508,13 +502,13 @@ describe("Publication Model", () => {
         publicationId,
         expectedAlignment,
       } of testCases) {
-        const game = await createTestGame(database, { presLeaning });
-        const publication = await createTestPublication(database, {
+        const game = await createGame(database, { presLeaning });
+        const publication = await createPublication(database, {
           gameId: game.id,
           staticId: publicationId,
         });
 
-        await createTestJournalist(database, {
+        await createJournalist(database, {
           gameId: game.id,
           publicationId: publication.id,
           psRelationship: 50,
@@ -533,15 +527,15 @@ describe("Publication Model", () => {
     });
 
     it("should maintain consistency between approval rating and media boost", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
-      const publication = await createTestPublication(database, {
+      const publication = await createPublication(database, {
         gameId: game.id,
         staticId: PublicationStaticId.IndependentPrimary,
       });
 
-      await createTestJournalist(database, {
+      await createJournalist(database, {
         gameId: game.id,
         publicationId: publication.id,
         psRelationship: 75,

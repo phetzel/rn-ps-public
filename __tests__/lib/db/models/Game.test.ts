@@ -26,21 +26,22 @@
  */
 
 import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "../index";
-import {
-  createTestGame,
-  createTestSubgroupApproval,
-  GameFixtureOptions,
-} from "../fixtures";
+import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
+import { createGame } from "~/__tests__/support/factories/gameFactory";
+import { createSubgroupApproval } from "~/__tests__/support/factories/subgroupApprovalFactory";
+import { GameFactoryOptions } from "~/__tests__/support/scenarios/types";
 import { Game } from "~/lib/db/models";
 import { GameStatus, PoliticalLeaning, SubgroupStaticId } from "~/types";
 
 describe("Game Model", () => {
   let database: Database;
 
-  beforeEach(async () => {
-    database = testDatabase;
-    await resetTestDatabase(database);
+  beforeAll(() => {
+    database = setupTestDatabase();
+  });
+
+  afterEach(async () => {
+    await resetDatabase(database);
   });
 
   // ═══════════════════════════════════════════════════════════════════════════════
@@ -49,7 +50,7 @@ describe("Game Model", () => {
 
   describe("Basic Properties", () => {
     it("should create a game with all required properties", async () => {
-      const gameOptions: GameFixtureOptions = {
+      const gameOptions: GameFactoryOptions = {
         status: GameStatus.Active,
         currentYear: 2024,
         currentMonth: 6,
@@ -62,7 +63,7 @@ describe("Game Model", () => {
         endTimestamp: null,
       };
 
-      const game = await createTestGame(database, gameOptions);
+      const game = await createGame(database, gameOptions);
 
       expect(game.status).toBe(GameStatus.Active);
       expect(game.currentYear).toBe(2024);
@@ -79,7 +80,7 @@ describe("Game Model", () => {
     });
 
     it("should have readonly created_at and updated_at timestamps", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       expect(game.createdAt).toBeInstanceOf(Date);
       expect(game.updatedAt).toBeInstanceOf(Date);
@@ -88,7 +89,7 @@ describe("Game Model", () => {
     });
 
     it("should create game with default values when no options provided", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       expect(game.status).toBeDefined();
       expect(game.currentYear).toBeDefined();
@@ -108,7 +109,7 @@ describe("Game Model", () => {
 
   describe("Month Advancement", () => {
     it("should advance month correctly within the same year", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 2024,
         currentMonth: 6,
       });
@@ -120,7 +121,7 @@ describe("Game Model", () => {
     });
 
     it("should advance year when month is 12", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 2024,
         currentMonth: 12,
       });
@@ -132,7 +133,7 @@ describe("Game Model", () => {
     });
 
     it("should handle multiple month advancements correctly", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 2024,
         currentMonth: 11,
       });
@@ -154,7 +155,7 @@ describe("Game Model", () => {
     });
 
     it("should update the updatedAt timestamp when advancing month", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
       const originalUpdatedAt = game.updatedAt.getTime();
 
       // Small delay to ensure timestamp difference
@@ -172,7 +173,7 @@ describe("Game Model", () => {
 
   describe("Used Situations Management", () => {
     it("should return empty array for usedSituationKeys when no situations used", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: [],
       });
 
@@ -181,7 +182,7 @@ describe("Game Model", () => {
 
     it("should parse usedSituationKeys correctly", async () => {
       const situations = ["crisis1", "scandal2", "domestic3"];
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: situations,
       });
 
@@ -189,7 +190,7 @@ describe("Game Model", () => {
     });
 
     it("should handle malformed JSON in usedSituations gracefully", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Manually set malformed JSON
       await database.write(async () => {
@@ -203,7 +204,7 @@ describe("Game Model", () => {
     });
 
     it("should add new situations to usedSituations", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: ["existing1", "existing2"],
       });
 
@@ -218,7 +219,7 @@ describe("Game Model", () => {
     });
 
     it("should not add duplicate situations", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: ["situation1", "situation2"],
       });
 
@@ -233,7 +234,7 @@ describe("Game Model", () => {
 
     it("should handle adding empty array of situations", async () => {
       const originalSituations = ["existing1", "existing2"];
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: originalSituations,
       });
 
@@ -243,7 +244,7 @@ describe("Game Model", () => {
     });
 
     it("should handle adding situations when none exist", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: [],
       });
 
@@ -259,7 +260,7 @@ describe("Game Model", () => {
 
   describe("President Approval Rating", () => {
     it("should return default approval rating when no subgroups exist", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       const approval = await game.getPresApprovalRating();
 
@@ -267,9 +268,9 @@ describe("Game Model", () => {
     });
 
     it("should calculate approval rating from single subgroup", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.LeftWingBase,
         approvalRating: 80,
@@ -281,22 +282,22 @@ describe("Game Model", () => {
     });
 
     it("should calculate average approval rating from multiple subgroups", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create subgroups with different approval ratings
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.LeftWingBase,
         approvalRating: 60,
       });
 
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.RightWingBase,
         approvalRating: 80,
       });
 
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.IndependentBase,
         approvalRating: 70,
@@ -309,16 +310,16 @@ describe("Game Model", () => {
     });
 
     it("should round approval rating to nearest integer", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create subgroups that will result in decimal average
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.LeftWingBase,
         approvalRating: 65,
       });
 
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.RightWingBase,
         approvalRating: 66,
@@ -331,15 +332,15 @@ describe("Game Model", () => {
     });
 
     it("should handle extreme approval ratings correctly", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.LeftWingBase,
         approvalRating: 0,
       });
 
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.RightWingBase,
         approvalRating: 100,
@@ -352,10 +353,10 @@ describe("Game Model", () => {
     });
 
     it("should ensure approval rating stays within 0-100 range", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // This shouldn't happen in normal gameplay, but test edge case
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.LeftWingBase,
         approvalRating: -10, // Invalid but testing bounds
@@ -407,7 +408,7 @@ describe("Game Model", () => {
     });
 
     it("should have children queries for related models", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       expect(game.levels).toBeDefined();
       expect(game.cabinetMembers).toBeDefined();
@@ -417,7 +418,7 @@ describe("Game Model", () => {
     });
 
     it("should fetch empty arrays for related models when none exist", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       const levels = await game.levels.fetch();
       const cabinetMembers = await game.cabinetMembers.fetch();
@@ -439,7 +440,7 @@ describe("Game Model", () => {
 
   describe("Edge Cases", () => {
     it("should handle null endTimestamp correctly", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         endTimestamp: null,
       });
 
@@ -447,7 +448,7 @@ describe("Game Model", () => {
     });
 
     it("should handle empty usedSituations string", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       await database.write(async () => {
         await game.update((g) => {
@@ -463,7 +464,7 @@ describe("Game Model", () => {
         { length: 100 },
         (_, i) => `situation_${i}`
       );
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: longSituationList,
       });
 
@@ -477,7 +478,7 @@ describe("Game Model", () => {
         "situation_with_underscores",
         "situation.with.dots",
       ];
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: specialSituations,
       });
 
@@ -491,7 +492,7 @@ describe("Game Model", () => {
 
   describe("Integration Tests", () => {
     it("should maintain data consistency after multiple operations", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 2024,
         currentMonth: 11,
         usedSituations: ["initial1"],
@@ -511,7 +512,7 @@ describe("Game Model", () => {
     });
 
     it("should handle concurrent situation additions correctly", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         usedSituations: ["existing1"],
       });
 
@@ -527,10 +528,10 @@ describe("Game Model", () => {
     });
 
     it("should work correctly with approval rating calculations after game updates", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create initial subgroup
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.LeftWingBase,
         approvalRating: 70,
@@ -540,7 +541,7 @@ describe("Game Model", () => {
       expect(approval).toBe(70);
 
       // Add another subgroup
-      await createTestSubgroupApproval(database, {
+      await createSubgroupApproval(database, {
         gameId: game.id,
         staticId: SubgroupStaticId.RightWingBase,
         approvalRating: 50,
@@ -557,7 +558,7 @@ describe("Game Model", () => {
 
   describe("Performance", () => {
     it("should handle large numbers of used situations efficiently", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
       const largeSituationList = Array.from(
         { length: 1000 },
         (_, i) => `situation_${i}`
@@ -572,12 +573,12 @@ describe("Game Model", () => {
     });
 
     it("should efficiently calculate approval ratings with many subgroups", async () => {
-      const game = await createTestGame(database);
+      const game = await createGame(database);
 
       // Create many subgroups
       const subgroupPromises = Object.values(SubgroupStaticId).map(
         (staticId, index) =>
-          createTestSubgroupApproval(database, {
+          createSubgroupApproval(database, {
             gameId: game.id,
             staticId,
             approvalRating: 50 + (index % 20), // Vary ratings
@@ -603,7 +604,7 @@ describe("Game Model", () => {
 
   describe("Game Completion", () => {
     it("should detect when at final month of term (year 4, month 12)", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 4,
         currentMonth: 12,
       });
@@ -612,7 +613,7 @@ describe("Game Model", () => {
     });
 
     it("should detect when not at final month (year 4, month 11)", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 4,
         currentMonth: 11,
       });
@@ -621,7 +622,7 @@ describe("Game Model", () => {
     });
 
     it("should detect when not at final year (year 3, month 12)", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 3,
         currentMonth: 12,
       });
@@ -630,7 +631,7 @@ describe("Game Model", () => {
     });
 
     it("should not advance month beyond term limit (year 4, month 12)", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 4,
         currentMonth: 12,
         status: GameStatus.Active,
@@ -642,7 +643,7 @@ describe("Game Model", () => {
     });
 
     it("should mark game as completed when term ends", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         currentYear: 4,
         currentMonth: 12,
         status: GameStatus.Active,
@@ -655,7 +656,7 @@ describe("Game Model", () => {
     });
 
     it("should not allow month advancement after completion", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         status: GameStatus.Completed,
       });
 
@@ -665,7 +666,7 @@ describe("Game Model", () => {
     });
 
     it("should not allow month advancement after firing", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         status: GameStatus.Fired,
       });
 
@@ -675,7 +676,7 @@ describe("Game Model", () => {
     });
 
     it("should not allow month advancement after impeachment", async () => {
-      const game = await createTestGame(database, {
+      const game = await createGame(database, {
         status: GameStatus.Impeached,
       });
 

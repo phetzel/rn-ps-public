@@ -1,19 +1,22 @@
 import { Database } from "@nozbe/watermelondb";
 
-import { testDatabase, resetTestDatabase } from "../index";
-import { createGameScenario } from "../fixtures";
+import { testDatabase, resetTestDatabase } from "~/__tests__/support/db";
+import { createGameScenario } from "~/__tests__/support/scenarios/game";
 import { hireReplacementCabinetMembers } from "~/lib/db/helpers/cabinetMembersApi";
 import { CabinetStaticId } from "~/types";
 
 // Mock the production database to use test database
 jest.mock("~/lib/db", () => ({
-  database: require("../index").testDatabase,
+  database: require("~/__tests__/support/db").testDatabase,
 }));
 
 // Mock the collections to use test database
 jest.mock("~/lib/db/helpers/collections", () => ({
-  cabinetCollection: require("../index").testDatabase.get("cabinet_members"),
+  cabinetCollection: require("~/__tests__/support/db").testDatabase.get(
+    "cabinet_members"
+  ),
 }));
+
 describe("Cabinet Members API", () => {
   let database: Database;
 
@@ -32,11 +35,12 @@ describe("Cabinet Members API", () => {
       expect(cabinetMembers).toHaveLength(3); // Only original members
     });
 
-    it("should hire replacement cabinet members", async () => {
-      const { game } = await createGameScenario(database); // Creates 3 active members
+    it("should hire replacement cabinet members for new positions", async () => {
+      const { game } = await createGameScenario(database); // Creates 3 active members: State, Treasury, Defense
 
-      const firedPositions = [CabinetStaticId.State, CabinetStaticId.Treasury];
-      await hireReplacementCabinetMembers(game.id, firedPositions);
+      // Hire for positions that don't already exist
+      const newPositions = [CabinetStaticId.Justice, CabinetStaticId.HHS];
+      await hireReplacementCabinetMembers(game.id, newPositions);
 
       const allCabinetMembers = await game.cabinetMembers.fetch();
       expect(allCabinetMembers).toHaveLength(5); // 3 original + 2 new ✅
@@ -47,13 +51,16 @@ describe("Cabinet Members API", () => {
 
       // Test that the new ones have correct properties
       const newMembers = activeMembers.filter(
-        (m) => firedPositions.includes(m.staticId) && m.approvalRating === 50 // New members start at 50
+        (m) => newPositions.includes(m.staticId) && m.approvalRating === 50 // New members start at 50
       );
       expect(newMembers).toHaveLength(2);
     });
 
     it("should hire multiple replacement members with unique names", async () => {
-      const { game } = await createGameScenario(database);
+      // Create game with no cabinet members initially
+      const { game } = await createGameScenario(database, {
+        cabinetMemberCount: 0, // Start with no members
+      });
 
       const allPositions = Object.values(CabinetStaticId);
 
@@ -61,6 +68,9 @@ describe("Cabinet Members API", () => {
 
       const allCabinetMembers = await game.cabinetMembers.fetch();
       const newMembers = allCabinetMembers.filter((m) => m.isActive);
+
+      // Should have all 7 positions now
+      expect(newMembers).toHaveLength(7);
 
       // Check that all names are unique
       const names = newMembers.map((m) => m.name);
