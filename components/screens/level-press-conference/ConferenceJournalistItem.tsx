@@ -2,11 +2,12 @@ import React, { useMemo } from "react";
 import { View, Pressable } from "react-native";
 
 import type PressExchange from "~/lib/db/models/PressExchange";
-import { Card, CardContent } from "~/components/ui/card";
 import { ChevronRight } from "~/lib/icons/ChevronRight";
+import { Card, CardContent } from "~/components/ui/card";
+import { Text } from "~/components/ui/text";
 import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 import InfoTooltip from "~/components/shared/InfoTooltip";
-import { Text } from "~/components/ui/text";
+import { FollowUpBadge } from "~/components/shared/entity/FollowUpBadge";
 
 interface ConferenceJournalistItemProps {
   pressExchange: PressExchange;
@@ -19,6 +20,11 @@ const ConferenceJournalistItem = ({
 }: ConferenceJournalistItemProps) => {
   // // Determine exchange status from progress
   const exchangeProgress = pressExchange.parseProgress;
+
+  // Check if journalist has been called on before (has history)
+  const hasBeenCalledOn = useMemo(() => {
+    return exchangeProgress && exchangeProgress.history.length > 0;
+  }, [exchangeProgress]);
 
   // Check if exchange is disabled and why
   const disabledInfo = useMemo(() => {
@@ -72,24 +78,32 @@ const ConferenceJournalistItem = ({
     >
       <Card>
         <CardContent className="p-4">
-          <View
-            className="flex-row justify-between items-center"
-            accessible={false}
-          >
-            <View className="flex-1">
-              <JournalistDisplay journalistId={pressExchange.journalist_id} />
-            </View>
-            <View className="px-1">
-              {isDisabled ? (
-                <InfoTooltip>
-                  <Text className="text-xs text-center">{disabledReason}</Text>
-                </InfoTooltip>
-              ) : (
-                <ChevronRight
-                  className="text-muted-foreground"
-                  accessibilityLabel="Available to select"
-                />
-              )}
+          <View className="gap-2" accessible={false}>
+            {/* Show follow-up badge if journalist has been called on */}
+            {hasBeenCalledOn && !isDisabled && (
+              <FollowUpBadge className="self-center my-0" />
+            )}
+            <View
+              className="flex-row justify-between items-center"
+              accessible={false}
+            >
+              <View className="flex-1">
+                <JournalistDisplay journalistId={pressExchange.journalist_id} />
+              </View>
+              <View className="px-1">
+                {isDisabled ? (
+                  <InfoTooltip>
+                    <Text className="text-xs text-center">
+                      {disabledReason}
+                    </Text>
+                  </InfoTooltip>
+                ) : (
+                  <ChevronRight
+                    className="text-muted-foreground"
+                    accessibilityLabel="Available to select"
+                  />
+                )}
+              </View>
             </View>
           </View>
         </CardContent>

@@ -107,6 +107,7 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
           accessible={true}
           accessibilityLabel="Situation details sections"
           accessibilityHint="Expandable sections for approval changes, alternative outcomes, and press exchanges"
+          defaultValue="approval-changes"
         >
           {/* Approval Changes */}
           <AccordionItem value="approval-changes">

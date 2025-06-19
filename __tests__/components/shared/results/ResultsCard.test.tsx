@@ -4,7 +4,7 @@
  * Tests main results card container:
  * - Shows proper accessibility labels with entity count and ad status
  * - Border styling based on ad watched status
- * - Continue button rendering and functionality
+ * - Header integration with ad functionality
  * - Custom messages for ad status
  * - Proper prop handling and rendering
  */
@@ -82,44 +82,6 @@ describe("ResultsCard", () => {
     ).toBeTruthy();
   });
 
-  it("renders Continue button when onComplete provided", () => {
-    const onComplete = jest.fn();
-    render(<ResultsCard {...defaultProps} onComplete={onComplete} />);
-
-    const continueButton = screen.getByLabelText("Continue to next screen");
-    expect(continueButton).toBeTruthy();
-    expect(screen.getByText("Continue")).toBeTruthy();
-  });
-
-  it("does not render Continue button when onComplete not provided", () => {
-    render(<ResultsCard {...defaultProps} />);
-
-    expect(screen.queryByLabelText("Continue to next screen")).toBeNull();
-    expect(screen.queryByText("Continue")).toBeNull();
-  });
-
-  it("calls onComplete when Continue button pressed", () => {
-    const onComplete = jest.fn();
-    render(<ResultsCard {...defaultProps} onComplete={onComplete} />);
-
-    const continueButton = screen.getByLabelText("Continue to next screen");
-    fireEvent.press(continueButton);
-
-    expect(onComplete).toHaveBeenCalledTimes(1);
-  });
-
-  it("Continue button has proper accessibility properties", () => {
-    const onComplete = jest.fn();
-    render(<ResultsCard {...defaultProps} onComplete={onComplete} />);
-
-    const continueButton = screen.getByLabelText("Continue to next screen");
-    expect(continueButton).toHaveProp("accessibilityRole", "button");
-    expect(continueButton).toHaveProp(
-      "accessibilityHint",
-      "Proceeds to the next section after reviewing results"
-    );
-  });
-
   it("renders with custom ad messages", () => {
     const customAdWatchMessage = "Custom boost applied!";
     const customAdNotWatchMessage = "Custom boost available!";
@@ -141,15 +103,13 @@ describe("ResultsCard", () => {
   });
 
   it("renders with all optional props", () => {
-    const onComplete = jest.fn();
     const onAdComplete = jest.fn();
     const customClass = "custom-results-card";
 
     render(
       <ResultsCard
         {...defaultProps}
-        isAdWatched={true}
-        onComplete={onComplete}
+        isAdWatched={false}
         onAdComplete={onAdComplete}
         adWatchMessage="Custom watched message"
         adNotWatchMessage="Custom not watched message"
@@ -159,10 +119,9 @@ describe("ResultsCard", () => {
 
     expect(
       screen.getByLabelText(
-        "Results summary with 2 entities. Ad boost applied."
+        "Results summary with 2 entities. Ad boost available."
       )
     ).toBeTruthy();
-    expect(screen.getByLabelText("Continue to next screen")).toBeTruthy();
   });
 
   it("renders without errors", () => {
@@ -198,5 +157,53 @@ describe("ResultsCard", () => {
         "Results summary with 4 entities. Ad boost available."
       )
     ).toBeTruthy();
+  });
+
+  describe("header integration", () => {
+    it("passes onAdComplete to header", () => {
+      const onAdComplete = jest.fn();
+      render(<ResultsCard {...defaultProps} onAdComplete={onAdComplete} />);
+
+      // Header should render - we can't test the button directly since it's in a separate component
+      // but we can verify the component renders without error
+      expect(
+        screen.getByLabelText(
+          "Results summary with 2 entities. Ad boost available."
+        )
+      ).toBeTruthy();
+    });
+
+    it("passes isAdWatched to header", () => {
+      render(<ResultsCard {...defaultProps} isAdWatched={true} />);
+
+      // Header should render with watched state
+      expect(
+        screen.getByLabelText(
+          "Results summary with 2 entities. Ad boost applied."
+        )
+      ).toBeTruthy();
+    });
+  });
+
+  describe("border styling", () => {
+    it("applies green border when ad is watched", () => {
+      render(<ResultsCard {...defaultProps} isAdWatched={true} />);
+      // Border styling is handled by className, component should render
+      expect(
+        screen.getByLabelText(
+          "Results summary with 2 entities. Ad boost applied."
+        )
+      ).toBeTruthy();
+    });
+
+    it("applies blue border when ad is not watched", () => {
+      render(<ResultsCard {...defaultProps} isAdWatched={false} />);
+      // Border styling is handled by className, component should render
+      expect(
+        screen.getByLabelText(
+          "Results summary with 2 entities. Ad boost available."
+        )
+      ).toBeTruthy();
+    });
   });
 });

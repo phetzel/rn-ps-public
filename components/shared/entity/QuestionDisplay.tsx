@@ -1,9 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
 import { MessageSquare } from "~/lib/icons/MessageSquare";
+import { FollowUpBadge } from "~/components/shared/entity/FollowUpBadge";
 
 interface QuestionDisplayProps {
   question: string;
@@ -21,14 +21,7 @@ export function QuestionDisplay({
         isFollowUpQuestion ? "Follow-up question" : "Question"
       }: ${question}`}
     >
-      {isFollowUpQuestion && (
-        <Badge
-          className="my-2 self-center"
-          accessibilityLabel="Follow-up question indicator"
-        >
-          <Text className="text-xs">Follow-up Question</Text>
-        </Badge>
-      )}
+      {isFollowUpQuestion && <FollowUpBadge />}
 
       <View className="flex-row items-center gap-2" accessible={false}>
         <View className="bg-primary/10 rounded-full p-2">

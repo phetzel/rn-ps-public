@@ -80,9 +80,13 @@ jest.mock("~/lib/hooks/useSituationOutcomeData", () => ({
 
 // Mock Accordion components
 jest.mock("~/components/ui/accordion", () => ({
-  Accordion: function MockAccordion({ children, ...props }: any) {
+  Accordion: function MockAccordion({ children, defaultValue, ...props }: any) {
     const { View } = require("react-native");
-    return <View {...props}>{children}</View>;
+    return (
+      <View {...props} testID={`accordion-default-${defaultValue}`}>
+        {children}
+      </View>
+    );
   },
   AccordionItem: function MockAccordionItem({
     children,
@@ -258,6 +262,14 @@ describe("SituationOutcomeItem", () => {
     expect(screen.getByText("Approval Changes")).toBeTruthy();
     expect(screen.getByText("Alternative Outcomes")).toBeTruthy();
     expect(screen.getByText("Press Exchanges")).toBeTruthy();
+  });
+
+  it("sets approval-changes as default accordion value", () => {
+    render(<SituationOutcomeItem situation={mockSituation} />);
+
+    expect(
+      screen.getByTestId("accordion-default-approval-changes")
+    ).toBeTruthy();
   });
 
   it("passes correct props to child components", () => {

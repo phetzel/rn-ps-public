@@ -10,13 +10,11 @@ import { EntityWithMediaDelta } from "~/types";
 
 interface SituationResultsProps {
   isAdWatched: boolean;
-  onComplete: () => void;
   onAdComplete: () => void;
 }
 
 export default function SituationResults({
   isAdWatched,
-  onComplete,
   onAdComplete,
 }: SituationResultsProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
@@ -45,7 +43,6 @@ export default function SituationResults({
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
       adWatchMessage="You've successfully boosted your situation approval changes!"
-      onComplete={onComplete}
     />
   );
 }

@@ -3,6 +3,14 @@ import { render, screen } from "@testing-library/react-native";
 
 import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
 
+// Mock FollowUpBadge component
+jest.mock("~/components/shared/entity/FollowUpBadge", () => ({
+  FollowUpBadge: function MockFollowUpBadge() {
+    const { Text } = require("react-native");
+    return <Text>Follow-up Question</Text>;
+  },
+}));
+
 describe("QuestionDisplay", () => {
   const renderWithProps = (props = {}) => {
     const defaultProps = {
