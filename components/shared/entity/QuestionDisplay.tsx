@@ -1,10 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
-import { Badge } from "~/components/ui/badge";
 import { Text } from "~/components/ui/text";
-import { FollowUpBadge } from "~/components/shared/entity/FollowUpBadge";
 import { MessageSquare } from "~/lib/icons/MessageSquare";
+import { FollowUpBadge } from "~/components/shared/entity/FollowUpBadge";
 
 interface QuestionDisplayProps {
   question: string;

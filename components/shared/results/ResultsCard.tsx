@@ -54,23 +54,6 @@ export function ResultsCard({
               adNotWatchMessage ?? "Watch a short ad to boost your results.",
           }}
         />
-
-        {!isAdWatched && onAdComplete && (
-          <Button
-            onPress={onAdComplete}
-            className="w-full gap-2 flex-row"
-            accessible={true}
-            accessibilityRole="button"
-            accessibilityLabel="Watch advertisement to boost results"
-            accessibilityHint="Plays a short ad that will increase your approval rating changes"
-          >
-            <Play
-              className="h-4 w-4  text-background"
-              accessibilityLabel="Play button"
-            />
-            <Text accessible={false}>Watch Ad</Text>
-          </Button>
-        )}
       </CardContent>
     </Card>
   );
