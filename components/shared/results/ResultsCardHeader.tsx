@@ -64,7 +64,7 @@ export default function ResultsCardHeader({
           accessibilityHint="Plays a short ad that will increase your approval rating changes"
         >
           <Play
-            className="h-4 w-4  text-foreground"
+            className="h-4 w-4 text-foreground"
             accessibilityLabel="Play button"
           />
           <Text accessible={false}>Watch Ad</Text>
