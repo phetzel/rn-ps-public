@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
@@ -6,25 +6,24 @@ import { observeLevel } from "~/lib/db/helpers/observations";
 import type { Level } from "~/lib/db/models";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 // Components
-import { CardHeader, CardTitle } from "~/components/ui/card";
-import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
-import CabinetLevelState from "~/components/screens/level-complete/CabinetLevelState";
-import PresidentLevelState from "~/components/screens/level-complete/PresidentLevelState";
-import MediaLevelState from "~/components/screens/level-complete/MediaLevelState";
-import SubgroupLevelState from "~/components/screens/level-complete/SubgroupLevelState";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "~/components/ui/accordion";
+import PresidentLevelState from "~/components/shared/level-state/PresidentLevelState";
+import CabinetLevelState from "~/components/shared/level-state/CabinetLevelState";
+import MediaLevelState from "~/components/shared/level-state/MediaLevelState";
+import SubgroupLevelState from "~/components/shared/level-state/SubgroupLevelState";
 import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
 // Icons
-import { Award, Briefcase, Newspaper, Shield, Users } from "~/lib/icons";
+import { Award, Briefcase, Newspaper, Users, Shield } from "~/lib/icons";
 // Types
 import { LevelStatus } from "~/types";
-
-interface TabConfig {
-  id: string;
-  label: string;
-  icon: ReactNode;
-  component: React.ComponentType<any>;
-  props?: Record<string, any>;
-}
 
 interface LevelCompleteContentProps {
   gameId: string;
@@ -37,7 +36,7 @@ const LevelCompleteContent = ({
   levelId,
   level,
 }: LevelCompleteContentProps) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentTab, setCurrentTab] = useState<string>("consequences");
 
   const {
     progressAndNavigate,
@@ -53,57 +52,6 @@ const LevelCompleteContent = ({
 
   const isLevelGameOver = snapshot.consequences?.gameEnded || false;
 
-  // Define all tabs with their configs
-  const tabs: TabConfig[] = [
-    {
-      id: "administration",
-      label: "President Monthly Update",
-      icon: <Award className="text-primary" />,
-      component: PresidentLevelState,
-      props: { gameId, outcomeSnapshot: snapshot },
-    },
-    {
-      id: "cabinet",
-      label: "Cabinet Monthly Update",
-      icon: <Briefcase className="text-primary" />,
-      component: CabinetLevelState,
-      props: { levelId, outcomeSnapshot: snapshot },
-    },
-    {
-      id: "media",
-      label: "Media Monthly Update",
-      icon: <Newspaper className="text-primary" />,
-      component: MediaLevelState,
-      props: { outcomeSnapshot: snapshot },
-    },
-    {
-      id: "subgroups",
-      label: "Subgroup Monthly Update",
-      icon: <Users className="text-primary" />,
-      component: SubgroupLevelState,
-      props: { gameId, levelId, outcomeSnapshot: snapshot },
-    },
-    {
-      id: "consequences",
-      label: "Level Consequences",
-      icon: <Shield className="text-primary" />,
-      component: LevelConsequences,
-      props: { levelId, outcomeSnapshot: snapshot },
-    },
-  ];
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < tabs.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
   const handleComplete = async () => {
     try {
       if (isLevelGameOver) {
@@ -117,44 +65,131 @@ const LevelCompleteContent = ({
         }
       }
     } catch (error) {
-      console.error("Failed to complete situation outcomes:", error);
+      console.error("Failed to complete level:", error);
     }
   };
 
-  const currentTab = tabs[currentIndex];
-  const TabComponent = currentTab.component;
-
   return (
-    <View
-      className="gap-4"
-      accessible={true}
-      accessibilityLabel={`Level complete summary: ${
-        currentTab.label
-      }. Section ${currentIndex + 1} of ${tabs.length}.`}
-    >
-      <ProgressNavigator
-        currentIndex={currentIndex}
-        totalItems={tabs.length}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
-        onComplete={isLevelGameOver ? undefined : handleComplete}
-        progressLabel={`${currentTab.label} (${currentIndex + 1} of ${
-          tabs.length
-        })`}
-        headerContent={
-          <CardHeader
-            className="flex-row items-center gap-2"
-            accessible={true}
-            accessibilityRole="header"
-            accessibilityLabel={`Current section: ${currentTab.label}`}
-          >
-            {currentTab.icon}
-            <CardTitle>{currentTab.label}</CardTitle>
-          </CardHeader>
-        }
+    <View className="gap-4">
+      <Tabs
+        value={currentTab}
+        onValueChange={setCurrentTab}
+        accessibilityLabel="Level complete sections"
       >
-        <TabComponent {...currentTab.props} />
-      </ProgressNavigator>
+        <TabsList className="flex-row">
+          <TabsTrigger
+            value="consequences"
+            className="flex-1"
+            accessibilityLabel="Level consequences"
+          >
+            <Text>Consequences</Text>
+          </TabsTrigger>
+          <TabsTrigger
+            value="administration"
+            className="flex-1"
+            accessibilityLabel="Administration updates"
+          >
+            <Text>Administration</Text>
+          </TabsTrigger>
+          <TabsTrigger
+            value="external"
+            className="flex-1"
+            accessibilityLabel="External relations"
+          >
+            <Text>External</Text>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="consequences" className="mt-4">
+          <LevelConsequences levelId={levelId} />
+        </TabsContent>
+
+        <TabsContent value="administration" className="mt-4">
+          <View className="gap-4">
+            <Accordion type="multiple" defaultValue={["president"]}>
+              <AccordionItem value="president">
+                <AccordionTrigger>
+                  <View className="flex-row items-center gap-2">
+                    <Award className="text-primary" size={16} />
+                    <Text>President Update</Text>
+                  </View>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <PresidentLevelState
+                    gameId={gameId}
+                    outcomeSnapshot={snapshot}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="cabinet">
+                <AccordionTrigger>
+                  <View className="flex-row items-center gap-2">
+                    <Briefcase className="text-primary" size={16} />
+                    <Text>Cabinet Update</Text>
+                  </View>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <CabinetLevelState
+                    levelId={levelId}
+                    outcomeSnapshot={snapshot}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </View>
+        </TabsContent>
+
+        <TabsContent value="external" className="mt-4">
+          <View className="gap-4">
+            <Accordion type="multiple">
+              <AccordionItem value="media">
+                <AccordionTrigger>
+                  <View className="flex-row items-center gap-2">
+                    <Newspaper className="text-primary" size={16} />
+                    <Text>Media & Press</Text>
+                  </View>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <MediaLevelState outcomeSnapshot={snapshot} />
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="subgroups">
+                <AccordionTrigger>
+                  <View className="flex-row items-center gap-2">
+                    <Users className="text-primary" size={16} />
+                    <Text>Political Groups</Text>
+                  </View>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <SubgroupLevelState
+                    gameId={gameId}
+                    levelId={levelId}
+                    outcomeSnapshot={snapshot}
+                  />
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </View>
+        </TabsContent>
+      </Tabs>
+
+      {/* Completion Button - only show if game is not over */}
+      {!isLevelGameOver && (
+        <View className="pt-4 border-t border-border">
+          <Button
+            onPress={handleComplete}
+            className="w-full"
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Continue to next month"
+            accessibilityHint="Proceed to the next month after reviewing level results"
+          >
+            <Text accessible={false}>Proceed to next month</Text>
+          </Button>
+        </View>
+      )}
     </View>
   );
 };

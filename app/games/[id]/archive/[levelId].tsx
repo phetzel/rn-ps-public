@@ -8,6 +8,7 @@ import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
 import ExchangesOutcomeList from "~/components/shared/exchanges-outcome-list/ExchangesOutcomeList";
 import SituationsOutcomeList from "~/components/shared/situations-outcome-list/SituationsOutcomeList";
 import LevelMediaCoverage from "~/components/shared/level-media-coverage/LevelMediaCoverage";
+import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
 import { EmptyState } from "~/components/shared/EmptyState";
 
 interface ArchiveLevelScreenProps {}
@@ -43,6 +44,13 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
         >
           <TabsList className="flex-row">
             <TabsTrigger
+              value="consequences"
+              className="flex-1"
+              accessibilityLabel="Level outcomes"
+            >
+              <Text>Consequences</Text>
+            </TabsTrigger>
+            <TabsTrigger
               value="exchanges"
               className="flex-1"
               accessibilityLabel="Press exchanges"
@@ -56,14 +64,11 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
             >
               <Text>Situations</Text>
             </TabsTrigger>
-            <TabsTrigger
-              value="outcomes"
-              className="flex-1"
-              accessibilityLabel="Level outcomes"
-            >
-              <Text>Outcomes</Text>
-            </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="consequences" className="mt-4">
+            <LevelConsequences levelId={levelId} />
+          </TabsContent>
 
           <TabsContent value="exchanges" className="mt-4">
             <ExchangesOutcomeList levelId={levelId} />
@@ -75,14 +80,6 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
             <View className="gap-2">
               <Text className="text-2xl font-semibold">Results</Text>
               <LevelMediaCoverage levelId={levelId} />
-            </View>
-          </TabsContent>
-
-          <TabsContent value="outcomes" className="mt-4">
-            <View className="p-4">
-              <Text className="text-center text-muted-foreground">
-                Complete content coming soon...
-              </Text>
             </View>
           </TabsContent>
         </Tabs>
