@@ -3,7 +3,7 @@ import { Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
 import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
-import ArchivedLevelContent from "~/components/screens/archived-level/ArchivedLevelContent";
+import LevelOverviewContent from "~/components/shared/level-overview/LevelOverviewContent";
 import { EmptyState } from "~/components/shared/EmptyState";
 
 interface ArchiveLevelScreenProps {}
@@ -30,7 +30,7 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
         />
       }
     >
-      <ArchivedLevelContent levelId={levelId} />
+      <LevelOverviewContent levelId={levelId} />
     </ParallaxScrollView>
   );
 }

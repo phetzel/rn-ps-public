@@ -18,12 +18,12 @@ import SubgroupLevelState from "~/components/shared/level-state/SubgroupLevelSta
 import { Award, Briefcase, Newspaper, Users } from "~/lib/icons";
 import { EmptyState } from "~/components/shared/EmptyState";
 
-interface ArchivedLevelStateProps {
+interface LevelOverviewStateProps {
   levelId: string;
   level: Level | null;
 }
 
-const ArchivedLevelState = ({ levelId, level }: ArchivedLevelStateProps) => {
+const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
   if (!level) {
     return <EmptyState message="Level not found" />;
   }
@@ -112,4 +112,4 @@ const enhance = withObservables(["levelId"], ({ levelId }) => ({
   level: observeLevel(levelId),
 }));
 
-export default enhance(ArchivedLevelState);
+export default enhance(LevelOverviewState);

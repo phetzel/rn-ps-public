@@ -13,13 +13,13 @@ import SituationsOutcomeList from "~/components/shared/situations-outcome-list/S
 import LevelMediaCoverage from "~/components/shared/level-media-coverage/LevelMediaCoverage";
 import { MessageSquare, AlertCircle, Newspaper } from "~/lib/icons";
 
-interface ArchivedLevelEventsProps {
+interface LevelOverviewEventsProps {
   levelId: string;
 }
 
-export default function ArchivedLevelEvents({
+export default function LevelOverviewEvents({
   levelId,
-}: ArchivedLevelEventsProps) {
+}: LevelOverviewEventsProps) {
   return (
     <View className="gap-4">
       <Accordion type="multiple" defaultValue={["exchanges"]}>
