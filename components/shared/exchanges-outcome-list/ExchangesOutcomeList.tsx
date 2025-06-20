@@ -29,9 +29,9 @@ const ExchangesOutcomeList = ({
       accessible={true}
       accessibilityLabel={`Press exchanges: ${pressExchanges.length} journalists interacted with during the press conference`}
     >
-      {/* <Text className="text-2xl font-semibold" accessibilityRole="header">
+      <Text className="text-2xl font-semibold" accessibilityRole="header">
         Press Exchanges
-      </Text> */}
+      </Text>
       <Accordion
         type="single"
         collapsible

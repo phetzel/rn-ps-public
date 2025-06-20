@@ -5,12 +5,7 @@ import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
 import { Text } from "~/components/ui/text";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Newspaper } from "~/lib/icons";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "~/components/ui/accordion";
+
 import { Separator } from "~/components/ui/separator";
 import LevelProgress from "~/components/shared/level-state/LevelProgress";
 import { PublicationStateHeader } from "~/components/shared/entity/PublicationStateHeader";
@@ -126,84 +121,58 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                     />
                   )}
 
-                  {/* Journalists Accordion */}
+                  {/* Journalists Section - Always Visible */}
                   {publicationJournalists.length > 0 && (
-                    <Accordion type="single">
-                      <AccordionItem value={publication.id}>
-                        <AccordionTrigger
-                          className="py-3"
-                          accessibilityLabel={`View ${publicationJournalists.length} journalists from ${publication.name}`}
-                          accessibilityHint="Expand to see individual journalist relationship changes"
-                        >
-                          <Text>
-                            Journalists ({publicationJournalists.length})
-                          </Text>
-                        </AccordionTrigger>
+                    <View className="gap-4">
+                      <Text
+                        className="text-xl font-medium"
+                        accessibilityRole="header"
+                      >
+                        Journalists ({publicationJournalists.length})
+                      </Text>
 
-                        <AccordionContent>
-                          <View
-                            className="gap-4"
-                            accessible={true}
-                            accessibilityLabel={`${publication.name} journalists: ${publicationJournalists.length} total`}
-                          >
-                            <View className="gap-2" accessible={false}>
-                              <Text
-                                className="text-xl font-medium"
-                                accessibilityRole="header"
-                              >
-                                Journalists
+                      <View className="gap-2">
+                        {publicationJournalists.map((journalist, journoIdx) => {
+                          const initialValues =
+                            initial.journalists[journalist.id];
+                          const finalValues = final.journalists[journalist.id];
+
+                          if (!initialValues || !finalValues) return null;
+
+                          const relationshipChange =
+                            finalValues.psRelationship -
+                            initialValues.psRelationship;
+
+                          return (
+                            <View
+                              key={journalist.id}
+                              className="gap-2"
+                              accessible={true}
+                              accessibilityLabel={`${
+                                journalist.name
+                              }. Relationship changed by ${
+                                relationshipChange > 0 ? "+" : ""
+                              }${relationshipChange}%.`}
+                            >
+                              <Text className="text-lg font-bold leading-tight">
+                                {journalist.name}
                               </Text>
 
-                              {publicationJournalists.map(
-                                (journalist, journoIdx) => {
-                                  const initialValues =
-                                    initial.journalists[journalist.id];
-                                  const finalValues =
-                                    final.journalists[journalist.id];
+                              <LevelProgress
+                                label="Relationship with You"
+                                initialValue={initialValues.psRelationship}
+                                finalValue={finalValues.psRelationship}
+                              />
 
-                                  if (!initialValues || !finalValues)
-                                    return null;
-
-                                  const relationshipChange =
-                                    finalValues.psRelationship -
-                                    initialValues.psRelationship;
-
-                                  return (
-                                    <View
-                                      key={journalist.id}
-                                      className="gap-2"
-                                      accessible={true}
-                                      accessibilityLabel={`${
-                                        journalist.name
-                                      }. Relationship changed by ${
-                                        relationshipChange > 0 ? "+" : ""
-                                      }${relationshipChange}%.`}
-                                    >
-                                      <Text className="text-xl font-bold leading-tight">
-                                        {journalist.name}
-                                      </Text>
-
-                                      <LevelProgress
-                                        label="Relationship with You"
-                                        initialValue={
-                                          initialValues.psRelationship
-                                        }
-                                        finalValue={finalValues.psRelationship}
-                                      />
-
-                                      {journoIdx !==
-                                        publicationJournalists.length - 1 && (
-                                        <Separator className="mt-2" />
-                                      )}
-                                    </View>
-                                  );
-                                }
+                              {journoIdx !==
+                                publicationJournalists.length - 1 && (
+                                <Separator className="mt-2" />
                               )}
                             </View>
-                          </View>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
+                          );
+                        })}
+                      </View>
+                    </View>
                   )}
                 </View>
                 {/* Add separator between publications */}

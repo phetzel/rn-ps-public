@@ -27,7 +27,7 @@ export function PublicationStateHeader({
         className="flex-row items-center justify-between"
         accessible={false}
       >
-        <Text className="text-lg font-bold" accessibilityRole="header">
+        <Text className="text-xl font-bold" accessibilityRole="header">
           {name}
         </Text>
         <PoliticalLeaningBadge politicalLeaning={politicalLeaning} />

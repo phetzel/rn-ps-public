@@ -48,15 +48,23 @@ export default function LevelOverviewContent({
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="results" className="mt-4">
+      <TabsContent
+        value="results"
+        className="mt-4"
+        key={`results-${currentTab}`}
+      >
         <LevelConsequences levelId={levelId} />
       </TabsContent>
 
-      <TabsContent value="changes" className="mt-4">
+      <TabsContent
+        value="changes"
+        className="mt-4"
+        key={`changes-${currentTab}`}
+      >
         <LevelOverviewState levelId={levelId} />
       </TabsContent>
 
-      <TabsContent value="events" className="mt-4">
+      <TabsContent value="events" className="mt-4" key={`events-${currentTab}`}>
         <LevelOverviewEvents levelId={levelId} />
       </TabsContent>
     </Tabs>

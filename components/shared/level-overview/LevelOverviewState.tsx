@@ -45,7 +45,11 @@ const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
 
   return (
     <View className="gap-4">
-      <Accordion type="multiple" defaultValue={["president"]}>
+      <Accordion
+        type="multiple"
+        defaultValue={["president"]}
+        key={`state-accordion-${levelId}`}
+      >
         <AccordionItem value="president">
           <AccordionTrigger>
             <View className="flex-row items-center gap-2">

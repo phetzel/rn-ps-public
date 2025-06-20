@@ -28,9 +28,9 @@ const SituationsOutcomeList = ({
       accessible={true}
       accessibilityLabel={`Situations outcomes: ${situations.length} situations with their results and consequences`}
     >
-      {/* <Text className="text-2xl font-semibold" accessibilityRole="header">
+      <Text className="text-2xl font-semibold" accessibilityRole="header">
         Situations
-      </Text> */}
+      </Text>
       <Accordion
         type="single"
         collapsible
