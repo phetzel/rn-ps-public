@@ -1,20 +1,14 @@
-import React, { useState } from "react";
-import { Image, View } from "react-native";
+import React from "react";
+import { Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 
-import { Text } from "~/components/ui/text";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
-import ExchangesOutcomeList from "~/components/shared/exchanges-outcome-list/ExchangesOutcomeList";
-import SituationsOutcomeList from "~/components/shared/situations-outcome-list/SituationsOutcomeList";
-import LevelMediaCoverage from "~/components/shared/level-media-coverage/LevelMediaCoverage";
-import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
+import ArchivedLevelContent from "~/components/screens/archived-level/ArchivedLevelContent";
 import { EmptyState } from "~/components/shared/EmptyState";
 
 interface ArchiveLevelScreenProps {}
 
 function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
-  const [currentTab, setCurrentTab] = useState<string>("exchanges");
   const { levelId } = useLocalSearchParams<{ levelId: string }>();
 
   if (!levelId) {
@@ -36,54 +30,7 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
         />
       }
     >
-      <View className="gap-4">
-        <Tabs
-          value={currentTab}
-          onValueChange={setCurrentTab}
-          accessibilityLabel="Archive sections"
-        >
-          <TabsList className="flex-row">
-            <TabsTrigger
-              value="consequences"
-              className="flex-1"
-              accessibilityLabel="Level outcomes"
-            >
-              <Text>Consequences</Text>
-            </TabsTrigger>
-            <TabsTrigger
-              value="exchanges"
-              className="flex-1"
-              accessibilityLabel="Press exchanges"
-            >
-              <Text>Exchanges</Text>
-            </TabsTrigger>
-            <TabsTrigger
-              value="situations"
-              className="flex-1"
-              accessibilityLabel="Level situations"
-            >
-              <Text>Situations</Text>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="consequences" className="mt-4">
-            <LevelConsequences levelId={levelId} />
-          </TabsContent>
-
-          <TabsContent value="exchanges" className="mt-4">
-            <ExchangesOutcomeList levelId={levelId} />
-          </TabsContent>
-
-          <TabsContent value="situations" className="mt-4 gap-4">
-            <SituationsOutcomeList levelId={levelId} />
-
-            <View className="gap-2">
-              <Text className="text-2xl font-semibold">Results</Text>
-              <LevelMediaCoverage levelId={levelId} />
-            </View>
-          </TabsContent>
-        </Tabs>
-      </View>
+      <ArchivedLevelContent levelId={levelId} />
     </ParallaxScrollView>
   );
 }
