@@ -55,6 +55,20 @@ export function createCabinetMemberMap(
   return map;
 }
 
+// Table Column Width Helpers
+export function calculateTableColumnWidths(columnCount: number) {
+  switch (columnCount) {
+    case 4:
+      return { name: "40%" as const, data: "20%" as const };
+    case 3:
+      return { name: "50%" as const, data: "25%" as const };
+    case 2:
+      return { name: "60%" as const, data: "40%" as const };
+    default:
+      return { name: "50%" as const, data: "25%" as const };
+  }
+}
+
 // Boost Helpers
 export const calculateAdBoost = (delta: number) => {
   if (delta >= 0) {

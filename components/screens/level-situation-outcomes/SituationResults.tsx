@@ -42,7 +42,7 @@ export default function SituationResults({
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
-      adWatchMessage="You've successfully boosted your situation approval changes!"
+      // adWatchMessage="You've successfully boosted your situation approval changes!"
     />
   );
 }

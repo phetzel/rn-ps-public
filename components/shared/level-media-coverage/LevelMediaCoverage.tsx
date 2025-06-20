@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import MediaCoverageContent from "~/components/shared/level-media-coverage/LevelMediaCoverageContent";
-import LevelMediaImpactContent from "~/components/shared/level-media-coverage/LevelMediaImpactContent";
+import { ResultsTableList } from "~/components/shared/results/ResultsTableList";
 import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
 // Icons
 import { Newspaper } from "~/lib/icons/Newspaper";
@@ -34,14 +34,14 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
     return <ErrorDisplay message={error.message} />;
   }
 
-  const hasAdWatched = level?.situationAdWatched || false;
+  const isAdWatched = level?.situationAdWatched || false;
 
   return (
     <Card
       accessible={true}
       accessibilityLabel={`Media coverage analysis with total boost multiplier of ${totalBoost.toFixed(
         2
-      )}${hasAdWatched ? " with ad boost applied" : ""}`}
+      )}${isAdWatched ? " with ad boost applied" : ""}`}
     >
       <CardHeader className="pb-2">
         <View
@@ -102,10 +102,10 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
               <Text accessible={false}>Media Impact on Approval</Text>
             </AccordionTrigger>
             <AccordionContent>
-              <LevelMediaImpactContent
-                isLoading={isLoading}
+              <ResultsTableList
                 enhancedDeltas={enhancedDeltas}
-                hasAdWatched={hasAdWatched}
+                isAdWatched={isAdWatched}
+                showAdColumn={isAdWatched}
               />
             </AccordionContent>
           </AccordionItem>

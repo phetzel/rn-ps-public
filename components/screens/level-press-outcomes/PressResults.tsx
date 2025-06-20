@@ -43,7 +43,7 @@ export default function PressResults({
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
-      adWatchMessage="You've successfully boosted your relationship outcomes!"
+      // adWatchMessage="You've successfully boosted your relationship outcomes!"
     />
   );
 }
