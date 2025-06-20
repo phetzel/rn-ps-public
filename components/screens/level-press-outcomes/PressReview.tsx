@@ -1,4 +1,3 @@
-// components/press-outcomes/PressResults.tsx
 import React, { useEffect, useState } from "react";
 
 // Components
@@ -10,15 +9,15 @@ import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers";
 // Types
 import { EntityWithDelta } from "~/types";
 
-interface PressResultsProps {
+interface PressReviewProps {
   isAdWatched: boolean;
   onAdComplete: () => void;
 }
 
-export default function PressResults({
+export default function PressReview({
   isAdWatched,
   onAdComplete,
-}: PressResultsProps) {
+}: PressReviewProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
     EntityWithDelta[] | null
   >(null);
@@ -43,7 +42,6 @@ export default function PressResults({
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
-      // adWatchMessage="You've successfully boosted your relationship outcomes!"
     />
   );
 }

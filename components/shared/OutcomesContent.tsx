@@ -62,7 +62,7 @@ export function OutcomesContent({
 
   const getButtonText = () => {
     if (isLastTab) {
-      return "Continue";
+      return "Complete";
     }
     return `Continue to ${nextTab?.label}`;
   };

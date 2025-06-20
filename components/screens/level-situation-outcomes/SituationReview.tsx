@@ -8,15 +8,15 @@ import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers";
 // Typess
 import { EntityWithMediaDelta } from "~/types";
 
-interface SituationResultsProps {
+interface SituationReviewProps {
   isAdWatched: boolean;
   onAdComplete: () => void;
 }
 
-export default function SituationResults({
+export default function SituationReview({
   isAdWatched,
   onAdComplete,
-}: SituationResultsProps) {
+}: SituationReviewProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
     EntityWithMediaDelta[] | null
   >(null);

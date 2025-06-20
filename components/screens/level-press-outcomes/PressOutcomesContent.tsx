@@ -7,7 +7,8 @@ import type { Level } from "~/lib/db/models";
 // Components
 import { OutcomesContent } from "~/components/shared/OutcomesContent";
 import ExchangesOutcomeList from "~/components/shared/exchanges-outcome-list/ExchangesOutcomeList";
-import PressResults from "~/components/screens/level-press-outcomes/PressResults";
+import PressResultsTotal from "~/components/shared/level-overview/PressResultsTotal";
+import PressReview from "~/components/screens/level-press-outcomes/PressReview";
 // Types
 import { LevelStatus } from "~/types";
 
@@ -50,10 +51,17 @@ const PressOutcomesContent = ({
       value: "results",
       label: "Results",
       accessibilityLabel: "Press conference results",
+      accessibilityHint: "See how media reported on the press conference",
+      content: <PressResultsTotal levelId={levelId} />,
+    },
+    {
+      value: "review",
+      label: "Review",
+      accessibilityLabel: "Press conference review",
       accessibilityHint:
         "See how your press conference performance affected relationships",
       content: (
-        <PressResults
+        <PressReview
           isAdWatched={isAdWatched}
           onAdComplete={handleAdComplete}
         />
