@@ -125,7 +125,7 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                   {publicationJournalists.length > 0 && (
                     <View className="gap-4">
                       <Text
-                        className="text-xl font-medium"
+                        className="text-lg font-medium"
                         accessibilityRole="header"
                       >
                         Journalists ({publicationJournalists.length})
@@ -146,7 +146,7 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                           return (
                             <View
                               key={journalist.id}
-                              className="gap-2"
+                              className=""
                               accessible={true}
                               accessibilityLabel={`${
                                 journalist.name

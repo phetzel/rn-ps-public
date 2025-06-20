@@ -6,12 +6,24 @@ import { EntityWithMediaDelta } from "~/types";
 
 interface LevelMediaCoverageImpactRowProps {
   entity: EntityWithMediaDelta;
+  hasAdWatched: boolean;
 }
 
 export function LevelMediaCoverageImpactRow({
   entity,
+  hasAdWatched,
 }: LevelMediaCoverageImpactRowProps) {
-  const { name, title, role, currentValue, delta, preMediaDelta } = entity;
+  const {
+    name,
+    title,
+    role,
+    currentValue,
+    delta,
+    preMediaDelta,
+    adBoostedDelta,
+  } = entity;
+
+  const finalValue = adBoostedDelta || delta;
 
   return (
     <View
@@ -23,12 +35,21 @@ export function LevelMediaCoverageImpactRow({
         preMediaDelta >= 0 ? "positive" : "negative"
       } ${Math.abs(preMediaDelta)}. Media boosted change: ${
         delta >= 0 ? "positive" : "negative"
-      } ${Math.abs(delta)}. Media ${
+      } ${Math.abs(delta)}.${
+        hasAdWatched
+          ? ` Final ad-boosted change: ${
+              finalValue >= 0 ? "positive" : "negative"
+            } ${Math.abs(finalValue)}.`
+          : ""
+      } Media ${
         Math.abs(delta) > Math.abs(preMediaDelta) ? "amplified" : "reduced"
       } the impact.`}
     >
       {/* Name and title */}
-      <View style={{ width: "40%" }} accessible={false}>
+      <View style={{ width: hasAdWatched ? "30%" : "40%" }} accessible={false}>
+        <Text className="text-base font-bold" accessible={false}>
+          {name}
+        </Text>
         {title && (
           <Text
             className="text-sm text-muted-foreground leading-none"
@@ -37,14 +58,11 @@ export function LevelMediaCoverageImpactRow({
             {title}
           </Text>
         )}
-        <Text className="text-base font-bold" accessible={false}>
-          {name}
-        </Text>
       </View>
 
       {/* Current value */}
       <View
-        style={{ width: "20%" }}
+        style={{ width: hasAdWatched ? "17.5%" : "20%" }}
         className="justify-center items-center"
         accessible={false}
       >
@@ -55,7 +73,7 @@ export function LevelMediaCoverageImpactRow({
 
       {/* Base Delta */}
       <View
-        style={{ width: "20%" }}
+        style={{ width: hasAdWatched ? "17.5%" : "20%" }}
         className="justify-center items-center"
         accessible={false}
       >
@@ -73,7 +91,7 @@ export function LevelMediaCoverageImpactRow({
 
       {/* Media-boosted delta */}
       <View
-        style={{ width: "20%" }}
+        style={{ width: hasAdWatched ? "17.5%" : "20%" }}
         className="justify-center items-center"
         accessible={false}
       >
@@ -88,6 +106,26 @@ export function LevelMediaCoverageImpactRow({
           {delta}
         </Text>
       </View>
+
+      {/* Ad-boosted delta (only if ad watched) */}
+      {hasAdWatched && (
+        <View
+          style={{ width: "17.5%" }}
+          className="justify-center items-center"
+          accessible={false}
+        >
+          <Text
+            className={cn(
+              "text-lg font-bold",
+              finalValue >= 0 ? "text-green-600" : "text-red-600"
+            )}
+            accessible={false}
+          >
+            {finalValue >= 0 ? "+" : ""}
+            {finalValue}
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
 
 // Components
 import {
@@ -17,12 +18,15 @@ import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
 import { Newspaper } from "~/lib/icons/Newspaper";
 // Hooks
 import { useMediaCoverageData } from "~/lib/hooks/useMediaCoverageData";
+import { observeLevel } from "~/lib/db/helpers/observations";
+import type { Level } from "~/lib/db/models";
 
 interface LevelMediaCoverageProps {
   levelId: string;
+  level: Level | null;
 }
 
-function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
+function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
   const { mediaBoosts, totalBoost, enhancedDeltas, isLoading, error } =
     useMediaCoverageData({ levelId });
 
@@ -30,12 +34,14 @@ function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
     return <ErrorDisplay message={error.message} />;
   }
 
+  const hasAdWatched = level?.situationAdWatched || false;
+
   return (
     <Card
       accessible={true}
       accessibilityLabel={`Media coverage analysis with total boost multiplier of ${totalBoost.toFixed(
         2
-      )}`}
+      )}${hasAdWatched ? " with ad boost applied" : ""}`}
     >
       <CardHeader className="pb-2">
         <View
@@ -99,6 +105,7 @@ function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
               <LevelMediaImpactContent
                 isLoading={isLoading}
                 enhancedDeltas={enhancedDeltas}
+                hasAdWatched={hasAdWatched}
               />
             </AccordionContent>
           </AccordionItem>
@@ -108,4 +115,8 @@ function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
   );
 }
 
-export default LevelMediaCoverage;
+const enhance = withObservables(["levelId"], ({ levelId }) => ({
+  level: observeLevel(levelId),
+}));
+
+export default enhance(LevelMediaCoverage);

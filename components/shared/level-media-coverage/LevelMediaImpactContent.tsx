@@ -8,11 +8,13 @@ import { EntityWithMediaDelta } from "~/types";
 interface LevelMediaImpactContentProps {
   isLoading: boolean;
   enhancedDeltas: EntityWithMediaDelta[];
+  hasAdWatched: boolean;
 }
 
 function LevelMediaImpactContent({
   isLoading,
   enhancedDeltas,
+  hasAdWatched,
 }: LevelMediaImpactContentProps) {
   // Group entities by role
   const groupedEntities = {
@@ -34,7 +36,9 @@ function LevelMediaImpactContent({
       accessible={true}
       accessibilityLabel={`Media impact analysis for ${totalEntities} entities${
         hasAdminEntities ? " including administration" : ""
-      }${hasSubgroups ? " and voter groups" : ""}`}
+      }${hasSubgroups ? " and voter groups" : ""}${
+        hasAdWatched ? " with ad boost applied" : ""
+      }`}
     >
       {isLoading ? (
         <Text accessible={true} accessibilityLiveRegion="polite">
@@ -46,10 +50,12 @@ function LevelMediaImpactContent({
           <View
             className="flex-row border-b pb-2"
             accessible={true}
-            accessibilityLabel="Table columns: Entity name, Starting value, Base change, Media boosted change"
+            accessibilityLabel={`Table columns: Entity name, Starting value, Base change, Media boosted change${
+              hasAdWatched ? ", Ad boosted change" : ""
+            }`}
           >
             <View
-              style={{ width: "40%" }}
+              style={{ width: hasAdWatched ? "30%" : "40%" }}
               className="justify-end"
               accessible={false}
             >
@@ -58,7 +64,7 @@ function LevelMediaImpactContent({
               </Text>
             </View>
             <View
-              style={{ width: "20%" }}
+              style={{ width: hasAdWatched ? "17.5%" : "20%" }}
               className="items-center justify-end"
               accessible={false}
             >
@@ -67,7 +73,7 @@ function LevelMediaImpactContent({
               </Text>
             </View>
             <View
-              style={{ width: "20%" }}
+              style={{ width: hasAdWatched ? "17.5%" : "20%" }}
               className="items-center justify-end"
               accessible={false}
             >
@@ -76,14 +82,25 @@ function LevelMediaImpactContent({
               </Text>
             </View>
             <View
-              style={{ width: "20%" }}
+              style={{ width: hasAdWatched ? "17.5%" : "20%" }}
               className="items-center justify-end"
               accessible={false}
             >
               <Text className="font-medium text-center" accessible={false}>
-                Media Boost
+                Media
               </Text>
             </View>
+            {hasAdWatched && (
+              <View
+                style={{ width: "17.5%" }}
+                className="items-center justify-end"
+                accessible={false}
+              >
+                <Text className="font-medium text-center" accessible={false}>
+                  Ad Boosted
+                </Text>
+              </View>
+            )}
           </View>
 
           {/* Admin section */}
@@ -101,10 +118,18 @@ function LevelMediaImpactContent({
                 Admin
               </Text>
               {groupedEntities.president.map((entity) => (
-                <LevelMediaCoverageImpactRow key={entity.id} entity={entity} />
+                <LevelMediaCoverageImpactRow
+                  key={entity.id}
+                  entity={entity}
+                  hasAdWatched={hasAdWatched}
+                />
               ))}
               {groupedEntities.cabinet.map((entity) => (
-                <LevelMediaCoverageImpactRow key={entity.id} entity={entity} />
+                <LevelMediaCoverageImpactRow
+                  key={entity.id}
+                  entity={entity}
+                  hasAdWatched={hasAdWatched}
+                />
               ))}
             </>
           )}
@@ -121,9 +146,21 @@ function LevelMediaImpactContent({
                 Groups
               </Text>
               {groupedEntities.subgroups.map((entity) => (
-                <LevelMediaCoverageImpactRow key={entity.id} entity={entity} />
+                <LevelMediaCoverageImpactRow
+                  key={entity.id}
+                  entity={entity}
+                  hasAdWatched={hasAdWatched}
+                />
               ))}
             </>
+          )}
+
+          {hasAdWatched && (
+            <View className="mt-2 p-3 bg-green-50 dark:bg-green-950 rounded-lg">
+              <Text className="text-sm text-green-700 dark:text-green-300 font-medium">
+                ✓ Ad boost applied - Enhanced situation approval changes
+              </Text>
+            </View>
           )}
         </View>
       )}

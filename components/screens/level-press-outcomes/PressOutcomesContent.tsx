@@ -47,9 +47,9 @@ const PressOutcomesContent = ({
       content: <ExchangesOutcomeList levelId={levelId} />,
     },
     {
-      value: "relationships",
-      label: "Relationships",
-      accessibilityLabel: "Relationship changes",
+      value: "results",
+      label: "Results",
+      accessibilityLabel: "Press conference results",
       accessibilityHint:
         "See how your press conference performance affected relationships",
       content: (

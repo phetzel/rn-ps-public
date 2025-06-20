@@ -4,6 +4,7 @@ import { Text } from "~/components/ui/text";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
 import LevelOverviewEvents from "~/components/shared/level-overview/LevelOverviewEvents";
+import LevelOverviewPress from "~/components/shared/level-overview/LevelOverviewPress";
 import LevelOverviewState from "~/components/shared/level-overview/LevelOverviewState";
 
 interface LevelOverviewContentProps {
@@ -40,6 +41,14 @@ export default function LevelOverviewContent({
         </TabsTrigger>
 
         <TabsTrigger
+          value="press"
+          className="flex-1"
+          accessibilityLabel="Level press"
+        >
+          <Text>Press</Text>
+        </TabsTrigger>
+
+        <TabsTrigger
           value="events"
           className="flex-1"
           accessibilityLabel="Level events"
@@ -62,6 +71,10 @@ export default function LevelOverviewContent({
         key={`changes-${currentTab}`}
       >
         <LevelOverviewState levelId={levelId} />
+      </TabsContent>
+
+      <TabsContent value="press" className="mt-4" key={`press-${currentTab}`}>
+        <LevelOverviewPress levelId={levelId} />
       </TabsContent>
 
       <TabsContent value="events" className="mt-4" key={`events-${currentTab}`}>
