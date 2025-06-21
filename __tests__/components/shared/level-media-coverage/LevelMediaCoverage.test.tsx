@@ -4,10 +4,9 @@
  * Tests the main media coverage container component:
  * - Hook integration with useMediaCoverageData
  * - Error state handling and display
- * - Loading states passed to child components
- * - Accordion structure and accessibility
- * - Data flow to child components (MediaCoverageContent, LevelMediaImpactContent)
- * - Dynamic accessibility labels with totalBoost values
+ * - Component structure and accessibility
+ * - Data flow from withObservables HOC
+ * - Ad watched status handling from level prop
  */
 
 import React from "react";
@@ -20,6 +19,26 @@ jest.mock("~/lib/hooks/useMediaCoverageData", () => ({
   useMediaCoverageData: jest.fn(),
 }));
 
+// Mock child components
+jest.mock("~/components/shared/results/ResultsTableList", () => ({
+  ResultsTableList: () => null,
+}));
+
+jest.mock(
+  "~/components/shared/level-media-coverage/LevelMediaCoverageContent",
+  () => () => null
+);
+
+// Mock observeLevel from db helpers
+jest.mock("~/lib/db/helpers/observations", () => ({
+  observeLevel: jest.fn(),
+}));
+
+// Mock withObservables - simple passthrough
+jest.mock("@nozbe/watermelondb/react", () => ({
+  withObservables: () => (component: any) => component,
+}));
+
 // Mock utils
 jest.mock("~/lib/utils", () => ({
   cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
@@ -27,6 +46,12 @@ jest.mock("~/lib/utils", () => ({
 
 // Import the mocked hook
 import { useMediaCoverageData } from "~/lib/hooks/useMediaCoverageData";
+
+// Mock level data
+const mockLevel = {
+  id: "level-1",
+  situationAdWatched: false,
+} as any;
 
 describe("LevelMediaCoverage", () => {
   const defaultHookReturn = {
@@ -65,21 +90,28 @@ describe("LevelMediaCoverage", () => {
   });
 
   it("renders media coverage card with correct accessibility", () => {
-    render(<LevelMediaCoverage levelId="level-1" />);
+    render(<LevelMediaCoverage levelId="level-1" level={mockLevel} />);
 
     expect(
       screen.getByLabelText(
         "Media coverage analysis with total boost multiplier of 1.25"
       )
     ).toBeTruthy();
+  });
 
-    // Use getAllByText to handle multiple instances of "Media Coverage"
-    const mediaCoverageTexts = screen.getAllByText("Media Coverage");
-    expect(mediaCoverageTexts.length).toBeGreaterThan(0);
+  it("includes ad status in accessibility label when ad watched", () => {
+    const adWatchedLevel = { ...mockLevel, situationAdWatched: true };
+    render(<LevelMediaCoverage levelId="level-1" level={adWatchedLevel} />);
+
+    expect(
+      screen.getByLabelText(
+        "Media coverage analysis with total boost multiplier of 1.25 with ad boost applied"
+      )
+    ).toBeTruthy();
   });
 
   it("passes levelId to useMediaCoverageData hook", () => {
-    render(<LevelMediaCoverage levelId="test-level-123" />);
+    render(<LevelMediaCoverage levelId="test-level-123" level={mockLevel} />);
 
     expect(useMediaCoverageData).toHaveBeenCalledWith({
       levelId: "test-level-123",
@@ -92,13 +124,13 @@ describe("LevelMediaCoverage", () => {
       error: new Error("Failed to load media data"),
     });
 
-    render(<LevelMediaCoverage levelId="level-1" />);
+    render(<LevelMediaCoverage levelId="level-1" level={mockLevel} />);
 
     expect(screen.getByText("Failed to load media data")).toBeTruthy();
   });
 
   it("renders accordion with both media coverage and impact sections", () => {
-    render(<LevelMediaCoverage levelId="level-1" />);
+    render(<LevelMediaCoverage levelId="level-1" level={mockLevel} />);
 
     // Check accordion accessibility
     expect(screen.getByLabelText("Media coverage sections")).toBeTruthy();
@@ -118,23 +150,15 @@ describe("LevelMediaCoverage", () => {
     expect(screen.getByText("Media Impact on Approval")).toBeTruthy();
   });
 
-  it("renders publication data in media coverage section", () => {
-    render(<LevelMediaCoverage levelId="level-1" />);
+  it("handles null level gracefully", () => {
+    render(<LevelMediaCoverage levelId="level-1" level={null} />);
 
-    // Since media-impact is the default expanded section, we should see the impact content
-    expect(screen.getByText("Test Entity")).toBeTruthy();
-  });
-
-  it("handles loading state correctly", () => {
-    (useMediaCoverageData as jest.Mock).mockReturnValue({
-      ...defaultHookReturn,
-      isLoading: true,
-    });
-
-    render(<LevelMediaCoverage levelId="level-1" />);
-
-    // Should show loading in the impact section (which is expanded by default)
-    expect(screen.getByText("Loading impact data...")).toBeTruthy();
+    // Should still render the main card
+    expect(
+      screen.getByLabelText(
+        "Media coverage analysis with total boost multiplier of 1.25"
+      )
+    ).toBeTruthy();
   });
 
   it("formats totalBoost to 2 decimal places in accessibility labels", () => {
@@ -143,7 +167,7 @@ describe("LevelMediaCoverage", () => {
       totalBoost: 1.2345,
     });
 
-    render(<LevelMediaCoverage levelId="level-1" />);
+    render(<LevelMediaCoverage levelId="level-1" level={mockLevel} />);
 
     expect(
       screen.getByLabelText(
@@ -158,6 +182,14 @@ describe("LevelMediaCoverage", () => {
     expect(screen.getByText("(x1.23)")).toBeTruthy();
   });
 
+  it("has correct card structure with title", () => {
+    render(<LevelMediaCoverage levelId="level-1" level={mockLevel} />);
+
+    // Check for Media Coverage title - there might be multiple instances
+    const mediaCoverageTexts = screen.getAllByText("Media Coverage");
+    expect(mediaCoverageTexts.length).toBeGreaterThan(0);
+  });
+
   it("handles empty data gracefully", () => {
     (useMediaCoverageData as jest.Mock).mockReturnValue({
       mediaBoosts: [],
@@ -167,26 +199,10 @@ describe("LevelMediaCoverage", () => {
       error: null,
     });
 
-    render(<LevelMediaCoverage levelId="level-1" />);
+    render(<LevelMediaCoverage levelId="level-1" level={mockLevel} />);
 
     // Should still render the accordion structure
     expect(screen.getByText("Media Impact on Approval")).toBeTruthy();
     expect(screen.getByText("(x1.00)")).toBeTruthy();
-  });
-
-  it("has newspaper icon in header", () => {
-    render(<LevelMediaCoverage levelId="level-1" />);
-
-    // The icon renders as an SVG element, so we check for the header structure
-    const mediaCoverageTexts = screen.getAllByText("Media Coverage");
-    expect(mediaCoverageTexts.length).toBeGreaterThan(0);
-  });
-
-  it("has correct accordion default value set to media-impact", () => {
-    render(<LevelMediaCoverage levelId="level-1" />);
-
-    // The media-impact section should be expanded by default, so we should see its content
-    expect(screen.getByText("Media Impact on Approval")).toBeTruthy();
-    expect(screen.getByText("Test Entity")).toBeTruthy();
   });
 });

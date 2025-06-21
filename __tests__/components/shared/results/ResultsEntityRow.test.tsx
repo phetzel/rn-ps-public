@@ -1,295 +1,345 @@
 /**
  * ResultsEntityRow Component Tests
  *
- * Tests individual entity row in results table:
- * - Displays entity name, title, current value, and deltas
- * - Proper formatting of positive/negative deltas
- * - Styling changes based on ad watched status
- * - Accessibility labels for each column section
- * - Handles entities with/without titles
- * - Column width percentages and layout
+ * Tests individual entity row component functionality:
+ * - Renders entity name, title, and all value columns
+ * - Handles showAdColumn and showBaseColumn props
+ * - Displays proper column values based on entity data
+ * - Conditional styling based on isAdWatched
+ * - Accessibility labels for all columns
+ * - Handles EntityWithDelta and EntityWithMediaDelta types
+ * - Proper column width calculations
  */
 
 import React from "react";
 import { render, screen } from "@testing-library/react-native";
 
 import { ResultsEntityRow } from "~/components/shared/results/ResultsEntityRow";
-import type { EntityWithDelta } from "~/types";
+import type { EntityWithDelta, EntityWithMediaDelta } from "~/types";
 
-// No mocks - testing actual component behavior
+// Mock calculateTableColumnWidths utility
+jest.mock("~/lib/utils", () => ({
+  ...jest.requireActual("~/lib/utils"),
+  calculateTableColumnWidths: jest.fn(() => ({
+    name: "40%",
+    data: "20%",
+  })),
+}));
 
 const createMockEntity = (
+  id: string,
+  name: string,
   overrides: Partial<EntityWithDelta> = {}
 ): EntityWithDelta => ({
-  id: "entity1",
-  name: "John Smith",
-  title: "Secretary of Defense",
-  role: "cabinet",
-  currentValue: 65,
+  id,
+  name,
+  title: `Title for ${name}`,
+  role: "cabinet" as any,
+  currentValue: 50,
   delta: 5,
   adBoostedDelta: 8,
   ...overrides,
 });
 
+const createMockMediaEntity = (
+  id: string,
+  name: string,
+  overrides: Partial<EntityWithMediaDelta> = {}
+): EntityWithMediaDelta => ({
+  id,
+  name,
+  title: `Title for ${name}`,
+  role: "cabinet" as any,
+  currentValue: 50,
+  delta: 5,
+  adBoostedDelta: 8,
+  preMediaDelta: 3,
+  ...overrides,
+});
+
 describe("ResultsEntityRow", () => {
   const defaultProps = {
-    entity: createMockEntity(),
+    entity: createMockEntity("1", "Test Entity"),
     isAdWatched: false,
   };
 
-  describe("entity name and title display", () => {
-    it("displays entity name and title", () => {
+  describe("basic rendering", () => {
+    it("renders entity name and title", () => {
       render(<ResultsEntityRow {...defaultProps} />);
 
-      expect(screen.getByText("John Smith")).toBeTruthy();
-      expect(screen.getByText("Secretary of Defense")).toBeTruthy();
+      expect(screen.getByText("Test Entity")).toBeTruthy();
+      expect(screen.getByText("Title for Test Entity")).toBeTruthy();
     });
 
-    it("has proper accessibility label for name section", () => {
+    it("renders entity name with accessibility label", () => {
       render(<ResultsEntityRow {...defaultProps} />);
 
       expect(
-        screen.getByLabelText("John Smith, Secretary of Defense")
+        screen.getByLabelText("Test Entity, Title for Test Entity")
       ).toBeTruthy();
     });
 
-    it("handles entity without title", () => {
-      const entityNoTitle = createMockEntity({ title: undefined });
-      render(<ResultsEntityRow entity={entityNoTitle} isAdWatched={false} />);
+    it("renders entity without title", () => {
+      const entityWithoutTitle = createMockEntity("1", "No Title Entity", {
+        title: undefined,
+      });
 
-      expect(screen.getByText("John Smith")).toBeTruthy();
-      expect(screen.queryByText("Secretary of Defense")).toBeNull();
-      expect(screen.getByLabelText("John Smith")).toBeTruthy();
-    });
-
-    it("handles empty title", () => {
-      const entityEmptyTitle = createMockEntity({ title: "" });
       render(
-        <ResultsEntityRow entity={entityEmptyTitle} isAdWatched={false} />
+        <ResultsEntityRow {...defaultProps} entity={entityWithoutTitle} />
       );
 
-      expect(screen.getByText("John Smith")).toBeTruthy();
-      expect(screen.getByLabelText("John Smith")).toBeTruthy();
+      expect(screen.getByText("No Title Entity")).toBeTruthy();
+      expect(screen.queryByText("Title for No Title Entity")).toBeNull();
+      expect(screen.getByLabelText("No Title Entity")).toBeTruthy();
     });
-  });
 
-  describe("current value display", () => {
-    it("displays current value", () => {
+    it("renders current value in start column", () => {
       render(<ResultsEntityRow {...defaultProps} />);
 
-      expect(screen.getByText("65")).toBeTruthy();
+      expect(screen.getByLabelText("Start value: 50")).toBeTruthy();
+      expect(screen.getByText("50")).toBeTruthy();
     });
 
-    it("has proper accessibility label for current value", () => {
+    it("renders delta in change column", () => {
       render(<ResultsEntityRow {...defaultProps} />);
 
-      expect(screen.getByLabelText("Current value: 65")).toBeTruthy();
-    });
-
-    it("handles zero current value", () => {
-      const entityZero = createMockEntity({ currentValue: 0 });
-      render(<ResultsEntityRow entity={entityZero} isAdWatched={false} />);
-
-      expect(screen.getByText("0")).toBeTruthy();
-      expect(screen.getByLabelText("Current value: 0")).toBeTruthy();
-    });
-
-    it("handles negative current value", () => {
-      const entityNegative = createMockEntity({ currentValue: -10 });
-      render(<ResultsEntityRow entity={entityNegative} isAdWatched={false} />);
-
-      expect(screen.getByText("-10")).toBeTruthy();
-      expect(screen.getByLabelText("Current value: -10")).toBeTruthy();
-    });
-  });
-
-  describe("base delta display", () => {
-    it("displays positive delta with plus sign", () => {
-      render(<ResultsEntityRow {...defaultProps} />);
-
+      expect(screen.getByLabelText("Change: plus 5")).toBeTruthy();
       expect(screen.getByText("+5")).toBeTruthy();
     });
-
-    it("has proper accessibility label for positive delta", () => {
-      render(<ResultsEntityRow {...defaultProps} />);
-
-      expect(screen.getByLabelText("Base change: plus 5")).toBeTruthy();
-    });
-
-    it("displays negative delta with minus sign", () => {
-      const entityNegativeDelta = createMockEntity({ delta: -3 });
-      render(
-        <ResultsEntityRow entity={entityNegativeDelta} isAdWatched={false} />
-      );
-
-      expect(screen.getByText("-3")).toBeTruthy();
-      expect(screen.getByLabelText("Base change: minus 3")).toBeTruthy();
-    });
-
-    it("displays zero delta", () => {
-      const entityZeroDelta = createMockEntity({ delta: 0 });
-      render(<ResultsEntityRow entity={entityZeroDelta} isAdWatched={false} />);
-
-      expect(screen.getByText("+0")).toBeTruthy();
-      expect(screen.getByLabelText("Base change: plus 0")).toBeTruthy();
-    });
   });
 
-  describe("ad boosted delta display", () => {
-    it("displays positive boosted delta with plus sign", () => {
+  describe("showAdColumn prop", () => {
+    it("shows ad boosted column by default", () => {
       render(<ResultsEntityRow {...defaultProps} />);
 
+      expect(screen.getByLabelText("Potential boost: plus 8")).toBeTruthy();
       expect(screen.getByText("+8")).toBeTruthy();
     });
 
-    it("has proper accessibility label for boosted delta when ad not watched", () => {
-      render(<ResultsEntityRow {...defaultProps} />);
+    it("shows ad boosted column when showAdColumn is true", () => {
+      render(<ResultsEntityRow {...defaultProps} showAdColumn={true} />);
 
       expect(screen.getByLabelText("Potential boost: plus 8")).toBeTruthy();
+      expect(screen.getByText("+8")).toBeTruthy();
     });
 
-    it("has proper accessibility label for boosted delta when ad watched", () => {
-      render(<ResultsEntityRow {...defaultProps} isAdWatched={true} />);
+    it("hides ad boosted column when showAdColumn is false", () => {
+      render(<ResultsEntityRow {...defaultProps} showAdColumn={false} />);
 
-      expect(screen.getByLabelText("Ad boosted: plus 8")).toBeTruthy();
-    });
-
-    it("displays negative boosted delta", () => {
-      const entityNegativeBoosted = createMockEntity({ adBoostedDelta: -2 });
-      render(
-        <ResultsEntityRow entity={entityNegativeBoosted} isAdWatched={false} />
-      );
-
-      expect(screen.getByText("-2")).toBeTruthy();
-      expect(screen.getByLabelText("Potential boost: minus 2")).toBeTruthy();
-    });
-
-    it("displays zero boosted delta", () => {
-      const entityZeroBoosted = createMockEntity({ adBoostedDelta: 0 });
-      render(
-        <ResultsEntityRow entity={entityZeroBoosted} isAdWatched={false} />
-      );
-
-      expect(screen.getByText("+0")).toBeTruthy();
-      expect(screen.getByLabelText("Potential boost: plus 0")).toBeTruthy();
-    });
-  });
-
-  describe("styling based on ad watched status", () => {
-    it("when ad not watched, base delta is colored and boosted is muted", () => {
-      render(<ResultsEntityRow {...defaultProps} />);
-
-      // Both deltas should be present, but styling behavior is tested through rendering
-      expect(screen.getByText("+5")).toBeTruthy(); // base delta
-      expect(screen.getByText("+8")).toBeTruthy(); // boosted delta
-    });
-
-    it("when ad watched, boosted delta is colored and base delta is muted", () => {
-      render(<ResultsEntityRow {...defaultProps} isAdWatched={true} />);
-
-      // Both deltas should be present, but styling behavior is tested through rendering
-      expect(screen.getByText("+5")).toBeTruthy(); // base delta
-      expect(screen.getByText("+8")).toBeTruthy(); // boosted delta
-    });
-  });
-
-  describe("accessibility", () => {
-    it("has proper accessibility labels for all sections", () => {
-      render(<ResultsEntityRow {...defaultProps} />);
-
-      expect(
-        screen.getByLabelText("John Smith, Secretary of Defense")
-      ).toBeTruthy();
-      expect(screen.getByLabelText("Current value: 65")).toBeTruthy();
-      expect(screen.getByLabelText("Base change: plus 5")).toBeTruthy();
-      expect(screen.getByLabelText("Potential boost: plus 8")).toBeTruthy();
-    });
-
-    it("accessibility labels change based on ad status", () => {
-      render(<ResultsEntityRow {...defaultProps} isAdWatched={true} />);
-
-      expect(screen.getByLabelText("Ad boosted: plus 8")).toBeTruthy();
       expect(screen.queryByLabelText("Potential boost: plus 8")).toBeNull();
+      expect(screen.queryByText("+8")).toBeNull();
+    });
+
+    it("updates accessibility label when ad is watched", () => {
+      render(
+        <ResultsEntityRow
+          {...defaultProps}
+          isAdWatched={true}
+          showAdColumn={true}
+        />
+      );
+
+      expect(screen.getByLabelText("Ad boosted: plus 8")).toBeTruthy();
     });
   });
 
-  describe("different entity types", () => {
-    it("handles president entity", () => {
-      const presidentEntity = createMockEntity({
-        name: "President Johnson",
-        title: "President of the United States",
-        role: "president",
-      });
+  describe("media data handling", () => {
+    it("shows base column for media entity when showAdColumn is false", () => {
+      const mediaEntity = createMockMediaEntity("1", "Media Entity");
 
-      render(<ResultsEntityRow entity={presidentEntity} isAdWatched={false} />);
+      render(
+        <ResultsEntityRow
+          entity={mediaEntity}
+          isAdWatched={false}
+          showAdColumn={false}
+        />
+      );
 
-      expect(screen.getByText("President Johnson")).toBeTruthy();
-      expect(screen.getByText("President of the United States")).toBeTruthy();
+      expect(screen.getByLabelText("Base change: plus 3")).toBeTruthy();
+      expect(screen.getByText("+3")).toBeTruthy();
     });
 
-    it("handles journalist entity", () => {
-      const journalistEntity = createMockEntity({
-        name: "Sarah Parker",
-        title: "CNN Reporter",
-        role: "journalist",
+    it("does not show base column for media entity when showAdColumn is true", () => {
+      const mediaEntity = createMockMediaEntity("1", "Media Entity");
+
+      render(
+        <ResultsEntityRow
+          entity={mediaEntity}
+          isAdWatched={false}
+          showAdColumn={true}
+        />
+      );
+
+      expect(screen.queryByLabelText("Base change: plus 3")).toBeNull();
+      expect(screen.queryByText("+3")).toBeNull();
+    });
+
+    it("handles negative preMediaDelta", () => {
+      const mediaEntity = createMockMediaEntity("1", "Media Entity", {
+        preMediaDelta: -2,
       });
 
       render(
-        <ResultsEntityRow entity={journalistEntity} isAdWatched={false} />
+        <ResultsEntityRow
+          entity={mediaEntity}
+          isAdWatched={false}
+          showAdColumn={false}
+        />
       );
 
-      expect(screen.getByText("Sarah Parker")).toBeTruthy();
-      expect(screen.getByText("CNN Reporter")).toBeTruthy();
+      expect(screen.getByLabelText("Base change: minus 2")).toBeTruthy();
+      expect(screen.getByText("-2")).toBeTruthy();
     });
 
-    it("handles subgroup entity", () => {
-      const subgroupEntity = createMockEntity({
-        name: "Urban Professionals",
-        title: undefined,
-        role: "subgroup",
+    it("does not show base column for regular entity", () => {
+      render(<ResultsEntityRow {...defaultProps} showAdColumn={false} />);
+
+      expect(screen.queryByLabelText("Base change: plus 3")).toBeNull();
+    });
+  });
+
+  describe("value formatting", () => {
+    it("formats positive delta values", () => {
+      const entity = createMockEntity("1", "Positive Entity", { delta: 10 });
+
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
+
+      expect(screen.getByLabelText("Change: plus 10")).toBeTruthy();
+      expect(screen.getByText("+10")).toBeTruthy();
+    });
+
+    it("formats negative delta values", () => {
+      const entity = createMockEntity("1", "Negative Entity", { delta: -5 });
+
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
+
+      expect(screen.getByLabelText("Change: minus 5")).toBeTruthy();
+      expect(screen.getByText("-5")).toBeTruthy();
+    });
+
+    it("formats zero delta values", () => {
+      const entity = createMockEntity("1", "Zero Entity", { delta: 0 });
+
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
+
+      expect(screen.getByLabelText("Change: plus 0")).toBeTruthy();
+      expect(screen.getByText("+0")).toBeTruthy();
+    });
+
+    it("formats positive ad boosted delta values", () => {
+      const entity = createMockEntity("1", "Positive Boosted", {
+        adBoostedDelta: 15,
       });
 
-      render(<ResultsEntityRow entity={subgroupEntity} isAdWatched={false} />);
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
 
-      expect(screen.getByText("Urban Professionals")).toBeTruthy();
-      expect(screen.getByLabelText("Urban Professionals")).toBeTruthy();
+      expect(screen.getByLabelText("Potential boost: plus 15")).toBeTruthy();
+      expect(screen.getByText("+15")).toBeTruthy();
+    });
+
+    it("formats negative ad boosted delta values", () => {
+      const entity = createMockEntity("1", "Negative Boosted", {
+        adBoostedDelta: -3,
+      });
+
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
+
+      expect(screen.getByLabelText("Potential boost: minus 3")).toBeTruthy();
+      expect(screen.getByText("-3")).toBeTruthy();
+    });
+  });
+
+  describe("isAdWatched styling", () => {
+    it("applies watched styling when ad is watched", () => {
+      const entity = createMockEntity("1", "Watched Entity", { delta: 5 });
+
+      render(
+        <ResultsEntityRow
+          entity={entity}
+          isAdWatched={true}
+          showAdColumn={true}
+        />
+      );
+
+      // Change column should be muted when ad is watched and ad column is shown
+      expect(screen.getByLabelText("Change: plus 5")).toBeTruthy();
+      // Ad boosted column should be highlighted
+      expect(screen.getByLabelText("Ad boosted: plus 8")).toBeTruthy();
+    });
+
+    it("applies normal styling when ad is not watched", () => {
+      const entity = createMockEntity("1", "Not Watched Entity", { delta: 5 });
+
+      render(
+        <ResultsEntityRow
+          entity={entity}
+          isAdWatched={false}
+          showAdColumn={true}
+        />
+      );
+
+      // Change column should be highlighted when ad is not watched
+      expect(screen.getByLabelText("Change: plus 5")).toBeTruthy();
+      // Ad boosted column should be muted
+      expect(screen.getByLabelText("Potential boost: plus 8")).toBeTruthy();
+    });
+
+    it("applies normal styling when showAdColumn is false", () => {
+      const entity = createMockEntity("1", "No Ad Column Entity", { delta: 5 });
+
+      render(
+        <ResultsEntityRow
+          entity={entity}
+          isAdWatched={true}
+          showAdColumn={false}
+        />
+      );
+
+      // Change column should be highlighted when no ad column
+      expect(screen.getByLabelText("Change: plus 5")).toBeTruthy();
     });
   });
 
   describe("edge cases", () => {
-    it("handles very large values", () => {
-      const largeValueEntity = createMockEntity({
-        currentValue: 999,
-        delta: 50,
-        adBoostedDelta: 75,
-      });
+    it("handles entity with empty name", () => {
+      const entity = createMockEntity("1", "", { title: "Just Title" });
 
-      render(
-        <ResultsEntityRow entity={largeValueEntity} isAdWatched={false} />
-      );
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
 
-      expect(screen.getByText("999")).toBeTruthy();
-      expect(screen.getByText("+50")).toBeTruthy();
-      expect(screen.getByText("+75")).toBeTruthy();
+      expect(screen.getByText("Just Title")).toBeTruthy();
+      expect(screen.getByLabelText(", Just Title")).toBeTruthy();
     });
 
-    it("handles very negative values", () => {
-      const negativeEntity = createMockEntity({
-        currentValue: -50,
-        delta: -10,
-        adBoostedDelta: -15,
+    it("handles entity with very large values", () => {
+      const entity = createMockEntity("1", "Large Values", {
+        currentValue: 999,
+        delta: 100,
+        adBoostedDelta: 150,
       });
 
-      render(<ResultsEntityRow entity={negativeEntity} isAdWatched={false} />);
+      render(<ResultsEntityRow entity={entity} isAdWatched={false} />);
 
-      expect(screen.getByText("-50")).toBeTruthy();
-      expect(screen.getByText("-10")).toBeTruthy();
-      expect(screen.getByText("-15")).toBeTruthy();
+      expect(screen.getByText("999")).toBeTruthy();
+      expect(screen.getByText("+100")).toBeTruthy();
+      expect(screen.getByText("+150")).toBeTruthy();
     });
 
     it("renders without errors", () => {
       expect(() =>
         render(<ResultsEntityRow {...defaultProps} />)
+      ).not.toThrow();
+    });
+
+    it("handles both entity types", () => {
+      const regularEntity = createMockEntity("1", "Regular");
+      const mediaEntity = createMockMediaEntity("2", "Media");
+
+      expect(() =>
+        render(<ResultsEntityRow entity={regularEntity} isAdWatched={false} />)
+      ).not.toThrow();
+
+      expect(() =>
+        render(<ResultsEntityRow entity={mediaEntity} isAdWatched={false} />)
       ).not.toThrow();
     });
   });

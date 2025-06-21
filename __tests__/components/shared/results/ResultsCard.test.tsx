@@ -1,194 +1,181 @@
 /**
  * ResultsCard Component Tests
  *
- * Tests main results card container:
- * - Shows proper accessibility labels with entity count and ad status
- * - Border styling based on ad watched status
- * - Header integration with ad functionality
- * - Custom messages for ad status
- * - Proper prop handling and rendering
+ * Tests results card component functionality:
+ * - Renders card with title and results content
+ * - Integrates with ResultsTableList and ResultsCardHeader
+ * - Handles different entity data scenarios
+ * - Proper accessibility labels and structure
  */
 
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
+import { render, screen } from "@testing-library/react-native";
 
 import { ResultsCard } from "~/components/shared/results/ResultsCard";
-import { EntityWithDelta } from "~/types";
+import type { EntityWithDelta } from "~/types";
 
-// No mocks - testing actual component behavior
+// Mock ResultsCardHeader
+jest.mock("~/components/shared/results/ResultsCardHeader", () => ({
+  __esModule: true,
+  default: ({ isAdWatched, onAdComplete }: any) => {
+    const { Text } = require("react-native");
+    return (
+      <Text testID="mocked-results-card-header">
+        {`Header: adWatched: ${isAdWatched}, hasCallback: ${!!onAdComplete}`}
+      </Text>
+    );
+  },
+}));
+
+// Mock ResultsTableList
+jest.mock("~/components/shared/results/ResultsTableList", () => ({
+  ResultsTableList: ({ enhancedDeltas, isAdWatched, showAdColumn }: any) => {
+    const { Text } = require("react-native");
+    return (
+      <Text testID="mocked-results-table-list">
+        {`TableList: ${
+          enhancedDeltas?.length || 0
+        } entities, adWatched: ${isAdWatched}, showAdColumn: ${showAdColumn}`}
+      </Text>
+    );
+  },
+}));
 
 const createMockEntity = (
   id: string,
   name: string,
-  role: string = "cabinet"
+  overrides: Partial<EntityWithDelta> = {}
 ): EntityWithDelta => ({
   id,
   name,
-  title: `Secretary of ${name}`,
-  role: role as any,
+  title: `Title for ${name}`,
+  role: "cabinet" as any,
   currentValue: 50,
   delta: 5,
   adBoostedDelta: 8,
+  ...overrides,
 });
 
 describe("ResultsCard", () => {
-  const mockEntities = [
-    createMockEntity("1", "Defense"),
-    createMockEntity("2", "State"),
-  ];
-
   const defaultProps = {
-    enhancedDeltas: mockEntities,
+    enhancedDeltas: [],
     isAdWatched: false,
   };
 
-  it("has proper accessibility label with entity count and ad status", () => {
-    render(<ResultsCard {...defaultProps} />);
+  describe("basic rendering", () => {
+    it("renders card with header", () => {
+      render(<ResultsCard {...defaultProps} />);
 
-    expect(
-      screen.getByLabelText(
-        "Results summary with 2 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  it("shows ad watched status in accessibility label", () => {
-    render(<ResultsCard {...defaultProps} isAdWatched={true} />);
-
-    expect(
-      screen.getByLabelText(
-        "Results summary with 2 entities. Ad boost applied."
-      )
-    ).toBeTruthy();
-  });
-
-  it("handles null enhancedDeltas", () => {
-    render(<ResultsCard {...defaultProps} enhancedDeltas={null} />);
-
-    expect(
-      screen.getByLabelText(
-        "Results summary with 0 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  it("handles empty enhancedDeltas array", () => {
-    render(<ResultsCard {...defaultProps} enhancedDeltas={[]} />);
-
-    expect(
-      screen.getByLabelText(
-        "Results summary with 0 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  it("renders with custom ad messages", () => {
-    const customAdWatchMessage = "Custom boost applied!";
-    const customAdNotWatchMessage = "Custom boost available!";
-
-    render(
-      <ResultsCard
-        {...defaultProps}
-        adWatchMessage={customAdWatchMessage}
-        adNotWatchMessage={customAdNotWatchMessage}
-      />
-    );
-
-    // Component should render without errors
-    expect(
-      screen.getByLabelText(
-        "Results summary with 2 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  it("renders with all optional props", () => {
-    const onAdComplete = jest.fn();
-    const customClass = "custom-results-card";
-
-    render(
-      <ResultsCard
-        {...defaultProps}
-        isAdWatched={false}
-        onAdComplete={onAdComplete}
-        adWatchMessage="Custom watched message"
-        adNotWatchMessage="Custom not watched message"
-        className={customClass}
-      />
-    );
-
-    expect(
-      screen.getByLabelText(
-        "Results summary with 2 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  it("renders without errors", () => {
-    expect(() => render(<ResultsCard {...defaultProps} />)).not.toThrow();
-  });
-
-  it("handles large number of entities", () => {
-    const manyEntities = Array.from({ length: 10 }, (_, i) =>
-      createMockEntity(`${i}`, `Entity${i}`)
-    );
-
-    render(<ResultsCard {...defaultProps} enhancedDeltas={manyEntities} />);
-
-    expect(
-      screen.getByLabelText(
-        "Results summary with 10 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  it("handles different entity roles", () => {
-    const mixedEntities = [
-      createMockEntity("pres1", "President", "president"),
-      createMockEntity("cab1", "Defense", "cabinet"),
-      createMockEntity("jour1", "Reporter", "journalist"),
-      createMockEntity("sub1", "Voters", "subgroup"),
-    ];
-
-    render(<ResultsCard {...defaultProps} enhancedDeltas={mixedEntities} />);
-
-    expect(
-      screen.getByLabelText(
-        "Results summary with 4 entities. Ad boost available."
-      )
-    ).toBeTruthy();
-  });
-
-  describe("header integration", () => {
-    it("passes onAdComplete to header", () => {
-      const onAdComplete = jest.fn();
-      render(<ResultsCard {...defaultProps} onAdComplete={onAdComplete} />);
-
-      // Header should render - we can't test the button directly since it's in a separate component
-      // but we can verify the component renders without error
+      expect(screen.getByTestId("mocked-results-card-header")).toBeTruthy();
       expect(
-        screen.getByLabelText(
-          "Results summary with 2 entities. Ad boost available."
+        screen.getByText("Header: adWatched: false, hasCallback: false")
+      ).toBeTruthy();
+    });
+
+    it("renders table list component", () => {
+      render(<ResultsCard {...defaultProps} />);
+
+      expect(screen.getByTestId("mocked-results-table-list")).toBeTruthy();
+      expect(
+        screen.getByText(
+          "TableList: 0 entities, adWatched: false, showAdColumn: true"
         )
       ).toBeTruthy();
     });
 
-    it("passes isAdWatched to header", () => {
-      render(<ResultsCard {...defaultProps} isAdWatched={true} />);
+    it("renders card with accessibility label", () => {
+      render(<ResultsCard {...defaultProps} />);
 
-      // Header should render with watched state
       expect(
         screen.getByLabelText(
-          "Results summary with 2 entities. Ad boost applied."
+          "Results summary with 0 entities. Ad boost available."
         )
       ).toBeTruthy();
     });
   });
 
-  describe("border styling", () => {
-    it("applies green border when ad is watched", () => {
+  describe("prop passing", () => {
+    it("passes enhancedDeltas to ResultsTableList", () => {
+      const entities = [
+        createMockEntity("1", "Entity One"),
+        createMockEntity("2", "Entity Two"),
+      ];
+
+      render(<ResultsCard {...defaultProps} enhancedDeltas={entities} />);
+
+      expect(
+        screen.getByText(
+          "TableList: 2 entities, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+
+    it("passes isAdWatched to both components", () => {
       render(<ResultsCard {...defaultProps} isAdWatched={true} />);
-      // Border styling is handled by className, component should render
+
+      expect(
+        screen.getByText("Header: adWatched: true, hasCallback: false")
+      ).toBeTruthy();
+      expect(
+        screen.getByText(
+          "TableList: 0 entities, adWatched: true, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+
+    it("passes onAdComplete callback to header", () => {
+      const mockCallback = jest.fn();
+      render(<ResultsCard {...defaultProps} onAdComplete={mockCallback} />);
+
+      expect(
+        screen.getByText("Header: adWatched: false, hasCallback: true")
+      ).toBeTruthy();
+    });
+
+    it("applies custom className", () => {
+      render(<ResultsCard {...defaultProps} className="custom-class" />);
+
+      expect(screen.getByTestId("mocked-results-card-header")).toBeTruthy();
+    });
+
+    it("always shows ad column in table list", () => {
+      render(<ResultsCard {...defaultProps} />);
+
+      expect(
+        screen.getByText(
+          "TableList: 0 entities, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+  });
+
+  describe("accessibility labels", () => {
+    it("shows correct label when ad not watched", () => {
+      const entities = [createMockEntity("1", "Entity One")];
+
+      render(<ResultsCard {...defaultProps} enhancedDeltas={entities} />);
+
+      expect(
+        screen.getByLabelText(
+          "Results summary with 1 entities. Ad boost available."
+        )
+      ).toBeTruthy();
+    });
+
+    it("shows correct label when ad watched", () => {
+      const entities = [
+        createMockEntity("1", "Entity One"),
+        createMockEntity("2", "Entity Two"),
+      ];
+
+      render(
+        <ResultsCard
+          {...defaultProps}
+          enhancedDeltas={entities}
+          isAdWatched={true}
+        />
+      );
+
       expect(
         screen.getByLabelText(
           "Results summary with 2 entities. Ad boost applied."
@@ -196,12 +183,138 @@ describe("ResultsCard", () => {
       ).toBeTruthy();
     });
 
-    it("applies blue border when ad is not watched", () => {
-      render(<ResultsCard {...defaultProps} isAdWatched={false} />);
-      // Border styling is handled by className, component should render
+    it("handles zero entities", () => {
+      render(<ResultsCard {...defaultProps} enhancedDeltas={[]} />);
+
       expect(
         screen.getByLabelText(
-          "Results summary with 2 entities. Ad boost available."
+          "Results summary with 0 entities. Ad boost available."
+        )
+      ).toBeTruthy();
+    });
+
+    it("handles null entities", () => {
+      render(<ResultsCard {...defaultProps} enhancedDeltas={null} />);
+
+      expect(
+        screen.getByLabelText(
+          "Results summary with 0 entities. Ad boost available."
+        )
+      ).toBeTruthy();
+    });
+  });
+
+  describe("different data scenarios", () => {
+    it("handles null enhancedDeltas", () => {
+      render(<ResultsCard {...defaultProps} enhancedDeltas={null} />);
+
+      expect(
+        screen.getByText(
+          "TableList: 0 entities, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+
+    it("handles empty enhancedDeltas array", () => {
+      render(<ResultsCard {...defaultProps} enhancedDeltas={[]} />);
+
+      expect(
+        screen.getByText(
+          "TableList: 0 entities, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+
+    it("handles single entity", () => {
+      const entities = [createMockEntity("1", "Single Entity")];
+
+      render(<ResultsCard {...defaultProps} enhancedDeltas={entities} />);
+
+      expect(
+        screen.getByText(
+          "TableList: 1 entities, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+
+    it("handles multiple entities", () => {
+      const entities = [
+        createMockEntity("1", "Entity One"),
+        createMockEntity("2", "Entity Two"),
+        createMockEntity("3", "Entity Three"),
+      ];
+
+      render(<ResultsCard {...defaultProps} enhancedDeltas={entities} />);
+
+      expect(
+        screen.getByText(
+          "TableList: 3 entities, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+  });
+
+  describe("component integration", () => {
+    it("renders both header and table list components", () => {
+      const entities = [createMockEntity("1", "Test Entity")];
+
+      render(
+        <ResultsCard
+          enhancedDeltas={entities}
+          isAdWatched={true}
+          onAdComplete={jest.fn()}
+        />
+      );
+
+      expect(
+        screen.getByText("Header: adWatched: true, hasCallback: true")
+      ).toBeTruthy();
+      expect(
+        screen.getByText(
+          "TableList: 1 entities, adWatched: true, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
+
+    it("maintains component structure", () => {
+      render(<ResultsCard {...defaultProps} />);
+
+      // Both components should be present
+      expect(screen.getByTestId("mocked-results-card-header")).toBeTruthy();
+      expect(screen.getByTestId("mocked-results-table-list")).toBeTruthy();
+    });
+  });
+
+  describe("edge cases", () => {
+    it("renders without errors", () => {
+      expect(() => render(<ResultsCard {...defaultProps} />)).not.toThrow();
+    });
+
+    it("handles various prop combinations", () => {
+      const entities = [createMockEntity("1", "Test Entity")];
+
+      expect(() =>
+        render(
+          <ResultsCard
+            enhancedDeltas={entities}
+            isAdWatched={true}
+            onAdComplete={jest.fn()}
+            className="test-class"
+          />
+        )
+      ).not.toThrow();
+    });
+
+    it("handles large entity arrays", () => {
+      const entities = Array.from({ length: 10 }, (_, i) =>
+        createMockEntity(`${i}`, `Entity ${i}`)
+      );
+
+      render(<ResultsCard {...defaultProps} enhancedDeltas={entities} />);
+
+      expect(
+        screen.getByLabelText(
+          "Results summary with 10 entities. Ad boost available."
         )
       ).toBeTruthy();
     });

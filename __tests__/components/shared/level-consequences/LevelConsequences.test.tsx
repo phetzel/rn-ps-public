@@ -90,6 +90,7 @@ describe("LevelConsequences", () => {
     game_id: "game-1",
     year: 1,
     month: 6,
+    parseOutcomeSnapshot: null, // Will be set per test
   } as Level;
 
   const mockCabinetMembers: CabinetMember[] = [
@@ -129,13 +130,17 @@ describe("LevelConsequences", () => {
 
   describe("when outcome snapshot is complete", () => {
     it("should render both risk card and consequences card", () => {
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: mockCompleteOutcomeSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={mockCompleteOutcomeSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -145,13 +150,17 @@ describe("LevelConsequences", () => {
     });
 
     it("should display cabinet member information", () => {
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: mockCompleteOutcomeSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={mockCompleteOutcomeSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -169,13 +178,17 @@ describe("LevelConsequences", () => {
         },
       };
 
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: outcomesWithFiredMembers,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={outcomesWithFiredMembers}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -194,13 +207,17 @@ describe("LevelConsequences", () => {
         consequences: mockConsequences,
       };
 
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: incompleteSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={incompleteSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -219,13 +236,17 @@ describe("LevelConsequences", () => {
         consequences: undefined,
       };
 
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: incompleteSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={incompleteSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -240,13 +261,17 @@ describe("LevelConsequences", () => {
 
   describe("accessibility", () => {
     it("should have proper accessibility labels for complete state", () => {
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: mockCompleteOutcomeSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={mockCompleteOutcomeSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -263,13 +288,17 @@ describe("LevelConsequences", () => {
         consequences: undefined,
       };
 
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: incompleteSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={incompleteSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -293,13 +322,17 @@ describe("LevelConsequences", () => {
         },
       };
 
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: gameEndedSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={gameEndedSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
@@ -318,13 +351,17 @@ describe("LevelConsequences", () => {
         },
       };
 
+      const levelWithSnapshot = {
+        ...mockLevel,
+        parseOutcomeSnapshot: gameEndedSnapshot,
+      };
+
       const EnhancedComponent = LevelConsequences;
 
       render(
         <EnhancedComponent
           levelId="level-1"
-          outcomeSnapshot={gameEndedSnapshot}
-          testLevel={mockLevel}
+          testLevel={levelWithSnapshot}
           testCabinetMembers={mockCabinetMembers}
         />
       );
