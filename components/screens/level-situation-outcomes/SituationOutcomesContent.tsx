@@ -5,7 +5,7 @@ import { observeGame, observeLevel } from "~/lib/db/helpers/observations";
 import type { Game, Level } from "~/lib/db/models";
 // Components
 import { OutcomesContent } from "~/components/shared/OutcomesContent";
-import SituationResults from "~/components/screens/level-situation-outcomes/SituationResults";
+import SituationReview from "~/components/screens/level-situation-outcomes/SituationReview";
 import LevelMediaCoverage from "~/components/shared/level-media-coverage/LevelMediaCoverage";
 import SituationsOutcomeList from "~/components/shared/situations-outcome-list/SituationsOutcomeList";
 // Types
@@ -51,20 +51,20 @@ const SituationOutcomesContent = ({
       content: <SituationsOutcomeList levelId={levelId} />,
     },
     {
-      value: "media",
-      label: "Coverage",
-      accessibilityLabel: "Media coverage",
+      value: "results",
+      label: "Results",
+      accessibilityLabel: "Situation results",
       accessibilityHint: "See how media reported on the situations and events",
       content: <LevelMediaCoverage levelId={levelId} />,
     },
     {
-      value: "results",
-      label: "Results",
-      accessibilityLabel: "Situation results",
+      value: "review",
+      label: "Review",
+      accessibilityLabel: "Situation review",
       accessibilityHint:
         "Review how situation outcomes affected your situation approval changes",
       content: (
-        <SituationResults
+        <SituationReview
           isAdWatched={isAdWatched}
           onAdComplete={handleAdComplete}
         />

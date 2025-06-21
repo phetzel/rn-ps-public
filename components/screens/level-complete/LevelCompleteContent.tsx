@@ -1,4 +1,3 @@
-import { useState, ReactNode } from "react";
 import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
@@ -6,25 +5,11 @@ import { observeLevel } from "~/lib/db/helpers/observations";
 import type { Level } from "~/lib/db/models";
 import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 // Components
-import { CardHeader, CardTitle } from "~/components/ui/card";
-import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
-import CabinetLevelState from "~/components/screens/level-complete/CabinetLevelState";
-import PresidentLevelState from "~/components/screens/level-complete/PresidentLevelState";
-import MediaLevelState from "~/components/screens/level-complete/MediaLevelState";
-import SubgroupLevelState from "~/components/screens/level-complete/SubgroupLevelState";
-import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
-// Icons
-import { Award, Briefcase, Newspaper, Shield, Users } from "~/lib/icons";
+import { Button } from "~/components/ui/button";
+import { Text } from "~/components/ui/text";
+import LevelOverviewContent from "~/components/shared/level-overview/LevelOverviewContent";
 // Types
 import { LevelStatus } from "~/types";
-
-interface TabConfig {
-  id: string;
-  label: string;
-  icon: ReactNode;
-  component: React.ComponentType<any>;
-  props?: Record<string, any>;
-}
 
 interface LevelCompleteContentProps {
   gameId: string;
@@ -37,8 +22,6 @@ const LevelCompleteContent = ({
   levelId,
   level,
 }: LevelCompleteContentProps) => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-
   const {
     progressAndNavigate,
     navigateToCurrentLevelScreen,
@@ -53,57 +36,6 @@ const LevelCompleteContent = ({
 
   const isLevelGameOver = snapshot.consequences?.gameEnded || false;
 
-  // Define all tabs with their configs
-  const tabs: TabConfig[] = [
-    {
-      id: "administration",
-      label: "President Monthly Update",
-      icon: <Award className="text-primary" />,
-      component: PresidentLevelState,
-      props: { gameId, outcomeSnapshot: snapshot },
-    },
-    {
-      id: "cabinet",
-      label: "Cabinet Monthly Update",
-      icon: <Briefcase className="text-primary" />,
-      component: CabinetLevelState,
-      props: { levelId, outcomeSnapshot: snapshot },
-    },
-    {
-      id: "media",
-      label: "Media Monthly Update",
-      icon: <Newspaper className="text-primary" />,
-      component: MediaLevelState,
-      props: { outcomeSnapshot: snapshot },
-    },
-    {
-      id: "subgroups",
-      label: "Subgroup Monthly Update",
-      icon: <Users className="text-primary" />,
-      component: SubgroupLevelState,
-      props: { gameId, levelId, outcomeSnapshot: snapshot },
-    },
-    {
-      id: "consequences",
-      label: "Level Consequences",
-      icon: <Shield className="text-primary" />,
-      component: LevelConsequences,
-      props: { levelId, outcomeSnapshot: snapshot },
-    },
-  ];
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < tabs.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
   const handleComplete = async () => {
     try {
       if (isLevelGameOver) {
@@ -117,44 +49,29 @@ const LevelCompleteContent = ({
         }
       }
     } catch (error) {
-      console.error("Failed to complete situation outcomes:", error);
+      console.error("Failed to complete level:", error);
     }
   };
 
-  const currentTab = tabs[currentIndex];
-  const TabComponent = currentTab.component;
-
   return (
-    <View
-      className="gap-4"
-      accessible={true}
-      accessibilityLabel={`Level complete summary: ${
-        currentTab.label
-      }. Section ${currentIndex + 1} of ${tabs.length}.`}
-    >
-      <ProgressNavigator
-        currentIndex={currentIndex}
-        totalItems={tabs.length}
-        onPrevious={handlePrevious}
-        onNext={handleNext}
-        onComplete={isLevelGameOver ? undefined : handleComplete}
-        progressLabel={`${currentTab.label} (${currentIndex + 1} of ${
-          tabs.length
-        })`}
-        headerContent={
-          <CardHeader
-            className="flex-row items-center gap-2"
+    <View className="gap-4">
+      <LevelOverviewContent levelId={levelId} />
+
+      {/* Completion Button - only show if game is not over */}
+      {!isLevelGameOver && (
+        <View className="pt-4 border-t border-border">
+          <Button
+            onPress={handleComplete}
+            className="w-full"
             accessible={true}
-            accessibilityRole="header"
-            accessibilityLabel={`Current section: ${currentTab.label}`}
+            accessibilityRole="button"
+            accessibilityLabel="Continue to next month"
+            accessibilityHint="Proceed to the next month after reviewing level results"
           >
-            {currentTab.icon}
-            <CardTitle>{currentTab.label}</CardTitle>
-          </CardHeader>
-        }
-      >
-        <TabComponent {...currentTab.props} />
-      </ProgressNavigator>
+            <Text accessible={false}>Proceed to next month</Text>
+          </Button>
+        </View>
+      )}
     </View>
   );
 };

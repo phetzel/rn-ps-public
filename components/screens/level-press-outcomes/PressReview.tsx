@@ -1,37 +1,37 @@
 import React, { useEffect, useState } from "react";
 
 // Components
-import { ResultsCard } from "~/components/shared/results/ResultsCard"; // Store
+import { ResultsCard } from "~/components/shared/results/ResultsCard";
+// Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
-import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers";
-// Typess
-import { EntityWithMediaDelta } from "~/types";
+import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers";
+// Types
+import { EntityWithDelta } from "~/types";
 
-interface SituationResultsProps {
+interface PressReviewProps {
   isAdWatched: boolean;
   onAdComplete: () => void;
 }
 
-export default function SituationResults({
+export default function PressReview({
   isAdWatched,
   onAdComplete,
-}: SituationResultsProps) {
+}: PressReviewProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<
-    EntityWithMediaDelta[] | null
+    EntityWithDelta[] | null
   >(null);
 
   const { currentLevelId } = useCurrentLevelStore((state) => ({
     currentLevelId: state.currentLevelId,
-    progressCurrentLevel: state.progressCurrentLevel,
   }));
 
   useEffect(() => {
     async function loadDeltas() {
       if (!currentLevelId) return;
 
-      const results = await getEnhancedSituationOutcomeDeltas(currentLevelId);
-      setEnhancedDeltas(results.deltas);
+      const results = await getEnhancedRelationshipDeltas(currentLevelId);
+      setEnhancedDeltas(results);
     }
 
     loadDeltas();
@@ -42,7 +42,6 @@ export default function SituationResults({
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
-      adWatchMessage="You've successfully boosted your situation approval changes!"
     />
   );
 }

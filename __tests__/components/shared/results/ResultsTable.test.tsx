@@ -1,354 +1,328 @@
 /**
  * ResultsTable Component Tests
  *
- * Tests results table with entity grouping:
- * - Groups entities by role (president, cabinet, journalists, subgroups)
- * - Shows appropriate sections: Admin, Journalists, Groups
- * - Header row with column labels
- * - Ad status messages
- * - Entity counting and section visibility logic
- * - Accessibility labels for sections and tables
+ * Tests results table component functionality:
+ * - Renders table with entities, titles, and column headers
+ * - Handles isAdWatched and showAdColumn props
+ * - Shows/hides columns based on media data and props
+ * - Calculates proper column widths
+ * - Handles empty/null entity arrays
+ * - Accessibility labels and table structure
+ * - Passes correct props to ResultsEntityRow
  */
 
 import React from "react";
 import { render, screen } from "@testing-library/react-native";
 
 import { ResultsTable } from "~/components/shared/results/ResultsTable";
-import type { EntityWithDelta } from "~/types";
+import type { EntityWithDelta, EntityWithMediaDelta } from "~/types";
 
-// No mocks - testing actual component behavior
+// Mock ResultsEntityRow
+jest.mock("~/components/shared/results/ResultsEntityRow", () => ({
+  ResultsEntityRow: ({ entity, isAdWatched, showAdColumn }: any) => {
+    const { Text } = require("react-native");
+    return (
+      <Text testID={`mocked-entity-row-${entity.id}`}>
+        {`EntityRow: ${entity.name}, adWatched: ${isAdWatched}, showAdColumn: ${showAdColumn}`}
+      </Text>
+    );
+  },
+}));
+
+// Mock calculateTableColumnWidths
+jest.mock("~/lib/utils", () => ({
+  ...jest.requireActual("~/lib/utils"),
+  calculateTableColumnWidths: jest.fn(() => ({
+    name: "40%",
+    data: "20%",
+  })),
+}));
 
 const createMockEntity = (
   id: string,
   name: string,
-  role: string,
   overrides: Partial<EntityWithDelta> = {}
 ): EntityWithDelta => ({
   id,
   name,
   title: `Title for ${name}`,
-  role: role as any,
+  role: "cabinet" as any,
   currentValue: 50,
   delta: 5,
   adBoostedDelta: 8,
   ...overrides,
 });
 
+const createMockMediaEntity = (
+  id: string,
+  name: string,
+  overrides: Partial<EntityWithMediaDelta> = {}
+): EntityWithMediaDelta => ({
+  id,
+  name,
+  title: `Title for ${name}`,
+  role: "cabinet" as any,
+  currentValue: 50,
+  delta: 5,
+  adBoostedDelta: 8,
+  preMediaDelta: 3,
+  ...overrides,
+});
+
 describe("ResultsTable", () => {
   const defaultProps = {
-    enhancedDeltas: null,
+    entities: [],
+    title: "Test Table",
     isAdWatched: false,
-    adMessage: {
-      watched: "Ad boost applied!",
-      notWatched: "Ad boost available!",
-    },
   };
 
   describe("empty/null data handling", () => {
-    it("renders with null enhancedDeltas", () => {
-      render(<ResultsTable {...defaultProps} />);
-
-      expect(
-        screen.getByLabelText("Results table. Ad boost available!")
-      ).toBeTruthy();
-      expect(screen.getByText("Ad boost available!")).toBeTruthy();
+    it("returns null when entities array is empty", () => {
+      const result = render(<ResultsTable {...defaultProps} entities={[]} />);
+      expect(result.toJSON()).toBeNull();
     });
 
-    it("renders with empty enhancedDeltas array", () => {
-      render(<ResultsTable {...defaultProps} enhancedDeltas={[]} />);
-
-      expect(
-        screen.getByLabelText("Results table. Ad boost available!")
-      ).toBeTruthy();
-      expect(screen.getByText("Ad boost available!")).toBeTruthy();
-    });
-  });
-
-  describe("ad status messages", () => {
-    it("shows not watched message when ad not watched", () => {
-      render(<ResultsTable {...defaultProps} />);
-
-      expect(screen.getByText("Ad boost available!")).toBeTruthy();
-      expect(
-        screen.getByLabelText("Results table. Ad boost available!")
-      ).toBeTruthy();
+    it("returns null when entities is null", () => {
+      const result = render(
+        <ResultsTable {...defaultProps} entities={null as any} />
+      );
+      expect(result.toJSON()).toBeNull();
     });
 
-    it("shows watched message when ad watched", () => {
-      render(<ResultsTable {...defaultProps} isAdWatched={true} />);
-
-      expect(screen.getByText("Ad boost applied!")).toBeTruthy();
-      expect(
-        screen.getByLabelText("Results table. Ad boost applied!")
-      ).toBeTruthy();
-    });
-
-    it("ad status message has live region accessibility", () => {
-      render(<ResultsTable {...defaultProps} />);
-
-      const message = screen.getByText("Ad boost available!");
-      expect(message).toHaveProp("accessibilityLiveRegion", "polite");
-      expect(message).toHaveProp("accessibilityLabel", "Ad boost available!");
+    it("returns null when entities is undefined", () => {
+      const result = render(
+        <ResultsTable {...defaultProps} entities={undefined as any} />
+      );
+      expect(result.toJSON()).toBeNull();
     });
   });
 
-  describe("table header", () => {
-    it("renders table header row", () => {
-      render(<ResultsTable {...defaultProps} enhancedDeltas={[]} />);
+  describe("basic rendering", () => {
+    it("renders table with title and entities", () => {
+      const entities = [
+        createMockEntity("1", "Entity One"),
+        createMockEntity("2", "Entity Two"),
+      ];
+
+      render(<ResultsTable {...defaultProps} entities={entities} />);
+
+      expect(screen.getByText("Test Table")).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-1")).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-2")).toBeTruthy();
+    });
+
+    it("renders section title with accessibility label", () => {
+      const entities = [createMockEntity("1", "Entity One")];
+
+      render(<ResultsTable {...defaultProps} entities={entities} />);
+
+      expect(
+        screen.getByLabelText("Test Table section with 1 entities")
+      ).toBeTruthy();
+    });
+
+    it("renders table headers", () => {
+      const entities = [createMockEntity("1", "Entity One")];
+
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
       expect(screen.getByText("Name")).toBeTruthy();
-      expect(screen.getByText("Current")).toBeTruthy();
+      expect(screen.getByText("Start")).toBeTruthy();
       expect(screen.getByText("Change")).toBeTruthy();
       expect(screen.getByText("Boosted")).toBeTruthy();
     });
 
-    it("has proper accessibility label for header", () => {
-      render(<ResultsTable {...defaultProps} enhancedDeltas={[]} />);
+    it("renders table header with accessibility label", () => {
+      const entities = [createMockEntity("1", "Entity One")];
+
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
       expect(
         screen.getByLabelText(
-          "Table columns: Entity name, Current value, Base change, Ad boosted change"
-        )
-      ).toBeTruthy();
-    });
-
-    it("has accessibility label for comparison table", () => {
-      render(<ResultsTable {...defaultProps} enhancedDeltas={[]} />);
-
-      expect(
-        screen.getByLabelText(
-          "Results comparison table showing current values, base changes, and ad-boosted changes"
+          "Table columns: Entity name, Start value, Change, Ad boosted change"
         )
       ).toBeTruthy();
     });
   });
 
-  describe("Admin section", () => {
-    it("shows Admin section with president entities", () => {
-      const entities = [
-        createMockEntity("pres1", "President Johnson", "president"),
-      ];
+  describe("column display logic", () => {
+    it("shows boosted column when showAdColumn is true (default)", () => {
+      const entities = [createMockEntity("1", "Entity One")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
-      expect(screen.getByText("Admin")).toBeTruthy();
-      expect(screen.getByText("President Johnson")).toBeTruthy();
+      expect(screen.getByText("Boosted")).toBeTruthy();
+      expect(screen.queryByText("Base")).toBeNull();
     });
 
-    it("shows Admin section with cabinet entities", () => {
-      const entities = [
-        createMockEntity("cab1", "Secretary of Defense", "cabinet"),
-      ];
+    it("hides boosted column when showAdColumn is false", () => {
+      const entities = [createMockEntity("1", "Entity One")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(
+        <ResultsTable
+          {...defaultProps}
+          entities={entities}
+          showAdColumn={false}
+        />
+      );
 
-      expect(screen.getByText("Admin")).toBeTruthy();
-      expect(screen.getByText("Secretary of Defense")).toBeTruthy();
+      expect(screen.queryByText("Boosted")).toBeNull();
     });
 
-    it("shows Admin section with both president and cabinet", () => {
-      const entities = [
-        createMockEntity("pres1", "President Johnson", "president"),
-        createMockEntity("cab1", "Secretary of Defense", "cabinet"),
-        createMockEntity("cab2", "Secretary of State", "cabinet"),
-      ];
+    it("shows base column when media data present and showAdColumn is false", () => {
+      const entities = [createMockMediaEntity("1", "Media Entity")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(
+        <ResultsTable
+          {...defaultProps}
+          entities={entities}
+          showAdColumn={false}
+        />
+      );
 
-      expect(screen.getByText("Admin")).toBeTruthy();
-      expect(
-        screen.getByLabelText("Administration section with 3 entities")
-      ).toBeTruthy();
-      expect(screen.getByText("President Johnson")).toBeTruthy();
-      expect(screen.getByText("Secretary of Defense")).toBeTruthy();
-      expect(screen.getByText("Secretary of State")).toBeTruthy();
+      expect(screen.getByText("Base")).toBeTruthy();
+      expect(screen.queryByText("Boosted")).toBeNull();
     });
 
-    it("does not show Admin section when no admin entities", () => {
-      const entities = [
-        createMockEntity("jour1", "Reporter Smith", "journalist"),
-      ];
+    it("does not show base column when media data present but showAdColumn is true", () => {
+      const entities = [createMockMediaEntity("1", "Media Entity")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
-      expect(screen.queryByText("Admin")).toBeNull();
-    });
-  });
-
-  describe("Journalists section", () => {
-    it("shows Journalists section with journalist entities", () => {
-      const entities = [
-        createMockEntity("jour1", "Reporter Smith", "journalist"),
-        createMockEntity("jour2", "Anchor Jones", "journalist"),
-      ];
-
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
-
-      expect(screen.getByText("Journalists")).toBeTruthy();
-      expect(
-        screen.getByLabelText("Journalists section with 2 entities")
-      ).toBeTruthy();
-      expect(screen.getByText("Reporter Smith")).toBeTruthy();
-      expect(screen.getByText("Anchor Jones")).toBeTruthy();
+      expect(screen.queryByText("Base")).toBeNull();
+      expect(screen.getByText("Boosted")).toBeTruthy();
     });
 
-    it("does not show Journalists section when no journalist entities", () => {
-      const entities = [
-        createMockEntity("cab1", "Secretary of Defense", "cabinet"),
-      ];
+    it("updates accessibility label based on shown columns", () => {
+      const entities = [createMockMediaEntity("1", "Media Entity")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
-
-      expect(screen.queryByText("Journalists")).toBeNull();
-    });
-  });
-
-  describe("Groups section", () => {
-    it("shows Groups section with subgroup entities", () => {
-      const entities = [
-        createMockEntity("sub1", "Urban Professionals", "subgroup"),
-        createMockEntity("sub2", "Rural Voters", "subgroup"),
-      ];
-
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
-
-      expect(screen.getByText("Groups")).toBeTruthy();
-      expect(
-        screen.getByLabelText("Voter groups section with 2 entities")
-      ).toBeTruthy();
-      expect(screen.getByText("Urban Professionals")).toBeTruthy();
-      expect(screen.getByText("Rural Voters")).toBeTruthy();
-    });
-
-    it("does not show Groups section when no subgroup entities", () => {
-      const entities = [
-        createMockEntity("jour1", "Reporter Smith", "journalist"),
-      ];
-
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
-
-      expect(screen.queryByText("Groups")).toBeNull();
-    });
-  });
-
-  describe("all sections together", () => {
-    it("shows all sections when all entity types present", () => {
-      const entities = [
-        createMockEntity("pres1", "President Johnson", "president"),
-        createMockEntity("cab1", "Secretary of Defense", "cabinet"),
-        createMockEntity("jour1", "Reporter Smith", "journalist"),
-        createMockEntity("sub1", "Urban Professionals", "subgroup"),
-      ];
-
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
-
-      expect(screen.getByText("Admin")).toBeTruthy();
-      expect(screen.getByText("Journalists")).toBeTruthy();
-      expect(screen.getByText("Groups")).toBeTruthy();
+      render(
+        <ResultsTable
+          {...defaultProps}
+          entities={entities}
+          showAdColumn={false}
+        />
+      );
 
       expect(
-        screen.getByLabelText("Administration section with 2 entities")
-      ).toBeTruthy();
-      expect(
-        screen.getByLabelText("Journalists section with 1 entities")
-      ).toBeTruthy();
-      expect(
-        screen.getByLabelText("Voter groups section with 1 entities")
+        screen.getByLabelText(
+          "Table columns: Entity name, Start value, Base change, Change"
+        )
       ).toBeTruthy();
     });
   });
 
-  describe("section headers accessibility", () => {
-    it("section headers have proper accessibility roles", () => {
-      const entities = [
-        createMockEntity("pres1", "President Johnson", "president"),
-        createMockEntity("jour1", "Reporter Smith", "journalist"),
-        createMockEntity("sub1", "Urban Professionals", "subgroup"),
-      ];
+  describe("prop passing to ResultsEntityRow", () => {
+    it("passes isAdWatched prop to entity rows", () => {
+      const entities = [createMockEntity("1", "Entity One")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(
+        <ResultsTable
+          {...defaultProps}
+          entities={entities}
+          isAdWatched={true}
+        />
+      );
 
-      const adminHeader = screen.getByText("Admin");
-      const journalistsHeader = screen.getByText("Journalists");
-      const groupsHeader = screen.getByText("Groups");
+      expect(
+        screen.getByText(
+          "EntityRow: Entity One, adWatched: true, showAdColumn: true"
+        )
+      ).toBeTruthy();
+    });
 
-      expect(adminHeader).toHaveProp("accessibilityRole", "header");
-      expect(journalistsHeader).toHaveProp("accessibilityRole", "header");
-      expect(groupsHeader).toHaveProp("accessibilityRole", "header");
+    it("passes showAdColumn prop to entity rows", () => {
+      const entities = [createMockEntity("1", "Entity One")];
+
+      render(
+        <ResultsTable
+          {...defaultProps}
+          entities={entities}
+          showAdColumn={false}
+        />
+      );
+
+      expect(
+        screen.getByText(
+          "EntityRow: Entity One, adWatched: false, showAdColumn: false"
+        )
+      ).toBeTruthy();
+    });
+
+    it("uses default showAdColumn value when not provided", () => {
+      const entities = [createMockEntity("1", "Entity One")];
+
+      render(<ResultsTable {...defaultProps} entities={entities} />);
+
+      expect(
+        screen.getByText(
+          "EntityRow: Entity One, adWatched: false, showAdColumn: true"
+        )
+      ).toBeTruthy();
     });
   });
 
-  describe("entity content display", () => {
-    it("displays entity data correctly in rows", () => {
+  describe("multiple entities", () => {
+    it("renders all entities in the array", () => {
       const entities = [
-        createMockEntity("test1", "Test Entity", "cabinet", {
-          currentValue: 75,
-          delta: 10,
-          adBoostedDelta: 15,
-        }),
+        createMockEntity("1", "Entity One"),
+        createMockEntity("2", "Entity Two"),
+        createMockEntity("3", "Entity Three"),
       ];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
-      expect(screen.getByText("Test Entity")).toBeTruthy();
-      expect(screen.getByText("75")).toBeTruthy();
-      expect(screen.getByText("+10")).toBeTruthy();
-      expect(screen.getByText("+15")).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-1")).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-2")).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-3")).toBeTruthy();
     });
 
-    it("shows entities in correct sections based on role", () => {
+    it("updates section title count for multiple entities", () => {
       const entities = [
-        createMockEntity("pres1", "President", "president"),
-        createMockEntity("cab1", "Cabinet Member", "cabinet"),
-        createMockEntity("jour1", "Journalist", "journalist"),
-        createMockEntity("sub1", "Subgroup", "subgroup"),
+        createMockEntity("1", "Entity One"),
+        createMockEntity("2", "Entity Two"),
       ];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
-      // President and Cabinet should appear under Admin
-      expect(screen.getByText("Admin")).toBeTruthy();
-      expect(screen.getByText("President")).toBeTruthy();
-      expect(screen.getByText("Cabinet Member")).toBeTruthy();
+      expect(
+        screen.getByLabelText("Test Table section with 2 entities")
+      ).toBeTruthy();
+    });
+  });
 
-      // Journalist should appear under Journalists
-      expect(screen.getByText("Journalists")).toBeTruthy();
-      expect(screen.getByText("Journalist")).toBeTruthy();
+  describe("mixed entity types", () => {
+    it("handles mix of EntityWithDelta and EntityWithMediaDelta", () => {
+      const entities = [
+        createMockEntity("1", "Regular Entity"),
+        createMockMediaEntity("2", "Media Entity"),
+      ];
 
-      // Subgroup should appear under Groups
-      expect(screen.getByText("Groups")).toBeTruthy();
-      expect(screen.getByText("Subgroup")).toBeTruthy();
+      render(<ResultsTable {...defaultProps} entities={entities} />);
+
+      expect(screen.getByTestId("mocked-entity-row-1")).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-2")).toBeTruthy();
     });
   });
 
   describe("edge cases", () => {
-    it("handles empty arrays for specific roles", () => {
-      const entities: EntityWithDelta[] = [];
+    it("handles single entity", () => {
+      const entities = [createMockEntity("1", "Single Entity")];
 
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
+      render(<ResultsTable {...defaultProps} entities={entities} />);
 
-      expect(screen.queryByText("Admin")).toBeNull();
-      expect(screen.queryByText("Journalists")).toBeNull();
-      expect(screen.queryByText("Groups")).toBeNull();
-    });
-
-    it("handles unknown entity roles gracefully", () => {
-      const entities = [
-        createMockEntity("unknown1", "Unknown Entity", "unknown"),
-      ];
-
-      render(<ResultsTable {...defaultProps} enhancedDeltas={entities} />);
-
-      // Unknown roles shouldn't break the component or appear in sections
-      expect(screen.queryByText("Admin")).toBeNull();
-      expect(screen.queryByText("Journalists")).toBeNull();
-      expect(screen.queryByText("Groups")).toBeNull();
-      // Unknown role entities are filtered out and don't render
-      expect(screen.queryByText("Unknown Entity")).toBeNull();
+      expect(
+        screen.getByLabelText("Test Table section with 1 entities")
+      ).toBeTruthy();
+      expect(screen.getByTestId("mocked-entity-row-1")).toBeTruthy();
     });
 
     it("renders without errors", () => {
-      expect(() => render(<ResultsTable {...defaultProps} />)).not.toThrow();
+      const entities = [createMockEntity("1", "Test Entity")];
+
+      expect(() =>
+        render(<ResultsTable {...defaultProps} entities={entities} />)
+      ).not.toThrow();
     });
   });
 });

@@ -85,8 +85,6 @@ export function PublicationStateItem({
               {/* Journalists */}
               {journalists?.length > 0 ? (
                 <View className="gap-2">
-                  <Text className="text-xl font-medium">Journalists</Text>
-
                   {journalists.map((journalist, idx) => {
                     const journoStaticData = journalist.staticData;
                     return (
@@ -97,7 +95,7 @@ export function PublicationStateItem({
                         accessibilityLabel={`${journoStaticData.name}, relationship: ${journalist.psRelationship}%`}
                       >
                         <View>
-                          <Text className="text-xl font-bold leading-tight">
+                          <Text className="text-lg font-bold leading-tight">
                             {journoStaticData.name}
                           </Text>
                         </View>

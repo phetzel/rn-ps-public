@@ -16,9 +16,25 @@ interface LevelConsequencesProps {
 
 const LevelConsequences = ({
   level,
-  outcomeSnapshot,
   cabinetMembers,
 }: LevelConsequencesProps) => {
+  // Get snapshot from level directly
+  const outcomeSnapshot = level.parseOutcomeSnapshot;
+
+  if (!outcomeSnapshot) {
+    return (
+      <View
+        className="p-4"
+        accessible={true}
+        accessibilityLabel="Level not yet completed - no consequences available"
+      >
+        <Text className="text-muted-foreground">
+          Level consequences will be available after completion.
+        </Text>
+      </View>
+    );
+  }
+
   const { final, consequences } = outcomeSnapshot;
 
   if (!final || !consequences) {

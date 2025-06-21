@@ -1,5 +1,6 @@
 import React from "react";
 import { View } from "react-native";
+import { withObservables } from "@nozbe/watermelondb/react";
 
 // Components
 import {
@@ -11,18 +12,21 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Text } from "~/components/ui/text";
 import MediaCoverageContent from "~/components/shared/level-media-coverage/LevelMediaCoverageContent";
-import LevelMediaImpactContent from "~/components/shared/level-media-coverage/LevelMediaImpactContent";
+import { ResultsTableList } from "~/components/shared/results/ResultsTableList";
 import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
 // Icons
 import { Newspaper } from "~/lib/icons/Newspaper";
 // Hooks
 import { useMediaCoverageData } from "~/lib/hooks/useMediaCoverageData";
+import { observeLevel } from "~/lib/db/helpers/observations";
+import type { Level } from "~/lib/db/models";
 
 interface LevelMediaCoverageProps {
   levelId: string;
+  level: Level | null;
 }
 
-function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
+function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
   const { mediaBoosts, totalBoost, enhancedDeltas, isLoading, error } =
     useMediaCoverageData({ levelId });
 
@@ -30,12 +34,14 @@ function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
     return <ErrorDisplay message={error.message} />;
   }
 
+  const isAdWatched = level?.situationAdWatched || false;
+
   return (
     <Card
       accessible={true}
       accessibilityLabel={`Media coverage analysis with total boost multiplier of ${totalBoost.toFixed(
         2
-      )}`}
+      )}${isAdWatched ? " with ad boost applied" : ""}`}
     >
       <CardHeader className="pb-2">
         <View
@@ -96,9 +102,10 @@ function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
               <Text accessible={false}>Media Impact on Approval</Text>
             </AccordionTrigger>
             <AccordionContent>
-              <LevelMediaImpactContent
-                isLoading={isLoading}
+              <ResultsTableList
                 enhancedDeltas={enhancedDeltas}
+                isAdWatched={isAdWatched}
+                showAdColumn={isAdWatched}
               />
             </AccordionContent>
           </AccordionItem>
@@ -108,4 +115,8 @@ function LevelMediaCoverage({ levelId }: LevelMediaCoverageProps) {
   );
 }
 
-export default LevelMediaCoverage;
+const enhance = withObservables(["levelId"], ({ levelId }) => ({
+  level: observeLevel(levelId),
+}));
+
+export default enhance(LevelMediaCoverage);
