@@ -20,6 +20,7 @@ import {
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
 import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
+import { HomePrivacySettings } from "~/components/screens/home/HomePrivacySettings";
 
 interface HomeMenuCardProps {
   games: Game[];
@@ -123,6 +124,8 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             <Text>Load / Manage Games</Text>
           </Button>
         )}
+
+        <HomePrivacySettings />
       </CardContent>
     </Card>
   );

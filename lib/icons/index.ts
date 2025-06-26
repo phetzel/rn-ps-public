@@ -30,6 +30,7 @@ import { Newspaper } from "./Newspaper";
 import { Play } from "./Play";
 import { Plus } from "./Plus";
 import { Save } from "./Save";
+import { Settings } from "./Settings";
 import { Shield } from "./Shield";
 import { SkipForward } from "./SkipForward";
 import { Sun } from "./Sun";
@@ -74,6 +75,7 @@ export {
   Play,
   Plus,
   Save,
+  Settings,
   Shield,
   SkipForward,
   Sun,

@@ -16,6 +16,7 @@ import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider";
 import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet";
 import { database } from "~/lib/db";
 import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import { useConsentStore } from "~/lib/stores/consentStore";
 import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
@@ -46,6 +47,9 @@ export default function RootLayout() {
     dbError: state.error,
   }));
 
+  // Consent management
+  const { isSdkInitialized, prepareConsentInfo } = useConsentStore();
+
   React.useEffect(() => {
     if (!isDbReady) {
       initializeDb();
@@ -70,7 +74,14 @@ export default function RootLayout() {
     }
   }, [isDbReady, dbError, isColorSchemeLoaded]);
 
-  if ((!isDbReady && !dbError) || !isColorSchemeLoaded) {
+  // Initialize consent management
+  React.useEffect(() => {
+    if (!isSdkInitialized && isDbReady) {
+      prepareConsentInfo();
+    }
+  }, [isSdkInitialized, isDbReady, prepareConsentInfo]);
+
+  if ((!isDbReady && !dbError) || !isColorSchemeLoaded || !isSdkInitialized) {
     return null;
   }
 

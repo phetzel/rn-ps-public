@@ -12,7 +12,15 @@
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "ADMOB_IOS_APP_ID": "ca-app-pub-1695070693174259~7597149296",
+        "ADMOB_IOS_REWARD_RELATIONSHIP_ID": "ca-app-pub-1695070693174259/2544133166",
+        "ADMOB_IOS_REWARD_APPROVAL_ID": "ca-app-pub-1695070693174259/6412592961",
+        "ADMOB_ANDROID_APP_ID": "ca-app-pub-1695070693174259~7214005919",
+        "ADMOB_ANDROID_REWARD_RELATIONSHIP_ID": "ca-app-pub-1695070693174259/5099511292",
+        "ADMOB_ANDROID_REWARD_APPROVAL_ID": "ca-app-pub-1695070693174259/3786429628"
+      }
     }
   },
   "submit": {
