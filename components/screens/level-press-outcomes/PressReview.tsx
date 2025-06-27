@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 // Components
-import { ResultsCard } from "~/components/shared/results/ResultsCard";
+import { AdCard } from "~/components/shared/ad-card/AdCard";
 // Store
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
@@ -38,7 +38,8 @@ export default function PressReview({
   }, [currentLevelId]);
 
   return (
-    <ResultsCard
+    <AdCard
+      adType="relationship"
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}

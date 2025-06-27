@@ -19,6 +19,8 @@
     "build:preview:android": "eas build --profile preview --platform android",
     "build:prod:android": "eas build --profile production --platform android",
     "test": "jest --watchAll",
+    "test:ci": "jest --watchAll=false --passWithNoTests",
+    "typecheck": "tsc --noEmit",
     "analyze": "tsx scripts/run-analysis.ts",
     "analyze:balance": "tsx scripts/analysis/balance-analyzer.ts",
     "analyze:stats": "tsx scripts/analysis/content-stats.ts"
@@ -62,6 +64,7 @@
     "react-hook-form": "^7.55.0",
     "react-native": "0.76.8",
     "react-native-gesture-handler": "~2.20.2",
+    "react-native-google-mobile-ads": "^15.4.0",
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
@@ -71,7 +74,8 @@
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.2",
-    "zustand": "^4.5.6"
+    "zustand": "^4.5.6",
+    "expo-tracking-transparency": "~5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

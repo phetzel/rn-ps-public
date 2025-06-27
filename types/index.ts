@@ -22,8 +22,8 @@ export enum LevelStatus {
 }
 
 export enum PoliticalLeaning {
-  Liberal = "liberal",
   Conservative = "conservative",
+  Liberal = "liberal",
   Neutral = "neutral",
 }
 
