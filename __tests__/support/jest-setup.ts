@@ -14,6 +14,79 @@ global.fail = (message?: string) => {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// AdMob and Tracking Mocks
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// Mock react-native-google-mobile-ads
+jest.mock("react-native-google-mobile-ads", () => ({
+  useRewardedAd: jest.fn(() => ({
+    isLoaded: false,
+    load: jest.fn(),
+    show: jest.fn(),
+    reward: null,
+    isEarnedReward: false,
+  })),
+  TestIds: {
+    REWARDED: "ca-app-pub-3940256099942544/5224354917",
+  },
+  AdsConsent: {
+    requestInfoUpdate: jest.fn(() =>
+      Promise.resolve({
+        status: "NOT_REQUIRED",
+        isConsentFormAvailable: false,
+      })
+    ),
+    getGdprApplies: jest.fn(() => Promise.resolve(false)),
+    getConsentInfo: jest.fn(() =>
+      Promise.resolve({
+        status: "NOT_REQUIRED",
+        canRequestAds: true,
+      })
+    ),
+    getUserChoices: jest.fn(() =>
+      Promise.resolve({
+        storeAndAccessInformationOnDevice: true,
+        selectBasicAds: true,
+      })
+    ),
+    gatherConsent: jest.fn(() => Promise.resolve()),
+    getPurposeConsents: jest.fn(() => Promise.resolve("1")),
+    showForm: jest.fn(() => Promise.resolve()),
+  },
+  AdsConsentStatus: {
+    NOT_REQUIRED: "NOT_REQUIRED",
+    OBTAINED: "OBTAINED",
+    REQUIRED: "REQUIRED",
+    UNKNOWN: "UNKNOWN",
+  },
+  default: jest.fn(() => ({
+    initialize: jest.fn(() => Promise.resolve()),
+  })),
+}));
+
+// Mock expo-tracking-transparency
+jest.mock("expo-tracking-transparency", () => ({
+  requestTrackingPermissionsAsync: jest.fn(() =>
+    Promise.resolve({
+      status: "granted",
+      canAskAgain: true,
+    })
+  ),
+  getTrackingPermissionsAsync: jest.fn(() =>
+    Promise.resolve({
+      status: "granted",
+      canAskAgain: true,
+    })
+  ),
+}));
+
+// Mock Platform for AdMob environment checks
+jest.mock("react-native/Libraries/Utilities/Platform", () => ({
+  OS: "ios",
+  select: jest.fn((obj) => obj.ios),
+}));
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // Suppress WatermelonDB setup + Model Invalid JSON logs
 // ═══════════════════════════════════════════════════════════════════════════════
 
