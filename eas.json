@@ -12,7 +12,15 @@
       "distribution": "internal"
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "ADMOB_ANDROID_APP_ID": "$ADMOB_ANDROID_APP_ID",
+        "ADMOB_IOS_APP_ID": "$ADMOB_IOS_APP_ID",
+        "ADMOB_IOS_REWARD_RELATIONSHIP_ID": "$ADMOB_IOS_REWARD_RELATIONSHIP_ID",
+        "ADMOB_IOS_REWARD_APPROVAL_ID": "$ADMOB_IOS_REWARD_APPROVAL_ID",
+        "ADMOB_ANDROID_REWARD_RELATIONSHIP_ID": "$ADMOB_ANDROID_REWARD_RELATIONSHIP_ID",
+        "ADMOB_ANDROID_REWARD_APPROVAL_ID": "$ADMOB_ANDROID_REWARD_APPROVAL_ID"
+      }
     }
   },
   "submit": {

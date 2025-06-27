@@ -42,7 +42,7 @@ export default function GameCreateScreen() {
     defaultValues: {
       pressSecretaryName: "",
       presidentName: "",
-      presidentLeaning: PoliticalLeaning.Liberal,
+      presidentLeaning: PoliticalLeaning.Conservative,
     },
   });
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 // Components
-import { ResultsCard } from "~/components/shared/results/ResultsCard"; // Store
+import { AdCard } from "~/components/shared/ad-card/AdCard";
+// Hooks
 import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
 // Models
 import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers";
@@ -38,11 +39,11 @@ export default function SituationReview({
   }, [currentLevelId]);
 
   return (
-    <ResultsCard
+    <AdCard
+      adType="approval"
       enhancedDeltas={enhancedDeltas}
       isAdWatched={isAdWatched}
       onAdComplete={onAdComplete}
-      // adWatchMessage="You've successfully boosted your situation approval changes!"
     />
   );
 }
