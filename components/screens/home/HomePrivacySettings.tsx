@@ -16,14 +16,13 @@ export function HomePrivacySettings() {
 
   return (
     <Button
-      size="lg"
       variant="ghost"
       onPress={showPrivacyOptions}
-      className="flex-row"
+      className="flex-row justify-center"
       accessibilityLabel="Privacy and consent settings"
       accessibilityHint="Update your advertising and data tracking preferences"
     >
-      <Settings className="mr-2 text-foreground" size={20} />
+      <Settings className="mr-1 text-foreground" size={18} />
       <Text>Privacy Settings</Text>
     </Button>
   );

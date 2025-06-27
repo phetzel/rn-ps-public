@@ -53,10 +53,9 @@ export function useAdCard({
   onAdComplete,
   disabled = false,
 }: UseAdCardProps): UseAdCardReturn {
-  console.log("__DEV__", __DEV__);
-
-  const [hasError, setHasError] = useState(false);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
+  const [userInitiatedShow, setUserInitiatedShow] = useState<boolean>(false);
 
   // Get enhanced consent status
   const { canRequestAds, isSdkInitialized } = useConsentStore();
@@ -67,31 +66,34 @@ export function useAdCard({
   // Only attempt to load ads if consent allows and not disabled
   const shouldLoadAd = isSdkInitialized && canRequestAds && !disabled;
 
-  const { isLoaded, isClosed, load, show, reward } = useRewardedAd(adUnitId, {
-    keywords: ["games", "politics", "simulation"],
-  });
-  console.log("reward", reward);
-  console.log("isLoaded", isLoaded);
+  const { isLoaded, load, show, reward, isEarnedReward } = useRewardedAd(
+    adUnitId,
+    {
+      keywords: ["games", "politics", "simulation"],
+    }
+  );
 
   // Load ad when component mounts (only if conditions are met)
   useEffect(() => {
-    console.log("load useEffect");
     if (shouldLoadAd && !isLoaded && !hasError) {
-      console.log("load useEffect condition met");
-      console.log(`Loading ${adType} ad`);
       load();
     }
   }, [shouldLoadAd, isLoaded, hasError, load, adType]);
 
   // Handle ad completion
   useEffect(() => {
-    console.log("reward useEffect");
-    if (reward && onAdComplete && !disabled) {
-      console.log("reward useEffect condition met");
-      console.log(`${adType} ad reward received:`, reward);
+    if (isEarnedReward && userInitiatedShow && onAdComplete && !disabled) {
       onAdComplete();
+      setUserInitiatedShow(false);
     }
-  }, [reward, onAdComplete, adType, disabled]);
+  }, [
+    isEarnedReward,
+    userInitiatedShow,
+    onAdComplete,
+    adType,
+    disabled,
+    reward,
+  ]);
 
   // Handle ad errors
   useEffect(() => {
@@ -122,12 +124,12 @@ export function useAdCard({
     }
 
     try {
-      console.log(`Showing ${adType} ad`);
+      setUserInitiatedShow(true);
       show();
     } catch (error) {
       setHasError(true);
       setErrorMessage("Failed to show ad. Please try again.");
-      console.error("Ad show error:", error);
+      setUserInitiatedShow(false);
     }
   };
 
