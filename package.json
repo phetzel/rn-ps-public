@@ -21,9 +21,7 @@
     "test": "jest --watchAll",
     "test:ci": "jest --watchAll=false --passWithNoTests",
     "typecheck": "tsc --noEmit",
-    "analyze": "tsx scripts/run-analysis.ts",
-    "analyze:balance": "tsx scripts/analysis/balance-analyzer.ts",
-    "analyze:stats": "tsx scripts/analysis/content-stats.ts"
+    "analyze": "tsx scripts/run-analysis.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",

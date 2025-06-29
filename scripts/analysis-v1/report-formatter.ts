@@ -1,4 +1,4 @@
-import type { BalanceReport, DetailedContentStats } from "../analysis";
+import type { BalanceReport, DetailedContentStats } from ".";
 
 export class ReportFormatter {
   static formatBalanceReport(report: BalanceReport): string {
