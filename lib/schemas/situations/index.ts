@@ -21,8 +21,8 @@ export const situationDataSchema = z
     content: situationContentSchema,
     exchanges: z
       .array(exchangeDataSchema)
-      .min(1, "At least one exchange is required")
-      .max(5, "Maximum 5 exchanges per situation for mobile performance"),
+      .min(2, "At least two exchanges are required")
+      .max(4, "Maximum 4 exchanges per situation for mobile performance"),
   })
   .refine((data) => data.trigger.type === data.type, {
     message: "Situation type must match trigger type",
