@@ -1,4 +1,4 @@
-import { situationsData } from "~/lib/data/situations/v1";
+import { situationsData } from "~/lib/data/situations";
 import { situationDataSchema } from "~/lib/schemas";
 import { SituationType, AnswerType, CabinetStaticId } from "~/types";
 

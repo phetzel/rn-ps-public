@@ -1,4 +1,4 @@
-import { situationsData } from "~/lib/data/situations/v1";
+import { situationsData } from "~/lib/data/situations";
 import { AnswerType } from "~/types";
 import { getMetadataSection } from "../util/file-utils";
 

@@ -1,4 +1,4 @@
-import { situationsData } from "~/lib/data/situations/v1";
+import { situationsData } from "~/lib/data/situations";
 import { CabinetStaticId, SubgroupStaticId, AnswerType } from "~/types";
 
 // Helper interfaces for analysis

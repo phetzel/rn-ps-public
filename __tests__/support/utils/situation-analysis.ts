@@ -1,4 +1,4 @@
-import { situationsData } from "~/lib/data/situations/v1";
+import { situationsData } from "~/lib/data/situations";
 import {
   AnswerType,
   CabinetStaticId,
@@ -52,33 +52,38 @@ export function analyzeGlobalPreferences(): PreferenceValidationResult {
   let totalPreferences = 0;
 
   // Initialize all answer types except Authorized
-  Object.values(AnswerType).forEach(type => {
+  Object.values(AnswerType).forEach((type) => {
     answerTypeDistribution[type] = 0;
   });
 
   // Count preferences by answer type
-  situationsData.forEach(situation => {
+  situationsData.forEach((situation) => {
     // Count president preferences
     if (situation.content.preferences.president) {
       totalPreferences++;
       const answerType = situation.content.preferences.president.answerType;
-      answerTypeDistribution[answerType] = (answerTypeDistribution[answerType] ?? 0) + 1;
+      answerTypeDistribution[answerType] =
+        (answerTypeDistribution[answerType] ?? 0) + 1;
     }
 
     // Count cabinet preferences
     if (situation.content.preferences.cabinet) {
-      Object.values(situation.content.preferences.cabinet).forEach(preference => {
-        totalPreferences++;
-        const answerType = preference.preference.answerType;
-        answerTypeDistribution[answerType] = (answerTypeDistribution[answerType] ?? 0) + 1;
-      });
+      Object.values(situation.content.preferences.cabinet).forEach(
+        (preference) => {
+          totalPreferences++;
+          const answerType = preference.preference.answerType;
+          answerTypeDistribution[answerType] =
+            (answerTypeDistribution[answerType] ?? 0) + 1;
+        }
+      );
     }
   });
 
   // Calculate percentages
-  Object.values(AnswerType).forEach(type => {
+  Object.values(AnswerType).forEach((type) => {
     const count = answerTypeDistribution[type] ?? 0;
-    answerTypePercentages[type] = totalPreferences > 0 ? (count / totalPreferences) * 100 : 0;
+    answerTypePercentages[type] =
+      totalPreferences > 0 ? (count / totalPreferences) * 100 : 0;
   });
 
   // Find violations (answer types with < 5% share, excluding Authorized)
@@ -98,7 +103,10 @@ export function analyzeGlobalPreferences(): PreferenceValidationResult {
 
   return {
     totalPreferences,
-    answerTypeDistribution: answerTypeDistribution as Record<AnswerType, number>,
+    answerTypeDistribution: answerTypeDistribution as Record<
+      AnswerType,
+      number
+    >,
     answerTypePercentages: answerTypePercentages as Record<AnswerType, number>,
     minShareViolations,
   };
@@ -118,34 +126,40 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
     };
   }> = [];
 
-  situationsData.forEach(situation => {
+  situationsData.forEach((situation) => {
     const entitiesInOutcomes = new Set<string>();
-    
+
     // Collect entities that appear in outcomes
-    situation.content.outcomes.forEach(outcome => {
+    situation.content.outcomes.forEach((outcome) => {
       if (outcome.consequences.approvalChanges.cabinet) {
-        Object.keys(outcome.consequences.approvalChanges.cabinet).forEach(cabinetId => {
-          entitiesInOutcomes.add(cabinetId);
-        });
+        Object.keys(outcome.consequences.approvalChanges.cabinet).forEach(
+          (cabinetId) => {
+            entitiesInOutcomes.add(cabinetId);
+          }
+        );
       }
       if (outcome.consequences.approvalChanges.subgroups) {
-        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(subgroupId => {
-          entitiesInOutcomes.add(subgroupId);
-        });
+        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(
+          (subgroupId) => {
+            entitiesInOutcomes.add(subgroupId);
+          }
+        );
       }
     });
 
     // Check president preferences
     if (situation.content.preferences.president) {
-      const preferredAnswerType = situation.content.preferences.president.answerType;
-      
+      const preferredAnswerType =
+        situation.content.preferences.president.answerType;
+
       // President doesn't appear in outcomes, so just check for positive impact answers
-      const hasPositiveImpactAnswers = situation.exchanges.some(exchange =>
-        Object.values(exchange.content.questions).some(question =>
-          question.answers.some(answer =>
-            answer.type === preferredAnswerType &&
-            answer.impacts.president &&
-            answer.impacts.president.weight > 0
+      const hasPositiveImpactAnswers = situation.exchanges.some((exchange) =>
+        Object.values(exchange.content.questions).some((question) =>
+          question.answers.some(
+            (answer) =>
+              answer.type === preferredAnswerType &&
+              answer.impacts.president &&
+              answer.impacts.president.weight > 0
           )
         )
       );
@@ -165,33 +179,38 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
 
     // Check cabinet preferences
     if (situation.content.preferences.cabinet) {
-      Object.entries(situation.content.preferences.cabinet).forEach(([cabinetId, preference]) => {
-        const preferredAnswerType = preference.preference.answerType;
-        const missingFromOutcomes = !entitiesInOutcomes.has(cabinetId);
+      Object.entries(situation.content.preferences.cabinet).forEach(
+        ([cabinetId, preference]) => {
+          const preferredAnswerType = preference.preference.answerType;
+          const missingFromOutcomes = !entitiesInOutcomes.has(cabinetId);
 
-        // Check if there are positive impact answers of the preferred type for this cabinet member
-        const hasPositiveImpactAnswers = situation.exchanges.some(exchange =>
-          Object.values(exchange.content.questions).some(question =>
-            question.answers.some(answer =>
-              answer.type === preferredAnswerType &&
-              answer.impacts.cabinet?.[cabinetId as CabinetStaticId] &&
-              answer.impacts.cabinet[cabinetId as CabinetStaticId]!.weight > 0
-            )
-          )
-        );
+          // Check if there are positive impact answers of the preferred type for this cabinet member
+          const hasPositiveImpactAnswers = situation.exchanges.some(
+            (exchange) =>
+              Object.values(exchange.content.questions).some((question) =>
+                question.answers.some(
+                  (answer) =>
+                    answer.type === preferredAnswerType &&
+                    answer.impacts.cabinet?.[cabinetId as CabinetStaticId] &&
+                    answer.impacts.cabinet[cabinetId as CabinetStaticId]!
+                      .weight > 0
+                )
+              )
+          );
 
-        if (missingFromOutcomes || !hasPositiveImpactAnswers) {
-          violations.push({
-            situationTitle: situation.title,
-            entityId: cabinetId,
-            preferredAnswerType,
-            issues: {
-              missingFromOutcomes,
-              noPositiveImpactAnswers: !hasPositiveImpactAnswers,
-            },
-          });
+          if (missingFromOutcomes || !hasPositiveImpactAnswers) {
+            violations.push({
+              situationTitle: situation.title,
+              entityId: cabinetId,
+              preferredAnswerType,
+              issues: {
+                missingFromOutcomes,
+                noPositiveImpactAnswers: !hasPositiveImpactAnswers,
+              },
+            });
+          }
         }
-      });
+      );
     }
   });
 
@@ -202,36 +221,40 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
  * Analyzes individual situation outcomes for balance requirements
  */
 export function analyzeSituationOutcomes(): SituationOutcomeAnalysis[] {
-  return situationsData.map(situation => {
+  return situationsData.map((situation) => {
     let positiveOutcomes = 0;
     let negativeOutcomes = 0;
     let neutralOutcomes = 0;
     const entitiesAffectedPerOutcome: number[] = [];
     const outcomeWeights: number[] = [];
 
-    situation.content.outcomes.forEach(outcome => {
+    situation.content.outcomes.forEach((outcome) => {
       let netEffect = 0;
       let entitiesAffected = 0;
-      
+
       outcomeWeights.push(outcome.weight);
 
       // Calculate net effect and count entities affected
       if (outcome.consequences.approvalChanges.cabinet) {
-        Object.values(outcome.consequences.approvalChanges.cabinet).forEach(weight => {
-          if (weight !== undefined) {
-            netEffect += weight;
-            entitiesAffected++;
+        Object.values(outcome.consequences.approvalChanges.cabinet).forEach(
+          (weight) => {
+            if (weight !== undefined) {
+              netEffect += weight;
+              entitiesAffected++;
+            }
           }
-        });
+        );
       }
 
       if (outcome.consequences.approvalChanges.subgroups) {
-        Object.values(outcome.consequences.approvalChanges.subgroups).forEach(weight => {
-          if (weight !== undefined) {
-            netEffect += weight;
-            entitiesAffected++;
+        Object.values(outcome.consequences.approvalChanges.subgroups).forEach(
+          (weight) => {
+            if (weight !== undefined) {
+              netEffect += weight;
+              entitiesAffected++;
+            }
           }
-        });
+        );
       }
 
       entitiesAffectedPerOutcome.push(entitiesAffected);

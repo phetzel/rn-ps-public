@@ -1,4 +1,4 @@
-import { situationsData } from "~/lib/data/situations/v1";
+import { situationsData } from "~/lib/data/situations";
 
 describe("Situation Data Cross-Reference Validation", () => {
   // Create lookup maps for efficient testing

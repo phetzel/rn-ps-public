@@ -1,6 +1,6 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
-import { situationsData } from "~/lib/data/situations";
+import { situationsData } from "~/lib/data/situations/v1";
 import {
   SituationType,
   AnswerType,
@@ -10,13 +10,12 @@ import {
 
 interface SituationBalanceRow {
   name: string;
-  description: string;
   cabinetInvolved: string;
   subgroupsAffected: string;
   authorizedOn: string;
   outcomeBalance: string;
   preferenceDiversity: string;
-  // balanceIssues: string[]; // Commented out for cleaner table
+  balanceIssues: string[];
 }
 
 interface SituationTypeBalance {
@@ -41,7 +40,6 @@ interface SituationTypeBalance {
  * Analyzes a single situation for balance metrics
  */
 function analyzeSituation(situation: any): SituationBalanceRow {
-  // Keep balance issues for summary stats but don't display in table
   const balanceIssues: string[] = [];
 
   // Exchange and question analysis for balance checking
@@ -85,15 +83,13 @@ function analyzeSituation(situation: any): SituationBalanceRow {
     }
   });
 
-  // Preference analysis - Format: "president: admit, hhs: deflect"
-  const preferenceMap: string[] = [];
+  // Preference analysis
   const preferenceAnswerTypes = new Set<AnswerType>();
   const preferences = situation.content.preferences;
 
   // Check president preferences
   if (preferences.president) {
     preferenceAnswerTypes.add(preferences.president.answerType);
-    preferenceMap.push(`president: ${preferences.president.answerType}`);
   }
 
   // Check cabinet preferences
@@ -102,19 +98,16 @@ function analyzeSituation(situation: any): SituationBalanceRow {
       ([cabinetId, cabinetPref]: [string, any]) => {
         if (cabinetPref?.preference) {
           preferenceAnswerTypes.add(cabinetPref.preference.answerType);
-          preferenceMap.push(
-            `${cabinetId}: ${cabinetPref.preference.answerType}`
-          );
         }
       }
     );
   }
 
-  // Outcome analysis - Format: "outcome name: Positive, other outcome: Negative"
+  // Outcome analysis
   const outcomes = situation.content.outcomes;
-  const outcomeDetails: string[] = [];
-  let hasPositiveOutcome = false;
-  let hasNegativeOutcome = false;
+  let positiveOutcomes = 0;
+  let negativeOutcomes = 0;
+  let mixedOutcomes = 0;
 
   outcomes.forEach((outcome: any) => {
     let hasPositive = false;
@@ -146,34 +139,26 @@ function analyzeSituation(situation: any): SituationBalanceRow {
       );
     }
 
-    // Determine outcome type and format
-    let outcomeType = "";
     if (hasPositive && hasNegative) {
-      outcomeType = "Mixed";
+      mixedOutcomes++;
     } else if (hasPositive) {
-      outcomeType = "Positive";
-      hasPositiveOutcome = true;
+      positiveOutcomes++;
     } else if (hasNegative) {
-      outcomeType = "Negative";
-      hasNegativeOutcome = true;
-    } else {
-      outcomeType = "Neutral";
+      negativeOutcomes++;
     }
-
-    outcomeDetails.push(`${outcome.title}: ${outcomeType}`);
   });
 
-  // Balance issue detection (for summary stats only)
+  // Balance issue detection
   if (exchangeCount < 2 || exchangeCount > 4) {
     balanceIssues.push(`Invalid exchange count: ${exchangeCount}`);
   }
   if (authorizedAnswers > 0) {
     balanceIssues.push(`${authorizedAnswers} Authorized`);
   }
-  if (!hasPositiveOutcome) {
+  if (positiveOutcomes === 0) {
     balanceIssues.push("No positive outcomes");
   }
-  if (!hasNegativeOutcome) {
+  if (negativeOutcomes === 0) {
     balanceIssues.push("No negative outcomes");
   }
   if (cabinetInvolved.size === 0) {
@@ -184,18 +169,20 @@ function analyzeSituation(situation: any): SituationBalanceRow {
   }
 
   // Create formatted strings for display
-  const outcomeBalance = outcomeDetails.join(", ") || "No outcomes";
-  const preferenceDiversityDisplay = preferenceMap.join(", ") || "None";
+  const outcomeBalance = `${positiveOutcomes}P/${negativeOutcomes}N/${mixedOutcomes}M`;
+  const preferenceDiversityDisplay =
+    preferenceAnswerTypes.size > 3
+      ? `${preferenceAnswerTypes.size} types`
+      : Array.from(preferenceAnswerTypes).join(", ") || "None";
 
   return {
     name: situation.title,
-    description: situation.description,
     cabinetInvolved: Array.from(cabinetInvolved).join(", ") || "None",
     subgroupsAffected: Array.from(subgroupsAffected).join(", ") || "None",
     authorizedOn,
     outcomeBalance,
     preferenceDiversity: preferenceDiversityDisplay,
-    // balanceIssues, // Commented out
+    balanceIssues,
   };
 }
 
@@ -256,22 +243,27 @@ function analyzeSituationsByType(): SituationTypeBalance[] {
       }
 
       if (row.authorizedOn !== "None") authorizedCount++;
-      // Count missing outcomes based on outcome text analysis
-      if (
-        row.outcomeBalance === "No outcomes" ||
-        !row.outcomeBalance.includes("Positive")
-      ) {
+      if (row.balanceIssues.includes("No positive outcomes"))
         missingPositiveCount++;
-      }
-      if (
-        row.outcomeBalance === "No outcomes" ||
-        !row.outcomeBalance.includes("Negative")
-      ) {
+      if (row.balanceIssues.includes("No negative outcomes"))
         missingNegativeCount++;
-      }
     });
 
-    // Note: Common issues analysis removed since we're not showing balance issues column
+    // Find common issues
+    const issueFrequency = new Map<string, number>();
+    situationRows.forEach((row) => {
+      row.balanceIssues.forEach((issue) => {
+        issueFrequency.set(issue, (issueFrequency.get(issue) || 0) + 1);
+      });
+    });
+
+    const commonIssues: string[] = [];
+    issueFrequency.forEach((count, issue) => {
+      if (count >= Math.ceil(totalSituations * 0.3)) {
+        // 30% threshold
+        commonIssues.push(`${issue} (${count}/${totalSituations})`);
+      }
+    });
 
     return {
       type,
@@ -287,7 +279,7 @@ function analyzeSituationsByType(): SituationTypeBalance[] {
           cabinet: cabinetCoverage,
           subgroups: subgroupCoverage,
         },
-        commonIssues: [], // Empty since we're not tracking individual issues
+        commonIssues,
       },
     };
   });
@@ -318,15 +310,25 @@ function generateMarkdownTable(typeBalance: SituationTypeBalance): string {
     summary.entityCoverage.subgroups
   ).join(", ")}\n`;
 
+  if (summary.commonIssues.length > 0) {
+    markdown += `\n### Common Issues\n`;
+    summary.commonIssues.forEach((issue) => {
+      markdown += `- ${issue}\n`;
+    });
+  }
+
   markdown += `\n## Situation Balance Details\n\n`;
 
-  // Main balance table - Balance Issues column removed
-  markdown += `| Name | Description | Cabinet Involved | Subgroups Affected | Authorized On | Outcome Balance | Preference Diversity |\n`;
-  markdown += `|------|-------------|------------------|-------------------|---------------|-----------------|---------------------|\n`;
+  // Main balance table
+  markdown += `| Name | Cabinet Involved | Subgroups Affected | Authorized On | Outcome Balance | Preference Diversity | Balance Issues |\n`;
+  markdown += `|------|------------------|-------------------|---------------|-----------------|---------------------|----------------|\n`;
 
   // Table rows
   situations.forEach((row) => {
-    markdown += `| ${row.name} | ${row.description} | ${row.cabinetInvolved} | ${row.subgroupsAffected} | ${row.authorizedOn} | ${row.outcomeBalance} | ${row.preferenceDiversity} |\n`;
+    const issuesStr =
+      row.balanceIssues.length > 0 ? row.balanceIssues.join("; ") : "✅ None";
+
+    markdown += `| ${row.name} | ${row.cabinetInvolved} | ${row.subgroupsAffected} | ${row.authorizedOn} | ${row.outcomeBalance} | ${row.preferenceDiversity} | ${issuesStr} |\n`;
   });
 
   return markdown;
@@ -336,7 +338,7 @@ function generateMarkdownTable(typeBalance: SituationTypeBalance): string {
  * Main analysis function
  */
 export function runSituationBalanceAnalysis(): void {
-  console.log("�� Analyzing situation balance...");
+  console.log("🔍 Analyzing situation balance...");
 
   const outputDir = join(process.cwd(), "analysis-output", "situations");
   mkdirSync(outputDir, { recursive: true });
