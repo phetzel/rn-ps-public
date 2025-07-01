@@ -123,10 +123,10 @@ Located in `~/__tests__/support/utils/`, these provide reusable analysis functio
 
 ```bash
 # Run all situation data tests (recommended)
-npm test __tests__/lib/data/v1/situations/
+npm test __tests__/lib/data/situations/
 
 # Run with coverage
-npm test -- --coverage __tests__/lib/data/v1/situations/
+npm test -- --coverage __tests__/lib/data/situations/
 ```
 
 ### Core Data Validation Only
@@ -136,7 +136,7 @@ npm test -- --coverage __tests__/lib/data/v1/situations/
 npm test -- --testPathPattern="schema-validation|business-rules|cross-reference|situation-data"
 
 # Run specific test file
-npm test __tests__/lib/data/v1/situations/schema-validation.test.ts
+npm test __tests__/lib/data/situations/schema-validation.test.ts
 ```
 
 ### Game Balance Validation Only
@@ -146,8 +146,8 @@ npm test __tests__/lib/data/v1/situations/schema-validation.test.ts
 npm test -- --testPathPattern="game-balance"
 
 # Run specific balance category
-npm test __tests__/lib/data/v1/situations/game-balance-entities.test.ts
-npm test __tests__/lib/data/v1/situations/game-balance-global.test.ts
+npm test __tests__/lib/data/situations/game-balance-entities.test.ts
+npm test __tests__/lib/data/situations/game-balance-global.test.ts
 ```
 
 ### Development Workflow

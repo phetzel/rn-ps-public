@@ -43,7 +43,6 @@ export enum CabinetStaticId {
   Justice = "justice",
   HHS = "hhs",
   Homeland = "homeland",
-  Interior = "interior",
 }
 
 export interface StaticCabinetMember {
