@@ -6,13 +6,13 @@ import {
   writeMarkdownFile,
 } from "./util/file-utils";
 import { generatePresidentMarkdown } from "./analysis/president-analysis";
-import { generateCabinetMarkdown } from "./analysis/cabinet-analysis";
 import { generateSubgroupsMarkdown } from "./analysis/subgroups-analysis";
 import { generateMediaMarkdown } from "./analysis/media-analysis";
 import { generateSituationDataMarkdown } from "./analysis/situation-data-analysis";
 import { generateExchangesMarkdown } from "./analysis/exchanges-analysis";
 import { generatePreferencesMarkdown } from "./analysis/preferences-analysis";
 import { generateOutcomesMarkdown } from "./analysis/outcomes-analysis";
+import { runSituationBalanceAnalysis } from "./analysis/situation-balance-analysis";
 
 /**
  * Main function that orchestrates the analysis and generates all markdown files
@@ -24,7 +24,8 @@ function main(): void {
 
   try {
     // Create analysis output directory structure
-    const { entityDataDir, situationDataDir } = createAnalysisDirectories();
+    const { entityDataDir, situationDataDir, situationsDir } =
+      createAnalysisDirectories();
 
     // Generate separate entity analysis files
     const presidentContent = generatePresidentMarkdown();
@@ -32,9 +33,6 @@ function main(): void {
       path.join(entityDataDir, "president.md"),
       presidentContent
     );
-
-    const cabinetContent = generateCabinetMarkdown();
-    writeMarkdownFile(path.join(entityDataDir, "cabinet.md"), cabinetContent);
 
     const subgroupsContent = generateSubgroupsMarkdown();
     writeMarkdownFile(
@@ -73,6 +71,10 @@ function main(): void {
     );
 
     console.log("✅ Situation data analysis complete!");
+
+    // Generate situation balance analysis per type
+    runSituationBalanceAnalysis();
+    console.log("✅ Situation balance analysis complete!");
   } catch (error) {
     console.error("❌ Error running analysis:", error);
     process.exit(1);
