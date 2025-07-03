@@ -34,7 +34,7 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
     id: "outcome_cheese_tariffs_hurt_farmers",
     title: "Tit-for-Tat Tariffs Hurt Farmers",
     description:
-      "Dairystan retaliates with steep tariffs on our agricultural exports. Our own farmers suffer significant losses as a key market disappears overnight.",
+      "Dairystan retaliates with steep tariffs on agricultural exports. Our farmers suffer significant losses as a key market disappears overnight.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -59,7 +59,7 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
     id: "outcome_cheese_public_rallies",
     title: "Public Rallies Behind 'Cheese Pride'",
     description:
-      "The dispute turns into a point of national pride. Domestic cheese sales skyrocket as citizens boycott Dairystani imports, creating a mixed result.",
+      "The dispute turns into national pride. Domestic cheese sales skyrocket as citizens boycott Dairystani imports, creating a mixed result.",
     weight: 20,
     consequences: {
       approvalChanges: {

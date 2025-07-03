@@ -10,7 +10,7 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
     id: "outcome_brawl_pr_war",
     title: "Public PR War Hurts Both Departments",
     description:
-      "The feud plays out messily in the media. Both secretaries look unprofessional, and public confidence in the administration's fiscal and defense management drops.",
+      "The feud plays out messily in the media. Both secretaries look unprofessional, hurting public confidence in the administration.",
     weight: 45,
     consequences: {
       approvalChanges: {
@@ -54,7 +54,7 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
     id: "outcome_brawl_joint_audit",
     title: "Joint Audit Improves Pentagon Efficiency",
     description:
-      "The public fight leads to a joint Treasury-Defense audit that genuinely finds and eliminates billions in waste, becoming a surprise win for good governance.",
+      "The public fight leads to a joint audit that finds billions in waste, becoming a surprise win for good governance.",
     weight: 20,
     consequences: {
       approvalChanges: {

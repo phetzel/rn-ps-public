@@ -5,21 +5,21 @@ export const plasticStrawBanPreferences: SituationPreferences = {
   president: {
     answerType: AnswerType.Deflect,
     rationale:
-      "The President wants to deflect from the 'nanny state' accusations and frame this as a common-sense environmental issue that everyone should support.",
+      "Wants to deflect from 'nanny state' accusations and frame this as common-sense environmental protection.",
   },
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
         answerType: AnswerType.Challenge,
         rationale:
-          "The HHS Secretary who pushed for the ban on environmental grounds wants to challenge the public's resistance to a minor, necessary inconvenience.",
+          "Pushed for the ban and wants to challenge public resistance to this minor environmental inconvenience.",
       },
     },
     [CabinetStaticId.Justice]: {
       preference: {
         answerType: AnswerType.Admit,
         rationale:
-          "The Attorney General is worried about the chaotic rollout and believes admitting the need for exceptions and a phased approach is necessary.",
+          "Worried about chaotic rollout and believes admitting need for exceptions and phased approach is necessary.",
       },
     },
   },

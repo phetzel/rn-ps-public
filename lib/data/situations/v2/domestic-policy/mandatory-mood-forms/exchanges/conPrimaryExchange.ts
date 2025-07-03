@@ -52,7 +52,7 @@ export const conPrimaryExchange: ExchangeData = {
       },
       q_mood_resistance: {
         id: "q_mood_resistance",
-        text: "The 'resistance' is because it's creepy and invasive. Do you deny that Americans have a right to keep their emotional state private from the government?",
+        text: "The 'resistance' is because it's creepy and invasive. Do you deny that Americans have a right to keep their emotional state private?",
         depth: 1,
         answers: [
           {
@@ -61,9 +61,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Of course we respect privacy. That's why we're exploring options, like an opt-in model, to ensure everyone is comfortable with the process.",
             impacts: {},
             outcomeModifiers: {
-              outcome_mood_retracted: OutcomeModifierWeight.SlightPositive, // +4 -> -4 total
-              outcome_mood_non_compliance: OutcomeModifierWeight.SlightNegative, // -4 -> +4 total
-              outcome_mood_scaled_back: OutcomeModifierWeight.StrongPositive, // +8 -> +8 total
+              outcome_mood_retracted: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_mood_non_compliance: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_mood_scaled_back: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {

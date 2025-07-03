@@ -10,7 +10,7 @@ export const nationalGlitterSpillOutcomes: SituationOutcome[] = [
     id: "outcome_glitter_contained",
     title: "Spill Contained, Ecosystem Recovers",
     description:
-      "A rapid, effective cleanup operation led by Homeland Security contains the spill. The biodegradable glitter breaks down with minimal long-term damage.",
+      "A rapid cleanup operation led by Homeland Security contains the spill. The biodegradable glitter breaks down with minimal damage.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -57,7 +57,7 @@ export const nationalGlitterSpillOutcomes: SituationOutcome[] = [
     id: "outcome_glitter_tourist_trap",
     title: "Glitter River Becomes Tourist Trap",
     description:
-      "The sparkly river becomes a bizarre tourist attraction and social media sensation. The responsible company leans in, sponsoring the cleanup with PR flair.",
+      "The sparkly river becomes a bizarre tourist attraction and social media sensation. The company sponsors the cleanup with PR flair.",
     weight: 20,
     consequences: {
       approvalChanges: {

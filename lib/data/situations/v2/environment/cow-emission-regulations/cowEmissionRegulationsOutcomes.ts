@@ -10,7 +10,7 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
     id: "outcome_cow_tech_boom",
     title: "Eco-Backpack Tech Boosts Exports",
     description:
-      "The mandated technology, once refined, becomes a surprise hit. Foreign nations buy the tech to meet their own climate goals, creating an export boom.",
+      "The technology becomes a surprise hit. Foreign nations buy the tech to meet climate goals, creating an export boom.",
     weight: 25,
     consequences: {
       approvalChanges: {
@@ -34,7 +34,7 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
     id: "outcome_cow_farm_rebellion",
     title: "Farm Rebellion Leads to Beef Shortages",
     description:
-      "Ranchers refuse to comply with the costly mandate, leading to legal battles and culling of herds. Beef prices skyrocket due to shortages.",
+      "Ranchers refuse to comply with the costly mandate, leading to legal battles and culling of herds. Beef prices skyrocket.",
     weight: 45,
     consequences: {
       approvalChanges: {
@@ -60,7 +60,7 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
     id: "outcome_cow_program_delayed",
     title: "Backpack Program Delayed by Lawsuits",
     description:
-      "Facing intense legal challenges from farming groups, the administration is forced to delay the program indefinitely pending court rulings.",
+      "Facing legal challenges from farming groups, the administration delays the program indefinitely pending court rulings.",
     weight: 30,
     consequences: {
       approvalChanges: {

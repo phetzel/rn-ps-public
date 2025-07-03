@@ -58,7 +58,7 @@ export const investigativeExchange: ExchangeData = {
       },
       q_meme_stock_reality: {
         id: "q_meme_stock_reality",
-        text: "The 'reality' is that these are not real investments; they're speculative bubbles. Is the State Dept prepared for the diplomatic fallout when this blows up?",
+        text: "These are speculative bubbles. Is the State Dept prepared for diplomatic fallout when this blows up?",
         depth: 1,
         answers: [
           {

@@ -10,7 +10,7 @@ export const treasuryInsiderTradingOutcomes: SituationOutcome[] = [
     id: "outcome_trading_guilty_verdict",
     title: "Guilty Verdict, Officials Resign in Disgrace",
     description:
-      "The investigation finds clear evidence of wrongdoing. Several high-level Treasury officials are charged and resign, creating a massive political scandal.",
+      "The investigation finds clear evidence of wrongdoing. Several Treasury officials are charged and resign, creating a political scandal.",
     weight: 40,
     consequences: {
       approvalChanges: {

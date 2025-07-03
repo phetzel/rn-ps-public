@@ -10,7 +10,7 @@ export const studentLoanLotteryOutcomes: SituationOutcome[] = [
     id: "outcome_lottery_spending_pop",
     title: "Winners Celebrate, Economy Gets a Jolt",
     description:
-      "A handful of lucky winners get their debt erased, leading to a small but noticeable boost in consumer spending and positive human-interest stories.",
+      "A handful of lucky winners get their debt erased, leading to a small boost in consumer spending and positive human-interest stories.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -34,7 +34,7 @@ export const studentLoanLotteryOutcomes: SituationOutcome[] = [
     id: "outcome_lottery_scandal",
     title: "Rigged Drawing Scandal Explodes",
     description:
-      "An investigation reveals the lottery was rigged to favor politically connected families, causing a massive scandal and calls for impeachment.",
+      "Investigation reveals the lottery was rigged to favor politically connected families, causing massive scandal and calls for impeachment.",
     weight: 30,
     consequences: {
       approvalChanges: {

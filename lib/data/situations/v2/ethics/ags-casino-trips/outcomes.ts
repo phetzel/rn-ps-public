@@ -10,7 +10,7 @@ export const agCasinoTripsOutcomes: SituationOutcome[] = [
     id: "outcome_ag_pays_back",
     title: "AG Pays Back Flight Costs, Stays in Office",
     description:
-      "The Attorney General agrees to reimburse the government for the full cost of the flights. The move dampens the scandal, allowing them to keep their job.",
+      "The Attorney General agrees to reimburse the government for flight costs. The move dampens the scandal, letting them keep their job.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -33,7 +33,7 @@ export const agCasinoTripsOutcomes: SituationOutcome[] = [
     id: "outcome_ag_ig_ouster",
     title: "Inspector General Fired, Sparks Outrage",
     description:
-      "In the middle of the probe, the President fires the Inspector General leading it. The move is seen as obstruction, escalating the scandal significantly.",
+      "During the probe, the President fires the Inspector General leading it. The move is seen as obstruction, escalating the scandal.",
     weight: 35,
     consequences: {
       approvalChanges: {

@@ -54,7 +54,7 @@ export const conPrimaryExchange: ExchangeData = {
       },
       q_chaos_protocols: {
         id: "q_chaos_protocols",
-        text: "What 'new protocols'? Did you have to create a rule that says 'the President shouldn't look like a cartoon character' on world calls?",
+        text: "What 'new protocols'? Did you have to create a rule that says 'the President shouldn't look like a cartoon character'?",
         depth: 1,
         answers: [
           {

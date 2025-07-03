@@ -40,7 +40,7 @@ export const investigativeExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_hack_traced: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_hack_foreign_power: OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_hack_foreign_power: OutcomeModifierWeight.StrongNegative, // -8
               outcome_hack_public_ridicule: OutcomeModifierWeight.SlightPositive, // +4 -> +2 total
             },
           },

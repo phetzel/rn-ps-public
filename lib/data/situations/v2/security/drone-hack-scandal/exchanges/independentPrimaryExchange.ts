@@ -25,9 +25,10 @@ export const independentPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.Positive },
             },
             outcomeModifiers: {
-              outcome_hack_traced: OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_hack_foreign_power: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_hack_public_ridicule: OutcomeModifierWeight.MajorPositive, // +12 -> +10 total
+              outcome_hack_traced: OutcomeModifierWeight.StrongNegative, // -8
+              outcome_hack_foreign_power: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_public_ridicule:
+                OutcomeModifierWeight.StrongPositive, // +8 -> 0 total
             },
           },
           {
@@ -35,12 +36,17 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "I would caution against treating this as a joke. This was a criminal act, and the DOJ is pursuing all leads to bring the culprits to justice.",
             impacts: {
-              cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_hack_traced: OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_foreign_power: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_hack_public_ridicule: OutcomeModifierWeight.StrongNegative, // -8
+              outcome_hack_public_ridicule:
+                OutcomeModifierWeight.StrongNegative, // -8
             },
             followUpId: "q_hack_culprits",
           },
@@ -56,12 +62,17 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "The FBI and our cyber-crime units are making significant progress. We are confident we will identify and prosecute those responsible.",
             impacts: {
-              cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_hack_traced: OutcomeModifierWeight.StrongPositive, // +8 -> +12 total
               outcome_hack_foreign_power: OutcomeModifierWeight.Neutral, // 0 -> +4 total
-              outcome_hack_public_ridicule: OutcomeModifierWeight.StrongNegative, // -8 -> -16 total
+              outcome_hack_public_ridicule:
+                OutcomeModifierWeight.StrongNegative, // -8 -> -16 total
             },
           },
           {
@@ -71,8 +82,9 @@ export const independentPrimaryExchange: ExchangeData = {
             impacts: {},
             outcomeModifiers: {
               outcome_hack_traced: OutcomeModifierWeight.Neutral, // 0 -> +4 total
-              outcome_hack_foreign_power: OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
-              outcome_hack_public_ridicule: OutcomeModifierWeight.SlightNegative, // -4 -> -12 total
+              outcome_hack_foreign_power: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
+              outcome_hack_public_ridicule:
+                OutcomeModifierWeight.SlightPositive, // +4 -> -4 total
             },
           },
         ],

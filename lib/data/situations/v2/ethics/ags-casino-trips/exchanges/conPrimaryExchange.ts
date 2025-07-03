@@ -63,9 +63,9 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
             },
             outcomeModifiers: {
-              outcome_ag_pays_back: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_ag_ig_ouster: OutcomeModifierWeight.ModerateNegative, // -6 -> +2 total
-              outcome_ag_rules_tightened: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
+              outcome_ag_pays_back: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_ag_ig_ouster: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_ag_rules_tightened: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {

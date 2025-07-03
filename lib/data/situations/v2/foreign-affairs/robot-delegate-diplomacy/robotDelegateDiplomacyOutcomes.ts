@@ -10,7 +10,7 @@ export const robotDelegateDiplomacyOutcomes: SituationOutcome[] = [
     id: "outcome_robot_hailed",
     title: "Robot Hailed as Diplomatic Innovation",
     description:
-      "The AI delegate performs flawlessly, analyzing data and proposing novel solutions. It's hailed as a breakthrough in diplomacy and conflict resolution.",
+      "The AI delegate performs flawlessly, analyzing data and proposing novel solutions. It's hailed as a breakthrough in diplomacy.",
     weight: 25,
     consequences: {
       approvalChanges: {
@@ -59,7 +59,7 @@ export const robotDelegateDiplomacyOutcomes: SituationOutcome[] = [
     id: "outcome_robot_glitch",
     title: "AI Glitch Causes Diplomatic Incident",
     description:
-      "A software glitch causes the robot to repeatedly translate 'hello' into a grave insult in the host's language, creating a major international incident.",
+      "A software glitch causes the robot to repeatedly translate 'hello' into a grave insult, creating a major international incident.",
     weight: 35,
     consequences: {
       approvalChanges: {

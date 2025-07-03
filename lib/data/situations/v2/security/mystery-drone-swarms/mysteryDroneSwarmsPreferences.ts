@@ -5,21 +5,21 @@ export const mysteryDroneSwarmsPreferences: SituationPreferences = {
   president: {
     answerType: AnswerType.Challenge,
     rationale:
-      "The President wants to project strength and challenge whoever is responsible, vowing a swift and strong response to the violation of our airspace.",
+      "Wants to project strength and challenge whoever is responsible, vowing swift response to airspace violation.",
   },
   cabinet: {
     [CabinetStaticId.Homeland]: {
       preference: {
         answerType: AnswerType.Inform,
         rationale:
-          "Homeland Security wants to calmly inform the public of the known facts to prevent widespread panic or conspiracy theories from taking root.",
+          "Wants to calmly inform the public of known facts to prevent widespread panic or conspiracy theories.",
       },
     },
     [CabinetStaticId.Defense]: {
       preference: {
         answerType: AnswerType.Deflect,
         rationale:
-          "The Defense Secretary wants to deflect questions about why our air defenses didn't stop the swarms, focusing instead on the investigation.",
+          "Wants to deflect questions about why air defenses failed, focusing instead on the investigation.",
       },
     },
   },

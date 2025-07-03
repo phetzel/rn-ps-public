@@ -45,7 +45,7 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_gnomes_recycled: OutcomeModifierWeight.SlightPositive, // +4
               outcome_gnomes_wildlife_harm:
                 OutcomeModifierWeight.SlightNegative, // -4
-              outcome_gnomes_public_art: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_gnomes_public_art: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],
@@ -67,9 +67,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_gnomes_recycled: OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
-              outcome_gnomes_wildlife_harm: OutcomeModifierWeight.Neutral, // 0 -> +4 total
-              outcome_gnomes_public_art: OutcomeModifierWeight.SlightNegative, // -4 -> -12 total
+              outcome_gnomes_recycled: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_gnomes_wildlife_harm: OutcomeModifierWeight.Neutral, // 0
+              outcome_gnomes_public_art: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -80,10 +80,10 @@ export const independentPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
             },
             outcomeModifiers: {
-              outcome_gnomes_recycled: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
+              outcome_gnomes_recycled: OutcomeModifierWeight.SlightNegative, // -4
               outcome_gnomes_wildlife_harm:
-                OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
-              outcome_gnomes_public_art: OutcomeModifierWeight.SlightNegative, // -4 -> -12 total
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_gnomes_public_art: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

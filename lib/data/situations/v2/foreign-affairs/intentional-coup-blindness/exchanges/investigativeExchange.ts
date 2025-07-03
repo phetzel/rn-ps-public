@@ -14,7 +14,7 @@ export const investigativeExchange: ExchangeData = {
     questions: {
       q_coup_complicit: {
         id: "q_coup_complicit",
-        text: "Sources in the intelligence community say we knew about this coup for weeks. Is the administration complicit in overthrowing a democracy for cheap oil?",
+        text: "Intelligence sources say we knew about this coup for weeks. Is the administration complicit in overthrowing democracy for cheap oil?",
         depth: 0,
         answers: [
           {
@@ -47,8 +47,7 @@ export const investigativeExchange: ExchangeData = {
               outcome_coup_cheap_oil: OutcomeModifierWeight.SlightPositive, // +4
               outcome_coup_sanctions_spike:
                 OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coup_collapses_blame:
-                OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_coup_collapses_blame: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

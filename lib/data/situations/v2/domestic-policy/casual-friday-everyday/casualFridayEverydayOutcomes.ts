@@ -10,7 +10,7 @@ export const casualFridayEverydayOutcomes: SituationOutcome[] = [
     id: "outcome_casual_morale_boost",
     title: "Nation Loves Comfy Government",
     description:
-      "The policy is a surprise hit. Federal workers report higher morale and productivity. The public finds the move refreshingly unstuffy and modern.",
+      "The policy is a surprise hit. Federal workers report higher morale and productivity. The public finds the move refreshingly modern.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -34,7 +34,7 @@ export const casualFridayEverydayOutcomes: SituationOutcome[] = [
     id: "outcome_casual_productivity_plunge",
     title: "Pajama-Gate Causes Productivity Plunge",
     description:
-      "The vague policy leads to chaos as workers show up in pajamas. Productivity plummets, and the administration is mocked for its lack of seriousness.",
+      "The vague policy leads to chaos as workers show up in pajamas. Productivity plummets, and the administration is mocked for being unserious.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -60,7 +60,7 @@ export const casualFridayEverydayOutcomes: SituationOutcome[] = [
     id: "outcome_casual_policy_walked_back",
     title: "Dress-Code Chaos Contained and Clarified",
     description:
-      "After initial confusion, the administration quickly clarifies the policy to 'business casual,' averting disaster and ending the story with a shrug.",
+      "After initial confusion, the administration clarifies the policy to 'business casual,' averting disaster and ending the story with a shrug.",
     weight: 25,
     consequences: {
       approvalChanges: {

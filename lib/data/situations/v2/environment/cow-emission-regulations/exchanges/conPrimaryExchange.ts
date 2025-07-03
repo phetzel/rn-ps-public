@@ -67,9 +67,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cow_tech_boom: OutcomeModifierWeight.ModeratePositive, // +6 -> +10 total
-              outcome_cow_farm_rebellion: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_cow_program_delayed: OutcomeModifierWeight.SlightNegative, // -4 -> -12 total
+              outcome_cow_tech_boom: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cow_farm_rebellion: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cow_program_delayed: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
@@ -80,9 +80,9 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
             outcomeModifiers: {
-              outcome_cow_tech_boom: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_cow_farm_rebellion: OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
-              outcome_cow_program_delayed: OutcomeModifierWeight.SlightNegative, // -4 -> -12 total
+              outcome_cow_tech_boom: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cow_farm_rebellion: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cow_program_delayed: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

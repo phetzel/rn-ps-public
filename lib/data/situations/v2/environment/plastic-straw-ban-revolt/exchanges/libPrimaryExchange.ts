@@ -47,10 +47,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_straw_ban_eased: OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_straw_ban_eased: OutcomeModifierWeight.SlightPositive, // +4
               outcome_straw_black_market: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_straw_alternatives_boom:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_straw_alternatives_boom: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_straw_timeline",
           },

@@ -34,7 +34,7 @@ export const plasticStrawBanOutcomes: SituationOutcome[] = [
     id: "outcome_straw_black_market",
     title: "Straw Black Market Thrives on Defiance",
     description:
-      "The ban creates a thriving black market for illicit plastic straws. Enforcement becomes a joke, and the policy is seen as a massive failure.",
+      "The ban creates a thriving black market for illicit straws. Enforcement becomes a joke, and the policy is seen as a failure.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -56,7 +56,7 @@ export const plasticStrawBanOutcomes: SituationOutcome[] = [
     id: "outcome_straw_alternatives_boom",
     title: "Metal & Paper Straws Become Trendy",
     description:
-      "The ban drives massive innovation in straw alternatives. Reusable metal and high-quality paper straws become trendy, achieving the environmental goal.",
+      "The ban drives innovation in straw alternatives. Reusable metal and paper straws become trendy, achieving the environmental goal.",
     weight: 25,
     consequences: {
       approvalChanges: {

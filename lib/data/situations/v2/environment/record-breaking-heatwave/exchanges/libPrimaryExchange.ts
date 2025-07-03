@@ -14,7 +14,7 @@ export const libPrimaryExchange: ExchangeData = {
     questions: {
       q_heatwave_climate: {
         id: "q_heatwave_climate",
-        text: "This record heatwave is clearly a symptom of climate change. Is the administration considering radical solutions, like geoengineering or cloud-seeding?",
+        text: "This heatwave is clearly climate change. Is the administration considering radical solutions like geoengineering or cloud-seeding?",
         depth: 0,
         answers: [
           {

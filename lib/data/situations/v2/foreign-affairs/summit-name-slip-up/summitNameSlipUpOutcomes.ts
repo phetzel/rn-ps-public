@@ -10,7 +10,7 @@ export const summitNameSlipUpOutcomes: SituationOutcome[] = [
     id: "outcome_slip_up_meme",
     title: "'Faroutistan' Becomes a Viral Meme",
     description:
-      "The gaffe goes viral. While diplomatically awkward, it unexpectedly boosts the President's image as relatable and humorous among younger voters.",
+      "The gaffe goes viral. While diplomatically awkward, it boosts the President's image as relatable and humorous among younger voters.",
     weight: 30,
     consequences: {
       approvalChanges: {
@@ -33,7 +33,7 @@ export const summitNameSlipUpOutcomes: SituationOutcome[] = [
     id: "outcome_slip_up_chill",
     title: "Diplomatic Chill with Farawaystan",
     description:
-      "The leader of Farawaystan takes the slip-up as a major sign of disrespect, refusing to engage in bilateral talks and chilling relations.",
+      "Farawaystan's leader takes the slip-up as disrespect, refusing bilateral talks and chilling relations.",
     weight: 40,
     consequences: {
       approvalChanges: {

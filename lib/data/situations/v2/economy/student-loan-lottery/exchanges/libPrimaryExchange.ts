@@ -84,9 +84,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_lottery_spending_pop:
-                OutcomeModifierWeight.ModeratePositive, // +6
+                OutcomeModifierWeight.Neutral, // 0
               outcome_lottery_scandal: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_lottery_legal_chaos: OutcomeModifierWeight.SlightNegative, // -2
+              outcome_lottery_legal_chaos: OutcomeModifierWeight.SlightPositive, // +2
             },
           },
         ],

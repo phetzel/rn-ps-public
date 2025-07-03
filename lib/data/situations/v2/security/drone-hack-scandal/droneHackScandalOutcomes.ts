@@ -34,7 +34,7 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
     id: "outcome_hack_foreign_power",
     title: "Foreign Power Suspected in Hack",
     description:
-      "The sophistication of the hack points toward a rival nation-state, escalating the incident from a prank into a serious international cyber-conflict.",
+      "The sophistication of the hack points toward a rival nation-state, escalating the incident from a prank into a serious cyber-conflict.",
     weight: 40,
     consequences: {
       approvalChanges: {

@@ -10,7 +10,7 @@ export const pentagonYachtPartyOutcomes: SituationOutcome[] = [
     id: "outcome_yacht_house_hearings",
     title: "House Hearings Explode into Major Scandal",
     description:
-      "The story escalates. The House launches a full-scale investigation into waste, fraud, and abuse at the Pentagon, dominating the news for weeks.",
+      "The story escalates. The House launches a full investigation into waste, fraud, and abuse at the Pentagon, dominating news for weeks.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -33,7 +33,7 @@ export const pentagonYachtPartyOutcomes: SituationOutcome[] = [
     id: "outcome_yacht_repayment_warning",
     title: "Repayment & Warning Letter Ends Story",
     description:
-      "The involved officials repay the costs, and the Pentagon issues a stern warning. The swift, low-key resolution keeps the story from escalating.",
+      "The involved officials repay costs, and the Pentagon issues a stern warning. The swift, low-key resolution keeps the story from escalating.",
     weight: 35,
     consequences: {
       approvalChanges: {

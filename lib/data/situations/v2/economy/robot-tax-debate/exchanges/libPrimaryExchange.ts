@@ -69,7 +69,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_tax_becomes_credit: OutcomeModifierWeight.SlightPositive, // +4
               outcome_firms_flee: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_tax_windfall: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_windfall: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {

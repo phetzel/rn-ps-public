@@ -29,10 +29,10 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_chaos_laughs: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_chaos_laughs: OutcomeModifierWeight.Neutral, // 0
               outcome_chaos_market_jitters:
                 OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_chaos_pirate_meme: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_chaos_pirate_meme: OutcomeModifierWeight.ModeratePositive, // +6
             },
           },
           {
@@ -54,7 +54,7 @@ export const independentPrimaryExchange: ExchangeData = {
       },
       q_chaos_icebreaker: {
         id: "q_chaos_icebreaker",
-        text: "You call it an 'icebreaker,' but sources say several leaders were offended by the lack of professionalism. Did this gaffe damage any relationships?",
+        text: "You call it an 'icebreaker,' but sources say several leaders were offended by the lack of professionalism. Did this damage relationships?",
         depth: 1,
         answers: [
           {

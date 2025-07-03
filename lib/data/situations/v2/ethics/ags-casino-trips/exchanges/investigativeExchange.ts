@@ -14,7 +14,7 @@ export const investigativeExchange: ExchangeData = {
     questions: {
       q_ag_trips_abuse: {
         id: "q_ag_trips_abuse",
-        text: "Flight logs show the Attorney General used a DOJ jet for repeated weekend trips to casino destinations. Is this not a clear abuse of taxpayer resources?",
+        text: "Flight logs show the AG used a DOJ jet for repeated weekend casino trips. Is this not a clear abuse of taxpayer resources?",
         depth: 0,
         answers: [
           {

@@ -35,7 +35,7 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
     id: "outcome_curfew_black_market",
     title: "Wi-Fi Black Market and VPNs Boom",
     description:
-      "The curfew is implemented, leading to a massive surge in VPN usage and the creation of underground networks, making internet use harder to track.",
+      "The curfew is implemented, leading to a massive surge in VPN usage and underground networks, making internet use harder to track.",
     weight: 35,
     consequences: {
       approvalChanges: {

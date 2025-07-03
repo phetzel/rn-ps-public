@@ -10,7 +10,7 @@ export const mysteryDroneSwarmsOutcomes: SituationOutcome[] = [
     id: "outcome_swarms_hobbyists",
     title: "Swarms Linked to Advanced Hobbyists",
     description:
-      "The FBI traces the swarms to a group of highly advanced tech hobbyists testing new software. The threat is neutralized, but it exposes major air security gaps.",
+      "The FBI traces the swarms to advanced tech hobbyists testing new software. The threat is neutralized but exposes air security gaps.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -33,7 +33,7 @@ export const mysteryDroneSwarmsOutcomes: SituationOutcome[] = [
     id: "outcome_swarms_foreign_probe",
     title: "Foreign Intelligence Probe Revealed",
     description:
-      "Evidence emerges that the swarms are sophisticated surveillance drones from a rival nation, mapping our infrastructure and testing our air defenses.",
+      "Evidence shows the swarms are sophisticated surveillance drones from a rival nation, mapping infrastructure and testing defenses.",
     weight: 40,
     consequences: {
       approvalChanges: {

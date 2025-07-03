@@ -44,8 +44,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_glitter_contained: OutcomeModifierWeight.SlightPositive, // +4
               outcome_glitter_mess: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_glitter_tourist_trap:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_glitter_tourist_trap: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_glitter_fines",
           },
@@ -79,10 +78,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "It's too early to talk about charges. The immediate priority is the emergency response, which the company is cooperating with fully.",
             impacts: {},
             outcomeModifiers: {
-              outcome_glitter_contained: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_glitter_mess: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_glitter_tourist_trap:
-                OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
+              outcome_glitter_contained: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_glitter_mess: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_glitter_tourist_trap: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

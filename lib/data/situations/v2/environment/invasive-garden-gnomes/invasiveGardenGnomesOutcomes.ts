@@ -10,7 +10,7 @@ export const invasiveGardenGnomesOutcomes: SituationOutcome[] = [
     id: "outcome_gnomes_recycled",
     title: "Gnomes Collected and Recycled",
     description:
-      "A massive volunteer effort, organized by the Parks Service, successfully collects and recycles the gnomes. The prankster is caught and fined.",
+      "A massive volunteer effort successfully collects and recycles the gnomes. The prankster is caught and fined.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -33,7 +33,7 @@ export const invasiveGardenGnomesOutcomes: SituationOutcome[] = [
     id: "outcome_gnomes_wildlife_harm",
     title: "Wildlife Harmed, Scandal Grows",
     description:
-      "Reports emerge of wildlife choking on plastic gnome fragments. The lighthearted prank turns into a serious environmental scandal, blaming slow government response.",
+      "Reports emerge of wildlife choking on plastic gnome fragments. The prank turns into an environmental scandal blaming slow response.",
     weight: 35,
     consequences: {
       approvalChanges: {

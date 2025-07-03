@@ -10,7 +10,7 @@ export const freedomcoinCurrencyPlanOutcomes: SituationOutcome[] = [
     id: "outcome_freedom_coin_panic",
     title: "Market Panic and Capital Flight Ensue",
     description:
-      "The announcement triggers a massive sell-off of the dollar. Investors flee to stabler currencies, causing economic chaos and international ridicule.",
+      "The announcement triggers a massive sell-off of the dollar. Investors flee to stabler currencies, causing economic chaos and ridicule.",
     weight: 45,
     consequences: {
       approvalChanges: {
@@ -62,7 +62,7 @@ export const freedomcoinCurrencyPlanOutcomes: SituationOutcome[] = [
     id: "outcome_freedom_coin_underground",
     title: "FreedomCoin Becomes Niche Success",
     description:
-      "While the official plan flops, FreedomCoin gains a cult following among tech enthusiasts, becoming a popular, if volatile, alternative currency.",
+      "While the official plan flops, FreedomCoin gains a cult following among tech enthusiasts, becoming a popular alternative currency.",
     weight: 20,
     consequences: {
       approvalChanges: {

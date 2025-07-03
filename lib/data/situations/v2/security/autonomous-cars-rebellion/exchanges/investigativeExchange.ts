@@ -22,7 +22,11 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "Absolutely. The ability to control our transportation grid is a profound security issue. We are treating this with the utmost seriousness.",
             impacts: {
-              cabinet: { [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_cars_patch_issued: OutcomeModifierWeight.SlightPositive, // +4
@@ -36,7 +40,11 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "Our military and civilian systems are on separate networks. While this is a major crime, it does not pose a direct threat to our defense assets.",
             impacts: {
-              cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_cars_patch_issued: OutcomeModifierWeight.SlightPositive, // +4
@@ -56,12 +64,16 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Cyber Command is actively working with tech companies to analyze the malicious code and develop a countermeasure to restore control.",
             impacts: {
-              cabinet: { [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
-              outcome_cars_patch_issued: OutcomeModifierWeight.ModeratePositive, // +6 -> +10 total
-              outcome_cars_traffic_chaos: OutcomeModifierWeight.SlightNegative, // -4 -> -4 total
-              outcome_cars_ban_proposed: OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
+              outcome_cars_patch_issued: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cars_traffic_chaos: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cars_ban_proposed: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {

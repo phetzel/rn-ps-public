@@ -29,7 +29,7 @@ export const threeAmTweetstormOutcomes: SituationOutcome[] = [
     id: "outcome_tweetstorm_fuels_distrust",
     title: "Conspiracy Trend Fuels Public Distrust",
     description:
-      "The wild claims are taken seriously by a segment of the population, fueling new conspiracy theories and eroding public trust in institutions.",
+      "The wild claims are taken seriously by some, fueling new conspiracy theories and eroding public trust in institutions.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -55,7 +55,7 @@ export const threeAmTweetstormOutcomes: SituationOutcome[] = [
     id: "outcome_tweetstorm_viral_meme",
     title: "'Spy Birds' Meme Goes Viral",
     description:
-      "The absurdity of the claim that birds are government spies becomes a massive internet meme, making the President seem both bizarre and weirdly relatable.",
+      "The absurdity of spy birds becomes a massive internet meme, making the President seem both bizarre and weirdly relatable.",
     weight: 25,
     consequences: {
       approvalChanges: {

@@ -47,12 +47,11 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_freedom_coin_panic:
-                OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_freedom_coin_panic: OutcomeModifierWeight.Neutral, // 0
               outcome_freedom_coin_shelved:
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_freedom_coin_underground:
-                OutcomeModifierWeight.SlightNegative, // -2
+                OutcomeModifierWeight.SlightPositive, // +4
             },
             followUpId: "q_freedom_coin_proof",
           },

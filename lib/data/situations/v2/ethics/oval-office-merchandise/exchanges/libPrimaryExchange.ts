@@ -75,10 +75,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_merch_closed: OutcomeModifierWeight.SlightNegative, // -4 -> -12 total
-              outcome_merch_profiteering_scandal:
-                OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
+              outcome_merch_profiteering_scandal: OutcomeModifierWeight.Neutral, // 0 -> +4 total
               outcome_merch_public_loves_it:
-                OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
+                OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
             },
           },
         ],

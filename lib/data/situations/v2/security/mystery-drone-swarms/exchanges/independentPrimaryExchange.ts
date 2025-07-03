@@ -22,11 +22,16 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "We cannot speculate. Homeland Security, the FBI, and the DOD are all working together to identify the source. We will inform you when we have facts.",
             impacts: {
-              cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_swarms_hobbyists: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_swarms_foreign_probe: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_swarms_foreign_probe:
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_swarms_tech_demo_fail: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -39,7 +44,8 @@ export const independentPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_swarms_hobbyists: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_swarms_foreign_probe: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_swarms_foreign_probe:
+                OutcomeModifierWeight.SlightPositive, // +4
               outcome_swarms_tech_demo_fail: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_swarms_action",
@@ -56,11 +62,16 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             text: "No. Discharging weapons over populated urban centers is incredibly dangerous. Our priority is to track the drones back to their operators.",
             impacts: {
-              cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_swarms_hobbyists: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_swarms_foreign_probe: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
+              outcome_swarms_foreign_probe:
+                OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
               outcome_swarms_tech_demo_fail: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -71,8 +82,9 @@ export const independentPrimaryExchange: ExchangeData = {
             impacts: {},
             outcomeModifiers: {
               outcome_swarms_hobbyists: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_swarms_foreign_probe: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_swarms_tech_demo_fail: OutcomeModifierWeight.SlightPositive, // +4 -> +4 total
+              outcome_swarms_foreign_probe:
+                OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
+              outcome_swarms_tech_demo_fail: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

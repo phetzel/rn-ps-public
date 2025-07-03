@@ -31,9 +31,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_casual_morale_boost: OutcomeModifierWeight.SlightPositive, // +4
               outcome_casual_productivity_plunge:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_casual_policy_walked_back:
-                OutcomeModifierWeight.SlightPositive, // +4
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_casual_policy_walked_back: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_casual_judgment",
           },

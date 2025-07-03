@@ -80,10 +80,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_fans_shelved: OutcomeModifierWeight.SlightPositive, // +4 -> -4 total
-              outcome_fans_prototype_fail: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_fans_research_program:
-                OutcomeModifierWeight.StrongPositive, // +8 -> +12 total
+              outcome_fans_shelved: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_fans_prototype_fail: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_fans_research_program: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

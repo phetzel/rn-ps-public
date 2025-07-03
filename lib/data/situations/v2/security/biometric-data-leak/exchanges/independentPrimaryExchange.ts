@@ -22,12 +22,17 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "We are providing free credit monitoring and identity theft protection services for all citizens. We will stand by everyone affected.",
             impacts: {
-              cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_leak_contained: OutcomeModifierWeight.StrongPositive, // +8
               outcome_leak_fraud_wave: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_leak_congress_stalls: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_leak_congress_stalls:
+                OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -35,12 +40,16 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Homeland Security has set up a website with step-by-step instructions for citizens to freeze their credit and report suspicious activity.",
             impacts: {
-              cabinet: { [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
-              outcome_leak_contained: OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_leak_contained: OutcomeModifierWeight.SlightPositive, // +4
               outcome_leak_fraud_wave: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_leak_congress_stalls: OutcomeModifierWeight.SlightNegative, // -4 -> -2 total
+              outcome_leak_congress_stalls: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_leak_cost",
           },
@@ -56,12 +65,17 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The DOJ is exploring every legal avenue to ensure the responsible contractor bears the full financial burden of this cleanup.",
             impacts: {
-              cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_leak_contained: OutcomeModifierWeight.SlightPositive, // +4 -> +10 total
               outcome_leak_fraud_wave: OutcomeModifierWeight.Neutral, // 0 -> -4 total
-              outcome_leak_congress_stalls: OutcomeModifierWeight.SlightNegative, // -4 -> -6 total
+              outcome_leak_congress_stalls:
+                OutcomeModifierWeight.SlightNegative, // -4 -> -6 total
             },
           },
           {
@@ -72,7 +86,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_leak_contained: OutcomeModifierWeight.Neutral, // 0 -> +6 total
               outcome_leak_fraud_wave: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_leak_congress_stalls: OutcomeModifierWeight.SlightNegative, // -4 -> -6 total
+              outcome_leak_congress_stalls:
+                OutcomeModifierWeight.SlightNegative, // -4 -> -6 total
             },
           },
         ],

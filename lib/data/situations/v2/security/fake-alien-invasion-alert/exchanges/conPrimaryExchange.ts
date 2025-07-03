@@ -22,12 +22,16 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "I want to be clear to all Americans: there is no alien threat. This was a purely internal, hypothetical exercise that should never have leaked.",
             impacts: {
-              cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_alert_panic: OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive, // +4 -> +2 total
+              outcome_alert_panic: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_alert_funding_pass: OutcomeModifierWeight.Neutral, // 0 -> 0 total
             },
           },
           {
@@ -35,7 +39,11 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "The real unethical act is the leaking of a sensitive national security document designed to test our nation's readiness for any threat.",
             impacts: {
-              cabinet: { [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.Positive } },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightNegative, // -4
@@ -56,7 +64,11 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The need for a strong defense is constant and based on real-world intelligence. It is entirely separate from this unfortunate internal document.",
             impacts: {
-              cabinet: { [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
@@ -70,9 +82,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "It's true that the funding need is real, even if the method discussed in the memo was wrong. We have to separate the two issues.",
             impacts: {},
             outcomeModifiers: {
-              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive, // +4 -> -0 total
+              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
               outcome_alert_panic: OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive, // +4 -> +4 total
+              outcome_alert_funding_pass: OutcomeModifierWeight.Neutral, // 0 -> 0 total
             },
           },
         ],

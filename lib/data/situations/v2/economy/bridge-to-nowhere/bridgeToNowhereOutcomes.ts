@@ -10,7 +10,7 @@ export const bridgeToNowhereOutcomes: SituationOutcome[] = [
     id: "outcome_bridge_scandal",
     title: "Bridge Scandal Explodes, Project Frozen",
     description:
-      "An internal audit reveals massive corruption and waste. The project is immediately frozen, sparking public fury and multiple investigations.",
+      "An internal audit reveals massive corruption and waste. The project is frozen, sparking public fury and investigations.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -34,7 +34,7 @@ export const bridgeToNowhereOutcomes: SituationOutcome[] = [
     id: "outcome_bridge_tourist_trap",
     title: "Bridge Becomes Bizarre Tourist Attraction",
     description:
-      "The bridge is built and becomes an internet-famous landmark. Tourists flock to see the absurdity, creating an unexpected economic boom.",
+      "The bridge is built and becomes an internet-famous landmark. Tourists flock to see the absurdity, creating an unexpected boom.",
     weight: 35,
     consequences: {
       approvalChanges: {

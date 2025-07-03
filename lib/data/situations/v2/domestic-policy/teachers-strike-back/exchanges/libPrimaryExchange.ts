@@ -67,9 +67,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_repealed: OutcomeModifierWeight.Neutral, // 0 -> +8 total
-              outcome_strike_prolonged: OutcomeModifierWeight.Neutral, // 0 -> -8 total
-              outcome_strike_compromise: OutcomeModifierWeight.StrongPositive, // +8 -> +8 total
+              outcome_strike_repealed: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_prolonged: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_compromise: OutcomeModifierWeight.StrongPositive, // +8
             },
           },
           {
@@ -80,9 +80,9 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
             outcomeModifiers: {
-              outcome_strike_repealed: OutcomeModifierWeight.SlightNegative, // -4 -> +4 total
-              outcome_strike_prolonged: OutcomeModifierWeight.SlightPositive, // +4 -> -4 total
-              outcome_strike_compromise: OutcomeModifierWeight.SlightNegative, // -4 -> -4 total
+              outcome_strike_repealed: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_prolonged: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_compromise: OutcomeModifierWeight.StrongNegative, // -8
             },
           },
         ],

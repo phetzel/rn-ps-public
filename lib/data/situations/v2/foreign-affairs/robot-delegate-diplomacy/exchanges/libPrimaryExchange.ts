@@ -30,8 +30,8 @@ export const libPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_robot_hailed: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_robot_walkout: OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_robot_glitch: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_robot_walkout: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_robot_glitch: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_robot_control",
           },

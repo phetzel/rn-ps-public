@@ -22,7 +22,11 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "The real issue is a failed HHS policy, not the teachers' response. We must address the root cause, which was our own mandate.",
             impacts: {
-              cabinet: { [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Negative } },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Negative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_strike_repealed: OutcomeModifierWeight.SlightPositive, // +4
@@ -35,12 +39,16 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "Our primary goal is to get kids back in school. The fastest way to do that is through negotiation, not legal battles.",
             impacts: {
-              cabinet: { [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_strike_repealed: OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_prolonged: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_compromise: OutcomeModifierWeight.SlightPositive, // +4 -> +4 total
+              outcome_strike_compromise: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_strike_precedent",
           },
@@ -56,12 +64,16 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The DOJ has advised that the unique nature of this dispute makes it unlikely to set a broad legal precedent for future strikes.",
             impacts: {
-              cabinet: { [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive } },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
-              outcome_strike_repealed: OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
-              outcome_strike_prolonged: OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
-              outcome_strike_compromise: OutcomeModifierWeight.Neutral, // 0 -> +4 total
+              outcome_strike_repealed: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_prolonged: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_compromise: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
@@ -70,9 +82,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "This is an extraordinary situation sparked by an experimental policy. We're focused on this specific resolution, not abstract hypotheticals.",
             impacts: {},
             outcomeModifiers: {
-              outcome_strike_repealed: OutcomeModifierWeight.Neutral, // 0 -> +4 total
-              outcome_strike_prolonged: OutcomeModifierWeight.Neutral, // 0 -> -4 total
-              outcome_strike_compromise: OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
+              outcome_strike_repealed: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_prolonged: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_compromise: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

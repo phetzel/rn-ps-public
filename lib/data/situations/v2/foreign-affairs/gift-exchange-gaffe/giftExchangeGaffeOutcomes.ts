@@ -10,7 +10,7 @@ export const giftExchangeGaffeOutcomes: SituationOutcome[] = [
     id: "outcome_gaffe_apology_accepted",
     title: "Apology Accepted, Crisis Averted",
     description:
-      "A swift, sincere apology, coupled with a more appropriate gift, smooths over the incident. Diplomats praise the quick recovery.",
+      "A swift apology, coupled with a more appropriate gift, smooths over the incident. Diplomats praise the quick recovery.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -32,7 +32,7 @@ export const giftExchangeGaffeOutcomes: SituationOutcome[] = [
     id: "outcome_gaffe_lingering_resentment",
     title: "Lingering Resentment in Veggistan",
     description:
-      "While the apology is formally accepted, relations with Veggistan remain frosty. The gaffe is seen as a sign of disrespect, harming future talks.",
+      "While the apology is formally accepted, relations remain frosty. The gaffe is seen as disrespect, harming future talks.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -56,7 +56,7 @@ export const giftExchangeGaffeOutcomes: SituationOutcome[] = [
     id: "outcome_gaffe_mockery",
     title: "'Ham-gate' Becomes International Joke",
     description:
-      "The incident becomes a running joke for late-night hosts and foreign media, undermining the administration's credibility on the world stage.",
+      "The incident becomes a running joke for late-night hosts and foreign media, undermining the administration's credibility.",
     weight: 25,
     consequences: {
       approvalChanges: {

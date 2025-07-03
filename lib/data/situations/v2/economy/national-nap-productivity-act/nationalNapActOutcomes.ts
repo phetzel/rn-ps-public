@@ -10,7 +10,7 @@ export const nationalNapActOutcomes: SituationOutcome[] = [
     id: "outcome_nap_productivity_boost",
     title: "Nationwide Siestas Boost Productivity",
     description:
-      "After initial resistance, companies report a surprising surge in productivity and worker morale. The 'power nap' becomes a celebrated policy.",
+      "After initial resistance, companies report a surprising surge in productivity and worker morale. The 'power nap' becomes celebrated.",
     weight: 30,
     consequences: {
       approvalChanges: {
@@ -59,7 +59,7 @@ export const nationalNapActOutcomes: SituationOutcome[] = [
     id: "outcome_nap_plan_paused",
     title: "Mandatory Nap Plan Paused Amid Backlash",
     description:
-      "Facing intense political pressure and ridicule, the administration 'pauses' the rollout to 'gather more data,' effectively shelving the plan.",
+      "Facing intense political pressure and ridicule, the administration 'pauses' the rollout to 'gather more data,' effectively shelving it.",
     weight: 25,
     consequences: {
       approvalChanges: {

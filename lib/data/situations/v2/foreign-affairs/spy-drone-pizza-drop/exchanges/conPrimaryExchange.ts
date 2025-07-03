@@ -14,7 +14,7 @@ export const conPrimaryExchange: ExchangeData = {
     questions: {
       q_pizza_drone_incompetence: {
         id: "q_pizza_drone_incompetence",
-        text: "Our multi-billion dollar spy drone can't tell the difference between a military target and a pizza party. Isn't this a massive failure of military tech?",
+        text: "Our spy drone can't tell the difference between a military target and a pizza party. Isn't this a massive failure of military tech?",
         depth: 0,
         answers: [
           {
@@ -29,9 +29,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_pizza_apology: OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_pizza_apology: OutcomeModifierWeight.SlightPositive, // +4
               outcome_pizza_escalation: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_pizza_meme: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_pizza_meme: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_pizza_drone_fleet",
           },
@@ -43,9 +43,9 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.Positive },
             },
             outcomeModifiers: {
-              outcome_pizza_apology: OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_pizza_apology: OutcomeModifierWeight.SlightNegative, // -4
               outcome_pizza_escalation: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_pizza_meme: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_pizza_meme: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

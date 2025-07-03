@@ -46,9 +46,8 @@ export const allPublicationsExchange: ExchangeData = {
               outcome_tweetstorm_walked_back:
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_tweetstorm_fuels_distrust:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_tweetstorm_viral_meme:
-                OutcomeModifierWeight.SlightPositive, // +4 -> +2 total
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tweetstorm_viral_meme: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {

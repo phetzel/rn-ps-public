@@ -31,7 +31,7 @@ export const ovalOfficeMerchandiseOutcomes: SituationOutcome[] = [
     id: "outcome_merch_profiteering_scandal",
     title: "Profiteering Scandal Erupts",
     description:
-      "It's revealed that a company owned by a presidential relative is producing the merchandise. The story explodes into a major profiteering scandal.",
+      "It's revealed that a company owned by a presidential relative is producing the merchandise. The story explodes into a profiteering scandal.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -54,7 +54,7 @@ export const ovalOfficeMerchandiseOutcomes: SituationOutcome[] = [
     id: "outcome_merch_public_loves_it",
     title: "Public Loves Souvenirs, Shrugs Off Ethics",
     description:
-      "The public largely ignores the ethics complaints, flocking to buy the merchandise. The shop is a huge success, much to the dismay of watchdogs.",
+      "The public largely ignores the ethics complaints, flocking to buy the merchandise. The shop is a huge success, dismaying watchdogs.",
     weight: 25,
     consequences: {
       approvalChanges: {

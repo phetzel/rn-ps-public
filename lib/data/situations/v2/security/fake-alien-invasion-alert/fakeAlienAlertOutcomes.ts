@@ -32,7 +32,7 @@ export const fakeAlienAlertOutcomes: SituationOutcome[] = [
     id: "outcome_alert_panic",
     title: "Leaked Memo Sparks Widespread Panic",
     description:
-      "The leaked plan causes real panic. Citizens, believing an invasion is imminent, begin hoarding supplies, causing chaos and hurting public trust.",
+      "The leaked plan causes real panic. Citizens, believing an invasion is imminent, begin hoarding supplies, causing chaos and hurting trust.",
     weight: 45,
     consequences: {
       approvalChanges: {
@@ -43,7 +43,8 @@ export const fakeAlienAlertOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.Negative,
           [SubgroupStaticId.SeniorsCitizens]:
             SituationConsequenceWeight.StronglyNegative,
           [SubgroupStaticId.RuralResidents]:
@@ -58,7 +59,7 @@ export const fakeAlienAlertOutcomes: SituationOutcome[] = [
     id: "outcome_alert_funding_pass",
     title: "Fear Mongering Works, Funding Bill Passes",
     description:
-      "Despite the unethical nature of the plan, the resulting fear convinces Congress to pass a massive new defense funding bill with bipartisan support.",
+      "Despite the unethical nature of the plan, the resulting fear convinces Congress to pass a massive funding bill with bipartisan support.",
     weight: 20,
     consequences: {
       approvalChanges: {

@@ -10,7 +10,7 @@ export const robotTaxDebateOutcomes: SituationOutcome[] = [
     id: "outcome_tax_becomes_credit",
     title: "Robot Tax Transforms into Innovation Credit",
     description:
-      "The controversial tax is reworked into a popular tax credit for companies that invest in worker retraining, creating a win-win for labor and tech.",
+      "The controversial tax is reworked into a popular tax credit for companies that invest in worker retraining, creating a win-win.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -59,7 +59,7 @@ export const robotTaxDebateOutcomes: SituationOutcome[] = [
     id: "outcome_tax_windfall",
     title: "Robot Levy Delivers Retraining Windfall",
     description:
-      "The tax passes despite opposition and generates massive revenue, funding robust and highly successful job retraining programs nationwide.",
+      "The tax passes despite opposition and generates massive revenue, funding robust and successful job retraining programs nationwide.",
     weight: 25,
     consequences: {
       approvalChanges: {

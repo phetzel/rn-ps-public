@@ -10,7 +10,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
     id: "outcome_coffee_price_shock_buffer",
     title: "Reserve Buffers Global Price Shock",
     description:
-      "A blight devastates global coffee crops, but the nation's reserve insulates consumers from massive price hikes, hailing the policy as a brilliant success.",
+      "A blight devastates global coffee crops, but the reserve insulates consumers from massive price hikes, hailing the policy brilliant.",
     weight: 35,
     consequences: {
       approvalChanges: {
@@ -36,7 +36,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
     id: "outcome_coffee_spoilage_scandal",
     title: "Spoilage Scandal Brews a Moldy Mess",
     description:
-      "Inspectors find that poor storage conditions have led to tons of moldy, unusable coffee beans. The waste sparks public outrage and finger-pointing.",
+      "Inspectors find that poor storage led to tons of moldy, unusable coffee beans. The waste sparks public outrage and finger-pointing.",
     weight: 40,
     consequences: {
       approvalChanges: {
@@ -63,7 +63,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
     id: "outcome_coffee_market_meddling",
     title: "Market Meddling Backfires as Prices Fall",
     description:
-      "A global coffee glut causes market prices to crash. The government is now stuck with a costly, depreciating asset, drawing ridicule from economists.",
+      "A global coffee glut causes market prices to crash. The government is stuck with a costly, depreciating asset, drawing ridicule.",
     weight: 25,
     consequences: {
       approvalChanges: {

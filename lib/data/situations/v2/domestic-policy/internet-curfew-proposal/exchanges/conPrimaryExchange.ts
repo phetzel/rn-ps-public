@@ -29,11 +29,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_curfew_shelved: OutcomeModifierWeight.StrongPositive, // +8
-              outcome_curfew_black_market:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_curfew_voluntary_rollout:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {

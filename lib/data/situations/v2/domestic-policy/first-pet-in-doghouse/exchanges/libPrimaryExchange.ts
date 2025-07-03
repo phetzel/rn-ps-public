@@ -31,8 +31,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_dog_laughs: OutcomeModifierWeight.SlightPositive, // +4
               outcome_dog_diplomatic_incident:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_dog_security_scare: OutcomeModifierWeight.SlightPositive, // +4
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_dog_security_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
@@ -47,10 +47,10 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_dog_laughs: OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_dog_laughs: OutcomeModifierWeight.SlightNegative, // -4
               outcome_dog_diplomatic_incident:
-                OutcomeModifierWeight.StrongPositive, // +8
-              outcome_dog_security_scare: OutcomeModifierWeight.SlightNegative, // -4
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_dog_security_scare: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_doghouse_consequences",
           },
