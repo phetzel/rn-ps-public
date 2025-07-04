@@ -1,4 +1,5 @@
 import { situationsData } from "~/lib/data/situations";
+import { BUSINESS_RULES_THRESHOLDS } from "~/lib/constants";
 import { AnswerType, CabinetStaticId } from "~/types";
 
 describe("Situation Data Business Rules", () => {
@@ -12,7 +13,7 @@ describe("Situation Data Business Rules", () => {
           0
         );
 
-        if (weightSum !== 100) {
+        if (weightSum !== BUSINESS_RULES_THRESHOLDS.OUTCOME_WEIGHTS_SUM) {
           errors.push({
             title: situation.title,
             sum: weightSum,
@@ -31,7 +32,7 @@ describe("Situation Data Business Rules", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} situations have outcome weights that don't sum to 100. See console for details.`
+          `${errors.length} situations have outcome weights that don't sum to ${BUSINESS_RULES_THRESHOLDS.OUTCOME_WEIGHTS_SUM}. See console for details.`
         );
       }
 
@@ -56,7 +57,10 @@ describe("Situation Data Business Rules", () => {
                   answer.outcomeModifiers
                 ).reduce((sum, modifier) => sum + modifier, 0);
 
-                if (modifierSum !== 0) {
+                if (
+                  modifierSum !==
+                  BUSINESS_RULES_THRESHOLDS.OUTCOME_MODIFIERS_SUM
+                ) {
                   errors.push({
                     situationTitle: situation.title,
                     questionId,
@@ -77,7 +81,7 @@ describe("Situation Data Business Rules", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} answers have outcome modifiers that don't sum to 0. See console for details.`
+          `${errors.length} answers have outcome modifiers that don't sum to ${BUSINESS_RULES_THRESHOLDS.OUTCOME_MODIFIERS_SUM}. See console for details.`
         );
       }
 
@@ -93,7 +97,7 @@ describe("Situation Data Business Rules", () => {
       });
     });
 
-    test("outcome modifier values are within reasonable range (-50 to +50)", () => {
+    test("outcome modifier values are within reasonable range", () => {
       const errors: Array<{
         situationTitle: string;
         answerId: string;
@@ -107,7 +111,12 @@ describe("Situation Data Business Rules", () => {
             question.answers.forEach((answer) => {
               Object.entries(answer.outcomeModifiers).forEach(
                 ([outcomeId, modifier]) => {
-                  if (modifier < -50 || modifier > 50) {
+                  if (
+                    modifier <
+                      BUSINESS_RULES_THRESHOLDS.OUTCOME_MODIFIER_RANGE.min ||
+                    modifier >
+                      BUSINESS_RULES_THRESHOLDS.OUTCOME_MODIFIER_RANGE.max
+                  ) {
                     errors.push({
                       situationTitle: situation.title,
                       answerId: answer.id,
@@ -128,7 +137,7 @@ describe("Situation Data Business Rules", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} outcome modifiers are outside reasonable range (-50 to +50). See console for details.`
+          `${errors.length} outcome modifiers are outside reasonable range (${BUSINESS_RULES_THRESHOLDS.OUTCOME_MODIFIER_RANGE.min} to ${BUSINESS_RULES_THRESHOLDS.OUTCOME_MODIFIER_RANGE.max}). See console for details.`
         );
       }
 
@@ -292,7 +301,7 @@ describe("Situation Data Business Rules", () => {
       expect(errors).toHaveLength(0);
     });
 
-    test("month requirements are within valid range (1-12)", () => {
+    test("month requirements are within valid range", () => {
       const errors: Array<{
         situationTitle: string;
         min?: number;
@@ -304,7 +313,8 @@ describe("Situation Data Business Rules", () => {
         if (monthReq) {
           if (
             monthReq.min !== undefined &&
-            (monthReq.min < 1 || monthReq.min > 12)
+            (monthReq.min < BUSINESS_RULES_THRESHOLDS.MONTH_RANGE.min ||
+              monthReq.min > BUSINESS_RULES_THRESHOLDS.MONTH_RANGE.max)
           ) {
             errors.push({
               situationTitle: situation.title,
@@ -314,7 +324,8 @@ describe("Situation Data Business Rules", () => {
           }
           if (
             monthReq.max !== undefined &&
-            (monthReq.max < 1 || monthReq.max > 12)
+            (monthReq.max < BUSINESS_RULES_THRESHOLDS.MONTH_RANGE.min ||
+              monthReq.max > BUSINESS_RULES_THRESHOLDS.MONTH_RANGE.max)
           ) {
             errors.push({
               situationTitle: situation.title,
@@ -349,7 +360,7 @@ describe("Situation Data Business Rules", () => {
       expect(errors).toHaveLength(0);
     });
 
-    test("approval rating requirements are within valid range (0-100)", () => {
+    test("approval rating requirements are within valid range", () => {
       const errors: Array<{
         situationTitle: string;
         entity: string;
@@ -364,7 +375,10 @@ describe("Situation Data Business Rules", () => {
         if (req.president) {
           if (
             req.president.minApproval !== undefined &&
-            (req.president.minApproval < 0 || req.president.minApproval > 100)
+            (req.president.minApproval <
+              BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.min ||
+              req.president.minApproval >
+                BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.max)
           ) {
             errors.push({
               situationTitle: situation.title,
@@ -375,7 +389,10 @@ describe("Situation Data Business Rules", () => {
           }
           if (
             req.president.maxApproval !== undefined &&
-            (req.president.maxApproval < 0 || req.president.maxApproval > 100)
+            (req.president.maxApproval <
+              BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.min ||
+              req.president.maxApproval >
+                BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.max)
           ) {
             errors.push({
               situationTitle: situation.title,
@@ -403,7 +420,10 @@ describe("Situation Data Business Rules", () => {
           Object.entries(req.cabinet).forEach(([cabinetId, cabinetReq]) => {
             if (
               cabinetReq.minApproval !== undefined &&
-              (cabinetReq.minApproval < 0 || cabinetReq.minApproval > 100)
+              (cabinetReq.minApproval <
+                BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.min ||
+                cabinetReq.minApproval >
+                  BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.max)
             ) {
               errors.push({
                 situationTitle: situation.title,
@@ -414,7 +434,10 @@ describe("Situation Data Business Rules", () => {
             }
             if (
               cabinetReq.maxApproval !== undefined &&
-              (cabinetReq.maxApproval < 0 || cabinetReq.maxApproval > 100)
+              (cabinetReq.maxApproval <
+                BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.min ||
+                cabinetReq.maxApproval >
+                  BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.max)
             ) {
               errors.push({
                 situationTitle: situation.title,
@@ -443,7 +466,10 @@ describe("Situation Data Business Rules", () => {
           Object.entries(req.subgroups).forEach(([subgroupId, subgroupReq]) => {
             if (
               subgroupReq.minApproval !== undefined &&
-              (subgroupReq.minApproval < 0 || subgroupReq.minApproval > 100)
+              (subgroupReq.minApproval <
+                BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.min ||
+                subgroupReq.minApproval >
+                  BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.max)
             ) {
               errors.push({
                 situationTitle: situation.title,
@@ -454,7 +480,10 @@ describe("Situation Data Business Rules", () => {
             }
             if (
               subgroupReq.maxApproval !== undefined &&
-              (subgroupReq.maxApproval < 0 || subgroupReq.maxApproval > 100)
+              (subgroupReq.maxApproval <
+                BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.min ||
+                subgroupReq.maxApproval >
+                  BUSINESS_RULES_THRESHOLDS.APPROVAL_RATING_RANGE.max)
             ) {
               errors.push({
                 situationTitle: situation.title,
@@ -494,7 +523,7 @@ describe("Situation Data Business Rules", () => {
   });
 
   describe("Game Balance Validation", () => {
-    test("each situation has reasonable number of outcomes (2-6)", () => {
+    test("each situation has reasonable number of outcomes", () => {
       const errors: Array<{
         situationTitle: string;
         outcomeCount: number;
@@ -502,7 +531,10 @@ describe("Situation Data Business Rules", () => {
 
       situationsData.forEach((situation) => {
         const outcomeCount = situation.content.outcomes.length;
-        if (outcomeCount < 2 || outcomeCount > 6) {
+        if (
+          outcomeCount < BUSINESS_RULES_THRESHOLDS.OUTCOMES_PER_SITUATION.min ||
+          outcomeCount > BUSINESS_RULES_THRESHOLDS.OUTCOMES_PER_SITUATION.max
+        ) {
           errors.push({
             situationTitle: situation.title,
             outcomeCount,
@@ -516,14 +548,14 @@ describe("Situation Data Business Rules", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} situations have unusual outcome counts (should be 2-6). See console for details.`
+          `${errors.length} situations have unusual outcome counts (should be ${BUSINESS_RULES_THRESHOLDS.OUTCOMES_PER_SITUATION.min}-${BUSINESS_RULES_THRESHOLDS.OUTCOMES_PER_SITUATION.max}). See console for details.`
         );
       }
 
       expect(errors).toHaveLength(0);
     });
 
-    test("each exchange has reasonable number of questions (1-10)", () => {
+    test("each exchange has reasonable number of questions", () => {
       const errors: Array<{
         situationTitle: string;
         exchangeIndex: number;
@@ -533,7 +565,11 @@ describe("Situation Data Business Rules", () => {
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange, index) => {
           const questionCount = Object.keys(exchange.content.questions).length;
-          if (questionCount < 1 || questionCount > 10) {
+          if (
+            questionCount <
+              BUSINESS_RULES_THRESHOLDS.QUESTIONS_PER_EXCHANGE.min ||
+            questionCount > BUSINESS_RULES_THRESHOLDS.QUESTIONS_PER_EXCHANGE.max
+          ) {
             errors.push({
               situationTitle: situation.title,
               exchangeIndex: index,
@@ -549,14 +585,14 @@ describe("Situation Data Business Rules", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} exchanges have unusual question counts (should be 1-10). See console for details.`
+          `${errors.length} exchanges have unusual question counts (should be ${BUSINESS_RULES_THRESHOLDS.QUESTIONS_PER_EXCHANGE.min}-${BUSINESS_RULES_THRESHOLDS.QUESTIONS_PER_EXCHANGE.max}). See console for details.`
         );
       }
 
       expect(errors).toHaveLength(0);
     });
 
-    test("each question has reasonable number of answers (2-5)", () => {
+    test("each question has reasonable number of answers", () => {
       const errors: Array<{
         situationTitle: string;
         questionId: string;
@@ -568,7 +604,11 @@ describe("Situation Data Business Rules", () => {
           Object.entries(exchange.content.questions).forEach(
             ([questionId, question]) => {
               const answerCount = question.answers.length;
-              if (answerCount < 2 || answerCount > 5) {
+              if (
+                answerCount <
+                  BUSINESS_RULES_THRESHOLDS.ANSWERS_PER_QUESTION.min ||
+                answerCount > BUSINESS_RULES_THRESHOLDS.ANSWERS_PER_QUESTION.max
+              ) {
                 errors.push({
                   situationTitle: situation.title,
                   questionId,
@@ -586,7 +626,7 @@ describe("Situation Data Business Rules", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} questions have unusual answer counts (should be 2-5). See console for details.`
+          `${errors.length} questions have unusual answer counts (should be ${BUSINESS_RULES_THRESHOLDS.ANSWERS_PER_QUESTION.min}-${BUSINESS_RULES_THRESHOLDS.ANSWERS_PER_QUESTION.max}). See console for details.`
         );
       }
 

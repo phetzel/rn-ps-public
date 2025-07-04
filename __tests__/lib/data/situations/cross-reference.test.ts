@@ -1,4 +1,5 @@
 import { situationsData } from "~/lib/data/situations";
+import { CROSS_REFERENCE_THRESHOLDS } from "~/lib/constants";
 
 describe("Situation Data Cross-Reference Validation", () => {
   // Create lookup maps for efficient testing
@@ -127,7 +128,7 @@ describe("Situation Data Cross-Reference Validation", () => {
       }
     });
 
-    test("follow-up chains don't exceed reasonable depth (max 3 levels)", () => {
+    test("follow-up chains don't exceed reasonable depth", () => {
       const errors: Array<{
         startingSituation: string;
         chain: string[];
@@ -141,8 +142,11 @@ describe("Situation Data Cross-Reference Validation", () => {
             let currentId: string | undefined = outcome.followUpId;
             let depth = 1;
 
-            while (currentId && depth <= 4) {
-              // Check up to 4 to detect violations
+            while (
+              currentId &&
+              depth <= CROSS_REFERENCE_THRESHOLDS.MAX_FOLLOW_UP_DEPTH + 1
+            ) {
+              // Check up to max + 1 to detect violations
               chain.push(currentId);
               const currentSituation = situationsByStaticKey.get(currentId);
               if (!currentSituation) break;
@@ -158,7 +162,7 @@ describe("Situation Data Cross-Reference Validation", () => {
               depth++;
             }
 
-            if (depth > 3) {
+            if (depth > CROSS_REFERENCE_THRESHOLDS.MAX_FOLLOW_UP_DEPTH) {
               errors.push({
                 startingSituation: situation.title,
                 chain,
@@ -272,7 +276,11 @@ describe("Situation Data Cross-Reference Validation", () => {
           const { questions, rootQuestionId } = exchange.content;
           const rootQuestion = questions[rootQuestionId];
 
-          if (rootQuestion && rootQuestion.depth !== 0) {
+          if (
+            rootQuestion &&
+            rootQuestion.depth !==
+              CROSS_REFERENCE_THRESHOLDS.ROOT_QUESTION_DEPTH
+          ) {
             errors.push({
               situationTitle: situation.title,
               rootQuestionId,

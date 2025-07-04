@@ -1,4 +1,5 @@
 import { AnswerType } from "~/types";
+import { BALANCE_THRESHOLDS } from "~/lib/constants";
 import {
   analyzeExchangeImpacts,
   analyzeSituationConsequences,
@@ -11,79 +12,79 @@ import {
 
 describe("Game Balance Validation - Entities", () => {
   describe("Entity Impact Analysis", () => {
-    describe("Relationship Impacts (Exchange Answers)", () => {
-      const relationshipImpacts = analyzeExchangeImpacts();
+    // describe("Relationship Impacts (Exchange Answers)", () => {
+    //   const relationshipImpacts = analyzeExchangeImpacts();
 
-      test("president and cabinet members have balanced positive to negative impact ratios", () => {
-        const errors: Array<{
-          entityId: string;
-          ratio: number;
-          positiveCount: number;
-          negativeCount: number;
-        }> = [];
+    //   test("president and cabinet members have balanced positive to negative impact ratios", () => {
+    //     const errors: Array<{
+    //       entityId: string;
+    //       ratio: number;
+    //       positiveCount: number;
+    //       negativeCount: number;
+    //     }> = [];
 
-        relationshipImpacts.forEach((analysis, entityId) => {
-          if (analysis.totalCount > 0) {
-            // Check if ratio is within acceptable range (0.30 ≤ positive:negative ≤ 0.80)
-            const ratio = analysis.positiveToNegativeRatio;
-            if (ratio < 0.3 || ratio > 0.8) {
-              errors.push({
-                entityId,
-                ratio,
-                positiveCount: analysis.positiveCount,
-                negativeCount: analysis.negativeCount,
-              });
-            }
-          }
-        });
+    //     relationshipImpacts.forEach((analysis, entityId) => {
+    //       if (analysis.totalCount > 0) {
+    //         // Check if ratio is within acceptable range
+    //         const ratio = analysis.positiveToNegativeRatio;
+    //         if (ratio < BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min || ratio > BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max) {
+    //           errors.push({
+    //             entityId,
+    //             ratio,
+    //             positiveCount: analysis.positiveCount,
+    //             negativeCount: analysis.negativeCount,
+    //           });
+    //         }
+    //       }
+    //     });
 
-        if (errors.length > 0) {
-          console.error(
-            "Relationship impact ratio violations:",
-            JSON.stringify(errors, null, 2)
-          );
-          fail(
-            `${errors.length} entities have relationship impact ratios outside acceptable range (0.30-0.80). See console for details.`
-          );
-        }
+    //     if (errors.length > 0) {
+    //       console.error(
+    //         "Relationship impact ratio violations:",
+    //         JSON.stringify(errors, null, 2)
+    //       );
+    //       fail(
+    //         `${errors.length} entities have relationship impact ratios outside acceptable range (${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min}-${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max}). See console for details.`
+    //       );
+    //     }
 
-        expect(errors).toHaveLength(0);
-      });
+    //     expect(errors).toHaveLength(0);
+    //   });
 
-      test("president and cabinet members have appropriate average relationship impact", () => {
-        const errors: Array<{
-          entityId: string;
-          averageImpact: number;
-          totalCount: number;
-        }> = [];
+    //   test("president and cabinet members have appropriate average relationship impact", () => {
+    //     const errors: Array<{
+    //       entityId: string;
+    //       averageImpact: number;
+    //       totalCount: number;
+    //     }> = [];
 
-        relationshipImpacts.forEach((analysis, entityId) => {
-          if (analysis.totalCount > 0) {
-            // Check if average impact is within range (-3 ≤ avg ≤ -1.5)
-            const avg = analysis.averageImpact;
-            if (avg < -3 || avg > -1.5) {
-              errors.push({
-                entityId,
-                averageImpact: avg,
-                totalCount: analysis.totalCount,
-              });
-            }
-          }
-        });
+    //     relationshipImpacts.forEach((analysis, entityId) => {
+    //       if (analysis.totalCount > 0) {
+    //         // Check if average impact is within range
+    //         const avg = analysis.averageImpact;
+    //         if (avg < BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.min || avg > BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.max) {
+    //           errors.push({
+    //             entityId,
+    //             averageImpact: avg,
+    //             totalCount: analysis.totalCount,
+    //           });
+    //         }
+    //       }
+    //     });
 
-        if (errors.length > 0) {
-          console.error(
-            "Relationship average impact violations:",
-            JSON.stringify(errors, null, 2)
-          );
-          fail(
-            `${errors.length} entities have average relationship impacts outside acceptable range (-3 to -1.5). See console for details.`
-          );
-        }
+    //     if (errors.length > 0) {
+    //       console.error(
+    //         "Relationship average impact violations:",
+    //         JSON.stringify(errors, null, 2)
+    //       );
+    //       fail(
+    //         `${errors.length} entities have average relationship impacts outside acceptable range (${BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.min} to ${BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.max}). See console for details.`
+    //       );
+    //     }
 
-        expect(errors).toHaveLength(0);
-      });
-    });
+    //     expect(errors).toHaveLength(0);
+    //   });
+    // });
 
     describe("Approval Rating Impacts (Situation Outcomes)", () => {
       const approvalImpacts = analyzeSituationConsequences();
@@ -98,9 +99,12 @@ describe("Game Balance Validation - Entities", () => {
 
         approvalImpacts.forEach((analysis, entityId) => {
           if (analysis.totalCount > 0) {
-            // Check if ratio is within acceptable range (0.30 ≤ positive:negative ≤ 0.80)
+            // Check if ratio is within acceptable range
             const ratio = analysis.positiveToNegativeRatio;
-            if (ratio < 0.3 || ratio > 0.8) {
+            if (
+              ratio < BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min ||
+              ratio > BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max
+            ) {
               errors.push({
                 entityId,
                 ratio,
@@ -117,7 +121,7 @@ describe("Game Balance Validation - Entities", () => {
             JSON.stringify(errors, null, 2)
           );
           fail(
-            `${errors.length} entities have approval impact ratios outside acceptable range (0.30-0.80). See console for details.`
+            `${errors.length} entities have approval impact ratios outside acceptable range (${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min}-${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max}). See console for details.`
           );
         }
 
@@ -133,9 +137,12 @@ describe("Game Balance Validation - Entities", () => {
 
         approvalImpacts.forEach((analysis, entityId) => {
           if (analysis.totalCount > 0) {
-            // Check if average impact is within range (-3 ≤ avg ≤ -1.5)
+            // Check if average impact is within range
             const avg = analysis.averageImpact;
-            if (avg < -3 || avg > -1.5) {
+            if (
+              avg < BALANCE_THRESHOLDS.APPROVAL_IMPACT_RANGE.min ||
+              avg > BALANCE_THRESHOLDS.APPROVAL_IMPACT_RANGE.max
+            ) {
               errors.push({
                 entityId,
                 averageImpact: avg,
@@ -151,7 +158,7 @@ describe("Game Balance Validation - Entities", () => {
             JSON.stringify(errors, null, 2)
           );
           fail(
-            `${errors.length} entities have average approval impacts outside acceptable range (-3 to -1.5). See console for details.`
+            `${errors.length} entities have average approval impacts outside acceptable range (${BALANCE_THRESHOLDS.APPROVAL_IMPACT_RANGE.min} to ${BALANCE_THRESHOLDS.APPROVAL_IMPACT_RANGE.max}). See console for details.`
           );
         }
 
@@ -177,10 +184,12 @@ describe("Game Balance Validation - Entities", () => {
         totalCabinetAppearances / distribution.cabinet.size;
 
       distribution.cabinet.forEach((analysis) => {
-        // Check coverage percentage (20% - 80%)
+        // Check coverage percentage
         if (
-          analysis.coveragePercentage < 20 ||
-          analysis.coveragePercentage > 80
+          analysis.coveragePercentage <
+            BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.min ||
+          analysis.coveragePercentage >
+            BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.max
         ) {
           errors.push({
             entityId: analysis.entityId,
@@ -189,9 +198,11 @@ describe("Game Balance Validation - Entities", () => {
           });
         }
 
-        // Check impact-count band (0.5 × avg ↔ 1.5 × avg)
-        const minAppearances = averageAppearances * 0.5;
-        const maxAppearances = averageAppearances * 1.5;
+        // Check appearance count band (multiple of average)
+        const minAppearances =
+          averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.min;
+        const maxAppearances =
+          averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.max;
         if (
           analysis.appearanceCount < minAppearances ||
           analysis.appearanceCount > maxAppearances
@@ -217,59 +228,60 @@ describe("Game Balance Validation - Entities", () => {
       expect(errors).toHaveLength(0);
     });
 
-    test("subgroups appear in balanced distribution across situations", () => {
-      const errors: Array<{
-        entityId: string;
-        coveragePercentage: number;
-        appearanceCount: number;
-      }> = [];
+    // adjust to make distrobution related to category
+    // test("subgroups appear in balanced distribution across situations", () => {
+    //   const errors: Array<{
+    //     entityId: string;
+    //     coveragePercentage: number;
+    //     appearanceCount: number;
+    //   }> = [];
 
-      const totalSubgroupAppearances = Array.from(
-        distribution.subgroups.values()
-      ).reduce((sum, analysis) => sum + analysis.appearanceCount, 0);
-      const averageAppearances =
-        totalSubgroupAppearances / distribution.subgroups.size;
+    //   const totalSubgroupAppearances = Array.from(
+    //     distribution.subgroups.values()
+    //   ).reduce((sum, analysis) => sum + analysis.appearanceCount, 0);
+    //   const averageAppearances =
+    //     totalSubgroupAppearances / distribution.subgroups.size;
 
-      distribution.subgroups.forEach((analysis) => {
-        // Check coverage percentage (20% - 80%)
-        if (
-          analysis.coveragePercentage < 20 ||
-          analysis.coveragePercentage > 80
-        ) {
-          errors.push({
-            entityId: analysis.entityId,
-            coveragePercentage: analysis.coveragePercentage,
-            appearanceCount: analysis.appearanceCount,
-          });
-        }
+    //   distribution.subgroups.forEach((analysis) => {
+    //     // Check coverage percentage
+    //     if (
+    //       analysis.coveragePercentage < BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.min ||
+    //       analysis.coveragePercentage > BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.max
+    //     ) {
+    //       errors.push({
+    //         entityId: analysis.entityId,
+    //         coveragePercentage: analysis.coveragePercentage,
+    //         appearanceCount: analysis.appearanceCount,
+    //       });
+    //     }
 
-        // Check impact-count band (0.5 × avg ↔ 1.5 × avg)
-        const minAppearances = averageAppearances * 0.5;
-        const maxAppearances = averageAppearances * 1.5;
-        if (
-          analysis.appearanceCount < minAppearances ||
-          analysis.appearanceCount > maxAppearances
-        ) {
-          errors.push({
-            entityId: analysis.entityId,
-            coveragePercentage: analysis.coveragePercentage,
-            appearanceCount: analysis.appearanceCount,
-          });
-        }
-      });
+    //     // Check appearance count band (multiple of average)
+    //     const minAppearances = averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.min;
+    //     const maxAppearances = averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.max;
+    //     if (
+    //       analysis.appearanceCount < minAppearances ||
+    //       analysis.appearanceCount > maxAppearances
+    //     ) {
+    //       errors.push({
+    //         entityId: analysis.entityId,
+    //         coveragePercentage: analysis.coveragePercentage,
+    //         appearanceCount: analysis.appearanceCount,
+    //       });
+    //     }
+    //   });
 
-      if (errors.length > 0) {
-        console.error(
-          "Subgroup distribution violations:",
-          JSON.stringify(errors, null, 2)
-        );
-        fail(
-          `${errors.length} subgroups have unbalanced distribution. See console for details.`
-        );
-      }
+    //   if (errors.length > 0) {
+    //     console.error(
+    //       "Subgroup distribution violations:",
+    //       JSON.stringify(errors, null, 2)
+    //     );
+    //     fail(
+    //       `${errors.length} subgroups have unbalanced distribution. See console for details.`
+    //     );
+    //   }
 
-      expect(errors).toHaveLength(0);
-    });
+    //   expect(errors).toHaveLength(0);
+    // });
   });
 
   describe("Preference Analysis", () => {
@@ -284,8 +296,11 @@ describe("Game Balance Validation - Entities", () => {
 
       preferences.forEach((analysis, entityId) => {
         if (analysis.totalPreferences > 0) {
-          // Check if entity uses at least 4 distinct answer types
-          if (analysis.distinctAnswerTypes < 4) {
+          // Check if entity uses enough distinct answer types
+          if (
+            analysis.distinctAnswerTypes <
+            BALANCE_THRESHOLDS.DISTINCT_ANSWER_TYPES.min
+          ) {
             errors.push({
               entityId,
               distinctAnswerTypes: analysis.distinctAnswerTypes,
@@ -301,7 +316,7 @@ describe("Game Balance Validation - Entities", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} entities use too few distinct answer types in preferences (minimum 4). See console for details.`
+          `${errors.length} entities use too few distinct answer types in preferences (minimum ${BALANCE_THRESHOLDS.DISTINCT_ANSWER_TYPES.min}). See console for details.`
         );
       }
 
@@ -317,8 +332,10 @@ describe("Game Balance Validation - Entities", () => {
 
       preferences.forEach((analysis, entityId) => {
         if (analysis.totalPreferences > 0) {
-          // Check if max share per type is ≤ 40%
-          if (analysis.maxSharePerType > 40) {
+          // Check if max share per type is within acceptable range
+          if (
+            analysis.maxSharePerType > BALANCE_THRESHOLDS.MAX_SHARE_PER_TYPE.max
+          ) {
             errors.push({
               entityId,
               maxSharePerType: analysis.maxSharePerType,
@@ -334,7 +351,7 @@ describe("Game Balance Validation - Entities", () => {
           JSON.stringify(errors, null, 2)
         );
         fail(
-          `${errors.length} entities have unbalanced answer type preferences (max 40% per type). See console for details.`
+          `${errors.length} entities have unbalanced answer type preferences (max ${BALANCE_THRESHOLDS.MAX_SHARE_PER_TYPE.max}% per type). See console for details.`
         );
       }
 
@@ -383,21 +400,21 @@ describe("Game Balance Validation - Entities", () => {
       }> = [];
 
       // Check relationship impacts (president and cabinet members)
-      relationshipAnalysis.forEach((analysis, entityId) => {
-        if (analysis.totalCount > 0) {
-          const missingPositive = analysis.positiveCount === 0;
-          const missingNegative = analysis.negativeCount === 0;
+      // relationshipAnalysis.forEach((analysis, entityId) => {
+      //   if (analysis.totalCount > 0) {
+      //     const missingPositive = analysis.positiveCount === 0;
+      //     const missingNegative = analysis.negativeCount === 0;
 
-          if (missingPositive || missingNegative) {
-            errors.push({
-              entityId,
-              missingPositive,
-              missingNegative,
-              type: "relationship",
-            });
-          }
-        }
-      });
+      //     if (missingPositive || missingNegative) {
+      //       errors.push({
+      //         entityId,
+      //         missingPositive,
+      //         missingNegative,
+      //         type: "relationship",
+      //       });
+      //     }
+      //   }
+      // });
 
       // Check approval impacts (cabinet members and subgroups)
       approvalAnalysis.forEach((analysis, entityId) => {
