@@ -319,7 +319,12 @@ function generateMarkdownTable(typeBalance: SituationTypeBalance): string {
 export function runSituationBalanceAnalysis(): void {
   console.log("Analyzing situation balance...");
 
-  const outputDir = join(process.cwd(), "analysis-output", "situations");
+  const outputDir = join(
+    process.cwd(),
+    "scripts",
+    "analysis-output",
+    "situations"
+  );
   mkdirSync(outputDir, { recursive: true });
 
   const typeBalances = analyzeSituationsByType();

@@ -40,7 +40,7 @@ export function createAnalysisDirectories(): {
   situationDataDir: string;
   situationsDir: string;
 } {
-  const outputDir = path.join(process.cwd(), "analysis-output");
+  const outputDir = path.join(process.cwd(), "scripts", "analysis-output");
   const entityDataDir = path.join(outputDir, "entity-data");
   const situationDataDir = path.join(outputDir, "situation-data");
   const situationsDir = path.join(outputDir, "situations");
