@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const biometricDataLeakPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Deny,
     rationale:
-      "Wants to deflect blame by pointing the finger at the 'lone wolf' intern and outdated systems from the past.",
+      "Wants to deny the extent of the breach and attack the credibility of reports, claiming the security was actually stronger than portrayed.",
   },
   cabinet: {
     [CabinetStaticId.Homeland]: {

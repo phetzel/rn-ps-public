@@ -10,9 +10,9 @@ export const threeAmTweetstormPreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Reassure,
+        answerType: AnswerType.Deflect,
         rationale:
-          "Concerned about the President's mental state and wants to reassure the public that the President is healthy and fit.",
+          "Wants to deflect from questions about the President's mental state by focusing on the broader issue of social media security protocols.",
       },
     },
     [CabinetStaticId.Homeland]: {

@@ -49,7 +49,7 @@ export const casualFridayEverydayOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.SeniorsCitizens]:
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },

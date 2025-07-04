@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const pentagonYachtPartyPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Challenge,
     rationale:
-      "Wants to deflect from the bad optics by framing this as a routine, if poorly chosen, networking event.",
+      "Wants to challenge the narrative by arguing this was a legitimate networking event that's being blown out of proportion by critics.",
   },
   cabinet: {
     [CabinetStaticId.Defense]: {

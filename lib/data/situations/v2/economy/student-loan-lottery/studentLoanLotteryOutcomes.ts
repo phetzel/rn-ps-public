@@ -50,6 +50,8 @@ export const studentLoanLotteryOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.StronglyNegative,
           [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.Negative,
           [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.LaborUnions]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

@@ -48,7 +48,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.RuralResidents]:

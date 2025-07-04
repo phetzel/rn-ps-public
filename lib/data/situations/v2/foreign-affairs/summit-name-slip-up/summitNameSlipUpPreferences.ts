@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const summitNameSlipUpPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Deny,
     rationale:
-      "Thinks it was a funny slip of the tongue and wants to deflect by joking about it rather than making a formal apology.",
+      "Thinks it was a funny slip of the tongue and wants to deny any intention of disrespect while maintaining it was just a harmless mistake.",
   },
   cabinet: {
     [CabinetStaticId.State]: {

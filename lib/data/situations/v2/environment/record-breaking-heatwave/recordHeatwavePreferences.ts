@@ -10,9 +10,9 @@ export const recordHeatwavePreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Reassure,
+        answerType: AnswerType.Admit,
         rationale:
-          "Focused on public health and wants to reassure vulnerable populations that help is available.",
+          "Wants to admit that the health infrastructure is strained and that the administration needs to do more to protect vulnerable populations.",
       },
     },
     [CabinetStaticId.Treasury]: {

@@ -10,9 +10,9 @@ export const invasiveGardenGnomesPreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Inform,
+        answerType: AnswerType.Challenge,
         rationale:
-          "Concerned about plastic waste from the prank and wants to inform the public about environmental danger.",
+          "Wants to challenge the perception that this is a harmless prank by emphasizing the serious environmental impact of the plastic waste.",
       },
     },
     [CabinetStaticId.Justice]: {

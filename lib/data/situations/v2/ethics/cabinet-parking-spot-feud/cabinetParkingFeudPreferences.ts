@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const cabinetParkingFeudPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Reassure,
     rationale:
-      "Finds this squabbling childish and wants to deflect by downplaying it as 'spirited competition' among the team.",
+      "Finds this squabbling childish and wants to reassure the public that despite this minor disagreement, the team remains focused on important issues.",
   },
   cabinet: {
     [CabinetStaticId.State]: {

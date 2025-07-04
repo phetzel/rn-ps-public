@@ -17,9 +17,9 @@ export const firstPetDoghousePreferences: SituationPreferences = {
     },
     [CabinetStaticId.Homeland]: {
       preference: {
-        answerType: AnswerType.Reassure,
+        answerType: AnswerType.Deflect,
         rationale:
-          "Concerned about the security breach and wants to reassure that protocols are being reviewed and tightened.",
+          "Concerned about the security breach and wants to deflect by focusing on the positive changes already being implemented.",
       },
     },
   },

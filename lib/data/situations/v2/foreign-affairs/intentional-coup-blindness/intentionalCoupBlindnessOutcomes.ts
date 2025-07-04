@@ -24,8 +24,6 @@ export const intentionalCoupBlindnessOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.StronglyNegative,
-          [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },
       },

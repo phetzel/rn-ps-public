@@ -64,7 +64,8 @@ export const threeAmTweetstormOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.SeniorsCitizens]:

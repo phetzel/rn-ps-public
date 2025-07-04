@@ -51,6 +51,8 @@ export const nationalNapActOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.LaborUnions]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

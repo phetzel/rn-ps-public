@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const agCasinoTripsPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Deny,
     rationale:
-      "Wants to support their AG and believes trips were legitimate, so deflecting by attacking story credibility.",
+      "Wants to support their AG and believes trips were legitimate, so denying the accusations and attacking story credibility.",
   },
   cabinet: {
     [CabinetStaticId.Justice]: {

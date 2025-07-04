@@ -10,9 +10,9 @@ export const cowEmissionRegulationsPreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Inform,
+        answerType: AnswerType.Reassure,
         rationale:
-          "Wants to inform with data, focusing on methane's environmental impact and why this novel solution is necessary.",
+          "Wants to reassure the public about the health benefits of reducing methane emissions and how this innovative approach will improve air quality.",
       },
     },
     [CabinetStaticId.Treasury]: {

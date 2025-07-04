@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const casualFridayEverydayPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Reassure,
     rationale:
-      "Thinks dress codes are outdated and wants to deflect criticism by framing this as forward-thinking for modern workforce.",
+      "Thinks dress codes are outdated and wants to reassure critics that this forward-thinking approach will modernize the workforce.",
   },
   cabinet: {
     [CabinetStaticId.HHS]: {

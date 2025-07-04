@@ -69,7 +69,7 @@ export const giftExchangeGaffeOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

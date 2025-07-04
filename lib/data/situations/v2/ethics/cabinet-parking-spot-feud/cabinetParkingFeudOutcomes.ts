@@ -46,7 +46,7 @@ export const cabinetParkingFeudOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

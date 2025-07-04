@@ -10,9 +10,9 @@ export const nationalGlitterSpillPreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Inform,
+        answerType: AnswerType.Reassure,
         rationale:
-          "Wants to inform the public about potential health and environmental risks, even if the glitter is 'biodegradable'.",
+          "Wants to reassure the public that while they're investigating potential health risks, the biodegradable glitter poses minimal immediate danger.",
       },
     },
     [CabinetStaticId.Homeland]: {

@@ -64,7 +64,8 @@ export const mysteryDroneSwarmsOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.YouthVoters]:

@@ -25,7 +25,7 @@ export const memeStockFederalReserveOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.Negative,
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },

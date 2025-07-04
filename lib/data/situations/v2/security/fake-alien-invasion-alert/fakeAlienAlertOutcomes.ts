@@ -49,6 +49,8 @@ export const fakeAlienAlertOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.StronglyNegative,
           [SubgroupStaticId.RuralResidents]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },

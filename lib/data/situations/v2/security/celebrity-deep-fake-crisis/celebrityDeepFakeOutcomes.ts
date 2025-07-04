@@ -27,6 +27,8 @@ export const celebrityDeepFakeOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.SeniorsCitizens]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

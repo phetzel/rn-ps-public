@@ -69,7 +69,7 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.TechIndustry]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:

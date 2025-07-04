@@ -44,8 +44,7 @@ export const mandatoryMoodFormsOutcomes: SituationOutcome[] = [
         subgroups: {
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.YouthVoters]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.Negative,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:

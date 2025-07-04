@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const autonomousCarsRebellionPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Deny,
     rationale:
-      "Wants to deflect from regulatory failure by focusing on 'criminal hackers' and treating it as law enforcement issue.",
+      "Wants to deny any regulatory failure by claiming the cars were functioning perfectly before criminal hackers interfered with them.",
   },
   cabinet: {
     [CabinetStaticId.Homeland]: {

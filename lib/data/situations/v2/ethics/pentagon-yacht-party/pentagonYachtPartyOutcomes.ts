@@ -21,8 +21,6 @@ export const pentagonYachtPartyOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },

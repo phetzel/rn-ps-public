@@ -71,7 +71,8 @@ export const autonomousCarsRebellionOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.LaborUnions]: SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.LaborUnions]:
+            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]:

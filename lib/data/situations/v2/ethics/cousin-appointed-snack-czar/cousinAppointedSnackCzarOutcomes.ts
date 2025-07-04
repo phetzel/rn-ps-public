@@ -25,6 +25,8 @@ export const cousinSnackCzarOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LaborUnions]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

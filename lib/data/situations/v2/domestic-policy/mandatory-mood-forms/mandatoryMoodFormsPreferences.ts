@@ -10,9 +10,9 @@ export const mandatoryMoodFormsPreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Inform,
+        answerType: AnswerType.Reassure,
         rationale:
-          "Wants to frame this as vital health data tool, like census, to better allocate mental health resources.",
+          "Wants to reassure the public that this health data tool will better allocate mental health resources and improve well-being.",
       },
     },
     [CabinetStaticId.Justice]: {

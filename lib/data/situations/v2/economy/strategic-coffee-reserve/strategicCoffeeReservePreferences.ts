@@ -10,9 +10,9 @@ export const strategicCoffeeReservePreferences: SituationPreferences = {
   cabinet: {
     [CabinetStaticId.HHS]: {
       preference: {
-        answerType: AnswerType.Inform,
+        answerType: AnswerType.Reassure,
         rationale:
-          "Wants to highlight the role of caffeine in national productivity and morale, treating coffee as wellness commodity.",
+          "Wants to reassure the public about the health benefits of coffee and that this strategic reserve will ensure reliable access to this wellness commodity.",
       },
     },
     [CabinetStaticId.Homeland]: {

@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const teachersStrikeBackPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Admit,
     rationale:
-      "Wants to deflect from the bizarre karaoke rule and reframe the debate around broader issues of teacher pay and funding.",
+      "Realizes the karaoke rule was a mistake and wants to admit the error while reframing around broader teacher support issues.",
   },
   cabinet: {
     [CabinetStaticId.HHS]: {

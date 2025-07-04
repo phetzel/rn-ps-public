@@ -3,9 +3,9 @@ import type { SituationPreferences } from "~/types";
 
 export const spyDronePizzaDropPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Deflect,
+    answerType: AnswerType.Challenge,
     rationale:
-      "Thinks it's hilarious and wants to deflect from the security breach by making light of the pizza delivery aspect.",
+      "Thinks it's hilarious and wants to challenge anyone who sees this as anything other than a harmless accident with a funny outcome.",
   },
   cabinet: {
     [CabinetStaticId.Defense]: {
