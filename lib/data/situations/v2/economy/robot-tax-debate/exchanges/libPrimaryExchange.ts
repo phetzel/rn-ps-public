@@ -23,6 +23,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "This isn't about punishment - it's about shared prosperity. Companies that benefit from automation should invest in the workforce that made it possible.",
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus:
@@ -36,6 +41,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The tax generates $50 billion annually for retraining programs, with clear metrics showing 80% job placement rates for participants.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.Positive,

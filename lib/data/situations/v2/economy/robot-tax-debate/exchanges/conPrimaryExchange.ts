@@ -23,6 +23,11 @@ export const conPrimaryExchange: ExchangeData = {
             text: "These are empty threats from companies that already pay almost nothing in taxes. Real innovators understand the value of an educated workforce.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
@@ -36,6 +41,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "We're monitoring these concerns closely and are open to adjusting the implementation timeline to address legitimate competitiveness issues.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.State]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,

@@ -23,6 +23,14 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Both departments are committed to fiscal responsibility. These discussions help us ensure every taxpayer dollar is used effectively for national security.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive, // +4
@@ -35,6 +43,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "The Pentagon has been too comfortable with blank check budgets. Treasury is doing its job by demanding accountability for taxpayer money.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.Positive,

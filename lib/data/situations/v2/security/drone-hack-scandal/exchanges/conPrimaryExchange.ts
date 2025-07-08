@@ -14,7 +14,7 @@ export const conPrimaryExchange: ExchangeData = {
     questions: {
       q_hack_health_systems: {
         id: "q_hack_health_systems",
-        text: "If hackers can compromise military drones, what about medical delivery drones that transport blood, organs, and emergency supplies? Are our health systems at risk?",
+        text: "If hackers can compromise military drones, what about medical drones transporting blood and organs? Are health systems at risk?",
         depth: 0,
         answers: [
           {
@@ -22,6 +22,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "HHS has immediately launched a comprehensive review of all medical drone systems and delivery protocols to ensure patient safety remains our top priority.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.Positive,
@@ -29,11 +30,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_hack_health_scare: OutcomeModifierWeight.StrongNegative, // -8
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_hack_rural_impact",
           },
@@ -43,20 +42,23 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Medical systems use completely different protocols and security measures. It's irresponsible to create panic by connecting these separate systems.",
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_hack_health_scare: OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],
       },
       q_hack_rural_impact: {
         id: "q_hack_rural_impact",
-        text: "Rural communities depend heavily on medical drone deliveries for emergency care. How can you guarantee their safety won't be compromised by similar attacks?",
+        text: "Rural communities depend on medical drone deliveries for emergency care. How can you guarantee their safety from similar attacks?",
         depth: 1,
         answers: [
           {
@@ -64,30 +66,30 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "Rural emergency services are being prioritized in our security review. We will not allow any compromise to life-saving medical deliveries.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
-              outcome_hack_health_scare: OutcomeModifierWeight.StrongNegative, // -8 -> -16 total
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
             id: "a_rural_deflect",
             type: AnswerType.Deflect,
             text: "The focus should be on catching the criminals responsible for this prank, not creating hypothetical scenarios that haven't happened.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            },
             outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0 -> -4 total
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive, // +4 -> -4 total
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

@@ -14,7 +14,7 @@ export const libPrimaryExchange: ExchangeData = {
     questions: {
       q_hack_economic_security: {
         id: "q_hack_economic_security",
-        text: "This drone hack exposed vulnerabilities in our financial infrastructure. How can Americans trust their economic data is secure when rubber chickens can penetrate high-security facilities?",
+        text: "This hack exposed vulnerabilities in financial infrastructure. How can Americans trust their data when rubber chickens breach security?",
         depth: 0,
         answers: [
           {
@@ -22,9 +22,10 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "The Treasury Department has immediately implemented enhanced security protocols for all financial data systems. Your economic information remains fully protected.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Positive,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -42,18 +43,22 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "You're right to be concerned. This incident has revealed security gaps we need to address across all critical infrastructure, including financial systems.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
               outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive, // +4
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.StrongPositive, // +8
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive, // +4
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],
@@ -69,20 +74,6 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There is no basis for market concerns. This was an isolated incident with harmless payloads that had no impact on actual financial operations.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
-            },
-            outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive, // +4 -> +12 total
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
-            },
-          },
-          {
-            id: "a_market_inform",
-            type: AnswerType.Inform,
-            text: "Treasury is in direct contact with major financial institutions and international partners to provide detailed security assessments and restore confidence.",
-            impacts: {
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
@@ -91,10 +82,30 @@ export const libPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightNegative, // -4 -> +4 total
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4 -> -8 total
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0 -> -4 total
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_market_inform",
+            type: AnswerType.Inform,
+            text: "Treasury is in direct contact with major financial institutions and international partners to provide detailed security assessments and restore confidence.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

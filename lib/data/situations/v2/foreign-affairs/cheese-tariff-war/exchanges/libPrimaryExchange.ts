@@ -14,7 +14,7 @@ export const libPrimaryExchange: ExchangeData = {
     questions: {
       q_cheese_war_security: {
         id: "q_cheese_war_security",
-        text: "This tariff spat threatens our food supply chains and could affect national security. How does starting a trade war over a bad joke protect American families?",
+        text: "This tariff spat threatens food supply chains and national security. How does starting a trade war over a joke protect families?",
         depth: 0,
         answers: [
           {
@@ -22,6 +22,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             text: "There is no threat to food security. Our domestic food supply chains are robust and this minor trade dispute poses no risk to American families.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.Positive,
@@ -33,8 +34,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_cheese_public_rallies:
-                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_cheese_war_preparation",
           },
@@ -44,14 +44,18 @@ export const libPrimaryExchange: ExchangeData = {
             text: "You're right that the President's comment was inappropriate and created unnecessary complications. We are working to resolve this quickly.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_cheese_tariffs_eased:
                 OutcomeModifierWeight.StrongPositive, // +8
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.StrongNegative, // -8
-              outcome_cheese_public_rallies:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],
@@ -66,9 +70,10 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "Homeland Security coordinates with all agencies on issues that could affect critical infrastructure. It's standard procedure, not crisis preparation.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -85,9 +90,10 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Homeland Security monitors all potential disruptions to supply chains. They provide risk assessments, not policy recommendations.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },

@@ -23,8 +23,6 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.Positive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.UrbanResidents]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },
@@ -47,12 +45,8 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.RuralResidents]:
             SituationConsequenceWeight.StronglyNegative,
           [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.BusinessLeaders]:
-            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -77,8 +71,6 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

@@ -5,7 +5,7 @@ export const cowEmissionRegulationsPreferences: SituationPreferences = {
   president: {
     answerType: AnswerType.Deflect,
     rationale:
-      "Wants to deflect from the absurd backpack imagery and frame this as a serious, innovative climate strategy with health benefits.",
+      "Wants to deflect from absurd backpack imagery and frame as serious, innovative climate strategy.",
   },
   cabinet: {
     [CabinetStaticId.HHS]: {
@@ -19,7 +19,7 @@ export const cowEmissionRegulationsPreferences: SituationPreferences = {
       preference: {
         answerType: AnswerType.Challenge,
         rationale:
-          "Challenges the agricultural industry's legal arguments and insists the federal government has clear regulatory authority.",
+          "Challenges industry legal arguments and insists federal government has clear regulatory authority.",
       },
     },
   },

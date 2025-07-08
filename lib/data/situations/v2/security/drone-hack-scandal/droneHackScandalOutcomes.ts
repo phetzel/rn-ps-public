@@ -10,12 +10,13 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
     id: "outcome_hack_economic_impact",
     title: "Hack Reveals Economic Infrastructure Risk",
     description:
-      "Investigation reveals vulnerabilities in financial sector drones used for secure document delivery, prompting emergency economic security measures.",
+      "Investigation reveals vulnerabilities in financial drones used for secure delivery, prompting emergency economic security measures.",
     weight: 35,
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]: SituationConsequenceWeight.Positive,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
           [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
@@ -47,7 +48,7 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.RightWingBase]:
+          [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyNegative,
         },
       },

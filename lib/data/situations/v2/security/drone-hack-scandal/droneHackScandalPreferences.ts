@@ -19,7 +19,7 @@ export const droneHackScandalPreferences: SituationPreferences = {
       preference: {
         answerType: AnswerType.Inform,
         rationale:
-          "Wants to inform about steps being taken to protect medical supply chains and emergency response systems from similar attacks.",
+          "Wants to inform about steps to protect medical supply chains and emergency response systems from similar attacks.",
       },
     },
     [CabinetStaticId.State]: {

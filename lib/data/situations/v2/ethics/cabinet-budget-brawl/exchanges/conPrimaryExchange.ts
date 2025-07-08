@@ -22,8 +22,12 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "You're right that this should have been handled internally. We're working to ensure cabinet discussions stay within appropriate channels going forward.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -40,6 +44,11 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Healthy debate between departments is how we get the best policies. The American people benefit when we examine every angle of complex issues.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive, // +4

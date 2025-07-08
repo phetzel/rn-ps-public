@@ -24,7 +24,7 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RuralResidents]:
+          [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },
       },
@@ -47,8 +47,6 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.StronglyNegative,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },
@@ -65,7 +63,7 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Justice]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
           [SubgroupStaticId.RuralResidents]:

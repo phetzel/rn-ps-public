@@ -12,14 +12,14 @@ export const cabinetBudgetBrawlPreferences: SituationPreferences = {
       preference: {
         answerType: AnswerType.Challenge,
         rationale:
-          "Feels the Pentagon's budget is out of control and wants to publicly challenge their spending priorities and lack of accountability.",
+          "Feels the Pentagon's budget is out of control and wants to challenge their spending priorities and accountability.",
       },
     },
     [CabinetStaticId.Defense]: {
       preference: {
         answerType: AnswerType.Deflect,
         rationale:
-          "Believes budget cuts threaten national security and wants to deflect by talking about global threats rather than specific budget lines.",
+          "Believes budget cuts threaten national security and wants to deflect by discussing global threats instead.",
       },
     },
   },

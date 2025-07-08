@@ -22,6 +22,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "We recognize this places a burden on farmers, and we're working on financial assistance programs to help with implementation costs.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -43,6 +44,11 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Rural Americans deserve clean air just like everyone else. This isn't overreach - it's protecting the health of farming families and their children.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_health_benefits_proven:

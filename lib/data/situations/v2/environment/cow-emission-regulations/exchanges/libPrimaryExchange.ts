@@ -22,6 +22,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Methane from livestock accounts for 14% of greenhouse gases and directly impacts respiratory health in rural communities. This program could prevent thousands of cases of asthma.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.Positive,
@@ -42,6 +43,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "While the imagery is unconventional, we're focused on results, not appearances. Early pilot programs show measurable air quality improvements.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_health_benefits_proven:

@@ -42,6 +42,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "This administration has consistently supported education. These strikes unfortunately distract from our broader student success agenda.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
             },
             outcomeModifiers: {
               outcome_strike_wellness_focus:

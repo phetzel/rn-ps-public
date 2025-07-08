@@ -26,8 +26,6 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -49,11 +47,7 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.SeniorsCitizens]:
             SituationConsequenceWeight.SlightlyNegative,
         },
       },
@@ -75,11 +69,11 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.BusinessLeaders]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

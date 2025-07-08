@@ -38,6 +38,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "You're right that we should have anticipated this reaction. The karaoke mandate was poorly implemented and we're fixing it.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -64,9 +65,10 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The economic impact is significant - roughly $400 million daily in lost productivity and emergency childcare costs. That's why we're prioritizing resolution.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Positive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -84,6 +86,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "The real cost is to our children's education. We won't put a price tag on doing right by students and teachers.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,

@@ -5,7 +5,7 @@ export const robotTaxDebatePreferences: SituationPreferences = {
   president: {
     answerType: AnswerType.Challenge,
     rationale:
-      "Sees this as a bold, signature policy and wants to challenge any framing of it as being anti-innovation or economically harmful.",
+      "Sees this as bold signature policy and wants to challenge framing as anti-innovation or harmful.",
   },
   cabinet: {
     [CabinetStaticId.Treasury]: {
@@ -19,7 +19,7 @@ export const robotTaxDebatePreferences: SituationPreferences = {
       preference: {
         answerType: AnswerType.Deflect,
         rationale:
-          "Worried this tax could damage international relationships and wants to deflect questions about capital flight and trade retaliation.",
+          "Worried tax could damage international relationships and wants to deflect capital flight questions.",
       },
     },
   },
