@@ -13,9 +13,27 @@ export const cabinetPreferenceSchema = z.object({
   authorizedContent: textLengthSchema.authorizedContent.optional(),
 });
 
-export const situationPreferencesSchema = z.object({
-  president: preferenceSchema.optional(),
-  cabinet: z
-    .record(z.nativeEnum(CabinetStaticId), cabinetPreferenceSchema)
-    .optional(),
-});
+export const situationPreferencesSchema = z
+  .object({
+    president: preferenceSchema.optional(),
+    cabinet: z
+      .record(z.nativeEnum(CabinetStaticId), cabinetPreferenceSchema)
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      // No Authorized preferences allowed
+      const allPrefs = [
+        data.president?.answerType,
+        ...Object.values(data.cabinet || {}).map(
+          (c) => c.preference.answerType
+        ),
+      ].filter(Boolean);
+
+      return !allPrefs.includes(AnswerType.Authorized);
+    },
+    {
+      message: "Authorized answer type not allowed in preferences",
+      path: ["preferences"],
+    }
+  );

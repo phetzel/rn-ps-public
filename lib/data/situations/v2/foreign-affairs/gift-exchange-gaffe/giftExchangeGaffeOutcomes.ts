@@ -24,6 +24,8 @@ export const giftExchangeGaffeOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

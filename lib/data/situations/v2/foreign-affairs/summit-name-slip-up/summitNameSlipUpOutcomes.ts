@@ -10,7 +10,7 @@ export const summitNameSlipUpOutcomes: SituationOutcome[] = [
     id: "outcome_slip_up_meme",
     title: "'Faroutistan' Becomes a Viral Meme",
     description:
-      "The gaffe goes viral. While diplomatically awkward, it boosts the President's image as relatable and humorous among younger voters.",
+      "The summit-name flub explodes into memes. Gen-Z brands it peak cringe, but older viewers find the self-deprecation charming and oddly humanising.",
     weight: 30,
     consequences: {
       approvalChanges: {
@@ -18,11 +18,12 @@ export const summitNameSlipUpOutcomes: SituationOutcome[] = [
           [CabinetStaticId.State]: SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyNegative,
         },

@@ -66,80 +66,87 @@ describe("Game Balance Validation - Global Patterns", () => {
     });
   });
 
-  // describe("Global Answer Type Distribution", () => {
-  //   const answerAnalysis = analyzeGlobalAnswerTypes();
+  describe("Global Answer Type Distribution", () => {
+    const answerAnalysis = analyzeGlobalAnswerTypes();
 
-  //   test("at least N distinct answer types are present", () => {
-  //     expect(answerAnalysis.distinctTypesPresent).toBeGreaterThanOrEqual(BALANCE_THRESHOLDS.GLOBAL_DISTINCT_ANSWER_TYPES.min);
-  //   });
+    test("at least N distinct answer types are present", () => {
+      expect(answerAnalysis.distinctTypesPresent).toBeGreaterThanOrEqual(
+        BALANCE_THRESHOLDS.GLOBAL_DISTINCT_ANSWER_TYPES.min
+      );
+    });
 
-  //   test("each non-Authorized answer type has sufficient share", () => {
-  //     const underrepresentedTypes: Array<{
-  //       answerType: AnswerType;
-  //       percentage: number;
-  //     }> = [];
+    test("each non-Authorized answer type has sufficient share", () => {
+      const underrepresentedTypes: Array<{
+        answerType: AnswerType;
+        percentage: number;
+      }> = [];
 
-  //     Object.entries(answerAnalysis.answerTypePercentages).forEach(
-  //       ([answerType, percentage]) => {
-  //         if (answerType !== AnswerType.Authorized && percentage < BALANCE_THRESHOLDS.ANSWER_TYPE_MIN_SHARE.min) {
-  //           underrepresentedTypes.push({
-  //             answerType: answerType as AnswerType,
-  //             percentage,
-  //           });
-  //         }
-  //       }
-  //     );
+      Object.entries(answerAnalysis.answerTypePercentages).forEach(
+        ([answerType, percentage]) => {
+          if (
+            answerType !== AnswerType.Authorized &&
+            percentage < BALANCE_THRESHOLDS.ANSWER_TYPE_MIN_SHARE.min
+          ) {
+            underrepresentedTypes.push({
+              answerType: answerType as AnswerType,
+              percentage,
+            });
+          }
+        }
+      );
 
-  //     if (underrepresentedTypes.length > 0) {
-  //       console.error(
-  //         "Underrepresented answer types:",
-  //         JSON.stringify(underrepresentedTypes, null, 2)
-  //       );
-  //       fail(
-  //         `${underrepresentedTypes.length} answer types have less than ${BALANCE_THRESHOLDS.ANSWER_TYPE_MIN_SHARE.min}% share. Each non-Authorized type needs sufficient representation.`
-  //       );
-  //     }
+      if (underrepresentedTypes.length > 0) {
+        console.error(
+          "Underrepresented answer types:",
+          JSON.stringify(underrepresentedTypes, null, 2)
+        );
+        fail(
+          `${underrepresentedTypes.length} answer types have less than ${BALANCE_THRESHOLDS.ANSWER_TYPE_MIN_SHARE.min}% share. Each non-Authorized type needs sufficient representation.`
+        );
+      }
 
-  //     expect(underrepresentedTypes).toHaveLength(0);
-  //   });
+      expect(underrepresentedTypes).toHaveLength(0);
+    });
 
-  //   test("common answer types don't exceed maximum share", () => {
-  //     const overrepresentedTypes: Array<{
-  //       answerType: AnswerType;
-  //       percentage: number;
-  //     }> = [];
+    test("common answer types don't exceed maximum share", () => {
+      const overrepresentedTypes: Array<{
+        answerType: AnswerType;
+        percentage: number;
+      }> = [];
 
-  //     Object.entries(answerAnalysis.answerTypePercentages).forEach(
-  //       ([answerType, percentage]) => {
-  //         if (percentage > BALANCE_THRESHOLDS.ANSWER_TYPE_MAX_SHARE.max) {
-  //           overrepresentedTypes.push({
-  //             answerType: answerType as AnswerType,
-  //             percentage,
-  //           });
-  //         }
-  //       }
-  //     );
+      Object.entries(answerAnalysis.answerTypePercentages).forEach(
+        ([answerType, percentage]) => {
+          if (percentage > BALANCE_THRESHOLDS.ANSWER_TYPE_MAX_SHARE.max) {
+            overrepresentedTypes.push({
+              answerType: answerType as AnswerType,
+              percentage,
+            });
+          }
+        }
+      );
 
-  //     if (overrepresentedTypes.length > 0) {
-  //       console.error(
-  //         "Overrepresented answer types:",
-  //         JSON.stringify(overrepresentedTypes, null, 2)
-  //       );
-  //       fail(
-  //         `${overrepresentedTypes.length} answer types exceed ${BALANCE_THRESHOLDS.ANSWER_TYPE_MAX_SHARE.max}% share limit. Distribution should be more balanced.`
-  //       );
-  //     }
+      if (overrepresentedTypes.length > 0) {
+        console.error(
+          "Overrepresented answer types:",
+          JSON.stringify(overrepresentedTypes, null, 2)
+        );
+        fail(
+          `${overrepresentedTypes.length} answer types exceed ${BALANCE_THRESHOLDS.ANSWER_TYPE_MAX_SHARE.max}% share limit. Distribution should be more balanced.`
+        );
+      }
 
-  //     expect(overrepresentedTypes).toHaveLength(0);
-  //   });
+      expect(overrepresentedTypes).toHaveLength(0);
+    });
 
-  //   test("Authorized answer type has acceptable share", () => {
-  //     const authorizedPercentage =
-  //       answerAnalysis.answerTypePercentages[AnswerType.Authorized] || 0;
+    test("Authorized answer type has acceptable share", () => {
+      const authorizedPercentage =
+        answerAnalysis.answerTypePercentages[AnswerType.Authorized] || 0;
 
-  //     expect(authorizedPercentage).toBeLessThanOrEqual(BALANCE_THRESHOLDS.AUTHORIZED_TYPE_MAX_SHARE.max);
-  //   });
-  // });
+      expect(authorizedPercentage).toBeLessThanOrEqual(
+        BALANCE_THRESHOLDS.AUTHORIZED_TYPE_MAX_SHARE.max
+      );
+    });
+  });
 
   describe("Mixed Outcomes Analysis", () => {
     const mixedAnalysis = analyzeMixedOutcomes();

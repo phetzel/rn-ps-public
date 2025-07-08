@@ -18,11 +18,12 @@ export const conferenceCallChaosOutcomes: SituationOutcome[] = [
           [CabinetStaticId.State]: SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.YouthVoters]: SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

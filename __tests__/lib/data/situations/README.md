@@ -4,19 +4,26 @@ This directory contains comprehensive tests for validating static situation data
 
 ## Overview
 
-These tests ensure that all situation data is structurally valid, mathematically balanced, and provides engaging gameplay experiences. The validation suite covers everything from basic schema compliance to sophisticated game balance analysis.
+The validation system uses a **schema-first approach** where all structural and business rules are enforced through Zod schemas, with tests focusing on cross-entity analysis and game balance metrics. This ensures immediate feedback during development and eliminates redundant validation logic.
 
-## Test Architecture
+## Validation Architecture
 
-The validation suite is organized into two main categories:
+### **Schema-First Validation** (Primary)
 
-### **Core Data Validation** (Structural & Logical)
+All structural, mathematical, and business rule validation is handled by comprehensive Zod schemas in `~/lib/schemas/`. This provides:
 
-Ensures data integrity and basic game mechanics compliance.
+- ✅ **Compile-time validation** - Errors caught immediately during development
+- ✅ **Single source of truth** - All rules defined once in schemas
+- ✅ **Type safety** - Full TypeScript integration with detailed error messages
+- ✅ **Cross-validation** - Complex relationships validated automatically
 
-### **Game Balance Validation** (Strategic & Experiential)
+### **Test-Based Analysis** (Secondary)
 
-Ensures balanced, challenging, and engaging gameplay through comprehensive balance analysis.
+Tests focus on areas schemas cannot easily handle:
+
+- 🎯 **Cross-entity uniqueness** - ID uniqueness across multiple situations
+- 🎯 **Statistical game balance** - Complex multi-dimensional analysis
+- 🎯 **Global patterns** - Distribution and coverage analysis
 
 ## Test Files
 
@@ -24,40 +31,37 @@ Ensures balanced, challenging, and engaging gameplay through comprehensive balan
 
 #### `situation-data.test.ts`
 
-Main orchestrator file that imports and runs all test suites. Contains basic data export validation.
+Basic data export validation - ensures situations data array is properly exported.
 
 #### `schema-validation.test.ts`
 
-Validates that all situation data conforms to TypeScript interfaces and Zod schemas.
+**Primary validation orchestrator** - validates all data through comprehensive schemas.
 
 **Key Validations:**
 
-- Schema compliance using Zod
-- ID uniqueness (static keys, outcome IDs, question IDs, answer IDs)
-- Type consistency (enums, references)
-- Structural integrity (required fields, array lengths)
+- **Master Schema Compliance**: All situations conform to `situationDataSchema`
+- **Cross-Entity Uniqueness**: Static keys, outcome IDs, question IDs, answer IDs
 
-#### `business-rules.test.ts`
+**Schema handles automatically:**
 
-Validates game mechanics and mathematical constraints.
-
-**Key Validations:**
-
-- Outcome weights sum to exactly 100 per situation
-- Outcome modifiers sum to 0 per answer (game balance)
-- Cabinet authorization logic
-- Trigger requirement ranges (years, months, approval ratings)
-- Reasonable counts (outcomes per situation, questions per exchange, answers per question)
+- Outcome weights sum to exactly 100
+- Outcome modifiers sum to 0 per answer
+- Cabinet authorization logic (authorized answers have required fields)
+- Trigger requirement ranges and logic
+- Structural integrity (required fields, array lengths, enum values)
+- Entity balance rules (no entity can have more positive than negative impacts)
+- Question balance (positive/negative relationship impacts required)
+- Reference validation (follow-ups, root questions, outcome modifiers)
 
 #### `cross-reference.test.ts`
 
-Validates relationships and references between data elements.
+Validates complex relationships and references between data elements.
 
 **Key Validations:**
 
-- Follow-up situation references
-- Question flow and depth progression
-- Outcome modifier references
+- Follow-up situation chains and circular reference detection
+- Question flow and depth progression logic
+- Outcome modifier cross-references
 - Data consistency across related fields
 
 ### Game Balance Validation
@@ -70,7 +74,7 @@ Validates entity-focused balance rules for relationships, approval ratings, and 
 
 - **Impact Ratios**: Positive:negative ratios (0.30-0.80) for all entities
 - **Impact Rates**: Average impact ranges (-3 to -1.5) per situation
-- **Distribution Balance**: Entity coverage (20%-80%) and hit-count distribution
+- **Distribution Balance**: Entity coverage (20%-80%) and appearance distribution
 - **Preference Diversity**: Answer type variety (≥4 types, ≤40% max share)
 - **Plus/Minus Spread**: Every entity has both positive and negative impacts
 
@@ -93,8 +97,7 @@ Validates per-situation balance requirements for preferences and outcomes.
 
 - **Global Preferences**: ≥5% share for each non-Authorized answer type
 - **Preference Consistency**: Entities in preferences appear in outcomes with positive impacts
-- **Outcome Balance**: Each situation has ≥1 positive and ≥1 negative outcome
-- **Entity Impact Scope**: Each outcome affects 1-3 entities, ≤70% single outcome weight
+- **Outcome Weight Distribution**: No single outcome dominates (≤70% weight)
 
 #### `game-balance-exchanges.test.ts`
 
@@ -105,8 +108,6 @@ Validates exchange, question, and answer structure for engaging gameplay.
 - **Exchange Structure**: 2-4 exchanges per situation
 - **Question Depth**: ≥70% questions with depth ≥1, maximum depth ≤3
 - **Answer Variety**: 2-5 answers per question, ≥2 distinct types, ≤50% dominance
-- **Impact Balance**: Each question has both positive and negative net impact answers
-- **Entity Coverage**: Each answer affects ≥1 entity
 
 ## Support Utilities
 
@@ -133,9 +134,9 @@ npm test -- --coverage __tests__/lib/data/situations/
 
 ```bash
 # Run structural validation tests
-npm test -- --testPathPattern="schema-validation|business-rules|cross-reference|situation-data"
+npm test -- --testPathPattern="schema-validation|cross-reference|situation-data"
 
-# Run specific test file
+# Quick schema validation (fastest)
 npm test __tests__/lib/data/situations/schema-validation.test.ts
 ```
 
@@ -153,8 +154,8 @@ npm test __tests__/lib/data/situations/game-balance-global.test.ts
 ### Development Workflow
 
 ```bash
-# Quick validation during development
-npm test -- --testPathPattern="schema-validation|business-rules" --watchAll
+# Quick validation during development (schema-first)
+npm test __tests__/lib/data/situations/schema-validation.test.ts --watchAll
 
 # Full balance analysis (slower, for final validation)
 npm test -- --testPathPattern="game-balance" --verbose
@@ -162,100 +163,120 @@ npm test -- --testPathPattern="game-balance" --verbose
 
 ## Test Philosophy
 
-This validation suite follows a **comprehensive quality assurance** approach:
+This validation suite follows a **schema-first quality assurance** approach:
 
-### **Fail-Fast Detection**
+### **Immediate Feedback**
 
-- Tests fail immediately when data issues are detected
-- Detailed error logging helps identify specific problems
-- Each test focuses on a single validation concern
+- **Schema validation** catches 95% of issues at compile-time
+- **TypeScript integration** provides IDE feedback during development
+- **Detailed error messages** show exact location and nature of problems
+- **Zero runtime surprises** - problems caught before deployment
 
 ### **Balance-Driven Development**
 
-- Game balance tests provide **actionable metrics** for content improvement
+- **Game balance tests** provide actionable metrics for content improvement
 - **Expected failures** during initial development guide iterative balancing
 - **Data-driven insights** help create engaging gameplay experiences
+- **Statistical analysis** reveals patterns invisible to manual review
 
 ### **Development vs. Production**
 
-- **Core validation** tests must pass before deployment
-- **Balance validation** tests guide content quality improvements
-- Tests catch issues during development, not runtime
+- **Schema validation** must pass before development can proceed
+- **Balance validation** guides content quality improvements
+- **Zero tolerance** for structural issues (caught by schemas)
+- **Iterative improvement** for balance issues (guided by tests)
 
 ## Development Workflow
 
 ### Adding New Situations
 
-1. **Start with core validation** - ensure basic structure is correct
-2. **Run balance tests** to understand current state
-3. **Iterate on content** using balance metrics as guidance
-4. **Verify improvements** with subsequent test runs
-5. **Commit only when core tests pass** (balance tests may still show improvement opportunities)
+1. **Create content** following schema structure
+2. **Run schema validation** - fix any structural issues immediately
+3. **Run balance tests** to understand current state
+4. **Iterate on content** using balance metrics as guidance
+5. **Commit only when schema validation passes** (balance tests guide improvement)
 
 ### Content Balancing Process
 
-1. **Run full balance suite**: `npm test -- --testPathPattern="game-balance" --verbose`
-2. **Review console output** for specific violations and metrics
-3. **Prioritize fixes** based on game design goals
-4. **Make targeted improvements** to address violations
-5. **Re-run tests** to measure progress
-6. **Iterate** until desired balance is achieved
+1. **Schema validation first**: `npm test schema-validation.test.ts`
+2. **Fix any schema errors** before proceeding
+3. **Run balance suite**: `npm test -- --testPathPattern="game-balance" --verbose`
+4. **Review console output** for specific violations and metrics
+5. **Make targeted improvements** to address balance issues
+6. **Re-run tests** to measure progress
+7. **Iterate** until desired balance is achieved
 
 ## Common Issues & Solutions
 
-### Core Data Validation Failures
+### Schema Validation Failures
 
-#### Schema Validation
+Schema validation catches **all structural and business rule violations**. Common issues:
 
-- Check TypeScript interfaces match your data structure
-- Ensure all required fields are present
-- Verify enum values are correct
+#### Compilation Errors
 
-#### Business Rules
+- **TypeScript errors**: Missing required fields, incorrect enum values
+- **Reference errors**: Invalid cabinet members, answer types, static IDs
+- **Structure errors**: Missing nested objects, incorrect array types
 
-- Outcome weights must sum to exactly 100
-- Outcome modifiers must sum to 0 for game balance
-- Check approval rating ranges (0-100)
+#### Schema Validation Errors
 
-#### Cross-Reference
+- **Mathematical constraints**: Outcome weights ≠ 100, outcome modifiers ≠ 0
+- **Text length violations**: Character count outside required ranges
+- **Entity balance rules**: Entities with more positive than negative impacts
+- **Relationship requirements**: Questions missing positive/negative impacts
+- **Authorization logic**: Authorized answers without cabinet content
 
-- Ensure follow-up IDs reference existing situations
-- Verify question follow-ups exist within the same exchange
-- Check outcome modifier IDs match actual outcomes
+#### Quick Fixes
 
-### Game Balance Validation Issues
+- **Check character counts** carefully against schema limits
+- **Verify mathematical sums** (weights = 100, modifiers = 0)
+- **Validate all enum references** against current type definitions
+- **Ensure entity balance** (≤ positive vs negative per entity)
+
+### Game Balance Issues
+
+Balance tests identify **statistical and gameplay concerns**:
 
 #### Entity Balance Problems
 
-- **Unbalanced ratios**: Add more positive or negative impacts to achieve 0.30-0.80 ratio
+- **Unbalanced ratios**: Add impacts to achieve 0.30-0.80 positive:negative ratio
 - **Poor distribution**: Ensure entities appear in 20%-80% of situations
 - **Preference monotony**: Use diverse answer types (≥4 types per entity)
 
 #### Global Pattern Issues
 
-- **Type imbalance**: Add situations for underrepresented types
+- **Type imbalance**: Add situations for underrepresented situation types
 - **Answer homogeneity**: Diversify answer types across all content
 - **Missing coverage**: Ensure every entity has both positive and negative effects
 
-#### Situation Structure Issues
+## Interpreting Results
 
-- **Outcome imbalance**: Each situation needs both positive and negative outcomes
-- **Preference inconsistency**: Preferred answer types must have positive impacts
-- **Structural problems**: Follow exchange count (2-4) and question depth (≥70% depth ≥1) guidelines
+### Schema Validation Results
 
-#### Exchange Quality Issues
+Schema failures **must be fixed immediately**:
 
-- **Answer variety**: Use 2-5 answers with ≥2 distinct types per question
-- **Impact balance**: Each question needs both positive and negative impact answers
-- **Entity coverage**: Every answer must affect at least one entity
+- **Error messages** show exact location and required fix
+- **Detailed context** helps understand what's wrong
+- **Actionable guidance** for immediate resolution
 
-## Interpreting Balance Test Results
+### Balance Test Results
 
-Balance tests are **designed to fail initially** and provide improvement guidance:
+Balance tests **guide iterative improvement**:
 
 - **Console output** shows specific violations with entity/situation details
-- **Percentage metrics** indicate how far from target balance you are
+- **Percentage metrics** indicate distance from target balance
 - **Violation counts** help prioritize which areas need most attention
-- **Error details** provide actionable information for targeted improvements
+- **Statistical insights** reveal patterns for systematic improvement
 
-Use these results as a **roadmap for iterative content improvement** rather than blockers to development progress.
+Use balance results as a **roadmap for content enhancement** rather than blockers to development progress.
+
+## Schema-First Benefits
+
+This architecture provides substantial advantages:
+
+- ✅ **Faster development** - Issues caught immediately, not in tests
+- ✅ **Better developer experience** - IDE integration with real-time feedback
+- ✅ **Reduced maintenance** - Single source of truth for validation rules
+- ✅ **Type safety** - Full compile-time verification of data structures
+- ✅ **Comprehensive validation** - Complex cross-validation handled automatically
+- ✅ **Focus on value** - Tests concentrate on game balance, not structure

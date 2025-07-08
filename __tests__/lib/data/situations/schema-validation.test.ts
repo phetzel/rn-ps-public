@@ -1,6 +1,5 @@
 import { situationsData } from "~/lib/data/situations";
 import { situationDataSchema } from "~/lib/schemas";
-import { SituationType, AnswerType, CabinetStaticId } from "~/types";
 
 describe("Situation Data Schema Validation", () => {
   describe("Overall Schema Compliance", () => {
@@ -30,33 +29,14 @@ describe("Situation Data Schema Validation", () => {
 
       expect(errors).toHaveLength(0);
     });
-
-    test("all situations have required fields", () => {
-      situationsData.forEach((situation, index) => {
-        expect(situation.trigger).toBeDefined();
-        expect(situation.type).toBeDefined();
-        expect(situation.title).toBeDefined();
-        expect(situation.description).toBeDefined();
-        expect(situation.content).toBeDefined();
-        expect(situation.exchanges).toBeDefined();
-        expect(Array.isArray(situation.exchanges)).toBe(true);
-      });
-    });
   });
 
-  describe("ID Uniqueness and Format", () => {
+  describe("Cross-Entity Uniqueness Validation", () => {
     test("all trigger static keys are unique", () => {
       const staticKeys = situationsData.map((s) => s.trigger.staticKey);
       const uniqueKeys = new Set(staticKeys);
 
       expect(uniqueKeys.size).toBe(staticKeys.length);
-    });
-
-    test("all trigger static keys are non-empty strings", () => {
-      situationsData.forEach((situation, index) => {
-        expect(typeof situation.trigger.staticKey).toBe("string");
-        expect(situation.trigger.staticKey.length).toBeGreaterThan(0);
-      });
     });
 
     test("outcome IDs are unique within each situation", () => {
@@ -88,118 +68,6 @@ describe("Situation Data Schema Validation", () => {
               const uniqueIds = new Set(answerIds);
 
               expect(uniqueIds.size).toBe(answerIds.length);
-            }
-          );
-        });
-      });
-    });
-  });
-
-  describe("Type Consistency", () => {
-    test("situation type matches trigger type", () => {
-      situationsData.forEach((situation, index) => {
-        expect(situation.type).toBe(situation.trigger.type);
-      });
-    });
-
-    test("all situation types are valid enum values", () => {
-      situationsData.forEach((situation, index) => {
-        expect(Object.values(SituationType)).toContain(situation.type);
-      });
-    });
-
-    test("all answer types are valid enum values", () => {
-      situationsData.forEach((situation, index) => {
-        situation.exchanges.forEach((exchange, exchangeIndex) => {
-          Object.values(exchange.content.questions).forEach(
-            (question, questionIndex) => {
-              question.answers.forEach((answer, answerIndex) => {
-                expect(Object.values(AnswerType)).toContain(answer.type);
-              });
-            }
-          );
-        });
-      });
-    });
-  });
-
-  describe("Reference Validation", () => {
-    test("root question IDs reference valid questions", () => {
-      situationsData.forEach((situation, index) => {
-        situation.exchanges.forEach((exchange, exchangeIndex) => {
-          const { questions, rootQuestionId } = exchange.content;
-          expect(questions[rootQuestionId]).toBeDefined();
-        });
-      });
-    });
-
-    test("answer follow-up IDs reference valid questions within same exchange", () => {
-      situationsData.forEach((situation, index) => {
-        situation.exchanges.forEach((exchange, exchangeIndex) => {
-          const { questions } = exchange.content;
-
-          Object.values(questions).forEach((question, questionIndex) => {
-            question.answers.forEach((answer, answerIndex) => {
-              if (answer.followUpId) {
-                expect(questions[answer.followUpId]).toBeDefined();
-              }
-            });
-          });
-        });
-      });
-    });
-
-    test("authorized cabinet member IDs are valid", () => {
-      situationsData.forEach((situation, index) => {
-        situation.exchanges.forEach((exchange, exchangeIndex) => {
-          Object.values(exchange.content.questions).forEach(
-            (question, questionIndex) => {
-              question.answers.forEach((answer, answerIndex) => {
-                if (answer.authorizedCabinetMemberId) {
-                  expect(Object.values(CabinetStaticId)).toContain(
-                    answer.authorizedCabinetMemberId
-                  );
-                }
-              });
-            }
-          );
-        });
-      });
-    });
-  });
-
-  describe("Structural Integrity", () => {
-    test("all situations have at least one outcome", () => {
-      situationsData.forEach((situation, index) => {
-        expect(situation.content.outcomes.length).toBeGreaterThan(0);
-      });
-    });
-
-    test("all situations have at least one exchange", () => {
-      situationsData.forEach((situation, index) => {
-        expect(situation.exchanges.length).toBeGreaterThan(0);
-      });
-    });
-
-    test("all questions have at least one answer", () => {
-      situationsData.forEach((situation, index) => {
-        situation.exchanges.forEach((exchange, exchangeIndex) => {
-          Object.values(exchange.content.questions).forEach(
-            (question, questionIndex) => {
-              expect(question.answers.length).toBeGreaterThan(0);
-            }
-          );
-        });
-      });
-    });
-
-    test("question depths are non-negative integers", () => {
-      situationsData.forEach((situation, index) => {
-        situation.exchanges.forEach((exchange, exchangeIndex) => {
-          Object.values(exchange.content.questions).forEach(
-            (question, questionIndex) => {
-              expect(Number.isInteger(question.depth)).toBe(true);
-              expect(question.depth).toBeGreaterThanOrEqual(0);
             }
           );
         });
