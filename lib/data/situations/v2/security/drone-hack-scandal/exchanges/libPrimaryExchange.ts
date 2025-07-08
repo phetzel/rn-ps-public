@@ -25,7 +25,13 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -41,14 +47,17 @@ export const libPrimaryExchange: ExchangeData = {
           {
             id: "a_economic_admit",
             type: AnswerType.Admit,
-            text: "You're right to be concerned. This incident has revealed security gaps we need to address across all critical infrastructure, including financial systems.",
+            text: "You're absolutely right to be concerned. The State Department is working with allies to address security gaps that this incident revealed.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
+                  weight: ExchangeImpactWeight.Positive,
                 },
                 [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -58,6 +67,58 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_economic_deny",
+            type: AnswerType.Deny,
+            text: "There are no broader security implications here. This was an isolated prank with harmless payloads that poses no real threat to national infrastructure.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.StrongPositive, // +8
+            },
+          },
+          {
+            id: "a_economic_inform",
+            type: AnswerType.Inform,
+            text: "HHS is conducting a comprehensive review of all critical infrastructure vulnerabilities to protect public health systems from similar intrusions.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },

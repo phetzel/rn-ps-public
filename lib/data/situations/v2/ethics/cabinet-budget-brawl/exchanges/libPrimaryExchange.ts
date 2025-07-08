@@ -22,15 +22,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "Both departments are committed to fiscal responsibility. These discussions help us ensure every taxpayer dollar is used effectively for national security.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
-              cabinet: {
-                [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-              },
+              president: { weight: ExchangeImpactWeight.Positive },
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive, // +4
@@ -48,6 +40,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.Positive,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -56,6 +51,26 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_private_resolution: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_national_security",
+          },
+          {
+            id: "a_accountability_deflect",
+            type: AnswerType.Deflect,
+            text: "Defense spending isn't the issue here - it's about smart procurement and eliminating waste. The Pentagon is focused on protecting America, not defending contractors.",
+            impacts: {
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_private_resolution: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },

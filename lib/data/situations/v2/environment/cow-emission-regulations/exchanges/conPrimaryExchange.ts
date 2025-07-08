@@ -22,9 +22,12 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "We recognize this places a burden on farmers, and we're working on financial assistance programs to help with implementation costs.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -41,12 +44,15 @@ export const conPrimaryExchange: ExchangeData = {
           {
             id: "a_overreach_challenge",
             type: AnswerType.Challenge,
-            text: "Rural Americans deserve clean air just like everyone else. This isn't overreach - it's protecting the health of farming families and their children.",
+            text: "The Justice Department has clear authority to enforce environmental regulations. We won't back down from protecting public health despite industry pressure.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -59,6 +65,44 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
             },
             followUpId: "q_enforcement_reality",
+          },
+          {
+            id: "a_overreach_deflect",
+            type: AnswerType.Deflect,
+            text: "This isn't about backpacks - it's about innovative climate leadership. We're creating new export markets while protecting the health of farming communities.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+            },
+            outcomeModifiers: {
+              outcome_health_benefits_proven:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_legal_battles_intensify:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_overreach_inform",
+            type: AnswerType.Inform,
+            text: "HHS data shows methane reduction directly improves air quality and reduces respiratory illness. This program could prevent thousands of asthma cases in rural areas.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_health_benefits_proven:
+                OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_legal_battles_intensify:
+                OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },

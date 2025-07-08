@@ -27,6 +27,12 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.Positive,
                 },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -59,6 +65,66 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
+          {
+            id: "a_defense_admit",
+            type: AnswerType.Admit,
+            text: "The President realizes that comment could have been better phrased. We're focused on resolving this diplomatically and strengthening our partnerships.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_defense_inform",
+            type: AnswerType.Inform,
+            text: "The Justice Department confirms all our trade actions comply with international law and WTO rules. We follow proper legal procedures.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_defense_deny",
+            type: AnswerType.Deny,
+            text: "This isn't about national security concerns. Homeland Security confirms there are no domestic threats from this trade disagreement.",
+            impacts: {
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
         ],
       },
       q_cheese_war_legal: {
@@ -71,13 +137,10 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "All trade actions follow proper legal procedures. The Justice Department ensures compliance with international law and our constitutional obligations.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
+                  weight: ExchangeImpactWeight.Positive,
                 },
               },
             },
@@ -97,7 +160,7 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },

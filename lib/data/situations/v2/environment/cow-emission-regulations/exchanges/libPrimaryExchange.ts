@@ -27,6 +27,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.Positive,
                 },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -42,9 +45,12 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "While the imagery is unconventional, we're focused on results, not appearances. Early pilot programs show measurable air quality improvements.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -58,6 +64,29 @@ export const libPrimaryExchange: ExchangeData = {
             },
             followUpId: "q_legal_authority",
           },
+          {
+            id: "a_benefits_challenge",
+            type: AnswerType.Challenge,
+            text: "The Justice Department has clear regulatory authority under environmental law. We won't be intimidated by industry lawsuits when public health is at stake.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_health_benefits_proven:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_legal_battles_intensify:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
         ],
       },
       q_legal_authority: {
@@ -70,9 +99,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "The Clean Air Act gives us unambiguous authority to regulate methane emissions. These lawsuits are delay tactics from an industry resistant to change.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -89,8 +122,12 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "We're confident in our legal position and are working with agricultural stakeholders to ensure smooth implementation while defending public health.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },

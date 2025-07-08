@@ -152,19 +152,22 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
       const preferredAnswerType =
         situation.content.preferences.president.answerType;
 
-      // President doesn't appear in outcomes, so just check for positive impact answers
-      const hasPositiveImpactAnswers = situation.exchanges.some((exchange) =>
-        Object.values(exchange.content.questions).some((question) =>
-          question.answers.some(
-            (answer) =>
-              answer.type === preferredAnswerType &&
-              answer.impacts.president &&
-              answer.impacts.president.weight > 0
-          )
-        )
+      // Check that ALL root questions across ALL exchanges have positive impact answers for president
+      const allRootQuestionsHavePositiveImpact = situation.exchanges.every(
+        (exchange) =>
+          Object.values(exchange.content.questions)
+            .filter((question) => question.depth === 0) // Only root questions
+            .every((question) =>
+              question.answers.some(
+                (answer) =>
+                  answer.type === preferredAnswerType &&
+                  answer.impacts.president &&
+                  answer.impacts.president.weight > 0
+              )
+            )
       );
 
-      if (!hasPositiveImpactAnswers) {
+      if (!allRootQuestionsHavePositiveImpact) {
         violations.push({
           situationTitle: situation.title,
           entityId: "president",
@@ -184,28 +187,30 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
           const preferredAnswerType = preference.preference.answerType;
           const missingFromOutcomes = !entitiesInOutcomes.has(cabinetId);
 
-          // Check if there are positive impact answers of the preferred type for this cabinet member
-          const hasPositiveImpactAnswers = situation.exchanges.some(
+          // Check that ALL root questions across ALL exchanges have positive impact answers for this cabinet member
+          const allRootQuestionsHavePositiveImpact = situation.exchanges.every(
             (exchange) =>
-              Object.values(exchange.content.questions).some((question) =>
-                question.answers.some(
-                  (answer) =>
-                    answer.type === preferredAnswerType &&
-                    answer.impacts.cabinet?.[cabinetId as CabinetStaticId] &&
-                    answer.impacts.cabinet[cabinetId as CabinetStaticId]!
-                      .weight > 0
+              Object.values(exchange.content.questions)
+                .filter((question) => question.depth === 0) // Only root questions
+                .every((question) =>
+                  question.answers.some(
+                    (answer) =>
+                      answer.type === preferredAnswerType &&
+                      answer.impacts.cabinet?.[cabinetId as CabinetStaticId] &&
+                      answer.impacts.cabinet[cabinetId as CabinetStaticId]!
+                        .weight > 0
+                  )
                 )
-              )
           );
 
-          if (missingFromOutcomes || !hasPositiveImpactAnswers) {
+          if (missingFromOutcomes || !allRootQuestionsHavePositiveImpact) {
             violations.push({
               situationTitle: situation.title,
               entityId: cabinetId,
               preferredAnswerType,
               issues: {
                 missingFromOutcomes,
-                noPositiveImpactAnswers: !hasPositiveImpactAnswers,
+                noPositiveImpactAnswers: !allRootQuestionsHavePositiveImpact,
               },
             });
           }

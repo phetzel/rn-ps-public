@@ -46,7 +46,10 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -56,6 +59,40 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_private_resolution: OutcomeModifierWeight.StrongNegative, // -8
             },
             followUpId: "q_defense_funding",
+          },
+          {
+            id: "a_unity_reassure",
+            type: AnswerType.Reassure,
+            text: "The President has full confidence in both departments. This discourse shows we take fiscal responsibility seriously while maintaining strong defense capabilities.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+            },
+            outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_private_resolution: OutcomeModifierWeight.StrongPositive, // +8
+            },
+          },
+          {
+            id: "a_unity_challenge",
+            type: AnswerType.Challenge,
+            text: "This isn't chaos - it's accountability. Treasury is right to demand answers about taxpayer dollars, and that takes courage in this town.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_private_resolution: OutcomeModifierWeight.StrongNegative, // -8
+            },
           },
         ],
       },

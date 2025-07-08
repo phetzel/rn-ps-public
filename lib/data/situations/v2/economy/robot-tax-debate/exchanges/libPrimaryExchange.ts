@@ -23,16 +23,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "This isn't about punishment - it's about shared prosperity. Companies that benefit from automation should invest in the workforce that made it possible.",
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-              },
             },
             outcomeModifiers: {
-              outcome_tax_offshore_exodus:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_tax_global_trend: OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -46,6 +40,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.Positive,
                 },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -54,6 +51,26 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_international_competition",
+          },
+          {
+            id: "a_protection_deflect",
+            type: AnswerType.Deflect,
+            text: "Other nations are studying similar measures. We're leading on workforce protection, not following outdated trade theories that prioritize capital over people.",
+            impacts: {
+              cabinet: {
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.StrongPositive, // +8
+              outcome_tax_global_trend: OutcomeModifierWeight.StrongNegative, // -8
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },

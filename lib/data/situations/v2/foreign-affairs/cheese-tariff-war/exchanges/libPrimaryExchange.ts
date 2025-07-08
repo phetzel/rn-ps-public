@@ -27,6 +27,12 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.Positive,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -41,10 +47,27 @@ export const libPrimaryExchange: ExchangeData = {
           {
             id: "a_security_admit",
             type: AnswerType.Admit,
-            text: "You're right that the President's comment was inappropriate and created unnecessary complications. We are working to resolve this quickly.",
+            text: "You're absolutely right. The President's comment was inappropriate and I take full responsibility for not preventing this diplomatic misstep.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.Positive },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.StrongPositive, // +8
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.StrongNegative, // -8
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_security_reassure",
+            type: AnswerType.Reassure,
+            text: "Our Defense Department maintains that bilateral security partnerships remain unaffected by trade disagreements. We're managing this carefully.",
+            impacts: {
               cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
@@ -52,9 +75,31 @@ export const libPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.StrongPositive, // +8
+                OutcomeModifierWeight.ModeratePositive, // +6
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.StrongNegative, // -8
+                OutcomeModifierWeight.ModerateNegative, // -6
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_security_inform",
+            type: AnswerType.Inform,
+            text: "The Justice Department confirms that all retaliatory measures follow proper legal procedures and international trade law frameworks.",
+            impacts: {
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
             },
           },

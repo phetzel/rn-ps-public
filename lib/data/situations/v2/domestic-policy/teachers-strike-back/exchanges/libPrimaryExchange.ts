@@ -29,10 +29,45 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0
               outcome_strike_security_crisis:
-                OutcomeModifierWeight.ModerateNegative, // -6
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_karaoke_compromise:
+                OutcomeModifierWeight.SlightNegative, // -4
+            },
+          },
+          {
+            id: "a_welfare_admit",
+            type: AnswerType.Admit,
+            text: "You're absolutely right. The karaoke policy was a mistake that's now harming student mental health. We're ending it immediately.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_security_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_karaoke_compromise:
+                OutcomeModifierWeight.StrongPositive, // +8
+            },
+          },
+          {
+            id: "a_welfare_deny",
+            type: AnswerType.Deny,
+            text: "These aren't security threats requiring federal intervention. Local communities can handle educational disputes without crisis protocols.",
+            impacts: {
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus:
+                OutcomeModifierWeight.StrongNegative, // -8
+              outcome_strike_security_crisis:
+                OutcomeModifierWeight.StrongPositive, // +8
               outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -46,13 +81,16 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
               outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_security_crisis:
                 OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_security_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_security_concern",

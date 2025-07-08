@@ -28,29 +28,71 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_strike_wellness_focus:
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+                OutcomeModifierWeight.MajorNegative, // -12
+              outcome_strike_karaoke_compromise:
+                OutcomeModifierWeight.StrongPositive, // +8
             },
             followUpId: "q_cost_crisis",
           },
           {
             id: "a_weakness_admit",
             type: AnswerType.Admit,
-            text: "You're right that we should have anticipated this reaction. The karaoke mandate was poorly implemented and we're fixing it.",
+            text: "You're right that we could have handled this better. The karaoke mandate created unnecessary conflict when we should focus on real student needs.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_security_crisis:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_weakness_reassure",
+            type: AnswerType.Reassure,
+            text: "We're prioritizing student welfare above all else. Our health officials are implementing crisis support programs for affected families.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
               outcome_strike_wellness_focus:
-                OutcomeModifierWeight.ModeratePositive, // +6
+                OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_security_crisis:
-                OutcomeModifierWeight.ModerateNegative, // -6
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_weakness_deny",
+            type: AnswerType.Deny,
+            text: "This isn't a security issue requiring federal oversight. Communities can manage educational policy disputes without crisis intervention.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_security_crisis:
+                OutcomeModifierWeight.StrongPositive, // +8
+              outcome_strike_karaoke_compromise:
+                OutcomeModifierWeight.StrongNegative, // -8
             },
           },
         ],
