@@ -1,0 +1,78 @@
+import {
+  SituationConsequenceWeight,
+  CabinetStaticId,
+  SubgroupStaticId,
+} from "~/types";
+import type { SituationOutcome } from "~/types";
+
+export const droneHackScandalOutcomes: SituationOutcome[] = [
+  {
+    id: "outcome_hack_economic_impact",
+    title: "Hack Reveals Economic Infrastructure Risk",
+    description:
+      "Investigation reveals vulnerabilities in financial sector drones used for secure document delivery, prompting emergency economic security measures.",
+    weight: 35,
+    consequences: {
+      approvalChanges: {
+        cabinet: {
+          [CabinetStaticId.Treasury]: SituationConsequenceWeight.Positive,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
+        },
+        subgroups: {
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
+        },
+      },
+    },
+  },
+  {
+    id: "outcome_hack_diplomatic_crisis",
+    title: "Diplomatic Relations Strained Over Hack",
+    description:
+      "Allied nations question our cybersecurity competence after rubber chickens appear at embassies, straining critical diplomatic relationships.",
+    weight: 40,
+    consequences: {
+      approvalChanges: {
+        cabinet: {
+          [CabinetStaticId.State]: SituationConsequenceWeight.Negative,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyNegative,
+        },
+        subgroups: {
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.RightWingBase]:
+            SituationConsequenceWeight.SlightlyNegative,
+        },
+      },
+    },
+  },
+  {
+    id: "outcome_hack_health_scare",
+    title: "Health System Vulnerability Exposed",
+    description:
+      "Security experts warn that medical delivery drones could be similarly compromised, threatening emergency response and patient care systems.",
+    weight: 25,
+    consequences: {
+      approvalChanges: {
+        cabinet: {
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
+        },
+        subgroups: {
+          [SubgroupStaticId.SeniorsCitizens]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.RuralResidents]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.UrbanResidents]:
+            SituationConsequenceWeight.SlightlyNegative,
+        },
+      },
+    },
+  },
+];

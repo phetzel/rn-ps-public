@@ -1,3 +1,6 @@
 import { SituationData } from "~/types";
+import { teachersStrikeBack } from "./teachers-strike-back";
 
-export const domesticPolicySituationsData: SituationData[] = [];
+export const domesticPolicySituationsData: SituationData[] = [
+  teachersStrikeBack,
+];
