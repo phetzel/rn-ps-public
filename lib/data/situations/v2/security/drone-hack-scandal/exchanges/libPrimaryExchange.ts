@@ -69,6 +69,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_ally_confidence",
           },
           {
             id: "a_economic_deny",
@@ -119,6 +120,101 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+            followUpId: "q_infrastructure_review",
+          },
+        ],
+      },
+      q_ally_confidence: {
+        id: "q_ally_confidence",
+        text: "Are our allies sharing intelligence about vulnerabilities? How can we restore international confidence in American security leadership?",
+        depth: 1,
+        answers: [
+          {
+            id: "a_confidence_reassure",
+            type: AnswerType.Reassure,
+            text: "We're leading a multinational cybersecurity initiative with NATO partners to share threat intelligence and strengthen collective defenses.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_confidence_inform",
+            type: AnswerType.Inform,
+            text: "State Department briefings show our allies remain confident in bilateral security arrangements. This incident has actually accelerated cooperation on cybersecurity standards.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_infrastructure_review: {
+        id: "q_infrastructure_review",
+        text: "When will the infrastructure review be completed, and will results be public? How transparent will the administration be?",
+        depth: 1,
+        answers: [
+          {
+            id: "a_review_inform",
+            type: AnswerType.Inform,
+            text: "HHS will complete the review within 90 days, with public recommendations for improving critical infrastructure security while protecting sensitive operational details.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_review_deflect",
+            type: AnswerType.Deflect,
+            text: "The timeline and scope of security reviews can't be dictated by media pressure. We'll be thorough and transparent when it's safe to do so.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },

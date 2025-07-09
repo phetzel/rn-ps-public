@@ -29,6 +29,7 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_worker_displacement",
           },
           {
             id: "a_protection_inform",
@@ -69,6 +70,49 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.StrongPositive, // +8
               outcome_tax_global_trend: OutcomeModifierWeight.StrongNegative, // -8
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_worker_displacement: {
+        id: "q_worker_displacement",
+        text: "But what about workers already displaced by automation? How does this tax help someone who lost their factory job last year?",
+        depth: 1,
+        answers: [
+          {
+            id: "a_displacement_inform",
+            type: AnswerType.Inform,
+            text: "The tax funds retroactive support - workers displaced in the past three years qualify for full retraining programs and transition assistance worth up to $25,000 per person.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_displacement_admit",
+            type: AnswerType.Admit,
+            text: "You're right that we should have acted sooner. This tax represents our commitment to never again leave workers behind when technology advances.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },

@@ -59,6 +59,7 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_small_business_impact",
           },
           {
             id: "a_flight_deflect",
@@ -100,6 +101,49 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_offshore_exodus:
                 OutcomeModifierWeight.ModerateNegative, // -6
               outcome_tax_global_trend: OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_small_business_impact: {
+        id: "q_small_business_impact",
+        text: "What about small manufacturers who can't relocate or afford automation taxes? Are you hurting the businesses you claim to protect?",
+        depth: 1,
+        answers: [
+          {
+            id: "a_small_business_reassure",
+            type: AnswerType.Reassure,
+            text: "The tax includes exemptions for businesses under $50 million in revenue and phase-in periods for mid-size companies. We're protecting small business, not punishing them.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_small_business_admit",
+            type: AnswerType.Admit,
+            text: "You raise a valid concern. We're reviewing threshold adjustments and additional support programs for smaller manufacturers facing automation pressures.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },

@@ -1,5 +1,11 @@
 import { situationsData } from "~/lib/data/situations";
-import { CabinetStaticId, SubgroupStaticId, AnswerType } from "~/types";
+import {
+  CabinetStaticId,
+  SubgroupStaticId,
+  AnswerType,
+  SubgroupCategory,
+} from "~/types";
+import { staticSubgroups } from "~/lib/data/staticPolitics";
 
 // Helper interfaces for analysis
 export interface EntityImpactAnalysis {
@@ -272,6 +278,74 @@ export function analyzeEntityDistribution(): {
   });
 
   return { cabinet: cabinetDistribution, subgroups: subgroupDistribution };
+}
+
+/**
+ * Analyzes subgroup distribution across situations by category
+ */
+export function analyzeSubgroupDistributionByCategory(): Map<
+  SubgroupCategory,
+  Map<string, EntityDistributionAnalysis>
+> {
+  const categoryDistribution = new Map<
+    SubgroupCategory,
+    Map<string, EntityDistributionAnalysis>
+  >();
+
+  // Initialize maps for each category
+  Object.values(SubgroupCategory).forEach((category) => {
+    categoryDistribution.set(
+      category,
+      new Map<string, EntityDistributionAnalysis>()
+    );
+  });
+
+  // Initialize each subgroup in its respective category
+  Object.entries(staticSubgroups).forEach(([subgroupId, subgroupData]) => {
+    const categoryMap = categoryDistribution.get(subgroupData.category)!;
+    categoryMap.set(subgroupId, {
+      entityId: subgroupId,
+      appearanceCount: 0,
+      totalSituations: situationsData.length,
+      coveragePercentage: 0,
+    });
+  });
+
+  // Count appearances in situations
+  situationsData.forEach((situation) => {
+    const subgroupsInSituation = new Set<string>();
+
+    // Check outcomes for subgroups
+    situation.content.outcomes.forEach((outcome) => {
+      if (outcome.consequences.approvalChanges.subgroups) {
+        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(
+          (subgroupId) => {
+            subgroupsInSituation.add(subgroupId);
+          }
+        );
+      }
+    });
+
+    // Update counts for each category
+    subgroupsInSituation.forEach((subgroupId) => {
+      const subgroupData = staticSubgroups[subgroupId as SubgroupStaticId];
+      if (subgroupData) {
+        const categoryMap = categoryDistribution.get(subgroupData.category);
+        const analysis = categoryMap?.get(subgroupId);
+        if (analysis) analysis.appearanceCount++;
+      }
+    });
+  });
+
+  // Calculate percentages for each category
+  categoryDistribution.forEach((categoryMap) => {
+    categoryMap.forEach((analysis) => {
+      analysis.coveragePercentage =
+        (analysis.appearanceCount / analysis.totalSituations) * 100;
+    });
+  });
+
+  return categoryDistribution;
 }
 
 /**

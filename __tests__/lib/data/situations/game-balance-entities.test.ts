@@ -4,6 +4,7 @@ import {
   analyzeExchangeImpacts,
   analyzeSituationConsequences,
   analyzeEntityDistribution,
+  analyzeSubgroupDistributionByCategory,
   analyzePreferences,
   EntityImpactAnalysis,
   EntityDistributionAnalysis,
@@ -228,60 +229,74 @@ describe("Game Balance Validation - Entities", () => {
       expect(errors).toHaveLength(0);
     });
 
-    // adjust to make distrobution related to category
-    // test("subgroups appear in balanced distribution across situations", () => {
-    //   const errors: Array<{
-    //     entityId: string;
-    //     coveragePercentage: number;
-    //     appearanceCount: number;
-    //   }> = [];
+    test("subgroups appear in balanced distribution within their categories", () => {
+      const categoryDistribution = analyzeSubgroupDistributionByCategory();
 
-    //   const totalSubgroupAppearances = Array.from(
-    //     distribution.subgroups.values()
-    //   ).reduce((sum, analysis) => sum + analysis.appearanceCount, 0);
-    //   const averageAppearances =
-    //     totalSubgroupAppearances / distribution.subgroups.size;
+      const errors: Array<{
+        category: string;
+        entityId: string;
+        coveragePercentage: number;
+        appearanceCount: number;
+        averageForCategory: number;
+      }> = [];
 
-    //   distribution.subgroups.forEach((analysis) => {
-    //     // Check coverage percentage
-    //     if (
-    //       analysis.coveragePercentage < BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.min ||
-    //       analysis.coveragePercentage > BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.max
-    //     ) {
-    //       errors.push({
-    //         entityId: analysis.entityId,
-    //         coveragePercentage: analysis.coveragePercentage,
-    //         appearanceCount: analysis.appearanceCount,
-    //       });
-    //     }
+      // Check balance within each category
+      categoryDistribution.forEach((subgroupMap, category) => {
+        const totalAppearances = Array.from(subgroupMap.values()).reduce(
+          (sum, analysis) => sum + analysis.appearanceCount,
+          0
+        );
+        const averageAppearances = totalAppearances / subgroupMap.size;
 
-    //     // Check appearance count band (multiple of average)
-    //     const minAppearances = averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.min;
-    //     const maxAppearances = averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.max;
-    //     if (
-    //       analysis.appearanceCount < minAppearances ||
-    //       analysis.appearanceCount > maxAppearances
-    //     ) {
-    //       errors.push({
-    //         entityId: analysis.entityId,
-    //         coveragePercentage: analysis.coveragePercentage,
-    //         appearanceCount: analysis.appearanceCount,
-    //       });
-    //     }
-    //   });
+        subgroupMap.forEach((analysis) => {
+          // Check coverage percentage
+          if (
+            analysis.coveragePercentage <
+              BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.min ||
+            analysis.coveragePercentage >
+              BALANCE_THRESHOLDS.COVERAGE_PERCENTAGE.max
+          ) {
+            errors.push({
+              category,
+              entityId: analysis.entityId,
+              coveragePercentage: analysis.coveragePercentage,
+              appearanceCount: analysis.appearanceCount,
+              averageForCategory: averageAppearances,
+            });
+          }
 
-    //   if (errors.length > 0) {
-    //     console.error(
-    //       "Subgroup distribution violations:",
-    //       JSON.stringify(errors, null, 2)
-    //     );
-    //     fail(
-    //       `${errors.length} subgroups have unbalanced distribution. See console for details.`
-    //     );
-    //   }
+          // Check appearance count band (multiple of category average)
+          const minAppearances =
+            averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.min;
+          const maxAppearances =
+            averageAppearances * BALANCE_THRESHOLDS.APPEARANCE_COUNT_BAND.max;
+          if (
+            analysis.appearanceCount < minAppearances ||
+            analysis.appearanceCount > maxAppearances
+          ) {
+            errors.push({
+              category,
+              entityId: analysis.entityId,
+              coveragePercentage: analysis.coveragePercentage,
+              appearanceCount: analysis.appearanceCount,
+              averageForCategory: averageAppearances,
+            });
+          }
+        });
+      });
 
-    //   expect(errors).toHaveLength(0);
-    // });
+      if (errors.length > 0) {
+        console.error(
+          "Subgroup category distribution violations:",
+          JSON.stringify(errors, null, 2)
+        );
+        fail(
+          `${errors.length} subgroups have unbalanced distribution within their categories. See console for details.`
+        );
+      }
+
+      expect(errors).toHaveLength(0);
+    });
   });
 
   describe("Preference Analysis", () => {
