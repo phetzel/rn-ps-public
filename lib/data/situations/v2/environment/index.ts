@@ -1,6 +1,7 @@
-import { SituationData } from "~/types";
 import { cowEmissionRegulations } from "./cow-emission-regulations";
+import { recordBreakingHeatwave } from "./record-breaking-heatwave";
 
-export const environmentSituationsData: SituationData[] = [
+export const environmentSituationsData = [
   cowEmissionRegulations,
+  recordBreakingHeatwave,
 ];
