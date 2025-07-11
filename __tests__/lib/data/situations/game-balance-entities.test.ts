@@ -13,79 +13,85 @@ import {
 
 describe("Game Balance Validation - Entities", () => {
   describe("Entity Impact Analysis", () => {
-    // describe("Relationship Impacts (Exchange Answers)", () => {
-    //   const relationshipImpacts = analyzeExchangeImpacts();
+    describe("Relationship Impacts (Exchange Answers)", () => {
+      const relationshipImpacts = analyzeExchangeImpacts();
 
-    //   test("president and cabinet members have balanced positive to negative impact ratios", () => {
-    //     const errors: Array<{
-    //       entityId: string;
-    //       ratio: number;
-    //       positiveCount: number;
-    //       negativeCount: number;
-    //     }> = [];
+      test("president and cabinet members have balanced positive to negative impact ratios", () => {
+        const errors: Array<{
+          entityId: string;
+          ratio: number;
+          positiveCount: number;
+          negativeCount: number;
+        }> = [];
 
-    //     relationshipImpacts.forEach((analysis, entityId) => {
-    //       if (analysis.totalCount > 0) {
-    //         // Check if ratio is within acceptable range
-    //         const ratio = analysis.positiveToNegativeRatio;
-    //         if (ratio < BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min || ratio > BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max) {
-    //           errors.push({
-    //             entityId,
-    //             ratio,
-    //             positiveCount: analysis.positiveCount,
-    //             negativeCount: analysis.negativeCount,
-    //           });
-    //         }
-    //       }
-    //     });
+        relationshipImpacts.forEach((analysis, entityId) => {
+          if (analysis.totalCount > 0) {
+            // Check if ratio is within acceptable range
+            const ratio = analysis.positiveToNegativeRatio;
+            if (
+              ratio < BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min ||
+              ratio > BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max
+            ) {
+              errors.push({
+                entityId,
+                ratio,
+                positiveCount: analysis.positiveCount,
+                negativeCount: analysis.negativeCount,
+              });
+            }
+          }
+        });
 
-    //     if (errors.length > 0) {
-    //       console.error(
-    //         "Relationship impact ratio violations:",
-    //         JSON.stringify(errors, null, 2)
-    //       );
-    //       fail(
-    //         `${errors.length} entities have relationship impact ratios outside acceptable range (${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min}-${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max}). See console for details.`
-    //       );
-    //     }
+        if (errors.length > 0) {
+          console.error(
+            "Relationship impact ratio violations:",
+            JSON.stringify(errors, null, 2)
+          );
+          fail(
+            `${errors.length} entities have relationship impact ratios outside acceptable range (${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.min}-${BALANCE_THRESHOLDS.POSITIVE_NEGATIVE_RATIO.max}). See console for details.`
+          );
+        }
 
-    //     expect(errors).toHaveLength(0);
-    //   });
+        expect(errors).toHaveLength(0);
+      });
 
-    //   test("president and cabinet members have appropriate average relationship impact", () => {
-    //     const errors: Array<{
-    //       entityId: string;
-    //       averageImpact: number;
-    //       totalCount: number;
-    //     }> = [];
+      test("president and cabinet members have appropriate average relationship impact", () => {
+        const errors: Array<{
+          entityId: string;
+          averageImpact: number;
+          totalCount: number;
+        }> = [];
 
-    //     relationshipImpacts.forEach((analysis, entityId) => {
-    //       if (analysis.totalCount > 0) {
-    //         // Check if average impact is within range
-    //         const avg = analysis.averageImpact;
-    //         if (avg < BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.min || avg > BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.max) {
-    //           errors.push({
-    //             entityId,
-    //             averageImpact: avg,
-    //             totalCount: analysis.totalCount,
-    //           });
-    //         }
-    //       }
-    //     });
+        relationshipImpacts.forEach((analysis, entityId) => {
+          if (analysis.totalCount > 0) {
+            // Check if average impact is within range
+            const avg = analysis.averageImpact;
+            if (
+              avg < BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.min ||
+              avg > BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.max
+            ) {
+              errors.push({
+                entityId,
+                averageImpact: avg,
+                totalCount: analysis.totalCount,
+              });
+            }
+          }
+        });
 
-    //     if (errors.length > 0) {
-    //       console.error(
-    //         "Relationship average impact violations:",
-    //         JSON.stringify(errors, null, 2)
-    //       );
-    //       fail(
-    //         `${errors.length} entities have average relationship impacts outside acceptable range (${BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.min} to ${BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.max}). See console for details.`
-    //       );
-    //     }
+        if (errors.length > 0) {
+          console.error(
+            "Relationship average impact violations:",
+            JSON.stringify(errors, null, 2)
+          );
+          fail(
+            `${errors.length} entities have average relationship impacts outside acceptable range (${BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.min} to ${BALANCE_THRESHOLDS.RELATIONSHIP_IMPACT_RANGE.max}). See console for details.`
+          );
+        }
 
-    //     expect(errors).toHaveLength(0);
-    //   });
-    // });
+        expect(errors).toHaveLength(0);
+      });
+    });
 
     describe("Approval Rating Impacts (Situation Outcomes)", () => {
       const approvalImpacts = analyzeSituationConsequences();
@@ -415,21 +421,21 @@ describe("Game Balance Validation - Entities", () => {
       }> = [];
 
       // Check relationship impacts (president and cabinet members)
-      // relationshipAnalysis.forEach((analysis, entityId) => {
-      //   if (analysis.totalCount > 0) {
-      //     const missingPositive = analysis.positiveCount === 0;
-      //     const missingNegative = analysis.negativeCount === 0;
+      relationshipAnalysis.forEach((analysis, entityId) => {
+        if (analysis.totalCount > 0) {
+          const missingPositive = analysis.positiveCount === 0;
+          const missingNegative = analysis.negativeCount === 0;
 
-      //     if (missingPositive || missingNegative) {
-      //       errors.push({
-      //         entityId,
-      //         missingPositive,
-      //         missingNegative,
-      //         type: "relationship",
-      //       });
-      //     }
-      //   }
-      // });
+          if (missingPositive || missingNegative) {
+            errors.push({
+              entityId,
+              missingPositive,
+              missingNegative,
+              type: "relationship",
+            });
+          }
+        }
+      });
 
       // Check approval impacts (cabinet members and subgroups)
       approvalAnalysis.forEach((analysis, entityId) => {

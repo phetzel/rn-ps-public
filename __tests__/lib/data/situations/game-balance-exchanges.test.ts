@@ -8,11 +8,6 @@ import {
 } from "~/__tests__/support/utils/exchange-analysis";
 
 describe("Game Balance Validation - Exchanges", () => {
-  // describe("TEMP", () => {
-  //   test("TEMP", () => {
-  //     expect(true).toBe(true);
-  //   });
-  // });
   describe("Exchange Structure", () => {
     const exchangeAnalyses = analyzeExchangeStructure();
 
@@ -143,11 +138,5 @@ describe("Game Balance Validation - Exchanges", () => {
 
       expect(violations).toHaveLength(0);
     });
-
-    // REMOVED: "each question has both positive and negative net impact answers" - now handled by schema
-  });
-
-  describe("Answer Entity Impact Coverage", () => {
-    // REMOVED: "each answer affects sufficient entities" - now handled by schema validation
   });
 });

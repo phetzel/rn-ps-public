@@ -203,4 +203,74 @@ export const situationContentSchema = z
         "No outcome can affect more than 5 entities (keeps impacts focused)",
       path: ["outcomes"],
     }
+  )
+  .refine(
+    (data) => {
+      // Each entity affected by a situation must have at least one positive AND one negative impact
+      const positiveWeights = [
+        SituationConsequenceWeight.StronglyPositive,
+        SituationConsequenceWeight.Positive,
+        SituationConsequenceWeight.SlightlyPositive,
+      ];
+      const negativeWeights = [
+        SituationConsequenceWeight.StronglyNegative,
+        SituationConsequenceWeight.Negative,
+        SituationConsequenceWeight.SlightlyNegative,
+      ];
+
+      const entityStats = new Map<
+        string,
+        { positive: number; negative: number }
+      >();
+
+      data.outcomes.forEach((outcome) => {
+        const { cabinet, subgroups } = outcome.consequences.approvalChanges;
+
+        // Count cabinet member changes
+        if (cabinet) {
+          Object.entries(cabinet).forEach(([entityId, weight]) => {
+            if (!entityStats.has(entityId)) {
+              entityStats.set(entityId, { positive: 0, negative: 0 });
+            }
+
+            const stats = entityStats.get(entityId)!;
+            if (positiveWeights.includes(weight)) {
+              stats.positive++;
+            } else if (negativeWeights.includes(weight)) {
+              stats.negative++;
+            }
+          });
+        }
+
+        // Count subgroup changes
+        if (subgroups) {
+          Object.entries(subgroups).forEach(([entityId, weight]) => {
+            if (!entityStats.has(entityId)) {
+              entityStats.set(entityId, { positive: 0, negative: 0 });
+            }
+
+            const stats = entityStats.get(entityId)!;
+            if (positiveWeights.includes(weight)) {
+              stats.positive++;
+            } else if (negativeWeights.includes(weight)) {
+              stats.negative++;
+            }
+          });
+        }
+      });
+
+      // Check that each entity has BOTH positive and negative impacts
+      for (const [entityId, stats] of entityStats) {
+        if (stats.positive === 0 || stats.negative === 0) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+    {
+      message:
+        "Each entity affected by a situation must have at least one positive AND one negative approval change across outcomes (ensures meaningful trade-offs)",
+      path: ["outcomes"],
+    }
   );
