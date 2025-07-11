@@ -1,7 +1,7 @@
 import { Database } from "@nozbe/watermelondb";
 import { PressExchange } from "~/lib/db/models";
 import { ExchangeContent, ExchangeProgress } from "~/types";
-import { bridgeToNowhereExchanges } from "~/lib/data/situations/v1/domestic-policy/bridge-to-nowhere/bridgeToNowhereExchanges";
+import { teachersStrikeBackExchanges } from "~/lib/data/situations/v2/domestic-policy/teachers-strike-back/exchanges";
 
 type ExchangeOverrides = {
   levelId: string;
@@ -17,7 +17,7 @@ export async function createPressExchange(
   overrides: ExchangeOverrides
 ): Promise<PressExchange> {
   // Use real static data as the default
-  const defaultContent = bridgeToNowhereExchanges[0].content;
+  const defaultContent = teachersStrikeBackExchanges[0].content;
 
   // Determine which content will actually be used
   const contentToUse = overrides.content || defaultContent;

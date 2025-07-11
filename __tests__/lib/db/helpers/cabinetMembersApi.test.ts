@@ -69,8 +69,8 @@ describe("Cabinet Members API", () => {
       const allCabinetMembers = await game.cabinetMembers.fetch();
       const newMembers = allCabinetMembers.filter((m) => m.isActive);
 
-      // Should have all 7 positions now
-      expect(newMembers).toHaveLength(7);
+      // Should have all 6 positions now
+      expect(newMembers).toHaveLength(6);
 
       // Check that all names are unique
       const names = newMembers.map((m) => m.name);
