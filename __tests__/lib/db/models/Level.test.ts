@@ -152,7 +152,6 @@ describe("Level Model", () => {
         [CabinetStaticId.Justice]: "member-id-4",
         [CabinetStaticId.HHS]: "member-id-5",
         [CabinetStaticId.Homeland]: "member-id-6",
-        [CabinetStaticId.Interior]: "member-id-7",
       };
 
       const level = await createLevel(database, {
@@ -527,7 +526,6 @@ describe("Level Model", () => {
           [CabinetStaticId.Justice]: "sec-id-4",
           [CabinetStaticId.HHS]: "sec-id-5",
           [CabinetStaticId.Homeland]: "sec-id-6",
-          [CabinetStaticId.Interior]: "sec-id-7",
         }),
       });
 
@@ -540,7 +538,6 @@ describe("Level Model", () => {
         [CabinetStaticId.Justice]: "sec-id-4",
         [CabinetStaticId.HHS]: "sec-id-5",
         [CabinetStaticId.Homeland]: "sec-id-6",
-        [CabinetStaticId.Interior]: "sec-id-7",
       });
       expect(level.parseOutcomeSnapshot).toBeNull();
 

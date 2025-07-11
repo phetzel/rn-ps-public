@@ -293,21 +293,21 @@ describe("PressExchange Model", () => {
         publicationId: publication.id,
       });
 
-      // Use real bridge-to-nowhere data (it's already valid and has proper schema)
+      // Use real teachers-strike-back data (it's already valid and has proper schema)
       pressExchange = await createPressExchange(database, {
         levelId: level.id,
         situationId: situation.id,
         journalistId: journalist.id,
-        // No custom content - use default bridge-to-nowhere data
+        // No custom content - use default teachers-strike-back data
       });
     });
 
     it("should answer the current question and move to the next", async () => {
-      // Current question is btn_inv_q1 (bridge-to-nowhere investigative question)
-      expect(pressExchange.currentQuestion?.id).toBe("btn_inv_q1");
+      // Current question is q_student_welfare (teachers-strike-back root question)
+      expect(pressExchange.currentQuestion?.id).toBe("q_student_welfare");
 
-      // Answer with first choice which has no follow-up (bridge questions don't have follow-ups)
-      await pressExchange.answerQuestion("btn_inv_q1_a1");
+      // Answer with first choice which has no follow-up
+      await pressExchange.answerQuestion("a_welfare_reassure");
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
@@ -317,7 +317,7 @@ describe("PressExchange Model", () => {
     });
 
     it("should answer a question that has no follow-up", async () => {
-      await pressExchange.answerQuestion("btn_inv_q1_a2"); // Answer with second choice
+      await pressExchange.answerQuestion("a_welfare_admit"); // Answer with second choice
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
@@ -337,7 +337,7 @@ describe("PressExchange Model", () => {
 
       expect(progress?.history).toHaveLength(1);
       expect(progress?.history[0]).toEqual({
-        questionId: "btn_inv_q1",
+        questionId: "q_student_welfare",
         skipped: true,
       });
       expect(progress?.currentQuestionId).toBeNull();
@@ -348,29 +348,38 @@ describe("PressExchange Model", () => {
       await expect(
         pressExchange.answerQuestion("invalid-answer")
       ).rejects.toThrow(
-        "Answer invalid-answer not found in question btn_inv_q1"
+        "Answer invalid-answer not found in question q_student_welfare"
       );
     });
 
     it("should handle multiple answers sequentially", async () => {
-      // Since bridge-to-nowhere questions don't have follow-ups, this test doesn't apply
-      // Let's test that answering completes the exchange
-      await pressExchange.answerQuestion("btn_inv_q1_a1");
+      // Answer with deflect choice which has a follow-up question
+      await pressExchange.answerQuestion("a_welfare_deflect");
       let updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
-      const progress = updatedExchange.parseProgress;
-      expect(updatedExchange.currentQuestion).toBeNull();
-      expect(progress?.currentQuestionId).toBeNull();
 
-      // Check history
-      expect(progress?.history).toHaveLength(1);
-      expect(progress?.history[0].questionId).toBe("btn_inv_q1");
+      // Should now be on the follow-up question
+      expect(updatedExchange.currentQuestion?.id).toBe("q_security_concern");
+
+      // Answer the follow-up question
+      await updatedExchange.answerQuestion("a_security_deny");
+      updatedExchange = await database
+        .get<PressExchange>("press_exchanges")
+        .find(pressExchange.id);
+
+      // Should now be complete
+      expect(updatedExchange.currentQuestion).toBeNull();
+
+      const progress = updatedExchange.parseProgress;
+      expect(progress?.history).toHaveLength(2);
+      expect(progress?.history[0].questionId).toBe("q_student_welfare");
+      expect(progress?.history[1].questionId).toBe("q_security_concern");
     });
 
     it("should throw an error if trying to answer/skip when no question is active", async () => {
-      // End the exchange by answering a question
-      await pressExchange.answerQuestion("btn_inv_q1_a2");
+      // End the exchange by answering a question with no follow-up
+      await pressExchange.answerQuestion("a_welfare_admit");
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
@@ -378,7 +387,7 @@ describe("PressExchange Model", () => {
 
       // Now, try to answer again
       await expect(
-        updatedExchange.answerQuestion("btn_inv_q1_a3")
+        updatedExchange.answerQuestion("a_welfare_deny")
       ).rejects.toThrow("No current question to answer");
       await expect(updatedExchange.skipQuestion()).rejects.toThrow(
         "No current question to skip"

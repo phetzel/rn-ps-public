@@ -1,6 +1,6 @@
 import { Q } from "@nozbe/watermelondb";
 import { Game } from "~/lib/db/models";
-import { situationsData } from "~/lib/data/situations/v1";
+import { situationsData } from "~/lib/data/situations";
 import { SituationData, SituationType } from "~/types";
 
 // Helper to get follow-up situations from the previous level

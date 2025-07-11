@@ -47,6 +47,7 @@ expo-env.d.ts
 coverage/**/*
 /coverage
 
-# Cursor
+# Self
 .cursor/
 .notes/
+/scripts/analysis-output

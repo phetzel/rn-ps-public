@@ -13,7 +13,7 @@ import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
 import { createGame } from "~/__tests__/support/factories/gameFactory";
 import { createLevel } from "~/__tests__/support/factories/levelFactory";
 import { createSituation } from "~/__tests__/support/factories/situationFactory";
-import { bridgeToNowhere } from "~/lib/data/situations/v1/domestic-policy/bridge-to-nowhere";
+import { teachersStrikeBack } from "~/lib/data/situations/v2/domestic-policy/teachers-strike-back";
 
 // Models & Types
 import { Situation } from "~/lib/db/models";
@@ -104,7 +104,7 @@ describe("Situation Model", () => {
       const situation = await createSituation(database, {
         gameId: game.id,
         levelId: level.id,
-        content: bridgeToNowhere.content,
+        content: teachersStrikeBack.content,
       });
 
       const content = situation.parseContent;
@@ -123,7 +123,7 @@ describe("Situation Model", () => {
         levelId: level.id,
       });
 
-      const customContent = bridgeToNowhere.content;
+      const customContent = teachersStrikeBack.content;
 
       await database.write(async () => {
         await situation.update((s) => {
@@ -167,11 +167,11 @@ describe("Situation Model", () => {
       const game = await createGame(database);
       const level = await createLevel(database, { gameId: game.id });
 
-      // Use actual bridge-to-nowhere content so outcome IDs match
+      // Use actual teachers-strike-back content so outcome IDs match
       situation = await createSituation(database, {
         gameId: game.id,
         levelId: level.id,
-        content: bridgeToNowhere.content,
+        content: teachersStrikeBack.content,
       });
       content = situation.parseContent;
     });
@@ -179,8 +179,8 @@ describe("Situation Model", () => {
     it("should select a valid outcome", async () => {
       expect(situation.outcomeId).toBeNull();
 
-      await situation.setOutcome("btn_funding_frozen");
-      expect(situation.outcomeId).toBe("btn_funding_frozen");
+      await situation.setOutcome("outcome_strike_wellness_focus");
+      expect(situation.outcomeId).toBe("outcome_strike_wellness_focus");
     });
 
     it("should handle invalid outcome ID gracefully", async () => {
@@ -190,13 +190,15 @@ describe("Situation Model", () => {
     });
 
     it("should retrieve the selected outcome data", async () => {
-      await situation.setOutcome("btn_bridge_proceeds");
+      await situation.setOutcome("outcome_strike_security_crisis");
 
       const selectedOutcome = situation.outcome;
       expect(selectedOutcome).not.toBeNull();
       if (!selectedOutcome) return;
-      expect(selectedOutcome.id).toBe("btn_bridge_proceeds");
-      expect(selectedOutcome.title).toBe("Bridge Built Amid Outrage");
+      expect(selectedOutcome.id).toBe("outcome_strike_security_crisis");
+      expect(selectedOutcome.title).toBe(
+        "Prolonged Strike Creates Public Safety Crisis"
+      );
     });
 
     it("should return null for selectedOutcome if none is selected", () => {
@@ -204,15 +206,15 @@ describe("Situation Model", () => {
     });
 
     it("should overwrite an existing outcome selection", async () => {
-      await situation.setOutcome("btn_funding_frozen");
-      expect(situation.outcomeId).toBe("btn_funding_frozen");
+      await situation.setOutcome("outcome_strike_wellness_focus");
+      expect(situation.outcomeId).toBe("outcome_strike_wellness_focus");
 
-      await situation.setOutcome("btn_tourist_trap");
-      expect(situation.outcomeId).toBe("btn_tourist_trap");
+      await situation.setOutcome("outcome_strike_karaoke_compromise");
+      expect(situation.outcomeId).toBe("outcome_strike_karaoke_compromise");
       const selectedOutcome = situation.outcome;
       expect(selectedOutcome).not.toBeNull();
       if (!selectedOutcome) return;
-      expect(selectedOutcome.id).toBe("btn_tourist_trap");
+      expect(selectedOutcome.id).toBe("outcome_strike_karaoke_compromise");
     });
   });
 });
