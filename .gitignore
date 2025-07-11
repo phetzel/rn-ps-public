@@ -50,4 +50,5 @@ coverage/**/*
 # Self
 .cursor/
 .notes/
-/scripts/analysis-output
+
+scripts/analysis-output
