@@ -24,8 +24,10 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -64,14 +66,14 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
         cabinet: {
           [CabinetStaticId.Justice]:
             SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Homeland]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
           [SubgroupStaticId.RuralResidents]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
           [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyNegative,
         },
       },

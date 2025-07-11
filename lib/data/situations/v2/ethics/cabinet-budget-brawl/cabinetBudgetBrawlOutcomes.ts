@@ -24,7 +24,7 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.Positive,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.LeftWingBase]:
+          [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyPositive,
         },
       },
@@ -72,8 +72,7 @@ export const cabinetBudgetBrawlOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
         },
       },
     },

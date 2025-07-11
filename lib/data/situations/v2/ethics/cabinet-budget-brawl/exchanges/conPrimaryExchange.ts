@@ -117,6 +117,7 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_messy_pr_disaster: OutcomeModifierWeight.SlightNegative, // -4
               outcome_private_resolution: OutcomeModifierWeight.StrongPositive, // +8
             },
+            followUpId: "q_budget_priorities",
           },
           {
             id: "a_funding_challenge",
@@ -133,6 +134,49 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive, // +4
               outcome_messy_pr_disaster: OutcomeModifierWeight.SlightPositive, // +4
               outcome_private_resolution: OutcomeModifierWeight.StrongNegative, // -8
+            },
+          },
+        ],
+      },
+      q_budget_priorities: {
+        id: "q_budget_priorities",
+        text: "If defense spending won't be cut, what programs will suffer? Are you planning to raise taxes or increase the deficit to resolve this?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_priorities_deflect",
+            type: AnswerType.Deflect,
+            text: "That's getting ahead of ourselves. We're focused on making sure every department operates efficiently before discussing broader budget decisions.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_private_resolution: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_priorities_inform",
+            type: AnswerType.Inform,
+            text: "Treasury is conducting a comprehensive review of all discretionary spending to identify savings without affecting core services or defense capabilities.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_private_resolution: OutcomeModifierWeight.Neutral, // 0
             },
           },
         ],

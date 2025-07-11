@@ -39,7 +39,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "Let's focus on the health benefits. We're exploring various implementation approaches with tech industry partners.", // 108 chars - within 80-180 limit
             impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
             outcomeModifiers: {
               outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
@@ -55,7 +55,7 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Positive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -73,7 +73,7 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.Positive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -91,7 +91,7 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               cabinet: {
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Added negative to balance Homeland
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -114,9 +114,10 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "We believe we can find collaborative solutions. A voluntary partnership is always preferred over government mandate.", // 117 chars - within 80-180 limit
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Added negative to balance Justice
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -132,6 +133,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Government has broad regulatory authority over public utilities. We're confident we have legal tools for compliance.", // 117 chars - within 80-180 limit
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Added negative impact for President to balance
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,

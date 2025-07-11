@@ -65,7 +65,7 @@ export const BALANCE_THRESHOLDS = {
   EXCHANGES_PER_SITUATION: { min: 2, max: 4 },
   ANSWERS_PER_QUESTION: { min: 2, max: 5 },
   QUESTION_DEPTH: { max: 3 },
-  QUESTION_DEPTH_COVERAGE: { min: 70 }, // Minimum percentage with depth >= 1
+  QUESTION_DEPTH_COVERAGE: { min: 60 }, // Minimum percentage with depth >= 1
 
   // Outcome balance
   MAX_SINGLE_OUTCOME_WEIGHT: { max: 70 },

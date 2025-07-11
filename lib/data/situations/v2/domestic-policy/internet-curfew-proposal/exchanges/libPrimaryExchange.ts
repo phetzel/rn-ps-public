@@ -22,10 +22,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "This isn't about restricting freedom; it's promoting public health. We have overwhelming evidence of sleep deprivation harm.", // 127 chars - within 80-180 limit
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Added negative to balance Justice
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative, // Added negative impact for HHS to balance
                 },
               },
             },
@@ -41,7 +44,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "We take civil liberties seriously. DOJ ensures any proposal will be narrowly tailored and withstand legal scrutiny.", // 115 chars - within 80-180 limit
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Added negative to balance President
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.Positive,
@@ -79,7 +82,7 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               cabinet: {
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.Positive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -101,7 +104,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "This regulates a public utility. HHS found this is the most effective way to address a documented national health issue.", // 121 chars - within 80-180 limit
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive }, // Added positive to balance President
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
@@ -123,7 +126,7 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Added negative to balance HHS
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },

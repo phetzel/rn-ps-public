@@ -26,6 +26,8 @@ export const recordBreakingHeatwaveOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -40,15 +42,17 @@ export const recordBreakingHeatwaveOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Positive,
-          [CabinetStaticId.Treasury]:
-            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.UrbanResidents]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.RuralResidents]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyPositive,
         },
       },
@@ -64,13 +68,18 @@ export const recordBreakingHeatwaveOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Homeland]: SituationConsequenceWeight.Negative,
+          [CabinetStaticId.Homeland]:
+            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Treasury]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
           [SubgroupStaticId.RuralResidents]:
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.SeniorsCitizens]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

@@ -90,6 +90,7 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_heatwave_cloud_seeding_backfire:
                 OutcomeModifierWeight.SlightNegative, // -4
             },
+            followUpId: "q_heatwave_federal_role",
           },
           {
             id: "a_long_term_admit",
@@ -113,6 +114,54 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_heatwave_cloud_seeding_backfire:
                 OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_heatwave_federal_role: {
+        id: "q_heatwave_federal_role",
+        text: "Cities are struggling to fund these centers. Shouldn't the federal government take direct control rather than just throwing money at the problem?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_federal_challenge",
+            type: AnswerType.Challenge,
+            text: "Direct federal management would be slower and less effective. Local officials know their communities' needs better than Washington bureaucrats.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_heatwave_grid_collapse: OutcomeModifierWeight.Neutral, // 0
+              outcome_heatwave_cooling_grants:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_heatwave_cloud_seeding_backfire:
+                OutcomeModifierWeight.SlightNegative, // -4
+            },
+          },
+          {
+            id: "a_federal_reassure",
+            type: AnswerType.Reassure,
+            text: "We're providing both funding and coordination through Homeland Security. This combines federal resources with local expertise for maximum effectiveness.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_heatwave_grid_collapse:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_heatwave_cooling_grants:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_heatwave_cloud_seeding_backfire:
+                OutcomeModifierWeight.StrongPositive, // +8
             },
           },
         ],

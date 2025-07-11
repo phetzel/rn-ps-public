@@ -156,6 +156,56 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_trade_retaliation",
+          },
+        ],
+      },
+      q_trade_retaliation: {
+        id: "q_trade_retaliation",
+        text: "What if countries impose counter-tariffs? Are you prepared for a trade war?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_retaliation_challenge",
+            type: AnswerType.Challenge,
+            text: "Countries that retaliate against worker protection policies are showing their true priorities. We won't be bullied into abandoning American workers by threats of trade war.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_retaliation_deflect",
+            type: AnswerType.Deflect,
+            text: "Trade disputes are resolved through established WTO mechanisms. We're confident our policy aligns with international law and worker protection standards.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },

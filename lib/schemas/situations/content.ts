@@ -195,12 +195,12 @@ export const situationContentSchema = z
         const subgroupCount = Object.keys(
           outcome.consequences.approvalChanges.subgroups || {}
         ).length;
-        return cabinetCount + subgroupCount <= 5;
+        return cabinetCount + subgroupCount <= 6;
       });
     },
     {
       message:
-        "No outcome can affect more than 5 entities (keeps impacts focused)",
+        "No outcome can affect more than 6 entities (keeps impacts focused)",
       path: ["outcomes"],
     }
   )

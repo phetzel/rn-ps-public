@@ -22,7 +22,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
         subgroups: {
           [SubgroupStaticId.SeniorsCitizens]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]:
+          [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyPositive,
         },
       },
@@ -40,12 +40,14 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
           [CabinetStaticId.Defense]:
             SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Homeland]:
+            SituationConsequenceWeight.StronglyNegative,
         },
         subgroups: {
+          [SubgroupStaticId.SeniorsCitizens]:
+            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -62,14 +64,12 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
           [CabinetStaticId.Defense]:
             SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Homeland]:
-            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

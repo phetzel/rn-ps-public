@@ -197,6 +197,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_hack_review_budget",
           },
           {
             id: "a_review_deflect",
@@ -262,6 +263,59 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_hack_review_budget: {
+        id: "q_hack_review_budget",
+        text: "What's the budget for implementing these security improvements? Are we talking millions or billions in taxpayer funds?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_budget_inform",
+            type: AnswerType.Inform,
+            text: "Treasury estimates $500 million over three years, with cost-sharing partnerships from private sector companies benefiting from enhanced security.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_budget_deflect",
+            type: AnswerType.Deflect,
+            text: "We won't put a price tag on national security before completing the assessment. Congress will receive detailed budget requests once HHS finishes the review.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },

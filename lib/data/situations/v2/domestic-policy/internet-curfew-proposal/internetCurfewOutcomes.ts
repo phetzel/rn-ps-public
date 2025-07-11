@@ -17,14 +17,14 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
         cabinet: {
           [CabinetStaticId.Justice]:
             SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyNegative, // Added to balance HHS across outcomes
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Homeland]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.YouthVoters]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
         },
       },
@@ -47,8 +47,8 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.Negative,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.UrbanResidents]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative, // Added negative to give IndependentBase both positive and negative
         },
       },
     },
@@ -64,15 +64,15 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Positive,
           [CabinetStaticId.Homeland]:
-            SituationConsequenceWeight.SlightlyNegative, // Added negative to balance
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.UrbanResidents]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive, // Added positive to give LeftWingBase both positive and negative
           [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

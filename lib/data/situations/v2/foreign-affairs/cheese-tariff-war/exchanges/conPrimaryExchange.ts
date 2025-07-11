@@ -151,6 +151,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_cheese_economic_impact",
           },
           {
             id: "a_legal_deflect",
@@ -169,6 +170,53 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_cheese_economic_impact: {
+        id: "q_cheese_economic_impact",
+        text: "Legal compliance aside, what about the economic impact? Are American consumers paying higher prices for this diplomatic cheese dispute?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_economic_deflect",
+            type: AnswerType.Deflect,
+            text: "We're focused on long-term trade balance, not short-term price fluctuations. Strong trade relationships require addressing underlying imbalances.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral, // 0
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_public_rallies:
+                OutcomeModifierWeight.SlightNegative, // -4
+            },
+          },
+          {
+            id: "a_economic_reassure",
+            type: AnswerType.Reassure,
+            text: "Treasury analysis shows minimal consumer impact. Most Americans won't see meaningful price changes, and domestic producers benefit from fairer competition.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative, // -4
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
             },
           },

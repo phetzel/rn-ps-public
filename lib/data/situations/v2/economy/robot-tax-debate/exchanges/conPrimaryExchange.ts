@@ -128,6 +128,7 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_exemption_criteria",
           },
           {
             id: "a_small_business_admit",
@@ -178,6 +179,55 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               cabinet: {
                 [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_exemption_criteria: {
+        id: "q_exemption_criteria",
+        text: "How will businesses prove exemption eligibility? Won't bureaucracy defeat the purpose?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_criteria_inform",
+            type: AnswerType.Inform,
+            text: "Treasury has streamlined the process - businesses simply file their standard tax returns. Companies under $50 million automatically qualify, with clear documentation requirements.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_criteria_admit",
+            type: AnswerType.Admit,
+            text: "You're right that compliance costs are a concern. We're working with small business associations to minimize paperwork while ensuring fair implementation.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.State]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },

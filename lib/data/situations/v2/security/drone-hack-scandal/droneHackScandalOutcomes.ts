@@ -18,6 +18,7 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
           [CabinetStaticId.Treasury]:
             SituationConsequenceWeight.SlightlyPositive,
           [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.State]: SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
           [SubgroupStaticId.BusinessLeaders]:
@@ -25,7 +26,7 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -65,14 +66,7 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
         },
-        subgroups: {
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.RuralResidents]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.UrbanResidents]:
-            SituationConsequenceWeight.SlightlyNegative,
-        },
+        subgroups: {},
       },
     },
   },

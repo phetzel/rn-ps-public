@@ -168,6 +168,7 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_hack_rural_funding",
           },
           {
             id: "a_rural_deflect",
@@ -179,6 +180,59 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_hack_economic_impact: OutcomeModifierWeight.Neutral, // 0
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+      q_hack_rural_funding: {
+        id: "q_hack_rural_funding",
+        text: "Who's paying for these rural security upgrades? Will taxpayers bear the cost, or should private medical companies foot the bill?",
+        depth: 2,
+        answers: [
+          {
+            id: "a_funding_reassure",
+            type: AnswerType.Reassure,
+            text: "Treasury is allocating emergency funds to protect critical infrastructure. Rural health security is worth every taxpayer dollar invested.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_funding_challenge",
+            type: AnswerType.Challenge,
+            text: "Private companies profiting from medical drone delivery should invest in their own security systems. Taxpayers shouldn't subsidize corporate profits.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightPositive, // +4
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral, // 0
             },
           },

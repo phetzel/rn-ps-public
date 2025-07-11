@@ -84,6 +84,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.ModeratePositive, // +6
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
+            followUpId: "q_coffee_timeline",
           },
           {
             id: "a_storage_deny",
@@ -104,6 +105,53 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_coffee_market_meddling:
                 OutcomeModifierWeight.StrongNegative, // -8
+            },
+          },
+        ],
+      },
+      q_coffee_timeline: {
+        id: "q_coffee_timeline",
+        text: "How long will this 'oversight' take to implement? Meanwhile, coffee prices could spike and Americans will blame the administration for delays.",
+        depth: 2,
+        answers: [
+          {
+            id: "a_timeline_reassure",
+            type: AnswerType.Reassure,
+            text: "Treasury has fast-tracked the implementation. We expect initial reserves to be operational within 60 days to provide immediate market stability.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_timeline_admit",
+            type: AnswerType.Admit,
+            text: "You're right that timing is critical. We're balancing speed with proper oversight - it's better to do this right than to rush and create bigger problems.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightNegative, // -4
             },
           },
         ],
