@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { robotTaxDebateOutcomes } from "./robotTaxDebateOutcomes";
 import { robotTaxDebatePreferences } from "./robotTaxDebatePreferences";
 import { robotTaxDebateExchanges } from "./exchanges";
 
-export const robotTaxDebate: SituationData = {
+export const robotTaxDebate: SituationDataType = {
   trigger: {
     staticKey: "robot_tax_debate",
     type: SituationType.Economy,

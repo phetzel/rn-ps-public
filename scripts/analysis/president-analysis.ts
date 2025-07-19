@@ -1,6 +1,6 @@
 import { situationsData } from "~/lib/data/situations";
 import { AnswerType } from "~/types";
-import { getMetadataSection } from "../util/file-utils";
+import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
 export interface PresidentAnalysisData {
   positiveRelationships: number;
@@ -11,9 +11,6 @@ export interface PresidentAnalysisData {
   preferenceTypes: AnswerType[];
 }
 
-/**
- * Analyzes president-related data from all situations
- */
 export function analyzePresidentData(): PresidentAnalysisData {
   let positiveRelationships = 0;
   let negativeRelationships = 0;
@@ -28,7 +25,8 @@ export function analyzePresidentData(): PresidentAnalysisData {
 
     // Check relationship impacts from answers
     situation.exchanges.forEach((exchange) => {
-      Object.values(exchange.content.questions).forEach((question) => {
+      const allQuestions = getAllQuestionsFromExchange(exchange.content);
+      allQuestions.forEach((question) => {
         question.answers.forEach((answer) => {
           if (answer.impacts.president?.weight !== undefined) {
             totalRelationships++;
@@ -44,9 +42,9 @@ export function analyzePresidentData(): PresidentAnalysisData {
   });
 
   const ratio =
-    negativeRelationships > 0
-      ? (positiveRelationships / negativeRelationships).toFixed(2)
-      : "N/A";
+    totalRelationships > 0
+      ? `${positiveRelationships}:${negativeRelationships}`
+      : "0:0";
 
   return {
     positiveRelationships,
@@ -54,56 +52,42 @@ export function analyzePresidentData(): PresidentAnalysisData {
     totalRelationships,
     ratio,
     preferenceVariety: answerTypes.size,
-    preferenceTypes: Array.from(answerTypes),
+    preferenceTypes: Array.from(answerTypes).sort(),
   };
 }
 
-/**
- * Generates markdown content for president analysis
- */
 export function generatePresidentMarkdown(): string {
-  const presidentData = analyzePresidentData();
-  let content = getMetadataSection(situationsData.length);
+  const data = analyzePresidentData();
 
-  // President section
-  const changeRate = (
-    (presidentData.positiveRelationships -
-      presidentData.negativeRelationships) /
-    situationsData.length
-  ).toFixed(2);
+  return `# President Analysis
 
-  content += `## President
+## Relationship Impact Balance
+- **Positive Impacts**: ${data.positiveRelationships}
+- **Negative Impacts**: ${data.negativeRelationships}
+- **Total Impacts**: ${data.totalRelationships}
+- **Ratio**: ${data.ratio}
 
-### Relationship Changes
-- **Positive Count:** ${presidentData.positiveRelationships}
-- **Negative Count:** ${presidentData.negativeRelationships}
-- **Positive/Negative Ratio:** ${presidentData.ratio}
-- **Total Changes:** ${presidentData.totalRelationships}
-- **Change Rate:** ${changeRate} net changes per situation
+## Preference Variety
+- **Unique Answer Types**: ${data.preferenceVariety}
+- **Types Used**: ${data.preferenceTypes.join(", ")}
 
-### Preference Variety
-- **Types Used:** ${presidentData.preferenceVariety} of ${
-    Object.keys(AnswerType).length - 1
-  } (excluding authorized)
-- **Answer Type Distribution:**
+## Analysis
+${
+  data.totalRelationships === 0
+    ? "⚠️ No presidential relationship impacts found in any answers."
+    : data.positiveRelationships === data.negativeRelationships
+    ? "✅ Perfect balance between positive and negative presidential impacts."
+    : data.positiveRelationships > data.negativeRelationships
+    ? "⚠️ More positive than negative presidential impacts - may be too easy to maintain relationship."
+    : "⚠️ More negative than positive presidential impacts - may be too difficult to maintain relationship."
+}
+
+${
+  data.preferenceVariety < 3
+    ? "⚠️ Limited answer type variety in presidential preferences - consider diversifying."
+    : data.preferenceVariety > 5
+    ? "✅ Good variety in presidential answer type preferences."
+    : "✅ Reasonable variety in presidential answer type preferences."
+}
 `;
-
-  // Add president answer type percentages (excluding authorized)
-  const presidentAnswerTypes = Object.values(AnswerType).filter(
-    (type) => type !== AnswerType.Authorized
-  );
-  const totalPreferences = presidentData.preferenceTypes.length;
-
-  presidentAnswerTypes.forEach((answerType) => {
-    const count = presidentData.preferenceTypes.filter(
-      (type) => type === answerType
-    ).length;
-    const percentage =
-      totalPreferences > 0
-        ? ((count / totalPreferences) * 100).toFixed(1)
-        : "0.0";
-    content += `  - ${answerType}: ${count} (${percentage}%)\n`;
-  });
-
-  return content;
 }

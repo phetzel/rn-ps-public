@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { cabinetBudgetBrawlOutcomes } from "./cabinetBudgetBrawlOutcomes";
 import { cabinetBudgetBrawlPreferences } from "./cabinetBudgetBrawlPreferences";
 import { cabinetBudgetBrawlExchanges } from "./exchanges";
 
-export const cabinetBudgetBrawl: SituationData = {
+export const cabinetBudgetBrawl: SituationDataType = {
   trigger: {
     staticKey: "cabinet_budget_brawl",
     type: SituationType.Ethics,

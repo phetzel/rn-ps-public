@@ -148,19 +148,33 @@ describe("PressExchange Model", () => {
         journalistId: journalist.id,
       });
 
+      // Debug the content validation issue
+      console.log("Raw content string:", pressExchange.content);
+
+      if (pressExchange.content) {
+        try {
+          const parsed = JSON.parse(pressExchange.content);
+          console.log("Parsed content:", JSON.stringify(parsed, null, 2));
+        } catch (e) {
+          console.log("JSON parse error:", e);
+        }
+      }
+
       const content = pressExchange.parseContent;
       expect(content).not.toBeNull();
       if (!content) return; // Type guard
 
       expect(content).toBeDefined();
-      expect(content).toHaveProperty("questions");
-      expect(content).toHaveProperty("rootQuestionId");
+      expect(content).toHaveProperty("rootQuestion");
+      expect(content).toHaveProperty("secondaryQuestions");
+      expect(content).toHaveProperty("tertiaryQuestions");
 
-      // Check that the root question exists in the questions
-      expect(content.questions).toHaveProperty(content.rootQuestionId);
+      // Check that the root question has an id and answers
+      expect(content.rootQuestion).toHaveProperty("id");
+      expect(content.rootQuestion).toHaveProperty("answers");
 
       // Check that the root question has answers
-      const rootQuestion = content.questions[content.rootQuestionId];
+      const rootQuestion = content.rootQuestion;
       expect(rootQuestion.answers.length).toBeGreaterThan(0);
     });
 
@@ -265,7 +279,7 @@ describe("PressExchange Model", () => {
 
       expect(pressExchange.parseContent).toBeNull();
       expect(pressExchange.parseProgress).toBeNull();
-      expect(consoleWarnSpy).toHaveBeenCalledTimes(2);
+      expect(consoleWarnSpy).toHaveBeenCalledTimes(3); // Updated from 2 to 3 due to currentQuestion getter
 
       consoleWarnSpy.mockRestore();
     });
@@ -306,8 +320,8 @@ describe("PressExchange Model", () => {
       // Current question is q_student_welfare (teachers-strike-back root question)
       expect(pressExchange.currentQuestion?.id).toBe("q_student_welfare");
 
-      // Answer with first choice which has no follow-up
-      await pressExchange.answerQuestion("a_welfare_reassure");
+      // Answer with choice that has no follow-up (ends the exchange)
+      await pressExchange.answerQuestion("a_welfare_inform");
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
@@ -317,7 +331,7 @@ describe("PressExchange Model", () => {
     });
 
     it("should answer a question that has no follow-up", async () => {
-      await pressExchange.answerQuestion("a_welfare_admit"); // Answer with second choice
+      await pressExchange.answerQuestion("a_welfare_challenge"); // Answer with choice that has no follow-up
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
@@ -348,38 +362,42 @@ describe("PressExchange Model", () => {
       await expect(
         pressExchange.answerQuestion("invalid-answer")
       ).rejects.toThrow(
-        "Answer invalid-answer not found in question q_student_welfare"
+        "Failed to answer question: Answer with ID invalid-answer not found"
       );
     });
 
     it("should handle multiple answers sequentially", async () => {
-      // Answer with deflect choice which has a follow-up question
-      await pressExchange.answerQuestion("a_welfare_deflect");
+      // Answer with reassure choice which has a follow-up question to q_teacher_working_conditions
+      await pressExchange.answerQuestion("a_welfare_reassure");
       let updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
 
       // Should now be on the follow-up question
-      expect(updatedExchange.currentQuestion?.id).toBe("q_security_concern");
+      expect(updatedExchange.currentQuestion?.id).toBe(
+        "q_teacher_working_conditions"
+      );
 
       // Answer the follow-up question
-      await updatedExchange.answerQuestion("a_security_deny");
+      await updatedExchange.answerQuestion("a_conditions_admit");
       updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
 
-      // Should now be complete
-      expect(updatedExchange.currentQuestion).toBeNull();
+      // Should now be on the tertiary question (union rights)
+      expect(updatedExchange.currentQuestion?.id).toBe("q_union_rights");
 
       const progress = updatedExchange.parseProgress;
       expect(progress?.history).toHaveLength(2);
       expect(progress?.history[0].questionId).toBe("q_student_welfare");
-      expect(progress?.history[1].questionId).toBe("q_security_concern");
+      expect(progress?.history[1].questionId).toBe(
+        "q_teacher_working_conditions"
+      );
     });
 
     it("should throw an error if trying to answer/skip when no question is active", async () => {
       // End the exchange by answering a question with no follow-up
-      await pressExchange.answerQuestion("a_welfare_admit");
+      await pressExchange.answerQuestion("a_welfare_inform");
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
@@ -387,11 +405,48 @@ describe("PressExchange Model", () => {
 
       // Now, try to answer again
       await expect(
-        updatedExchange.answerQuestion("a_welfare_deny")
+        updatedExchange.answerQuestion("a_welfare_challenge")
       ).rejects.toThrow("No current question to answer");
       await expect(updatedExchange.skipQuestion()).rejects.toThrow(
         "No current question to skip"
       );
+    });
+
+    it("should handle hierarchical exchange flow with follow-up questions", async () => {
+      // Start with root question q_student_welfare
+      expect(pressExchange.currentQuestion?.id).toBe("q_student_welfare");
+
+      // Answer with choice that has follow-up to q_teacher_working_conditions
+      await pressExchange.answerQuestion("a_welfare_reassure");
+      let updatedExchange = await database
+        .get<PressExchange>("press_exchanges")
+        .find(pressExchange.id);
+
+      // Should now be on secondary question
+      expect(updatedExchange.currentQuestion?.id).toBe(
+        "q_teacher_working_conditions"
+      );
+
+      let progress = updatedExchange.parseProgress;
+      expect(progress?.history).toHaveLength(1);
+      expect(progress?.history[0].questionId).toBe("q_student_welfare");
+      expect(progress?.currentQuestionId).toBe("q_teacher_working_conditions");
+
+      // Answer secondary question with choice that has follow-up to q_union_rights
+      await updatedExchange.answerQuestion("a_conditions_admit");
+      updatedExchange = await database
+        .get<PressExchange>("press_exchanges")
+        .find(pressExchange.id);
+
+      // Should now be on tertiary question
+      expect(updatedExchange.currentQuestion?.id).toBe("q_union_rights");
+
+      progress = updatedExchange.parseProgress;
+      expect(progress?.history).toHaveLength(2);
+      expect(progress?.history[1].questionId).toBe(
+        "q_teacher_working_conditions"
+      );
+      expect(progress?.currentQuestionId).toBe("q_union_rights");
     });
   });
 });

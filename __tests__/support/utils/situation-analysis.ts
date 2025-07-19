@@ -44,6 +44,30 @@ export interface SituationOutcomeAnalysis {
 }
 
 /**
+ * Helper function to get all questions from an exchange in the new structure
+ */
+function getAllQuestionsFromExchange(
+  exchange: any
+): Array<{ question: any; depth: number }> {
+  const questions: Array<{ question: any; depth: number }> = [];
+
+  // Add root question (depth 0)
+  questions.push({ question: exchange.content.rootQuestion, depth: 0 });
+
+  // Add secondary questions (depth 1)
+  exchange.content.secondaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 1 });
+  });
+
+  // Add tertiary questions (depth 2)
+  exchange.content.tertiaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 2 });
+  });
+
+  return questions;
+}
+
+/**
  * Analyzes global preference distribution across all situations
  */
 export function analyzeGlobalPreferences(): PreferenceValidationResult {
@@ -154,17 +178,21 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
 
       // Check that ALL root questions across ALL exchanges have positive impact answers for president
       const allRootQuestionsHavePositiveImpact = situation.exchanges.every(
-        (exchange) =>
-          Object.values(exchange.content.questions)
-            .filter((question) => question.depth === 0) // Only root questions
-            .every((question) =>
-              question.answers.some(
-                (answer) =>
-                  answer.type === preferredAnswerType &&
-                  answer.impacts.president &&
-                  answer.impacts.president.weight > 0
-              )
+        (exchange) => {
+          const allQuestions = getAllQuestionsFromExchange(exchange);
+          const rootQuestions = allQuestions.filter(
+            ({ question, depth }) => depth === 0
+          );
+
+          return rootQuestions.every(({ question, depth }) =>
+            question.answers.some(
+              (answer: any) =>
+                answer.type === preferredAnswerType &&
+                answer.impacts.president &&
+                answer.impacts.president.weight > 0
             )
+          );
+        }
       );
 
       if (!allRootQuestionsHavePositiveImpact) {
@@ -189,18 +217,22 @@ export function analyzePreferenceConsistency(): PreferenceConsistencyResult {
 
           // Check that ALL root questions across ALL exchanges have positive impact answers for this cabinet member
           const allRootQuestionsHavePositiveImpact = situation.exchanges.every(
-            (exchange) =>
-              Object.values(exchange.content.questions)
-                .filter((question) => question.depth === 0) // Only root questions
-                .every((question) =>
-                  question.answers.some(
-                    (answer) =>
-                      answer.type === preferredAnswerType &&
-                      answer.impacts.cabinet?.[cabinetId as CabinetStaticId] &&
-                      answer.impacts.cabinet[cabinetId as CabinetStaticId]!
-                        .weight > 0
-                  )
+            (exchange) => {
+              const allQuestions = getAllQuestionsFromExchange(exchange);
+              const rootQuestions = allQuestions.filter(
+                ({ question, depth }) => depth === 0
+              );
+
+              return rootQuestions.every(({ question, depth }) =>
+                question.answers.some(
+                  (answer: any) =>
+                    answer.type === preferredAnswerType &&
+                    answer.impacts.cabinet?.[cabinetId as CabinetStaticId] &&
+                    answer.impacts.cabinet[cabinetId as CabinetStaticId]!
+                      .weight > 0
                 )
+              );
+            }
           );
 
           if (missingFromOutcomes || !allRootQuestionsHavePositiveImpact) {

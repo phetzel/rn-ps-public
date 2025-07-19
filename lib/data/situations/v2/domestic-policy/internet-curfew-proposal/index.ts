@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { internetCurfewOutcomes } from "./internetCurfewOutcomes";
 import { internetCurfewPreferences } from "./internetCurfewPreferences";
 import { internetCurfewExchanges } from "./exchanges";
 
-export const internetCurfew: SituationData = {
+export const internetCurfew: SituationDataType = {
   trigger: {
     staticKey: "internet_curfew_proposal",
     type: SituationType.DomesticPolicy,

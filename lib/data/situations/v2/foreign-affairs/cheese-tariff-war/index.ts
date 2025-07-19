@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { cheeseTariffWarOutcomes } from "./cheeseTariffWarOutcomes";
 import { cheeseTariffWarPreferences } from "./cheeseTariffWarPreferences";
 import { cheeseTariffWarExchanges } from "./exchanges";
 
-export const cheeseTariffWar: SituationData = {
+export const cheeseTariffWar: SituationDataType = {
   trigger: {
     staticKey: "cheese_tariff_war",
     type: SituationType.ForeignAffairs,

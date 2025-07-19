@@ -1,5 +1,6 @@
 import { situationsData } from "~/lib/data/situations";
 import { CROSS_REFERENCE_THRESHOLDS } from "~/lib/constants";
+import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
 describe("Situation Data Cross-Reference Validation", () => {
   // Create lookup maps for efficient testing
@@ -194,17 +195,22 @@ describe("Situation Data Cross-Reference Validation", () => {
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
-          const { questions } = exchange.content;
+          const allQuestions = getAllQuestionsFromExchange(exchange.content);
 
-          Object.entries(questions).forEach(([questionId, question]) => {
+          allQuestions.forEach((question) => {
             question.answers.forEach((answer) => {
-              if (answer.followUpId && !questions[answer.followUpId]) {
-                errors.push({
-                  situationTitle: situation.title,
-                  questionId,
-                  answerId: answer.id,
-                  followUpId: answer.followUpId,
-                });
+              if (answer.followUpId) {
+                const followUpExists = allQuestions.some(
+                  (q) => q.id === answer.followUpId
+                );
+                if (!followUpExists) {
+                  errors.push({
+                    situationTitle: situation.title,
+                    questionId: question.id,
+                    answerId: answer.id,
+                    followUpId: answer.followUpId,
+                  });
+                }
               }
             });
           });
@@ -231,22 +237,42 @@ describe("Situation Data Cross-Reference Validation", () => {
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
-          const { questions } = exchange.content;
+          // Helper to get questions with depth information
+          const questionsWithDepth: Array<{ question: any; depth: number }> =
+            [];
 
-          Object.entries(questions).forEach(([questionId, question]) => {
-            question.answers.forEach((answer) => {
+          // Add root question (depth 0)
+          questionsWithDepth.push({
+            question: exchange.content.rootQuestion,
+            depth: 0,
+          });
+
+          // Add secondary questions (depth 1)
+          exchange.content.secondaryQuestions.forEach((question: any) => {
+            questionsWithDepth.push({ question, depth: 1 });
+          });
+
+          // Add tertiary questions (depth 2)
+          exchange.content.tertiaryQuestions.forEach((question: any) => {
+            questionsWithDepth.push({ question, depth: 2 });
+          });
+
+          questionsWithDepth.forEach(({ question, depth }) => {
+            question.answers.forEach((answer: any) => {
               if (answer.followUpId) {
-                const followUpQuestion = questions[answer.followUpId];
+                const followUpQuestionWithDepth = questionsWithDepth.find(
+                  (q) => q.question.id === answer.followUpId
+                );
                 if (
-                  followUpQuestion &&
-                  followUpQuestion.depth <= question.depth
+                  followUpQuestionWithDepth &&
+                  followUpQuestionWithDepth.depth <= depth
                 ) {
                   errors.push({
                     situationTitle: situation.title,
-                    parentQuestionId: questionId,
-                    parentDepth: question.depth,
+                    parentQuestionId: question.id,
+                    parentDepth: depth,
                     followUpQuestionId: answer.followUpId,
-                    followUpDepth: followUpQuestion.depth,
+                    followUpDepth: followUpQuestionWithDepth.depth,
                   });
                 }
               }
@@ -273,18 +299,15 @@ describe("Situation Data Cross-Reference Validation", () => {
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
-          const { questions, rootQuestionId } = exchange.content;
-          const rootQuestion = questions[rootQuestionId];
+          const rootQuestion = exchange.content.rootQuestion;
 
-          if (
-            rootQuestion &&
-            rootQuestion.depth !==
-              CROSS_REFERENCE_THRESHOLDS.ROOT_QUESTION_DEPTH
-          ) {
+          // In the new structure, root questions are always at depth 0 by design
+          // We just verify the root question exists and has required properties
+          if (!rootQuestion || !rootQuestion.id || !rootQuestion.text) {
             errors.push({
               situationTitle: situation.title,
-              rootQuestionId,
-              depth: rootQuestion.depth,
+              rootQuestionId: rootQuestion?.id || "missing",
+              depth: 0,
             });
           }
         });
@@ -292,7 +315,7 @@ describe("Situation Data Cross-Reference Validation", () => {
 
       if (errors.length > 0) {
         console.error(
-          "Root questions with non-zero depth:",
+          "Root questions with invalid structure:",
           JSON.stringify(errors, null, 2)
         );
         expect(errors).toHaveLength(0);
@@ -307,17 +330,18 @@ describe("Situation Data Cross-Reference Validation", () => {
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
-          const { questions, rootQuestionId } = exchange.content;
+          const allQuestions = getAllQuestionsFromExchange(exchange.content);
+          const questionsMap = new Map(allQuestions.map((q) => [q.id, q]));
           const reachableQuestions = new Set<string>();
 
           // BFS to find all reachable questions
-          const queue = [rootQuestionId];
+          const queue = [exchange.content.rootQuestion.id];
           while (queue.length > 0) {
             const currentId = queue.shift();
             if (!currentId || reachableQuestions.has(currentId)) continue;
 
             reachableQuestions.add(currentId);
-            const currentQuestion = questions[currentId];
+            const currentQuestion = questionsMap.get(currentId);
 
             if (currentQuestion) {
               currentQuestion.answers.forEach((answer) => {
@@ -332,7 +356,7 @@ describe("Situation Data Cross-Reference Validation", () => {
           }
 
           // Find orphaned questions
-          const allQuestionIds = Object.keys(questions);
+          const allQuestionIds = allQuestions.map((q) => q.id);
           const orphanedQuestions = allQuestionIds.filter(
             (id) => !reachableQuestions.has(id)
           );
@@ -369,7 +393,9 @@ describe("Situation Data Cross-Reference Validation", () => {
         const validOutcomeIds = situation.content.outcomes.map((o) => o.id);
 
         situation.exchanges.forEach((exchange) => {
-          Object.values(exchange.content.questions).forEach((question) => {
+          const allQuestions = getAllQuestionsFromExchange(exchange.content);
+
+          allQuestions.forEach((question) => {
             question.answers.forEach((answer) => {
               Object.keys(answer.outcomeModifiers).forEach((outcomeId) => {
                 if (!validOutcomeIds.includes(outcomeId)) {

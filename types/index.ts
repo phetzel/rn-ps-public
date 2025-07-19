@@ -151,14 +151,13 @@ export interface Answer {
 export interface Question {
   id: string;
   text: string;
-  depth: number; // 0 for main questions, 1+ for follow-ups
-  answers: Answer[];
+  answers: Answer[]; // 3+ answers
 }
 
 export interface ExchangeContent {
-  // Static JSON data
-  questions: Record<string, Question>; // Map of questions by ID
-  rootQuestionId: string; // The starting question ID
+  rootQuestion: Question;
+  secondaryQuestions: [Question, Question];
+  tertiaryQuestions: [Question, Question];
 }
 
 export interface ExchangeHistoryItem {
@@ -168,9 +167,15 @@ export interface ExchangeHistoryItem {
 }
 
 export interface ExchangeProgress {
-  // User progress/choices
+  // Detailed history - needed for consequence calculations
   history: ExchangeHistoryItem[];
-  currentQuestionId: string | null; // Current question the user is on, null if complete
+  currentQuestionId: string | null;
+
+  // Cached computed values for efficiency
+  questionsAnswered: number; // 0-3
+  hasSkipped: boolean;
+  completed: boolean;
+  journalistEngagement?: JournalistEngagementWeight; // Optional - only set after completion
 }
 
 export interface ExchangeData {
@@ -426,6 +431,12 @@ export enum JournalistInteractionImpact {
   HadFollowUp = -5,
   Answered = 5,
   AuthorizedAnswer = 10,
+}
+
+export enum JournalistEngagementWeight {
+  Ignored = -10,
+  Partial = -5,
+  Complete = 5,
 }
 
 export enum SituationConsequenceWeight {

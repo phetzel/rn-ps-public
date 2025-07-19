@@ -37,3 +37,8 @@ export const situationPreferencesSchema = z
       path: ["preferences"],
     }
   );
+
+// Export TypeScript types derived from Zod schemas
+export type SituationPreferences = z.infer<typeof situationPreferencesSchema>;
+export type CabinetPreference = z.infer<typeof cabinetPreferenceSchema>;
+export type Preference = z.infer<typeof preferenceSchema>;

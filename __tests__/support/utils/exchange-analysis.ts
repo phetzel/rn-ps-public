@@ -36,13 +36,38 @@ export interface AnswerEntityImpactAnalysis {
 }
 
 /**
+ * Helper function to get all questions from an exchange in the new structure
+ */
+function getAllQuestionsFromExchange(
+  exchange: any
+): Array<{ question: any; depth: number }> {
+  const questions: Array<{ question: any; depth: number }> = [];
+
+  // Add root question (depth 0)
+  questions.push({ question: exchange.content.rootQuestion, depth: 0 });
+
+  // Add secondary questions (depth 1)
+  exchange.content.secondaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 1 });
+  });
+
+  // Add tertiary questions (depth 2)
+  exchange.content.tertiaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 2 });
+  });
+
+  return questions;
+}
+
+/**
  * Analyzes exchange structure (count and question distribution)
  */
 export function analyzeExchangeStructure(): ExchangeStructureAnalysis[] {
   return situationsData.map((situation) => {
-    const questionCounts = situation.exchanges.map(
-      (exchange) => Object.keys(exchange.content.questions).length
-    );
+    const questionCounts = situation.exchanges.map((exchange) => {
+      // With normalized structure, each exchange has exactly 5 questions
+      return 5;
+    });
 
     return {
       situationTitle: situation.title,
@@ -63,15 +88,16 @@ export function analyzeQuestionDepth(): QuestionDepthAnalysis {
 
   situationsData.forEach((situation) => {
     situation.exchanges.forEach((exchange) => {
-      Object.values(exchange.content.questions).forEach((question) => {
+      const allQuestions = getAllQuestionsFromExchange(exchange);
+
+      allQuestions.forEach(({ question, depth }) => {
         totalQuestions++;
 
-        if (question.depth > 0) {
+        if (depth > 0) {
           questionsWithDepthGreaterThanZero++;
         }
 
-        questionsByDepth[question.depth] =
-          (questionsByDepth[question.depth] || 0) + 1;
+        questionsByDepth[depth] = (questionsByDepth[depth] || 0) + 1;
       });
     });
   });
@@ -95,81 +121,81 @@ export function analyzeQuestionAnswers(): QuestionAnswerAnalysis[] {
 
   situationsData.forEach((situation) => {
     situation.exchanges.forEach((exchange) => {
-      Object.entries(exchange.content.questions).forEach(
-        ([questionId, question]) => {
-          const answerTypes = question.answers.map((answer) => answer.type);
-          const answerTypeDistribution: Record<AnswerType, number> =
-            {} as Record<AnswerType, number>;
+      const allQuestions = getAllQuestionsFromExchange(exchange);
 
-          // Count answer types
-          answerTypes.forEach((type) => {
-            answerTypeDistribution[type] =
-              (answerTypeDistribution[type] || 0) + 1;
-          });
+      allQuestions.forEach(({ question, depth }) => {
+        const answerTypes = question.answers.map((answer: any) => answer.type);
+        const answerTypeDistribution: Record<AnswerType, number> = {} as Record<
+          AnswerType,
+          number
+        >;
 
-          const distinctAnswerTypes = Object.keys(
-            answerTypeDistribution
-          ).length;
-          const maxAnswerTypeCount = Math.max(
-            ...Object.values(answerTypeDistribution)
-          );
-          const maxAnswerTypePercentage =
-            (maxAnswerTypeCount / question.answers.length) * 100;
+        // Count answer types
+        answerTypes.forEach((type: AnswerType) => {
+          answerTypeDistribution[type] =
+            (answerTypeDistribution[type] || 0) + 1;
+        });
 
-          // Analyze entities affected and net impacts per answer
-          const entitiesAffectedByAnswers: number[] = [];
-          let hasPositiveNetImpact = false;
-          let hasNegativeNetImpact = false;
+        const distinctAnswerTypes = Object.keys(answerTypeDistribution).length;
+        const maxAnswerTypeCount = Math.max(
+          ...Object.values(answerTypeDistribution)
+        );
+        const maxAnswerTypePercentage =
+          (maxAnswerTypeCount / question.answers.length) * 100;
 
-          question.answers.forEach((answer) => {
-            let entitiesAffected = 0;
-            let netImpact = 0;
+        // Analyze entities affected and net impacts per answer
+        const entitiesAffectedByAnswers: number[] = [];
+        let hasPositiveNetImpact = false;
+        let hasNegativeNetImpact = false;
 
-            // Count president impact
-            if (answer.impacts.president) {
-              entitiesAffected++;
-              netImpact += answer.impacts.president.weight;
-            }
+        question.answers.forEach((answer: any) => {
+          let entitiesAffected = 0;
+          let netImpact = 0;
 
-            // Count cabinet impacts
-            if (answer.impacts.cabinet) {
-              Object.values(answer.impacts.cabinet).forEach((impact) => {
-                if (impact) {
-                  entitiesAffected++;
-                  netImpact += impact.weight;
-                }
-              });
-            }
+          // Count president impact
+          if (answer.impacts.president) {
+            entitiesAffected++;
+            netImpact += answer.impacts.president.weight;
+          }
 
-            // Count journalist impacts
-            if (answer.impacts.journalists) {
-              Object.values(answer.impacts.journalists).forEach((impact) => {
-                if (impact) {
-                  entitiesAffected++;
-                  netImpact += impact.weight;
-                }
-              });
-            }
+          // Count cabinet impacts
+          if (answer.impacts.cabinet) {
+            Object.values(answer.impacts.cabinet).forEach((impact: any) => {
+              if (impact) {
+                entitiesAffected++;
+                netImpact += impact.weight;
+              }
+            });
+          }
 
-            entitiesAffectedByAnswers.push(entitiesAffected);
+          // Count journalist impacts
+          if (answer.impacts.journalists) {
+            Object.values(answer.impacts.journalists).forEach((impact: any) => {
+              if (impact) {
+                entitiesAffected++;
+                netImpact += impact.weight;
+              }
+            });
+          }
 
-            if (netImpact > 0) hasPositiveNetImpact = true;
-            else if (netImpact < 0) hasNegativeNetImpact = true;
-          });
+          entitiesAffectedByAnswers.push(entitiesAffected);
 
-          analyses.push({
-            situationTitle: situation.title,
-            questionId,
-            answerCount: question.answers.length,
-            answerTypes,
-            distinctAnswerTypes,
-            maxAnswerTypePercentage,
-            entitiesAffectedByAnswers,
-            hasPositiveNetImpact,
-            hasNegativeNetImpact,
-          });
-        }
-      );
+          if (netImpact > 0) hasPositiveNetImpact = true;
+          else if (netImpact < 0) hasNegativeNetImpact = true;
+        });
+
+        analyses.push({
+          situationTitle: situation.title,
+          questionId: question.id,
+          answerCount: question.answers.length,
+          answerTypes,
+          distinctAnswerTypes,
+          maxAnswerTypePercentage,
+          entitiesAffectedByAnswers,
+          hasPositiveNetImpact,
+          hasNegativeNetImpact,
+        });
+      });
     });
   });
 
@@ -184,48 +210,48 @@ export function analyzeAnswerEntityImpacts(): AnswerEntityImpactAnalysis[] {
 
   situationsData.forEach((situation) => {
     situation.exchanges.forEach((exchange) => {
-      Object.entries(exchange.content.questions).forEach(
-        ([questionId, question]) => {
-          question.answers.forEach((answer) => {
-            let entitiesAffected = 0;
-            let netImpactValue = 0;
+      const allQuestions = getAllQuestionsFromExchange(exchange);
 
-            // Count president impact
-            if (answer.impacts.president) {
-              entitiesAffected++;
-              netImpactValue += answer.impacts.president.weight;
-            }
+      allQuestions.forEach(({ question, depth }) => {
+        question.answers.forEach((answer: any) => {
+          let entitiesAffected = 0;
+          let netImpactValue = 0;
 
-            // Count cabinet impacts
-            if (answer.impacts.cabinet) {
-              Object.values(answer.impacts.cabinet).forEach((impact) => {
-                if (impact) {
-                  entitiesAffected++;
-                  netImpactValue += impact.weight;
-                }
-              });
-            }
+          // Count president impact
+          if (answer.impacts.president) {
+            entitiesAffected++;
+            netImpactValue += answer.impacts.president.weight;
+          }
 
-            // Count journalist impacts
-            if (answer.impacts.journalists) {
-              Object.values(answer.impacts.journalists).forEach((impact) => {
-                if (impact) {
-                  entitiesAffected++;
-                  netImpactValue += impact.weight;
-                }
-              });
-            }
-
-            analyses.push({
-              situationTitle: situation.title,
-              questionId,
-              answerId: answer.id,
-              entitiesAffected,
-              netImpactValue,
+          // Count cabinet impacts
+          if (answer.impacts.cabinet) {
+            Object.values(answer.impacts.cabinet).forEach((impact: any) => {
+              if (impact) {
+                entitiesAffected++;
+                netImpactValue += impact.weight;
+              }
             });
+          }
+
+          // Count journalist impacts
+          if (answer.impacts.journalists) {
+            Object.values(answer.impacts.journalists).forEach((impact: any) => {
+              if (impact) {
+                entitiesAffected++;
+                netImpactValue += impact.weight;
+              }
+            });
+          }
+
+          analyses.push({
+            situationTitle: situation.title,
+            questionId: question.id,
+            answerId: answer.id,
+            entitiesAffected,
+            netImpactValue,
           });
-        }
-      );
+        });
+      });
     });
   });
 

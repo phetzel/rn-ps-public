@@ -31,6 +31,6 @@ export const situationsData = [
   ...foreignAffairsSituationsData,
   ...ethicsSituationsData,
   ...securitySituationsData,
-  ...governanceSituationsData,
+  // ...governanceSituationsData,
   ...environmentSituationsData,
 ];

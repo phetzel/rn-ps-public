@@ -5,110 +5,105 @@ import {
   CabinetStaticId,
   PublicationStaticId,
 } from "~/types";
-import type { ExchangeData } from "~/types";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 export const libPrimaryExchange: ExchangeData = {
   publication: PublicationStaticId.LibPrimary,
   content: {
-    rootQuestionId: "q_cheese_war_security",
-    questions: {
-      q_cheese_war_security: {
-        id: "q_cheese_war_security",
-        text: "This tariff spat threatens food supply chains and national security. How does starting a trade war over a joke protect families?",
-        depth: 0,
-        answers: [
-          {
-            id: "a_security_deny",
-            type: AnswerType.Deny,
-            text: "There is no threat to food security. Our domestic food supply chains are robust and this minor trade dispute poses no risk to American families.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
-                [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+    rootQuestion: {
+      id: "q_cheese_war_security",
+      text: "This tariff spat threatens food supply chains and national security. How does starting a trade war over a joke protect families?",
+      answers: [
+        {
+          id: "a_security_deny",
+          type: AnswerType.Deny,
+          text: "There is no threat to food security. Our domestic food supply chains are robust and this minor trade dispute poses no risk to American families.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.Positive,
+              },
+              [CabinetStaticId.Defense]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
-            },
-            followUpId: "q_cheese_war_preparation",
           },
-          {
-            id: "a_security_admit",
-            type: AnswerType.Admit,
-            text: "You're absolutely right. The President's comment was inappropriate and I take full responsibility for not preventing this diplomatic misstep.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
-            },
-            outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.StrongPositive, // +8
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.StrongNegative, // -8
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
-            },
+          outcomeModifiers: {
+            outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
+            outcome_cheese_tariffs_hurt_farmers:
+              OutcomeModifierWeight.SlightPositive,
+            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
           },
-          {
-            id: "a_security_reassure",
-            type: AnswerType.Reassure,
-            text: "Our Defense Department maintains that bilateral security partnerships remain unaffected by trade disagreements. We're managing this carefully.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+          followUpId: "q_cheese_war_preparation",
+        },
+        {
+          id: "a_security_admit",
+          type: AnswerType.Admit,
+          text: "You're absolutely right. The President's comment was inappropriate and I take full responsibility for not preventing this diplomatic misstep.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.Positive },
+          },
+          outcomeModifiers: {
+            outcome_cheese_tariffs_eased: OutcomeModifierWeight.StrongPositive,
+            outcome_cheese_tariffs_hurt_farmers:
+              OutcomeModifierWeight.StrongNegative,
+            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+          },
+          followUpId: "q_cheese_war_damage_control",
+        },
+        {
+          id: "a_security_reassure",
+          type: AnswerType.Reassure,
+          text: "Our Defense Department maintains that bilateral security partnerships remain unaffected by trade disagreements. We're managing this carefully.",
+          impacts: {
+            cabinet: {
+              [CabinetStaticId.Defense]: {
+                weight: ExchangeImpactWeight.Positive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.ModeratePositive, // +6
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
-            },
           },
-          {
-            id: "a_security_inform",
-            type: AnswerType.Inform,
-            text: "The Justice Department confirms that all retaliatory measures follow proper legal procedures and international trade law frameworks.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+          outcomeModifiers: {
+            outcome_cheese_tariffs_eased:
+              OutcomeModifierWeight.ModeratePositive,
+            outcome_cheese_tariffs_hurt_farmers:
+              OutcomeModifierWeight.ModerateNegative,
+            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+          },
+        },
+        {
+          id: "a_security_inform",
+          type: AnswerType.Inform,
+          text: "The Justice Department confirms that all retaliatory measures follow proper legal procedures and international trade law frameworks.",
+          impacts: {
+            cabinet: {
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.Positive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
-            },
           },
-        ],
-      },
-      q_cheese_war_preparation: {
+          outcomeModifiers: {
+            outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
+            outcome_cheese_tariffs_hurt_farmers:
+              OutcomeModifierWeight.SlightNegative,
+            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+          },
+        },
+      ],
+    },
+    secondaryQuestions: [
+      {
         id: "q_cheese_war_preparation",
         text: "If there's no security risk, why is Homeland Security involved in trade discussions? Are you preparing for something worse than you're admitting?",
-        depth: 1,
         answers: [
           {
             id: "a_preparation_reassure",
@@ -124,11 +119,12 @@ export const libPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightPositive, // +4 -> 0 total
+                OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0 -> +4 total
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
+            followUpId: "q_cheese_war_supply_chain",
           },
           {
             id: "a_preparation_inform",
@@ -143,15 +139,236 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral, // 0 -> -4 total
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightPositive, // +4 -> +8 total
+                OutcomeModifierWeight.SlightPositive,
               outcome_cheese_public_rallies:
-                OutcomeModifierWeight.SlightNegative, // -4 -> 0 total
+                OutcomeModifierWeight.SlightNegative,
+            },
+          },
+          {
+            id: "a_preparation_deflect",
+            type: AnswerType.Deflect,
+            text: "The focus should be on diplomatic solutions, not on speculating about crisis scenarios that won't materialize.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
         ],
       },
-    },
+      {
+        id: "q_cheese_war_damage_control",
+        text: "What concrete steps is the administration taking to repair the diplomatic damage from this cheese comment?",
+        answers: [
+          {
+            id: "a_damage_inform",
+            type: AnswerType.Inform,
+            text: "The State Department is conducting high-level diplomatic outreach to Dairystani officials to clarify the President's intent and find common ground.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+            followUpId: "q_cheese_war_future_prevention",
+          },
+          {
+            id: "a_damage_reassure",
+            type: AnswerType.Reassure,
+            text: "Our diplomatic relationships are resilient. This minor trade dispute won't affect our long-term partnerships with key allies.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+          {
+            id: "a_damage_deflect",
+            type: AnswerType.Deflect,
+            text: "The media is overblowing this situation. Trade disagreements happen regularly and get resolved through normal diplomatic channels.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+        ],
+      },
+    ],
+    tertiaryQuestions: [
+      {
+        id: "q_cheese_war_supply_chain",
+        text: "Are there contingency plans if this trade dispute expands beyond cheese to other critical food imports?",
+        answers: [
+          {
+            id: "a_supply_chain_inform",
+            type: AnswerType.Inform,
+            text: "The Agriculture Department maintains strategic reserves and has diversified supplier relationships to ensure food security regardless of trade disruptions.",
+            impacts: {
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+          {
+            id: "a_supply_chain_reassure",
+            type: AnswerType.Reassure,
+            text: "American food production is robust and diverse. We're not dependent on any single trading partner for essential nutrition.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+          {
+            id: "a_supply_chain_deflect",
+            type: AnswerType.Deflect,
+            text: "That's a hypothetical scenario. We're focused on resolving the current situation, not planning for escalation.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+        ],
+      },
+      {
+        id: "q_cheese_war_future_prevention",
+        text: "How will the administration prevent similar diplomatic gaffes in the future? Do you need better communication protocols?",
+        answers: [
+          {
+            id: "a_prevention_admit",
+            type: AnswerType.Admit,
+            text: "This incident highlights the need for better coordination between communications and foreign policy teams. We're implementing new review procedures.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+          {
+            id: "a_prevention_inform",
+            type: AnswerType.Inform,
+            text: "The State Department already has extensive protocols for diplomatic communications. This was an isolated incident, not a systemic failure.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies:
+                OutcomeModifierWeight.SlightNegative,
+            },
+          },
+          {
+            id: "a_prevention_deflect",
+            type: AnswerType.Deflect,
+            text: "The President's authentic communication style is one of his strengths. Americans appreciate leaders who speak plainly about trade issues.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased:
+                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
+          },
+        ],
+      },
+    ],
   },
 };

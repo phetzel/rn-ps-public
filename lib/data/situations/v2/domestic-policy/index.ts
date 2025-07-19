@@ -1,8 +1,8 @@
-import { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { teachersStrikeBack } from "./teachers-strike-back";
 import { internetCurfew } from "./internet-curfew-proposal";
 
-export const domesticPolicySituationsData: SituationData[] = [
+export const domesticPolicySituationsData: SituationDataType[] = [
   teachersStrikeBack,
   internetCurfew,
 ];

@@ -1,4 +1,4 @@
-import type { ExchangeData } from "~/types";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 import { libPrimaryExchange } from "./libPrimaryExchange";
 import { independentPrimaryExchange } from "./independentPrimaryExchange";
 

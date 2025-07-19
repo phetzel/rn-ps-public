@@ -1,7 +1,8 @@
-import { conPrimaryExchange } from "./conPrimaryExchange";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 import { libPrimaryExchange } from "./libPrimaryExchange";
+import { conPrimaryExchange } from "./conPrimaryExchange";
 
-export const droneHackScandalExchanges = [
-  conPrimaryExchange,
+export const droneHackScandalExchanges: ExchangeData[] = [
   libPrimaryExchange,
+  conPrimaryExchange,
 ];

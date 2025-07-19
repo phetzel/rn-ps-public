@@ -35,6 +35,30 @@ export interface PreferenceAnalysis {
 }
 
 /**
+ * Helper function to get all questions from an exchange in the new structure
+ */
+function getAllQuestionsFromExchange(
+  exchange: any
+): Array<{ question: any; depth: number }> {
+  const questions: Array<{ question: any; depth: number }> = [];
+
+  // Add root question (depth 0)
+  questions.push({ question: exchange.content.rootQuestion, depth: 0 });
+
+  // Add secondary questions (depth 1)
+  exchange.content.secondaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 1 });
+  });
+
+  // Add tertiary questions (depth 2)
+  exchange.content.tertiaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 2 });
+  });
+
+  return questions;
+}
+
+/**
  * Analyzes relationship impacts from exchange answers for president and cabinet members
  */
 export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
@@ -57,8 +81,10 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
 
   situationsData.forEach((situation) => {
     situation.exchanges.forEach((exchange) => {
-      Object.values(exchange.content.questions).forEach((question) => {
-        question.answers.forEach((answer) => {
+      const allQuestions = getAllQuestionsFromExchange(exchange);
+
+      allQuestions.forEach(({ question, depth }) => {
+        question.answers.forEach((answer: any) => {
           // Analyze president impact
           if (answer.impacts.president) {
             const weight = answer.impacts.president.weight;
@@ -74,7 +100,7 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
           // Analyze cabinet member impacts
           if (answer.impacts.cabinet) {
             Object.entries(answer.impacts.cabinet).forEach(
-              ([cabinetId, impact]) => {
+              ([cabinetId, impact]: [string, any]) => {
                 if (impact) {
                   const weight = impact.weight;
                   const analysis = entityImpacts.get(cabinetId)!;
@@ -225,8 +251,10 @@ export function analyzeEntityDistribution(): {
 
     // Check exchanges for cabinet members
     situation.exchanges.forEach((exchange) => {
-      Object.values(exchange.content.questions).forEach((question) => {
-        question.answers.forEach((answer) => {
+      const allQuestions = getAllQuestionsFromExchange(exchange);
+
+      allQuestions.forEach(({ question, depth }) => {
+        question.answers.forEach((answer: any) => {
           if (answer.impacts.cabinet) {
             Object.keys(answer.impacts.cabinet).forEach((cabinetId) => {
               cabinetInSituation.add(cabinetId);

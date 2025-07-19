@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { withObservables } from "@nozbe/watermelondb/react";
 
 import { observePressExchangesForSituation } from "~/lib/db/helpers/observations";
+import { findQuestionById } from "~/lib/db/helpers/exchangeApi";
 // Components
 import { Text } from "~/components/ui/text";
 import SituationOutcomeExchangeItem from "~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem";
@@ -33,7 +34,7 @@ const SituationOutcomeExchanges = ({
       for (const item of progress.history) {
         if (item.skipped || !item.answerId) continue;
 
-        const question = content.questions[item.questionId];
+        const question = findQuestionById(item.questionId, content);
         if (!question) continue;
 
         const answer = question.answers.find((a) => a.id === item.answerId);

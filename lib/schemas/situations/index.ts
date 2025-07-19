@@ -5,105 +5,36 @@ export * from "~/lib/schemas/situations/content";
 
 // Main situation data schema with cross-validation
 import { z } from "zod";
+import { AnswerType } from "~/types";
+import { exchangeContentSchema } from "../exchanges";
+import { situationContentSchema } from "./content";
+import { situationTriggerSchema } from "./triggers";
+import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
-import { textLengthSchema } from "~/lib/schemas/common";
-import { exchangeDataSchema } from "~/lib/schemas/exchanges";
-import { situationTriggerSchema } from "~/lib/schemas/situations/triggers";
-import { situationContentSchema } from "~/lib/schemas/situations/content";
-import { SituationType, AnswerType } from "~/types";
-
-export const situationDataSchema = z
+const situationDataSchema = z
   .object({
     trigger: situationTriggerSchema,
-    type: z.nativeEnum(SituationType),
-    title: textLengthSchema.situationTitle,
-    description: textLengthSchema.situationDescription,
+    type: z.string(),
+    title: z.string(),
+    description: z.string(),
     content: situationContentSchema,
-    exchanges: z
-      .array(exchangeDataSchema)
-      .min(2, "At least two exchanges are required")
-      .max(4, "Maximum 4 exchanges per situation for mobile performance"),
-  })
-  .refine((data) => data.trigger.type === data.type, {
-    message: "Situation type must match trigger type",
-    path: ["type"],
+    exchanges: z.array(
+      z.object({
+        publication: z.string(),
+        content: exchangeContentSchema,
+      })
+    ),
   })
   .refine(
     (data) => {
-      // Authorized answers must reference cabinet members with authorizedContent
+      // All exchanges must have exactly 5 questions
       const errors: string[] = [];
 
       data.exchanges.forEach((exchange, exchangeIndex) => {
-        Object.entries(exchange.content.questions).forEach(
-          ([questionId, question]) => {
-            question.answers.forEach((answer, answerIndex) => {
-              if (
-                answer.type === AnswerType.Authorized &&
-                answer.authorizedCabinetMemberId
-              ) {
-                const cabinetMember =
-                  data.content.preferences.cabinet?.[
-                    answer.authorizedCabinetMemberId
-                  ];
-                if (!cabinetMember?.authorizedContent) {
-                  errors.push(
-                    `Exchange ${exchangeIndex}, Question ${questionId}, Answer ${answerIndex}: Authorized answer references cabinet member without authorizedContent`
-                  );
-                }
-              }
-            });
-          }
-        );
-      });
-
-      return errors.length === 0;
-    },
-    {
-      message:
-        "Authorized answers must reference cabinet members with authorizedContent",
-      path: ["exchanges"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Outcome modifiers must be within reasonable range (-50 to 50)
-      const errors: string[] = [];
-
-      data.exchanges.forEach((exchange, exchangeIndex) => {
-        Object.entries(exchange.content.questions).forEach(
-          ([questionId, question]) => {
-            question.answers.forEach((answer, answerIndex) => {
-              Object.entries(answer.outcomeModifiers).forEach(
-                ([outcomeId, modifier]) => {
-                  if (modifier < -50 || modifier > 50) {
-                    errors.push(
-                      `Exchange ${exchangeIndex}, Question ${questionId}, Answer ${answerIndex}: Outcome modifier ${modifier} for ${outcomeId} is outside reasonable range (-50 to 50)`
-                    );
-                  }
-                }
-              );
-            });
-          }
-        );
-      });
-
-      return errors.length === 0;
-    },
-    {
-      message: "Outcome modifiers must be within reasonable range (-50 to 50)",
-      path: ["exchanges"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Each exchange must have reasonable number of questions (1-8)
-      const errors: string[] = [];
-
-      data.exchanges.forEach((exchange, exchangeIndex) => {
-        const questionCount = Object.keys(exchange.content.questions).length;
-        if (questionCount < 1 || questionCount > 8) {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        if (allQuestions.length !== 5) {
           errors.push(
-            `Exchange ${exchangeIndex}: Has ${questionCount} questions, must have 1-8 questions`
+            `Exchange ${exchangeIndex} has ${allQuestions.length} questions, expected 5`
           );
         }
       });
@@ -111,9 +42,130 @@ export const situationDataSchema = z
       return errors.length === 0;
     },
     {
-      message: "Each exchange must have 1-8 questions",
-      path: ["exchanges"],
+      message: "All exchanges must have exactly 5 questions",
+    }
+  )
+  .refine(
+    (data) => {
+      // Authorized answers must reference cabinet members with authorizedContent
+      const errors: string[] = [];
+
+      data.exchanges.forEach((exchange, exchangeIndex) => {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((question) => {
+          question.answers.forEach((answer, answerIndex) => {
+            if (
+              answer.type === AnswerType.Authorized &&
+              answer.authorizedCabinetMemberId
+            ) {
+              const cabinetMember =
+                data.content.preferences.cabinet?.[
+                  answer.authorizedCabinetMemberId
+                ];
+              if (!cabinetMember?.authorizedContent) {
+                errors.push(
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: Authorized answer references cabinet member ${answer.authorizedCabinetMemberId} but they have no authorizedContent`
+                );
+              }
+            }
+          });
+        });
+      });
+
+      return errors.length === 0;
+    },
+    {
+      message:
+        "Authorized answers must reference cabinet members with authorizedContent",
+    }
+  )
+  .refine(
+    (data) => {
+      // Follow-up questions must exist
+      const errors: string[] = [];
+
+      data.exchanges.forEach((exchange, exchangeIndex) => {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((question) => {
+          question.answers.forEach((answer, answerIndex) => {
+            if (answer.followUpId) {
+              const followUpExists = allQuestions.some(
+                (q) => q.id === answer.followUpId
+              );
+              if (!followUpExists) {
+                errors.push(
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: Follow-up question ${answer.followUpId} does not exist`
+                );
+              }
+            }
+          });
+        });
+      });
+
+      return errors.length === 0;
+    },
+    {
+      message: "Follow-up questions must exist in the exchange",
+    }
+  )
+  .refine(
+    (data) => {
+      // Exchanges must have normalized structure
+      const errors: string[] = [];
+
+      data.exchanges.forEach((exchange, exchangeIndex) => {
+        const content = exchange.content;
+
+        // Check root question has 2 follow-ups
+        const rootFollowUps = content.rootQuestion.answers.filter(
+          (a) => a.followUpId
+        ).length;
+        if (rootFollowUps !== 2) {
+          errors.push(
+            `Exchange ${exchangeIndex}: Root question must have exactly 2 follow-ups, has ${rootFollowUps}`
+          );
+        }
+
+        // Check secondary questions structure
+        if (content.secondaryQuestions.length !== 2) {
+          errors.push(
+            `Exchange ${exchangeIndex}: Must have exactly 2 secondary questions, has ${content.secondaryQuestions.length}`
+          );
+        }
+
+        content.secondaryQuestions.forEach((question, qIndex) => {
+          const followUps = question.answers.filter((a) => a.followUpId).length;
+          if (followUps !== 1) {
+            errors.push(
+              `Exchange ${exchangeIndex}, Secondary question ${qIndex}: Must have exactly 1 follow-up, has ${followUps}`
+            );
+          }
+        });
+
+        // Check tertiary questions structure
+        if (content.tertiaryQuestions.length !== 2) {
+          errors.push(
+            `Exchange ${exchangeIndex}: Must have exactly 2 tertiary questions, has ${content.tertiaryQuestions.length}`
+          );
+        }
+
+        content.tertiaryQuestions.forEach((question, qIndex) => {
+          const followUps = question.answers.filter((a) => a.followUpId).length;
+          if (followUps !== 0) {
+            errors.push(
+              `Exchange ${exchangeIndex}, Tertiary question ${qIndex}: Must have no follow-ups, has ${followUps}`
+            );
+          }
+        });
+      });
+
+      return errors.length === 0;
+    },
+    {
+      message:
+        "Exchanges must follow normalized structure (1 root + 2 secondary + 2 tertiary questions)",
     }
   );
 
+export { situationDataSchema };
 export type SituationDataType = z.infer<typeof situationDataSchema>;

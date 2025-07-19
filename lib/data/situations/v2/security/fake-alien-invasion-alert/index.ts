@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { fakeAlienInvasionAlertOutcomes } from "./fakeAlienInvasionAlertOutcomes";
 import { fakeAlienInvasionAlertPreferences } from "./fakeAlienInvasionAlertPreferences";
 import { fakeAlienInvasionAlertExchanges } from "./exchanges";
 
-export const fakeAlienInvasionAlert: SituationData = {
+export const fakeAlienInvasionAlert: SituationDataType = {
   trigger: {
     staticKey: "fake_alien_invasion_alert",
     type: SituationType.Security,

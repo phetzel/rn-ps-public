@@ -5,65 +5,89 @@ import {
   CabinetStaticId,
   PublicationStaticId,
 } from "~/types";
-import type { ExchangeData } from "~/types";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 export const libPrimaryExchange: ExchangeData = {
   publication: PublicationStaticId.LibPrimary,
   content: {
-    rootQuestionId: "q_coffee_cost",
-    questions: {
-      q_coffee_cost: {
-        id: "q_coffee_cost",
-        text: "Couldn't the billions spent on warehousing coffee be better used on healthcare or education? How do you justify this massive, odd expenditure?",
-        depth: 0,
-        answers: [
-          {
-            id: "a_cost_challenge",
-            type: AnswerType.Challenge,
-            text: "It's not an either/or proposition. We can and must do both. A stable economy, which this ensures, is what pays for those other programs.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+    rootQuestion: {
+      id: "q_coffee_cost",
+      text: "Couldn't the billions spent on warehousing coffee be better used on healthcare or education? How do you justify this massive, odd expenditure?",
+      answers: [
+        {
+          id: "a_cost_challenge",
+          type: AnswerType.Challenge,
+          text: "It's not an either/or proposition. We can and must do both. A stable economy, which this ensures, is what pays for those other programs.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
-            outcomeModifiers: {
-              outcome_coffee_price_shock_buffer:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
-            },
           },
-          {
-            id: "a_cost_admit",
-            type: AnswerType.Admit,
-            text: "The cost is significant, and it's a valid concern. Treasury is exploring cost-saving storage solutions to minimize the taxpayer burden.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+          outcomeModifiers: {
+            outcome_coffee_price_shock_buffer:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_coffee_spoilage_scandal:
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+          },
+        },
+        {
+          id: "a_cost_admit",
+          type: AnswerType.Admit,
+          text: "The cost is significant, and it's a valid concern. Treasury is exploring cost-saving storage solutions to minimize the taxpayer burden.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal:
-                OutcomeModifierWeight.ModeratePositive, // +6
-              outcome_coffee_market_meddling:
-                OutcomeModifierWeight.ModerateNegative, // -6
-            },
-            followUpId: "q_coffee_storage_details",
           },
-        ],
-      },
-      q_coffee_storage_details: {
-        id: "q_coffee_storage_details",
+          outcomeModifiers: {
+            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+            outcome_coffee_spoilage_scandal:
+              OutcomeModifierWeight.ModeratePositive, // +6
+            outcome_coffee_market_meddling:
+              OutcomeModifierWeight.ModerateNegative, // -6
+          },
+          followUpId: "q_coffee_storage_oversight",
+        },
+        {
+          id: "a_cost_inform",
+          type: AnswerType.Inform,
+          text: "According to economic analysis, coffee price volatility costs the economy $3.2 billion annually in lost productivity. This reserve prevents larger economic shocks.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.Neutral },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.Neutral,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+            },
+          },
+          outcomeModifiers: {
+            outcome_coffee_price_shock_buffer:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+            outcome_coffee_market_meddling:
+              OutcomeModifierWeight.SlightNegative, // -4
+          },
+          followUpId: "q_coffee_health_benefits",
+        },
+      ],
+    },
+    secondaryQuestions: [
+      {
+        id: "q_coffee_storage_oversight",
         text: "What 'cost-saving' solutions? Are you talking about outsourcing the reserve to private companies, potentially creating a new corruption risk?",
-        depth: 1,
         answers: [
           {
             id: "a_storage_reassure",
@@ -84,7 +108,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.ModeratePositive, // +6
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
-            followUpId: "q_coffee_timeline",
+            followUpId: "q_coffee_implementation_timeline",
           },
           {
             id: "a_storage_deny",
@@ -94,6 +118,9 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -107,12 +134,101 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
             },
           },
+          {
+            id: "a_storage_inform",
+            type: AnswerType.Inform,
+            text: "We're reviewing public-private partnerships, but with ironclad transparency requirements. Any private involvement would be fully audited and publicly reported.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Neutral },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Neutral,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
         ],
       },
-      q_coffee_timeline: {
-        id: "q_coffee_timeline",
+      {
+        id: "q_coffee_health_benefits",
+        text: "What about health implications? Are you encouraging caffeine dependency by ensuring coffee availability?",
+        answers: [
+          {
+            id: "a_health_reassure",
+            type: AnswerType.Reassure,
+            text: "Research shows moderate coffee consumption has health benefits. We're not encouraging dependency - we're preventing withdrawal symptoms that could affect millions of Americans.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightNegative, // -4
+            },
+            followUpId: "q_coffee_worker_protection",
+          },
+          {
+            id: "a_health_challenge",
+            type: AnswerType.Challenge,
+            text: "That's a false choice. Coffee has documented health benefits and is part of American culture. Supply disruptions would create real physiological and economic harm.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightNegative, // -4
+            },
+          },
+          {
+            id: "a_health_inform",
+            type: AnswerType.Inform,
+            text: "HHS data shows 85% of Americans consume coffee daily. Medical research indicates moderate consumption reduces risks of several diseases. This is about public health stability.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Neutral },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Neutral,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+    ],
+    tertiaryQuestions: [
+      {
+        id: "q_coffee_implementation_timeline",
         text: "How long will this 'oversight' take to implement? Meanwhile, coffee prices could spike and Americans will blame the administration for delays.",
-        depth: 2,
         answers: [
           {
             id: "a_timeline_reassure",
@@ -154,8 +270,88 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
             },
           },
+          {
+            id: "a_timeline_deflect",
+            type: AnswerType.Deflect,
+            text: "We're moving as quickly as responsible governance allows. The alternative - doing nothing while prices potentially spike - would be far worse for American families.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Neutral },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Neutral,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
         ],
       },
-    },
+      {
+        id: "q_coffee_worker_protection",
+        text: "What about coffee shop workers? If the reserve stabilizes prices, could their tips and wages be affected?",
+        answers: [
+          {
+            id: "a_worker_reassure",
+            type: AnswerType.Reassure,
+            text: "Price stability actually helps service workers by ensuring consistent customer traffic. When coffee prices spike, people cut back on café visits, hurting workers' income.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightNegative, // -4
+            },
+          },
+          {
+            id: "a_worker_inform",
+            type: AnswerType.Inform,
+            text: "The coffee industry employs 1.6 million workers. Supply stability protects these jobs from boom-bust cycles that typically hurt workers most.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.Neutral },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Neutral,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+          {
+            id: "a_worker_deflect",
+            type: AnswerType.Deflect,
+            text: "We're focused on preventing the kind of supply disruption that would close businesses and eliminate jobs entirely. That's the real threat to workers.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            },
+          },
+        ],
+      },
+    ],
   },
 };

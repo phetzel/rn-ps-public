@@ -1,5 +1,5 @@
 import { AnswerType, CabinetStaticId } from "~/types";
-import type { SituationPreferences } from "~/types";
+import type { SituationPreferences } from "~/lib/schemas/situations";
 
 export const strategicCoffeeReservePreferences: SituationPreferences = {
   president: {

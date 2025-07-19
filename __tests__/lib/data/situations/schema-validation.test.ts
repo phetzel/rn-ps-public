@@ -1,5 +1,6 @@
 import { situationsData } from "~/lib/data/situations";
 import { situationDataSchema } from "~/lib/schemas";
+import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
 describe("Situation Data Schema Validation", () => {
   describe("Overall Schema Compliance", () => {
@@ -51,7 +52,8 @@ describe("Situation Data Schema Validation", () => {
     test("question IDs are unique within each exchange", () => {
       situationsData.forEach((situation, index) => {
         situation.exchanges.forEach((exchange, exchangeIndex) => {
-          const questionIds = Object.keys(exchange.content.questions);
+          const allQuestions = getAllQuestionsFromExchange(exchange.content);
+          const questionIds = allQuestions.map((q) => q.id);
           const uniqueIds = new Set(questionIds);
 
           expect(uniqueIds.size).toBe(questionIds.length);
@@ -62,14 +64,13 @@ describe("Situation Data Schema Validation", () => {
     test("answer IDs are unique within each question", () => {
       situationsData.forEach((situation, index) => {
         situation.exchanges.forEach((exchange, exchangeIndex) => {
-          Object.values(exchange.content.questions).forEach(
-            (question, questionIndex) => {
-              const answerIds = question.answers.map((a) => a.id);
-              const uniqueIds = new Set(answerIds);
+          const allQuestions = getAllQuestionsFromExchange(exchange.content);
+          allQuestions.forEach((question, questionIndex) => {
+            const answerIds = question.answers.map((a) => a.id);
+            const uniqueIds = new Set(answerIds);
 
-              expect(uniqueIds.size).toBe(answerIds.length);
-            }
-          );
+            expect(uniqueIds.size).toBe(answerIds.length);
+          });
         });
       });
     });

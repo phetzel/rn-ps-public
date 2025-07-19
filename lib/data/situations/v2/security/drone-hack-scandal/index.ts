@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { droneHackScandalOutcomes } from "./droneHackScandalOutcomes";
 import { droneHackScandalPreferences } from "./droneHackScandalPreferences";
 import { droneHackScandalExchanges } from "./exchanges";
 
-export const droneHackScandal: SituationData = {
+export const droneHackScandal: SituationDataType = {
   trigger: {
     staticKey: "drone_hack_scandal",
     type: SituationType.Security,

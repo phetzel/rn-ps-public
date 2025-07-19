@@ -1,12 +1,8 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import { situationsData } from "~/lib/data/situations";
-import {
-  SituationType,
-  AnswerType,
-  CabinetStaticId,
-  SubgroupStaticId,
-} from "~/types";
+import { SituationType } from "~/types";
+import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
 interface SituationBalanceRow {
   name: string;
@@ -37,16 +33,15 @@ interface SituationTypeBalance {
  * Analyzes a single situation for balance metrics
  */
 function analyzeSituation(situation: any): SituationBalanceRow {
-  // Entity involvement analysis
   const cabinetInvolved = new Set<string>();
-  const entityImpacts = new Map<
-    string,
-    { positive: number; negative: number; totalValue: number }
-  >();
+  const entitiesAffected = new Set<string>();
+  const preferenceTypes = new Set<string>();
+  // const balanceIssues: string[] = [];
 
   // Track cabinet involvement from exchanges
   situation.exchanges.forEach((exchange: any) => {
-    Object.values(exchange.content.questions).forEach((question: any) => {
+    const allQuestions = getAllQuestionsFromExchange(exchange.content);
+    allQuestions.forEach((question: any) => {
       question.answers.forEach((answer: any) => {
         if (answer.impacts.cabinet) {
           Object.keys(answer.impacts.cabinet).forEach((id) =>
@@ -58,134 +53,78 @@ function analyzeSituation(situation: any): SituationBalanceRow {
   });
 
   // Preference analysis - Format: "president: admit, hhs: deflect"
-  const preferenceMap: string[] = [];
-  const preferences = situation.content.preferences;
-
-  // Check president preferences
-  if (preferences.president) {
-    preferenceMap.push(`president: ${preferences.president.answerType}`);
+  const preferences: string[] = [];
+  if (situation.content.preferences.president) {
+    preferences.push(
+      `president: ${situation.content.preferences.president.answerType}`
+    );
+    preferenceTypes.add(situation.content.preferences.president.answerType);
   }
 
-  // Check cabinet preferences
-  if (preferences.cabinet) {
-    Object.entries(preferences.cabinet).forEach(
-      ([cabinetId, cabinetPref]: [string, any]) => {
-        if (cabinetPref?.preference) {
-          preferenceMap.push(
-            `${cabinetId}: ${cabinetPref.preference.answerType}`
-          );
-        }
+  if (situation.content.preferences.cabinet) {
+    Object.entries(situation.content.preferences.cabinet).forEach(
+      ([id, pref]: [string, any]) => {
+        preferences.push(`${id}: ${pref.preference.answerType}`);
+        preferenceTypes.add(pref.preference.answerType);
       }
     );
   }
 
-  // Outcome analysis with detailed entity impact tracking
-  const outcomes = situation.content.outcomes;
-  const outcomeDetails: string[] = [];
-  let hasPositiveOutcome = false;
-  let hasNegativeOutcome = false;
-
-  outcomes.forEach((outcome: any) => {
-    const entityEffects: string[] = [];
-    let outcomeTotal = 0;
-
-    // Track cabinet approval changes
-    if (outcome.consequences.approvalChanges.cabinet) {
-      Object.entries(outcome.consequences.approvalChanges.cabinet).forEach(
-        ([id, weight]: [string, any]) => {
-          if (weight !== undefined) {
-            const symbol =
-              weight >= 3 ? "++" : weight > 0 ? "+" : weight <= -3 ? "--" : "-";
-            entityEffects.push(`${id}:${symbol}`);
-            outcomeTotal += weight;
-
-            // Track for entity impact summary
-            if (!entityImpacts.has(id)) {
-              entityImpacts.set(id, {
-                positive: 0,
-                negative: 0,
-                totalValue: 0,
-              });
-            }
-            const impact = entityImpacts.get(id)!;
-            if (weight > 0) impact.positive++;
-            else if (weight < 0) impact.negative++;
-            impact.totalValue += weight;
-          }
+  // Entity impact analysis
+  situation.exchanges.forEach((exchange: any) => {
+    const allQuestions = getAllQuestionsFromExchange(exchange.content);
+    allQuestions.forEach((question: any) => {
+      question.answers.forEach((answer: any) => {
+        if (answer.impacts.president) entitiesAffected.add("president");
+        if (answer.impacts.cabinet) {
+          Object.keys(answer.impacts.cabinet).forEach((id) =>
+            entitiesAffected.add(id)
+          );
         }
-      );
-    }
-
-    // Track subgroup approval changes
-    if (outcome.consequences.approvalChanges.subgroups) {
-      Object.entries(outcome.consequences.approvalChanges.subgroups).forEach(
-        ([id, weight]: [string, any]) => {
-          if (weight !== undefined) {
-            const symbol =
-              weight >= 3 ? "++" : weight > 0 ? "+" : weight <= -3 ? "--" : "-";
-            entityEffects.push(`${id}:${symbol}`);
-            outcomeTotal += weight;
-
-            // Track for entity impact summary
-            if (!entityImpacts.has(id)) {
-              entityImpacts.set(id, {
-                positive: 0,
-                negative: 0,
-                totalValue: 0,
-              });
-            }
-            const impact = entityImpacts.get(id)!;
-            if (weight > 0) impact.positive++;
-            else if (weight < 0) impact.negative++;
-            impact.totalValue += weight;
-          }
+        if (answer.impacts.subgroups) {
+          Object.keys(answer.impacts.subgroups).forEach((id) =>
+            entitiesAffected.add(id)
+          );
         }
-      );
-    }
-
-    // Determine outcome type
-    if (outcomeTotal > 0) {
-      hasPositiveOutcome = true;
-    } else if (outcomeTotal < 0) {
-      hasNegativeOutcome = true;
-    }
-
-    const totalSymbol =
-      outcomeTotal >= 3
-        ? "++"
-        : outcomeTotal > 0
-        ? "+"
-        : outcomeTotal <= -3
-        ? "--"
-        : outcomeTotal < 0
-        ? "-"
-        : "0";
-    outcomeDetails.push(
-      `**${outcome.title}** (${totalSymbol}): ${entityEffects.join(", ")}`
-    );
+        if (answer.impacts.journalists) {
+          Object.keys(answer.impacts.journalists).forEach((id) =>
+            entitiesAffected.add(id)
+          );
+        }
+      });
+    });
   });
 
-  // Create entities affected summary
-  const entitiesAffectedList: string[] = [];
-  entityImpacts.forEach((impact, entityId) => {
-    entitiesAffectedList.push(
-      `${entityId}:(+${impact.positive}/-${impact.negative}/=${impact.totalValue})`
-    );
-  });
+  // Outcome balance analysis
+  const outcomeWeights = situation.content.outcomes.map((o: any) => o.weight);
+  const totalWeight = outcomeWeights.reduce(
+    (sum: number, w: number) => sum + w,
+    0
+  );
+  const minWeight = Math.min(...outcomeWeights);
+  const maxWeight = Math.max(...outcomeWeights);
+  const weightRange = maxWeight - minWeight;
 
-  // Create formatted strings for display
-  const outcomeBalance = outcomeDetails.join("<br/>") || "No outcomes";
-  const preferenceDiversityDisplay = preferenceMap.join(", ") || "None";
-  const entitiesAffectedDisplay = entitiesAffectedList.join(", ") || "None";
+  const outcomeBalance =
+    totalWeight !== 100
+      ? `⚠️ ${totalWeight}% (should be 100%)`
+      : weightRange > 50
+      ? `⚠️ unbalanced (${minWeight}-${maxWeight}%)`
+      : `✅ balanced (${minWeight}-${maxWeight}%)`;
 
   return {
     name: situation.title,
-    description: situation.description,
-    cabinetInvolved: Array.from(cabinetInvolved).join(", ") || "None",
-    preferenceDiversity: preferenceDiversityDisplay,
-    entitiesAffected: entitiesAffectedDisplay,
+    description:
+      situation.description.length > 80
+        ? situation.description.substring(0, 80) + "..."
+        : situation.description,
+    cabinetInvolved: Array.from(cabinetInvolved).join(", "),
+    preferenceDiversity: `${preferenceTypes.size} types: ${Array.from(
+      preferenceTypes
+    ).join(", ")}`,
+    entitiesAffected: `${entitiesAffected.size} entities`,
     outcomeBalance,
-    // balanceIssues, // Commented out
+    // balanceIssues,
   };
 }
 
@@ -193,124 +132,169 @@ function analyzeSituation(situation: any): SituationBalanceRow {
  * Groups situations by type and analyzes each type
  */
 function analyzeSituationsByType(): SituationTypeBalance[] {
-  const typeGroups = new Map<SituationType, any[]>();
+  const typeMap = new Map<SituationType, any[]>();
 
   // Group situations by type
   situationsData.forEach((situation) => {
-    if (!typeGroups.has(situation.type)) {
-      typeGroups.set(situation.type, []);
+    const type = situation.type as SituationType;
+    if (!typeMap.has(type)) {
+      typeMap.set(type, []);
     }
-    typeGroups.get(situation.type)!.push(situation);
+    typeMap.get(type)!.push(situation);
   });
 
+  const results: SituationTypeBalance[] = [];
+
   // Analyze each type
-  return Array.from(typeGroups.entries()).map(([type, situations]) => {
+  typeMap.forEach((situations, type) => {
     const situationRows = situations.map(analyzeSituation);
 
     // Calculate summary statistics
-    const totalSituations = situations.length;
-    const cabinetCoverage = new Map<string, number>();
-    const impactedEntities = new Map<string, number>();
+    const cabinetUsage = new Map<string, number>();
+    const entityUsage = new Map<string, number>();
     let missingPositiveCount = 0;
     let missingNegativeCount = 0;
+    const issues: string[] = [];
 
-    situationRows.forEach((row) => {
-      // Track cabinet involvement counts
-      if (row.cabinetInvolved !== "None") {
-        row.cabinetInvolved.split(", ").forEach((id: string) => {
-          cabinetCoverage.set(id, (cabinetCoverage.get(id) || 0) + 1);
-        });
-      }
-
-      // Track entity impacts counts
-      if (row.entitiesAffected !== "None") {
-        // Parse entity impacts format: "entity:(+1/-2/=3)"
-        const entityMatches = row.entitiesAffected.match(/(\w+):\(/g);
-        if (entityMatches) {
-          entityMatches.forEach((match) => {
-            const entityId = match.replace(":(", "");
-            impactedEntities.set(
-              entityId,
-              (impactedEntities.get(entityId) || 0) + 1
-            );
+    situations.forEach((situation) => {
+      // Track cabinet usage
+      situation.exchanges.forEach((exchange: any) => {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((question: any) => {
+          question.answers.forEach((answer: any) => {
+            if (answer.impacts.cabinet) {
+              Object.keys(answer.impacts.cabinet).forEach((id) => {
+                cabinetUsage.set(id, (cabinetUsage.get(id) || 0) + 1);
+              });
+            }
           });
-        }
+        });
+      });
+
+      // Track entity usage
+      situation.exchanges.forEach((exchange: any) => {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((question: any) => {
+          question.answers.forEach((answer: any) => {
+            if (answer.impacts.president) {
+              entityUsage.set(
+                "president",
+                (entityUsage.get("president") || 0) + 1
+              );
+            }
+            if (answer.impacts.cabinet) {
+              Object.keys(answer.impacts.cabinet).forEach((id) => {
+                entityUsage.set(id, (entityUsage.get(id) || 0) + 1);
+              });
+            }
+            if (answer.impacts.subgroups) {
+              Object.keys(answer.impacts.subgroups).forEach((id) => {
+                entityUsage.set(id, (entityUsage.get(id) || 0) + 1);
+              });
+            }
+            if (answer.impacts.journalists) {
+              Object.keys(answer.impacts.journalists).forEach((id) => {
+                entityUsage.set(id, (entityUsage.get(id) || 0) + 1);
+              });
+            }
+          });
+        });
+      });
+
+      // Check for missing positive/negative outcomes
+      const outcomeWeights = situation.content.outcomes.map(
+        (o: any) => o.weight
+      );
+      const totalWeight = outcomeWeights.reduce(
+        (sum: number, w: number) => sum + w,
+        0
+      );
+
+      if (totalWeight !== 100) {
+        issues.push(
+          `${situation.title}: Weight total ${totalWeight}% (should be 100%)`
+        );
       }
 
-      // Count missing outcomes based on outcome text analysis
-      if (
-        row.outcomeBalance === "No outcomes" ||
-        !row.outcomeBalance.includes("(+")
-      ) {
-        missingPositiveCount++;
-      }
-      if (
-        row.outcomeBalance === "No outcomes" ||
-        !row.outcomeBalance.includes("(-")
-      ) {
-        missingNegativeCount++;
-      }
+      const positiveOutcomes = situation.content.outcomes.filter(
+        (o: any) =>
+          o.consequences?.approvalChanges?.cabinet ||
+          o.consequences?.approvalChanges?.subgroups
+      ).length;
+
+      const negativeOutcomes = situation.content.outcomes.filter(
+        (o: any) =>
+          o.consequences?.approvalChanges?.cabinet ||
+          o.consequences?.approvalChanges?.subgroups
+      ).length;
+
+      if (positiveOutcomes === 0) missingPositiveCount++;
+      if (negativeOutcomes === 0) missingNegativeCount++;
     });
 
-    return {
+    results.push({
       type,
       situations: situationRows,
       summary: {
-        totalSituations,
+        totalSituations: situations.length,
         missingPositiveCount,
         missingNegativeCount,
         entityCoverage: {
-          cabinet: cabinetCoverage,
-          impactedEntities,
+          cabinet: cabinetUsage,
+          impactedEntities: entityUsage,
         },
-        commonIssues: [], // Empty since we're not tracking individual issues
+        commonIssues: issues,
       },
-    };
+    });
   });
+
+  return results;
 }
 
 /**
  * Generates markdown table for a situation type
  */
 function generateMarkdownTable(typeBalance: SituationTypeBalance): string {
-  const { type, situations, summary } = typeBalance;
+  let markdown = `## ${typeBalance.type} (${typeBalance.summary.totalSituations} situations)\n\n`;
 
-  let markdown = `# ${
-    type.charAt(0).toUpperCase() + type.slice(1).replace("_", " ")
-  } Situations\n\n`;
+  markdown += `| Situation | Description | Cabinet Involved | Preference Diversity | Entities Affected | Outcome Balance |\n`;
+  markdown += `|-----------|-------------|------------------|---------------------|-------------------|----------------|\n`;
 
-  // Summary section
-  markdown += `## Summary\n\n`;
-  markdown += `- **Total Situations:** ${summary.totalSituations}\n`;
-  markdown += `- **Missing Positive Outcomes:** ${summary.missingPositiveCount} situations\n`;
-  markdown += `- **Missing Negative Outcomes:** ${summary.missingNegativeCount} situations\n`;
-
-  // Cabinet coverage with counts
-  const cabinetList = Array.from(summary.entityCoverage.cabinet.entries())
-    .map(([id, count]) => `${id}(${count})`)
-    .join(", ");
-  markdown += `- **Cabinet Coverage:** ${cabinetList || "None"}\n`;
-
-  // Impacted entities with counts
-  const entitiesList = Array.from(
-    summary.entityCoverage.impactedEntities.entries()
-  )
-    .map(([id, count]) => `${id}(${count})`)
-    .join(", ");
-  markdown += `- **Impacted Entities:** ${entitiesList || "None"}\n`;
-
-  markdown += `\n## Situation Balance Details\n\n`;
-
-  // Main balance table - updated columns
-  markdown += `| Name | Description | Cabinet Involved | Preference Diversity | Entities Affected | Outcome Balance |\n`;
-  markdown += `|------|-------------|------------------|---------------------|-------------------|----------------|\n`;
-
-  // Table rows
-  situations.forEach((row) => {
-    markdown += `| ${row.name} | ${row.description} | ${row.cabinetInvolved} | ${row.preferenceDiversity} | ${row.entitiesAffected} | ${row.outcomeBalance} |\n`;
+  typeBalance.situations.forEach((situation) => {
+    markdown += `| ${situation.name} | ${situation.description} | ${situation.cabinetInvolved} | ${situation.preferenceDiversity} | ${situation.entitiesAffected} | ${situation.outcomeBalance} |\n`;
   });
 
-  return markdown;
+  markdown += `\n### Summary\n`;
+  markdown += `- **Total Situations**: ${typeBalance.summary.totalSituations}\n`;
+  markdown += `- **Missing Positive Outcomes**: ${typeBalance.summary.missingPositiveCount}\n`;
+  markdown += `- **Missing Negative Outcomes**: ${typeBalance.summary.missingNegativeCount}\n`;
+
+  if (typeBalance.summary.commonIssues.length > 0) {
+    markdown += `\n### Common Issues\n`;
+    typeBalance.summary.commonIssues.forEach((issue) => {
+      markdown += `- ${issue}\n`;
+    });
+  }
+
+  markdown += `\n### Cabinet Coverage\n`;
+  const sortedCabinet = Array.from(
+    typeBalance.summary.entityCoverage.cabinet.entries()
+  ).sort((a, b) => b[1] - a[1]);
+
+  sortedCabinet.forEach(([id, count]) => {
+    markdown += `- **${id}**: ${count} impacts\n`;
+  });
+
+  markdown += `\n### Entity Coverage\n`;
+  const sortedEntities = Array.from(
+    typeBalance.summary.entityCoverage.impactedEntities.entries()
+  ).sort((a, b) => b[1] - a[1]);
+
+  sortedEntities.forEach(([id, count]) => {
+    markdown += `- **${id}**: ${count} impacts\n`;
+  });
+
+  return markdown + "\n";
 }
 
 /**
@@ -329,18 +313,10 @@ export function runSituationBalanceAnalysis(): void {
 
   const typeBalances = analyzeSituationsByType();
 
-  typeBalances.forEach((typeBalance) => {
-    const markdown = generateMarkdownTable(typeBalance);
-    const filename = `${typeBalance.type.replace("_", "-")}.md`;
-    const filepath = join(outputDir, filename);
+  let fullMarkdown = `# Situation Balance Analysis\n\n`;
+  fullMarkdown += `Generated on: ${new Date().toISOString()}\n\n`;
 
-    writeFileSync(filepath, markdown);
-    console.log(
-      `📝 Generated ${filename} with ${typeBalance.situations.length} situations`
-    );
-  });
-
-  // Generate overall summary
+  // Overall summary
   const totalSituations = typeBalances.reduce(
     (sum, tb) => sum + tb.summary.totalSituations,
     0
@@ -354,24 +330,34 @@ export function runSituationBalanceAnalysis(): void {
     0
   );
 
-  let summaryMarkdown = `# Situation Balance Analysis Summary\n\n`;
-  summaryMarkdown += `**Total Situations:** ${totalSituations}\n`;
-  summaryMarkdown += `**Situations Missing Positive Outcomes:** ${totalMissingPositive}\n`;
-  summaryMarkdown += `**Situations Missing Negative Outcomes:** ${totalMissingNegative}\n\n`;
+  fullMarkdown += `## Overall Summary\n`;
+  fullMarkdown += `- **Total Situations**: ${totalSituations}\n`;
+  fullMarkdown += `- **Situations Missing Positive Outcomes**: ${totalMissingPositive}\n`;
+  fullMarkdown += `- **Situations Missing Negative Outcomes**: ${totalMissingNegative}\n\n`;
 
-  summaryMarkdown += `## Balance Priority\n\n`;
-  summaryMarkdown += `1. **High Priority:** Add positive outcomes to ${totalMissingPositive} situations\n`;
-  summaryMarkdown += `2. **Medium Priority:** Add negative outcomes to ${totalMissingNegative} situations\n\n`;
-
-  summaryMarkdown += `## Situations by Type\n\n`;
-
-  typeBalances.forEach((tb) => {
-    const issues =
-      tb.summary.missingPositiveCount + tb.summary.missingNegativeCount;
-    summaryMarkdown += `- **${tb.type}:** ${tb.summary.totalSituations} situations, ${issues} with missing outcome issues\n`;
+  // Generate table for each type
+  typeBalances.forEach((typeBalance) => {
+    fullMarkdown += generateMarkdownTable(typeBalance);
   });
 
-  writeFileSync(join(outputDir, "README.md"), summaryMarkdown);
+  // Global cabinet usage
+  const globalCabinetUsage = new Map<string, number>();
+  typeBalances.forEach((tb) => {
+    tb.summary.entityCoverage.cabinet.forEach((count, id) => {
+      globalCabinetUsage.set(id, (globalCabinetUsage.get(id) || 0) + count);
+    });
+  });
+
+  fullMarkdown += `## Global Cabinet Usage\n`;
+  const sortedGlobalCabinet = Array.from(globalCabinetUsage.entries()).sort(
+    (a, b) => b[1] - a[1]
+  );
+
+  sortedGlobalCabinet.forEach(([id, count]) => {
+    fullMarkdown += `- **${id}**: ${count} total impacts\n`;
+  });
+
+  writeFileSync(join(outputDir, "README.md"), fullMarkdown);
 
   console.log(`✅ Analysis complete! Check ${outputDir} for detailed reports.`);
 }

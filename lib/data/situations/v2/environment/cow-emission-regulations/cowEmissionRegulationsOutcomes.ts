@@ -3,7 +3,7 @@ import {
   CabinetStaticId,
   SubgroupStaticId,
 } from "~/types";
-import type { SituationOutcome } from "~/types";
+import type { SituationOutcome } from "~/lib/schemas/situations";
 
 export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
   {

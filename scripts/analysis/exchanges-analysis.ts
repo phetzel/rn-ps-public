@@ -1,6 +1,6 @@
 import { situationsData } from "~/lib/data/situations";
 import { AnswerType } from "~/types";
-import { getMetadataSection } from "../util/file-utils";
+import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
 export interface ExchangesAnalysis {
   // General stats
@@ -28,25 +28,13 @@ export interface ExchangesAnalysis {
   averageDepthPercentage: number;
 }
 
-/**
- * Analyzes exchange data including questions, answers, and consequences
- */
 export function analyzeExchangesData(): ExchangesAnalysis {
   let totalExchanges = 0;
   let totalQuestions = 0;
   let totalAnswers = 0;
   let answersWithFollowups = 0;
 
-  const consequencesByAnswerType: Record<
-    string,
-    {
-      totalAnswers: number;
-      withConsequences: number;
-      positiveConsequences: number;
-      negativeConsequences: number;
-      averageImpactEntities: number;
-    }
-  > = {};
+  const consequencesByAnswerType: Record<string, any> = {};
 
   // Initialize answer type tracking
   Object.values(AnswerType).forEach((answerType) => {
@@ -63,7 +51,7 @@ export function analyzeExchangesData(): ExchangesAnalysis {
     totalExchanges += situation.exchanges.length;
 
     situation.exchanges.forEach((exchange) => {
-      const questions = Object.values(exchange.content.questions);
+      const questions = getAllQuestionsFromExchange(exchange.content);
       totalQuestions += questions.length;
 
       questions.forEach((question) => {
@@ -72,69 +60,69 @@ export function analyzeExchangesData(): ExchangesAnalysis {
         // Analyze each answer
         question.answers.forEach((answer) => {
           const answerType = answer.type;
+          consequencesByAnswerType[answerType].totalAnswers++;
 
-          // Safety check: ensure we have this answer type in our tracking
-          if (!consequencesByAnswerType[answerType]) {
-            console.warn(`Unknown answer type found: ${answerType}`);
-            consequencesByAnswerType[answerType] = {
-              totalAnswers: 0,
-              withConsequences: 0,
-              positiveConsequences: 0,
-              negativeConsequences: 0,
-              averageImpactEntities: 0,
-            };
-          }
-
-          const stats = consequencesByAnswerType[answerType];
-          stats.totalAnswers++;
-
-          // Check for follow-ups
+          // Track follow-ups
           if (answer.followUpId) {
             answersWithFollowups++;
           }
 
-          // Count consequences
-          let hasConsequences = false;
-          let positiveCount = 0;
-          let negativeCount = 0;
+          // Count impact entities
           let impactEntities = 0;
-
-          // Check president impacts
-          if (answer.impacts.president?.weight !== undefined) {
-            hasConsequences = true;
-            impactEntities++;
-            if (answer.impacts.president.weight > 0) positiveCount++;
-            else if (answer.impacts.president.weight < 0) negativeCount++;
-          }
-
-          // Check cabinet impacts
+          if (answer.impacts.president) impactEntities++;
           if (answer.impacts.cabinet) {
-            Object.values(answer.impacts.cabinet).forEach((impact) => {
-              if (impact?.weight !== undefined) {
-                hasConsequences = true;
-                impactEntities++;
-                if (impact.weight > 0) positiveCount++;
-                else if (impact.weight < 0) negativeCount++;
-              }
-            });
+            impactEntities += Object.keys(answer.impacts.cabinet).length;
+          }
+          if (answer.impacts.journalists) {
+            impactEntities += Object.keys(answer.impacts.journalists).length;
           }
 
-          if (hasConsequences) {
-            stats.withConsequences++;
-            stats.positiveConsequences += positiveCount;
-            stats.negativeConsequences += negativeCount;
-            stats.averageImpactEntities += impactEntities;
+          // Update consequences tracking
+          if (impactEntities > 0) {
+            consequencesByAnswerType[answerType].withConsequences++;
+            consequencesByAnswerType[answerType].averageImpactEntities +=
+              impactEntities;
+
+            // Categorize as positive/negative based on impacts
+            let hasPositive = false;
+            let hasNegative = false;
+
+            if (answer.impacts.president && answer.impacts.president.weight > 0)
+              hasPositive = true;
+            if (answer.impacts.president && answer.impacts.president.weight < 0)
+              hasNegative = true;
+
+            if (answer.impacts.cabinet) {
+              Object.values(answer.impacts.cabinet).forEach((impact) => {
+                if (impact.weight > 0) hasPositive = true;
+                if (impact.weight < 0) hasNegative = true;
+              });
+            }
+
+            if (answer.impacts.journalists) {
+              Object.values(answer.impacts.journalists).forEach((impact) => {
+                if (impact.weight > 0) hasPositive = true;
+                if (impact.weight < 0) hasNegative = true;
+              });
+            }
+
+            if (hasPositive)
+              consequencesByAnswerType[answerType].positiveConsequences++;
+            if (hasNegative)
+              consequencesByAnswerType[answerType].negativeConsequences++;
           }
         });
       });
     });
   });
 
-  // Calculate averages for impact entities
-  Object.values(consequencesByAnswerType).forEach((stats) => {
-    if (stats.withConsequences > 0) {
-      stats.averageImpactEntities =
-        stats.averageImpactEntities / stats.withConsequences;
+  // Calculate averages
+  Object.keys(consequencesByAnswerType).forEach((answerType) => {
+    const data = consequencesByAnswerType[answerType];
+    if (data.withConsequences > 0) {
+      data.averageImpactEntities = Number(
+        (data.averageImpactEntities / data.withConsequences).toFixed(2)
+      );
     }
   });
 
@@ -142,68 +130,79 @@ export function analyzeExchangesData(): ExchangesAnalysis {
     totalExchanges,
     totalQuestions,
     totalAnswers,
-    averageExchangesPerSituation: totalExchanges / situationsData.length,
-    averageQuestionsPerExchange: totalQuestions / totalExchanges,
-    averageAnswersPerQuestion: totalAnswers / totalQuestions,
+    averageExchangesPerSituation: Number(
+      (totalExchanges / situationsData.length).toFixed(2)
+    ),
+    averageQuestionsPerExchange: Number(
+      (totalQuestions / totalExchanges).toFixed(2)
+    ),
+    averageAnswersPerQuestion: Number(
+      (totalAnswers / totalQuestions).toFixed(2)
+    ),
     consequencesByAnswerType,
     answersWithFollowups,
-    averageDepthPercentage:
-      totalAnswers > 0 ? (answersWithFollowups / totalAnswers) * 100 : 0,
+    averageDepthPercentage: Number(
+      ((answersWithFollowups / totalAnswers) * 100).toFixed(1)
+    ),
   };
 }
 
-/**
- * Generates markdown content for exchanges analysis
- */
 export function generateExchangesMarkdown(): string {
   const data = analyzeExchangesData();
-  let content = getMetadataSection(situationsData.length);
 
-  content += `## Exchanges Analysis
+  let markdown = `# Exchanges Analysis
 
-### General Statistics
-- **Total Exchanges:** ${data.totalExchanges}
-- **Total Questions:** ${data.totalQuestions}
-- **Total Answers:** ${data.totalAnswers}
-- **Average Exchanges per Situation:** ${data.averageExchangesPerSituation.toFixed(
-    2
-  )}
-- **Average Questions per Exchange:** ${data.averageQuestionsPerExchange.toFixed(
-    2
-  )}
-- **Average Answers per Question:** ${data.averageAnswersPerQuestion.toFixed(2)}
+## General Statistics
+- **Total Exchanges**: ${data.totalExchanges}
+- **Total Questions**: ${data.totalQuestions}
+- **Total Answers**: ${data.totalAnswers}
+- **Average Exchanges per Situation**: ${data.averageExchangesPerSituation}
+- **Average Questions per Exchange**: ${data.averageQuestionsPerExchange}
+- **Average Answers per Question**: ${data.averageAnswersPerQuestion}
 
-### Question Depth Analysis
-- **Answers with Follow-ups:** ${data.answersWithFollowups} of ${
-    data.totalAnswers
-  }
-- **Average Depth Percentage:** ${data.averageDepthPercentage.toFixed(1)}%
+## Question Depth Analysis
+- **Answers with Follow-ups**: ${data.answersWithFollowups}
+- **Average Depth Percentage**: ${data.averageDepthPercentage}%
 
-### Consequences by Answer Type
+## Consequences by Answer Type
+
+| Answer Type | Total | With Consequences | Positive | Negative | Avg Impact Entities |
+|-------------|-------|-------------------|----------|----------|-------------------|
 `;
 
-  // Sort answer types by total answers (descending)
-  const sortedAnswerTypes = Object.entries(data.consequencesByAnswerType).sort(
-    ([, a], [, b]) => b.totalAnswers - a.totalAnswers
-  );
-
-  sortedAnswerTypes.forEach(([answerType, stats]) => {
-    const consequenceRate =
+  Object.entries(data.consequencesByAnswerType).forEach(([type, stats]) => {
+    const withConseqPercent =
       stats.totalAnswers > 0
-        ? (stats.withConsequences / stats.totalAnswers) * 100
-        : 0;
+        ? ((stats.withConsequences / stats.totalAnswers) * 100).toFixed(1)
+        : "0.0";
 
-    content += `
-#### ${answerType.toUpperCase()}
-- **Total Answers:** ${stats.totalAnswers}
-- **With Consequences:** ${stats.withConsequences} (${consequenceRate.toFixed(
-      1
-    )}%)
-- **Positive Consequences:** ${stats.positiveConsequences}
-- **Negative Consequences:** ${stats.negativeConsequences}
-- **Average Impact Entities:** ${stats.averageImpactEntities.toFixed(2)}
-`;
+    markdown += `| ${type} | ${stats.totalAnswers} | ${stats.withConsequences} (${withConseqPercent}%) | ${stats.positiveConsequences} | ${stats.negativeConsequences} | ${stats.averageImpactEntities} |\n`;
   });
 
-  return content;
+  markdown += `\n## Analysis Notes
+
+${
+  data.averageQuestionsPerExchange === 5
+    ? "✅ Perfect normalized structure - all exchanges have exactly 5 questions."
+    : `⚠️ Exchange structure not normalized - average ${data.averageQuestionsPerExchange} questions per exchange.`
+}
+
+${
+  data.averageDepthPercentage < 30
+    ? "⚠️ Low follow-up percentage - consider adding more question depth."
+    : data.averageDepthPercentage > 50
+    ? "⚠️ High follow-up percentage - might be too complex for players."
+    : "✅ Good balance of question depth with follow-ups."
+}
+
+${
+  data.averageAnswersPerQuestion < 3
+    ? "⚠️ Low answer variety - consider adding more options per question."
+    : data.averageAnswersPerQuestion > 4
+    ? "⚠️ High answer variety - might overwhelm players."
+    : "✅ Good answer variety per question."
+}
+`;
+
+  return markdown;
 }

@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { teachersStrikeBackOutcomes } from "./teachersStrikeBackOutcomes";
 import { teachersStrikeBackPreferences } from "./teachersStrikeBackPreferences";
 import { teachersStrikeBackExchanges } from "./exchanges";
 
-export const teachersStrikeBack: SituationData = {
+export const teachersStrikeBack: SituationDataType = {
   trigger: {
     staticKey: "teachers_strike_back",
     type: SituationType.DomesticPolicy,

@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { recordBreakingHeatwaveOutcomes } from "./recordBreakingHeatwaveOutcomes";
 import { recordBreakingHeatwavePreferences } from "./recordBreakingHeatwavePreferences";
 import { recordBreakingHeatwaveExchanges } from "./exchanges";
 
-export const recordBreakingHeatwave: SituationData = {
+export const recordBreakingHeatwave: SituationDataType = {
   trigger: {
     staticKey: "record_breaking_heatwave",
     type: SituationType.Environment,

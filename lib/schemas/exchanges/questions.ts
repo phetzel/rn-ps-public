@@ -41,167 +41,190 @@ export const answerSchema = z
     }
   );
 
-export const questionSchema = z.object({
-  id: idSchema,
-  text: textLengthSchema.questionText,
-  depth: z.number().min(0).max(3, "Maximum depth of 3 for mobile UX"),
-  answers: z
-    .array(answerSchema)
-    .min(2, "At least 2 answers required for meaningful choice")
-    .max(5, "Maximum 5 answers for mobile UI constraints")
-    .refine(
-      (answers) => {
-        // Ensure diverse answer types
-        const types = new Set(answers.map((a) => a.type));
-        return types.size >= 2;
-      },
-      { message: "Questions must have at least 2 distinct answer types" }
-    )
-    .refine(
-      (answers) => {
-        // Ensure balanced positive/negative relationship impacts across all answers
-        const positiveWeights = [
-          ExchangeImpactWeight.StronglyPositive,
-          ExchangeImpactWeight.Positive,
-          ExchangeImpactWeight.SlightlyPositive,
-        ];
-        const negativeWeights = [
-          ExchangeImpactWeight.StronglyNegative,
-          ExchangeImpactWeight.Negative,
-          ExchangeImpactWeight.SlightlyNegative,
-        ];
+// Base question schema with all necessary validations
+export const questionSchema = z
+  .object({
+    id: idSchema,
+    text: textLengthSchema.questionText,
+    answers: z.array(answerSchema).min(3, "Questions need at least 3 answers"),
+  })
+  .refine(
+    (data) => {
+      // Ensure diverse answer types
+      const types = new Set(data.answers.map((a) => a.type));
+      return types.size >= 2;
+    },
+    { message: "Questions must have at least 2 distinct answer types" }
+  )
+  .refine(
+    (data) => {
+      // Ensure balanced positive/negative relationship impacts across all answers
+      const positiveWeights = [
+        ExchangeImpactWeight.StronglyPositive,
+        ExchangeImpactWeight.Positive,
+        ExchangeImpactWeight.SlightlyPositive,
+      ];
+      const negativeWeights = [
+        ExchangeImpactWeight.StronglyNegative,
+        ExchangeImpactWeight.Negative,
+        ExchangeImpactWeight.SlightlyNegative,
+      ];
 
-        const hasPositiveImpact = answers.some((answer) => {
-          const impacts = answer.impacts;
-          return (
-            (impacts.president?.weight &&
-              positiveWeights.includes(impacts.president.weight)) ||
-            (impacts.cabinet &&
-              Object.values(impacts.cabinet).some((impact) =>
-                positiveWeights.includes(impact.weight)
-              ))
-          );
-        });
-
-        const hasNegativeImpact = answers.some((answer) => {
-          const impacts = answer.impacts;
-          return (
-            (impacts.president?.weight &&
-              negativeWeights.includes(impacts.president.weight)) ||
-            (impacts.cabinet &&
-              Object.values(impacts.cabinet).some((impact) =>
-                negativeWeights.includes(impact.weight)
-              ))
-          );
-        });
-
-        return hasPositiveImpact && hasNegativeImpact;
-      },
-      {
-        message:
-          "Questions must have answers with both positive and negative relationship impacts for president/cabinet",
-        path: ["answers"],
-      }
-    )
-    .refine(
-      (answers) => {
-        // Ensure president doesn't have more positive than negative impacts
-        const positiveWeights = [
-          ExchangeImpactWeight.StronglyPositive,
-          ExchangeImpactWeight.Positive,
-          ExchangeImpactWeight.SlightlyPositive,
-        ];
-        const negativeWeights = [
-          ExchangeImpactWeight.StronglyNegative,
-          ExchangeImpactWeight.Negative,
-          ExchangeImpactWeight.SlightlyNegative,
-        ];
-
-        const presidentPositive = answers.filter(
-          (answer) =>
-            answer.impacts.president?.weight &&
-            positiveWeights.includes(answer.impacts.president.weight)
-        ).length;
-
-        const presidentNegative = answers.filter(
-          (answer) =>
-            answer.impacts.president?.weight &&
-            negativeWeights.includes(answer.impacts.president.weight)
-        ).length;
-
-        // Allow equal or fewer positive than negative (≤ ratio)
+      const hasPositiveImpact = data.answers.some((answer) => {
+        const impacts = answer.impacts;
         return (
-          presidentPositive <= presidentNegative || presidentPositive === 0
+          (impacts.president?.weight &&
+            positiveWeights.includes(impacts.president.weight)) ||
+          (impacts.cabinet &&
+            Object.values(impacts.cabinet).some((impact) =>
+              positiveWeights.includes(impact.weight)
+            ))
         );
-      },
-      {
-        message:
-          "President cannot have more positive than negative relationship impacts across question answers",
-        path: ["answers"],
-      }
-    )
-    .refine(
-      (answers) => {
-        // Ensure each cabinet member doesn't have more positive than negative impacts
-        const positiveWeights = [
-          ExchangeImpactWeight.StronglyPositive,
-          ExchangeImpactWeight.Positive,
-          ExchangeImpactWeight.SlightlyPositive,
-        ];
-        const negativeWeights = [
-          ExchangeImpactWeight.StronglyNegative,
-          ExchangeImpactWeight.Negative,
-          ExchangeImpactWeight.SlightlyNegative,
-        ];
+      });
 
-        const cabinetStats = new Map<
-          CabinetStaticId,
-          { positive: number; negative: number }
-        >();
+      const hasNegativeImpact = data.answers.some((answer) => {
+        const impacts = answer.impacts;
+        return (
+          (impacts.president?.weight &&
+            negativeWeights.includes(impacts.president.weight)) ||
+          (impacts.cabinet &&
+            Object.values(impacts.cabinet).some((impact) =>
+              negativeWeights.includes(impact.weight)
+            ))
+        );
+      });
 
-        answers.forEach((answer) => {
-          if (answer.impacts.cabinet) {
-            Object.entries(answer.impacts.cabinet).forEach(
-              ([cabinetId, impact]) => {
-                const id = cabinetId as CabinetStaticId;
-                if (!cabinetStats.has(id)) {
-                  cabinetStats.set(id, { positive: 0, negative: 0 });
-                }
+      return hasPositiveImpact && hasNegativeImpact;
+    },
+    {
+      message:
+        "Questions must have answers with both positive and negative relationship impacts for president/cabinet",
+      path: ["answers"],
+    }
+  )
+  .refine(
+    (data) => {
+      // Ensure president doesn't have more positive than negative impacts
+      const positiveWeights = [
+        ExchangeImpactWeight.StronglyPositive,
+        ExchangeImpactWeight.Positive,
+        ExchangeImpactWeight.SlightlyPositive,
+      ];
+      const negativeWeights = [
+        ExchangeImpactWeight.StronglyNegative,
+        ExchangeImpactWeight.Negative,
+        ExchangeImpactWeight.SlightlyNegative,
+      ];
 
-                const stats = cabinetStats.get(id)!;
-                if (positiveWeights.includes(impact.weight)) {
-                  stats.positive++;
-                } else if (negativeWeights.includes(impact.weight)) {
-                  stats.negative++;
-                }
+      const presidentPositive = data.answers.filter(
+        (answer) =>
+          answer.impacts.president?.weight &&
+          positiveWeights.includes(answer.impacts.president.weight)
+      ).length;
+
+      const presidentNegative = data.answers.filter(
+        (answer) =>
+          answer.impacts.president?.weight &&
+          negativeWeights.includes(answer.impacts.president.weight)
+      ).length;
+
+      // Allow equal or fewer positive than negative (≤ ratio)
+      return presidentPositive <= presidentNegative || presidentPositive === 0;
+    },
+    {
+      message:
+        "President cannot have more positive than negative relationship impacts across question answers",
+      path: ["answers"],
+    }
+  )
+  .refine(
+    (data) => {
+      // Ensure each cabinet member doesn't have more positive than negative impacts
+      const positiveWeights = [
+        ExchangeImpactWeight.StronglyPositive,
+        ExchangeImpactWeight.Positive,
+        ExchangeImpactWeight.SlightlyPositive,
+      ];
+      const negativeWeights = [
+        ExchangeImpactWeight.StronglyNegative,
+        ExchangeImpactWeight.Negative,
+        ExchangeImpactWeight.SlightlyNegative,
+      ];
+
+      const cabinetStats = new Map<
+        CabinetStaticId,
+        { positive: number; negative: number }
+      >();
+
+      data.answers.forEach((answer) => {
+        if (answer.impacts.cabinet) {
+          Object.entries(answer.impacts.cabinet).forEach(
+            ([cabinetId, impact]) => {
+              const id = cabinetId as CabinetStaticId;
+              if (!cabinetStats.has(id)) {
+                cabinetStats.set(id, { positive: 0, negative: 0 });
               }
-            );
-          }
-        });
 
-        // Check that no cabinet member has more positive than negative
-        for (const [, stats] of cabinetStats) {
-          if (stats.positive > stats.negative && stats.positive > 0) {
-            return false;
-          }
+              const stats = cabinetStats.get(id)!;
+              if (positiveWeights.includes(impact.weight)) {
+                stats.positive++;
+              } else if (negativeWeights.includes(impact.weight)) {
+                stats.negative++;
+              }
+            }
+          );
         }
+      });
 
-        return true;
-      },
-      {
-        message:
-          "No cabinet member can have more positive than negative relationship impacts across question answers",
-        path: ["answers"],
+      // Check that no cabinet member has more positive than negative
+      for (const [, stats] of cabinetStats) {
+        if (stats.positive > stats.negative && stats.positive > 0) {
+          return false;
+        }
       }
-    ),
-});
 
+      return true;
+    },
+    {
+      message:
+        "No cabinet member can have more positive than negative relationship impacts across question answers",
+      path: ["answers"],
+    }
+  );
+
+// Root question schema - must have exactly 2 followUp answers
+export const rootQuestionSchema = questionSchema.refine(
+  (data) => {
+    const followUpCount = data.answers.filter((a) => a.followUpId).length;
+    return followUpCount === 2;
+  },
+  { message: "Root question must have exactly 2 answers with followUpId" }
+);
+
+// Secondary question schema - must have exactly 1 followUp answer
+export const secondaryQuestionSchema = questionSchema.refine(
+  (data) => {
+    const followUpCount = data.answers.filter((a) => a.followUpId).length;
+    return followUpCount === 1;
+  },
+  { message: "Secondary question must have exactly 1 answer with followUpId" }
+);
+
+// Tertiary question schema - must have no followUp answers
+export const tertiaryQuestionSchema = questionSchema.refine(
+  (data) => {
+    const followUpCount = data.answers.filter((a) => a.followUpId).length;
+    return followUpCount === 0;
+  },
+  { message: "Tertiary questions cannot have followUpId (terminal questions)" }
+);
+
+// Exchange content schema
 export const exchangeContentSchema = z.object({
-  questions: z
-    .record(z.string(), questionSchema)
-    .refine(
-      (questions) => Object.keys(questions).length >= 1,
-      "At least one question is required"
-    ),
-  rootQuestionId: z.string().min(1, "Root question ID is required"),
+  rootQuestion: rootQuestionSchema,
+  secondaryQuestions: z.tuple([
+    secondaryQuestionSchema,
+    secondaryQuestionSchema,
+  ]),
+  tertiaryQuestions: z.tuple([tertiaryQuestionSchema, tertiaryQuestionSchema]),
 });

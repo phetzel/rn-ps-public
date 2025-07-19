@@ -1,4 +1,8 @@
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 import { libPrimaryExchange } from "./libPrimaryExchange";
 import { conPrimaryExchange } from "./conPrimaryExchange";
 
-export const robotTaxDebateExchanges = [libPrimaryExchange, conPrimaryExchange];
+export const robotTaxDebateExchanges: ExchangeData[] = [
+  libPrimaryExchange,
+  conPrimaryExchange,
+];

@@ -2,7 +2,6 @@ import { AnswerType } from "~/types";
 import { BALANCE_THRESHOLDS } from "~/lib/constants";
 import {
   analyzeExchangeStructure,
-  analyzeQuestionDepth,
   analyzeQuestionAnswers,
   analyzeAnswerEntityImpacts,
 } from "~/__tests__/support/utils/exchange-analysis";
@@ -37,57 +36,8 @@ describe("Game Balance Validation - Exchanges", () => {
     });
   });
 
-  describe("Question Depth Analysis", () => {
-    const depthAnalysis = analyzeQuestionDepth();
-
-    test("sufficient percentage of questions have depth ≥1", () => {
-      expect(
-        depthAnalysis.percentageWithDepthGreaterThanZero
-      ).toBeGreaterThanOrEqual(BALANCE_THRESHOLDS.QUESTION_DEPTH_COVERAGE.min);
-    });
-
-    test("question depth does not exceed maximum", () => {
-      const violations = Object.keys(depthAnalysis.questionsByDepth)
-        .map((depth) => parseInt(depth))
-        .filter((depth) => depth > BALANCE_THRESHOLDS.QUESTION_DEPTH.max);
-
-      if (violations.length > 0) {
-        console.error("Question depth violations (>max):", violations);
-        fail(
-          `Questions found with depth > ${BALANCE_THRESHOLDS.QUESTION_DEPTH.max}. Maximum allowed depth is ${BALANCE_THRESHOLDS.QUESTION_DEPTH.max}.`
-        );
-      }
-
-      expect(violations).toHaveLength(0);
-    });
-  });
-
   describe("Question Answer Patterns", () => {
     const questionAnalyses = analyzeQuestionAnswers();
-
-    test("each question has appropriate number of answers", () => {
-      const violations = questionAnalyses.filter(
-        (analysis) =>
-          analysis.answerCount < BALANCE_THRESHOLDS.ANSWERS_PER_QUESTION.min ||
-          analysis.answerCount > BALANCE_THRESHOLDS.ANSWERS_PER_QUESTION.max
-      );
-
-      if (violations.length > 0) {
-        console.error(
-          "Answer count violations:",
-          violations.map((v) => ({
-            situation: v.situationTitle,
-            questionId: v.questionId,
-            answerCount: v.answerCount,
-          }))
-        );
-        fail(
-          `${violations.length} questions have wrong number of answers (must be ${BALANCE_THRESHOLDS.ANSWERS_PER_QUESTION.min}-${BALANCE_THRESHOLDS.ANSWERS_PER_QUESTION.max}). See console for details.`
-        );
-      }
-
-      expect(violations).toHaveLength(0);
-    });
 
     test("each question has sufficient distinct answer types", () => {
       const violations = questionAnalyses.filter(

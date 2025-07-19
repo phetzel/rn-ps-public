@@ -274,3 +274,7 @@ export const situationContentSchema = z
       path: ["outcomes"],
     }
   );
+
+// Export TypeScript types derived from Zod schemas
+export type SituationOutcome = z.infer<typeof situationOutcomeSchema>;
+export type SituationConsequence = z.infer<typeof consequenceSchema>;

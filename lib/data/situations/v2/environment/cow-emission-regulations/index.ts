@@ -1,10 +1,10 @@
 import { SituationType } from "~/types";
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { cowEmissionRegulationsOutcomes } from "./cowEmissionRegulationsOutcomes";
 import { cowEmissionRegulationsPreferences } from "./cowEmissionRegulationsPreferences";
 import { cowEmissionRegulationsExchanges } from "./exchanges";
 
-export const cowEmissionRegulations: SituationData = {
+export const cowEmissionRegulations: SituationDataType = {
   trigger: {
     staticKey: "cow_emission_regulations",
     type: SituationType.Environment,
