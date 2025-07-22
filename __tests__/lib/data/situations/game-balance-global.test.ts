@@ -12,63 +12,63 @@ describe("Game Balance Validation - Global Patterns", () => {
     expect(true).toBe(true);
   });
 
-  // describe("Situation Type Balance", () => {
-  //   const typeAnalysis = analyzeSituationTypes();
+  describe("Situation Type Balance", () => {
+    const typeAnalysis = analyzeSituationTypes();
 
-  // test("each situation type appears at least once", () => {
-  //   const missingTypes: SituationType[] = [];
+    // test("each situation type appears at least once", () => {
+    //   const missingTypes: SituationType[] = [];
 
-  //   Object.values(SituationType).forEach((type) => {
-  //     if ((typeAnalysis.typeDistribution[type] || 0) === 0) {
-  //       missingTypes.push(type);
-  //     }
-  //   });
+    //   Object.values(SituationType).forEach((type) => {
+    //     if ((typeAnalysis.typeDistribution[type] || 0) === 0) {
+    //       missingTypes.push(type);
+    //     }
+    //   });
 
-  //   if (missingTypes.length > 0) {
-  //     console.error(
-  //       "Missing situation types:",
-  //       JSON.stringify(missingTypes, null, 2)
-  //     );
-  //     fail(
-  //       `${missingTypes.length} situation types are missing from the data. Each type must appear at least once.`
-  //     );
-  //   }
+    //   if (missingTypes.length > 0) {
+    //     console.error(
+    //       "Missing situation types:",
+    //       JSON.stringify(missingTypes, null, 2)
+    //     );
+    //     fail(
+    //       `${missingTypes.length} situation types are missing from the data. Each type must appear at least once.`
+    //     );
+    //   }
 
-  //   expect(missingTypes).toHaveLength(0);
-  // });
+    //   expect(missingTypes).toHaveLength(0);
+    // });
 
-  //     test("no single situation type dominates", () => {
-  //       const dominatingTypes: Array<{
-  //         type: SituationType;
-  //         percentage: number;
-  //         count: number;
-  //       }> = [];
+    test("no single situation type dominates", () => {
+      const dominatingTypes: Array<{
+        type: SituationType;
+        percentage: number;
+        count: number;
+      }> = [];
 
-  //       Object.entries(typeAnalysis.percentageByType).forEach(
-  //         ([type, percentage]) => {
-  //           if (percentage > BALANCE_THRESHOLDS.SITUATION_TYPE_MAX_SHARE.max) {
-  //             dominatingTypes.push({
-  //               type: type as SituationType,
-  //               percentage,
-  //               count: typeAnalysis.typeDistribution[type as SituationType],
-  //             });
-  //           }
-  //         }
-  //       );
+      Object.entries(typeAnalysis.percentageByType).forEach(
+        ([type, percentage]) => {
+          if (percentage > BALANCE_THRESHOLDS.SITUATION_TYPE_MAX_SHARE.max) {
+            dominatingTypes.push({
+              type: type as SituationType,
+              percentage,
+              count: typeAnalysis.typeDistribution[type as SituationType],
+            });
+          }
+        }
+      );
 
-  //       if (dominatingTypes.length > 0) {
-  //         console.error(
-  //           "Dominating situation types:",
-  //           JSON.stringify(dominatingTypes, null, 2)
-  //         );
-  //         fail(
-  //           `${dominatingTypes.length} situation types exceed ${BALANCE_THRESHOLDS.SITUATION_TYPE_MAX_SHARE.max}% share limit. Distribution must be more balanced.`
-  //         );
-  //       }
+      if (dominatingTypes.length > 0) {
+        console.error(
+          "Dominating situation types:",
+          JSON.stringify(dominatingTypes, null, 2)
+        );
+        fail(
+          `${dominatingTypes.length} situation types exceed ${BALANCE_THRESHOLDS.SITUATION_TYPE_MAX_SHARE.max}% share limit. Distribution must be more balanced.`
+        );
+      }
 
-  //       expect(dominatingTypes).toHaveLength(0);
-  //     });
-  //   });
+      expect(dominatingTypes).toHaveLength(0);
+    });
+  });
 
   //   describe("Global Answer Type Distribution", () => {
   //     const answerAnalysis = analyzeGlobalAnswerTypes();
@@ -152,23 +152,23 @@ describe("Game Balance Validation - Global Patterns", () => {
   //     });
   //   });
 
-  //   describe("Mixed Outcomes Analysis", () => {
-  //     const mixedAnalysis = analyzeMixedOutcomes();
+  describe("Mixed Outcomes Analysis", () => {
+    const mixedAnalysis = analyzeMixedOutcomes();
 
-  //     test("sufficient percentage of outcomes are mixed (both positive and negative effects)", () => {
-  //       expect(mixedAnalysis.mixedOutcomePercentage).toBeGreaterThanOrEqual(
-  //         BALANCE_THRESHOLDS.MIXED_OUTCOME_PERCENTAGE.min
-  //       );
-  //     });
+    test("sufficient percentage of outcomes are mixed (both positive and negative effects)", () => {
+      expect(mixedAnalysis.mixedOutcomePercentage).toBeGreaterThanOrEqual(
+        BALANCE_THRESHOLDS.MIXED_OUTCOME_PERCENTAGE.min
+      );
+    });
 
-  //     test("mixed outcomes have meaningful complexity", () => {
-  //       const insufficientComplexity = mixedAnalysis.mixedOutcomeDetails.filter(
-  //         (detail) => detail.positiveEffects < 1 || detail.negativeEffects < 1
-  //       );
+    test("mixed outcomes have meaningful complexity", () => {
+      const insufficientComplexity = mixedAnalysis.mixedOutcomeDetails.filter(
+        (detail) => detail.positiveEffects < 1 || detail.negativeEffects < 1
+      );
 
-  //       expect(insufficientComplexity).toHaveLength(0);
-  //     });
-  //   });
+      expect(insufficientComplexity).toHaveLength(0);
+    });
+  });
 
   //   describe("Entity Coverage Analysis", () => {
   //     const coverageAnalysis = analyzeEntityCoverage();

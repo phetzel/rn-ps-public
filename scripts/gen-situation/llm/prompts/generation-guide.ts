@@ -1,0 +1,49 @@
+export const GENERATION_GUIDE = `
+## 🎯 Content Creation Guidelines
+
+### Tone & Style Requirements
+- **Satirical newsroom humor** (think Veep × Daily Show blend)
+- **Equal-opportunity absurdity** - Mock incompetence, not ideology  
+- **Light political satire** - Satirical but substantive content
+
+### Strict Content Rules  
+- **NO real people** - No actual politicians, officials, or public figures
+- **NO real places** - No actual countries, cities, or organizations
+- **NO real events** - No direct references to actual current events
+- **Use fictional entities** - Create names like "Republic of Reallyfarawaystan"
+- **Soft-pedal tragedies** - Keep humor light, avoid serious real-world pain
+
+### Entity Guidelines
+- Use only the provided entity IDs (cabinet members, subgroups, publications)
+- Choose entities strategically based on situation type and balance needs
+- Consider realistic (but sometimes absurd) government department, subgroup, and publication involvement for situation types`;
+
+export const PLANNER_TYPE_GUIDE = `
+## 📋 Available Situation Types & Entities
+
+### Situation Types:
+- **domestic_policy**: Internal government policies, regulations, domestic initiatives
+- **foreign_affairs**: International relations, diplomacy, trade, foreign conflicts  
+- **economy**: Economic policy, budgets, taxation, financial markets, trade
+- **security**: National security, military, cybersecurity, terrorism, defense
+- **environment**: Climate policy, environmental regulations, natural disasters
+- **ethics**: Government ethics, corruption, scandals, institutional integrity
+
+### Cabinet Members:
+- **state**: Secretary of State (foreign affairs, diplomacy)
+- **treasury**: Secretary of Treasury (economy, finances, budgets)
+- **defense**: Secretary of Defense (military, national security)
+- **justice**: Attorney General (law enforcement, legal matters)
+- **hhs**: Health and Human Services (health, social services)
+- **homeland**: Homeland Security (domestic security, border, emergency response)
+
+### Subgroups:
+- **Political**: left_wing_base, right_wing_base, independent_base
+- **Demographic**: youth_voters, seniors_citizens, rural_residents, urban_residents
+- **Economic**: labor_unions, business_leaders, tech_industry
+
+### Publications:
+- **lib_primary**: Liberal-leaning primary news outlet
+- **con_primary**: Conservative-leaning primary news outlet  
+- **independent_primary**: Independent/centrist news outlet
+- **investigative**: Investigative journalism outlet`;
