@@ -1,10 +1,5 @@
-import {
-  SituationPlan,
-  ApiPreferences,
-  ApiOutcome,
-} from "../../schemas/llm-schemas";
-import { z } from "zod";
-import { apiOutcomeSchema } from "../../schemas/llm-schemas";
+import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
+import { SituationPlan, ApiPreferences } from "../../schemas/llm-schemas";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION OUTCOMES GENERATION PROMPTS
@@ -20,54 +15,106 @@ export interface PromptConfig {
  * Build the main prompt for situation outcomes generation
  */
 export function buildOutcomesPrompt(
-  basic: SituationPlan,
+  plan: SituationPlan,
   preferences: ApiPreferences
 ): string {
-  return `# Generate Situation Outcomes
+  // Extract entity lists for clear reference
+  const cabinetMembers = plan.involvedEntities.cabinetMembers;
+  const subgroups = plan.involvedEntities.subgroups;
 
-For this situation:
-**${basic.title}**
-${basic.description}
+  return `
+Generate realistic outcomes for this political situation:
 
-Type: ${basic.type}
-Entity preferences: ${JSON.stringify(preferences, null, 2)}
+${GENERATION_GUIDE}
 
-## Task
-Generate 2-4 possible outcomes for how this situation could develop, each with different consequences for approval ratings.
+${PLANNER_TYPE_GUIDE}
 
-## Requirements
-- **Outcomes**: 2-4 different scenarios with varying weights (totaling 100)
-- **Impacts**: How each outcome affects cabinet and subgroup approval
-- **Balance**: Mix of positive, negative, and neutral outcomes
-- **Realism**: Consequences should match the situation type and severity
+## Situation Context
 
-## Impact Values (use exact strings)
-- Cabinet/Subgroup impact values: "15", "10", "5", "0", "-5", "-10", "-15"
-- "15" = StronglyPositive, "10" = Positive, "5" = SlightlyPositive
-- "0" = Neutral, "-5" = SlightlyNegative, "-10" = Negative, "-15" = StronglyNegative
+**Title**: ${plan.title}
+**Description**: ${plan.description}
+**Type**: ${plan.type}
+**Strategic Reasoning**: ${plan.reasoning}
 
-Generate realistic outcomes that create meaningful strategic choices for players.`;
+**Entity Preferences**:
+- **President**: ${preferences.presidentPreference.answerType} (${
+    preferences.presidentPreference.rationale
+  })
+- **Cabinet Preferences**:
+${preferences.cabinetPreferences
+  .map((pref) => `  ${pref.member}: ${pref.answerType} (${pref.rationale})`)
+  .join("\n")}
+
+## Available Entities (ONLY USE THESE)
+
+**Cabinet Members**: ${cabinetMembers.join(", ")}
+**Subgroups**: ${subgroups.join(", ")}
+
+## Outcome Generation Requirements
+
+### Narrative Requirements
+1. **Satirical Realism**: Absurd scenarios with believable government reactions
+2. **Political Logic**: Outcomes should flow naturally from the situation
+3. **Variety**: Mix of resolutions, escalations, and compromises
+4. **Strategic Choices**: Each outcome creates meaningful trade-offs for players
+
+### Technical Requirements
+1. **2-4 Outcomes**: Generate 2-4 different scenarios
+2. **Weight Distribution**: Weights sum to exactly 100, each 10-70
+3. **Title/Description**: Satirical headlines (20-60 chars), narratives (60-140 chars)
+4. **Entity Impacts**: Only use cabinet/subgroups from the lists above
+
+### Balance Requirements (CRITICAL)
+1. **Each entity must have BOTH positive AND negative impacts across ALL outcomes**
+2. **No entity can have more positive than negative total impacts**
+3. **Impact values**: 15 (strongly positive), 10 (positive), 5 (slightly positive), 0 (neutral), -5 (slightly negative), -10 (negative), -15 (strongly negative)
+4. **Realistic Reactions**: Cabinet departments react based on their expertise, subgroups on political alignment
+
+### Example Impact Logic:
+- **${plan.type}**: Which departments would be most affected?
+- **Political Implications**: How would different voter groups react?
+- **Preference Alignment**: Consider whether outcomes align with entity preferences
+
+## Outcome Generation Strategy
+
+For each outcome:
+1. **Create compelling narrative** that flows from the situation
+2. **Assign realistic impacts** to relevant entities only
+3. **Ensure balance**: Every entity needs both positive and negative across outcomes
+4. **Match intensity**: Severe outcomes = stronger impacts, mild outcomes = lighter impacts
+
+Generate outcomes that create authentic government dynamics while maintaining satirical tone.`;
 }
 
-/**
- * Schema for the outcomes response (wrapper around the array)
- */
-export const outcomesResponseSchema = z.object({
-  outcomes: z
-    .array(apiOutcomeSchema)
-    .min(2)
-    .max(4)
-    .describe("Array of 2-4 possible outcomes"),
-});
+const outcomesSystemPrompt = `
+You are an expert content strategist for a satirical Press Secretary simulation game.
+
+${GENERATION_GUIDE}
+
+## Your Task
+Generate realistic outcomes for political situations that create meaningful strategic choices for players while maintaining satirical tone.
+
+## Requirements
+- **Narrative Flow**: Outcomes should logically develop from the situation
+- **Entity Balance**: Each entity must have both positive AND negative impacts across outcomes
+- **Political Realism**: Departments and groups react according to their roles and interests
+- **Strategic Depth**: Create genuine trade-offs and consequences for player choices
+- **Satirical Tone**: Maintain absurd scenarios with believable government reactions
+
+## Critical Balance Rules
+- Weights must sum to exactly 100
+- No entity can have more positive than negative total impacts
+- Only use entities specified in the situation plan
+- Each outcome must affect at least one entity
+- Impact severity should match narrative tone
+
+Focus on creating authentic political dynamics that serve both gameplay and satirical storytelling.`;
 
 /**
  * Configuration for outcomes generation
  */
 export const outcomesPromptConfig: PromptConfig = {
   temperature: 0.8,
-  systemPrompt:
-    "You understand political consequences and how different outcomes affect various stakeholders. Create balanced, realistic scenarios.",
+  systemPrompt: outcomesSystemPrompt,
   schemaName: "situation_outcomes",
 };
-
-export type OutcomesResponse = z.infer<typeof outcomesResponseSchema>;

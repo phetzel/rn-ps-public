@@ -16,9 +16,4 @@ export {
 } from "./preferences-prompt";
 
 // Situation outcomes prompts
-export {
-  buildOutcomesPrompt,
-  outcomesResponseSchema,
-  outcomesPromptConfig,
-  type OutcomesResponse,
-} from "./outcomes-prompt";
+export { buildOutcomesPrompt, outcomesPromptConfig } from "./outcomes-prompt";

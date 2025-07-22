@@ -2,9 +2,10 @@ import { LLMClient } from "./llm/client";
 import {
   SituationPlan,
   ApiPreferences,
-  ApiOutcome,
+  ApiOutcomes,
   situationPlanSchema,
   apiPreferencesSchema,
+  apiOutcomesSchema,
 } from "./schemas/llm-schemas";
 import {
   buildPlannerPrompt,
@@ -12,9 +13,7 @@ import {
   buildPreferencesPrompt,
   preferencesPromptConfig,
   buildOutcomesPrompt,
-  outcomesResponseSchema,
   outcomesPromptConfig,
-  type OutcomesResponse,
 } from "./llm/prompts";
 import { generationAnalysis, GenerationAnalysis } from "./utils";
 
@@ -27,6 +26,7 @@ export interface GenerationResult {
   situation?: {
     plan: SituationPlan;
     preferences?: ApiPreferences;
+    outcomes?: ApiOutcomes;
   };
   error?: string;
   usage?: {
@@ -61,6 +61,18 @@ export class SituationGenerator {
         `✅ Generated preferences for President and ${preferences.cabinetPreferences.length} cabinet members`
       );
 
+      // Step 3: Generate situation outcomes
+      console.log("🎯 Step 3: Generating situation outcomes...");
+      const outcomes = await this.generateOutcomes(plan, preferences);
+
+      console.log(
+        `✅ Generated ${
+          outcomes.outcomes.length
+        } outcomes with weights: ${outcomes.outcomes
+          .map((o) => `${o.weight}%`)
+          .join(", ")}`
+      );
+
       // Calculate total usage
       const usage = this.llmClient.getUsageStats();
 
@@ -71,6 +83,7 @@ export class SituationGenerator {
         situation: {
           plan,
           preferences,
+          outcomes,
         },
         usage: {
           requests: usage.requestCount,
@@ -130,19 +143,16 @@ export class SituationGenerator {
   private async generateOutcomes(
     plan: SituationPlan,
     preferences: ApiPreferences
-  ): Promise<ApiOutcome[]> {
+  ): Promise<ApiOutcomes> {
     const prompt = buildOutcomesPrompt(plan, preferences);
 
-    const response = await this.llmClient.generateStructured<OutcomesResponse>(
-      prompt,
-      {
-        schema: outcomesResponseSchema,
-        schemaName: outcomesPromptConfig.schemaName,
-        temperature: outcomesPromptConfig.temperature,
-        systemPrompt: outcomesPromptConfig.systemPrompt,
-      }
-    );
+    const response = await this.llmClient.generateStructured(prompt, {
+      schema: apiOutcomesSchema,
+      schemaName: outcomesPromptConfig.schemaName,
+      temperature: outcomesPromptConfig.temperature,
+      systemPrompt: outcomesPromptConfig.systemPrompt,
+    });
 
-    return response.content.outcomes;
+    return response.content;
   }
 }

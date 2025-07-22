@@ -68,44 +68,76 @@ export const apiPreferencesSchema = z.object({
     .describe("Preferences for each involved cabinet member"),
 });
 
-// API-compatible outcomes schema (simplified)
-export const apiOutcomeSchema = z.object({
-  id: z.string().describe("Unique identifier for this outcome"),
-  title: z.string().min(10).max(60).describe("Brief title for this outcome"),
-  description: z
-    .string()
-    .min(50)
-    .max(200)
-    .describe("Description of what happens"),
-  weight: z
-    .number()
-    .min(1)
-    .max(100)
-    .describe("Probability weight (must sum to 100 across all outcomes)"),
-  cabinetImpacts: z
-    .array(
-      z.object({
-        member: z
-          .nativeEnum(CabinetStaticId)
-          .describe("Cabinet member affected"),
-        impact: z
-          .enum(["15", "10", "5", "0", "-5", "-10", "-15"])
-          .describe("Approval change amount"),
-      })
-    )
-    .describe("How this outcome affects cabinet approval"),
-  subgroupImpacts: z
-    .array(
-      z.object({
-        group: z.nativeEnum(SubgroupStaticId).describe("Subgroup affected"),
-        impact: z
-          .enum(["15", "10", "5", "0", "-5", "-10", "-15"])
-          .describe("Approval change amount"),
-      })
-    )
-    .describe("How this outcome affects subgroup approval"),
-});
+// API-compatible outcomes schema (simplified for LLM generation)
+export const apiOutcomesSchema = z
+  .object({
+    outcomes: z
+      .array(
+        z.object({
+          id: z.string().describe("Unique outcome identifier"),
+          title: z
+            .string()
+            .min(20)
+            .max(60)
+            .describe("Satirical outcome headline (20-60 chars)"),
+          description: z
+            .string()
+            .min(60)
+            .max(140)
+            .describe("Brief outcome narrative (60-140 chars)"),
+          weight: z
+            .number()
+            .min(10)
+            .max(70)
+            .describe("Probability weight (10-70, must sum to 100)"),
+          consequences: z.object({
+            cabinet: z
+              .array(
+                z.object({
+                  member: z
+                    .nativeEnum(CabinetStaticId)
+                    .describe("Cabinet member affected"),
+                  impact: z
+                    .enum(["15", "10", "5", "0", "-5", "-10", "-15"])
+                    .describe("Approval change amount"),
+                })
+              )
+              .describe(
+                "Cabinet member approval impacts (empty array if none)"
+              ),
+            subgroups: z
+              .array(
+                z.object({
+                  group: z
+                    .nativeEnum(SubgroupStaticId)
+                    .describe("Subgroup affected"),
+                  impact: z
+                    .enum(["15", "10", "5", "0", "-5", "-10", "-15"])
+                    .describe("Approval change amount"),
+                })
+              )
+              .describe("Subgroup approval impacts (empty array if none)"),
+          }),
+        })
+      )
+      .min(2)
+      .max(4)
+      .describe("Possible situation outcomes (2-4 outcomes)"),
+  })
+  .refine(
+    (data) => {
+      const totalWeight = data.outcomes.reduce(
+        (sum, outcome) => sum + outcome.weight,
+        0
+      );
+      return totalWeight === 100;
+    },
+    {
+      message: "Outcome weights must sum to exactly 100",
+      path: ["outcomes"],
+    }
+  );
 
 export type SituationPlan = z.infer<typeof situationPlanSchema>;
 export type ApiPreferences = z.infer<typeof apiPreferencesSchema>;
-export type ApiOutcome = z.infer<typeof apiOutcomeSchema>;
+export type ApiOutcomes = z.infer<typeof apiOutcomesSchema>;

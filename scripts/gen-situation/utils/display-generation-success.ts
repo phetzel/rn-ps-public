@@ -61,6 +61,36 @@ export function displayGenerationSuccess(result: GenerationResult): void {
     }
   }
 
+  // ═══ SITUATION OUTCOMES ═══
+  if (result.situation.outcomes) {
+    console.log("\n🎲 SITUATION OUTCOMES");
+    console.log("─────────────────────");
+
+    result.situation.outcomes.outcomes.forEach((outcome, index) => {
+      console.log(`${index + 1}. ${outcome.title} (${outcome.weight}%)`);
+      console.log(`   ${outcome.description}`);
+
+      // Show impacts
+      const impacts: string[] = [];
+      if (outcome.consequences.cabinet.length > 0) {
+        outcome.consequences.cabinet.forEach((impact) => {
+          const sign = impact.impact.startsWith("-") ? "" : "+";
+          impacts.push(`${impact.member}: ${sign}${impact.impact}`);
+        });
+      }
+      if (outcome.consequences.subgroups.length > 0) {
+        outcome.consequences.subgroups.forEach((impact) => {
+          const sign = impact.impact.startsWith("-") ? "" : "+";
+          impacts.push(`${impact.group}: ${sign}${impact.impact}`);
+        });
+      }
+      if (impacts.length > 0) {
+        console.log(`   Impacts: ${impacts.join(", ")}`);
+      }
+      console.log("");
+    });
+  }
+
   if (result.usage) {
     console.log(`\n💰 GENERATION USAGE`);
     console.log("───────────────────");
