@@ -26,6 +26,7 @@ export interface GenerationResult {
   success: boolean;
   situation?: {
     plan: SituationPlan;
+    preferences?: ApiPreferences;
   };
   error?: string;
   usage?: {
@@ -45,13 +46,20 @@ export class SituationGenerator {
     try {
       console.log("📊 Analyzing existing situations...");
       const startingContext = generationAnalysis();
-      console.log(JSON.stringify(startingContext));
 
       // Step 1: Generate basic situation plan
       console.log("🎯 Step 1: Planning basic situation...");
       const plan = await this.generateSituationPlan(startingContext);
 
-      console.log(`📝 Plan: ${plan.description}`);
+      console.log(`✅ Generated new situation: "${plan.type} - ${plan.title}"`);
+
+      // Step 2: Generate entity preferences
+      console.log("🎯 Step 2: Generating entity preferences...");
+      const preferences = await this.generatePreferences(plan, startingContext);
+
+      console.log(
+        `✅ Generated preferences for President and ${preferences.cabinetPreferences.length} cabinet members`
+      );
 
       // Calculate total usage
       const usage = this.llmClient.getUsageStats();
@@ -62,6 +70,7 @@ export class SituationGenerator {
         success: true,
         situation: {
           plan,
+          preferences,
         },
         usage: {
           requests: usage.requestCount,
@@ -97,12 +106,13 @@ export class SituationGenerator {
   }
 
   /**
-   * Step 2: Generate entity preferences (API-compatible)
+   * Step 2: Generate entity preferences based on situation plan
    */
   private async generatePreferences(
-    plan: SituationPlan
+    plan: SituationPlan,
+    analysis: GenerationAnalysis
   ): Promise<ApiPreferences> {
-    const prompt = buildPreferencesPrompt(plan);
+    const prompt = buildPreferencesPrompt(plan, analysis);
 
     const response = await this.llmClient.generateStructured(prompt, {
       schema: apiPreferencesSchema,

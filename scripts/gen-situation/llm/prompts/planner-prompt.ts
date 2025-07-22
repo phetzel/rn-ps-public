@@ -18,15 +18,6 @@ export function buildPlannerPrompt(analysis: GenerationAnalysis): string {
   // Transform raw analysis into strategic context
   const strategic = analyzeStrategicRequirements(analysis);
 
-  console.log("=== STRATEGIC REQUIREMENTS ===");
-  console.log("Target Situation Type:", strategic.targetSituationType);
-  console.log(
-    "Existing Situations of Type:",
-    strategic.existingSituationsOfType
-  );
-  console.log("Entity Balance:", strategic.entityBalance);
-  console.log("===============================");
-
   return `
 Plan generate new political situation that:
 1. Is of type: ${strategic.targetSituationType}

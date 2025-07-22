@@ -44,9 +44,6 @@ export const situationPlanSchema = z.object({
 
 // API-compatible preferences schema (simplified, no optional fields)
 export const apiPreferencesSchema = z.object({
-  presidentHasPreference: z
-    .boolean()
-    .describe("Whether the president has a preference"),
   presidentPreference: z
     .object({
       answerType: z
@@ -54,7 +51,7 @@ export const apiPreferencesSchema = z.object({
         .describe("President's preferred answer type"),
       rationale: z.string().describe("Why the president prefers this approach"),
     })
-    .describe("President's preference if they have one"),
+    .describe("President's preference (always required)"),
   cabinetPreferences: z
     .array(
       z.object({
