@@ -1,4 +1,5 @@
 import { GenerationResult } from "../generator";
+import { AnswerType } from "~/types";
 
 /**
  * Display the generation results in a clean, formatted way
@@ -89,6 +90,56 @@ export function displayGenerationSuccess(result: GenerationResult): void {
       }
       console.log("");
     });
+  }
+
+  // ═══ PRESS EXCHANGES ═══
+  if (result.situation.exchanges) {
+    console.log("\n🎤 PRESS EXCHANGES");
+    console.log("─────────────────");
+
+    result.situation.exchanges.exchanges.forEach((exchange, index) => {
+      console.log(`${index + 1}. ${exchange.publication.toUpperCase()}`);
+      console.log(`   Editorial Angle: ${exchange.editorialAngle}`);
+      console.log(
+        `   Structure: 1 root → 2 secondary → 2 tertiary (5 total questions)`
+      );
+
+      // Show authorized answers if any
+      const allAnswers = [
+        exchange.rootAnswer1,
+        exchange.rootAnswer2,
+        exchange.rootAnswer3,
+        exchange.secondary1Answer1,
+        exchange.secondary1Answer2,
+        exchange.secondary2Answer1,
+        exchange.secondary2Answer2,
+        exchange.tertiary1Answer1,
+        exchange.tertiary1Answer2,
+        exchange.tertiary2Answer1,
+        exchange.tertiary2Answer2,
+      ];
+
+      const hasAuthorized = allAnswers.some(
+        (answer) => answer.answerType === AnswerType.Authorized
+      );
+
+      if (hasAuthorized) {
+        console.log(`   🔒 Contains authorized answers`);
+      }
+      console.log("");
+    });
+  }
+
+  // ═══ GENERATED FILES ═══
+  if (result.files) {
+    console.log("\n📁 GENERATED FILES");
+    console.log("──────────────────");
+    console.log(`📂 Directory: ${result.files.directoryPath}`);
+    console.log(`📄 Files generated: ${result.files.files.length}`);
+    result.files.files.forEach((file) => {
+      console.log(`   • ${file}`);
+    });
+    console.log(`🔗 Type index automatically updated`);
   }
 
   if (result.usage) {

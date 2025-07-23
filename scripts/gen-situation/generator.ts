@@ -3,10 +3,14 @@ import {
   SituationPlan,
   ApiPreferences,
   ApiOutcomes,
+  ApiExchanges,
   situationPlanSchema,
   apiPreferencesSchema,
   apiOutcomesSchema,
+  apiExchangesSchema,
 } from "./schemas/llm-schemas";
+import { convertToGameSchema } from "./schemas/conversion";
+import { writeSituationFiles } from "./utils/file-writer";
 import {
   buildPlannerPrompt,
   plannerPromptConfig,
@@ -14,6 +18,8 @@ import {
   preferencesPromptConfig,
   buildOutcomesPrompt,
   outcomesPromptConfig,
+  buildExchangesPrompt,
+  exchangesPromptConfig,
 } from "./llm/prompts";
 import { generationAnalysis, GenerationAnalysis } from "./utils";
 
@@ -27,6 +33,11 @@ export interface GenerationResult {
     plan: SituationPlan;
     preferences?: ApiPreferences;
     outcomes?: ApiOutcomes;
+    exchanges?: ApiExchanges;
+  };
+  files?: {
+    directoryPath: string;
+    files: string[];
   };
   error?: string;
   usage?: {
@@ -73,6 +84,48 @@ export class SituationGenerator {
           .join(", ")}`
       );
 
+      // Step 4: Generate press exchanges
+      console.log("🎯 Step 4: Generating press exchanges...");
+      const exchanges = await this.generateExchanges(
+        plan,
+        preferences,
+        outcomes
+      );
+
+      console.log(
+        `✅ Generated ${
+          exchanges.exchanges.length
+        } exchanges for publications: ${exchanges.exchanges
+          .map((e: any) => e.publication)
+          .join(", ")}`
+      );
+
+      // Step 5: Convert schemas and write files
+      console.log("🎯 Step 5: Converting schemas and writing files...");
+      const gameSchema = convertToGameSchema(
+        plan,
+        preferences,
+        outcomes,
+        exchanges
+      );
+
+      const fileResult = await writeSituationFiles(
+        gameSchema.situationData,
+        gameSchema.outcomes,
+        gameSchema.preferences,
+        gameSchema.exchanges
+      );
+
+      if (!fileResult.success) {
+        throw new Error(`File writing failed: ${fileResult.error}`);
+      }
+
+      console.log(
+        `✅ Generated ${fileResult.files.length} files in: ${fileResult.directoryPath}`
+      );
+      console.log(`📁 Files: ${fileResult.files.join(", ")}`);
+      console.log(`🔗 Type index automatically updated`);
+
       // Calculate total usage
       const usage = this.llmClient.getUsageStats();
 
@@ -84,6 +137,11 @@ export class SituationGenerator {
           plan,
           preferences,
           outcomes,
+          exchanges,
+        },
+        files: {
+          directoryPath: fileResult.directoryPath,
+          files: fileResult.files,
         },
         usage: {
           requests: usage.requestCount,
@@ -151,6 +209,26 @@ export class SituationGenerator {
       schemaName: outcomesPromptConfig.schemaName,
       temperature: outcomesPromptConfig.temperature,
       systemPrompt: outcomesPromptConfig.systemPrompt,
+    });
+
+    return response.content;
+  }
+
+  /**
+   * Step 4: Generate press exchanges based on plan, preferences, and outcomes
+   */
+  private async generateExchanges(
+    plan: SituationPlan,
+    preferences: ApiPreferences,
+    outcomes: ApiOutcomes
+  ): Promise<ApiExchanges> {
+    const prompt = buildExchangesPrompt(plan, preferences, outcomes);
+
+    const response = await this.llmClient.generateStructured(prompt, {
+      schema: apiExchangesSchema,
+      schemaName: exchangesPromptConfig.schemaName,
+      temperature: exchangesPromptConfig.temperature,
+      systemPrompt: exchangesPromptConfig.systemPrompt,
     });
 
     return response.content;

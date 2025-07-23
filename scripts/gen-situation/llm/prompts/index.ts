@@ -17,3 +17,9 @@ export {
 
 // Situation outcomes prompts
 export { buildOutcomesPrompt, outcomesPromptConfig } from "./outcomes-prompt";
+
+// Press exchanges prompts
+export {
+  buildExchangesPrompt,
+  exchangesPromptConfig,
+} from "./exchanges-prompt";
