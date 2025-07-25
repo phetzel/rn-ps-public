@@ -67,7 +67,7 @@ export class LLMClient {
       schemaName = "response",
       model = this.defaultModel,
       temperature = 0.7,
-      maxTokens = 2000,
+      maxTokens = 10000, // Updated default from 2000 to 10000
       systemPrompt = "You are a helpful assistant that responds with structured data.",
     } = options;
 
@@ -134,7 +134,7 @@ export class LLMClient {
     const {
       model = this.defaultModel,
       temperature = 0.7,
-      maxTokens = 2000,
+      maxTokens = 10000, // Updated default from 2000 to 10000
       systemPrompt = "You are a helpful assistant.",
     } = options;
 
@@ -207,7 +207,7 @@ export class LLMClient {
     const {
       model = this.defaultModel,
       temperature = 0.7,
-      maxTokens = 2000,
+      maxTokens = 10000, // Updated default from 2000 to 10000
       systemPrompt = "You are a helpful assistant.",
       responseFormat = "text",
     } = options;

@@ -1,16 +1,11 @@
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
 import { SituationPlan } from "../../schemas/llm-schemas";
 import { GenerationAnalysis } from "../../utils";
+import { PromptConfig } from "./planner-prompt";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ENTITY PREFERENCES GENERATION PROMPTS
 // ═══════════════════════════════════════════════════════════════════════════════
-
-export interface PromptConfig {
-  temperature: number;
-  systemPrompt: string;
-  schemaName: string;
-}
 
 /**
  * Build the main prompt for entity preferences generation

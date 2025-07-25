@@ -1,25 +1,25 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// PROMPTS INDEX - CENTRALIZED PROMPT EXPORTS
+// PROMPT BUILDERS INDEX
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// Basic situation prompts
-export {
-  buildPlannerPrompt,
-  plannerPromptConfig,
-  type PromptConfig,
-} from "./planner-prompt";
+// Generation Guide
+export * from "./generation-guide";
 
-// Entity preferences prompts
-export {
-  buildPreferencesPrompt,
-  preferencesPromptConfig,
-} from "./preferences-prompt";
+// Basic Planning
+export * from "./planner-prompt";
 
-// Situation outcomes prompts
-export { buildOutcomesPrompt, outcomesPromptConfig } from "./outcomes-prompt";
+// Entity Preferences
+export * from "./preferences-prompt";
 
-// Press exchanges prompts
-export {
-  buildExchangesPrompt,
-  exchangesPromptConfig,
-} from "./exchanges-prompt";
+// Situation Outcomes (3-phase approach)
+export * from "./outcomes-narratives-prompt";
+export * from "./outcomes-impact-matrix-prompt";
+
+// Exchange Planning (Phase 1)
+export * from "./exchange-planning-prompt";
+
+// Question Generation (Phase 2)
+export * from "./question-generation-prompt";
+
+// Impact Generation (Phase 3)
+export * from "./impact-generation-prompt";

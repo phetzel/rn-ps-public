@@ -20,3 +20,6 @@ export {
 
 // Success display utilities
 export { displayGenerationSuccess } from "./display-generation-success";
+
+// Outcomes assembly utilities
+export { assembleOutcomes } from "./outcomes-assembler";

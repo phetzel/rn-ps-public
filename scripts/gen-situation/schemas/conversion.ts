@@ -14,6 +14,8 @@ import type {
   SituationPreferences,
 } from "~/lib/schemas/situations";
 import type { ExchangeData } from "~/lib/schemas/exchanges";
+import { situationDataSchema } from "~/lib/schemas/situations";
+import { type ZodIssue } from "zod";
 import {
   SituationPlan,
   ApiPreferences,
@@ -337,7 +339,74 @@ export function generateStaticKey(title: string): string {
 }
 
 /**
- * Convert complete generation result to game schema
+ * Validate and convert complete generation result to game schema
+ */
+export function validateAndConvertToGameSchema(
+  plan: SituationPlan,
+  preferences: ApiPreferences,
+  outcomes: ApiOutcomes,
+  exchanges: ApiExchanges
+): {
+  success: boolean;
+  data?: {
+    situationData: SituationDataType;
+    outcomes: SituationOutcome[];
+    preferences: SituationPreferences;
+    exchanges: ExchangeData[];
+  };
+  errors?: string[];
+  warnings?: string[];
+} {
+  try {
+    // Convert using existing logic
+    const converted = convertToGameSchema(
+      plan,
+      preferences,
+      outcomes,
+      exchanges
+    );
+
+    // Validate against real game schema
+    const validation = situationDataSchema.safeParse(converted.situationData);
+
+    if (!validation.success) {
+      const errors = validation.error.issues.map(
+        (issue) => `${issue.path.join(".")}: ${issue.message}`
+      );
+
+      return {
+        success: false,
+        errors,
+        warnings: [
+          `Generated data failed validation with ${errors.length} errors`,
+        ],
+      };
+    }
+
+    return {
+      success: true,
+      data: {
+        situationData: validation.data,
+        outcomes: converted.outcomes,
+        preferences: converted.preferences,
+        exchanges: converted.exchanges,
+      },
+      warnings: [],
+    };
+  } catch (error) {
+    return {
+      success: false,
+      errors: [
+        `Conversion failed: ${
+          error instanceof Error ? error.message : "Unknown error"
+        }`,
+      ],
+    };
+  }
+}
+
+/**
+ * Convert complete generation result to game schema (legacy - use validateAndConvertToGameSchema)
  */
 export function convertToGameSchema(
   plan: SituationPlan,
