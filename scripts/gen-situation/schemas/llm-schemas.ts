@@ -328,6 +328,15 @@ export const apiExchangesSchema = z
               .describe("False for non-follow-up answers"),
             followUpQuestionId: z.string().nullable().describe("Always null"),
           }),
+          rootAnswer4: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+            hasFollowUp: z
+              .boolean()
+              .describe("False for non-follow-up answers"),
+            followUpQuestionId: z.string().nullable().describe("Always null"),
+          }),
 
           // Secondary questions (exactly 2)
           secondaryQuestion1Id: z.string(),
@@ -342,6 +351,20 @@ export const apiExchangesSchema = z
             followUpQuestionId: z.string().nullable(),
           }),
           secondary1Answer2: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+            hasFollowUp: z.boolean().describe("False for non-follow-up"),
+            followUpQuestionId: z.string().nullable(),
+          }),
+          secondary1Answer3: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+            hasFollowUp: z.boolean().describe("False for non-follow-up"),
+            followUpQuestionId: z.string().nullable(),
+          }),
+          secondary1Answer4: z.object({
             id: z.string(),
             answerType: z.nativeEnum(AnswerType),
             answerText: z.string().min(80).max(180),
@@ -367,6 +390,20 @@ export const apiExchangesSchema = z
             hasFollowUp: z.boolean().describe("False for non-follow-up"),
             followUpQuestionId: z.string().nullable(),
           }),
+          secondary2Answer3: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+            hasFollowUp: z.boolean().describe("False for non-follow-up"),
+            followUpQuestionId: z.string().nullable(),
+          }),
+          secondary2Answer4: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+            hasFollowUp: z.boolean().describe("False for non-follow-up"),
+            followUpQuestionId: z.string().nullable(),
+          }),
 
           // Tertiary questions (exactly 2, no follow-ups)
           tertiaryQuestion1Id: z.string(),
@@ -381,6 +418,16 @@ export const apiExchangesSchema = z
             answerType: z.nativeEnum(AnswerType),
             answerText: z.string().min(80).max(180),
           }),
+          tertiary1Answer3: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+          }),
+          tertiary1Answer4: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+          }),
 
           tertiaryQuestion2Id: z.string(),
           tertiaryQuestion2Text: z.string().min(60).max(150),
@@ -390,6 +437,16 @@ export const apiExchangesSchema = z
             answerText: z.string().min(80).max(180),
           }),
           tertiary2Answer2: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+          }),
+          tertiary2Answer3: z.object({
+            id: z.string(),
+            answerType: z.nativeEnum(AnswerType),
+            answerText: z.string().min(80).max(180),
+          }),
+          tertiary2Answer4: z.object({
             id: z.string(),
             answerType: z.nativeEnum(AnswerType),
             answerText: z.string().min(80).max(180),
@@ -408,6 +465,7 @@ export const apiExchangesSchema = z
           exchange.rootAnswer1.hasFollowUp,
           exchange.rootAnswer2.hasFollowUp,
           exchange.rootAnswer3.hasFollowUp,
+          exchange.rootAnswer4.hasFollowUp,
         ].filter(Boolean).length;
         return rootFollowUps === 2;
       });
@@ -425,11 +483,15 @@ export const apiExchangesSchema = z
         const secondary1FollowUps = [
           exchange.secondary1Answer1.hasFollowUp,
           exchange.secondary1Answer2.hasFollowUp,
+          exchange.secondary1Answer3.hasFollowUp,
+          exchange.secondary1Answer4.hasFollowUp,
         ].filter(Boolean).length;
 
         const secondary2FollowUps = [
           exchange.secondary2Answer1.hasFollowUp,
           exchange.secondary2Answer2.hasFollowUp,
+          exchange.secondary2Answer3.hasFollowUp,
+          exchange.secondary2Answer4.hasFollowUp,
         ].filter(Boolean).length;
 
         return secondary1FollowUps === 1 && secondary2FollowUps === 1;
@@ -447,8 +509,12 @@ export const apiExchangesSchema = z
         const tertiaryFollowUps = [
           exchange.tertiary1Answer1,
           exchange.tertiary1Answer2,
+          exchange.tertiary1Answer3,
+          exchange.tertiary1Answer4,
           exchange.tertiary2Answer1,
           exchange.tertiary2Answer2,
+          exchange.tertiary2Answer3,
+          exchange.tertiary2Answer4,
         ];
 
         // Tertiary answers should not have hasFollowUp or followUpQuestionId properties
@@ -471,14 +537,23 @@ export const apiExchangesSchema = z
           exchange.rootAnswer1.answerType,
           exchange.rootAnswer2.answerType,
           exchange.rootAnswer3.answerType,
+          exchange.rootAnswer4.answerType,
           exchange.secondary1Answer1.answerType,
           exchange.secondary1Answer2.answerType,
+          exchange.secondary1Answer3.answerType,
+          exchange.secondary1Answer4.answerType,
           exchange.secondary2Answer1.answerType,
           exchange.secondary2Answer2.answerType,
+          exchange.secondary2Answer3.answerType,
+          exchange.secondary2Answer4.answerType,
           exchange.tertiary1Answer1.answerType,
           exchange.tertiary1Answer2.answerType,
+          exchange.tertiary1Answer3.answerType,
+          exchange.tertiary1Answer4.answerType,
           exchange.tertiary2Answer1.answerType,
           exchange.tertiary2Answer2.answerType,
+          exchange.tertiary2Answer3.answerType,
+          exchange.tertiary2Answer4.answerType,
         ];
 
         const uniqueTypes = new Set(allAnswerTypes);

@@ -13,7 +13,7 @@ export const exchangeProgressSchema = z.object({
   currentQuestionId: z.string().nullable(),
 
   // Cached computed values for efficiency
-  questionsAnswered: z.number().min(0).max(3),
+  questionsAnswered: z.number().min(0).max(5),
   hasSkipped: z.boolean(),
   completed: z.boolean(),
   journalistEngagement: z.nativeEnum(JournalistEngagementWeight).optional(), // Optional - only set after completion

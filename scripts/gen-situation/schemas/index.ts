@@ -22,3 +22,6 @@ export * from "./outcomes-generation";
 
 // Intermediate Types
 export * from "./intermediate-types";
+
+// Publication-specific schemas
+export * from "./consequence-generation-schemas";

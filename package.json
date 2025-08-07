@@ -22,7 +22,9 @@
     "test:ci": "jest --watchAll=false --passWithNoTests",
     "typecheck": "tsc --noEmit",
     "analyze": "tsx scripts/run-analysis.ts",
-    "gen-situation": "tsx scripts/run-gen-situation.ts"
+    "gen-situation": "tsx scripts/run-gen-situation.ts",
+    "gen-situation:batch": "tsx scripts/run-gen-situation.ts --count=10",
+    "gen-situation:batch-large": "tsx scripts/run-gen-situation.ts --count=100"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",

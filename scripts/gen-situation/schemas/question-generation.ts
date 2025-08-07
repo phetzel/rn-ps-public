@@ -46,8 +46,8 @@ export const questionDataSchema = z.object({
 
   answers: z
     .array(answerOptionSchema)
-    .min(3)
-    .max(7)
+    .min(4)
+    .max(4)
     .describe("Available answer options for this question"),
 
   level: z
@@ -76,8 +76,8 @@ export const publicationExchangeSchema = z.object({
 
   questions: z
     .array(questionDataSchema)
-    .min(3)
-    .max(7)
+    .min(5)
+    .max(5)
     .describe("All questions in this exchange (root + follow-ups)"),
 
   questionFlow: z

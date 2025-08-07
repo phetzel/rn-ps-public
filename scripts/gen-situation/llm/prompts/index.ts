@@ -23,3 +23,7 @@ export * from "./question-generation-prompt";
 
 // Impact Generation (Phase 3)
 export * from "./impact-generation-prompt";
+
+// Publication-specific prompts
+export * from "./publication-questions-prompt";
+export * from "./question-consequences-prompt";

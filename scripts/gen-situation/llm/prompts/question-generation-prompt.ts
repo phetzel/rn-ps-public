@@ -75,9 +75,9 @@ ${cabinetPrefs}
 ## Question Structure Requirements
 
 ### CRITICAL RULES:
-1. **Root Question**: Must have 3-7 answers, exactly 2 must have follow-ups
-2. **Secondary Questions**: Must have 3-7 answers each, exactly 1 must have follow-up
-3. **Tertiary Questions**: Must have 3-7 answers each, none can have follow-ups
+1. **Root Question**: Must have exactly 4 answers, exactly 2 must have follow-ups
+2. **Secondary Questions**: Must have exactly 4 answers each, exactly 1 must have follow-up
+3. **Tertiary Questions**: Must have exactly 4 answers each, none can have follow-ups
 4. **Answer IDs**: Use format a1, a2, a3, etc. (unique across entire exchange)
 5. **Question IDs**: Use format q1, q2, q3, etc. (q1 is always root)
 
@@ -92,15 +92,17 @@ Root Question (q1)
 Secondary Question (q2)
 ├── Answer a5 (no follow-up)
 ├── Answer a6 → Tertiary Question (q4)
-└── Answer a7 (no follow-up)
+├── Answer a7 (no follow-up)
+└── Answer a8 (no follow-up)
 
 Secondary Question (q3)
-├── Answer a8 (no follow-up)
-├── Answer a9 → Tertiary Question (q5)
-└── Answer a10 (no follow-up)
+├── Answer a9 (no follow-up)
+├── Answer a10 → Tertiary Question (q5)
+├── Answer a11 (no follow-up)
+└── Answer a12 (no follow-up)
 
 Tertiary Questions (q4, q5)
-├── Multiple answers each
+├── 4 answers each (a13-a16, a17-a20)
 └── NO FOLLOW-UPS ALLOWED
 
 ### Answer Type Distribution:
@@ -162,7 +164,7 @@ Generate a complete question and answer structure for one publication's press ex
 1. **Root Question**: Exactly 2 of its answers must have follow-ups
 2. **Secondary Questions**: Exactly 1 of each question's answers must have follow-up
 3. **Tertiary Questions**: NONE of their answers can have follow-ups
-4. **Answer Counts**: Each question needs 3-7 answers
+4. **Answer Counts**: Each question needs exactly 4 answers
 5. **ID Format**: Questions q1,q2,q3... Answers a1,a2,a3... (unique across exchange)
 
 ### Content Requirements:

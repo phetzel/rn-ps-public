@@ -46,7 +46,7 @@ export const questionSchema = z
   .object({
     id: idSchema,
     text: textLengthSchema.questionText,
-    answers: z.array(answerSchema).min(3, "Questions need at least 3 answers"),
+    answers: z.array(answerSchema).min(4).max(4),
   })
   .refine(
     (data) => {

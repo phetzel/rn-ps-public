@@ -63,7 +63,7 @@ export const BALANCE_THRESHOLDS = {
 
   // Situation structure
   EXCHANGES_PER_SITUATION: { min: 2, max: 4 },
-  ANSWERS_PER_QUESTION: { min: 2, max: 5 },
+  ANSWERS_PER_QUESTION: { min: 4, max: 4 },
   QUESTION_DEPTH: { max: 3 },
   QUESTION_DEPTH_COVERAGE: { min: 60 }, // Minimum percentage with depth >= 1
 
