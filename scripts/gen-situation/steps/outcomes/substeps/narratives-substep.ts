@@ -6,8 +6,8 @@ import {
 import { 
   outcomesNarrativesResultSchema,
   type OutcomesNarrativesResult 
-} from "../../../schemas/outcomes-generation";
-import type { NarrativesSubStepInput, NarrativesSubStepOutput } from "../types";
+} from "../../../schemas";
+import type { NarrativesSubStepInput, NarrativesSubStepOutput } from "../../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // NARRATIVES SUB-STEP IMPLEMENTATION

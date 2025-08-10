@@ -1,27 +1,15 @@
 // ═══════════════════════════════════════════════════════════════════════════════
-// GENERATION SCHEMAS INDEX
+// GENERATION SCHEMAS INDEX - CONSOLIDATED STRUCTURE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// LLM Schemas
-export * from "./llm-schemas";
+// Core schemas and shared utilities
+export * from "./core";
 
-// Schema Conversion
+// All LLM generation schemas
+export * from "./generation";
+
+// Game validation schemas and enhanced validation
+export * from "./validation";
+
+// Schema conversion utilities (LLM → Game)
 export * from "./conversion";
-
-// Exchange Planning Schemas
-export * from "./exchange-planning";
-
-// Question Generation Schemas
-export * from "./question-generation";
-
-// Impact Generation Schemas
-export * from "./impact-generation";
-
-// Outcomes Generation Schemas (3-phase)
-export * from "./outcomes-generation";
-
-// Intermediate Types
-export * from "./intermediate-types";
-
-// Publication-specific schemas
-export * from "./consequence-generation-schemas";

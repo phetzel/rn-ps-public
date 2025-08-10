@@ -1,14 +1,11 @@
-import type { SituationPlan, ApiPreferences, ApiOutcomes } from "../../schemas/llm-schemas";
+import type { SituationPlan, ApiPreferences, ApiOutcomes } from "../../schemas/generation";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PUBLICATION QUESTIONS GENERATION PROMPT
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export interface PublicationQuestionsPromptConfig {
-  temperature: number;
-  schemaName: string;
-  systemPrompt: string;
-}
+// Types moved to root types.ts
+import type { PublicationQuestionsPromptConfig } from "../../types";
 
 export const publicationQuestionsPromptConfig: PublicationQuestionsPromptConfig = {
   temperature: 0.8,
@@ -64,28 +61,232 @@ ${preferences.cabinetPreferences
   .map((pref) => `${pref.member}: ${pref.answerType} (${pref.rationale})`)
   .join("\n")}
 
+## ✏️ CHARACTER COUNT REQUIREMENTS
+
+**CRITICAL**: All text must fit exact character limits:
+
+- **Question Text**: 60-150 characters (about 1-2 sentences)
+- **Answer Text**: 80-180 characters (about 2-3 sentences) 
+
+**Tips for character limits:**
+- Question: "Focused inquiry about [specific aspect] of the situation"
+- Answer: "Concise response that directly addresses the question with [specific action/position]"
+
+**ALWAYS count characters in your response and adjust to fit limits!**
+
 ## Structure Requirements
 Generate exactly 5 questions following this hierarchy:
 
-1. **Root Question (q1)**: Broad question that sets the stage
-   - Must have exactly 4 answers (a1, a2, a3, a4)
+1. **Root Question**: Broad question that sets the stage
+   - Must have exactly 4 answers
    - Exactly 2 answers must have follow-ups (hasFollowUp: true)
+   - Follow-up answers must specify followUpQuestionId pointing to secondary questions
 
-2. **Secondary Question 1 (q2)**: Triggered by root answer
-   - Must have exactly 4 answers (a5, a6, a7, a8)
+2. **Secondary Question 1**: Triggered by root answer
+   - Must have exactly 4 answers
+   - Exactly 1 answer must have follow-up (hasFollowUp: true) 
+   - Follow-up answer must specify followUpQuestionId pointing to tertiary question
+
+3. **Secondary Question 2**: Triggered by root answer
+   - Must have exactly 4 answers
    - Exactly 1 answer must have follow-up (hasFollowUp: true)
+   - Follow-up answer must specify followUpQuestionId pointing to tertiary question
 
-3. **Secondary Question 2 (q3)**: Triggered by root answer
-   - Must have exactly 4 answers (a9, a10, a11, a12)
-   - Exactly 1 answer must have follow-up (hasFollowUp: true)
-
-4. **Tertiary Question 1 (q4)**: Triggered by secondary answer
-   - Must have exactly 4 answers (a13, a14, a15, a16)
+4. **Tertiary Question 1**: Triggered by secondary answer
+   - Must have exactly 4 answers
    - No follow-ups allowed (hasFollowUp: false)
 
-5. **Tertiary Question 2 (q5)**: Triggered by secondary answer
-   - Must have exactly 4 answers (a17, a18, a19, a20)
+5. **Tertiary Question 2**: Triggered by secondary answer
+   - Must have exactly 4 answers
    - No follow-ups allowed (hasFollowUp: false)
+
+## JSON Structure Required
+
+{
+  "publication": "${publicationPlan.publication}",
+  "editorialAngle": "Brief description of this publication's angle on the situation",
+  "rootQuestion": {
+    "id": "q1",
+    "text": "Your root question here",
+    "answers": [
+      {
+        "id": "a1",
+        "answerType": "deflect",
+        "answerText": "Answer text here",
+        "hasFollowUp": false,
+        "followUpQuestionId": null
+      },
+      {
+        "id": "a2", 
+        "answerType": "inform",
+        "answerText": "Answer text here",
+        "hasFollowUp": true,
+        "followUpQuestionId": "q2"
+      },
+      {
+        "id": "a3",
+        "answerType": "challenge", 
+        "answerText": "Answer text here",
+        "hasFollowUp": true,
+        "followUpQuestionId": "q3"
+      },
+      {
+        "id": "a4",
+        "answerType": "reassure",
+        "answerText": "Answer text here", 
+        "hasFollowUp": false,
+        "followUpQuestionId": null
+      }
+    ]
+  },
+  "secondaryQuestions": [
+    {
+      "id": "q2",
+      "text": "Follow-up question based on answer a2",
+      "answers": [
+        {
+          "id": "a5",
+          "answerType": "admit",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a6",
+          "answerType": "deny", 
+          "answerText": "Answer text here",
+          "hasFollowUp": true,
+          "followUpQuestionId": "q4"
+        },
+        {
+          "id": "a7",
+          "answerType": "deflect",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a8",
+          "answerType": "inform",
+          "answerText": "Answer text here",
+          "hasFollowUp": false, 
+          "followUpQuestionId": null
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "text": "Follow-up question based on answer a3",
+      "answers": [
+        {
+          "id": "a9",
+          "answerType": "challenge",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a10",
+          "answerType": "reassure",
+          "answerText": "Answer text here",
+          "hasFollowUp": true,
+          "followUpQuestionId": "q5"
+        },
+        {
+          "id": "a11",
+          "answerType": "admit",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a12",
+          "answerType": "deflect",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        }
+      ]
+    }
+  ],
+  "tertiaryQuestions": [
+    {
+      "id": "q4", 
+      "text": "Final follow-up from secondary question q2",
+      "answers": [
+        {
+          "id": "a13",
+          "answerType": "inform",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a14",
+          "answerType": "deny",
+          "answerText": "Answer text here", 
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a15",
+          "answerType": "challenge",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a16",
+          "answerType": "admit", 
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "text": "Final follow-up from secondary question q3", 
+      "answers": [
+        {
+          "id": "a17",
+          "answerType": "reassure",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a18",
+          "answerType": "deflect",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a19",
+          "answerType": "inform",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        },
+        {
+          "id": "a20",
+          "answerType": "challenge",
+          "answerText": "Answer text here",
+          "hasFollowUp": false,
+          "followUpQuestionId": null
+        }
+      ]
+    }
+  ]
+}
+
+**CRITICAL**: 
+- Root question must have exactly 2 answers with hasFollowUp: true
+- Each secondary question must have exactly 1 answer with hasFollowUp: true  
+- All tertiary questions must have hasFollowUp: false for all answers
+- followUpQuestionId must exactly match the target question's id
+- Use sequential IDs: q1-q5 for questions, a1-a20 for answers
 
 ## Answer Type Requirements
 Include variety in answer types across all answers:

@@ -1,4 +1,4 @@
-import { GenerationResult } from "../generator";
+import { GenerationResult } from "../types";
 import { AnswerType } from "~/types";
 
 /**
@@ -71,16 +71,16 @@ export function displayGenerationSuccess(result: GenerationResult): void {
       console.log(`${index + 1}. ${outcome.title} (${outcome.weight}%)`);
       console.log(`   ${outcome.description}`);
 
-      // Show impacts
+      // Show impacts (using new structure)
       const impacts: string[] = [];
-      if (outcome.consequences.cabinet.length > 0) {
-        outcome.consequences.cabinet.forEach((impact) => {
+      if ((outcome as any).consequences?.cabinet?.length > 0) {
+        (outcome as any).consequences.cabinet.forEach((impact: any) => {
           const sign = impact.impact.startsWith("-") ? "" : "+";
           impacts.push(`${impact.member}: ${sign}${impact.impact}`);
         });
       }
-      if (outcome.consequences.subgroups.length > 0) {
-        outcome.consequences.subgroups.forEach((impact) => {
+      if ((outcome as any).consequences?.subgroups?.length > 0) {
+        (outcome as any).consequences.subgroups.forEach((impact: any) => {
           const sign = impact.impact.startsWith("-") ? "" : "+";
           impacts.push(`${impact.group}: ${sign}${impact.impact}`);
         });
@@ -97,30 +97,39 @@ export function displayGenerationSuccess(result: GenerationResult): void {
     console.log("\n🎤 PRESS EXCHANGES");
     console.log("─────────────────");
 
-    result.situation.exchanges.exchanges.forEach((exchange, index) => {
-      console.log(`${index + 1}. ${exchange.publication.toUpperCase()}`);
+    result.situation.exchanges.exchanges.forEach((exchange: any, index: number) => {
+      console.log(`${index + 1}. ${(exchange.publicationId || exchange.publication)?.toUpperCase()}`);
       console.log(`   Editorial Angle: ${exchange.editorialAngle}`);
       console.log(
         `   Structure: 1 root → 2 secondary → 2 tertiary (5 total questions)`
       );
 
-      // Show authorized answers if any
+      // Show authorized answers if any (check all possible answer fields)
       const allAnswers = [
         exchange.rootAnswer1,
         exchange.rootAnswer2,
         exchange.rootAnswer3,
+        exchange.rootAnswer4,
         exchange.secondary1Answer1,
         exchange.secondary1Answer2,
+        exchange.secondary1Answer3,
+        exchange.secondary1Answer4,
         exchange.secondary2Answer1,
         exchange.secondary2Answer2,
+        exchange.secondary2Answer3,
+        exchange.secondary2Answer4,
         exchange.tertiary1Answer1,
         exchange.tertiary1Answer2,
+        exchange.tertiary1Answer3,
+        exchange.tertiary1Answer4,
         exchange.tertiary2Answer1,
         exchange.tertiary2Answer2,
-      ];
+        exchange.tertiary2Answer3,
+        exchange.tertiary2Answer4,
+      ].filter(Boolean); // Filter out undefined answers
 
       const hasAuthorized = allAnswers.some(
-        (answer) => answer.answerType === AnswerType.Authorized
+        (answer: any) => answer?.answerType === AnswerType.Authorized
       );
 
       if (hasAuthorized) {

@@ -1,64 +1,24 @@
 import { LLMClient } from "./llm/client";
-import {
-  generationAnalysis,
-  type GenerationAnalysis,
-} from "./utils";
+import { generationAnalysis } from "./steps/planning/utils/generation-analysis";
 import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./steps";
-import {
-  type SituationPlan,
-  type ApiPreferences,
-  type ApiOutcomes,
-  type ApiExchanges,
-} from "./schemas/llm-schemas";
 import { validateAndConvertToGameSchema } from "./schemas/conversion";
 import { writeSituationFiles } from "./utils/file-writer";
+import type {
+  GenerationAnalysis,
+  GenerationStage,
+  GenerationResult,
+  BatchGenerationStats,
+} from "./types";
+import type {
+  SituationPlan,
+  ApiPreferences,
+  ApiOutcomes,
+  ApiExchanges,
+} from "./schemas";
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SITUATION GENERATOR - LINEAR LLM PIPELINE (API-COMPATIBLE SCHEMAS)
+// SITUATION GENERATOR - LINEAR LLM PIPELINE WITH ENHANCED VALIDATION
 // ═══════════════════════════════════════════════════════════════════════════════
-
-export type GenerationStage = 'analysis' | 'planning' | 'preferences' | 'outcomes' | 'exchanges' | 'conversion' | 'files';
-
-export interface GenerationResult {
-  success: boolean;
-  situation?: {
-    plan: SituationPlan;
-    preferences?: ApiPreferences;
-    outcomes?: ApiOutcomes;
-    exchanges?: ApiExchanges;
-  };
-  files?: {
-    directoryPath: string;
-    files: string[];
-  };
-  error?: string;
-  failedStage?: GenerationStage;
-  usage?: {
-    requests: number;
-    totalTokens: number;
-    totalCost: number;
-  };
-  generationId?: string;
-  startTime?: Date;
-  endTime?: Date;
-  duration?: number;
-}
-
-export interface BatchGenerationStats {
-  total: number;
-  successful: number;
-  failed: number;
-  successRate: number;
-  failuresByStage: Record<GenerationStage, number>;
-  totalUsage: {
-    requests: number;
-    totalTokens: number;
-    totalCost: number;
-  };
-  totalDuration: number;
-  averageDuration: number;
-  results: GenerationResult[];
-}
 
 export class SituationGenerator {
   private llmClient: LLMClient;
@@ -69,9 +29,12 @@ export class SituationGenerator {
 
   constructor(llmClient: LLMClient) {
     this.llmClient = llmClient;
+    
     this.planningStep = new PlanningStep({ llmClient });
     this.preferencesStep = new PreferencesStep({ llmClient });
+    
     this.outcomesStep = new OutcomesStep({ llmClient });
+      
     this.exchangesStep = new ExchangesStep({ llmClient });
   }
 
@@ -97,8 +60,8 @@ export class SituationGenerator {
         analysis: startingContext,
       });
 
-      // Step 3: Generate situation outcomes
-      console.log(`🎲 [${id}] Step 3: Outcomes...`);
+      // Step 3: Generate situation outcomes (enhanced)
+      console.log(`🎲 [${id}] Step 3: Enhanced Outcomes...`);
       const outcomes = await this.outcomesStep.execute({
         plan,
         preferences,
@@ -143,7 +106,7 @@ export class SituationGenerator {
       const endTime = new Date();
       const duration = endTime.getTime() - startTime.getTime();
 
-      console.log(`✅ [${id}] Generation pipeline completed! (${duration}ms)`);
+      console.log(`✅ [${id}] Enhanced generation pipeline completed! (${duration}ms)`);
       console.log(`📁 [${id}] Files written to: ${fileResult.directoryPath}`);
 
       return {
@@ -173,13 +136,16 @@ export class SituationGenerator {
       const duration = endTime.getTime() - startTime.getTime();
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
       
+      // IMPORTANT: Always capture usage stats even on failure
+      const usage = this.llmClient.getUsageStats();
+      
       // Try to determine which stage failed based on the error message or stack
       let failedStage: GenerationStage = 'analysis';
       if (errorMessage.includes('planning') || errorMessage.includes('PlanningStep')) {
         failedStage = 'planning';
       } else if (errorMessage.includes('preferences') || errorMessage.includes('PreferencesStep')) {
         failedStage = 'preferences';
-      } else if (errorMessage.includes('outcomes') || errorMessage.includes('OutcomesStep')) {
+      } else if (errorMessage.includes('outcomes') || errorMessage.includes('OutcomesStep') || errorMessage.includes('Enhanced Outcomes')) {
         failedStage = 'outcomes';
       } else if (errorMessage.includes('exchanges') || errorMessage.includes('ExchangesStep')) {
         failedStage = 'exchanges';
@@ -199,6 +165,11 @@ export class SituationGenerator {
         startTime,
         endTime,
         duration,
+        usage: {
+          requests: usage.requestCount,
+          totalTokens: usage.totalTokens,
+          totalCost: usage.totalCost,
+        },
       };
     }
   }
@@ -207,7 +178,7 @@ export class SituationGenerator {
    * Generate multiple situations in batch with comprehensive error handling
    */
   async generateBatch(count: number): Promise<BatchGenerationStats> {
-    console.log(`🚀 Starting batch generation of ${count} situations...`);
+    console.log(`🚀 Starting ENHANCED batch generation of ${count} situations...`);
     console.log("============================================================");
     
     const batchStartTime = new Date();
@@ -225,6 +196,9 @@ export class SituationGenerator {
     for (let i = 1; i <= count; i++) {
       console.log(`\n📝 Generation ${i}/${count}`);
       console.log("------------------------------------------------------------");
+      
+      // Reset LLM client usage stats for clean per-generation tracking
+      this.llmClient.resetUsageStats();
       
       try {
         const result = await this.generateComplete(`batch-${i}`);
@@ -244,6 +218,9 @@ export class SituationGenerator {
         const errorMessage = error instanceof Error ? error.message : "Unexpected batch error";
         console.error(`💥 Unexpected error in generation ${i}: ${errorMessage}`);
         
+        // Still capture any usage that occurred
+        const usage = this.llmClient.getUsageStats();
+        
         results.push({
           success: false,
           error: errorMessage,
@@ -252,6 +229,11 @@ export class SituationGenerator {
           startTime: new Date(),
           endTime: new Date(),
           duration: 0,
+          usage: {
+            requests: usage.requestCount,
+            totalTokens: usage.totalTokens,
+            totalCost: usage.totalCost,
+          },
         });
         
         failuresByStage.analysis++;
@@ -296,7 +278,7 @@ export class SituationGenerator {
   private logBatchSummary(stats: BatchGenerationStats): void {
     console.log("\n");
     console.log("════════════════════════════════════════════════════════════");
-    console.log("🎯 BATCH GENERATION SUMMARY");
+    console.log("🎯 ENHANCED BATCH GENERATION SUMMARY");
     console.log("════════════════════════════════════════════════════════════");
     console.log(`📊 Total Generations: ${stats.total}`);
     console.log(`✅ Successful: ${stats.successful}`);

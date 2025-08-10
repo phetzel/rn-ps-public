@@ -1,5 +1,5 @@
-import { assembleOutcomes } from "../../../utils";
-import type { AssemblySubStepInput, AssemblySubStepOutput } from "../types";
+import { assembleOutcomes } from "../utils/outcomes-assembler";
+import type { AssemblySubStepInput, AssemblySubStepOutput } from "../../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ASSEMBLY SUB-STEP IMPLEMENTATION

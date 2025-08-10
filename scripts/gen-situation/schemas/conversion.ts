@@ -21,7 +21,7 @@ import {
   ApiPreferences,
   ApiOutcomes,
   ApiExchanges,
-} from "./llm-schemas";
+} from "./generation";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SCHEMA CONVERSION UTILITIES - LLM TO GAME SCHEMAS
@@ -78,7 +78,78 @@ function convertToSituationConsequenceWeight(
 }
 
 /**
- * Generate balanced outcome modifiers that sum to 0
+ * Convert LLM impact structure to game impact structure
+ * Now uses direct numeric values - no enum conversion needed
+ */
+function convertLLMImpactsToGameImpacts(llmImpacts: any): any {
+  const gameImpacts: any = {};
+
+  // Convert cabinet impacts - use numeric weights directly
+  if (llmImpacts?.cabinet && Array.isArray(llmImpacts.cabinet)) {
+    gameImpacts.cabinet = {};
+    llmImpacts.cabinet.forEach((impact: any) => {
+      if (impact.member && impact.weight !== undefined) {
+        gameImpacts.cabinet[impact.member] = {
+          weight: impact.weight, // Direct numeric value
+          reaction: impact.reaction || undefined
+        };
+      }
+    });
+  }
+
+  // Convert journalist impacts - use numeric weights directly
+  if (llmImpacts?.journalists && Array.isArray(llmImpacts.journalists)) {
+    gameImpacts.journalists = {};
+    llmImpacts.journalists.forEach((impact: any) => {
+      if (impact.journalist && impact.weight !== undefined) {
+        gameImpacts.journalists[impact.journalist] = {
+          weight: impact.weight, // Direct numeric value
+          reaction: impact.reaction || undefined
+        };
+      }
+    });
+  }
+
+  // Convert president impacts - use numeric weight directly
+  if (llmImpacts?.president && llmImpacts.president.weight !== undefined) {
+    gameImpacts.president = {
+      weight: llmImpacts.president.weight, // Direct numeric value
+      reaction: llmImpacts.president.reaction || undefined
+    };
+  }
+
+  return gameImpacts;
+}
+
+/**
+ * Convert LLM outcome modifiers to game outcome modifiers
+ * Now uses direct numeric values - no enum conversion needed
+ */
+function convertLLMOutcomeModifiers(
+  llmModifiers: any[],
+  outcomeIds: string[]
+): Record<string, number> {
+  const modifiers: Record<string, number> = {};
+
+  // Initialize all outcomes to neutral (0)
+  outcomeIds.forEach(id => {
+    modifiers[id] = 0;
+  });
+
+  // Apply LLM-generated modifiers - use numeric values directly
+  if (Array.isArray(llmModifiers)) {
+    llmModifiers.forEach(modifier => {
+      if (modifier.outcomeId && modifier.modifier !== undefined) {
+        modifiers[modifier.outcomeId] = modifier.modifier; // Direct numeric value
+      }
+    });
+  }
+
+  return modifiers;
+}
+
+/**
+ * Generate balanced outcome modifiers that sum to 0 (LEGACY - now uses LLM data)
  */
 function generateOutcomeModifiers(
   outcomeIds: string[]
@@ -144,36 +215,82 @@ export function convertPreferences(
  * Convert ApiOutcomes to SituationOutcome array
  */
 export function convertOutcomes(apiOutcomes: ApiOutcomes): SituationOutcome[] {
-  return apiOutcomes.outcomes.map((outcome) => ({
-    id: outcome.id,
-    title: outcome.title,
-    description: outcome.description,
-    weight: outcome.weight,
-    consequences: {
-      approvalChanges: {
-        ...(outcome.consequences.cabinet.length > 0 && {
-          cabinet: Object.fromEntries(
-            outcome.consequences.cabinet.map((impact) => [
-              impact.member,
-              convertToSituationConsequenceWeight(impact.impact),
-            ])
-          ),
-        }),
-        ...(outcome.consequences.subgroups.length > 0 && {
-          subgroups: Object.fromEntries(
-            outcome.consequences.subgroups.map((impact) => [
-              impact.group,
-              convertToSituationConsequenceWeight(impact.impact),
-            ])
-          ),
-        }),
-      },
-    },
-  }));
+  return apiOutcomes.outcomes.map((outcome) => {
+    const consequences: any = {
+      approvalChanges: {},
+    };
+
+    // Convert entityImpacts to consequences structure
+    if (outcome.entityImpacts && Array.isArray(outcome.entityImpacts)) {
+      const cabinetImpacts: Record<string, SituationConsequenceWeight> = {};
+      const subgroupImpacts: Record<string, SituationConsequenceWeight> = {};
+
+      outcome.entityImpacts.forEach((entityImpact: any) => {
+        const entityId = entityImpact.entityId;
+        
+        // Find the impact for this outcome
+        const outcomeImpact = entityImpact.outcomeImpacts?.find(
+          (impact: any) => impact.outcomeId === outcome.id
+        );
+        
+        if (outcomeImpact) {
+          const weight = convertToSituationConsequenceWeight(outcomeImpact.impact);
+          
+          // Determine if this is a cabinet member or subgroup based on entityId format
+          // Cabinet members typically use specific IDs like 'state', 'defense', etc.
+          // Subgroups typically use different format
+          if (isCabinetMember(entityId)) {
+            cabinetImpacts[entityId] = weight;
+          } else if (isSubgroup(entityId)) {
+            subgroupImpacts[entityId] = weight;
+          }
+        }
+      });
+
+      if (Object.keys(cabinetImpacts).length > 0) {
+        consequences.approvalChanges.cabinet = cabinetImpacts;
+      }
+      
+      if (Object.keys(subgroupImpacts).length > 0) {
+        consequences.approvalChanges.subgroups = subgroupImpacts;
+      }
+    }
+
+    return {
+      id: outcome.id,
+      title: outcome.title,
+      description: outcome.description,
+      weight: outcome.weight,
+      consequences,
+    };
+  });
+}
+
+/**
+ * Helper function to determine if entityId is a cabinet member
+ */
+function isCabinetMember(entityId: string): boolean {
+  const cabinetMembers = [
+    'state', 'treasury', 'defense', 'justice', 'hhs', 'homeland'
+  ];
+  return cabinetMembers.includes(entityId);
+}
+
+/**
+ * Helper function to determine if entityId is a subgroup
+ */
+function isSubgroup(entityId: string): boolean {
+  const subgroups = [
+    'left_wing_base', 'right_wing_base', 'independent_base',
+    'youth_voters', 'seniors_citizens', 'rural_residents', 'urban_residents',
+    'labor_unions', 'business_leaders', 'tech_industry'
+  ];
+  return subgroups.includes(entityId);
 }
 
 /**
  * Convert ApiExchanges to ExchangeData array
+ * Now properly uses LLM-generated impacts and outcome modifiers
  */
 export function convertExchanges(
   apiExchanges: ApiExchanges,
@@ -182,206 +299,56 @@ export function convertExchanges(
   const outcomeIds = apiOutcomes.outcomes.map((o) => o.id);
 
   return apiExchanges.exchanges.map((exchange) => {
-    // Convert flattened structure to nested structure
+    // Note: The exchange data comes from the new LLM-generated format
+    // which has nested question/answer structure with full impacts
+    
+    // Convert the first exchange structure (assuming it matches the expected format)
+    const exchangeData = exchange as any; // Type assertion since we know this comes from LLM generation
+    
     const rootQuestion = {
-      id: exchange.rootQuestionId,
-      text: exchange.rootQuestionText,
-      answers: [
-        {
-          id: exchange.rootAnswer1.id,
-          type: exchange.rootAnswer1.answerType,
-          text: exchange.rootAnswer1.answerText,
-          impacts: {
-            cabinet: {},
-            ...(exchange.rootAnswer1.hasFollowUp && {
-              followUpId: exchange.rootAnswer1.followUpQuestionId,
-            }),
-          },
-          outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-        },
-        {
-          id: exchange.rootAnswer2.id,
-          type: exchange.rootAnswer2.answerType,
-          text: exchange.rootAnswer2.answerText,
-          impacts: {
-            cabinet: {},
-            ...(exchange.rootAnswer2.hasFollowUp && {
-              followUpId: exchange.rootAnswer2.followUpQuestionId,
-            }),
-          },
-          outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-        },
-        {
-          id: exchange.rootAnswer3.id,
-          type: exchange.rootAnswer3.answerType,
-          text: exchange.rootAnswer3.answerText,
-          impacts: {
-            cabinet: {},
-          },
-          outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-        },
-        {
-          id: exchange.rootAnswer4.id,
-          type: exchange.rootAnswer4.answerType,
-          text: exchange.rootAnswer4.answerText,
-          impacts: {
-            cabinet: {},
-          },
-          outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-        },
-      ],
+      id: exchangeData.rootQuestion.id,
+      text: exchangeData.rootQuestion.questionText || exchangeData.rootQuestion.text,
+      answers: exchangeData.rootQuestion.answers.map((answer: any) => ({
+        id: answer.id,
+        type: answer.answerType || answer.type,
+        text: answer.answerText || answer.text,
+        impacts: convertLLMImpactsToGameImpacts(answer.impacts),
+        outcomeModifiers: convertLLMOutcomeModifiers(answer.outcomeModifiers, outcomeIds),
+        ...(answer.hasFollowUp && answer.followUpQuestionId && {
+          followUpId: answer.followUpQuestionId,
+        }),
+      })),
     };
 
-    const secondaryQuestions = [
-      {
-        id: exchange.secondaryQuestion1Id,
-        text: exchange.secondaryQuestion1Text,
-        answers: [
-          {
-            id: exchange.secondary1Answer1.id,
-            type: exchange.secondary1Answer1.answerType,
-            text: exchange.secondary1Answer1.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-            ...(exchange.secondary1Answer1.hasFollowUp && {
-              followUpId: exchange.secondary1Answer1.followUpQuestionId,
-            }),
-          },
-          {
-            id: exchange.secondary1Answer2.id,
-            type: exchange.secondary1Answer2.answerType,
-            text: exchange.secondary1Answer2.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.secondary1Answer3.id,
-            type: exchange.secondary1Answer3.answerType,
-            text: exchange.secondary1Answer3.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.secondary1Answer4.id,
-            type: exchange.secondary1Answer4.answerType,
-            text: exchange.secondary1Answer4.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-        ],
-      },
-      {
-        id: exchange.secondaryQuestion2Id,
-        text: exchange.secondaryQuestion2Text,
-        answers: [
-          {
-            id: exchange.secondary2Answer1.id,
-            type: exchange.secondary2Answer1.answerType,
-            text: exchange.secondary2Answer1.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-            ...(exchange.secondary2Answer1.hasFollowUp && {
-              followUpId: exchange.secondary2Answer1.followUpQuestionId,
-            }),
-          },
-          {
-            id: exchange.secondary2Answer2.id,
-            type: exchange.secondary2Answer2.answerType,
-            text: exchange.secondary2Answer2.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.secondary2Answer3.id,
-            type: exchange.secondary2Answer3.answerType,
-            text: exchange.secondary2Answer3.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.secondary2Answer4.id,
-            type: exchange.secondary2Answer4.answerType,
-            text: exchange.secondary2Answer4.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-        ],
-      },
-    ];
+    const secondaryQuestions = exchangeData.secondaryQuestions.map((question: any) => ({
+      id: question.id,
+      text: question.questionText || question.text,
+      answers: question.answers.map((answer: any) => ({
+        id: answer.id,
+        type: answer.answerType || answer.type,
+        text: answer.answerText || answer.text,
+        impacts: convertLLMImpactsToGameImpacts(answer.impacts),
+        outcomeModifiers: convertLLMOutcomeModifiers(answer.outcomeModifiers, outcomeIds),
+        ...(answer.hasFollowUp && answer.followUpQuestionId && {
+          followUpId: answer.followUpQuestionId,
+        }),
+      })),
+    }));
 
-    const tertiaryQuestions = [
-      {
-        id: exchange.tertiaryQuestion1Id,
-        text: exchange.tertiaryQuestion1Text,
-        answers: [
-          {
-            id: exchange.tertiary1Answer1.id,
-            type: exchange.tertiary1Answer1.answerType,
-            text: exchange.tertiary1Answer1.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.tertiary1Answer2.id,
-            type: exchange.tertiary1Answer2.answerType,
-            text: exchange.tertiary1Answer2.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.tertiary1Answer3.id,
-            type: exchange.tertiary1Answer3.answerType,
-            text: exchange.tertiary1Answer3.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.tertiary1Answer4.id,
-            type: exchange.tertiary1Answer4.answerType,
-            text: exchange.tertiary1Answer4.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-        ],
-      },
-      {
-        id: exchange.tertiaryQuestion2Id,
-        text: exchange.tertiaryQuestion2Text,
-        answers: [
-          {
-            id: exchange.tertiary2Answer1.id,
-            type: exchange.tertiary2Answer1.answerType,
-            text: exchange.tertiary2Answer1.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.tertiary2Answer2.id,
-            type: exchange.tertiary2Answer2.answerType,
-            text: exchange.tertiary2Answer2.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.tertiary2Answer3.id,
-            type: exchange.tertiary2Answer3.answerType,
-            text: exchange.tertiary2Answer3.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-          {
-            id: exchange.tertiary2Answer4.id,
-            type: exchange.tertiary2Answer4.answerType,
-            text: exchange.tertiary2Answer4.answerText,
-            impacts: { cabinet: {} },
-            outcomeModifiers: generateOutcomeModifiers(outcomeIds),
-          },
-        ],
-      },
-    ];
+    const tertiaryQuestions = exchangeData.tertiaryQuestions.map((question: any) => ({
+      id: question.id,
+      text: question.questionText || question.text,
+      answers: question.answers.map((answer: any) => ({
+        id: answer.id,
+        type: answer.answerType || answer.type,
+        text: answer.answerText || answer.text,
+        impacts: convertLLMImpactsToGameImpacts(answer.impacts),
+        outcomeModifiers: convertLLMOutcomeModifiers(answer.outcomeModifiers, outcomeIds),
+      })),
+    }));
 
     return {
-      publication: exchange.publication,
+      publication: exchangeData.publication,
       content: {
         rootQuestion,
         secondaryQuestions: secondaryQuestions as [any, any],
@@ -492,10 +459,10 @@ export function convertToGameSchema(
   const situationData: SituationDataType = {
     trigger: {
       staticKey,
-      type: plan.type,
+      type: plan.type as SituationType,
       requirements: {},
     },
-    type: plan.type,
+    type: plan.type as SituationType,
     title: plan.title,
     description: plan.description,
     content: {

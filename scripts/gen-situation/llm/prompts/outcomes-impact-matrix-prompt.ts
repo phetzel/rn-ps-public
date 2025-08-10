@@ -1,14 +1,14 @@
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
-import { SituationPlan, ApiPreferences } from "../../schemas/llm-schemas";
-import { OutcomeNarrative } from "../../schemas/outcomes-generation";
-import { PromptConfig } from "./planner-prompt";
+import { SituationPlan, ApiPreferences, OutcomeNarrative } from "../../schemas";
+import type { PromptConfig } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PHASE 2: OUTCOMES IMPACT MATRIX GENERATION PROMPTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Build the main prompt for Phase 2: outcomes impact matrix generation
+ * Build the unified prompt for Phase 2: outcomes impact matrix generation
+ * Combines enhanced validation with correct structure
  */
 export function buildOutcomesImpactMatrixPrompt(
   plan: SituationPlan,
@@ -24,9 +24,9 @@ export function buildOutcomesImpactMatrixPrompt(
   const narrativeContext = narratives
     .map(
       (narrative) =>
-        `**${narrative.id}** (${narrative.weight}%): ${narrative.title}\n   ${narrative.description}\n   Focus: ${narrative.thematicFocus}`
+        `**${narrative.id}** (${narrative.weight}%): ${narrative.title}`
     )
-    .join("\n\n");
+    .join("\n");
 
   // Build preference context for political logic
   const preferenceContext = preferences.cabinetPreferences
@@ -41,6 +41,33 @@ Plan balanced entity impacts for the outcome scenarios:
 
 ${GENERATION_GUIDE}
 
+## 🎯 CRITICAL STRUCTURE REQUIREMENT
+
+Each entity must have impacts for ALL outcomes in this exact format:
+\`\`\`json
+{
+  "entityId": "treasury",
+  "outcomeImpacts": [
+    {"outcomeId": "outcome1", "impact": "10", "rationale": "Benefits from increased budget"},
+    {"outcomeId": "outcome2", "impact": "-5", "rationale": "Minor cuts affect operations"},
+    {"outcomeId": "outcome3", "impact": "-10", "rationale": "Severe budget reduction"}
+  ]
+}
+\`\`\`
+
+## 🎯 CRITICAL BALANCE REQUIREMENTS
+
+**EACH ENTITY BALANCE VALIDATION:**
+✅ Must have impacts for ALL outcomes
+✅ Each entity: positive impacts ≤ negative impacts
+✅ Impact values: only use "-15", "-10", "-5", "0", "5", "10", "15"
+✅ Rationale: 20-100 chars explaining political logic
+
+**BALANCE EXAMPLES:**
+Entity A across 3 outcomes: [+10, -5, -10] = 1 positive, 2 negative ✅ (balanced)
+Entity B across 3 outcomes: [+15, +5, -10] = 2 positive, 1 negative ❌ (too positive)
+Entity C across 3 outcomes: [-5, -10, +12] = 1 positive, 2 negative ✅ (balanced)
+
 ## Situation Context
 
 **Title**: ${plan.title}
@@ -49,12 +76,11 @@ ${GENERATION_GUIDE}
 
 ## Phase 2 Objective: Strategic Entity Balance
 
-Create a balanced impact matrix where each entity has both positive and negative impacts across outcomes.
+Create impacts for every entity across every outcome, ensuring strategic balance.
 
-## Available Entities (MUST USE ALL)
+## All Entities (MUST INCLUDE ALL)
 
-**Cabinet Members**: ${cabinetMembers.join(", ")}
-**Subgroups**: ${subgroups.join(", ")}
+**Entities**: ${allEntities.join(", ")}
 
 ## Outcome Scenarios
 
@@ -69,85 +95,55 @@ ${narrativeContext}
 **Cabinet**:
 ${preferenceContext}
 
-## CRITICAL BALANCE REQUIREMENT
+## Strategic Planning Process
 
-**Each entity MUST have both positive and negative impacts across ALL outcomes.**
+**Step 1: Entity Analysis**
+For each entity, identify their primary interests in this situation.
 
-### Balance Rules:
-1. **Each entity**: positiveCount ≤ negativeCount (at most equal positive/negative)
-2. **Impact values**: 15 (strongly positive), 10 (positive), 5 (slightly positive), 0 (neutral), -5 (slightly negative), -10 (negative), -15 (strongly negative)  
-3. **Political realism**: Impacts should make sense for each entity's role and interests
-4. **Meaningful trade-offs**: Different entities should prefer different outcomes
-
-### Strategic Planning Process:
-
-**Step 1: Entity Stake Analysis**
-For each entity, identify:
-- What are their primary interests in this situation?
-- Which outcomes would benefit them? (and why)
-- Which outcomes would hurt them? (and why)
-- What's their relationship to the situation type?
-
-**Step 2: Impact Assignment**
-For each entity × outcome combination:
-- Create impact entries as an array of {outcomeId, impact, rationale}
-- Assign impact value (-15 to +15) based on how the outcome affects their interests
-- Provide rationale explaining the political logic
-- Ensure overall balance: positive impacts ≤ negative impacts per entity
+**Step 2: Impact Assignment**  
+For each entity, create impacts for ALL outcomes:
+- Impact value (-15 to +15) based on how outcome affects their interests
+- Rationale explaining the political logic (20-100 chars)
+- Ensure overall balance: positive ≤ negative impacts per entity
 
 **Step 3: Balance Validation**
-For each entity, count:
-- Positive impacts: values 5, 10, 15
-- Negative impacts: values -5, -10, -15
+For each entity across all outcomes:
+- Count positive impacts (5, 10, 15)
+- Count negative impacts (-5, -10, -15)  
 - Ensure: positiveCount ≤ negativeCount
 
-## Impact Structure
+## 🔢 BALANCE CALCULATION HELPER
 
-For each entity, create an array of impact entries:
-\`\`\`json
-{
-  "entityId": "treasury",
-  "outcomeImpacts": [
-    {
-      "outcomeId": "outcome1", 
-      "impact": "10",
-      "rationale": "Treasury benefits from increased budget allocations"
-    },
-    {
-      "outcomeId": "outcome2",
-      "impact": "-5", 
-      "rationale": "Minor budget cuts affect department operations"
-    }
-  ]
-}
-\`\`\`
+For each entity:
+1. List all their impacts across outcomes
+2. Sum positive impacts: +X
+3. Sum negative impacts: -Y  
+4. Check: positive count ≤ negative count
+5. Adjust if needed to maintain balance
 
-## Entity-Specific Guidance
-
-### Cabinet Members:
-- **${cabinetMembers.join(", ")}**: Consider their departmental responsibilities
-- Think about budget implications, jurisdictional impacts, and political standing
-- Consider how outcomes affect their ability to achieve their preferences
-
-### Subgroups:
-- **${subgroups.join(", ")}**: Consider their political and economic interests  
-- Think about how outcomes affect their constituents and priorities
-- Consider ideological alignment with different outcome scenarios
-
-## Balance Example
-
-If we have 3 outcomes and entity X:
-- Outcome 1: +10 (benefits from policy success)
-- Outcome 2: -5 (minor negative from compromise)  
-- Outcome 3: -10 (hurt by policy failure)
-- Balance: 1 positive, 2 negative ✅ (valid)
+Example for Treasury across 4 outcomes:
+- Outcome 1: +10 (budget increase)
+- Outcome 2: -15 (major cuts)  
+- Outcome 3: +5 (minor benefit)
+- Outcome 4: -10 (department restructure)
+Balance: 2 positive, 2 negative ✅ (acceptable)
 
 ## Political Realism Guidelines
 
 - **${plan.type}** situations typically affect entities through:
 ${getSituationTypeEntityImpacts(plan.type)}
 
-Generate a balanced impact matrix that creates meaningful political trade-offs while ensuring every entity has both positive and negative impacts across outcomes.`;
+## Final Balance Validation
+
+Before submitting, verify for EACH entity:
+1. ✅ Has impacts for ALL outcomes
+2. ✅ Has at least one positive impact
+3. ✅ Has at least one negative impact  
+4. ✅ Positive count ≤ negative count
+5. ✅ Impacts make political sense
+6. ✅ All rationales are 20-100 chars
+
+Generate entity impacts that create strategic depth while maintaining perfect game balance.`;
 }
 
 /**

@@ -10,7 +10,7 @@ export const GENERATION_GUIDE = `
 - **NO real people** - No actual politicians, officials, or public figures
 - **NO real places** - No actual countries, cities, or organizations
 - **NO real events** - No direct references to actual current events
-- **Use fictional entities** - Create names like "Republic of Reallyfarawaystan"
+- **Use fictional entities** - Create names like "Republic of Reallyfarawaystan" (this is just an example, do not actually use "Republic of Reallyfarawaystan").
 - **Soft-pedal tragedies** - Keep humor light, avoid serious real-world pain
 
 ### Entity Guidelines

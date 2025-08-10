@@ -1,4 +1,5 @@
-import { GenerationStep, LLMConfig } from "../../base";
+import { GenerationStep } from "../../base";
+import type { LLMConfig, ExchangePlanningSubStepInput, ExchangePlanningSubStepOutput } from "../../../types";
 import { 
   buildExchangePlanningPrompt,
   exchangePlanningPromptConfig,
@@ -6,8 +7,7 @@ import {
 import { 
   exchangePlanSchema,
   type ExchangePlan 
-} from "../../../schemas/exchange-planning";
-import type { ExchangePlanningSubStepInput, ExchangePlanningSubStepOutput } from "../types";
+} from "../../../schemas";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXCHANGE PLANNING SUB-STEP IMPLEMENTATION
@@ -79,8 +79,8 @@ export class ExchangePlanningSubStep extends GenerationStep<ExchangePlanningSubS
    */
   protected getResultSummary(result: ExchangePlanningSubStepOutput): any {
     return {
-      publicationsCount: result.publications.length,
-      strategy: result.strategy.overallApproach,
+      publicationsCount: result.publicationPlans.length,
+      overallStrategy: "exchange-planning",
     };
   }
 }

@@ -4,11 +4,9 @@ import {
   plannerPromptConfig,
 } from "../../llm/prompts/planner-prompt";
 import { 
-  situationPlanSchema,
-  type SituationPlan 
-} from "../../schemas/llm-schemas";
-import type { GenerationAnalysis } from "../../utils";
-import type { PlanningStepInput, PlanningStepOutput } from "./types";
+  situationPlanSchema
+} from "../../schemas";
+import type { PlanningStepInput, PlanningStepOutput } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // PLANNING STEP IMPLEMENTATION

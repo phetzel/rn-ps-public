@@ -1,15 +1,13 @@
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
-import { GenerationAnalysis, analyzeStrategicRequirements } from "../../utils";
+
+import { analyzeStrategicRequirements } from "../../utils/situation-balance-analyzer";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // BASIC SITUATION GENERATION PROMPTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export interface PromptConfig {
-  temperature: number;
-  systemPrompt: string;
-  schemaName: string;
-}
+// Types moved to root types.ts
+import type { PromptConfig, GenerationAnalysis } from "../../types";
 
 /**
  * Build the main prompt for basic situation generation

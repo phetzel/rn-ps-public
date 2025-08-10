@@ -6,7 +6,7 @@ import {
 import { 
   apiPreferencesSchema,
   type ApiPreferences 
-} from "../../schemas/llm-schemas";
+} from "../../schemas";
 import type { PreferencesStepInput, PreferencesStepOutput } from "./types";
 
 // ═══════════════════════════════════════════════════════════════════════════════

@@ -11,45 +11,14 @@ import {
 // GENERATION-SPECIFIC DISTRIBUTION ANALYSIS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export interface SituationOverview {
-  id: string;
-  title: string;
-  description: string;
-  type: SituationType;
-}
-
-export interface EntityPreferenceAnalysis {
-  appearanceCount: number;
-  preferenceTypes: Record<AnswerType, number>;
-  // Removed situationsList as requested
-}
-
-export interface EntityOutcomeAnalysis {
-  appearanceCount: number;
-  // Removed situationsList as requested
-}
-
-export interface PublicationAnalysis {
-  appearanceCount: number;
-  percentage: number;
-}
-
-export interface GenerationAnalysis {
-  situations: {
-    totalCount: number;
-    byType: Record<SituationType, number>;
-    list: SituationOverview[];
-  };
-  entityPreferences: {
-    president: EntityPreferenceAnalysis;
-    cabinet: Record<CabinetStaticId, EntityPreferenceAnalysis>;
-  };
-  entityOutcomes: {
-    cabinet: Record<CabinetStaticId, EntityOutcomeAnalysis>;
-    subgroups: Record<SubgroupStaticId, EntityOutcomeAnalysis>;
-  };
-  publications: Record<PublicationStaticId, PublicationAnalysis>; // NEW: Fourth key
-}
+// Types moved to root types.ts
+import type {
+  SituationOverview,
+  EntityPreferenceAnalysis,
+  EntityOutcomeAnalysis,
+  PublicationAnalysis,
+  GenerationAnalysis
+} from "../../../types";
 
 /**
  * Analyzes distribution specifically for generation context

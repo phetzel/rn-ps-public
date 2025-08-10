@@ -2,9 +2,9 @@ import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
 import {
   SituationPlan,
   ApiPreferences,
-  ApiOutcomes,
-} from "../../schemas/llm-schemas";
-import { PromptConfig } from "./planner-prompt";
+  ApiOutcomes
+} from "../../schemas";
+import type { PromptConfig } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXCHANGE PLANNING GENERATION PROMPTS

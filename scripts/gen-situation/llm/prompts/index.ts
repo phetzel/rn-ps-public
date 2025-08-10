@@ -18,12 +18,12 @@ export * from "./outcomes-impact-matrix-prompt";
 // Exchange Planning (Phase 1)
 export * from "./exchange-planning-prompt";
 
-// Question Generation (Phase 2)
-export * from "./question-generation-prompt";
+// Question Generation (Phase 2) - now unified in publication-questions-prompt
+// (removed duplicate question-generation-prompt)
 
 // Impact Generation (Phase 3)
 export * from "./impact-generation-prompt";
 
 // Publication-specific prompts
 export * from "./publication-questions-prompt";
-export * from "./question-consequences-prompt";
+export * from "./enhanced-question-consequences-prompt";

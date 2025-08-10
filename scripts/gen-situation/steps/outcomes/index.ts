@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export { OutcomesStep } from "./outcomes-step";
-export type { OutcomesStepInput, OutcomesStepOutput } from "./types";
+export type { OutcomesStepInput, OutcomesStepOutput } from "../../types";
 
 // Sub-steps exports (if needed externally)
 export { NarrativesSubStep } from "./substeps/narratives-substep";

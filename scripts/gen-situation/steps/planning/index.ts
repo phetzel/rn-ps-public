@@ -3,4 +3,4 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export { PlanningStep } from "./planning-step";
-export type { PlanningStepInput, PlanningStepOutput } from "./types";
+export type { PlanningStepInput, PlanningStepOutput } from "../../types";

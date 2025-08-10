@@ -7,5 +7,5 @@ export type {
   LLMConfig, 
   GenerationLogger, 
   StepDependencies 
-} from "./types";
-export { ConsoleGenerationLogger } from "./types";
+} from "../../types";
+export { ConsoleGenerationLogger } from "../../types";

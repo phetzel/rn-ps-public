@@ -1,7 +1,6 @@
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
-import { SituationPlan } from "../../schemas/llm-schemas";
-import { GenerationAnalysis } from "../../utils";
-import { PromptConfig } from "./planner-prompt";
+import type { SituationPlan } from "../../schemas";
+import type { GenerationAnalysis, PromptConfig } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ENTITY PREFERENCES GENERATION PROMPTS
@@ -85,6 +84,19 @@ ${PLANNER_TYPE_GUIDE}
 
 **Cabinet Member Historical Preferences**:
 ${cabinetDistributions}
+
+## ✏️ CHARACTER COUNT REQUIREMENTS
+
+**CRITICAL**: All rationales must fit exact character limits:
+
+- **Rationale**: 40-120 characters (about 1-2 sentences)
+
+**Tips for rationale limits:**
+- Focus on ONE key reason: "Aligns with administration's [policy area] priorities"
+- Be specific but concise: "Protects national security without escalating tensions"
+- Avoid redundancy: Don't repeat the situation description
+
+**ALWAYS count characters in rationales and adjust to fit 40-120 character limit!**
 
 ## Guidelines for Preference Generation
 

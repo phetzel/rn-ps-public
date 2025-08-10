@@ -1,10 +1,10 @@
 import { LLMClient } from "../../llm/client";
-import { 
+import type { 
   LLMConfig, 
   GenerationLogger, 
-  ConsoleGenerationLogger, 
   StepDependencies 
-} from "./types";
+} from "../../types";
+import { ConsoleGenerationLogger } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ABSTRACT BASE GENERATION STEP
@@ -47,6 +47,7 @@ export abstract class GenerationStep<TInput, TOutput> {
       const config = this.getLLMConfig();
       
       // Execute LLM call
+      console.log(`🔍 [DEBUG] ${stepName}: About to call LLM with schema: ${config.schemaName}`);
       const response = await this.llmClient.generateStructured(prompt, {
         schema: config.schema,
         schemaName: config.schemaName,
@@ -54,8 +55,13 @@ export abstract class GenerationStep<TInput, TOutput> {
         systemPrompt: config.systemPrompt,
       });
       
+      console.log(`🔍 [DEBUG] ${stepName}: LLM response received`);
+      console.log(`🔍 [DEBUG] ${stepName}: Raw response:`, JSON.stringify(response.content, null, 2));
+      
       // Post-process result if needed
+      console.log(`🔍 [DEBUG] ${stepName}: About to post-process result`);
       const result = this.postProcess(response.content, input);
+      console.log(`🔍 [DEBUG] ${stepName}: Post-processed result:`, JSON.stringify(result, null, 2));
       
       this.logger.logStepSuccess(stepName, this.getResultSummary(result));
       return result;

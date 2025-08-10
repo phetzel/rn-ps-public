@@ -3,10 +3,10 @@ import {
   SituationPlan,
   ApiPreferences,
   ApiOutcomes,
-} from "../../schemas/llm-schemas";
-import { ExchangePlan } from "../../schemas/exchange-planning";
-import { QuestionGenerationResult } from "../../schemas/question-generation";
-import { PromptConfig } from "./planner-prompt";
+  ExchangePlan,
+  QuestionGenerationResult
+} from "../../schemas";
+import type { PromptConfig } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // IMPACT GENERATION PROMPTS
@@ -36,16 +36,8 @@ export function buildImpactGenerationPrompt(
     )
     .join("\n");
 
-  // Build exchange context
-  const exchangeContext = questionResults.exchanges
-    .map((exchange) => {
-      const answerCount = exchange.questions.reduce(
-        (total, q) => total + q.answers.length,
-        0
-      );
-      return `**${exchange.publication}**: ${exchange.questions.length} questions, ${answerCount} total answers`;
-    })
-    .join("\n");
+  // Build exchange context - using questionText property from schema
+  const exchangeContext = `Question: ${questionResults.questionText} (${questionResults.level} level)`;
 
   return `
 Generate relationship and outcome impacts for all answers in the press exchanges:
@@ -133,21 +125,13 @@ Example for a 4-answer question:
 
 ## Answer Impact Context
 
-For each publication, you'll generate impacts for these answer structures:
+Generate impacts for this question structure:
 
-${questionResults.exchanges
-  .map(
-    (exchange) =>
-      `**${exchange.publication}**:\n${exchange.questions
-        .map(
-          (q) =>
-            `  ${q.id}: ${q.answers.length} answers (${q.answers
-              .map((a) => a.id)
-              .join(", ")})`
-        )
-        .join("\n")}`
-  )
-  .join("\n\n")}
+**Question**: ${questionResults.questionText}
+**Level**: ${questionResults.level}
+**Answers**: ${questionResults.answers.length} answers (${questionResults.answers
+  .map((a: any) => a.id)
+  .join(", ")})
 
 Generate impacts that create meaningful strategic choices while maintaining authentic government press dynamics and strict mathematical balance for outcome modifiers.`;
 }

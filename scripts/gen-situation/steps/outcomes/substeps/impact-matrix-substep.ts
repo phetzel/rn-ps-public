@@ -4,10 +4,10 @@ import {
   outcomesImpactMatrixPromptConfig,
 } from "../../../llm/prompts/outcomes-impact-matrix-prompt";
 import { 
-  outcomesImpactMatrixResultSchema,
-  type OutcomesImpactMatrixResult 
-} from "../../../schemas/outcomes-generation";
-import type { ImpactMatrixSubStepInput, ImpactMatrixSubStepOutput } from "../types";
+  impactMatrixResultSchema,
+  type ImpactMatrixResult 
+} from "../../../schemas";
+import type { ImpactMatrixSubStepInput, ImpactMatrixSubStepOutput } from "../../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // IMPACT MATRIX SUB-STEP IMPLEMENTATION
@@ -37,7 +37,7 @@ export class ImpactMatrixSubStep extends GenerationStep<ImpactMatrixSubStepInput
    */
   protected getLLMConfig(): LLMConfig<ImpactMatrixSubStepOutput> {
     return {
-      schema: outcomesImpactMatrixResultSchema,
+      schema: impactMatrixResultSchema,
       schemaName: outcomesImpactMatrixPromptConfig.schemaName,
       temperature: outcomesImpactMatrixPromptConfig.temperature,
       systemPrompt: outcomesImpactMatrixPromptConfig.systemPrompt,
@@ -80,7 +80,6 @@ export class ImpactMatrixSubStep extends GenerationStep<ImpactMatrixSubStepInput
   protected getResultSummary(result: ImpactMatrixSubStepOutput): any {
     return {
       entityImpactsCount: result.entityImpacts.length,
-      balanceValidation: result.balanceValidation.isValid,
     };
   }
 }

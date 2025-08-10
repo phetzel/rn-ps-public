@@ -1,5 +1,4 @@
-import { GenerationStep } from "../../base";
-import type { ExchangeAssemblySubStepInput, ExchangeAssemblySubStepOutput } from "../types";
+import type { ExchangeAssemblySubStepInput, ExchangeAssemblySubStepOutput } from "../../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // API EXCHANGE ASSEMBLY SUB-STEP IMPLEMENTATION
@@ -23,75 +22,41 @@ export class ApiExchangeAssemblySubStep {
   }
 
   /**
-   * Convert completed publication exchange to API format
+   * Keep the nested structure - no need to flatten and re-convert
    */
   private convertToApiExchange(
     questionsWithConsequences: any,
     publicationPlan: any
   ): any {
-    const questions = questionsWithConsequences.questions;
+    // Extract structured question data (rootQuestion, secondaryQuestions, tertiaryQuestions)
+    const { rootQuestion, secondaryQuestions, tertiaryQuestions } = questionsWithConsequences;
 
-    // Ensure we have the right structure: 1 root + 2 secondary + 2 tertiary
-    const rootQuestion = questions.find((q: any) => q.level === "root");
-    const secondaryQuestions = questions
-      .filter((q: any) => q.level === "secondary")
-      .slice(0, 2);
-    const tertiaryQuestions = questions
-      .filter((q: any) => q.level === "tertiary")
-      .slice(0, 2);
-
-    if (
-      !rootQuestion ||
-      secondaryQuestions.length !== 2 ||
-      tertiaryQuestions.length !== 2
-    ) {
+    // Validate structure
+    if (!rootQuestion) {
       throw new Error(
-        `Invalid question structure for ${publicationPlan.publication}: expected 1 root + 2 secondary + 2 tertiary`
+        `Missing root question for ${publicationPlan.publication}`
       );
     }
 
-    // Build flattened API structure (matches ApiExchanges schema)
+    if (!secondaryQuestions || secondaryQuestions.length !== 2) {
+      throw new Error(
+        `Invalid secondary questions for ${publicationPlan.publication}: expected exactly 2, got ${secondaryQuestions?.length || 0}`
+      );
+    }
+
+    if (!tertiaryQuestions || tertiaryQuestions.length !== 2) {
+      throw new Error(
+        `Invalid tertiary questions for ${publicationPlan.publication}: expected exactly 2, got ${tertiaryQuestions?.length || 0}`
+      );
+    }
+
+    // Keep the nested structure - this is cleaner and avoids double conversion
     return {
       publication: publicationPlan.publication,
       editorialAngle: questionsWithConsequences.editorialAngle,
-
-      // Root question and answers
-      rootQuestionId: rootQuestion.id,
-      rootQuestionText: rootQuestion.text,
-      rootAnswer1: rootQuestion.answers[0],
-      rootAnswer2: rootQuestion.answers[1],
-      rootAnswer3: rootQuestion.answers[2],
-      rootAnswer4: rootQuestion.answers[3],
-
-      // Secondary questions and answers
-      secondaryQuestion1Id: secondaryQuestions[0].id,
-      secondaryQuestion1Text: secondaryQuestions[0].text,
-      secondary1Answer1: secondaryQuestions[0].answers[0],
-      secondary1Answer2: secondaryQuestions[0].answers[1],
-      secondary1Answer3: secondaryQuestions[0].answers[2],
-      secondary1Answer4: secondaryQuestions[0].answers[3],
-
-      secondaryQuestion2Id: secondaryQuestions[1].id,
-      secondaryQuestion2Text: secondaryQuestions[1].text,
-      secondary2Answer1: secondaryQuestions[1].answers[0],
-      secondary2Answer2: secondaryQuestions[1].answers[1],
-      secondary2Answer3: secondaryQuestions[1].answers[2],
-      secondary2Answer4: secondaryQuestions[1].answers[3],
-
-      // Tertiary questions and answers
-      tertiaryQuestion1Id: tertiaryQuestions[0].id,
-      tertiaryQuestion1Text: tertiaryQuestions[0].text,
-      tertiary1Answer1: tertiaryQuestions[0].answers[0],
-      tertiary1Answer2: tertiaryQuestions[0].answers[1],
-      tertiary1Answer3: tertiaryQuestions[0].answers[2],
-      tertiary1Answer4: tertiaryQuestions[0].answers[3],
-
-      tertiaryQuestion2Id: tertiaryQuestions[1].id,
-      tertiaryQuestion2Text: tertiaryQuestions[1].text,
-      tertiary2Answer1: tertiaryQuestions[1].answers[0],
-      tertiary2Answer2: tertiaryQuestions[1].answers[1],
-      tertiary2Answer3: tertiaryQuestions[1].answers[2],
-      tertiary2Answer4: tertiaryQuestions[1].answers[3],
+      rootQuestion,
+      secondaryQuestions,
+      tertiaryQuestions,
     };
   }
 

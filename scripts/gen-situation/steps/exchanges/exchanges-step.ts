@@ -3,7 +3,7 @@ import { ExchangePlanningSubStep } from "./substeps/exchange-planning-substep";
 import { QuestionGenerationSubStep } from "./substeps/question-generation-substep";
 import { ConsequenceGenerationSubStep } from "./substeps/consequence-generation-substep";
 import { ApiExchangeAssemblySubStep } from "./substeps/api-exchange-assembly-substep";
-import type { ExchangesStepInput, ExchangesStepOutput } from "./types";
+import type { ExchangesStepInput, ExchangesStepOutput } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXCHANGES STEP IMPLEMENTATION
@@ -54,9 +54,9 @@ export class ExchangesStep {
       const exchangePlan = await this.exchangePlanningSubStep.execute(input);
 
       console.log(
-        `✅ Planned ${exchangePlan.publications.length} exchanges with strategy: "${exchangePlan.strategy.overallApproach}"`
+        `✅ Planned ${exchangePlan.publicationPlans.length} exchanges`
       );
-      exchangePlan.publications.forEach((pubPlan, index) => {
+      exchangePlan.publicationPlans.forEach((pubPlan, index) => {
         const authorizedIndicator = pubPlan.willHaveAuthorizedAnswer ? " 🔒" : "";
         console.log(
           `   ${index + 1}. ${pubPlan.publication}${authorizedIndicator}: ${
@@ -72,7 +72,7 @@ export class ExchangesStep {
       for (const [
         index,
         publicationPlan,
-      ] of exchangePlan.publications.entries()) {
+      ] of exchangePlan.publicationPlans.entries()) {
         console.log(
           `🎯 Step 4b.${index + 1}: Processing ${publicationPlan.publication}...`
         );
@@ -87,8 +87,9 @@ export class ExchangesStep {
         });
 
         // Step 4b.2: Generate consequences for each question
+
         console.log(
-          `   🔄 Generating consequences for ${publicationQuestions.questions.length} questions...`
+          `   🔄 Generating consequences for questions...`
         );
         const questionsWithConsequences = await this.consequenceGenerationSubStep.execute({
           publicationQuestions,

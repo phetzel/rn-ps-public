@@ -2,6 +2,7 @@ import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
 import dotenv from "dotenv";
+import type { LLMResponse, LLMOptions, StructuredOptions } from "../types";
 
 dotenv.config({ path: [".env.local", ".env"] });
 
@@ -9,49 +10,23 @@ dotenv.config({ path: [".env.local", ".env"] });
 // ENHANCED LLM CLIENT WITH TOOLS & SCHEMA SUPPORT (FIXED)
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export interface LLMResponse<T = any> {
-  content: T;
-  raw?: string;
-  usage?: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-    cost?: number;
-  };
-  toolCalls?: any[];
-}
-
-export interface LLMOptions {
-  model?: string;
-  temperature?: number;
-  maxTokens?: number;
-  systemPrompt?: string;
-  tools?: any[];
-  responseFormat?: "text" | "json_object" | "structured";
-}
-
-export interface StructuredOptions<T>
-  extends Omit<LLMOptions, "responseFormat"> {
-  schema: z.ZodSchema<T>;
-  schemaName?: string;
-  strict?: boolean;
-}
-
 export class LLMClient {
   private client: OpenAI;
-  private defaultModel = "gpt-4o-mini";
+  private defaultModel = "gpt-4o"; // UPGRADED: Better constraint compliance than gpt-4o-mini
   private costTracking = {
     totalTokens: 0,
     totalCost: 0,
     requestCount: 0,
   };
+  private debugMode: boolean;
 
-  constructor() {
+  constructor(options?: { debugMode?: boolean }) {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       throw new Error("OPENAI_API_KEY environment variable is required");
     }
     this.client = new OpenAI({ apiKey });
+    this.debugMode = options?.debugMode ?? false;
   }
 
   /**
@@ -67,18 +42,12 @@ export class LLMClient {
       schemaName = "response",
       model = this.defaultModel,
       temperature = 0.7,
-      maxTokens = 10000, // Updated default from 2000 to 10000
+      maxTokens = 16000, // Updated default - max allowed is 16384
       systemPrompt = "You are a helpful assistant that responds with structured data.",
     } = options;
 
     try {
-      console.log(
-        `🤖 Structured request to ${model} using zodResponseFormat...`
-      );
-
-      console.log(
-        "Using regular chat.completions.create with zodResponseFormat..."
-      );
+      console.log(`🤖 Structured request to ${model}...`);
 
       const completion = await this.client.chat.completions.create({
         model,
@@ -92,13 +61,37 @@ export class LLMClient {
       });
 
       const rawContent = completion.choices[0]?.message?.content || "";
+      
+      // Always log raw content for validation failures, but only debug details in debug mode
+      if (this.debugMode) {
+        console.log(`🔍 [DEBUG] Raw JSON response:`, rawContent);
+      }
 
       // Manual parsing and validation
       let parsedContent;
       try {
         const jsonContent = JSON.parse(rawContent);
+        
+        if (this.debugMode) {
+          console.log(`🔍 [DEBUG] Parsed JSON:`, JSON.stringify(jsonContent, null, 2));
+          
+          // Check for weight validation specifically
+          if (jsonContent.outcomes) {
+            const weights = jsonContent.outcomes.map((o: any) => o.weight);
+            const total = weights.reduce((sum: number, w: number) => sum + w, 0);
+            console.log(`🔍 [DEBUG] Pre-validation weights: [${weights.join(", ")}] = ${total}`);
+          }
+        }
+        
         parsedContent = schema.parse(jsonContent);
+        
+        if (this.debugMode) {
+          console.log(`🔍 [DEBUG] Schema validation passed!`);
+        }
       } catch (parseError) {
+        // Always log validation failures with raw content for debugging
+        console.error(`❌ Schema validation failed for raw content:`, rawContent);
+        console.error(`❌ Validation error:`, parseError);
         throw new Error(`Schema validation failed: ${parseError}`);
       }
 
@@ -134,7 +127,7 @@ export class LLMClient {
     const {
       model = this.defaultModel,
       temperature = 0.7,
-      maxTokens = 10000, // Updated default from 2000 to 10000
+      maxTokens = 16000, // Updated default - max allowed is 16384
       systemPrompt = "You are a helpful assistant.",
     } = options;
 
@@ -207,7 +200,7 @@ export class LLMClient {
     const {
       model = this.defaultModel,
       temperature = 0.7,
-      maxTokens = 10000, // Updated default from 2000 to 10000
+      maxTokens = 16000, // Updated default - max allowed is 16384
       systemPrompt = "You are a helpful assistant.",
       responseFormat = "text",
     } = options;

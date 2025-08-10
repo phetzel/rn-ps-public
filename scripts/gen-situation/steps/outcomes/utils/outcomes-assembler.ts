@@ -1,9 +1,9 @@
 import { CabinetStaticId, SubgroupStaticId } from "~/types";
-import type { SituationPlan, ApiOutcomes } from "../schemas/llm-schemas";
+import type { SituationPlan, ApiOutcomes } from "../../../schemas";
 import type {
   OutcomesNarrativesResult,
-  OutcomesImpactMatrixResult,
-} from "../schemas/outcomes-generation";
+  ImpactMatrixResult,
+} from "../../../schemas";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // OUTCOMES ASSEMBLER UTILITY
@@ -19,7 +19,7 @@ import type {
 export function assembleOutcomes(
   plan: SituationPlan,
   narratives: OutcomesNarrativesResult,
-  impactMatrix: OutcomesImpactMatrixResult
+  impactMatrix: ImpactMatrixResult
 ): ApiOutcomes {
   const outcomes = narratives.outcomes.map((narrative) => {
     // Build consequences from impact matrix

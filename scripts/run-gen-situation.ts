@@ -10,7 +10,7 @@ import { displayGenerationSuccess } from "./gen-situation/utils/display-generati
  * Supports both single and batch generation with comprehensive error handling
  */
 async function main(): Promise<void> {
-  console.log("🎮 Press Secretary Situation Generator v3.1");
+  console.log("🎮 Press Secretary Situation Generator");
   console.log(`📅 Generation Date: ${new Date().toLocaleString()}`);
   console.log("============================================================");
 
@@ -19,11 +19,15 @@ async function main(): Promise<void> {
   const batchCountArg = args.find(arg => arg.startsWith('--count='));
   const batchCount = batchCountArg ? parseInt(batchCountArg.split('=')[1]) : 1;
   const isBatch = batchCount > 1;
+  const debugMode = args.includes('--debug') || process.env.LLM_DEBUG_MODE === 'true';
 
   try {
-    console.log("🤖 Initializing LLM-powered situation generator...");
+    console.log("🤖 Initializing situation generator...");
+    if (debugMode) {
+      console.log("🔍 Debug mode enabled - verbose logging active");
+    }
 
-    const llmClient = new LLMClient();
+    const llmClient = new LLMClient({ debugMode });
     const generator = new SituationGenerator(llmClient);
 
     if (isBatch) {
@@ -59,12 +63,17 @@ Usage: npm run gen-situation [options]
 
 Options:
   --count=N     Generate N situations in batch (default: 1)
+  --debug       Enable verbose debug logging
   --help, -h    Show this help message
 
+Environment Variables:
+  LLM_DEBUG_MODE=true   Enable debug mode globally
+
 Examples:
-  npm run gen-situation                  # Generate single situation
-  npm run gen-situation -- --count=5    # Generate 5 situations in batch
-  npm run gen-situation -- --count=10   # Generate 10 situations in batch
+  npm run gen-situation                        # Generate single situation (clean output)
+  npm run gen-situation -- --debug            # Generate with debug logging
+  npm run gen-situation -- --count=5          # Generate 5 situations in batch
+  LLM_DEBUG_MODE=true npm run gen-situation   # Generate with debug via env var
 `);
   process.exit(0);
 }

@@ -4,33 +4,17 @@ import {
   SubgroupStaticId,
   PublicationStaticId,
 } from "~/types";
-import { GenerationAnalysis } from "./generation-analysis";
+import type { GenerationAnalysis } from "../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION BALANCE ANALYZER - TRANSFORMS RAW ANALYSIS INTO STRATEGIC REQUIREMENTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export interface StrategicRequirements {
-  targetSituationType: SituationType;
-  existingSituationsOfType: Array<{
-    id: string;
-    title: string;
-    description: string;
-  }>;
-  entityBalance: {
-    cabinet: {
-      underRepresented: CabinetStaticId[];
-      overRepresented: CabinetStaticId[];
-    };
-    subgroups: {
-      underRepresented: SubgroupStaticId[];
-      overRepresented: SubgroupStaticId[];
-    };
-    publications: {
-      underRepresented: PublicationStaticId[];
-    };
-  };
-}
+// Types moved to root types.ts
+import type { StrategicRequirements } from "../types";
+
+// Re-export for backward compatibility
+export type { StrategicRequirements };
 
 /**
  * Analyzes raw generation data and returns strategic requirements
@@ -60,10 +44,14 @@ export function analyzeStrategicRequirements(
   // Calculate entity balance
   const entityBalance = calculateEntityBalance(analysis);
 
+  // Generate recommended focus based on balance
+  const recommendedFocus = generateRecommendedFocus(entityBalance);
+
   return {
     targetSituationType: targetType,
     existingSituationsOfType,
     entityBalance,
+    recommendedFocus,
   };
 }
 
@@ -110,7 +98,7 @@ function calculateEntityBalance(analysis: GenerationAnalysis) {
     }
   });
 
-  // Publication balance (only under-represented)
+  // Publication balance
   const publicationCounts = Object.values(analysis.publications).map(
     (pub) => pub.appearanceCount
   );
@@ -119,11 +107,14 @@ function calculateEntityBalance(analysis: GenerationAnalysis) {
     publicationCounts.length;
 
   const underRepresentedPublications: PublicationStaticId[] = [];
+  const overRepresentedPublications: PublicationStaticId[] = [];
 
   Object.entries(analysis.publications).forEach(([id, data]) => {
     const publicationId = id as PublicationStaticId;
     if (data.appearanceCount < publicationAverage * 0.8) {
       underRepresentedPublications.push(publicationId);
+    } else if (data.appearanceCount > publicationAverage * 1.2) {
+      overRepresentedPublications.push(publicationId);
     }
   });
 
@@ -138,6 +129,21 @@ function calculateEntityBalance(analysis: GenerationAnalysis) {
     },
     publications: {
       underRepresented: underRepresentedPublications,
+      overRepresented: overRepresentedPublications,
     },
+  };
+}
+
+/**
+ * Generate recommended focus based on entity balance
+ */
+function generateRecommendedFocus(entityBalance: any) {
+  return {
+    preferredEntities: entityBalance.cabinet.underRepresented,
+    preferredSubgroups: entityBalance.subgroups.underRepresented,
+    preferredPublications: entityBalance.publications.underRepresented,
+    avoidEntities: entityBalance.cabinet.overRepresented,
+    avoidSubgroups: entityBalance.subgroups.overRepresented,
+    avoidPublications: entityBalance.publications.overRepresented,
   };
 }

@@ -1,13 +1,13 @@
-import { GenerationStep, LLMConfig } from "../../base";
+import { GenerationStep } from "../../base";
+import type { LLMConfig, QuestionGenerationSubStepInput, QuestionGenerationSubStepOutput } from "../../../types";
 import { 
   publicationExchangeSchema,
   type PublicationExchange 
-} from "../../../schemas/question-generation";
+} from "../../../schemas";
 import { 
   buildPublicationQuestionsPrompt,
   publicationQuestionsPromptConfig,
 } from "../../../llm/prompts/publication-questions-prompt";
-import type { QuestionGenerationSubStepInput, QuestionGenerationSubStepOutput } from "../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // QUESTION GENERATION SUB-STEP IMPLEMENTATION
@@ -81,10 +81,16 @@ export class QuestionGenerationSubStep extends GenerationStep<QuestionGeneration
    * Get result summary for logging
    */
   protected getResultSummary(result: QuestionGenerationSubStepOutput): any {
+    const allQuestions = [
+      result.rootQuestion,
+      ...result.secondaryQuestions,
+      ...result.tertiaryQuestions
+    ];
+    
     return {
       publication: result.publication,
-      questionsCount: result.questions.length,
-      totalAnswers: result.questions.reduce((sum, q) => sum + q.answers.length, 0),
+      questionsCount: allQuestions.length,
+      totalAnswers: allQuestions.reduce((sum, q) => sum + q.answers.length, 0),
     };
   }
 }
