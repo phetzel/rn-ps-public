@@ -1,8 +1,8 @@
 import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../base";
-import { ExchangePlanningSubStep } from "./substeps/exchange-planning-substep";
-import { QuestionGenerationSubStep } from "./substeps/question-generation-substep";
-import { ConsequenceGenerationSubStep } from "./substeps/consequence-generation-substep";
-import { ApiExchangeAssemblySubStep } from "./substeps/api-exchange-assembly-substep";
+import { ExchangePublicationsSubStep } from "./substeps/exchange-publications-substep";
+import { ExchangeQuestionsSubStep } from "./substeps/exchange-questions-substep";
+import { ExchangeConsequencesSubStep } from "./substeps/exchange-consequences-substep";
+import { ExchangeAssemblySubStep } from "./substeps/exchange-assembly-substep";
 import type { ExchangesStepInput, ExchangesStepOutput } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -10,29 +10,30 @@ import type { ExchangesStepInput, ExchangesStepOutput } from "../../types";
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Step 4: Generate press exchanges using publication-by-publication approach
+ * Step 4: Generate press exchanges using simplified publication-aware approach
  * 
  * This step orchestrates the complete exchanges generation process:
- * 1. Plan exchange strategy
- * 2. Generate questions for each publication
- * 3. Generate consequences for each question
- * 4. Assemble final exchanges
+ * 1. Plan publication editorial angles (simplified)
+ * 2. Generate publication-aware questions for each publication
+ * 3. Generate consequences for each question with strict balance rules
+ * 4. Final assembly and validation (nested structure)
  * 
- * Each phase is handled by dedicated sub-steps for clean separation of concerns.
+ * Each phase is handled by dedicated sub-steps following exchange-* naming convention.
+ * Enhanced with content guidelines and better publication awareness throughout.
  */
 export class ExchangesStep {
   private logger: GenerationLogger;
-  private exchangePlanningSubStep: ExchangePlanningSubStep;
-  private questionGenerationSubStep: QuestionGenerationSubStep;
-  private consequenceGenerationSubStep: ConsequenceGenerationSubStep;
-  private apiExchangeAssemblySubStep: ApiExchangeAssemblySubStep;
+  private exchangePublicationsSubStep: ExchangePublicationsSubStep;
+  private exchangeQuestionsSubStep: ExchangeQuestionsSubStep;
+  private exchangeConsequencesSubStep: ExchangeConsequencesSubStep;
+  private exchangeAssemblySubStep: ExchangeAssemblySubStep;
 
   constructor(dependencies: StepDependencies) {
     this.logger = dependencies.logger || new ConsoleGenerationLogger();
-    this.exchangePlanningSubStep = new ExchangePlanningSubStep(dependencies);
-    this.questionGenerationSubStep = new QuestionGenerationSubStep(dependencies);
-    this.consequenceGenerationSubStep = new ConsequenceGenerationSubStep(dependencies);
-    this.apiExchangeAssemblySubStep = new ApiExchangeAssemblySubStep();
+    this.exchangePublicationsSubStep = new ExchangePublicationsSubStep(dependencies);
+    this.exchangeQuestionsSubStep = new ExchangeQuestionsSubStep(dependencies);
+    this.exchangeConsequencesSubStep = new ExchangeConsequencesSubStep(dependencies);
+    this.exchangeAssemblySubStep = new ExchangeAssemblySubStep();
   }
 
   /**
@@ -49,9 +50,9 @@ export class ExchangesStep {
         "🎯 Step 4: Generating press exchanges (publication-by-publication approach)..."
       );
 
-      // Phase 1: Plan exchange strategy
-      console.log("🎯 Step 4a: Planning exchange strategy...");
-      const exchangePlan = await this.exchangePlanningSubStep.execute(input);
+      // Phase 1: Plan publication editorial angles
+      console.log("🎯 Step 4a: Planning publication editorial angles...");
+      const exchangePlan = await this.exchangePublicationsSubStep.execute(input);
 
       console.log(
         `✅ Planned ${exchangePlan.publicationPlans.length} exchanges`
@@ -60,7 +61,7 @@ export class ExchangesStep {
         const authorizedIndicator = pubPlan.willHaveAuthorizedAnswer ? " 🔒" : "";
         console.log(
           `   ${index + 1}. ${pubPlan.publication}${authorizedIndicator}: ${
-            pubPlan.primaryFocus
+            pubPlan.editorialAngle
           }`
         );
       });
@@ -69,17 +70,15 @@ export class ExchangesStep {
       console.log("🎯 Step 4b: Generating exchanges for each publication...");
       const completedExchanges = [];
 
-      for (const [
-        index,
-        publicationPlan,
-      ] of exchangePlan.publicationPlans.entries()) {
+              for (let index = 0; index < exchangePlan.publicationPlans.length; index++) {
+          const publicationPlan = exchangePlan.publicationPlans[index];
         console.log(
           `🎯 Step 4b.${index + 1}: Processing ${publicationPlan.publication}...`
         );
 
-        // Step 4b.1: Generate question structure for this publication
-        console.log(`   🔄 Generating question structure...`);
-        const publicationQuestions = await this.questionGenerationSubStep.execute({
+        // Step 4b.1: Generate publication-aware question structure
+        console.log(`   🔄 Generating publication-aware question structure...`);
+        const publicationQuestions = await this.exchangeQuestionsSubStep.execute({
           publicationPlan,
           plan: input.plan,
           preferences: input.preferences,
@@ -87,11 +86,10 @@ export class ExchangesStep {
         });
 
         // Step 4b.2: Generate consequences for each question
-
         console.log(
           `   🔄 Generating consequences for questions...`
         );
-        const questionsWithConsequences = await this.consequenceGenerationSubStep.execute({
+        const questionsWithConsequences = await this.exchangeConsequencesSubStep.execute({
           publicationQuestions,
           publicationPlan,
           plan: input.plan,
@@ -99,8 +97,8 @@ export class ExchangesStep {
           outcomes: input.outcomes,
         });
 
-        // Step 4b.3: Convert to API exchange format
-        const exchange = this.apiExchangeAssemblySubStep.execute({
+        // Step 4b.3: Final assembly and validation
+        const exchange = this.exchangeAssemblySubStep.execute({
           questionsWithConsequences,
           publicationPlan,
         });

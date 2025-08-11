@@ -15,15 +15,10 @@ export * from "./preferences-prompt";
 export * from "./outcomes-narratives-prompt";
 export * from "./outcomes-impact-matrix-prompt";
 
-// Exchange Planning (Phase 1)
-export * from "./exchange-planning-prompt";
+// Exchange Generation (4-phase approach)
+export * from "./exchange-publications-prompt";
+export * from "./exchange-questions-prompt";
+export * from "./exchange-consequences-prompt";
 
-// Question Generation (Phase 2) - now unified in publication-questions-prompt
-// (removed duplicate question-generation-prompt)
-
-// Impact Generation (Phase 3)
+// Impact Generation (other steps)
 export * from "./impact-generation-prompt";
-
-// Publication-specific prompts
-export * from "./publication-questions-prompt";
-export * from "./enhanced-question-consequences-prompt";

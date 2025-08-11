@@ -55,18 +55,30 @@ Each entity must have impacts for ALL outcomes in this exact format:
 }
 \`\`\`
 
-## 🎯 CRITICAL BALANCE REQUIREMENTS
+## 🎯 CRITICAL VALIDATION REQUIREMENTS (FROM GAME SCHEMAS)
 
-**EACH ENTITY BALANCE VALIDATION:**
-✅ Must have impacts for ALL outcomes
-✅ Each entity: positive impacts ≤ negative impacts
-✅ Impact values: only use "-15", "-10", "-5", "0", "5", "10", "15"
-✅ Rationale: 20-100 chars explaining political logic
+### **🔥 MANDATORY FOR EVERY OUTCOME:**
+1. **Entity Impact Required**: Each outcome MUST affect at least one entity
+2. **Impact Values**: Use only valid SituationConsequenceWeight values: 15, 10, 5, 0, -5, -10, -15  
+3. **Maximum Entities**: No outcome can affect more than 6 entities
+
+### **🔥 MANDATORY ACROSS ALL OUTCOMES:**
+4. **Weight Balance**: All outcome weights must sum to exactly 100
+5. **Positive & Negative Mix**: Must have at least one positive AND one negative outcome
+6. **Per-Entity Balance**: No entity can have more positive than negative impacts across outcomes
+7. **Entity Variety**: Each entity that appears must have both positive AND negative impacts somewhere
+
+### **🔥 PER-ENTITY VALIDATION:**
+✅ **Must have impacts for ALL outcomes** (if generating for entity)
+✅ **positive_count ≤ negative_count** across outcomes
+✅ **Both positive AND negative impacts** if appears in multiple outcomes
+✅ **Rationale**: 20-100 chars explaining political logic
 
 **BALANCE EXAMPLES:**
-Entity A across 3 outcomes: [+10, -5, -10] = 1 positive, 2 negative ✅ (balanced)
-Entity B across 3 outcomes: [+15, +5, -10] = 2 positive, 1 negative ❌ (too positive)
-Entity C across 3 outcomes: [-5, -10, +12] = 1 positive, 2 negative ✅ (balanced)
+Entity A across 3 outcomes: [+10, -5, -10] = 1 positive ≤ 2 negative ✅ (has both)
+Entity B across 3 outcomes: [+15, +5, -10] = 2 positive > 1 negative ❌ (too positive)  
+Entity C across 3 outcomes: [-5, -10, +10] = 1 positive ≤ 2 negative ✅ (has both)
+Entity D across 3 outcomes: [+5, +10, +15] = 3 positive, 0 negative ❌ (no negative impacts)
 
 ## Situation Context
 
@@ -106,27 +118,33 @@ For each entity, create impacts for ALL outcomes:
 - Rationale explaining the political logic (20-100 chars)
 - Ensure overall balance: positive ≤ negative impacts per entity
 
-**Step 3: Balance Validation**
+**Step 3: Critical Validation**
 For each entity across all outcomes:
 - Count positive impacts (5, 10, 15)
 - Count negative impacts (-5, -10, -15)  
-- Ensure: positiveCount ≤ negativeCount
+- Verify: positiveCount ≤ negativeCount AND both exist if multi-appearance
 
-## 🔢 BALANCE CALCULATION HELPER
+## 🔢 MANDATORY VALIDATION PROCESS
 
-For each entity:
+**For each entity:**
 1. List all their impacts across outcomes
-2. Sum positive impacts: +X
-3. Sum negative impacts: -Y  
-4. Check: positive count ≤ negative count
-5. Adjust if needed to maintain balance
+2. Count positive impacts: X  
+3. Count negative impacts: Y
+4. **VERIFY ALL**:
+   - X ≤ Y (positive ≤ negative)
+   - If entity appears in >1 outcome: X ≥ 1 AND Y ≥ 1 (has both types)
+   - All impact values in valid SituationConsequenceWeight enum (15,10,5,0,-5,-10,-15)
 
-Example for Treasury across 4 outcomes:
-- Outcome 1: +10 (budget increase)
-- Outcome 2: -15 (major cuts)  
-- Outcome 3: +5 (minor benefit)
-- Outcome 4: -10 (department restructure)
-Balance: 2 positive, 2 negative ✅ (acceptable)
+**Example: Perfect Treasury Validation**
+- Outcome 1: +10 (budget increase) ✓ valid enum
+- Outcome 2: -15 (major cuts) ✓ valid enum  
+- Outcome 3: +5 (minor benefit) ✓ valid enum
+- Outcome 4: -10 (department restructure) ✓ valid enum
+- **Analysis**: 2 positive ≤ 2 negative ✓ AND has both types ✓ VALID
+
+**Example: FAILED Validation**
+- Outcome 1: +10, Outcome 2: +15, Outcome 3: -5
+- **Analysis**: 2 positive > 1 negative ❌ INVALID (too positive)
 
 ## Political Realism Guidelines
 

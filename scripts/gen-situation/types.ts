@@ -381,144 +381,28 @@ export interface ExchangeAssemblySubStepInput {
   publicationPlan: any; // PublicationPlan from exchange planning
 }
 
-// Use the actual API exchange format from the schema
-export type ApiExchange = {
+// Use the nested exchange format that matches questionDataSchema
+export interface ApiExchangeQuestion {
+  id: string;
+  questionText: string;
+  answers: Array<{
+    id: string;
+    answerType: AnswerType;
+    answerText: string;
+    hasFollowUp?: boolean;
+    followUpQuestionId?: string | null;
+    authorizedCabinetMember?: "state" | "treasury" | "defense" | "justice" | "hhs" | "homeland" | null;
+    impacts?: any; // Impact data from consequence generation
+    outcomeModifiers?: any; // Outcome modifier data from consequence generation
+  }>;
+}
+
+export interface ApiExchange {
   publication: PublicationStaticId;
   editorialAngle: string;
-  rootQuestionId: string;
-  rootQuestionText: string;
-  rootAnswer1: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  rootAnswer2: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  rootAnswer3: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  rootAnswer4: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondaryQuestion1Id: string;
-  secondaryQuestion1Text: string;
-  secondary1Answer1: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondary1Answer2: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondary1Answer3: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondary1Answer4: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondaryQuestion2Id: string;
-  secondaryQuestion2Text: string;
-  secondary2Answer1: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondary2Answer2: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondary2Answer3: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  secondary2Answer4: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp: boolean;
-    followUpQuestionId: string | null;
-  };
-  tertiaryQuestion1Id: string;
-  tertiaryQuestion1Text: string;
-  tertiary1Answer1: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiary1Answer2: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiary1Answer3: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiary1Answer4: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiaryQuestion2Id: string;
-  tertiaryQuestion2Text: string;
-  tertiary2Answer1: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiary2Answer2: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiary2Answer3: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
-  tertiary2Answer4: {
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-  };
+  rootQuestion: ApiExchangeQuestion;
+  secondaryQuestions: [ApiExchangeQuestion, ApiExchangeQuestion]; // Exactly 2
+  tertiaryQuestions: [ApiExchangeQuestion, ApiExchangeQuestion]; // Exactly 2
 }
 
 export type ExchangeAssemblySubStepOutput = ApiExchange;

@@ -84,17 +84,33 @@ Total: 5 questions × 4 answers = 20 answers per exchange
 `,
 
   answerTypes: `
-🎯 CRITICAL: Use diverse answer types across 4 answers.
+🎯 CRITICAL: Use EXACT enum values (case-sensitive).
 
-Available types: Presidential, Defensive, Deflective, Authorized, Investigative
+**REQUIRED VALUES (must match exactly):**
+- "deflect" - Avoid direct answers, redirect attention
+- "reassure" - Calm public concerns, provide comfort
+- "challenge" - Push back on question premise or media
+- "admit" - Acknowledge issues or problems directly
+- "deny" - Reject allegations or claims outright
+- "inform" - Provide factual information or data
+- "authorized" - Use cabinet member for insider information
 
-Good distribution for 4 answers:
-- Answer 1: Presidential (direct response)
-- Answer 2: Defensive (protect admin)  
-- Answer 3: Deflective (redirect topic)
-- Answer 4: Authorized (cabinet member quote)
+**Good distribution for 4 answers:**
+- Answer 1: "deflect" (redirect topic)
+- Answer 2: "inform" (provide facts)
+- Answer 3: "challenge" (push back)
+- Answer 4: "authorized" (cabinet quote)
 
-Ensure at least 2 different types per question.
+✅ Use at least 2 different types per question
+❌ Do not use: "presidential", "defensive", "investigative" (invalid)
+
+**IMPACT WEIGHTS** (relationship changes):
+✅ Valid values: 6, 4, 2, 0, -2, -4, -6
+❌ Invalid: 1, -1, 3, -3, 5, -5 (not in enum)
+
+**OUTCOME MODIFIERS** (probability changes):
+✅ Valid values: 12, 8, 6, 4, 0, -4, -6, -8, -12
+❌ Invalid: 1, -1, 3, -3, 5, -5, 10, -10 (not in enum)
 `,
 
   gameBalance: `

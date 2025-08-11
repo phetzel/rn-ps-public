@@ -216,16 +216,6 @@ export const publicationPlanSchema = z
       .min(textLengthRules.editorialAngle.min)
       .max(textLengthRules.editorialAngle.max)
       .describe("How this publication approaches the situation"),
-    primaryFocus: z
-      .string()
-      .min(textLengthRules.primaryFocus.min)
-      .max(textLengthRules.primaryFocus.max)
-      .describe("What specific aspect this publication will dig into"),
-    answerTypeStrategy: z
-      .array(gameEntitySchemas.answerType)
-      .min(3)
-      .max(7)
-      .describe("Planned answer types to use for variety (3-7 types)"),
     willHaveAuthorizedAnswer: z
       .boolean()
       .describe("Whether this exchange will include an authorized answer"),
@@ -283,7 +273,6 @@ export const questionDataSchema = z.object({
     .min(textLengthRules.questionText.min)
     .max(textLengthRules.questionText.max)
     .describe("The journalist's question"),
-  level: z.enum(["difficult", "moderate", "easy"]).describe("Question difficulty level"),
   answers: z
     .array(answerOptionSchema)
     .length(4)
@@ -359,29 +348,8 @@ export const optimizedQuestionConsequencesSchema = z.object({
 export const questionConsequencesSchema = optimizedQuestionConsequencesSchema;
 
 // ───────────────────────────────────────────────────────────────────────────────
-// EXCHANGE GENERATION SCHEMAS (FLATTENED FOR LLM)
+// EXCHANGE GENERATION SCHEMAS (NESTED STRUCTURE)
 // ───────────────────────────────────────────────────────────────────────────────
-
-export const apiExchangeSchema = z.object({
-  publicationId: gameEntitySchemas.publication,
-  editorialAngle: z.string().min(50).max(200),
-  
-  // Root question (4 answers, 2 with follow-ups)
-  rootQuestionId: idSchema,
-  rootQuestionText: z.string().min(40).max(200),
-  rootAnswer1: answerOptionSchema,
-  rootAnswer2: answerOptionSchema,
-  rootAnswer3: answerOptionSchema,
-  rootAnswer4: answerOptionSchema,
-  
-  // Secondary questions (2 questions, 4 answers each, 1 follow-up each)
-  secondaryQuestion1: questionDataSchema,
-  secondaryQuestion2: questionDataSchema,
-  
-  // Tertiary questions (2 questions, 4 answers each, no follow-ups)
-  tertiaryQuestion1: questionDataSchema,
-  tertiaryQuestion2: questionDataSchema,
-});
 
 export const publicationExchangeSchema = z.object({
   publication: gameEntitySchemas.publication.describe("Publication conducting this exchange"),
@@ -396,6 +364,9 @@ export const publicationExchangeSchema = z.object({
     .length(2)
     .describe("Exactly 2 tertiary questions triggered by secondary answers"),
 });
+
+// Use the nested structure for API exchanges
+export const apiExchangeSchema = publicationExchangeSchema;
 
 export const apiExchangesSchema = z.object({
   exchanges: z

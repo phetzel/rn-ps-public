@@ -8,23 +8,23 @@ import {
   ApiOutcomes 
 } from "../../../schemas";
 import { 
-  buildEnhancedQuestionConsequencesPrompt,
-  enhancedQuestionConsequencesPromptConfig,
-} from "../../../llm/prompts/enhanced-question-consequences-prompt";
+  buildExchangeConsequencesPrompt,
+  exchangeConsequencesPromptConfig,
+} from "../../../llm/prompts/exchange-consequences-prompt";
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// CONSEQUENCE GENERATION SUB-STEP IMPLEMENTATION (ENHANCED WITH VALIDATION)
+// EXCHANGE CONSEQUENCES SUB-STEP IMPLEMENTATION (SIMPLIFIED WITH STRICT BALANCE)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Phase 2b: Generate consequences (impacts + outcome modifiers) for each question
+ * Phase 3: Generate consequences (impacts + outcome modifiers) for each question
  * 
  * This sub-step processes each question individually to generate relationship impacts
- * and outcome modifiers for all answers, maintaining game balance rules.
+ * and outcome modifiers for all answers, maintaining strict game balance rules.
  * 
- * ENHANCED with detailed validation guidance to improve LLM success rates.
+ * Simplified with clearer balance guidance and better validation warnings.
  */
-export class ConsequenceGenerationSubStep {
+export class ExchangeConsequencesSubStep {
   private logger: GenerationLogger;
   private llmClient: any;
 
@@ -37,7 +37,7 @@ export class ConsequenceGenerationSubStep {
    * Execute consequence generation for all questions in the exchange
    */
   async execute(input: ConsequenceGenerationSubStepInput): Promise<ConsequenceGenerationSubStepOutput> {
-    const stepName = "Consequence Generation";
+    const stepName = "Exchange Consequences Generation";
     
     try {
       this.logger.logStepStart(stepName, this.getLogContext(input));
@@ -92,7 +92,7 @@ export class ConsequenceGenerationSubStep {
   }
 
   /**
-   * Generate consequences for a single question's answers (ENHANCED VERSION)
+   * Generate consequences for a single question's answers (simplified version)
    */
   private async generateSingleQuestionConsequences(
     question: any,
@@ -102,9 +102,9 @@ export class ConsequenceGenerationSubStep {
     publicationPlan: any,
     questionIndex: number
   ): Promise<any> {
-    console.log(`🎯 Using enhanced validation prompts for question ${questionIndex + 1}...`);
+    console.log(`🎯 Using simplified balance prompts for question ${questionIndex + 1}...`);
     
-    const prompt = buildEnhancedQuestionConsequencesPrompt(
+    const prompt = buildExchangeConsequencesPrompt(
       question,
       plan,
       preferences,
@@ -115,9 +115,9 @@ export class ConsequenceGenerationSubStep {
 
     const response = await this.llmClient.generateStructured(prompt, {
       schema: questionConsequencesSchema,
-      schemaName: enhancedQuestionConsequencesPromptConfig.schemaName,
-      temperature: enhancedQuestionConsequencesPromptConfig.temperature,
-      systemPrompt: enhancedQuestionConsequencesPromptConfig.systemPrompt,
+      schemaName: exchangeConsequencesPromptConfig.schemaName,
+      temperature: exchangeConsequencesPromptConfig.temperature,
+      systemPrompt: exchangeConsequencesPromptConfig.systemPrompt,
     });
 
     // Validate and merge the original question structure with the generated consequences
@@ -176,19 +176,23 @@ export class ConsequenceGenerationSubStep {
    */
   private validateInput(input: ConsequenceGenerationSubStepInput): void {
     if (!input.publicationQuestions) {
-      throw new Error("Consequence generation requires publication questions data");
+      throw new Error("Exchange consequences generation requires publication questions data");
     }
     
     if (!input.plan) {
-      throw new Error("Consequence generation requires situation plan");
+      throw new Error("Exchange consequences generation requires situation plan");
     }
     
     if (!input.preferences) {
-      throw new Error("Consequence generation requires preferences");
+      throw new Error("Exchange consequences generation requires preferences");
     }
     
     if (!input.outcomes) {
-      throw new Error("Consequence generation requires outcomes");
+      throw new Error("Exchange consequences generation requires outcomes");
+    }
+
+    if (!input.publicationPlan) {
+      throw new Error("Exchange consequences generation requires publication plan");
     }
   }
 
@@ -205,8 +209,9 @@ export class ConsequenceGenerationSubStep {
     return {
       situationTitle: input.plan.title,
       publicationId: input.publicationPlan.publication,
+      editorialAngle: input.publicationPlan.editorialAngle,
       questionsCount: allQuestions.length,
-      step: "consequence-generation",
+      step: "exchange-consequences",
     };
   }
 
@@ -222,6 +227,7 @@ export class ConsequenceGenerationSubStep {
     
     return {
       publication: result.publication,
+      editorialAngle: result.editorialAngle,
       questionsCount: allQuestions.length,
       answersProcessed: allQuestions.reduce((total, q) => total + q.answers.length, 0),
     };
