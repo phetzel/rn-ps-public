@@ -6,7 +6,7 @@ import { analyzeStrategicRequirements } from "../../utils/situation-balance-anal
 import { generateSituationPlanSchema, type GenerateSituationPlan } from "~/lib/schemas/generate";
 
 
-export const plannerInstructions = `
+export const instructions = `
 You are a content strategist for a satirical Press Secretary game.
 
 GOALS
@@ -56,8 +56,7 @@ export function buildPlannerRequest(
         prompt,
         options: {
           model: "gpt-5",
-          instructions: plannerInstructions,               // system/developer guidance
-        //   temperature: 0.8,
+          instructions,               // system/developer guidance
           maxOutputTokens: 16000,
           schema: generateSituationPlanSchema,
           schemaName: "situation_plan",

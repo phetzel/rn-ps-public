@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { LLMClient } from "./llm/client";
 import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, SubgroupStaticId } from "~/types";
+import type { GenerateSituationPlan } from "~/lib/schemas/generate";
+import type { GeneratePreferences } from "~/lib/schemas/generate";
+
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SCHEMA-DERIVED TYPES IMPORT
@@ -8,19 +11,13 @@ import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, Subgro
 
 // Import schema-derived types for use in our own type definitions
 import type {
-  SituationPlan,
-  ApiPreferences,
   ApiOutcomes,
   ApiExchanges,
   OutcomeNarrative,
   OutcomesNarrativesResult,
   ImpactMatrixResult,
   ExchangePlan,
-  PublicationPlan,
-  QuestionConsequences,
-  QuestionGenerationResult,
   PublicationExchange,
-  AnswerOption
 } from "./schemas";
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -32,8 +29,8 @@ export type GenerationStage = 'analysis' | 'planning' | 'preferences' | 'outcome
 export interface GenerationResult {
   success: boolean;
   situation?: {
-    plan: SituationPlan;
-    preferences?: ApiPreferences;
+    plan: GenerateSituationPlan;
+    preferences?: GeneratePreferences;
     outcomes?: ApiOutcomes;
     exchanges?: ApiExchanges;
   };
@@ -268,38 +265,38 @@ export interface StrategicRequirements {
 
 // Planning Step Types
 export type PlanningStepInput = GenerationAnalysis;
-export type PlanningStepOutput = SituationPlan;
+export type PlanningStepOutput = GenerateSituationPlan;
 
 // Preferences Step Types
 export interface PreferencesStepInput {
-  plan: SituationPlan;
+  plan: PlanningStepOutput;
   analysis: GenerationAnalysis;
 }
-export type PreferencesStepOutput = ApiPreferences;
+export type PreferencesStepOutput = GeneratePreferences;
 
 // Outcomes Step Types
 export interface OutcomesStepInput {
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
 }
 export type OutcomesStepOutput = ApiOutcomes;
 
 // Outcomes Sub-step Types
 export interface NarrativesSubStepInput {
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
 }
 export type NarrativesSubStepOutput = OutcomesNarrativesResult;
 
 export interface ImpactMatrixSubStepInput {
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
   narratives: OutcomeNarrative[];
 }
 export type ImpactMatrixSubStepOutput = ImpactMatrixResult;
 
 export interface AssemblySubStepInput {
-  plan: SituationPlan;
+  plan: PlanningStepOutput;
   narratives: OutcomesNarrativesResult;
   impactMatrix: ImpactMatrixResult;
 }
@@ -307,16 +304,16 @@ export type AssemblySubStepOutput = ApiOutcomes;
 
 // Exchanges Step Types
 export interface ExchangesStepInput {
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
   outcomes: ApiOutcomes;
 }
 export type ExchangesStepOutput = ApiExchanges;
 
 // Exchange Planning Sub-step
 export interface ExchangePlanningSubStepInput {
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
   outcomes: ApiOutcomes;
 }
 export type ExchangePlanningSubStepOutput = ExchangePlan;
@@ -324,8 +321,8 @@ export type ExchangePlanningSubStepOutput = ExchangePlan;
 // Question Generation Sub-step
 export interface QuestionGenerationSubStepInput {
   publicationPlan: any; // PublicationPlan from exchange planning
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
   outcomes: ApiOutcomes;
 }
 export type QuestionGenerationSubStepOutput = PublicationExchange;
@@ -334,8 +331,8 @@ export type QuestionGenerationSubStepOutput = PublicationExchange;
 export interface ConsequenceGenerationSubStepInput {
   publicationQuestions: PublicationExchange;
   publicationPlan: any; // PublicationPlan from exchange planning
-  plan: SituationPlan;
-  preferences: ApiPreferences;
+  plan: PlanningStepOutput;
+  preferences: PreferencesStepOutput;
   outcomes: ApiOutcomes;
 }
 

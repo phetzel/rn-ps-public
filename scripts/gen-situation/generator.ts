@@ -47,14 +47,14 @@ export class SituationGenerator {
       console.log(`🎯 [${id}] Step 1: Planning...`);
       const plan = await this.planningStep.execute(startingContext);
 
-      console.log("PLAN CREATED: ", plan);
-
       // Step 2: Generate entity preferences
       console.log(`⚙️ [${id}] Step 2: Preferences...`);
       const preferences = await this.preferencesStep.execute({
         plan,
         analysis: startingContext,
       });
+
+      console.log("PREFERENCES CREATED: ", preferences);
 
       // Step 3: Generate situation outcomes (enhanced)
       console.log(`🎲 [${id}] Step 3: Enhanced Outcomes...`);
@@ -71,31 +71,31 @@ export class SituationGenerator {
         outcomes,
       });
 
-      // Step 5: Convert to game schema
-      console.log(`🔄 [${id}] Step 5: Converting to game schema...`);
-      const conversionResult = validateAndConvertToGameSchema(
-        plan,
-        preferences,
-        outcomes,
-        exchanges
-      );
+      // // Step 5: Convert to game schema
+      // console.log(`🔄 [${id}] Step 5: Converting to game schema...`);
+      // const conversionResult = validateAndConvertToGameSchema(
+      //   plan,
+      //   preferences,
+      //   outcomes,
+      //   exchanges
+      // );
 
-      if (!conversionResult.success) {
-        throw new Error(`Schema conversion failed: ${conversionResult.errors?.join(", ")}`);
-      }
+      // if (!conversionResult.success) {
+      //   throw new Error(`Schema conversion failed: ${conversionResult.errors?.join(", ")}`);
+      // }
 
-      // Step 6: Write files to disk
-      console.log(`💾 [${id}] Step 6: Writing files...`);
-      const fileResult = await writeSituationFiles(
-        conversionResult.data!.situationData,
-        conversionResult.data!.outcomes,
-        conversionResult.data!.preferences,
-        conversionResult.data!.exchanges
-      );
+      // // Step 6: Write files to disk
+      // console.log(`💾 [${id}] Step 6: Writing files...`);
+      // const fileResult = await writeSituationFiles(
+      //   conversionResult.data!.situationData,
+      //   conversionResult.data!.outcomes,
+      //   conversionResult.data!.preferences,
+      //   conversionResult.data!.exchanges
+      // );
 
-      if (!fileResult.success) {
-        throw new Error(`File writing failed: ${fileResult.error}`);
-      }
+      // if (!fileResult.success) {
+      //   throw new Error(`File writing failed: ${fileResult.error}`);
+      // }
 
       // Calculate total usage and timing
       const usage = this.llmClient.getUsageStats();
@@ -103,7 +103,7 @@ export class SituationGenerator {
       const duration = endTime.getTime() - startTime.getTime();
 
       console.log(`✅ [${id}] Enhanced generation pipeline completed! (${duration}ms)`);
-      console.log(`📁 [${id}] Files written to: ${fileResult.directoryPath}`);
+      // console.log(`📁 [${id}] Files written to: ${fileResult.directoryPath}`);
 
       return {
         success: true,
@@ -114,8 +114,10 @@ export class SituationGenerator {
           exchanges,
         },
         files: {
-          directoryPath: fileResult.directoryPath,
-          files: fileResult.files,
+          // directoryPath: fileResult.directoryPath,
+          // files: fileResult.files,
+          directoryPath: "",
+          files: [],
         },
         usage: {
           requests: usage.requestCount,

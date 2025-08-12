@@ -16,6 +16,9 @@ export abstract class ResponsesGenerationStep<I, O> {
   protected validateInput(input: I): void {
     if (input == null) throw new Error("Input required");
   }
+
+  protected async postProcess(result: O, _input: I): Promise<O> { return result; }
+
   // ---- main runner
   async execute(input: I): Promise<O> {
     this.validateInput(input);
@@ -23,6 +26,6 @@ export abstract class ResponsesGenerationStep<I, O> {
     const { prompt, options } = this.buildRequest(input);
     const { content } = await this.llmClient.generateResponse<O>(prompt, options);
 
-    return content;
+    return this.postProcess(content, input);
   }
 }

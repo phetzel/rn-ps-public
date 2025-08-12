@@ -1,6 +1,6 @@
 import { z } from "zod";
-
 import { baseSituationDataSchema } from "~/lib/schemas/situations";
+import { baseSituationPreferencesSchema } from "~/lib/schemas/situations/preferences";
 import { cabinetMemberSchema, subgroupSchema, publicationSchema } from "~/lib/schemas/common";
 
 // Plan
@@ -13,3 +13,7 @@ export const generateSituationPlanSchema = baseSituationDataSchema.extend({
   }),
 });
 export type GenerateSituationPlan = z.infer<typeof generateSituationPlanSchema>;
+
+// Preferences
+export const generatePreferencesSchema = baseSituationPreferencesSchema;
+export type GeneratePreferences = z.infer<typeof generatePreferencesSchema>;

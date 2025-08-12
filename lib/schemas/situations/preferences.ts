@@ -3,23 +3,30 @@ import { z } from "zod";
 import { textLengthSchema } from "~/lib/schemas/common";
 import { AnswerType, CabinetStaticId } from "~/types";
 
+// Helper to exclude Authorized from AnswerType for preferences
+const AllowedPrefAnswerType = z.enum(
+  Object.values(AnswerType).filter(v => v !== AnswerType.Authorized) as [string, ...string[]]
+).describe("Answer type for the preference");
+
 export const preferenceSchema = z.object({
-  answerType: z.nativeEnum(AnswerType),
+  answerType: AllowedPrefAnswerType,
   rationale: textLengthSchema.rationale,
 });
 
 export const cabinetPreferenceSchema = z.object({
   preference: preferenceSchema,
-  authorizedContent: textLengthSchema.authorizedContent.optional(),
+  authorizedContent: textLengthSchema.authorizedContent
+    .describe("Confidential talking points; maximum one cabinet member per situation should include this."),
 });
 
-export const situationPreferencesSchema = z
-  .object({
-    president: preferenceSchema.optional(),
-    cabinet: z
-      .record(z.nativeEnum(CabinetStaticId), cabinetPreferenceSchema)
-      .optional(),
-  })
+export const baseSituationPreferencesSchema = z.object({
+  president: preferenceSchema,
+  cabinet: z
+    .record(z.nativeEnum(CabinetStaticId), cabinetPreferenceSchema)
+    .optional(),
+});
+
+export const situationPreferencesSchema = baseSituationPreferencesSchema.extend({})
   .refine(
     (data) => {
       // No Authorized preferences allowed
