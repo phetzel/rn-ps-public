@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
 import dotenv from "dotenv";
-import type { LLMResponse, LLMOptions, StructuredOptions } from "../types";
+import type { LLMResponse, LLMOptions, StructuredOptions, LLMResponseOptions, LLMPesposeRequest } from "../types";
 
 dotenv.config({ path: [".env.local", ".env"] });
 
@@ -12,7 +12,7 @@ dotenv.config({ path: [".env.local", ".env"] });
 
 export class LLMClient {
   private client: OpenAI;
-  private defaultModel = "gpt-4o"; // UPGRADED: Better constraint compliance than gpt-4o-mini
+  private defaultModel = "gpt-5"; 
   private costTracking = {
     totalTokens: 0,
     totalCost: 0,
@@ -29,6 +29,57 @@ export class LLMClient {
     this.debugMode = options?.debugMode ?? false;
   }
 
+    /**
+   * NEW: Generate via Responses API (text, JSON mode, or Structured Outputs)
+   *
+   * - Plain text (default)
+   * - JSON mode:     pass options.responseFormat = "json_object"
+   * - Structured:    pass options.jsonSchema (and optionally options.schema for local Zod validation)
+   * - Stateful:      pass options.previousResponseId to chain turns in Responses
+   */
+  async generateResponse<T>(
+    prompt: string,
+    opts: LLMResponseOptions<T>
+  ): Promise<LLMResponse<T>> {
+    const {
+      model = this.defaultModel,
+      instructions,
+      // temperature = 0.7,
+      maxOutputTokens = 16000,
+      schema,
+      schemaName,
+      jsonSchema,
+      previousResponseId,
+    } = opts;
+
+    const req: any = {
+      model,
+      instructions,                  // ← system guidance here
+      input: prompt,                 // ← user ask here
+      // temperature,
+      max_output_tokens: maxOutputTokens,
+      text: {
+        format: {
+          type: "json_schema",
+          name: schemaName,
+          schema: jsonSchema,
+          strict: true,
+        },
+      },
+    };
+    if (previousResponseId) req.previous_response_id = previousResponseId;
+
+    const res = await this.client.responses.create(req);
+    const raw = res.output_text ?? ""; // SDK convenience field for text aggregation. :contentReference[oaicite:3]{index=3}
+
+    // Parsed+validated => always returns T (no unions)
+    const parsed = schema.parse(JSON.parse(raw));
+    if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(parsed, null, 2));
+
+    const usage = this.trackUsage(res.usage);
+    return { content: parsed, raw, usage };
+  }
+  
   /**
    * Generate structured output using OpenAI's zodResponseFormat
    * Try different API approaches based on availability
@@ -57,8 +108,14 @@ export class LLMClient {
         ],
         temperature,
         max_tokens: maxTokens,
-        response_format: zodResponseFormat(schema, schemaName),
-      });
+        text: {
+          format: {
+            type: "json_schema",
+            name: schemaName,
+            schema: jsonSchema,
+            strict: true,
+          },
+        },      });
 
       const rawContent = completion.choices[0]?.message?.content || "";
       
@@ -117,119 +174,6 @@ export class LLMClient {
   }
 
   /**
-   * Generate with function/tool calling
-   */
-  async generateWithTools(
-    prompt: string,
-    tools: any[],
-    options: LLMOptions = {}
-  ): Promise<LLMResponse> {
-    const {
-      model = this.defaultModel,
-      temperature = 0.7,
-      maxTokens = 16000, // Updated default - max allowed is 16384
-      systemPrompt = "You are a helpful assistant.",
-    } = options;
-
-    try {
-      console.log(`🔧 Tool-enabled request to ${model}...`);
-
-      const response = await this.client.chat.completions.create({
-        model,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: prompt },
-        ],
-        temperature,
-        max_tokens: maxTokens,
-        tools,
-        tool_choice: "auto",
-      });
-
-      const message = response.choices[0]?.message;
-      const usage = this.trackUsage(response.usage);
-
-      return {
-        content: message?.content || "",
-        usage,
-        toolCalls: message?.tool_calls,
-      };
-    } catch (error) {
-      console.error("❌ Tool generation failed:", error);
-      throw error;
-    }
-  }
-
-  /**
-   * Legacy JSON generation with manual validation
-   * Use generateStructured() instead for better reliability
-   */
-  async generateJSON<T>(
-    prompt: string,
-    schema: z.ZodSchema<T>,
-    options: LLMOptions = {}
-  ): Promise<LLMResponse<T>> {
-    console.warn(
-      "⚠️  Consider using generateStructured() for better reliability"
-    );
-
-    const response = await this.generateCompletion(prompt, {
-      ...options,
-      responseFormat: "json_object",
-    });
-
-    try {
-      const parsed = JSON.parse(response.content);
-      const validated = schema.parse(parsed);
-      return {
-        ...response,
-        content: validated,
-      };
-    } catch (error) {
-      throw new Error(`JSON validation failed: ${error}`);
-    }
-  }
-
-  /**
-   * Basic text completion
-   */
-  async generateCompletion(
-    prompt: string,
-    options: LLMOptions = {}
-  ): Promise<LLMResponse<string>> {
-    const {
-      model = this.defaultModel,
-      temperature = 0.7,
-      maxTokens = 16000, // Updated default - max allowed is 16384
-      systemPrompt = "You are a helpful assistant.",
-      responseFormat = "text",
-    } = options;
-
-    try {
-      const response = await this.client.chat.completions.create({
-        model,
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: prompt },
-        ],
-        temperature,
-        max_tokens: maxTokens,
-        ...(responseFormat === "json_object" && {
-          response_format: { type: "json_object" },
-        }),
-      });
-
-      const content = response.choices[0]?.message?.content || "";
-      const usage = this.trackUsage(response.usage);
-
-      return { content, usage };
-    } catch (error) {
-      console.error("❌ Generation failed:", error);
-      throw error;
-    }
-  }
-
-  /**
    * Get usage statistics
    */
   getUsageStats() {
@@ -246,22 +190,28 @@ export class LLMClient {
   private trackUsage(usage: any) {
     if (!usage) return undefined;
 
-    // GPT-4o-mini pricing (as of 2024)
+    // Support BOTH Chat (prompt/completion) and Responses (input/output) shapes
+    const promptTokens = usage.prompt_tokens ?? usage.input_tokens ?? 0;
+    const completionTokens = usage.completion_tokens ?? usage.output_tokens ?? 0;
+    const totalTokens =
+      usage.total_tokens ?? promptTokens + completionTokens;
+
+    // Pricing placeholders (update these to your current model pricing)
     const inputCostPer1K = 0.00015;
     const outputCostPer1K = 0.0006;
 
     const cost =
-      (usage.prompt_tokens / 1000) * inputCostPer1K +
-      (usage.completion_tokens / 1000) * outputCostPer1K;
+      (promptTokens / 1000) * inputCostPer1K +
+      (completionTokens / 1000) * outputCostPer1K;
 
-    this.costTracking.totalTokens += usage.total_tokens;
+    this.costTracking.totalTokens += totalTokens;
     this.costTracking.totalCost += cost;
     this.costTracking.requestCount++;
 
     return {
-      promptTokens: usage.prompt_tokens,
-      completionTokens: usage.completion_tokens,
-      totalTokens: usage.total_tokens,
+      promptTokens,
+      completionTokens,
+      totalTokens,
       cost,
     };
   }

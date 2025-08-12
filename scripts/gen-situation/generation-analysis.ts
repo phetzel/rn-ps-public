@@ -18,7 +18,7 @@ import type {
   EntityOutcomeAnalysis,
   PublicationAnalysis,
   GenerationAnalysis
-} from "../../../types";
+} from "./types";
 
 /**
  * Analyzes distribution specifically for generation context

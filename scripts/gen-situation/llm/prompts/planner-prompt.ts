@@ -1,77 +1,53 @@
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "./generation-guide";
 
 import { analyzeStrategicRequirements } from "../../utils/situation-balance-analyzer";
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// BASIC SITUATION GENERATION PROMPTS
-// ═══════════════════════════════════════════════════════════════════════════════
-
-// Types moved to root types.ts
 import type { PromptConfig, GenerationAnalysis } from "../../types";
 
-/**
- * Build the main prompt for basic situation generation
- */
-export function buildPlannerPrompt(analysis: GenerationAnalysis): string {
-  // Transform raw analysis into strategic context
-  const strategic = analyzeStrategicRequirements(analysis);
+export const plannerInstructions = `
+You are a content strategist for a satirical Press Secretary game.
 
-  return `
-Plan generate new political situation that:
-1. Is of type: ${strategic.targetSituationType}
+GOALS
+- Propose a new situation that fits the requested situation type.
+- Avoid near-duplicate titles to those listed as existing.
+- Improve distribution balance by choosing underrepresented entities when coherent for the story.
+- Keep satire smart, substantive, not slapstick.
 
-2. Avoids direct overlap with existing situations of the same type. We want dynamic situations that are not just rehashes of existing ones. 
-Current situations:
-${strategic.existingSituationsOfType.map((s) => `- ${s.title}`).join("\n")}
+OUTPUT CONTRACT
+- You must follow the provided JSON Schema exactly (Structured Outputs is enabled).
+- Honor all field descriptions and length ranges (title 15–50 chars; description 80–160).
+- Only select entities that fit the scenario and type.
 
-3. Attempts to move our situations towards balance. 
-Dont make it too obvious and only use entities if it makes sense.
-Current balance issues:
-a. Entities:
-- Overrepresented: ${strategic.entityBalance.cabinet.overRepresented.join(", ")}
-- Underrepresented: ${strategic.entityBalance.cabinet.underRepresented.join(
-    ", "
-  )}
-b. Subgroups:
-- Overrepresented: ${strategic.entityBalance.subgroups.overRepresented.join(
-    ", "
-  )}
-- Underrepresented: ${strategic.entityBalance.subgroups.underRepresented.join(
-    ", "
-  )}
-c. Publications:
-- Underrepresented: ${strategic.entityBalance.publications.underRepresented.join(
-    ", "
-  )}
-`;
-}
-
-const plannerSystemPrompt = `
-You are an expert content strategist for a satirical Press Secretary simulation game (think Veep meets The Daily Show).
-
-Make sure to follow the generation guide:
+CONTENT RULES (Authoritative)
 ${GENERATION_GUIDE}
+
+REFERENCE — Situation Types & Entities
 ${PLANNER_TYPE_GUIDE}
-
-## Your Task
-Create an outline for a new political situation that:
-1. Fills content gaps based on the distribution
-2. Avoids direct overlap with existing situations  
-3. Has potential for meaningful press conference challenges and opposing viewpoints from entities
-4. Maintains satirical tone while being substantive
-
-## Requirements
-- **Title**: Catchy, satirical headline (15-50 chars)
-- **Description**: Brief situational summary (80-160 chars)  
-- **Type**: MUST be of the type provided
-- **Entities**: Choose based on balance requirements above
-- **Reasoning**: Explain how this addresses the strategic balance needs`;
+`.trim();
 
 /**
  * Configuration for planner generation
  */
 export const plannerPromptConfig: PromptConfig = {
   temperature: 0.8,
-  systemPrompt: plannerSystemPrompt,
+  instructions: plannerInstructions,
   schemaName: "situation_plan",
 };
+
+export function buildPlannerPrompt(analysis: GenerationAnalysis): string {
+  const s = analyzeStrategicRequirements(analysis);
+
+  const lines = [
+    `TargetSituationType: ${s.targetSituationType}`,
+    `AvoidOverlapWithExistingTitles:`,
+    ...s.existingSituationsOfType.map(v => `- ${v.title}`),
+    `BalanceHints:`,
+    `  CabinetOver: ${s.entityBalance.cabinet.overRepresented.join(", ")}`,
+    `  CabinetUnder: ${s.entityBalance.cabinet.underRepresented.join(", ")}`,
+    `  SubgroupsOver: ${s.entityBalance.subgroups.overRepresented.join(", ")}`,
+    `  SubgroupsUnder: ${s.entityBalance.subgroups.underRepresented.join(", ")}`,
+    `  PublicationsUnder: ${s.entityBalance.publications.underRepresented.join(", ")}`,
+    ``,
+  ];
+
+  return lines.join("\n");
+}

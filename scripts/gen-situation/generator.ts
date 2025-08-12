@@ -1,20 +1,14 @@
 import { LLMClient } from "./llm/client";
-import { generationAnalysis } from "./steps/planning/utils/generation-analysis";
+import { generationAnalysis } from "./generation-analysis";
 import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./steps";
-import { validateAndConvertToGameSchema } from "./schemas/conversion";
 import { writeSituationFiles } from "./utils/file-writer";
+import { validateAndConvertToGameSchema } from "./schemas/conversion";
 import type {
-  GenerationAnalysis,
   GenerationStage,
   GenerationResult,
   BatchGenerationStats,
 } from "./types";
-import type {
-  SituationPlan,
-  ApiPreferences,
-  ApiOutcomes,
-  ApiExchanges,
-} from "./schemas";
+
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION GENERATOR - LINEAR LLM PIPELINE WITH ENHANCED VALIDATION
@@ -52,6 +46,8 @@ export class SituationGenerator {
       // Step 1: Generate basic situation plan
       console.log(`🎯 [${id}] Step 1: Planning...`);
       const plan = await this.planningStep.execute(startingContext);
+
+      console.log("PLAN CREATED: ", plan);
 
       // Step 2: Generate entity preferences
       console.log(`⚙️ [${id}] Step 2: Preferences...`);

@@ -101,6 +101,25 @@ export interface StructuredOptions<T> extends Omit<LLMOptions, "responseFormat">
   strict?: boolean;
 }
 
+/** Options passed to LLMClient.generateResponse (Responses + Structured Outputs only) */
+export type LLMResponseOptions<T> = {
+  model?: string;                    // defaults inside LLMClient
+  instructions: string;              // "system" guidance; resend each call
+  temperature?: number;
+  maxOutputTokens?: number;          // Responses uses max_output_tokens
+  schema: z.ZodSchema<T>;            // local Zod validation (domain invariants)
+  schemaName: string;                // response_format.json_schema.name
+  jsonSchema: Record<string, any>;   // compiled JSON Schema (strict mode)
+  previousResponseId?: string;       // optional chaining
+};
+
+/** Full, ready-to-run Responses request built by a config file */
+export type LLMPesposeRequest<T> = {
+  prompt: string;                    // user input string
+  options: LLMResponseOptions<T>;
+};
+
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // BASE STEP TYPES
 // ═══════════════════════════════════════════════════════════════════════════════

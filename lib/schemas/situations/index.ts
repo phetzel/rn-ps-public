@@ -6,21 +6,24 @@ export * from "~/lib/schemas/situations/content";
 // Main situation data schema with cross-validation
 import { z } from "zod";
 import { AnswerType } from "~/types";
+import { situationTypeSchema, textLengthSchema, publicationSchema } from "../common";
 import { exchangeContentSchema } from "../exchanges";
 import { situationContentSchema } from "./content";
 import { situationTriggerSchema } from "./triggers";
 import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
 
-const situationDataSchema = z
-  .object({
+export const baseSituationDataSchema = z.object({
+  type: situationTypeSchema,
+  title: textLengthSchema.situationTitle,
+  description: textLengthSchema.situationDescription,
+});
+
+const situationDataSchema = baseSituationDataSchema.extend({
     trigger: situationTriggerSchema,
-    type: z.string(),
-    title: z.string(),
-    description: z.string(),
     content: situationContentSchema,
     exchanges: z.array(
       z.object({
-        publication: z.string(),
+        publication: publicationSchema,
         content: exchangeContentSchema,
       })
     ),
