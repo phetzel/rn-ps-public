@@ -1,8 +1,7 @@
 import { z } from "zod";
 import { LLMClient } from "./llm/client";
 import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, SubgroupStaticId } from "~/types";
-import type { GenerateSituationPlan } from "~/lib/schemas/generate";
-import type { GeneratePreferences } from "~/lib/schemas/generate";
+import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes } from "~/lib/schemas/generate";
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -11,11 +10,11 @@ import type { GeneratePreferences } from "~/lib/schemas/generate";
 
 // Import schema-derived types for use in our own type definitions
 import type {
-  ApiOutcomes,
+  // ApiOutcomes,
   ApiExchanges,
-  OutcomeNarrative,
-  OutcomesNarrativesResult,
-  ImpactMatrixResult,
+  // OutcomeNarrative,
+  // OutcomesNarrativesResult,
+  // ImpactMatrixResult,
   ExchangePlan,
   PublicationExchange,
 } from "./schemas";
@@ -31,7 +30,7 @@ export interface GenerationResult {
   situation?: {
     plan: GenerateSituationPlan;
     preferences?: GeneratePreferences;
-    outcomes?: ApiOutcomes;
+    outcomes?: GenerateOutcomes;
     exchanges?: ApiExchanges;
   };
   files?: {
@@ -111,7 +110,7 @@ export type LLMResponseOptions<T> = {
 };
 
 /** Full, ready-to-run Responses request built by a config file */
-export type LLMPesposeRequest<T> = {
+export type LLMResponseRequest<T> = {
   prompt: string;                    // user input string
   options: LLMResponseOptions<T>;
 };
@@ -279,34 +278,14 @@ export interface OutcomesStepInput {
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
 }
-export type OutcomesStepOutput = ApiOutcomes;
+export type OutcomesStepOutput = GenerateOutcomes;
 
-// Outcomes Sub-step Types
-export interface NarrativesSubStepInput {
-  plan: PlanningStepOutput;
-  preferences: PreferencesStepOutput;
-}
-export type NarrativesSubStepOutput = OutcomesNarrativesResult;
-
-export interface ImpactMatrixSubStepInput {
-  plan: PlanningStepOutput;
-  preferences: PreferencesStepOutput;
-  narratives: OutcomeNarrative[];
-}
-export type ImpactMatrixSubStepOutput = ImpactMatrixResult;
-
-export interface AssemblySubStepInput {
-  plan: PlanningStepOutput;
-  narratives: OutcomesNarrativesResult;
-  impactMatrix: ImpactMatrixResult;
-}
-export type AssemblySubStepOutput = ApiOutcomes;
 
 // Exchanges Step Types
 export interface ExchangesStepInput {
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
-  outcomes: ApiOutcomes;
+  outcomes: GenerateOutcomes;
 }
 export type ExchangesStepOutput = ApiExchanges;
 
@@ -314,7 +293,7 @@ export type ExchangesStepOutput = ApiExchanges;
 export interface ExchangePlanningSubStepInput {
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
-  outcomes: ApiOutcomes;
+  outcomes: GenerateOutcomes;
 }
 export type ExchangePlanningSubStepOutput = ExchangePlan;
 
@@ -323,7 +302,7 @@ export interface QuestionGenerationSubStepInput {
   publicationPlan: any; // PublicationPlan from exchange planning
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
-  outcomes: ApiOutcomes;
+  outcomes: GenerateOutcomes;
 }
 export type QuestionGenerationSubStepOutput = PublicationExchange;
 
@@ -333,7 +312,7 @@ export interface ConsequenceGenerationSubStepInput {
   publicationPlan: any; // PublicationPlan from exchange planning
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
-  outcomes: ApiOutcomes;
+  outcomes: GenerateOutcomes;
 }
 
 export interface QuestionsWithConsequences {

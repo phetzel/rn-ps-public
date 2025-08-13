@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod";
 import { z } from "zod";
 import dotenv from "dotenv";
-import type { LLMResponse, LLMOptions, StructuredOptions, LLMResponseOptions, LLMPesposeRequest } from "../types";
+import type { LLMResponse, LLMOptions, StructuredOptions, LLMResponseOptions, LLMResponseRequest } from "../types";
 
 dotenv.config({ path: [".env.local", ".env"] });
 

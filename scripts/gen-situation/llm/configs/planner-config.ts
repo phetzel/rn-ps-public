@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMPesposeRequest } from "../../types";
+import type { LLMResponseRequest } from "../../types";
 import type { GenerationAnalysis } from "../../types";
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "../generation-guide";
 import { analyzeStrategicRequirements } from "../../utils/situation-balance-analyzer";
@@ -29,7 +29,7 @@ ${PLANNER_TYPE_GUIDE}
 
 export function buildPlannerRequest(
     analysis: GenerationAnalysis
-  ): LLMPesposeRequest<GenerateSituationPlan> {
+  ): LLMResponseRequest<GenerateSituationPlan> {
     const s = analyzeStrategicRequirements(analysis);
   
     const lines = [

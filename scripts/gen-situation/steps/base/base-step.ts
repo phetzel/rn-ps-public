@@ -1,6 +1,6 @@
 // src/gen/base/responses-generation-step.ts
 import type { LLMClient } from "../../llm/client";
-import type { LLMPesposeRequest } from "../../types";
+import type { LLMResponseRequest } from "../../types";
 
 
 export abstract class ResponsesGenerationStep<I, O> {
@@ -11,7 +11,7 @@ export abstract class ResponsesGenerationStep<I, O> {
   }
 
   // ---- subclass must provide these
-  protected abstract buildRequest(input: I): LLMPesposeRequest<O>;
+  protected abstract buildRequest(input: I): LLMResponseRequest<O>;
 
   protected validateInput(input: I): void {
     if (input == null) throw new Error("Input required");

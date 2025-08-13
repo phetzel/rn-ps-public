@@ -39,7 +39,7 @@ export class ExchangesStep {
   /**
    * Execute the complete exchanges generation process
    */
-  async execute(input: ExchangesStepInput): Promise<ExchangesStepOutput> {
+  async execute(input: ExchangesStepInput): Promise<any> {
     const stepName = "Exchanges Generation";
     
     try {
@@ -113,7 +113,7 @@ export class ExchangesStep {
         exchanges: completedExchanges,
       };
       
-      this.logger.logStepSuccess(stepName, this.getResultSummary(result));
+      // this.logger.logStepSuccess(stepName, this.getResultSummary(result));
       return result;
       
     } catch (error) {

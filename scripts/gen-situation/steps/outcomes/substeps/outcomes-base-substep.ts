@@ -1,0 +1,46 @@
+import { ResponsesGenerationStep } from "../../base"; // your Responses base-step
+import type { LLMResponseRequest } from "../../../types";
+import { buildOutcomesBaseRequest } from "../../../llm/configs/outcomes-base-config";
+
+import  {
+    type GenerateSituationPlan,
+    type GeneratePreferences,
+    type GenerateBaseOutcomes,
+    generateBaseOutcomesSchema,
+  } from "~/lib/schemas/generate";
+
+
+type OutcomesBaseInput = {
+    plan: GenerateSituationPlan;
+    preferences: GeneratePreferences;
+  };
+  
+  export class OutcomesBaseSubstep
+    extends ResponsesGenerationStep<OutcomesBaseInput, GenerateBaseOutcomes> {
+    
+    protected buildRequest(input: OutcomesBaseInput): LLMResponseRequest<GenerateBaseOutcomes> {
+      // Pass full plan (includes involvedEntities) and preferences so the builder
+      // can include them in the prompt (the LLM will understand impacts come later)
+      return buildOutcomesBaseRequest(input.plan, input.preferences);
+    }
+
+    protected validateInput(input: OutcomesBaseInput): void {
+        super.validateInput(input);
+        if (!input?.plan) throw new Error("Outcomes base sub-step requires a situation plan");
+        if (!input?.preferences) throw new Error("Outcomes base sub-step requires preferences");
+      }
+    
+      // Keep it consistent with your pattern: normalize then validate with the base array schema
+      protected async postProcess(result: GenerateBaseOutcomes): Promise<GenerateBaseOutcomes> {
+        // Validate the full wrapper object
+        return generateBaseOutcomesSchema.parse(result);
+      }
+
+        // Optional: tiny summary for your logger
+  protected getResultSummary(result: GenerateBaseOutcomes) {
+    const outcomes = result.outcomes;
+    const weights = outcomes.map(o => `${o.weight}%`).join(", ");
+    const sum = outcomes.reduce((s, o) => s + o.weight, 0);
+    return { count: outcomes.length, weights, sum };
+  }
+}

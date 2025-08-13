@@ -1,7 +1,7 @@
 import { ResponsesGenerationStep } from "../base";
+import type { LLMResponseRequest } from "../../types";
 import { buildPreferencesRequest } from "../../llm/configs/preferences-config";
 import type { PlanningStepOutput, GenerationAnalysis } from "../../types";
-import type { LLMPesposeRequest } from "../../types";
 import { situationPreferencesSchema, type SituationPreferences } from "~/lib/schemas/situations/preferences";
 
 type PreferencesStepInput = {
@@ -10,7 +10,7 @@ type PreferencesStepInput = {
 };
 
 export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInput, SituationPreferences> {
-  protected buildRequest(input: PreferencesStepInput): LLMPesposeRequest<SituationPreferences> {
+  protected buildRequest(input: PreferencesStepInput): LLMResponseRequest<SituationPreferences> {
     return buildPreferencesRequest(input.plan, input.analysis);
   }
 

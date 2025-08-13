@@ -1,39 +1,35 @@
 import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../base";
-import { NarrativesSubStep } from "./substeps/narratives-substep";
-import { ImpactMatrixSubStep } from "./substeps/impact-matrix-substep";
-import { AssemblySubStep } from "./substeps/assembly-substep";
-import type { OutcomesStepInput, OutcomesStepOutput } from "../../types";
+import { OutcomesBaseSubstep } from "./substeps/outcomes-base-substep";
+import { OutcomesImpactsSubstep } from "./substeps/outcomes-impact-substep";
+import { GenerateOutcomes } from "~/lib/schemas/generate";
+import type { OutcomesStepInput } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // OUTCOMES STEP IMPLEMENTATION (WITH ENHANCED VALIDATION)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Step 3: Generate situation outcomes using unified 3-phase approach
- * 
- * Combines enhanced validation with clean architecture.
- * This step orchestrates the complete outcomes generation process:
- * 1. Generate outcome narratives (story-focused with weight validation)
- * 2. Generate outcomes impact matrix (balance-focused with structure validation)
- * 3. Assemble final outcomes
+ * Step 3: Generate situation outcomes using 2-phase approach
  */
 export class OutcomesStep {
   private logger: GenerationLogger;
-  private narrativesSubStep: NarrativesSubStep;
-  private impactMatrixSubStep: ImpactMatrixSubStep;
-  private assemblySubStep: AssemblySubStep;
+  private outcomesBaseSubstep: OutcomesBaseSubstep;
+  private outcomesImpactsSubstep: OutcomesImpactsSubstep;
+
 
   constructor(dependencies: StepDependencies) {
     this.logger = dependencies.logger || new ConsoleGenerationLogger();
-    this.narrativesSubStep = new NarrativesSubStep(dependencies);
-    this.impactMatrixSubStep = new ImpactMatrixSubStep(dependencies);
-    this.assemblySubStep = new AssemblySubStep();
+    // this.narrativesSubStep = new NarrativesSubStep(dependencies);
+    // this.impactMatrixSubStep = new ImpactMatrixSubStep(dependencies);
+    // this.assemblySubStep = new AssemblySubStep();
+    this.outcomesBaseSubstep = new OutcomesBaseSubstep(dependencies);
+    this.outcomesImpactsSubstep = new OutcomesImpactsSubstep(dependencies);
   }
 
   /**
    * Execute the complete unified outcomes generation process
    */
-  async execute(input: OutcomesStepInput): Promise<OutcomesStepOutput> {
+  async execute(input: OutcomesStepInput): Promise<GenerateOutcomes> {
     const stepName = "Outcomes Generation";
     
     try {
@@ -43,37 +39,16 @@ export class OutcomesStep {
       console.log("🎯 Step 3: Generating outcomes using unified 3-phase approach...");
 
       // Phase 1: Generate outcome narratives with weight validation
-      console.log("🎯 Step 3a: Creating outcome narratives...");
-      const narratives = await this.narrativesSubStep.execute({
-        plan: input.plan,
-        preferences: input.preferences,
-      });
-
-      this.validateNarratives(narratives);
-      console.log(`✅ Generated ${narratives.outcomes.length} narratives with validated weights`);
+      console.log("🎯 Step 3a: Creating base outcomes...");
+      const baseOutcomes = await this.outcomesBaseSubstep.execute({ plan: input.plan, preferences: input.preferences });
 
       // Phase 2: Generate outcomes impact matrix with structure validation  
-      console.log("🎯 Step 3b: Planning outcomes impact matrix...");
-      const impactMatrix = await this.impactMatrixSubStep.execute({
-        plan: input.plan,
-        preferences: input.preferences,
-        narratives: narratives.outcomes,
-      });
+      console.log("🎯 Step 3b: Full outcomes with impacts...");
+      const fullOutcomes = await this.outcomesImpactsSubstep.execute({ plan: input.plan, preferences: input.preferences, baseOutcomes });
 
-      this.validateImpactMatrix(impactMatrix);
-      console.log(`✅ Generated impacts for ${impactMatrix.entityImpacts.length} entities`);
 
-      // Phase 3: Assemble final outcomes
-      console.log("🎯 Step 3c: Assembling final outcomes...");
-      const finalOutcomes = await this.assemblySubStep.execute({
-        plan: input.plan,
-        narratives,
-        impactMatrix,
-      });
-
-      const result = finalOutcomes;
-      this.logger.logStepSuccess(stepName, this.getResultSummary(result));
-      return result;
+      this.logger.logStepSuccess(stepName, this.getResultSummary(fullOutcomes));
+      return fullOutcomes;
       
     } catch (error) {
       this.logger.logStepError(stepName, error as Error);
@@ -95,34 +70,6 @@ export class OutcomesStep {
   }
 
   /**
-   * Validate narratives weight distribution
-   */
-  private validateNarratives(narratives: any): void {
-    const weights = narratives.outcomes.map((o: any) => o.weight);
-    const total = weights.reduce((sum: number, w: number) => sum + w, 0);
-    
-    if (total !== 100) {
-      throw new Error(`Weight validation failed: Total weight is ${total}, must be 100`);
-    }
-  }
-
-  /**
-   * Validate impact matrix structure
-   */
-  private validateImpactMatrix(impactMatrix: any): void {
-    if (!impactMatrix.entityImpacts?.length) {
-      throw new Error("Impact matrix must have entity impacts");
-    }
-    
-    // Check structure matches what assembler expects
-    for (const entity of impactMatrix.entityImpacts) {
-      if (!entity.outcomeImpacts?.length) {
-        throw new Error(`Entity ${entity.entityId} missing outcomeImpacts array`);
-      }
-    }
-  }
-
-  /**
    * Get context for logging
    */
   private getLogContext(input: OutcomesStepInput): any {
@@ -138,7 +85,7 @@ export class OutcomesStep {
   /**
    * Get result summary for logging
    */
-  private getResultSummary(result: OutcomesStepOutput): any {
+  private getResultSummary(result: GenerateOutcomes): any {
     const weights = result.outcomes.map((o: any) => `${o.weight}%`).join(", ");
     const totalWeight = result.outcomes.reduce((sum: number, o: any) => sum + o.weight, 0);
     

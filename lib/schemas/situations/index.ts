@@ -2,6 +2,7 @@
 export * from "~/lib/schemas/situations/triggers";
 export * from "~/lib/schemas/situations/preferences";
 export * from "~/lib/schemas/situations/content";
+export * from "~/lib/schemas/situations/outcomes";
 
 // Main situation data schema with cross-validation
 import { z } from "zod";

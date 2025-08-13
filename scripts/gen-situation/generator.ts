@@ -57,11 +57,14 @@ export class SituationGenerator {
       console.log("PREFERENCES CREATED: ", preferences);
 
       // Step 3: Generate situation outcomes (enhanced)
-      console.log(`🎲 [${id}] Step 3: Enhanced Outcomes...`);
+      console.log(`🎲 [${id}] Step 3: Outcomes...`);
       const outcomes = await this.outcomesStep.execute({
         plan,
         preferences,
       });
+
+      console.log("OUTCOMES CREATED: ", outcomes);
+
 
       // Step 4: Generate press exchanges
       console.log(`🎤 [${id}] Step 4: Exchanges...`);
@@ -102,7 +105,7 @@ export class SituationGenerator {
       const endTime = new Date();
       const duration = endTime.getTime() - startTime.getTime();
 
-      console.log(`✅ [${id}] Enhanced generation pipeline completed! (${duration}ms)`);
+      console.log(`✅ [${id}] Generation pipeline completed! (${duration}ms)`);
       // console.log(`📁 [${id}] Files written to: ${fileResult.directoryPath}`);
 
       return {

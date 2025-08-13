@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMPesposeRequest } from "../../types";
+import type { LLMResponseRequest } from "../../types";
 import type { GenerationAnalysis } from "../../types";
 import type { GenerateSituationPlan } from "~/lib/schemas/generate";
 import { baseSituationPreferencesSchema, type SituationPreferences } from "~/lib/schemas/situations/preferences";
@@ -34,7 +34,7 @@ ${GENERATION_GUIDE}
 export function buildPreferencesRequest(
     plan: GenerateSituationPlan,
     analysis: GenerationAnalysis
-  ): LLMPesposeRequest<SituationPreferences> {
+  ): LLMResponseRequest<SituationPreferences> {
     const prompt = [
       `SituationTitle: ${plan.title}`,
       `SituationType: ${plan.type}`,
@@ -48,7 +48,6 @@ export function buildPreferencesRequest(
       `- Only one cabinet member may include authorizedContent if they plausibly have confidential insight on THIS situation.`,
     ].join("\n");
   
-    // Use the same core schema for generation (no separate gen schema).
     const jsonSchema = zodToJsonSchema(baseSituationPreferencesSchema, {
       target: "jsonSchema7",
       $refStrategy: "none",
