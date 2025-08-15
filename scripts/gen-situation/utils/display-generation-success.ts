@@ -1,5 +1,5 @@
-import { GenerationResult } from "../types";
-import { AnswerType } from "~/types";
+import type { GenerationResult } from "../types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 
 /**
  * Display the generation results in a clean, formatted way
@@ -9,135 +9,80 @@ export function displayGenerationSuccess(result: GenerationResult): void {
     return;
   }
 
+  const situation = result.situation;
+
   console.log("\n✅ Complete Situation Generated!");
   console.log("==================================================");
 
-  // ═══ SITUATION PLAN ═══
-  console.log("📋 SITUATION PLAN");
+  // ═══ SITUATION DETAILS ═══
+  console.log("📋 SITUATION");
   console.log("──────────────────");
-  console.log(`📋 Title: ${result.situation.plan.title}`);
-  console.log(`🏷️  Type: ${result.situation.plan.type}`);
-  console.log(`📖 Description: ${result.situation.plan.description}`);
-  console.log(`🎯 Reasoning: ${result.situation.plan.reasoning}`);
-  console.log(`📦 Involved Entities:`);
-  console.log(
-    `   Cabinet: ${result.situation.plan.involvedEntities.cabinetMembers.join(
-      ", "
-    )}`
-  );
-  console.log(
-    `   Subgroups: ${result.situation.plan.involvedEntities.subgroups.join(
-      ", "
-    )}`
-  );
-  console.log(
-    `   Publications: ${result.situation.plan.involvedEntities.publications.join(
-      ", "
-    )}`
-  );
+  console.log(`📋 Title: ${situation.title}`);
+  console.log(`🏷️  Type: ${situation.type}`);
+  console.log(`📖 Description: ${situation.description}`);
+  console.log(`🔑 Static Key: ${situation.trigger.staticKey}`);
 
   // ═══ ENTITY PREFERENCES ═══
-  if (result.situation.preferences) {
-    console.log("\n🎯 ENTITY PREFERENCES");
-    console.log("─────────────────────");
+  console.log("\n🎯 ENTITY PREFERENCES");
+  console.log("─────────────────────");
+  
+  // President preference
+  console.log(`👔 President: ${situation.content.preferences.president.answerType}`);
+  console.log(`   Rationale: ${situation.content.preferences.president.rationale}`);
 
-    // President preference
-    console.log(
-      `👔 President: ${result.situation.preferences.presidentPreference.answerType}`
-    );
-    console.log(
-      `   Rationale: ${result.situation.preferences.presidentPreference.rationale}`
-    );
-
-    // Cabinet preferences
-    if (result.situation.preferences.cabinetPreferences.length > 0) {
-      console.log(`🏛️  Cabinet Members:`);
-      result.situation.preferences.cabinetPreferences.forEach((pref) => {
-        const authorizedIndicator = pref.hasAuthorizedContent ? " 🔒" : "";
-        console.log(
-          `   ${pref.member}: ${pref.answerType}${authorizedIndicator}`
-        );
-        console.log(`     Rationale: ${pref.rationale}`);
-      });
-    }
+  // Cabinet preferences
+  if (situation.content.preferences.cabinet) {
+    console.log(`🏛️  Cabinet Members:`);
+    Object.entries(situation.content.preferences.cabinet).forEach(([member, pref]) => {
+      const authorizedIndicator = pref.authorizedContent ? " 🔒" : "";
+      console.log(`   ${member}: ${pref.preference.answerType}${authorizedIndicator}`);
+      console.log(`     Rationale: ${pref.preference.rationale}`);
+    });
   }
 
   // ═══ SITUATION OUTCOMES ═══
-  if (result.situation.outcomes) {
-    console.log("\n🎲 SITUATION OUTCOMES");
-    console.log("─────────────────────");
+  console.log("\n🎲 SITUATION OUTCOMES");
+  console.log("─────────────────────");
 
-    result.situation.outcomes.outcomes.forEach((outcome, index) => {
-      console.log(`${index + 1}. ${outcome.title} (${outcome.weight}%)`);
-      console.log(`   ${outcome.description}`);
+  situation.content.outcomes.forEach((outcome, index) => {
+    console.log(`${index + 1}. ${outcome.title} (${outcome.weight}%)`);
+    console.log(`   ${outcome.description}`);
 
-      // Show impacts (using new structure)
-      const impacts: string[] = [];
-      if ((outcome as any).consequences?.cabinet?.length > 0) {
-        (outcome as any).consequences.cabinet.forEach((impact: any) => {
-          const sign = impact.impact.startsWith("-") ? "" : "+";
-          impacts.push(`${impact.member}: ${sign}${impact.impact}`);
-        });
-      }
-      if ((outcome as any).consequences?.subgroups?.length > 0) {
-        (outcome as any).consequences.subgroups.forEach((impact: any) => {
-          const sign = impact.impact.startsWith("-") ? "" : "+";
-          impacts.push(`${impact.group}: ${sign}${impact.impact}`);
-        });
-      }
-      if (impacts.length > 0) {
-        console.log(`   Impacts: ${impacts.join(", ")}`);
-      }
-      console.log("");
-    });
-  }
+    // Show impacts
+    const impacts: string[] = [];
+    if (outcome.consequences.approvalChanges.cabinet) {
+      Object.entries(outcome.consequences.approvalChanges.cabinet).forEach(([member, weight]) => {
+        const sign = weight.toString().startsWith("-") ? "" : "+";
+        impacts.push(`${member}: ${sign}${weight}`);
+      });
+    }
+    if (outcome.consequences.approvalChanges.subgroups) {
+      Object.entries(outcome.consequences.approvalChanges.subgroups).forEach(([group, weight]) => {
+        const sign = weight.toString().startsWith("-") ? "" : "+";
+        impacts.push(`${group}: ${sign}${weight}`);
+      });
+    }
+    if (impacts.length > 0) {
+      console.log(`   Impacts: ${impacts.join(", ")}`);
+    }
+    console.log("");
+  });
 
   // ═══ PRESS EXCHANGES ═══
-  if (result.situation.exchanges) {
-    console.log("\n🎤 PRESS EXCHANGES");
-    console.log("─────────────────");
+  console.log("\n🎤 PRESS EXCHANGES");
+  console.log("─────────────────");
 
-    result.situation.exchanges.exchanges.forEach((exchange: any, index: number) => {
-      console.log(`${index + 1}. ${(exchange.publicationId || exchange.publication)?.toUpperCase()}`);
-      console.log(`   Editorial Angle: ${exchange.editorialAngle}`);
-      console.log(
-        `   Structure: 1 root → 2 secondary → 2 tertiary (5 total questions)`
-      );
-
-      // Show authorized answers if any (check all possible answer fields)
-      const allAnswers = [
-        exchange.rootAnswer1,
-        exchange.rootAnswer2,
-        exchange.rootAnswer3,
-        exchange.rootAnswer4,
-        exchange.secondary1Answer1,
-        exchange.secondary1Answer2,
-        exchange.secondary1Answer3,
-        exchange.secondary1Answer4,
-        exchange.secondary2Answer1,
-        exchange.secondary2Answer2,
-        exchange.secondary2Answer3,
-        exchange.secondary2Answer4,
-        exchange.tertiary1Answer1,
-        exchange.tertiary1Answer2,
-        exchange.tertiary1Answer3,
-        exchange.tertiary1Answer4,
-        exchange.tertiary2Answer1,
-        exchange.tertiary2Answer2,
-        exchange.tertiary2Answer3,
-        exchange.tertiary2Answer4,
-      ].filter(Boolean); // Filter out undefined answers
-
-      const hasAuthorized = allAnswers.some(
-        (answer: any) => answer?.answerType === AnswerType.Authorized
-      );
-
-      if (hasAuthorized) {
-        console.log(`   🔒 Contains authorized answers`);
-      }
-      console.log("");
-    });
-  }
+  situation.exchanges.forEach((exchange, index) => {
+    console.log(`${index + 1}. ${exchange.publication.toUpperCase()}`);
+    console.log(`   Structure: 1 root → 2 secondary → 2 tertiary (5 total questions)`);
+    
+    // Check for authorized answers
+    const hasAuthorized = checkForAuthorizedAnswers(exchange.content);
+    if (hasAuthorized) {
+      console.log(`   🔒 Contains authorized answers`);
+    }
+    console.log("");
+  });
 
   // ═══ GENERATED FILES ═══
   if (result.files) {
@@ -157,5 +102,25 @@ export function displayGenerationSuccess(result: GenerationResult): void {
     console.log(`   Requests: ${result.usage.requests}`);
     console.log(`   Tokens: ${result.usage.totalTokens}`);
     console.log(`   Cost: $${result.usage.totalCost.toFixed(4)}`);
+  }
+}
+
+/**
+ * Helper function to check if exchange content has authorized answers
+ */
+function checkForAuthorizedAnswers(content: any): boolean {
+  try {
+    // Check all answers in all questions for authorized type
+    const allAnswers = [
+      ...(content.rootQuestion?.answers || []),
+      ...(content.secondaryQuestions?.flatMap((q: any) => q.answers || []) || []),
+      ...(content.tertiaryQuestions?.flatMap((q: any) => q.answers || []) || [])
+    ];
+    
+    return allAnswers.some((answer: any) => 
+      answer?.type === "authorized" || answer?.answerType === "authorized"
+    );
+  } catch (error) {
+    return false;
   }
 }

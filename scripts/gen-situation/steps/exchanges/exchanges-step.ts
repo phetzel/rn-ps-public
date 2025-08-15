@@ -1,128 +1,103 @@
 import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../base";
-import { ExchangePublicationsSubStep } from "./substeps/exchange-publications-substep";
-import { ExchangeQuestionsSubStep } from "./substeps/exchange-questions-substep";
-import { ExchangeConsequencesSubStep } from "./substeps/exchange-consequences-substep";
-import { ExchangeAssemblySubStep } from "./substeps/exchange-assembly-substep";
-import type { ExchangesStepInput, ExchangesStepOutput } from "../../types";
+import { ExchangesPlanSubstep } from "./substeps/exchanges-plan-substep";
+import { ExchangeBaseSubstep } from "./substeps/exchange-base-substep";
+import { ExchangeFullSubstep } from "./substeps/exchange-full-substep";
+import type { ExchangesStepOutput } from "~/lib/schemas/generate";
+import { validatedExchangeDataSchema, type ValidatedExchangeData } from "~/lib/schemas/exchanges";
+import type { ExchangesStepInput } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// EXCHANGES STEP IMPLEMENTATION
+// EXCHANGES STEP IMPLEMENTATION (SIMPLIFIED 2-PHASE APPROACH)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Step 4: Generate press exchanges using simplified publication-aware approach
+ * Step 4: Generate press exchanges using simplified 2-phase approach
  * 
- * This step orchestrates the complete exchanges generation process:
- * 1. Plan publication editorial angles (simplified)
- * 2. Generate publication-aware questions for each publication
- * 3. Generate consequences for each question with strict balance rules
- * 4. Final assembly and validation (nested structure)
- * 
- * Each phase is handled by dedicated sub-steps following exchange-* naming convention.
- * Enhanced with content guidelines and better publication awareness throughout.
+ * Phase 1: Plan publication editorial angles and authorized content
+ * Phase 2: Generate complete exchanges content with consequences
  */
 export class ExchangesStep {
   private logger: GenerationLogger;
-  private exchangePublicationsSubStep: ExchangePublicationsSubStep;
-  private exchangeQuestionsSubStep: ExchangeQuestionsSubStep;
-  private exchangeConsequencesSubStep: ExchangeConsequencesSubStep;
-  private exchangeAssemblySubStep: ExchangeAssemblySubStep;
+  private exchangesPlanSubstep: ExchangesPlanSubstep;
+  private exchangeBaseSubstep: ExchangeBaseSubstep;
+  private exchangeFullSubstep: ExchangeFullSubstep;
 
   constructor(dependencies: StepDependencies) {
     this.logger = dependencies.logger || new ConsoleGenerationLogger();
-    this.exchangePublicationsSubStep = new ExchangePublicationsSubStep(dependencies);
-    this.exchangeQuestionsSubStep = new ExchangeQuestionsSubStep(dependencies);
-    this.exchangeConsequencesSubStep = new ExchangeConsequencesSubStep(dependencies);
-    this.exchangeAssemblySubStep = new ExchangeAssemblySubStep();
+    this.exchangesPlanSubstep = new ExchangesPlanSubstep(dependencies);
+    this.exchangeBaseSubstep = new ExchangeBaseSubstep(dependencies);
+    this.exchangeFullSubstep = new ExchangeFullSubstep(dependencies);
   }
 
   /**
    * Execute the complete exchanges generation process
    */
-  async execute(input: ExchangesStepInput): Promise<any> {
+  async execute(input: ExchangesStepInput): Promise<ExchangesStepOutput> {
     const stepName = "Exchanges Generation";
     
     try {
       this.logger.logStepStart(stepName, this.getLogContext(input));
       this.validateInput(input);
       
-      console.log(
-        "🎯 Step 4: Generating press exchanges (publication-by-publication approach)..."
-      );
+      console.log("🎯 Step 4: Generating exchanges using 3-phase approach...");
 
       // Phase 1: Plan publication editorial angles
-      console.log("🎯 Step 4a: Planning publication editorial angles...");
-      const exchangePlan = await this.exchangePublicationsSubStep.execute(input);
+      console.log("🎯 Step 4a: Planning publication exchanges...");
+      const exchangesPlanResponse = await this.exchangesPlanSubstep.execute({
+        plan: input.plan,
+        preferences: input.preferences,
+        outcomes: input.outcomes
+      });
 
-      console.log(
-        `✅ Planned ${exchangePlan.publicationPlans.length} exchanges`
-      );
-      exchangePlan.publicationPlans.forEach((pubPlan, index) => {
-        const authorizedIndicator = pubPlan.willHaveAuthorizedAnswer ? " 🔒" : "";
+      // Log the plan results
+      const exchangesPlan = exchangesPlanResponse.exchangePlans;
+      console.log(`✅ Planned ${exchangesPlan.length} exchanges`);
+      exchangesPlan.forEach((planItem, index) => {
+        const authorizedIndicator = planItem.willHaveAuthorizedAnswer ? " 🔒" : "";
         console.log(
-          `   ${index + 1}. ${pubPlan.publication}${authorizedIndicator}: ${
-            pubPlan.editorialAngle
-          }`
+          `   ${index + 1}. ${planItem.publication}${authorizedIndicator}: ${planItem.editorialAngle}`
         );
       });
 
-      // Phase 2: Generate complete exchanges publication by publication
-      console.log("🎯 Step 4b: Generating exchanges for each publication...");
-      const completedExchanges = [];
+      // Phase 2: Generate full exchanges content
+      console.log("🎯 Step 4b: Generating base exchanges content...");
+      const validatedExchanges: ValidatedExchangeData[] = [];
 
-              for (let index = 0; index < exchangePlan.publicationPlans.length; index++) {
-          const publicationPlan = exchangePlan.publicationPlans[index];
-        console.log(
-          `🎯 Step 4b.${index + 1}: Processing ${publicationPlan.publication}...`
-        );
-
-        // Step 4b.1: Generate publication-aware question structure
-        console.log(`   🔄 Generating publication-aware question structure...`);
-        const publicationQuestions = await this.exchangeQuestionsSubStep.execute({
-          publicationPlan,
+      exchangesPlan.forEach(async (planItem) => {
+        const baseExchangeResponse = await this.exchangeBaseSubstep.execute({
           plan: input.plan,
           preferences: input.preferences,
           outcomes: input.outcomes,
+          publicationPlan: planItem
         });
 
-        // Step 4b.2: Generate consequences for each question
-        console.log(
-          `   🔄 Generating consequences for questions...`
-        );
-        const questionsWithConsequences = await this.exchangeConsequencesSubStep.execute({
-          publicationQuestions,
-          publicationPlan,
+        const fullExchangeResponse = await this.exchangeFullSubstep.execute({
           plan: input.plan,
           preferences: input.preferences,
           outcomes: input.outcomes,
+          publicationPlan: planItem,
+          baseExchange: baseExchangeResponse
         });
 
-        // Step 4b.3: Final assembly and validation
-        const exchange = this.exchangeAssemblySubStep.execute({
-          questionsWithConsequences,
-          publicationPlan,
+        const validatedExchange = validatedExchangeDataSchema.parse({
+          content: fullExchangeResponse,
+          publication: planItem.publication
         });
 
-        completedExchanges.push(exchange);
-        console.log(`✅ Completed exchange for ${publicationPlan.publication}`);
-      }
+        validatedExchanges.push(validatedExchange);
+        console.log(`✅ Completed exchange for ${planItem.publication}`);
+      });
 
-      console.log(`✅ Generated ${completedExchanges.length} complete exchanges`);
 
-      const result = {
-        exchanges: completedExchanges,
-      };
-      
-      // this.logger.logStepSuccess(stepName, this.getResultSummary(result));
-      return result;
+
+      this.logger.logStepSuccess(stepName, this.getResultSummary(validatedExchanges));
+      return validatedExchanges;
       
     } catch (error) {
       this.logger.logStepError(stepName, error as Error);
       throw error;
     }
   }
-
-
 
   /**
    * Validate input
@@ -139,6 +114,10 @@ export class ExchangesStep {
     if (!input.outcomes) {
       throw new Error("Exchanges step requires outcomes");
     }
+
+    if (!input.plan.involvedEntities?.publications?.length) {
+      throw new Error("Exchanges step requires publications in the plan");
+    }
   }
 
   /**
@@ -148,7 +127,9 @@ export class ExchangesStep {
     return {
       situationTitle: input.plan.title,
       situationType: input.plan.type,
-      outcomesCount: input.outcomes.outcomes.length,
+      publicationsCount: input.plan.involvedEntities.publications.length,
+      outcomesCount: input.outcomes.outcomes?.length || 0,
+      step: "simplified-exchanges",
     };
   }
 
@@ -157,7 +138,13 @@ export class ExchangesStep {
    */
   private getResultSummary(result: ExchangesStepOutput): any {
     return {
-      exchangesCount: result.exchanges.length,
+      exchangesCount: result.length,
+      publicationsProcessed: result.map(e => e.publication).join(", "),
+      withAuthorized: result.filter(e => 
+        e.content.rootQuestion.answers?.some((a: any) => a.authorizedCabinetMember) ||
+        e.content.secondaryQuestions.some((q: any) => q.answers?.some((a: any) => a.authorizedCabinetMember)) ||
+        e.content.tertiaryQuestions.some((q: any) => q.answers?.some((a: any) => a.authorizedCabinetMember))
+      ).length,
     };
   }
 }

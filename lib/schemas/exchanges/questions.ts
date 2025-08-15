@@ -4,16 +4,18 @@ import { idSchema, textLengthSchema } from "~/lib/schemas/common";
 import { exchangeImpactsSchema } from "~/lib/schemas/exchanges/impacts";
 import { AnswerType, CabinetStaticId, ExchangeImpactWeight } from "~/types";
 
-export const answerSchema = z
-  .object({
-    id: idSchema,
-    text: textLengthSchema.answerText,
-    type: z.nativeEnum(AnswerType),
-    authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
-    impacts: exchangeImpactsSchema,
-    outcomeModifiers: z.record(z.string(), z.number()),
-    followUpId: z.string().optional(),
-  })
+export const baseAnswerSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.answerText,
+  type: z.nativeEnum(AnswerType),
+  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
+  followUpId: z.string().optional(),
+});
+
+export const answerSchema = baseAnswerSchema.extend({
+  outcomeModifiers: z.record(z.string(), z.number()),
+  impacts: exchangeImpactsSchema,
+})
   .refine(
     (data) => {
       const modifierSum = Object.values(data.outcomeModifiers).reduce(
@@ -41,7 +43,7 @@ export const answerSchema = z
     }
   );
 
-// Base question schema with all necessary validations
+// Question schema
 export const questionSchema = z
   .object({
     id: idSchema,

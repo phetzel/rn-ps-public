@@ -36,15 +36,17 @@ export class OutcomesStep {
       this.logger.logStepStart(stepName, this.getLogContext(input));
       this.validateInput(input);
       
-      console.log("🎯 Step 3: Generating outcomes using unified 3-phase approach...");
+      console.log("🎯 Step 3: Generating outcomes using 2-phase approach...");
 
       // Phase 1: Generate outcome narratives with weight validation
       console.log("🎯 Step 3a: Creating base outcomes...");
       const baseOutcomes = await this.outcomesBaseSubstep.execute({ plan: input.plan, preferences: input.preferences });
+      console.log("🎯 Step 3a: Base outcomes:", baseOutcomes);
 
       // Phase 2: Generate outcomes impact matrix with structure validation  
       console.log("🎯 Step 3b: Full outcomes with impacts...");
       const fullOutcomes = await this.outcomesImpactsSubstep.execute({ plan: input.plan, preferences: input.preferences, baseOutcomes });
+      console.log("🎯 Step 3b: Full outcomes:", fullOutcomes);
 
 
       this.logger.logStepSuccess(stepName, this.getResultSummary(fullOutcomes));

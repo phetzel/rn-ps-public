@@ -22,6 +22,5 @@ export type {
   PreferencesStepOutput,
   OutcomesStepInput, 
   OutcomesStepOutput,
-  ExchangesStepInput, 
-  ExchangesStepOutput
+  ExchangesStepInput,
 } from "../types";

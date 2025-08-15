@@ -1,8 +1,8 @@
 import { LLMClient } from "./llm/client";
 import { generationAnalysis } from "./generation-analysis";
 import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./steps";
-import { writeSituationFiles } from "./utils/file-writer";
-import { validateAndConvertToGameSchema } from "./schemas/conversion";
+import { convertToSituation } from "./utils/situation-converter";
+import { writeSituationFiles } from "./utils/situation-file-writer";
 import type {
   GenerationStage,
   GenerationResult,
@@ -74,31 +74,29 @@ export class SituationGenerator {
         outcomes,
       });
 
-      // // Step 5: Convert to game schema
-      // console.log(`🔄 [${id}] Step 5: Converting to game schema...`);
-      // const conversionResult = validateAndConvertToGameSchema(
-      //   plan,
-      //   preferences,
-      //   outcomes,
-      //   exchanges
-      // );
+      console.log("EXCHANGES CREATED: ", exchanges);
 
-      // if (!conversionResult.success) {
-      //   throw new Error(`Schema conversion failed: ${conversionResult.errors?.join(", ")}`);
-      // }
+      // Step 5: Convert to complete situation and validate
+      console.log(`🔄 [${id}] Step 5: Converting to complete situation...`);
+      const conversionResult = convertToSituation(plan, preferences, outcomes, exchanges);
 
-      // // Step 6: Write files to disk
-      // console.log(`💾 [${id}] Step 6: Writing files...`);
-      // const fileResult = await writeSituationFiles(
-      //   conversionResult.data!.situationData,
-      //   conversionResult.data!.outcomes,
-      //   conversionResult.data!.preferences,
-      //   conversionResult.data!.exchanges
-      // );
+      console.log("CONVERSION RESULT: ", conversionResult);
+      
+      if (!conversionResult.success) {
+        const errorDetails = conversionResult.errors?.join(", ") || "Unknown validation error";
+        console.error(`❌ [${id}] Validation errors:`, conversionResult.errors);
+        throw new Error(`Situation validation failed: ${errorDetails}`);
+      }
 
-      // if (!fileResult.success) {
-      //   throw new Error(`File writing failed: ${fileResult.error}`);
-      // }
+      const completeSituation = conversionResult.situation!;
+
+      // Step 6: Write files to disk
+      console.log(`💾 [${id}] Step 6: Writing files...`);
+      const fileResult = await writeSituationFiles(completeSituation);
+
+      if (!fileResult.success) {
+        throw new Error(`File writing failed: ${fileResult.error}`);
+      }
 
       // Calculate total usage and timing
       const usage = this.llmClient.getUsageStats();
@@ -106,21 +104,14 @@ export class SituationGenerator {
       const duration = endTime.getTime() - startTime.getTime();
 
       console.log(`✅ [${id}] Generation pipeline completed! (${duration}ms)`);
-      // console.log(`📁 [${id}] Files written to: ${fileResult.directoryPath}`);
+      console.log(`📁 [${id}] Files written to: ${fileResult.directoryPath}`);
 
       return {
         success: true,
-        situation: {
-          plan,
-          preferences,
-          outcomes,
-          exchanges,
-        },
+        situation: completeSituation,
         files: {
-          // directoryPath: fileResult.directoryPath,
-          // files: fileResult.files,
-          directoryPath: "",
-          files: [],
+          directoryPath: fileResult.directoryPath,
+          files: fileResult.files,
         },
         usage: {
           requests: usage.requestCount,

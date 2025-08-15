@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { LLMClient } from "./llm/client";
 import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, SubgroupStaticId } from "~/types";
-import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes } from "~/lib/schemas/generate";
+import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes, ExchangesStepOutput } from "~/lib/schemas/generate";
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -10,14 +10,10 @@ import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes } fr
 
 // Import schema-derived types for use in our own type definitions
 import type {
-  // ApiOutcomes,
-  ApiExchanges,
-  // OutcomeNarrative,
-  // OutcomesNarrativesResult,
-  // ImpactMatrixResult,
   ExchangePlan,
   PublicationExchange,
 } from "./schemas";
+import type { SituationDataType } from "~/lib/schemas/situations";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // GENERATOR TYPES
@@ -27,12 +23,7 @@ export type GenerationStage = 'analysis' | 'planning' | 'preferences' | 'outcome
 
 export interface GenerationResult {
   success: boolean;
-  situation?: {
-    plan: GenerateSituationPlan;
-    preferences?: GeneratePreferences;
-    outcomes?: GenerateOutcomes;
-    exchanges?: ApiExchanges;
-  };
+  situation?: SituationDataType;
   files?: {
     directoryPath: string;
     files: string[];
@@ -287,7 +278,6 @@ export interface ExchangesStepInput {
   preferences: PreferencesStepOutput;
   outcomes: GenerateOutcomes;
 }
-export type ExchangesStepOutput = ApiExchanges;
 
 // Exchange Planning Sub-step
 export interface ExchangePlanningSubStepInput {

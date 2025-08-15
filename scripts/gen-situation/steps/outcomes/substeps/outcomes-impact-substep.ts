@@ -42,6 +42,6 @@ export class OutcomesImpactsSubstep
 
 
   protected getResultSummary(result: GenerateOutcomes) {
-    return { count: result.outcomes.length, withFollowUps: result.outcomes.filter(o => !!o.followUpId).length };
+    return { count: result.outcomes.length, withConsequences: result.outcomes.filter(o => !!o.consequences).length };
   }
 }

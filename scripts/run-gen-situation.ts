@@ -3,7 +3,7 @@
 import path from "path";
 import { LLMClient } from "./gen-situation/llm/client";
 import { SituationGenerator } from "./gen-situation/generator";
-import { displayGenerationSuccess } from "./gen-situation/utils/display-generation-success";
+import { displayGenerationSuccess } from "./gen-situation/utils";
 
 /**
  * Main situation generation command

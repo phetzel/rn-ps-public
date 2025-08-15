@@ -1,12 +1,7 @@
 import { z } from "zod";
 import {
   textLengthRules,
-  llmAnswerTypeSchema,
-  fullAnswerTypeSchema,
   idSchema,
-  weightValidation,
-  entitySchemas,
-  validationPatterns,
 } from "./core";
 import { gameEntitySchemas } from "./game-enums";
 
@@ -102,107 +97,6 @@ export const apiPreferencesSchema = z
     }
   );
 
-// ───────────────────────────────────────────────────────────────────────────────
-// OUTCOMES GENERATION SCHEMAS (3-PHASE)
-// ───────────────────────────────────────────────────────────────────────────────
-
-// Phase 1: Outcome Narratives (story-focused, no entity impacts)
-export const outcomeNarrativeSchema = z.object({
-  id: idSchema.describe("Unique outcome identifier"),
-  title: z
-    .string()
-    .min(textLengthRules.outcomeTitle.min)
-    .max(textLengthRules.outcomeTitle.max)
-    .describe("Satirical outcome headline"),
-  description: z
-    .string()
-    .min(textLengthRules.outcomeDescription.min)
-    .max(textLengthRules.outcomeDescription.max)
-    .describe("Brief outcome narrative"),
-  weight: weightValidation.outcomeWeight.describe("Probability weight (10-70, must sum to 100)"),
-  thematicFocus: z
-    .string()
-    .min(textLengthRules.thematicFocus.min)
-    .max(textLengthRules.thematicFocus.max)
-    .describe("What aspect of the situation this outcome emphasizes"),
-});
-
-export const outcomesNarrativesResultSchema = z
-  .object({
-    outcomes: z
-      .array(outcomeNarrativeSchema)
-      .min(2)
-      .max(4)
-      .describe("2-4 outcome scenarios"),
-  })
-  .refine(
-    (data) => validationPatterns.weightsSum100(data.outcomes),
-    { message: "Outcome weights must sum to exactly 100" }
-  );
-
-// Phase 2: Impact Matrix (balance-focused)
-export const outcomeImpactSchema = z.object({
-  outcomeId: z.string().min(1).describe("Outcome identifier"),
-  impact: z.enum(["-15", "-10", "-5", "0", "5", "10", "15"]).describe("Impact value"),
-  rationale: z
-    .string()
-    .min(20)
-    .max(100)
-    .describe("Why this outcome affects this entity"),
-});
-
-export const entityImpactSchema = z.object({
-  entityId: z.string().min(1).describe("Entity identifier"),
-  outcomeImpacts: z
-    .array(outcomeImpactSchema)
-    .min(1)
-    .describe("Impact of each outcome on this entity"),
-});
-
-export const impactMatrixResultSchema = z.object({
-  entityImpacts: z
-    .array(entityImpactSchema)
-    .min(1)
-    .describe("Impact specifications for each entity"),
-});
-
-// Phase 3: Assembled Outcomes
-export const apiOutcomeSchema = z.object({
-  id: idSchema.describe("Unique outcome identifier"),
-  title: z
-    .string()
-    .min(textLengthRules.outcomeTitle.min)
-    .max(textLengthRules.outcomeTitle.max)
-    .describe("Satirical outcome headline"),
-  description: z
-    .string()
-    .min(textLengthRules.outcomeDescription.min)
-    .max(textLengthRules.outcomeDescription.max)
-    .describe("Brief outcome narrative"),
-  weight: weightValidation.outcomeWeight.describe("Probability weight"),
-  impactSummary: z
-    .string()
-    .min(40)
-    .max(120)
-    .describe("Summary of political impacts"),
-  entityImpacts: z
-    .array(entityImpactSchema)
-    .min(1)
-    .describe("Detailed entity impacts"),
-});
-
-export const apiOutcomesSchema = z
-  .object({
-    outcomes: z
-      .array(apiOutcomeSchema)
-      .min(2)
-      .max(4)
-      .describe("Final assembled outcomes"),
-  })
-  .refine(
-    (data) => validationPatterns.weightsSum100(data.outcomes),
-    { message: "Outcome weights must sum to exactly 100" }
-  );
 
 // ───────────────────────────────────────────────────────────────────────────────
 // EXCHANGE PLANNING SCHEMAS
@@ -382,11 +276,7 @@ export const apiExchangesSchema = z.object({
 
 export type SituationPlan = z.infer<typeof situationPlanSchema>;
 export type ApiPreferences = z.infer<typeof apiPreferencesSchema>;
-export type ApiOutcomes = z.infer<typeof apiOutcomesSchema>;
 export type ApiExchanges = z.infer<typeof apiExchangesSchema>;
-export type OutcomeNarrative = z.infer<typeof outcomeNarrativeSchema>;
-export type OutcomesNarrativesResult = z.infer<typeof outcomesNarrativesResultSchema>;
-export type ImpactMatrixResult = z.infer<typeof impactMatrixResultSchema>;
 export type ExchangePlan = z.infer<typeof exchangePlanSchema>;
 export type PublicationPlan = z.infer<typeof publicationPlanSchema>;
 export type QuestionConsequences = z.infer<typeof questionConsequencesSchema>;
@@ -394,25 +284,3 @@ export type QuestionGenerationResult = z.infer<typeof questionDataSchema>;
 export type PublicationExchange = z.infer<typeof publicationExchangeSchema>;
 export type AnswerOption = z.infer<typeof answerOptionSchema>;
 
-// ───────────────────────────────────────────────────────────────────────────────
-// ORGANIZED SCHEMA COLLECTIONS
-// ───────────────────────────────────────────────────────────────────────────────
-
-export const LLMSchemas = {
-  situation: {
-    planning: situationPlanSchema,
-    preferences: apiPreferencesSchema,
-  },
-  outcomes: {
-    narratives: outcomesNarrativesResultSchema,
-    impactMatrix: impactMatrixResultSchema,
-    assembled: apiOutcomesSchema,
-  },
-  exchanges: {
-    planning: exchangePlanSchema,
-    questions: questionDataSchema,
-    publicationExchange: publicationExchangeSchema,
-    consequences: questionConsequencesSchema,
-    complete: apiExchangesSchema,
-  },
-} as const;
