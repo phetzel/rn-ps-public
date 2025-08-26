@@ -6,6 +6,12 @@ import {
   PublicationStaticId,
   AnswerType,
 } from "~/types";
+import type { 
+  SituationDataType, 
+  CabinetPreference,
+  SituationOutcome 
+} from "~/lib/schemas/situations";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // GENERATION-SPECIFIC DISTRIBUTION ANALYSIS
@@ -36,14 +42,11 @@ export function generationAnalysis(): GenerationAnalysis {
   const situationsList: SituationOverview[] = [];
 
   // Initialize all situation types with 0 (excluding governance)
-  (Object.keys(SituationType) as Array<keyof typeof SituationType>).forEach(
-    (key) => {
-      const type = SituationType[key];
-      if (type !== SituationType.Governance) {
-        situationsByType[type] = 0;
-      }
+  Object.values(SituationType).forEach((type) => {
+    if (type !== SituationType.Governance) {
+      situationsByType[type] = 0;
     }
-  );
+  });
 
   // Initialize entity preference tracking
   const presidentPreferences: EntityPreferenceAnalysis = {
@@ -90,8 +93,8 @@ export function generationAnalysis(): GenerationAnalysis {
   Object.values(AnswerType).forEach((answerType) => {
     if (answerType !== AnswerType.Authorized) {
       presidentPreferences.preferenceTypes[answerType] = 0;
-      Object.values(CabinetStaticId).forEach((id) => {
-        cabinetPreferences[id].preferenceTypes[answerType] = 0;
+      Object.values(CabinetStaticId).forEach((cabinetId) => {
+        cabinetPreferences[cabinetId].preferenceTypes[answerType] = 0;
       });
     }
   });
@@ -102,20 +105,21 @@ export function generationAnalysis(): GenerationAnalysis {
     if (situation.type === SituationType.Governance) return;
 
     // Count situation types
-    const currentCount = situationsByType[situation.type as SituationType] ?? 0;
-    situationsByType[situation.type as SituationType] = currentCount + 1;
+    const situationType = situation.type as SituationType;
+    const currentCount = situationsByType[situationType] ?? 0;
+    situationsByType[situationType] = currentCount + 1;
 
     // Add to situations list
     situationsList.push({
       id: situation.trigger.staticKey,
       title: situation.title,
       description: situation.description,
-      type: situation.type as SituationType,
+      type: situationType,
     });
 
     // Analyze president preferences (excluding authorized)
     if (
-      situation.content.preferences.president &&
+      situation.content?.preferences?.president?.answerType &&
       situation.content.preferences.president.answerType !== AnswerType.Authorized
     ) {
       presidentPreferences.appearanceCount++;
@@ -124,16 +128,17 @@ export function generationAnalysis(): GenerationAnalysis {
     }
 
     // Analyze cabinet preferences (excluding authorized)
-    if (situation.content.preferences.cabinet) {
+    if (situation.content?.preferences?.cabinet) {
       Object.entries(situation.content.preferences.cabinet).forEach(
         ([cabinetId, pref]) => {
           const id = cabinetId as CabinetStaticId;
+          const cabinetPref = pref as CabinetPreference;
           if (
-            pref?.preference &&
-            pref.preference.answerType !== AnswerType.Authorized
+            cabinetPref?.preference?.answerType &&
+            cabinetPref.preference.answerType !== AnswerType.Authorized
           ) {
             cabinetPreferences[id].appearanceCount++;
-            const answerType = pref.preference.answerType as AnswerType;
+            const answerType = cabinetPref.preference.answerType as AnswerType;
             cabinetPreferences[id].preferenceTypes[answerType]++;
           }
         }
@@ -144,23 +149,21 @@ export function generationAnalysis(): GenerationAnalysis {
     const cabinetInSituation = new Set<CabinetStaticId>();
     const subgroupsInSituation = new Set<SubgroupStaticId>();
 
-    situation.content.outcomes.forEach((outcome) => {
+    situation.content?.outcomes?.forEach((outcome: SituationOutcome) => {
       // Check cabinet members in approval changes
-      if (outcome.consequences.approvalChanges.cabinet) {
+      if (outcome.consequences?.approvalChanges?.cabinet) {
         Object.keys(outcome.consequences.approvalChanges.cabinet).forEach(
           (cabinetId) => {
-            const id = cabinetId as CabinetStaticId;
-            cabinetInSituation.add(id);
+            cabinetInSituation.add(cabinetId as CabinetStaticId);
           }
         );
       }
 
       // Check subgroups in approval changes
-      if (outcome.consequences.approvalChanges.subgroups) {
+      if (outcome.consequences?.approvalChanges?.subgroups) {
         Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(
           (subgroupId) => {
-            const id = subgroupId as SubgroupStaticId;
-            subgroupsInSituation.add(id);
+            subgroupsInSituation.add(subgroupId as SubgroupStaticId);
           }
         );
       }
@@ -177,8 +180,8 @@ export function generationAnalysis(): GenerationAnalysis {
     });
 
     // Analyze publication distribution from exchanges
-    situation.exchanges.forEach((exchange) => {
-      const publicationId = exchange.publication as PublicationStaticId;
+    situation.exchanges?.forEach((exchange: ExchangeData) => {
+      const publicationId = exchange.publication;
       if (publicationCounts[publicationId] !== undefined) {
         publicationCounts[publicationId]++;
       }

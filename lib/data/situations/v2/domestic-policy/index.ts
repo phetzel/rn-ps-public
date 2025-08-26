@@ -1,4 +1,4 @@
-import type { SituationDataType } from "~/lib/schemas/situations";
+import type { SituationData } from "~/types";
 import { teachersStrikeBack } from "./teachers-strike-back";
 import { internetCurfew } from "./internet-curfew-proposal";
 

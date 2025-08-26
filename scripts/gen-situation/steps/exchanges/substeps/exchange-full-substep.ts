@@ -1,16 +1,15 @@
-import { ResponsesGenerationStep } from "../../base";
-import type { LLMResponseRequest } from "../../../types";
-import {
-  buildExchangeFullRequest
-} from "../../../llm/configs/exchange-full-config";
+import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../../base";
+import { ExchangeQuestionsSubstep } from "./exchange-questions-substep";
+import { ExchangeImpactsSubstep } from "./exchange-impacts-substep";
 
 import type {
   GenerateSituationPlan,
   GeneratePreferences,
   GenerateOutcomes,
   GenerateExchangeContent,
+  GenerateQuestionsOnlyContent,
+  GenerateAllQuestionImpacts,
   ExchangesPlanArray,
-  GenerateBaseExchangeContent,
 } from "~/lib/schemas/generate";
 import { generateExchangeContentSchema } from "~/lib/schemas/generate";
 import { AnswerType } from "~/types";
@@ -20,52 +19,159 @@ type ExchangeFullInput = {
   preferences: GeneratePreferences;
   outcomes: GenerateOutcomes;
   publicationPlan: ExchangesPlanArray[number];
-  baseExchange?: GenerateBaseExchangeContent; // optional skeleton (IDs/followUps)
 };
 
-export class ExchangeFullSubstep
-  extends ResponsesGenerationStep<ExchangeFullInput, GenerateExchangeContent> {
+/**
+ * Orchestrates the split exchange generation process using two substeps:
+ * 1. ExchangeQuestionsSubstep - generates questions and answers structure
+ * 2. ExchangeImpactsSubstep - generates impacts and outcome modifiers
+ * 3. Assembles the final complete exchange content
+ */
+export class ExchangeFullSubstep {
+  private logger: GenerationLogger;
+  private questionsSubstep: ExchangeQuestionsSubstep;
+  private impactsSubstep: ExchangeImpactsSubstep;
 
-  protected buildRequest(input: ExchangeFullInput): LLMResponseRequest<GenerateExchangeContent> {
-    return buildExchangeFullRequest(
-      input.plan,
-      input.preferences,
-      input.outcomes,
-      input.publicationPlan,
-      input.baseExchange
-    );
+  constructor(dependencies: StepDependencies) {
+    this.logger = dependencies.logger || new ConsoleGenerationLogger();
+    this.questionsSubstep = new ExchangeQuestionsSubstep(dependencies);
+    this.impactsSubstep = new ExchangeImpactsSubstep(dependencies);
   }
 
-  protected validateInput(input: ExchangeFullInput): void {
-    super.validateInput(input);
+  async execute(input: ExchangeFullInput): Promise<GenerateExchangeContent> {
+    try {
+      this.validateInput(input);
+
+      console.log(`🎯 Step 4b.1: Generating questions structure for ${input.publicationPlan.publication}...`);
+      
+      // Phase 1: Generate questions and answers structure (no impacts)
+      const questionsContent = await this.questionsSubstep.execute({
+        plan: input.plan,
+        preferences: input.preferences,
+        outcomes: input.outcomes,
+        publicationPlan: input.publicationPlan
+      });
+
+      console.log(`🎯 Step 4b.2: Generating impacts and outcome modifiers for ${input.publicationPlan.publication}...`);
+      
+      // Phase 2: Generate impacts and outcome modifiers for the questions
+      const impactsContent = await this.impactsSubstep.execute({
+        plan: input.plan,
+        preferences: input.preferences,
+        outcomes: input.outcomes,
+        publicationPlan: input.publicationPlan,
+        questionsContent: questionsContent
+      });
+
+      console.log(`🎯 Step 4b.3: Assembling complete exchange for ${input.publicationPlan.publication}...`);
+      
+      // Phase 3: Assemble the complete exchange content
+      const completeExchange = this.assembleExchange(questionsContent, impactsContent);
+
+      // Phase 4: Final validation
+      const validated = this.validateCompleteExchange(completeExchange, input);
+
+      console.log(`✅ Complete exchange generated for ${input.publicationPlan.publication}`);
+      
+      return validated;
+
+    } catch (error) {
+      this.logger.logStepError(`ExchangeFullSubstep:${input.publicationPlan.publication}`, error as Error);
+      throw error;
+    }
+  }
+
+  private validateInput(input: ExchangeFullInput): void {
     if (!input.plan?.title) throw new Error("Missing situation plan");
     if (!input.outcomes?.outcomes?.length) throw new Error("Missing outcomes for outcomeModifiers keys");
     if (!input.publicationPlan?.publication) throw new Error("Missing publication plan entry");
-    // baseExchange is optional – when provided we’ll pin its IDs/followUps
   }
 
-  // Minimal defensive pass – your core schema already encodes most constraints.
-  protected async postProcess(
-    result: GenerateExchangeContent,
-    input: ExchangeFullInput
-  ): Promise<GenerateExchangeContent> {
-    // 1) Validate shape & field bounds via Zod
-    const parsed = generateExchangeContentSchema.parse(result);
+  /**
+   * Combine questions structure with impacts data to create complete exchange
+   */
+  private assembleExchange(
+    questions: GenerateQuestionsOnlyContent,
+    impacts: GenerateAllQuestionImpacts
+  ): GenerateExchangeContent {
+    // Create mapping of question ID to impacts
+    const impactsMap = new Map();
+    for (const questionImpact of impacts.questionImpacts) {
+      const answerImpactsMap = new Map();
+      for (const answerImpact of questionImpact.answerImpacts) {
+        answerImpactsMap.set(answerImpact.answerId, {
+          outcomeModifiers: answerImpact.outcomeModifiers,
+          impacts: answerImpact.impacts
+        });
+      }
+      impactsMap.set(questionImpact.questionId, answerImpactsMap);
+    }
 
-    // 2) Optional extra guard: outcomeModifiers keys must match your outcome IDs
+    // Helper to merge answers with impacts
+    const mergeAnswersWithImpacts = (answers: any[], questionId: string) => {
+      const questionImpacts = impactsMap.get(questionId);
+      if (!questionImpacts) {
+        throw new Error(`Missing impacts for question ${questionId}`);
+      }
+
+      return answers.map(answer => {
+        const answerImpacts = questionImpacts.get(answer.id);
+        if (!answerImpacts) {
+          throw new Error(`Missing impacts for answer ${answer.id} in question ${questionId}`);
+        }
+
+        return {
+          ...answer,
+          outcomeModifiers: answerImpacts.outcomeModifiers,
+          impacts: answerImpacts.impacts
+        };
+      });
+    };
+
+    // Assemble complete exchange
+    return {
+      rootQuestion: {
+        ...questions.rootQuestion,
+        answers: mergeAnswersWithImpacts(questions.rootQuestion.answers, questions.rootQuestion.id)
+      },
+      secondaryQuestions: questions.secondaryQuestions.map(q => ({
+        ...q,
+        answers: mergeAnswersWithImpacts(q.answers, q.id)
+      })),
+      tertiaryQuestions: questions.tertiaryQuestions.map(q => ({
+        ...q,
+        answers: mergeAnswersWithImpacts(q.answers, q.id)
+      }))
+    };
+  }
+
+  /**
+   * Final validation of the complete exchange
+   */
+  private validateCompleteExchange(
+    exchange: GenerateExchangeContent,
+    input: ExchangeFullInput
+  ): GenerateExchangeContent {
+    // Validate with Zod schema
+    const parsed = generateExchangeContentSchema.parse(exchange);
+
+    // Additional business logic validation
     const outcomeIds = new Set(input.outcomes.outcomes.map(o => o.id));
     const allQuestions = [
       parsed.rootQuestion,
       ...parsed.secondaryQuestions,
       ...parsed.tertiaryQuestions,
     ];
+
     for (const q of allQuestions) {
-      const modifierSums = q.answers.map(a =>
-        Object.values(a.outcomeModifiers ?? {}).reduce((s, v) => s + v, 0)
-      );
-      if (modifierSums.some(sum => sum !== 0)) {
-        throw new Error("Outcome modifiers must sum to 0 per question.");
+      // Check that all answers in this question sum to 0 collectively (for game balance)
+      const totalQuestionSum = q.answers.reduce((total, answer) => {
+        return total + Object.values(answer.outcomeModifiers ?? {}).reduce((s, v) => s + v, 0);
+      }, 0);
+      if (totalQuestionSum !== 0) {
+        throw new Error(`Outcome modifiers must sum to 0 per question. Question ${q.id} sums to ${totalQuestionSum}`);
       }
+
       for (const a of q.answers) {
         for (const key of Object.keys(a.outcomeModifiers ?? {})) {
           if (!outcomeIds.has(key)) {
@@ -75,7 +181,7 @@ export class ExchangeFullSubstep
       }
     }
 
-    // 3) Optional extra guard: if pub has authorized=true, enforce the exact member
+    // Validate authorized answers if required
     if (input.publicationPlan.willHaveAuthorizedAnswer) {
       const requiredMember = input.publicationPlan.authorizedCabinetMemberId;
       for (const q of allQuestions) {

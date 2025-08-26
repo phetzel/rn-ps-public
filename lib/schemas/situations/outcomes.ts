@@ -39,9 +39,36 @@ export const baseSituationOutcomeArraySchema = z
 export const situationOutcomeSchema = baseSituationOutcomeSchema.extend({
   consequences: consequenceSchema,
   followUpId: z.string().optional(),
-});
+})
+.refine(
+  (outcome) => {
+    // Individual outcome must affect at least one entity
+    const cabinetCount = Object.keys(outcome.consequences.approvalChanges.cabinet || {}).length;
+    const subgroupCount = Object.keys(outcome.consequences.approvalChanges.subgroups || {}).length;
+    return cabinetCount + subgroupCount >= 1;
+  },
+  {
+    message: "Each outcome must affect at least one entity",
+    path: ["consequences"],
+  }
+)
+.refine(
+  (outcome) => {
+    // Individual outcome cannot affect too many entities (keeps impacts focused)
+    const cabinetCount = Object.keys(outcome.consequences.approvalChanges.cabinet || {}).length;
+    const subgroupCount = Object.keys(outcome.consequences.approvalChanges.subgroups || {}).length;
+    return cabinetCount + subgroupCount <= 6;
+  },
+  {
+    message: "No outcome can affect more than 6 entities (keeps impacts focused)",
+    path: ["consequences"],
+  }
+);
 
 export const situationOutcomeArraySchema = z
   .array(situationOutcomeSchema)
   .min(2, "At least 2 outcomes required for meaningful choice")
   .max(4, "Maximum 4 outcomes for mobile UI constraints");
+
+  export type SituationOutcome = z.infer<typeof situationOutcomeSchema>;
+  export type SituationOutcomeArray = z.infer<typeof situationOutcomeArraySchema>;

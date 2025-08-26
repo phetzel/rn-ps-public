@@ -3,7 +3,6 @@
 import path from "path";
 import { LLMClient } from "./gen-situation/llm/client";
 import { SituationGenerator } from "./gen-situation/generator";
-import { displayGenerationSuccess } from "./gen-situation/utils";
 
 /**
  * Main situation generation command
@@ -44,7 +43,14 @@ async function main(): Promise<void> {
       const result = await generator.generateComplete();
 
       if (result.success) {
-        displayGenerationSuccess(result);
+        console.log("✅ Generation completed successfully!");
+        console.log(`📁 Files written to: ${result.files?.directoryPath}`);
+        if (result.files?.files) {
+          console.log(`📄 Generated files: ${result.files.files.join(", ")}`);
+        }
+        if (result.usage) {
+          console.log(`💰 Usage: ${result.usage.requests} requests, ${result.usage.totalTokens} tokens, $${result.usage.totalCost.toFixed(4)}`);
+        }
       } else {
         console.error("❌ Generation failed:", result.error);
         process.exit(1);

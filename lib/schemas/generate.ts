@@ -5,7 +5,8 @@ import { cabinetMemberSchema, subgroupSchema, publicationSchema, textLengthSchem
 import { baseSituationDataSchema } from "~/lib/schemas/situations";
 import { baseSituationPreferencesSchema } from "~/lib/schemas/situations/preferences";
 import { baseSituationOutcomeSchema, baseSituationOutcomeArraySchema, consequenceSchema } from "~/lib/schemas/situations/outcomes";
-import { exchangeContentSchema, baseAnswerSchema } from "~/lib/schemas/exchanges/questions";
+// baseAnswerSchema moved here for generation use
+import { AnswerType, CabinetStaticId, ExchangeImpactWeight, JournalistStaticId } from "~/types";
 import { ValidatedExchangeData } from "./exchanges";
 
 // Plan
@@ -71,19 +72,133 @@ export const generateExchangesPlanSchema = z.object({
 });
 export type GenerateExchangesPlan = z.infer<typeof generateExchangesPlanSchema>;
 
+// Base answer schema for generation (with nullable() for OpenAI strict mode compatibility)
+export const baseAnswerSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.answerText,
+  type: z.nativeEnum(AnswerType),
+  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
+  followUpId: z.string().nullable(),
+}).strict();
+
+// Generation-specific schemas with nullable() for OpenAI strict mode
+export const generateBaseAnswerSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.answerText,
+  type: z.nativeEnum(AnswerType),
+  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
+  followUpId: z.string().nullable(),
+  outcomeModifiers: z.record(z.string(), z.number()),
+}).strict();
+
+export const generateBaseQuestionSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.questionText,
+  answers: z.array(generateBaseAnswerSchema),
+}).strict();
+
+// Export types for generation schemas
+export type GenerateBaseAnswer = z.infer<typeof generateBaseAnswerSchema>;
+export type GenerateBaseQuestion = z.infer<typeof generateBaseQuestionSchema>;
+
+// Keep for backward compatibility, but prefer generateBaseQuestionSchema for generation  
 export const baseQuestionSchema = z.object({
   id: idSchema,
   text: textLengthSchema.questionText,
   answers: z.array(baseAnswerSchema),
 });
 export const generateBaseExchangeContentSchema = z.object({
-  rootQuestion: baseQuestionSchema,
-  secondaryQuestions: z.array(baseQuestionSchema).length(2), // ✅ Fixed
-  tertiaryQuestions: z.array(baseQuestionSchema).length(2),
-});
+  rootQuestion: generateBaseQuestionSchema,
+  secondaryQuestions: z.array(generateBaseQuestionSchema).length(2),
+  tertiaryQuestions: z.array(generateBaseQuestionSchema).length(2),
+}).strict();
 export type GenerateBaseExchangeContent = z.infer<typeof generateBaseExchangeContentSchema>;
 
-export const generateExchangeContentSchema = exchangeContentSchema;
+// Generate schemas for impacts (OpenAI compatible)
+export const generateExchangeImpactSchema = z.object({
+  weight: z.nativeEnum(ExchangeImpactWeight),
+  reaction: z.string().nullable(),
+}).strict();
+
+export const generateExchangeImpactsSchema = z.object({
+  president: generateExchangeImpactSchema.nullable(),
+  cabinet: z.union([
+    z.record(z.string(), generateExchangeImpactSchema), // Allow any string key instead of strict enum
+    z.null()
+  ]),
+  journalists: z.union([
+    z.record(z.string(), generateExchangeImpactSchema), // Allow any string key instead of strict enum  
+    z.null()
+  ]),
+}).strict();
+
+// Full answer schema with impacts (for generation)
+export const generateFullAnswerSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.answerText,
+  type: z.nativeEnum(AnswerType),
+  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
+  followUpId: z.string().nullable(),
+  outcomeModifiers: z.record(z.string(), z.number()),
+  impacts: generateExchangeImpactsSchema,
+}).strict();
+
+export const generateFullQuestionSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.questionText,
+  answers: z.array(generateFullAnswerSchema),
+}).strict();
+
+// Full exchange content schema (OpenAI compatible with impacts)
+export const generateExchangeContentSchema = z.object({
+  rootQuestion: generateFullQuestionSchema,
+  secondaryQuestions: z.array(generateFullQuestionSchema).length(2),
+  tertiaryQuestions: z.array(generateFullQuestionSchema).length(2),
+}).strict();
+
 export type GenerateExchangeContent = z.infer<typeof generateExchangeContentSchema>;
+
+// Intermediate schemas for split generation
+export const generateQuestionOnlyAnswerSchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.answerText,
+  type: z.nativeEnum(AnswerType),
+  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
+  followUpId: z.string().nullable(),
+}).strict();
+
+export const generateQuestionOnlySchema = z.object({
+  id: idSchema,
+  text: textLengthSchema.questionText,
+  answers: z.array(generateQuestionOnlyAnswerSchema),
+}).strict();
+
+export const generateQuestionsOnlyContentSchema = z.object({
+  rootQuestion: generateQuestionOnlySchema,
+  secondaryQuestions: z.array(generateQuestionOnlySchema).length(2),
+  tertiaryQuestions: z.array(generateQuestionOnlySchema).length(2),
+}).strict();
+
+export type GenerateQuestionsOnlyContent = z.infer<typeof generateQuestionsOnlyContentSchema>;
+
+// Schema for impacts generation per question (NOTE: These are not used in actual generation)
+// The real schema is dynamically created in exchange-impacts-config.ts with explicit outcome ID properties
+export const generateAnswerImpactSchema = z.object({
+  answerId: idSchema,
+  outcomeModifiers: z.record(z.string(), z.number()),
+  impacts: generateExchangeImpactsSchema,
+});
+
+export const generateQuestionImpactsSchema = z.object({
+  questionId: idSchema,
+  answerImpacts: z.array(generateAnswerImpactSchema),
+});
+
+export const generateAllQuestionImpactsSchema = z.object({
+  questionImpacts: z.array(generateQuestionImpactsSchema),
+});
+
+export type GenerateQuestionImpacts = z.infer<typeof generateQuestionImpactsSchema>;
+export type GenerateAllQuestionImpacts = z.infer<typeof generateAllQuestionImpactsSchema>;
 
 export type ExchangesStepOutput = ValidatedExchangeData[];

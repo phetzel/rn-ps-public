@@ -48,7 +48,7 @@ STRUCTURE (strict)
   • each secondary question must have exactly 1 answer with followUpId (to its paired tertiary question)
   • each tertiary question has 0 follow-up answers
 - Use the base schema only (no impacts yet). Each answer includes:
-  id, text, type, outcomeModifiers, optional authorizedCabinetMemberId, optional followUpId.
+  id, text, type, outcomeModifiers, authorizedCabinetMemberId (null if not authorized), followUpId (null if no follow-up).
 - outcomeModifiers: object keyed by OUTCOME IDs (see below). Keep small integers in [-2, 2] and ensure the sum across the 4 answers of a question is ≈ 0.
 - Text lengths must respect schema constraints. Use fictional entities only.
 

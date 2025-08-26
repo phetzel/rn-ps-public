@@ -4,31 +4,15 @@ import { idSchema, textLengthSchema } from "~/lib/schemas/common";
 import { exchangeImpactsSchema } from "~/lib/schemas/exchanges/impacts";
 import { AnswerType, CabinetStaticId, ExchangeImpactWeight } from "~/types";
 
-export const baseAnswerSchema = z.object({
+export const answerSchema = z.object({
   id: idSchema,
   text: textLengthSchema.answerText,
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
   followUpId: z.string().optional(),
-});
-
-export const answerSchema = baseAnswerSchema.extend({
   outcomeModifiers: z.record(z.string(), z.number()),
   impacts: exchangeImpactsSchema,
 })
-  .refine(
-    (data) => {
-      const modifierSum = Object.values(data.outcomeModifiers).reduce(
-        (sum, mod) => sum + mod,
-        0
-      );
-      return modifierSum === 0;
-    },
-    {
-      message: "Outcome modifiers must sum to 0 for game balance",
-      path: ["outcomeModifiers"],
-    }
-  )
   .refine(
     (data) => {
       // If it's an authorized answer, must have cabinet member ID
@@ -50,6 +34,16 @@ export const questionSchema = z
     text: textLengthSchema.questionText,
     answers: z.array(answerSchema).min(4).max(4),
   })
+  .refine(
+    (data) => {
+      // Ensure outcome modifiers sum to 0 across all answers for game balance
+      const totalSum = data.answers.reduce((total, answer) => {
+        return total + Object.values(answer.outcomeModifiers).reduce((s, v) => s + v, 0);
+      }, 0);
+      return totalSum === 0;
+    },
+    { message: "Outcome modifiers must sum to 0 per question for game balance" }
+  )
   .refine(
     (data) => {
       // Ensure diverse answer types

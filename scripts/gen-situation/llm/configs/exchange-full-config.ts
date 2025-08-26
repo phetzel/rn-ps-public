@@ -9,13 +9,15 @@ import {
   type GeneratePreferences,
   type GenerateOutcomes,
   type ExchangesPlanArray,
-  generateBaseExchangeContentSchema,     // if you pass a skeleton, we’ll pin IDs/followUps
+  generateBaseExchangeContentSchema,     // if you pass a skeleton, we'll pin IDs/followUps
 } from "~/lib/schemas/generate";
 
 // Small helper to present outcomes for the model (ids must be used in outcomeModifiers)
 function summarizeOutcomes(outcomes: GenerateOutcomes["outcomes"]) {
   return outcomes.map(o => `- ${o.id}: "${o.title}" (weight ${o.weight})`).join("\n");
 }
+
+
 
 export function buildExchangeFullRequest(
   plan: GenerateSituationPlan,
@@ -100,7 +102,7 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 4096,
+      maxOutputTokens: 16000,
       schema: generateExchangeContentSchema,
       schemaName: "exchange_content",
       jsonSchema,

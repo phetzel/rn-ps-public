@@ -1,13 +1,6 @@
 import { writeFile, mkdir, readFile } from "fs/promises";
 import { join } from "path";
 import { z } from "zod";
-import type { SituationDataType } from "~/lib/schemas/situations";
-import { situationOutcomeSchema, situationPreferencesSchema } from "~/lib/schemas/situations";
-import type { ExchangeData } from "~/lib/schemas/exchanges";
-
-// Types derived from schemas
-type SituationOutcome = z.infer<typeof situationOutcomeSchema>;
-type SituationPreferences = z.infer<typeof situationPreferencesSchema>;
 import {
   SituationType,
   CabinetStaticId,
@@ -17,9 +10,24 @@ import {
   ExchangeImpactWeight,
   OutcomeModifierWeight,
   SituationConsequenceWeight,
+  type SituationData,
+  type SituationOutcome,
+  type SituationPreferences,
+  type ExchangeData,
 } from "~/types";
 
-import { extractSituationComponents } from "./situation-converter";
+// Internal utility function (moved from situation-converter.ts)
+function extractSituationComponents(situation: SituationData): {
+  outcomes: SituationOutcome[];
+  preferences: SituationPreferences;
+  exchanges: any[];
+} {
+  return {
+    outcomes: situation.content.outcomes,
+    preferences: situation.content.preferences,
+    exchanges: situation.exchanges.map(ex => ex.content)
+  };
+}
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION FILE WRITER - WRITES COMPLETE SITUATIONS TO V2 STRUCTURE
@@ -107,8 +115,8 @@ function generateOutcomesFile(
   SituationConsequenceWeight,
   CabinetStaticId,
   SubgroupStaticId,
+  type SituationOutcome,
 } from "~/types";
-import type { SituationOutcome } from "~/lib/schemas/situations";
 
 export const ${variableName}: SituationOutcome[] = ${JSON.stringify(
     outcomes,
@@ -130,8 +138,7 @@ function generatePreferencesFile(
   preferences: SituationPreferences,
   variableName: string
 ): string {
-  return `import { AnswerType, CabinetStaticId } from "~/types";
-import type { SituationPreferences } from "~/lib/schemas/situations";
+  return `import { AnswerType, CabinetStaticId, type SituationPreferences } from "~/types";
 
 export const ${variableName}: SituationPreferences = ${JSON.stringify(
     preferences,
@@ -157,8 +164,8 @@ function generateExchangeFile(
   OutcomeModifierWeight,
   CabinetStaticId,
   PublicationStaticId,
+  type ExchangeData,
 } from "~/types";
-import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 export const ${variableName}: ExchangeData = ${JSON.stringify(exchange, null, 2)
     .replace(/: "([A-Z][a-zA-Z]+\.[\w]+)"/g, ": $1")
@@ -185,7 +192,7 @@ function generateExchangesIndexFile(
     })
     .join("\n");
 
-  return `import type { ExchangeData } from "~/lib/schemas/exchanges";
+  return `import type { ExchangeData } from "~/types";
 ${imports}
 
 export const ${variableName}: ExchangeData[] = [
@@ -222,7 +229,7 @@ function getSituationTypeEnumName(type: SituationType): string {
  * Generate main situation index file
  */
 function generateSituationIndexFile(
-  situation: SituationDataType,
+  situation: SituationData,
   variableName: string,
   outcomesVar: string,
   preferencesVar: string,
@@ -231,13 +238,12 @@ function generateSituationIndexFile(
   const typeEnumName = getSituationTypeEnumName(situation.type);
   const staticKey = situation.trigger.staticKey;
 
-  return `import { SituationType } from "~/types";
-import type { SituationDataType } from "~/lib/schemas/situations";
+  return `import { SituationType, type SituationData } from "~/types";
 import { ${outcomesVar} } from "./${outcomesVar}";
 import { ${preferencesVar} } from "./${preferencesVar}";
 import { ${exchangesVar} } from "./exchanges";
 
-export const ${variableName}: SituationDataType = {
+export const ${variableName}: SituationData = {
   trigger: {
     staticKey: "${staticKey}",
     type: SituationType.${typeEnumName},
@@ -276,7 +282,7 @@ function parseIndexFile(content: string): {
   const typeImportLine =
     lines.find(
       (line) =>
-        line.includes("import type") && line.includes("SituationDataType")
+        line.includes("import type") && line.includes("SituationData")
     ) || "";
 
   // Find situation imports
@@ -297,7 +303,7 @@ function parseIndexFile(content: string): {
   const exportArray: string[] = [];
   let inExportArray = false;
   for (const line of lines) {
-    if (line.includes("export const") && line.includes("SituationDataType[]")) {
+    if (line.includes("export const") && line.includes("SituationData[]")) {
       inExportArray = true;
       continue;
     }
@@ -349,7 +355,7 @@ function generateUpdatedIndexContent(
 
   return `${imports.join("\n")}
 
-export const ${exportArrayName}: SituationDataType[] = [
+export const ${exportArrayName}: SituationData[] = [
 ${exportItems.join("\n")}
 ];
 `;
@@ -390,7 +396,7 @@ async function updateTypeIndex(
       // Create new index file if it doesn't exist
       parsed = {
         typeImport:
-          'import type { SituationDataType } from "~/lib/schemas/situations";',
+          'import type { SituationData } from "~/types";',
         situationImports: [],
         exportArray: [],
       };
@@ -443,7 +449,7 @@ async function updateTypeIndex(
  * Write complete situation files to disk using v2 structure
  */
 export async function writeSituationFiles(
-  situation: SituationDataType
+  situation: SituationData
 ): Promise<{
   success: boolean;
   directoryPath: string;

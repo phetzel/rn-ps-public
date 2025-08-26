@@ -1,31 +1,29 @@
 import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../base";
 import { ExchangesPlanSubstep } from "./substeps/exchanges-plan-substep";
-import { ExchangeBaseSubstep } from "./substeps/exchange-base-substep";
+
 import { ExchangeFullSubstep } from "./substeps/exchange-full-substep";
 import type { ExchangesStepOutput } from "~/lib/schemas/generate";
 import { validatedExchangeDataSchema, type ValidatedExchangeData } from "~/lib/schemas/exchanges";
 import type { ExchangesStepInput } from "../../types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// EXCHANGES STEP IMPLEMENTATION (SIMPLIFIED 2-PHASE APPROACH)
+// EXCHANGES STEP IMPLEMENTATION (CLEAN 2-PHASE SPLIT APPROACH)
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
- * Step 4: Generate press exchanges using simplified 2-phase approach
+ * Step 4: Generate press exchanges using clean 2-phase split approach
  * 
  * Phase 1: Plan publication editorial angles and authorized content
- * Phase 2: Generate complete exchanges content with consequences
+ * Phase 2: Generate complete exchanges using split generation (questions → impacts)
  */
 export class ExchangesStep {
   private logger: GenerationLogger;
   private exchangesPlanSubstep: ExchangesPlanSubstep;
-  private exchangeBaseSubstep: ExchangeBaseSubstep;
   private exchangeFullSubstep: ExchangeFullSubstep;
 
   constructor(dependencies: StepDependencies) {
     this.logger = dependencies.logger || new ConsoleGenerationLogger();
     this.exchangesPlanSubstep = new ExchangesPlanSubstep(dependencies);
-    this.exchangeBaseSubstep = new ExchangeBaseSubstep(dependencies);
     this.exchangeFullSubstep = new ExchangeFullSubstep(dependencies);
   }
 
@@ -39,7 +37,7 @@ export class ExchangesStep {
       this.logger.logStepStart(stepName, this.getLogContext(input));
       this.validateInput(input);
       
-      console.log("🎯 Step 4: Generating exchanges using 3-phase approach...");
+      console.log("🎯 Step 4: Generating exchanges using clean 2-phase split approach...");
 
       // Phase 1: Plan publication editorial angles
       console.log("🎯 Step 4a: Planning publication exchanges...");
@@ -48,6 +46,7 @@ export class ExchangesStep {
         preferences: input.preferences,
         outcomes: input.outcomes
       });
+      console.log("EXCHANGES PLAN RESPONSE: ", exchangesPlanResponse);
 
       // Log the plan results
       const exchangesPlan = exchangesPlanResponse.exchangePlans;
@@ -59,25 +58,20 @@ export class ExchangesStep {
         );
       });
 
-      // Phase 2: Generate full exchanges content
-      console.log("🎯 Step 4b: Generating base exchanges content...");
+      // Phase 2: Generate complete exchanges using split generation
+      console.log("🎯 Step 4b: Generating complete exchanges...");
       const validatedExchanges: ValidatedExchangeData[] = [];
 
-      exchangesPlan.forEach(async (planItem) => {
-        const baseExchangeResponse = await this.exchangeBaseSubstep.execute({
-          plan: input.plan,
-          preferences: input.preferences,
-          outcomes: input.outcomes,
-          publicationPlan: planItem
-        });
-
+      for (const planItem of exchangesPlan) {
+        console.log(`🎯 Step 4b: Generating exchange content for ${planItem.publication}...`);
+        
         const fullExchangeResponse = await this.exchangeFullSubstep.execute({
           plan: input.plan,
           preferences: input.preferences,
           outcomes: input.outcomes,
           publicationPlan: planItem,
-          baseExchange: baseExchangeResponse
         });
+        console.log("FULL EXCHANGE RESPONSE: ", fullExchangeResponse);
 
         const validatedExchange = validatedExchangeDataSchema.parse({
           content: fullExchangeResponse,
@@ -86,9 +80,7 @@ export class ExchangesStep {
 
         validatedExchanges.push(validatedExchange);
         console.log(`✅ Completed exchange for ${planItem.publication}`);
-      });
-
-
+      };
 
       this.logger.logStepSuccess(stepName, this.getResultSummary(validatedExchanges));
       return validatedExchanges;

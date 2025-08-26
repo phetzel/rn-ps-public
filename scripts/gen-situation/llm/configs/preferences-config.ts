@@ -5,31 +5,26 @@ import type { GenerateSituationPlan } from "~/lib/schemas/generate";
 import { baseSituationPreferencesSchema, type SituationPreferences } from "~/lib/schemas/situations/preferences";
 import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "../generation-guide";
 
-
 const instructions = `
-You are advising how the President and cabinet should prefer to respond to a fictional political situation.
+You are generating preferences for a fictional White House scenario.
 
-GOALS
-- Produce preferences for the President and relevant cabinet members.
-- Encourage productive tension: some preferences should conflict (e.g., a more cautious legal stance vs. an aggressive political stance), but all must be plausible for the role.
-- Use only fictional entities; no real names, places, or events.
-
-AUTHORIZED CONTENT
-- "Authorized content" is confidential, department-only guidance for this situation.
-- At most ONE cabinet member should include authorizedContent.
-- If none logically have unique inside info, omit authorizedContent entirely.
-
-OUTPUT CONTRACT
-- Follow the JSON Schema exactly (Structured Outputs, strict mode).
-- Respect field descriptions and length limits.
-- President and each cabinet entry must use allowed public answer types (exclude 'Authorized'); authorizedContent is a separate confidential field if included.
+STRICT RULES
+- Output must be valid JSON only (the SDK enforces schema).
+- Use ONLY fictional entities (no real people/places/events).
+- Use ONLY the cabinet IDs provided in the prompt. Do not invent new IDs.
+- For each included official, produce a plausible, role-consistent stance.
+- If a cabinet member does NOT have pre-cleared messaging, OMIT the "authorizedContent" field entirely.
+- NEVER use placeholders like "NO_AUTHORIZED..." or "N/A". Just omit the field.
+- At most ONE cabinet member may include "authorizedContent". If none plausibly has it, include it for no one.
 
 STYLE
-- Witty but substantive; treat institutions consistently with their mandates.
+- President: choose a valid "answerType" and a concise rationale (≤ 40 words).
+- Cabinet: keep rationales concise (≤ 40 words). Favor realistic departmental tensions (e.g., State vs. Defense tone, Justice legal caution, etc.) while staying plausible.
+- Keep tone satirical-but-grounded per the guide.
 
-CONTENT RULES (Authoritative)
+REFERENCE
 ${GENERATION_GUIDE}
-`.trim();
+`;
 
 export function buildPreferencesRequest(
     plan: GenerateSituationPlan,

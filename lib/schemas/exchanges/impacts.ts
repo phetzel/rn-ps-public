@@ -14,7 +14,7 @@ export const exchangeImpactSchema = z.object({
     .min(20, "Reaction should provide meaningful context")
     .max(100, "Reaction should be concise for mobile display")
     .optional(),
-});
+}).strict();
 
 export const exchangeImpactsSchema = z.object({
   president: exchangeImpactSchema.optional(),
@@ -24,4 +24,4 @@ export const exchangeImpactsSchema = z.object({
   journalists: z
     .record(z.nativeEnum(JournalistStaticId), exchangeImpactSchema)
     .optional(),
-});
+}).strict();

@@ -1,8 +1,9 @@
 import { LLMClient } from "./llm/client";
 import { generationAnalysis } from "./generation-analysis";
 import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./steps";
-import { convertToSituation } from "./utils/situation-converter";
+import { validateFinalSituation } from "./utils/final-validator";
 import { writeSituationFiles } from "./utils/situation-file-writer";
+import { BatchGenerationHelper } from "./utils/batch-helpers";
 import type {
   GenerationStage,
   GenerationResult,
@@ -47,6 +48,8 @@ export class SituationGenerator {
       console.log(`🎯 [${id}] Step 1: Planning...`);
       const plan = await this.planningStep.execute(startingContext);
 
+      console.log("PLAN CREATED: ", plan);
+
       // Step 2: Generate entity preferences
       console.log(`⚙️ [${id}] Step 2: Preferences...`);
       const preferences = await this.preferencesStep.execute({
@@ -76,19 +79,10 @@ export class SituationGenerator {
 
       console.log("EXCHANGES CREATED: ", exchanges);
 
-      // Step 5: Convert to complete situation and validate
-      console.log(`🔄 [${id}] Step 5: Converting to complete situation...`);
-      const conversionResult = convertToSituation(plan, preferences, outcomes, exchanges);
-
-      console.log("CONVERSION RESULT: ", conversionResult);
-      
-      if (!conversionResult.success) {
-        const errorDetails = conversionResult.errors?.join(", ") || "Unknown validation error";
-        console.error(`❌ [${id}] Validation errors:`, conversionResult.errors);
-        throw new Error(`Situation validation failed: ${errorDetails}`);
-      }
-
-      const completeSituation = conversionResult.situation!;
+      // Step 5: Final validation
+      console.log(`✅ [${id}] Step 5: Final validation...`);
+      const completeSituation = validateFinalSituation(plan, preferences, outcomes, exchanges);
+      console.log(`✅ [${id}] Validation passed: ${completeSituation.title}`);
 
       // Step 6: Write files to disk
       console.log(`💾 [${id}] Step 6: Writing files...`);
@@ -175,19 +169,9 @@ export class SituationGenerator {
     
     const batchStartTime = new Date();
     const results: GenerationResult[] = [];
-    const failuresByStage: Record<GenerationStage, number> = {
-      analysis: 0,
-      planning: 0,
-      preferences: 0,
-      outcomes: 0,
-      exchanges: 0,
-      conversion: 0,
-      files: 0,
-    };
 
     for (let i = 1; i <= count; i++) {
-      console.log(`\n📝 Generation ${i}/${count}`);
-      console.log("------------------------------------------------------------");
+      BatchGenerationHelper.logGenerationProgress(i, count);
       
       // Reset LLM client usage stats for clean per-generation tracking
       this.llmClient.resetUsageStats();
@@ -196,116 +180,24 @@ export class SituationGenerator {
         const result = await this.generateComplete(`batch-${i}`);
         results.push(result);
         
-        if (!result.success && result.failedStage) {
-          failuresByStage[result.failedStage]++;
-        }
-        
         // Brief pause between generations to avoid rate limiting
         if (i < count) {
-          console.log("⏸️  Brief pause before next generation...");
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await BatchGenerationHelper.rateLimitPause();
         }
       } catch (error) {
-        // Catch any unexpected errors that escape the generateComplete method
-        const errorMessage = error instanceof Error ? error.message : "Unexpected batch error";
-        console.error(`💥 Unexpected error in generation ${i}: ${errorMessage}`);
+        // Handle unexpected errors that escape the generateComplete method
+        console.error(`💥 Unexpected error in generation ${i}: ${error instanceof Error ? error.message : error}`);
         
-        // Still capture any usage that occurred
         const usage = this.llmClient.getUsageStats();
-        
-        results.push({
-          success: false,
-          error: errorMessage,
-          failedStage: 'analysis',
-          generationId: `batch-${i}`,
-          startTime: new Date(),
-          endTime: new Date(),
-          duration: 0,
-          usage: {
-            requests: usage.requestCount,
-            totalTokens: usage.totalTokens,
-            totalCost: usage.totalCost,
-          },
-        });
-        
-        failuresByStage.analysis++;
+        const errorResult = BatchGenerationHelper.createErrorResult(`batch-${i}`, error, usage);
+        results.push(errorResult);
       }
     }
 
     const batchEndTime = new Date();
-    const totalDuration = batchEndTime.getTime() - batchStartTime.getTime();
+    const stats = BatchGenerationHelper.calculateBatchStats(results, batchStartTime, batchEndTime);
     
-    // Calculate stats
-    const successful = results.filter(r => r.success).length;
-    const failed = results.length - successful;
-    const successRate = (successful / results.length) * 100;
-    
-    const totalUsage = results.reduce((acc, result) => {
-      if (result.usage) {
-        acc.requests += result.usage.requests;
-        acc.totalTokens += result.usage.totalTokens;
-        acc.totalCost += result.usage.totalCost;
-      }
-      return acc;
-    }, { requests: 0, totalTokens: 0, totalCost: 0 });
-
-    const averageDuration = results.reduce((acc, result) => acc + (result.duration || 0), 0) / results.length;
-
-    const stats: BatchGenerationStats = {
-      total: results.length,
-      successful,
-      failed,
-      successRate,
-      failuresByStage,
-      totalUsage,
-      totalDuration,
-      averageDuration,
-      results,
-    };
-
-    this.logBatchSummary(stats);
+    BatchGenerationHelper.logBatchSummary(stats);
     return stats;
-  }
-
-  private logBatchSummary(stats: BatchGenerationStats): void {
-    console.log("\n");
-    console.log("════════════════════════════════════════════════════════════");
-    console.log("🎯 ENHANCED BATCH GENERATION SUMMARY");
-    console.log("════════════════════════════════════════════════════════════");
-    console.log(`📊 Total Generations: ${stats.total}`);
-    console.log(`✅ Successful: ${stats.successful}`);
-    console.log(`❌ Failed: ${stats.failed}`);
-    console.log(`📈 Success Rate: ${stats.successRate.toFixed(1)}%`);
-    console.log("");
-    
-    if (stats.failed > 0) {
-      console.log("💥 Failure Breakdown by Stage:");
-      Object.entries(stats.failuresByStage).forEach(([stage, count]) => {
-        if (count > 0) {
-          console.log(`   ${stage}: ${count} failures`);
-        }
-      });
-      console.log("");
-    }
-    
-    console.log("💰 Usage Summary:");
-    console.log(`   Requests: ${stats.totalUsage.requests}`);
-    console.log(`   Tokens: ${stats.totalUsage.totalTokens.toLocaleString()}`);
-    console.log(`   Cost: $${stats.totalUsage.totalCost.toFixed(2)}`);
-    console.log("");
-    
-    console.log("⏱️  Timing:");
-    console.log(`   Total Duration: ${(stats.totalDuration / 1000 / 60).toFixed(1)} minutes`);
-    console.log(`   Average per Generation: ${(stats.averageDuration / 1000).toFixed(1)} seconds`);
-    console.log("");
-    
-    if (stats.failed > 0) {
-      console.log("🔍 Failed Generations:");
-      stats.results.filter(r => !r.success).forEach(result => {
-        console.log(`   ${result.generationId}: ${result.failedStage} - ${result.error}`);
-      });
-    }
-    
-    console.log("════════════════════════════════════════════════════════════");
   }
 }

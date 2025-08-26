@@ -11,20 +11,20 @@ const AllowedPrefAnswerType = z.enum(
 export const preferenceSchema = z.object({
   answerType: AllowedPrefAnswerType,
   rationale: textLengthSchema.rationale,
-});
+}).strict();
 
 export const cabinetPreferenceSchema = z.object({
   preference: preferenceSchema,
   authorizedContent: textLengthSchema.authorizedContent
     .describe("Confidential talking points; maximum one cabinet member per situation should include this."),
-});
+}).strict();
 
 export const baseSituationPreferencesSchema = z.object({
   president: preferenceSchema,
   cabinet: z
     .record(z.nativeEnum(CabinetStaticId), cabinetPreferenceSchema)
     .optional(),
-});
+}).strict();
 
 export const situationPreferencesSchema = baseSituationPreferencesSchema.extend({})
   .refine(

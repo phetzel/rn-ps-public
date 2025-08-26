@@ -1,6 +1,6 @@
-import type { SituationDataType } from "~/lib/schemas/situations";
+import type { SituationData } from "~/types";
 import { cheeseTariffWar } from "./cheese-tariff-war";
 
-export const foreignAffairsSituationsData: SituationDataType[] = [
+export const foreignAffairsSituationsData: SituationData[] = [
   cheeseTariffWar,
 ];

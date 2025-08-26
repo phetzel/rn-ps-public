@@ -5,15 +5,11 @@ import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes, Exc
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SCHEMA-DERIVED TYPES IMPORT
+// TYPES IMPORT
 // ═══════════════════════════════════════════════════════════════════════════════
 
-// Import schema-derived types for use in our own type definitions
-import type {
-  ExchangePlan,
-  PublicationExchange,
-} from "./schemas";
-import type { SituationDataType } from "~/lib/schemas/situations";
+
+import type { SituationData } from "~/types";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // GENERATOR TYPES
@@ -23,7 +19,7 @@ export type GenerationStage = 'analysis' | 'planning' | 'preferences' | 'outcome
 
 export interface GenerationResult {
   success: boolean;
-  situation?: SituationDataType;
+  situation?: SituationData;
   files?: {
     directoryPath: string;
     files: string[];
@@ -71,21 +67,6 @@ export interface LLMResponse<T = any> {
     cost?: number;
   };
   toolCalls?: any[];
-}
-
-export interface LLMOptions {
-  model?: string;
-  temperature?: number;
-  maxTokens?: number;
-  systemPrompt?: string;
-  tools?: any[];
-  responseFormat?: "text" | "json_object" | "structured";
-}
-
-export interface StructuredOptions<T> extends Omit<LLMOptions, "responseFormat"> {
-  schema: z.ZodSchema<T>;
-  schemaName?: string;
-  strict?: boolean;
 }
 
 /** Options passed to LLMClient.generateResponse (Responses + Structured Outputs only) */
@@ -279,137 +260,3 @@ export interface ExchangesStepInput {
   outcomes: GenerateOutcomes;
 }
 
-// Exchange Planning Sub-step
-export interface ExchangePlanningSubStepInput {
-  plan: PlanningStepOutput;
-  preferences: PreferencesStepOutput;
-  outcomes: GenerateOutcomes;
-}
-export type ExchangePlanningSubStepOutput = ExchangePlan;
-
-// Question Generation Sub-step
-export interface QuestionGenerationSubStepInput {
-  publicationPlan: any; // PublicationPlan from exchange planning
-  plan: PlanningStepOutput;
-  preferences: PreferencesStepOutput;
-  outcomes: GenerateOutcomes;
-}
-export type QuestionGenerationSubStepOutput = PublicationExchange;
-
-// Consequence Generation Sub-step
-export interface ConsequenceGenerationSubStepInput {
-  publicationQuestions: PublicationExchange;
-  publicationPlan: any; // PublicationPlan from exchange planning
-  plan: PlanningStepOutput;
-  preferences: PreferencesStepOutput;
-  outcomes: GenerateOutcomes;
-}
-
-export interface QuestionsWithConsequences {
-  publication: string;
-  editorialAngle: string;
-  rootQuestion: {
-    id: string;
-    text: string;
-    answers: Array<{
-      id: string;
-      answerText: string;
-      answerType: string;
-      hasFollowUp: boolean;
-      followUpQuestionId?: string;
-      impacts: any; // Impact structure
-      outcomeModifiers: Array<{
-        outcomeId: string;
-        modifier: number;
-      }>;
-    }>;
-  };
-  secondaryQuestions: Array<{
-    id: string;
-    text: string;
-    answers: Array<{
-      id: string;
-      answerText: string;
-      answerType: string;
-      hasFollowUp: boolean;
-      followUpQuestionId?: string;
-      impacts: any; // Impact structure
-      outcomeModifiers: Array<{
-        outcomeId: string;
-        modifier: number;
-      }>;
-    }>;
-  }>;
-  tertiaryQuestions: Array<{
-    id: string;
-    text: string;
-    answers: Array<{
-      id: string;
-      answerText: string;
-      answerType: string;
-      hasFollowUp: boolean;
-      followUpQuestionId?: string;
-      impacts: any; // Impact structure
-      outcomeModifiers: Array<{
-        outcomeId: string;
-        modifier: number;
-      }>;
-    }>;
-  }>;
-}
-
-export type ConsequenceGenerationSubStepOutput = QuestionsWithConsequences;
-
-// API Exchange Assembly Sub-step
-export interface ExchangeAssemblySubStepInput {
-  questionsWithConsequences: QuestionsWithConsequences;
-  publicationPlan: any; // PublicationPlan from exchange planning
-}
-
-// Use the nested exchange format that matches questionDataSchema
-export interface ApiExchangeQuestion {
-  id: string;
-  questionText: string;
-  answers: Array<{
-    id: string;
-    answerType: AnswerType;
-    answerText: string;
-    hasFollowUp?: boolean;
-    followUpQuestionId?: string | null;
-    authorizedCabinetMember?: "state" | "treasury" | "defense" | "justice" | "hhs" | "homeland" | null;
-    impacts?: any; // Impact data from consequence generation
-    outcomeModifiers?: any; // Outcome modifier data from consequence generation
-  }>;
-}
-
-export interface ApiExchange {
-  publication: PublicationStaticId;
-  editorialAngle: string;
-  rootQuestion: ApiExchangeQuestion;
-  secondaryQuestions: [ApiExchangeQuestion, ApiExchangeQuestion]; // Exactly 2
-  tertiaryQuestions: [ApiExchangeQuestion, ApiExchangeQuestion]; // Exactly 2
-}
-
-export type ExchangeAssemblySubStepOutput = ApiExchange;
-
-// ═══════════════════════════════════════════════════════════════════════════════
-// PROMPT CONFIGURATION TYPES
-// ═══════════════════════════════════════════════════════════════════════════════
-
-export interface PromptConfig {
-  temperature: number;
-  systemPrompt: string;
-  schemaName: string;
-}
-
-export interface PublicationQuestionsPromptConfig {
-  temperature: number;
-  schemaName: string;
-  systemPrompt: string;
-}
-
-export interface QuestionConsequencesPromptConfig {
-  temperature: number;
-  schemaName: string;
-  systemPrompt: string;
-}
