@@ -24,8 +24,13 @@ export abstract class ResponsesGenerationStep<I, O> {
     this.validateInput(input);
 
     const { prompt, options } = this.buildRequest(input);
-    const { content } = await this.llmClient.generateResponse<O>(prompt, options);
-
-    return this.postProcess(content, input);
+    try {
+      const { content } = await this.llmClient.generateResponse<O>(prompt, options);
+      return this.postProcess(content, input);
+    } catch (err: any) {
+      const prefix = this.constructor?.name || "ResponsesGenerationStep";
+      const message = err?.message || String(err);
+      throw new Error(`${prefix} failed: ${message}`);
+    }
   }
 }

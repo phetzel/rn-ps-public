@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { z } from "zod";
 import dotenv from "dotenv";
 import type { LLMResponse, LLMResponseOptions } from "../types";
 
@@ -67,15 +68,51 @@ export class LLMClient {
     };
     if (previousResponseId) req.previous_response_id = previousResponseId;
 
-    const res = await this.client.responses.create(req);
-    const raw = res.output_text ?? ""; // SDK convenience field for text aggregation. :contentReference[oaicite:3]{index=3}
+    let res: any;
+    try {
+      res = await this.client.responses.create(req);
+    } catch (apiErr: any) {
+      const msg = apiErr?.message || String(apiErr);
+      throw new Error(`OpenAI API error: ${msg}`);
+    }
 
-    // Parsed+validated => always returns T (no unions)
-    const parsed = schema.parse(JSON.parse(raw));
-    if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(parsed, null, 2));
+    const raw = (res as any).output_text ?? ""; // aggregated text output
+    if (this.debugMode) {
+      console.log("🧩 [DEBUG] Raw model output (first 400 chars):", raw.slice(0, 400));
+    }
 
-    const usage = this.trackUsage(res.usage);
-    return { content: parsed, raw, usage };
+    // Try JSON.parse with helpful error messages
+    let parsedJson: unknown;
+    try {
+      parsedJson = JSON.parse(raw);
+    } catch (parseErr: any) {
+      const snippet = raw.slice(0, 400);
+      throw new Error(
+        `Model returned non-JSON or malformed JSON. Parse error: ${parseErr?.message || parseErr}. Raw snippet: ${snippet}`
+      );
+    }
+
+    // Validate with Zod but prefer safeParse for better diagnostics
+    const result = (schema as z.ZodSchema<T>).safeParse(parsedJson);
+    if (!result.success) {
+      const issues = result.error.issues.slice(0, 5).map(i => {
+        const path = i.path?.length ? `[${i.path.join(".")}]` : "";
+        return `${path} ${i.message}`.trim();
+      });
+
+      if (this.debugMode) {
+        console.error("❌ [DEBUG] Zod validation errors:", JSON.stringify(result.error.issues, null, 2));
+        console.error("🧩 [DEBUG] Offending JSON (first 800 chars):", raw.slice(0, 800));
+      }
+
+      throw new Error(
+        `LLM output failed validation against schema. Top issues: ${issues.join(" | ")}`
+      );
+    }
+
+    const usage = this.trackUsage((res as any).usage);
+    if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(result.data, null, 2));
+    return { content: result.data, raw, usage };
   }
   
 

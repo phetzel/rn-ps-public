@@ -20,14 +20,14 @@ export const generateSituationPlanSchema = baseSituationDataSchema.extend({
 });
 export type GenerateSituationPlan = z.infer<typeof generateSituationPlanSchema>;
 
-// Preferences
+// Preferences (use core base schema during generation to satisfy strict JSON Schema)
 export const generatePreferencesSchema = baseSituationPreferencesSchema;
 export type GeneratePreferences = z.infer<typeof generatePreferencesSchema>;
 
 // Outcomes
 export const generateBaseOutcomesSchema = z.object({
   outcomes: baseSituationOutcomeArraySchema,
-});
+}).strict();
 export type GenerateBaseOutcomes = z.infer<typeof generateBaseOutcomesSchema>;
 
 export const generateSituationOutcomeSchema = baseSituationOutcomeSchema.extend({
@@ -43,7 +43,7 @@ export const generateSituationOutcomeArraySchema = z
 
 export const generateOutcomesSchema = z.object({
   outcomes: generateSituationOutcomeArraySchema,
-});
+}).strict();
 export type GenerateOutcomes = z.infer<typeof generateOutcomesSchema>;
 
 // Exchanges
@@ -121,13 +121,13 @@ export const generateExchangeImpactSchema = z.object({
 }).strict();
 
 export const generateExchangeImpactsSchema = z.object({
-  president: generateExchangeImpactSchema.nullable(),
+  president: z.union([generateExchangeImpactSchema, z.null()]),
   cabinet: z.union([
-    z.record(z.string(), generateExchangeImpactSchema), // Allow any string key instead of strict enum
+    z.record(z.string(), generateExchangeImpactSchema),
     z.null()
   ]),
   journalists: z.union([
-    z.record(z.string(), generateExchangeImpactSchema), // Allow any string key instead of strict enum  
+    z.record(z.string(), generateExchangeImpactSchema),
     z.null()
   ]),
 }).strict();

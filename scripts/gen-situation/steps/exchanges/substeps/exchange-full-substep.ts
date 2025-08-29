@@ -12,6 +12,7 @@ import type {
   ExchangesPlanArray,
 } from "~/lib/schemas/generate";
 import { generateExchangeContentSchema } from "~/lib/schemas/generate";
+import { exchangeContentSchema } from "~/lib/schemas/exchanges";
 import { AnswerType } from "~/types";
 
 type ExchangeFullInput = {
@@ -68,12 +69,13 @@ export class ExchangeFullSubstep {
       // Phase 3: Assemble the complete exchange content
       const completeExchange = this.assembleExchange(questionsContent, impactsContent);
 
-      // Phase 4: Final validation
-      const validated = this.validateCompleteExchange(completeExchange, input);
+      // Phase 4: Normalize to core expectations (remove nulls → omit) and validate
+      const normalized = this.normalizeForCore(completeExchange);
+      const validated = this.validateCompleteExchange(normalized, input);
 
       console.log(`✅ Complete exchange generated for ${input.publicationPlan.publication}`);
       
-      return validated;
+      return validated as unknown as GenerateExchangeContent;
 
     } catch (error) {
       this.logger.logStepError(`ExchangeFullSubstep:${input.publicationPlan.publication}`, error as Error);
@@ -146,14 +148,66 @@ export class ExchangeFullSubstep {
   }
 
   /**
+   * Normalize generation output (nullable fields) to core schema expectations (optional fields)
+   */
+  private normalizeForCore(content: GenerateExchangeContent): GenerateExchangeContent {
+    const cleanAnswer = (a: any) => {
+      const out: any = { ...a };
+      // convert nullable fields to optional (remove when null)
+      if (out.authorizedCabinetMemberId === null) delete out.authorizedCabinetMemberId;
+      if (out.followUpId === null) delete out.followUpId;
+
+      if (out.impacts) {
+        const imp = { ...out.impacts };
+        if (imp.president === null) delete imp.president;
+        if (imp.cabinet === null) delete imp.cabinet;
+        if (imp.journalists === null) delete imp.journalists;
+
+        // scrub nullable reactions to optional
+        if (imp.president && imp.president.reaction === null) {
+          delete imp.president.reaction;
+        }
+        if (imp.cabinet) {
+          Object.keys(imp.cabinet).forEach((k) => {
+            if (imp.cabinet[k]?.reaction === null) delete imp.cabinet[k].reaction;
+          });
+        }
+        if (imp.journalists) {
+          Object.keys(imp.journalists).forEach((k) => {
+            if (imp.journalists[k]?.reaction === null) delete imp.journalists[k].reaction;
+          });
+        }
+
+        out.impacts = imp;
+      }
+      return out;
+    };
+
+    return {
+      rootQuestion: {
+        ...content.rootQuestion,
+        answers: content.rootQuestion.answers.map(cleanAnswer),
+      },
+      secondaryQuestions: content.secondaryQuestions.map((q) => ({
+        ...q,
+        answers: q.answers.map(cleanAnswer),
+      })),
+      tertiaryQuestions: content.tertiaryQuestions.map((q) => ({
+        ...q,
+        answers: q.answers.map(cleanAnswer),
+      })),
+    } as unknown as GenerateExchangeContent;
+  }
+
+  /**
    * Final validation of the complete exchange
    */
   private validateCompleteExchange(
     exchange: GenerateExchangeContent,
     input: ExchangeFullInput
   ): GenerateExchangeContent {
-    // Validate with Zod schema
-    const parsed = generateExchangeContentSchema.parse(exchange);
+    // Validate against core exchange schema (strict, non-nullable optionals)
+    const parsed = exchangeContentSchema.parse(exchange as any);
 
     // Additional business logic validation
     const outcomeIds = new Set(input.outcomes.outcomes.map(o => o.id));
@@ -195,6 +249,6 @@ export class ExchangeFullSubstep {
       }
     }
 
-    return parsed;
+    return parsed as unknown as GenerateExchangeContent;
   }
 }

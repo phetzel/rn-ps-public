@@ -26,18 +26,18 @@ function createDynamicImpactsSchema(outcomes: GenerateOutcomes["outcomes"]) {
     outcomeModifiersProperties[outcome.id] = z.number();
   });
 
-  // Use impact schema compatible with OpenAI strict mode (nullable instead of optional)
+  // Impact schema for strict mode; keep required with nullable reaction
   const generateExchangeImpactSchema = z.object({
     weight: z.nativeEnum(ExchangeImpactWeight),
-    reaction: z.string().nullable(), // OpenAI strict mode prefers nullable over optional
+    reaction: z.string().nullable(),
   }).strict();
 
-  // Use catchall pattern for OpenAI strict mode - allows LLM to generate only relevant entities
+  // Properties required but can be null; dynamic members via catchall
   const dynamicExchangeImpactsSchema = z.object({
-    president: z.union([generateExchangeImpactSchema, z.null()]), // Required field but can be null
-    cabinet: z.union([z.object({}).catchall(generateExchangeImpactSchema), z.null()]), // Dynamic cabinet members only when relevant
-    journalists: z.union([z.object({}).catchall(generateExchangeImpactSchema), z.null()]), // Dynamic journalist IDs only when relevant  
-  }).strict(); // Safe to use strict mode with catchall pattern
+    president: z.union([generateExchangeImpactSchema, z.null()]),
+    cabinet: z.union([z.object({}).catchall(generateExchangeImpactSchema), z.null()]),
+    journalists: z.union([z.object({}).catchall(generateExchangeImpactSchema), z.null()]),
+  }).strict();
   
   const dynamicAnswerImpactSchema = z.object({
     answerId: idSchema,

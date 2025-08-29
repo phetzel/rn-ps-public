@@ -43,10 +43,11 @@ export function buildPreferencesRequest(
       `- Only one cabinet member may include authorizedContent if they plausibly have confidential insight on THIS situation.`,
     ].join("\n");
   
-    const jsonSchema = zodToJsonSchema(baseSituationPreferencesSchema, {
-      target: "jsonSchema7",
-      $refStrategy: "none",
-    });
+  // Use strict schema for Structured Outputs (OpenAI requires additionalProperties=false)
+  const jsonSchema = zodToJsonSchema(baseSituationPreferencesSchema, {
+    target: "jsonSchema7",
+    $refStrategy: "none",
+  });
 
     return {
         prompt,
@@ -55,10 +56,10 @@ export function buildPreferencesRequest(
           instructions,
           // omit temperature for gpt-5 (unsupported)
           maxOutputTokens: 16000,
-          schema: baseSituationPreferencesSchema, // parse + then refined by situationPreferencesSchema later if you prefer
-          schemaName: "situation_preferences",
-          jsonSchema,
-        },
-      };
-    }
+        schema: baseSituationPreferencesSchema, // strict during generation; final validator enforces core too
+        schemaName: "situation_preferences",
+        jsonSchema,
+      },
+    };
+  }
     
