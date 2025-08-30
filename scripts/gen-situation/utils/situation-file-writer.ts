@@ -25,7 +25,8 @@ function extractSituationComponents(situation: SituationData): {
   return {
     outcomes: situation.content.outcomes,
     preferences: situation.content.preferences,
-    exchanges: situation.exchanges.map(ex => ex.content)
+    // Preserve full ExchangeData objects so we keep publication for filenames
+    exchanges: situation.exchanges
   };
 }
 
@@ -111,23 +112,90 @@ function generateOutcomesFile(
   outcomes: SituationOutcome[],
   variableName: string
 ): string {
+  const cabKey = (k: string) => {
+    const map: Record<string, string> = {
+      state: "CabinetStaticId.State",
+      treasury: "CabinetStaticId.Treasury",
+      defense: "CabinetStaticId.Defense",
+      justice: "CabinetStaticId.Justice",
+      hhs: "CabinetStaticId.HHS",
+      homeland: "CabinetStaticId.Homeland",
+    };
+    return map[k] ?? `CabinetStaticId.${k}`;
+  };
+  const subgroupKey = (k: string) => {
+    const map: Record<string, string> = {
+      left_wing_base: "SubgroupStaticId.LeftWingBase",
+      right_wing_base: "SubgroupStaticId.RightWingBase",
+      independent_base: "SubgroupStaticId.IndependentBase",
+      youth_voters: "SubgroupStaticId.YouthVoters",
+      seniors_citizens: "SubgroupStaticId.SeniorsCitizens",
+      rural_residents: "SubgroupStaticId.RuralResidents",
+      urban_residents: "SubgroupStaticId.UrbanResidents",
+      labor_unions: "SubgroupStaticId.LaborUnions",
+      business_leaders: "SubgroupStaticId.BusinessLeaders",
+      tech_industry: "SubgroupStaticId.TechIndustry",
+    };
+    return map[k] ?? `SubgroupStaticId.${k}`;
+  };
+  const consWeight = (n: number) => {
+    if (n >= 13) return "SituationConsequenceWeight.StronglyPositive";
+    if (n >= 9) return "SituationConsequenceWeight.Positive";
+    if (n >= 4) return "SituationConsequenceWeight.SlightlyPositive";
+    if (n <= -13) return "SituationConsequenceWeight.StronglyNegative";
+    if (n <= -9) return "SituationConsequenceWeight.Negative";
+    if (n <= -4) return "SituationConsequenceWeight.SlightlyNegative";
+    return "SituationConsequenceWeight.Neutral";
+  };
+
+  const items = outcomes
+    .map((o) => {
+      const cabEntries = o.consequences?.approvalChanges?.cabinet
+        ? Object.entries(o.consequences.approvalChanges.cabinet).map(
+            ([k, v]) => `          [${cabKey(k)}]: ${consWeight(v as any)},`
+          )
+        : [];
+
+      const subgroupEntries = o.consequences?.approvalChanges?.subgroups
+        ? Object.entries(o.consequences.approvalChanges.subgroups).map(
+            ([k, v]) => `          [${subgroupKey(k)}]: ${consWeight(v as any)},`
+          )
+        : [];
+
+      const cabBlock = cabEntries.length
+        ? `        cabinet: {
+${cabEntries.join("\n")}
+        },\n`
+        : "";
+      const subgroupBlock = subgroupEntries.length
+        ? `        subgroups: {
+${subgroupEntries.join("\n")}
+        },\n`
+        : "";
+
+      return `  {
+    id: ${JSON.stringify(o.id)},
+    title: ${JSON.stringify(o.title)},
+    description: ${JSON.stringify(o.description)},
+    weight: ${o.weight},
+    consequences: {
+      approvalChanges: {
+${cabBlock}${subgroupBlock}      },
+    },
+  }`;
+    })
+    .join(",\n");
+
   return `import {
   SituationConsequenceWeight,
   CabinetStaticId,
   SubgroupStaticId,
-  type SituationOutcome,
 } from "~/types";
+import type { SituationOutcome } from "~/lib/schemas/situations";
 
-export const ${variableName}: SituationOutcome[] = ${JSON.stringify(
-    outcomes,
-    null,
-    2
-  )
-    .replace(/"([A-Z][a-zA-Z]+)":/g, "$1:")
-    .replace(/: "([A-Z][a-zA-Z]+\.[\w]+)"/g, ": $1")
-    .replace(/SituationConsequenceWeight\./g, "SituationConsequenceWeight.")
-    .replace(/CabinetStaticId\./g, "CabinetStaticId.")
-    .replace(/SubgroupStaticId\./g, "SubgroupStaticId.")};
+export const ${variableName}: SituationOutcome[] = [
+${items}
+];
 `;
 }
 
@@ -138,16 +206,53 @@ function generatePreferencesFile(
   preferences: SituationPreferences,
   variableName: string
 ): string {
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+  const answerTypeEnum = (s: string) => `AnswerType.${cap(s)}`;
+  const cabKey = (k: string) => {
+    const map: Record<string, string> = {
+      state: "CabinetStaticId.State",
+      treasury: "CabinetStaticId.Treasury",
+      defense: "CabinetStaticId.Defense",
+      justice: "CabinetStaticId.Justice",
+      hhs: "CabinetStaticId.HHS",
+      homeland: "CabinetStaticId.Homeland",
+    };
+    return map[k] ?? `CabinetStaticId.${k}`;
+  };
+
+  const pres = preferences.president;
+  const presBlock = `  president: {
+    answerType: ${answerTypeEnum((pres as any).answerType)},
+    rationale: ${JSON.stringify(pres ? pres.rationale : null)},
+  },`;
+
+  const cab = preferences.cabinet || {};
+  const cabEntries = Object.entries(cab).map(([k, v]) => {
+    const pref = (v as any).preference;
+    const auth = (v as any).authorizedContent;
+    const lines = [
+      `    [${cabKey(k)}]: {`,
+      `      preference: {`,
+      `        answerType: ${answerTypeEnum(pref.answerType)},`,
+      `        rationale: ${JSON.stringify(pref.rationale)},`,
+      `      },`,
+    ];
+    if (auth) lines.push(`      authorizedContent: ${JSON.stringify(auth)},`);
+    lines.push(`    },`);
+    return lines.join("\n");
+  });
+
+  const cabBlock = cabEntries.length
+    ? `  cabinet: {
+${cabEntries.join("\n")}  },`
+    : "";
+
   return `import { AnswerType, CabinetStaticId, type SituationPreferences } from "~/types";
 
-export const ${variableName}: SituationPreferences = ${JSON.stringify(
-    preferences,
-    null,
-    2
-  )
-    .replace(/: "([A-Z][a-zA-Z]+\.[\w]+)"/g, ": $1")
-    .replace(/AnswerType\./g, "AnswerType.")
-    .replace(/CabinetStaticId\./g, "CabinetStaticId.")};
+export const ${variableName}: SituationPreferences = {
+${presBlock}
+${cabBlock}
+};
 `;
 }
 
@@ -158,22 +263,83 @@ function generateExchangeFile(
   exchange: ExchangeData,
   variableName: string
 ): string {
+  // Start from JSON and progressively transform to idiomatic TS with enums
+  let body = JSON.stringify(exchange, null, 2);
+
+  // Map publication string to PublicationStaticId enum
+  const pubMap: Record<string, string> = {
+    lib_primary: "PublicationStaticId.LibPrimary",
+    con_primary: "PublicationStaticId.ConPrimary",
+    independent_primary: "PublicationStaticId.IndependentPrimary",
+    investigative: "PublicationStaticId.Investigative",
+  };
+  body = body.replace(/"publication"\s*:\s*"(lib_primary|con_primary|independent_primary|investigative)"/g, (_m, p1) => {
+    return `publication: ${pubMap[p1]}`;
+  });
+
+  // Map answer type strings to AnswerType enum
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+  body = body.replace(/"type"\s*:\s*"(deflect|reassure|challenge|admit|deny|inform|authorized)"/g, (_m, p1) => {
+    return `type: AnswerType.${cap(p1)}`;
+  });
+
+  // Map authorizedCabinetMemberId strings to CabinetStaticId enum
+  const cabMap: Record<string, string> = {
+    state: "CabinetStaticId.State",
+    treasury: "CabinetStaticId.Treasury",
+    defense: "CabinetStaticId.Defense",
+    justice: "CabinetStaticId.Justice",
+    hhs: "CabinetStaticId.HHS",
+    homeland: "CabinetStaticId.Homeland",
+  };
+  body = body.replace(/"authorizedCabinetMemberId"\s*:\s*"(state|treasury|defense|justice|hhs|homeland)"/g, (_m, p1) => {
+    return `authorizedCabinetMemberId: ${cabMap[p1]}`;
+  });
+
+  // Map impact weights numbers to ExchangeImpactWeight enum when they match exactly known values
+  const weightMap: Record<string, string> = {
+    "6": "ExchangeImpactWeight.StronglyPositive",
+    "4": "ExchangeImpactWeight.Positive",
+    "2": "ExchangeImpactWeight.SlightlyPositive",
+    "0": "ExchangeImpactWeight.Neutral",
+    "-2": "ExchangeImpactWeight.SlightlyNegative",
+    "-4": "ExchangeImpactWeight.Negative",
+    "-6": "ExchangeImpactWeight.StronglyNegative",
+  };
+  body = body.replace(/"weight"\s*:\s*(-?\d+)/g, (_m, p1) => {
+    return weightMap[p1] ? `weight: ${weightMap[p1]}` : `weight: ${p1}`;
+  });
+
+  // Map outcomeModifiers values to OutcomeModifierWeight enum (best-fit buckets)
+  const outWeight = (n: number) => {
+    if (n >= 11) return "OutcomeModifierWeight.MajorPositive";
+    if (n >= 7) return "OutcomeModifierWeight.StrongPositive";
+    if (n >= 5) return "OutcomeModifierWeight.ModeratePositive";
+    if (n >= 1) return "OutcomeModifierWeight.SlightPositive";
+    if (n <= -11) return "OutcomeModifierWeight.MajorNegative";
+    if (n <= -7) return "OutcomeModifierWeight.StrongNegative";
+    if (n <= -5) return "OutcomeModifierWeight.ModerateNegative";
+    if (n <= -1) return "OutcomeModifierWeight.SlightNegative";
+    return "OutcomeModifierWeight.Neutral";
+  };
+  body = body.replace(/("outcomeModifiers"\s*:\s*\{)([\s\S]*?)(\})/g, (_m, p1, p2, p3) => {
+    const replaced = p2.replace(/:\s*(-?\d+)/g, (_m2: string, n: string) => `: ${outWeight(parseInt(n, 10))}`);
+    return `${p1}${replaced}${p3}`;
+  });
+
+  // Finally, remove quotes around object keys for cleaner TS
+  body = body.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, "$1:");
+
   return `import {
   AnswerType,
   ExchangeImpactWeight,
   OutcomeModifierWeight,
   CabinetStaticId,
   PublicationStaticId,
-  type ExchangeData,
 } from "~/types";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
-export const ${variableName}: ExchangeData = ${JSON.stringify(exchange, null, 2)
-    .replace(/: "([A-Z][a-zA-Z]+\.[\w]+)"/g, ": $1")
-    .replace(/AnswerType\./g, "AnswerType.")
-    .replace(/ExchangeImpactWeight\./g, "ExchangeImpactWeight.")
-    .replace(/OutcomeModifierWeight\./g, "OutcomeModifierWeight.")
-    .replace(/CabinetStaticId\./g, "CabinetStaticId.")
-    .replace(/PublicationStaticId\./g, "PublicationStaticId.")};
+export const ${variableName}: ExchangeData = ${body};
 `;
 }
 
@@ -192,7 +358,7 @@ function generateExchangesIndexFile(
     })
     .join("\n");
 
-  return `import type { ExchangeData } from "~/types";
+  return `import type { ExchangeData } from "~/lib/schemas/exchanges";
 ${imports}
 
 export const ${variableName}: ExchangeData[] = [

@@ -51,68 +51,112 @@ export class LLMClient {
       previousResponseId,
     } = opts;
 
-    const req: any = {
-      model,
-      instructions,                  // ← system guidance here
-      input: prompt,                 // ← user ask here
-      // temperature,
-      max_output_tokens: maxOutputTokens,
-      text: {
-        format: {
-          type: "json_schema",
-          name: schemaName,
-          schema: jsonSchema,
-          strict: true,
-        },
-      },
+    // Helper to strip code fences and try to isolate a JSON object
+    const extractJsonText = (rawText: string): string => {
+      let txt = (rawText ?? "").trim();
+      if (txt.startsWith("```")) {
+        // Remove leading fence and optional language
+        const firstFenceEnd = txt.indexOf("\n");
+        txt = firstFenceEnd >= 0 ? txt.slice(firstFenceEnd + 1) : txt;
+        const lastFenceStart = txt.lastIndexOf("```");
+        if (lastFenceStart >= 0) txt = txt.slice(0, lastFenceStart);
+        txt = txt.trim();
+      }
+      // Fallback: take the largest {...} block
+      const first = txt.indexOf("{");
+      const last = txt.lastIndexOf("}");
+      if (first >= 0 && last > first) {
+        return txt.slice(first, last + 1);
+      }
+      return txt;
     };
-    if (previousResponseId) req.previous_response_id = previousResponseId;
 
-    let res: any;
-    try {
-      res = await this.client.responses.create(req);
-    } catch (apiErr: any) {
-      const msg = apiErr?.message || String(apiErr);
-      throw new Error(`OpenAI API error: ${msg}`);
-    }
+    const maxAttempts = 1;
+    let lastError: Error | null = null;
+    let priorId: string | undefined = previousResponseId;
 
-    const raw = (res as any).output_text ?? ""; // aggregated text output
-    if (this.debugMode) {
-      console.log("🧩 [DEBUG] Raw model output (first 400 chars):", raw.slice(0, 400));
-    }
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const attemptInstructions =
+        attempt === 1
+          ? instructions
+          : `${instructions}\n\nReturn ONLY valid JSON that strictly matches the schema. No commentary, no code fences, no trailing text.`;
 
-    // Try JSON.parse with helpful error messages
-    let parsedJson: unknown;
-    try {
-      parsedJson = JSON.parse(raw);
-    } catch (parseErr: any) {
-      const snippet = raw.slice(0, 400);
-      throw new Error(
-        `Model returned non-JSON or malformed JSON. Parse error: ${parseErr?.message || parseErr}. Raw snippet: ${snippet}`
-      );
-    }
+      const req: any = {
+        model,
+        instructions: attemptInstructions,
+        input: prompt,
+        // temperature,
+        max_output_tokens: maxOutputTokens,
+        text: {
+          format: {
+            type: "json_schema",
+            name: schemaName,
+            schema: jsonSchema,
+            strict: true,
+          },
+        },
+      };
+      if (priorId) req.previous_response_id = priorId;
 
-    // Validate with Zod but prefer safeParse for better diagnostics
-    const result = (schema as z.ZodSchema<T>).safeParse(parsedJson);
-    if (!result.success) {
-      const issues = result.error.issues.slice(0, 5).map(i => {
-        const path = i.path?.length ? `[${i.path.join(".")}]` : "";
-        return `${path} ${i.message}`.trim();
-      });
-
-      if (this.debugMode) {
-        console.error("❌ [DEBUG] Zod validation errors:", JSON.stringify(result.error.issues, null, 2));
-        console.error("🧩 [DEBUG] Offending JSON (first 800 chars):", raw.slice(0, 800));
+      let res: any;
+      try {
+        res = await this.client.responses.create(req);
+      } catch (apiErr: any) {
+        const msg = apiErr?.message || String(apiErr);
+        throw new Error(`OpenAI API error: ${msg}`);
       }
 
-      throw new Error(
-        `LLM output failed validation against schema. Top issues: ${issues.join(" | ")}`
-      );
+      const raw = (res as any).output_text ?? ""; // aggregated text output
+      if (this.debugMode) {
+        console.log(
+          `🧩 [DEBUG] Raw model output (attempt ${attempt}, first 400 chars):`,
+          raw.slice(0, 400)
+        );
+      }
+
+      // Keep id to optionally chain retries
+      priorId = (res as any)?.id ?? priorId;
+
+      // Try JSON.parse with helpful error messages and light repair
+      let parsedJson: unknown;
+      try {
+        const jsonText = extractJsonText(raw);
+        parsedJson = JSON.parse(jsonText);
+      } catch (parseErr: any) {
+        lastError = new Error(
+          `Model returned non-JSON or malformed JSON. Parse error: ${parseErr?.message || parseErr}. Raw snippet: ${(raw ?? "").slice(0, 400)}`
+        );
+        if (attempt < maxAttempts) continue;
+        throw lastError;
+      }
+
+      // Validate with Zod but prefer safeParse for better diagnostics
+      const result = (schema as z.ZodSchema<T>).safeParse(parsedJson);
+      if (!result.success) {
+        const issues = result.error.issues.slice(0, 5).map(i => {
+          const path = i.path?.length ? `[${i.path.join(".")}]` : "";
+          return `${path} ${i.message}`.trim();
+        });
+
+        if (this.debugMode) {
+          console.error("❌ [DEBUG] Zod validation errors:", JSON.stringify(result.error.issues, null, 2));
+          console.error("🧩 [DEBUG] Offending JSON (first 800 chars):", ((res as any).output_text ?? "").slice(0, 800));
+        }
+
+        lastError = new Error(
+          `LLM output failed validation against schema. Top issues: ${issues.join(" | ")}`
+        );
+        if (attempt < maxAttempts) continue;
+        throw lastError;
+      }
+
+      const usage = this.trackUsage((res as any).usage);
+      if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(result.data, null, 2));
+      return { content: result.data, raw: (res as any).output_text, usage };
     }
 
-    const usage = this.trackUsage((res as any).usage);
-    if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(result.data, null, 2));
-    return { content: result.data, raw, usage };
+    // Should not reach here
+    throw lastError ?? new Error("Unknown error generating LLM response");
   }
   
 
