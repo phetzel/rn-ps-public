@@ -11,7 +11,11 @@ import { ValidatedExchangeData } from "./exchanges";
 
 // Plan
 export const generateSituationPlanSchema = baseSituationDataSchema.extend({
-  reasoning: z.string().min(10).describe("Why this situation improves balance"),
+  reasoning: z
+    .string()
+    .min(10)
+    .max(200)
+    .describe("Why this situation improves balance"),
   involvedEntities: z.object({
     cabinetMembers: z.array(cabinetMemberSchema).min(1),
     subgroups: z.array(subgroupSchema).min(1),
@@ -95,7 +99,7 @@ export const baseAnswerSchema = z.object({
   text: textLengthSchema.answerText,
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
-  followUpId: z.string().nullable(),
+  followUpId: idSchema.nullable(),
 }).strict();
 
 // Generation-specific schemas with nullable() for OpenAI strict mode
@@ -104,7 +108,7 @@ export const generateBaseAnswerSchema = z.object({
   text: textLengthSchema.answerText,
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
-  followUpId: z.string().nullable(),
+  followUpId: idSchema.nullable(),
   outcomeModifiers: z.record(z.string(), z.number()),
 }).strict();
 
@@ -134,7 +138,8 @@ export type GenerateBaseExchangeContent = z.infer<typeof generateBaseExchangeCon
 // Generate schemas for impacts (OpenAI compatible)
 export const generateExchangeImpactSchema = z.object({
   weight: z.nativeEnum(ExchangeImpactWeight),
-  reaction: z.string().nullable(),
+  // Align with core: when present, 20–100 chars; allow null during generation
+  reaction: z.string().min(20).max(100).nullable(),
 }).strict();
 
 export const generateExchangeImpactsSchema = z.object({
@@ -155,7 +160,7 @@ export const generateFullAnswerSchema = z.object({
   text: textLengthSchema.answerText,
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
-  followUpId: z.string().nullable(),
+  followUpId: idSchema.nullable(),
   outcomeModifiers: z.record(z.string(), z.number()),
   impacts: generateExchangeImpactsSchema,
 }).strict();
@@ -181,7 +186,7 @@ export const generateQuestionOnlyAnswerSchema = z.object({
   text: textLengthSchema.answerText,
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
-  followUpId: z.string().nullable(),
+  followUpId: idSchema.nullable(),
 }).strict();
 
 export const generateQuestionOnlySchema = z.object({

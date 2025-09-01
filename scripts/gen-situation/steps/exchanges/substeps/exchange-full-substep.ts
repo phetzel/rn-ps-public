@@ -169,12 +169,16 @@ export class ExchangeFullSubstep {
         }
         if (imp.cabinet) {
           Object.keys(imp.cabinet).forEach((k) => {
-            if (imp.cabinet[k]?.reaction === null) delete imp.cabinet[k].reaction;
+            if (imp.cabinet[k]?.reaction === null) {
+              delete imp.cabinet[k].reaction;
+            }
           });
         }
         if (imp.journalists) {
           Object.keys(imp.journalists).forEach((k) => {
-            if (imp.journalists[k]?.reaction === null) delete imp.journalists[k].reaction;
+            if (imp.journalists[k]?.reaction === null) {
+              delete imp.journalists[k].reaction;
+            }
           });
         }
 

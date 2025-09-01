@@ -26,10 +26,11 @@ function createDynamicImpactsSchema(outcomes: GenerateOutcomes["outcomes"]) {
     outcomeModifiersProperties[outcome.id] = z.number();
   });
 
-  // Impact schema for strict mode; keep required with nullable reaction
+  // Impact schema for strict mode; enforce reaction length when provided
   const generateExchangeImpactSchema = z.object({
     weight: z.nativeEnum(ExchangeImpactWeight),
-    reaction: z.string().nullable(),
+    // Match core constraints: 20-100 chars when present; allow null to omit
+    reaction: z.string().min(20).max(100).nullable(),
   }).strict();
 
   // Properties required but can be null; dynamic members via catchall
@@ -109,7 +110,7 @@ IMPACTS RULES:
 - Each question must include at least one answer with positive impact and one with negative impact overall
 - No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question
 - Impact weights: VeryNegative, Negative, Neutral, Positive, VeryPositive
-- Reaction text should be brief and relevant to the impact
+ - Reaction: 20–100 characters and relevant to the impact; if you cannot provide a meaningful reaction, set it to null
 
 STRUCTURE:
 - Generate exactly ${[questionsContent.rootQuestion, ...questionsContent.secondaryQuestions, ...questionsContent.tertiaryQuestions].length} questionImpacts entries
