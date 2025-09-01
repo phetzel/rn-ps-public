@@ -64,31 +64,7 @@ export const conPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_hack_system_separation",
         },
-        {
-          id: "a_health_deny",
-          type: AnswerType.Deny,
-          text: "This was a harmless prank, not a cybersecurity threat. There are no broader implications for any other systems, including medical infrastructure.",
-          impacts: {
-            president: { weight: ExchangeImpactWeight.Positive },
-            cabinet: {
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-            },
-          },
-          outcomeModifiers: {
-            outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
-            outcome_hack_diplomatic_crisis:
-              OutcomeModifierWeight.SlightNegative,
-            outcome_hack_health_scare: OutcomeModifierWeight.StrongPositive,
-          },
-        },
+        
         {
           id: "a_health_reassure",
           type: AnswerType.Reassure,
@@ -198,6 +174,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
             },
           },
+          {
+            id: "a_rural_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish risk assessments, improvement milestones, and service continuity plans for rural providers in coordination with states.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -258,6 +241,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
+          },
+          {
+            id: "a_separation_neutral",
+            type: AnswerType.Inform,
+            text: "We will provide non-sensitive architecture overviews and third-party validations to strengthen public confidence without disclosing sensitive details.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -336,6 +326,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
             },
           },
+          {
+            id: "a_funding_neutral",
+            type: AnswerType.Inform,
+            text: "We will outline funding sources, cost sharing mechanisms, and accountability metrics for any upgrades affecting critical health logistics.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -399,6 +396,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_hack_health_scare: OutcomeModifierWeight.StrongPositive,
             },
+          },
+          {
+            id: "a_credibility_neutral",
+            type: AnswerType.Inform,
+            text: "We appreciate diverse expert perspectives and will publish how inputs inform policy decisions through transparent, conflict-aware processes.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

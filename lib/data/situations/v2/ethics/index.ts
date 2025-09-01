@@ -1,6 +1,6 @@
-import type { SituationData } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { cabinetBudgetBrawl } from "./cabinet-budget-brawl";
 
-export const ethicsSituationsData: SituationData[] = [
-  cabinetBudgetBrawl
+export const ethicsSituationsData: SituationDataType[] = [
+  cabinetBudgetBrawl,
 ];

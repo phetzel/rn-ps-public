@@ -97,27 +97,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
           },
         },
-        {
-          id: "a_defense_deny",
-          type: AnswerType.Deny,
-          text: "This isn't about national security concerns. Homeland Security confirms there are no domestic threats from this trade disagreement.",
-          impacts: {
-            cabinet: {
-              [CabinetStaticId.Homeland]: {
-                weight: ExchangeImpactWeight.Positive,
-              },
-              [CabinetStaticId.Justice]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-            },
-          },
-          outcomeModifiers: {
-            outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
-            outcome_cheese_tariffs_hurt_farmers:
-              OutcomeModifierWeight.SlightPositive,
-            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
-          },
-        },
+        
       ],
     },
     secondaryQuestions: [
@@ -185,6 +165,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
+          },
+          {
+            id: "a_legal_neutral",
+            type: AnswerType.Inform,
+            text: "We will document the legal chain of decisions and provide public-facing summaries to reinforce that policy moves through proper channels.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -257,6 +244,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
+          {
+            id: "a_nationalism_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish a clear set of foreign policy priorities and timelines to show how this fits alongside other workstreams.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
     ],
@@ -324,6 +318,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
+          },
+          {
+            id: "a_economic_neutral",
+            type: AnswerType.Inform,
+            text: "Commerce will monitor consumer prices and publish mitigation options, including targeted relief if thresholds are exceeded.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -398,6 +399,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
+          },
+          {
+            id: "a_timing_neutral",
+            type: AnswerType.Inform,
+            text: "We will release a public schedule of diplomatic engagements to clarify sequencing and prevent signal confusion.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

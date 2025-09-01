@@ -66,12 +66,12 @@ export const fakeAlienInvasionAlertOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Defense]: SituationConsequenceWeight.Positive,
+          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyPositive,
           [CabinetStaticId.Treasury]:
             SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Positive,
+          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.Negative,

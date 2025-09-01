@@ -162,6 +162,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_small_business_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish a small business navigator, phase-in schedules, and automatic safe harbors to keep compliance straightforward and affordable.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -226,6 +233,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_revenue_neutral",
+            type: AnswerType.Inform,
+            text: "Treasury will publish sensitivity analyses and contingency plans to maintain workforce funding even under relocation scenarios.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
     ],
@@ -288,6 +302,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_compliance_neutral",
+            type: AnswerType.Inform,
+            text: "We'll publish a one-page compliance checklist and API access to automate reporting; small firms can opt into simplified filing.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -347,6 +368,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_disruption_neutral",
+            type: AnswerType.Inform,
+            text: "We will track productivity, wages, and investment and publish results so policy can be tuned to support sustainable innovation.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

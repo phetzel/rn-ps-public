@@ -159,6 +159,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
             },
           },
+          {
+            id: "a_taxpayer_neutral",
+            type: AnswerType.Inform,
+            text: "We will provide transparent daily figures, fiscal tradeoffs, and independent verification so families understand both costs and benefits.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -229,6 +236,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
             },
           },
+          {
+            id: "a_union_neutral",
+            type: AnswerType.Inform,
+            text: "We are reviewing accountability options with states while prioritizing swift return-to-learning plans and student support.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
     ],
@@ -297,6 +311,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_budget_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish a full fiscal analysis comparing emergency support with alternative approaches, including projected educational outcomes.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -360,6 +381,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
               outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0 (changed from -4)
             },
+          },
+          {
+            id: "a_legal_neutral",
+            type: AnswerType.Inform,
+            text: "We are coordinating with local authorities and education leaders on lawful remedies that prioritize classroom reopening and student well-being.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

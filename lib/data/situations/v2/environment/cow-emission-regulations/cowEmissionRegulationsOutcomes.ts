@@ -70,7 +70,7 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.Negative,
         },
       },
     },

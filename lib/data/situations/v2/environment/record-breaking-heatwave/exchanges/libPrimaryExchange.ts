@@ -90,6 +90,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_heatwave_infrastructure_failure",
         },
+        {
+          id: "a_climate_neutral",
+          type: AnswerType.Inform,
+          text: "We're releasing a transparent scientific advisory process and will not move forward without rigorous peer review.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
       ],
     },
     secondaryQuestions: [
@@ -177,8 +184,15 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_heatwave_cloud_seeding_backfire:
                 OutcomeModifierWeight.StrongNegative, // -8
-            },
           },
+        },
+        {
+          id: "a_risks_neutral",
+          type: AnswerType.Inform,
+          text: "Any research will include public comment, ethical review, and international coordination to avoid unintended consequences.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
       {
@@ -254,6 +268,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_heatwave_cloud_seeding_backfire:
                 OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_infrastructure_neutral",
+            type: AnswerType.Inform,
+            text: "We’ll publish shovel-ready projects, funding sources, and timelines so communities can see exactly what resilience work happens next.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -334,10 +355,17 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_heatwave_cooling_grants:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.Neutral, // 0
-            },
+          outcome_heatwave_cloud_seeding_backfire:
+            OutcomeModifierWeight.Neutral, // 0
           },
+        },
+        {
+          id: "a_relief_neutral",
+          type: AnswerType.Inform,
+          text: "We'll publish capacity dashboards and deploy mobile teams to neighborhoods furthest from cooling centers.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
       {
@@ -409,10 +437,17 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_heatwave_cooling_grants:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.Neutral, // 0
-            },
+          outcome_heatwave_cloud_seeding_backfire:
+            OutcomeModifierWeight.Neutral, // 0
           },
+        },
+        {
+          id: "a_federal_neutral",
+          type: AnswerType.Inform,
+          text: "We'll report weekly on utility performance and consider temporary federal coordination where outages persist.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
     ],

@@ -85,6 +85,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_coffee_storage_risks",
         },
+        {
+          id: "a_necessity_neutral",
+          type: AnswerType.Inform,
+          text: "We will set clear reserve criteria, publish triggers and safeguards, and consult internationally to avoid unintended precedent.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
       ],
     },
     secondaryQuestions: [
@@ -154,6 +161,13 @@ export const independentPrimaryExchange: ExchangeData = {
             },
             followUpId: "q_coffee_quality_control",
           },
+          {
+            id: "a_health_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish medical guidance and limit-setting principles so this policy addresses disruption risk without promoting consumption.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -216,6 +230,13 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_storage_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish audit schedules, spoilage thresholds, and corrective protocols with independent oversight.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -287,6 +308,13 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_quality_neutral",
+            type: AnswerType.Inform,
+            text: "Quality protocols and rotating inventory will be published with public dashboards to verify performance and freshness standards are met.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -348,6 +376,13 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_market_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish economic monitoring and guardrails so reserve operations stabilize supply only during genuine emergencies.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

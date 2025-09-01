@@ -67,7 +67,7 @@ export const teachersStrikeBackOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.LaborUnions]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.Negative,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:

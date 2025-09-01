@@ -152,6 +152,13 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
             },
           },
+          {
+            id: "a_authority_neutral",
+            type: AnswerType.Inform,
+            text: "We will seek broad legal and academic input before any proposal advances and will publish a full constitutional analysis for public review.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -216,6 +223,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
               outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_resistance_neutral",
+            type: AnswerType.Inform,
+            text: "We will convene industry, labor, and public health experts to evaluate voluntary options, timelines, and safeguards before any enforcement path is considered.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -284,6 +298,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_surveillance_neutral",
+            type: AnswerType.Inform,
+            text: "Privacy is foundational. We will publish a privacy impact assessment and consult independent advocates before any technical approach is selected.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -345,6 +366,13 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_curfew_voluntary_rollout:
                 OutcomeModifierWeight.SlightPositive, // +4
             },
+          },
+          {
+            id: "a_economic_neutral",
+            type: AnswerType.Inform,
+            text: "Treasury will publish detailed modeling and alternatives, engage small businesses and workers, and phase any changes to minimize disruption.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

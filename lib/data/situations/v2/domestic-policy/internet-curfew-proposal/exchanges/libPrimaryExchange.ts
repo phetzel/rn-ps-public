@@ -163,6 +163,13 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
             },
           },
+          {
+            id: "a_equity_neutral",
+            type: AnswerType.Inform,
+            text: "Additional context: we will publish detailed criteria and implementation milestones and solicit stakeholder feedback to ensure equitable access for all families.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -229,6 +236,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_curfew_voluntary_rollout:
                 OutcomeModifierWeight.SlightPositive, // +4
             },
+          },
+          {
+            id: "a_vulnerable_neutral",
+            type: AnswerType.Inform,
+            text: "We will release clear exemption criteria and work with labor, healthcare, and disability advocates to ensure legitimate nighttime access needs are accommodated fairly.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -297,6 +311,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_timeline_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish a phased rollout schedule, publish service levels, and invite public comment to validate that processing times meet real community needs.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -362,6 +383,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_curfew_voluntary_rollout:
                 OutcomeModifierWeight.SlightPositive, // +4
             },
+          },
+          {
+            id: "a_accountability_neutral",
+            type: AnswerType.Inform,
+            text: "In parallel, we will consult industry, researchers, and civil society on standards for responsible design and will report back with specific accountability proposals.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

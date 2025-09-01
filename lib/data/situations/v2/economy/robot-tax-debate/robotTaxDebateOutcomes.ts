@@ -69,7 +69,7 @@ export const robotTaxDebateOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.LaborUnions]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.Negative,
         },
       },
     },

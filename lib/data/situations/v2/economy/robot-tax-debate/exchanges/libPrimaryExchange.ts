@@ -159,6 +159,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_displacement_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish program eligibility rules, outreach plans for affected workers, and independent evaluation criteria to ensure support reaches people quickly.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -222,6 +229,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_accountability_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish clear criteria for tax applicability, enforcement safeguards, and mechanisms for appeal to keep the policy predictable and fair.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -288,6 +302,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_income_neutral",
+            type: AnswerType.Inform,
+            text: "We are consulting with workforce boards and seniors' advocates to design complementary supports and will publish pilots with measured outcomes.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -350,6 +371,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_inequality_neutral",
+            type: AnswerType.Inform,
+            text: "We will establish transparent oversight and publish enforcement results, closing loopholes and assessing impact on wealth distribution each quarter.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

@@ -168,6 +168,13 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
+          {
+            id: "a_conditions_neutral",
+            type: AnswerType.Inform,
+            text: "We will convene educators and families to set implementation standards and timelines and publish progress against those metrics.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -242,6 +249,13 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
             },
           },
+          {
+            id: "a_funding_neutral",
+            type: AnswerType.Inform,
+            text: "We will outline funding options, tradeoffs, and accountability measures, and invite public comment before final proposals are advanced.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
     ],
@@ -312,6 +326,13 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
+          {
+            id: "a_rights_neutral",
+            type: AnswerType.Inform,
+            text: "We are engaging unions and districts in a structured process to resolve disputes while protecting student learning and workplace rights.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -378,6 +399,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_strike_karaoke_compromise:
                 OutcomeModifierWeight.SlightNegative, // -4
             },
+          },
+          {
+            id: "a_reform_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish a roadmap for educator input, pilot evaluations, and evidence reviews before any systemic policy changes are rolled out.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

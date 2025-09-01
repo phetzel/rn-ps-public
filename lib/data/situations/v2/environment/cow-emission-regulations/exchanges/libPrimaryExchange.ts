@@ -62,10 +62,10 @@ export const libPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_legal_authority",
         },
-        {
-          id: "a_benefits_challenge",
-          type: AnswerType.Challenge,
-          text: "The Justice Department has clear regulatory authority under environmental law. We won't be intimidated by industry lawsuits when public health is at stake.",
+      {
+        id: "a_benefits_challenge",
+        type: AnswerType.Challenge,
+        text: "The Justice Department has clear regulatory authority under environmental law. We won't be intimidated by industry lawsuits when public health is at stake.",
           impacts: {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
@@ -82,9 +82,16 @@ export const libPrimaryExchange: ExchangeData = {
               OutcomeModifierWeight.SlightNegative, // -4
             outcome_legal_battles_intensify:
               OutcomeModifierWeight.SlightPositive, // +4
-            outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-          },
+          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
         },
+      },
+      {
+        id: "a_benefits_neutral",
+        type: AnswerType.Inform,
+        text: "We'll publish pilot program data and implementation timelines so communities can see how benefits are measured.",
+        impacts: {},
+        outcomeModifiers: {},
+      },
       ],
     },
     secondaryQuestions: [
@@ -158,8 +165,15 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_enforcement_compromise:
                 OutcomeModifierWeight.StrongNegative, // -8
             },
-            followUpId: "q_industry_resistance",
-          },
+          followUpId: "q_industry_resistance",
+        },
+        {
+          id: "a_data_neutral",
+          type: AnswerType.Inform,
+          text: "Independent evaluators will audit air quality and health outcomes with public dashboards for transparency.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
       {
@@ -234,8 +248,15 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_legal_battles_intensify:
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-            },
           },
+        },
+        {
+          id: "a_authority_neutral",
+          type: AnswerType.Inform,
+          text: "We'll release a legal brief summarizing case law and regulatory authority to address stakeholder concerns.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
     ],
@@ -304,9 +325,16 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_health_benefits_proven: OutcomeModifierWeight.Neutral, // 0
               outcome_legal_battles_intensify: OutcomeModifierWeight.Neutral, // 0
-              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-            },
-          },
+          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+        },
+      },
+      {
+        id: "a_resistance_neutral",
+        type: AnswerType.Inform,
+        text: "We'll expand technical assistance and grant programs in partnership with land-grant universities and co-ops.",
+        impacts: {},
+        outcomeModifiers: {},
+      },
         ],
       },
       {
@@ -376,8 +404,15 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_enforcement_compromise:
                 OutcomeModifierWeight.StrongNegative, // -8
-            },
           },
+        },
+        {
+          id: "a_enforcement_neutral",
+          type: AnswerType.Inform,
+          text: "We will publish enforcement protocols with clear thresholds, appeals, and grace periods for small operators.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
     ],

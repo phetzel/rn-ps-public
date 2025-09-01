@@ -82,6 +82,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_coffee_health_benefits",
         },
+        {
+          id: "a_cost_neutral",
+          type: AnswerType.Inform,
+          text: "We will present a full fiscal and policy rationale, including alternatives considered, and invite public comment before finalizing implementation details.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
       ],
     },
     secondaryQuestions: [
@@ -157,6 +164,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_storage_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish oversight plans, audit schedules, and transparency rules for any option considered so the public can evaluate risk and safeguards.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -221,6 +235,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_health_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish clear public health guidance and guardrails in consultation with medical experts while pursuing supply stability goals.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -288,6 +309,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
+          {
+            id: "a_timeline_neutral",
+            type: AnswerType.Inform,
+            text: "We will share a detailed timeline, responsible agencies, and progress updates so people can track delivery and hold us accountable.",
+            impacts: {},
+            outcomeModifiers: {},
+          },
         ],
       },
       {
@@ -349,6 +377,13 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_worker_neutral",
+            type: AnswerType.Inform,
+            text: "We will monitor worker outcomes with labor groups and publish metrics on hours, wages, and staffing to ensure shared benefits.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

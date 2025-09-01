@@ -149,10 +149,10 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
             },
           },
-          {
-            id: "a_enforcement_inform",
-            type: AnswerType.Inform,
-            text: "We're working with state agriculture departments to implement phased compliance, starting with larger operations before moving to family farms.",
+      {
+        id: "a_enforcement_inform",
+        type: AnswerType.Inform,
+        text: "We're working with state agriculture departments to implement phased compliance, starting with larger operations before moving to family farms.",
             impacts: {
               president: { weight: ExchangeImpactWeight.Neutral },
               cabinet: {
@@ -168,8 +168,15 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
             },
-            followUpId: "q_constitutional_authority",
-          },
+          followUpId: "q_constitutional_authority",
+        },
+        {
+          id: "a_enforcement_neutral",
+          type: AnswerType.Inform,
+          text: "We'll publish clear guidelines and timelines so producers know what's expected well before inspections begin.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
       {
@@ -218,10 +225,10 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
             },
           },
-          {
-            id: "a_economic_deflect",
-            type: AnswerType.Deflect,
-            text: "We're exploring innovative financing options and partnerships with agricultural lenders to minimize upfront costs for farmers.",
+      {
+        id: "a_economic_deflect",
+        type: AnswerType.Deflect,
+        text: "We're exploring innovative financing options and partnerships with agricultural lenders to minimize upfront costs for farmers.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
@@ -233,13 +240,20 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_health_benefits_proven: OutcomeModifierWeight.Neutral, // 0
               outcome_legal_battles_intensify: OutcomeModifierWeight.Neutral, // 0
-              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-            },
-          },
-        ],
+          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+        },
       },
-    ],
-    tertiaryQuestions: [
+      {
+        id: "a_economic_neutral",
+        type: AnswerType.Inform,
+        text: "We'll release a cost calculator and technical assistance program so small farms can plan upgrades without surprise expenses.",
+        impacts: {},
+        outcomeModifiers: {},
+      },
+      ],
+    },
+  ],
+  tertiaryQuestions: [
       {
         id: "q_constitutional_authority",
         text: "Where does the federal government get the constitutional authority to regulate what farmers put on their livestock? Isn't this a state issue?",
@@ -286,10 +300,10 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
-          {
-            id: "a_constitutional_deflect",
-            type: AnswerType.Deflect,
-            text: "We're confident in our legal authority and look forward to working with Congress to ensure this program has bipartisan support.",
+      {
+        id: "a_constitutional_deflect",
+        type: AnswerType.Deflect,
+        text: "We're confident in our legal authority and look forward to working with Congress to ensure this program has bipartisan support.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
@@ -301,15 +315,22 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_health_benefits_proven: OutcomeModifierWeight.Neutral, // 0
               outcome_legal_battles_intensify: OutcomeModifierWeight.Neutral, // 0
-              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-            },
-          },
-        ],
+          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+        },
       },
       {
-        id: "q_rural_values",
-        text: "This administration seems disconnected from rural values and traditions. How do you respond to farmers who say you don't understand their way of life?",
-        answers: [
+        id: "a_constitutional_neutral",
+        type: AnswerType.Inform,
+        text: "We'll publish a legal memorandum outlining statutory authorities and how state partners will be engaged.",
+        impacts: {},
+        outcomeModifiers: {},
+      },
+      ],
+    },
+    {
+      id: "q_rural_values",
+      text: "This administration seems disconnected from rural values and traditions. How do you respond to farmers who say you don't understand their way of life?",
+      answers: [
           {
             id: "a_rural_admit",
             type: AnswerType.Admit,
@@ -352,10 +373,10 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
             },
           },
-          {
-            id: "a_rural_deflect",
-            type: AnswerType.Deflect,
-            text: "This administration has invested billions in rural infrastructure and farm programs. We're partners with farming communities, not adversaries.",
+      {
+        id: "a_rural_deflect",
+        type: AnswerType.Deflect,
+        text: "This administration has invested billions in rural infrastructure and farm programs. We're partners with farming communities, not adversaries.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
@@ -367,11 +388,18 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_health_benefits_proven: OutcomeModifierWeight.Neutral, // 0
               outcome_legal_battles_intensify: OutcomeModifierWeight.Neutral, // 0
-              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-            },
-          },
-        ],
+          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+        },
       },
-    ],
+      {
+        id: "a_rural_neutral",
+        type: AnswerType.Inform,
+        text: "We'll expand listening sessions across farm states and adjust implementation where feedback shows unintended burdens.",
+        impacts: {},
+        outcomeModifiers: {},
+      },
+      ],
+    },
+  ],
   },
 };

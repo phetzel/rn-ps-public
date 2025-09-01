@@ -57,17 +57,17 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Deflect,
           text: "I'm not going to authenticate every piece of paper that gets leaked. What I will discuss is our legitimate national security priorities.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Defense]: {
-                weight: ExchangeImpactWeight.SlightlyPositive,
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
           },
           outcomeModifiers: {
             outcome_alert_shelved: OutcomeModifierWeight.SlightNegative,
             outcome_alert_panic: OutcomeModifierWeight.SlightPositive,
-            outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive,
+            outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
           },
         },
         {
@@ -75,10 +75,10 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Challenge,
           text: "I'd question your sourcing on this. Are you really going to run with unverified documents from anonymous sources?",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Defense]: {
-                weight: ExchangeImpactWeight.SlightlyPositive,
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
           },
@@ -132,23 +132,30 @@ export const investigativeExchange: ExchangeData = {
             },
             followUpId: "q_alert_timing",
           },
-          {
-            id: "a_sources_inform",
+        {
+          id: "a_sources_inform",
             type: AnswerType.Inform,
             text: "I can tell you that internal brainstorming happens in every administration, but that doesn't mean every idea gets seriously considered.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.Neutral,
               },
             },
+          },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
               outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
               outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
             },
+          },
+          {
+            id: "a_sources_neutral",
+            type: AnswerType.Inform,
+            text: "We will provide a document log and timelines to clarify how drafts are handled and rejected.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -156,28 +163,28 @@ export const investigativeExchange: ExchangeData = {
         id: "q_alert_who_proposed",
         text: "If this was a real proposal that was rejected, who originally suggested using a fake alien invasion to manipulate Congress?",
         answers: [
-          {
-            id: "a_who_proposed_deflect",
+        {
+          id: "a_who_proposed_deflect",
             type: AnswerType.Deflect,
             text: "I'm not going to throw any individual under the bus for participating in a hypothetical planning exercise that was properly rejected.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          impacts: {
+            cabinet: {
+              [CabinetStaticId.Defense]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
-            outcomeModifiers: {
-              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
-              outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
-              outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
-            },
           },
-          {
-            id: "a_who_proposed_inform",
+          outcomeModifiers: {
+            outcome_alert_shelved: OutcomeModifierWeight.Neutral,
+            outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
+            outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
+          },
+          },
+        {
+          id: "a_who_proposed_inform",
             type: AnswerType.Inform,
             text: "This came from lower-level staff as part of a broader readiness planning exercise. No senior officials endorsed this approach.",
             impacts: {
@@ -186,19 +193,19 @@ export const investigativeExchange: ExchangeData = {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.Neutral,
                 },
               },
             },
-            outcomeModifiers: {
-              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
-              outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
-              outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
-            },
+          outcomeModifiers: {
+            outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
+            outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
+            outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive,
+          },
             followUpId: "q_alert_oversight",
           },
-          {
-            id: "a_who_proposed_admit",
+        {
+          id: "a_who_proposed_admit",
             type: AnswerType.Admit,
             text: "Look, multiple departments contributed to this brainstorming, which is exactly why it was such a bad idea that got rejected quickly.",
             impacts: {
@@ -211,11 +218,18 @@ export const investigativeExchange: ExchangeData = {
                 },
               },
             },
-            outcomeModifiers: {
-              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
-              outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
-              outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
-            },
+          outcomeModifiers: {
+            outcome_alert_shelved: OutcomeModifierWeight.Neutral,
+            outcome_alert_panic: OutcomeModifierWeight.Neutral,
+            outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
+          },
+          },
+          {
+            id: "a_who_proposed_neutral",
+            type: AnswerType.Inform,
+            text: "We’re instituting cross-department reviews and ethical gates for future scenario planning.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -232,7 +246,7 @@ export const investigativeExchange: ExchangeData = {
             impacts: {
               cabinet: {
                 [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -265,25 +279,32 @@ export const investigativeExchange: ExchangeData = {
               outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive,
             },
           },
-          {
-            id: "a_timing_admit",
+        {
+          id: "a_timing_admit",
             type: AnswerType.Admit,
             text: "You're right that the timing looks terrible. That's exactly why we need to be extra careful about separating legitimate needs from this mess.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-                [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+          impacts: {
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.Neutral,
+              },
+              [CabinetStaticId.Defense]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
               outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
               outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
             },
+          },
+          {
+            id: "a_timing_neutral",
+            type: AnswerType.Inform,
+            text: "We’ll publish the budget schedule and link it to public hearings so timing is transparent.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -291,25 +312,25 @@ export const investigativeExchange: ExchangeData = {
         id: "q_alert_oversight",
         text: "If lower-level staff proposed this, what does that say about the oversight and ethical standards in this administration?",
         answers: [
-          {
-            id: "a_oversight_inform",
+        {
+          id: "a_oversight_inform",
             type: AnswerType.Inform,
             text: "It shows our system works - bad ideas get proposed and good oversight rejects them. That's how democratic governance should function.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          impacts: {
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.Neutral,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.Neutral,
               },
             },
-            outcomeModifiers: {
-              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
-              outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
-              outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
-            },
+          },
+          outcomeModifiers: {
+            outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
+            outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
+            outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
+          },
           },
           {
             id: "a_oversight_admit",
@@ -350,6 +371,13 @@ export const investigativeExchange: ExchangeData = {
               outcome_alert_panic: OutcomeModifierWeight.SlightPositive,
               outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive,
             },
+          },
+          {
+            id: "a_oversight_neutral",
+            type: AnswerType.Inform,
+            text: "We will release updated ethics training and oversight workflows for scenario planning.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

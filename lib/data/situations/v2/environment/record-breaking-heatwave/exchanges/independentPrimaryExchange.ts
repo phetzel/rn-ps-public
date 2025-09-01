@@ -82,6 +82,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_heatwave_emergency_measures",
         },
+        {
+          id: "a_grid_neutral",
+          type: AnswerType.Inform,
+          text: "We'll publish outage schedules, cooling center maps, and conservation targets so people can plan hour by hour.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
       ],
     },
     secondaryQuestions: [
@@ -163,8 +170,15 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_heatwave_cloud_seeding_backfire:
                 OutcomeModifierWeight.Neutral, // 0
-            },
           },
+        },
+        {
+          id: "a_long_term_neutral",
+          type: AnswerType.Inform,
+          text: "A real-time portal shows open centers, transit options, and wait times across affected cities.",
+          impacts: {},
+          outcomeModifiers: {},
+        },
         ],
       },
       {
@@ -230,9 +244,16 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_heatwave_grid_collapse: OutcomeModifierWeight.Neutral, // 0
               outcome_heatwave_cooling_grants:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cloud_seeding_backfire:
+              OutcomeModifierWeight.SlightNegative, // -4
             },
+          },
+          {
+            id: "a_emergency_neutral",
+            type: AnswerType.Inform,
+            text: "Independent scientists are part of our review board, and any pilot would include rapid-stop criteria.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -300,9 +321,16 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_heatwave_cooling_grants:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.Neutral, // 0
+            outcome_heatwave_cloud_seeding_backfire:
+              OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_federal_neutral",
+            type: AnswerType.Inform,
+            text: "We'll issue after-action reports and update playbooks so coordination improves each heat event.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },
@@ -372,9 +400,16 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_heatwave_cooling_grants:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.Neutral, // 0
+            outcome_heatwave_cloud_seeding_backfire:
+              OutcomeModifierWeight.Neutral, // 0
             },
+          },
+          {
+            id: "a_cost_neutral",
+            type: AnswerType.Inform,
+            text: "Treasury will publish cost-benefit analyses comparing emergency spending with grid resilience investments.",
+            impacts: {},
+            outcomeModifiers: {},
           },
         ],
       },

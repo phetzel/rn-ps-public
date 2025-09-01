@@ -62,7 +62,7 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.HHS]: SituationConsequenceWeight.Positive,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
           [CabinetStaticId.Homeland]:
             SituationConsequenceWeight.SlightlyNegative,
         },
@@ -73,6 +73,8 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive, // Added positive to give LeftWingBase both positive and negative
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
