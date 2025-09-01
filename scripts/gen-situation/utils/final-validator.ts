@@ -51,6 +51,10 @@ function convertPreferences(preferences: any): any {
       if (cabinetMember?.preference?.answerType && typeof cabinetMember.preference.answerType === 'string') {
         cabinetMember.preference.answerType = convertAnswerType(cabinetMember.preference.answerType);
       }
+      // Drop null authorizedContent to align with core schema (optional string)
+      if (cabinetMember && cabinetMember.authorizedContent === null) {
+        delete cabinetMember.authorizedContent;
+      }
     });
   }
   

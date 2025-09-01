@@ -2,15 +2,15 @@ import { ResponsesGenerationStep } from "../base";
 import type { LLMResponseRequest } from "../../types";
 import { buildPreferencesRequest } from "../../llm/configs/preferences-config";
 import type { PlanningStepOutput, GenerationAnalysis } from "../../types";
-import { situationPreferencesSchema, type SituationPreferences } from "~/lib/schemas/situations/preferences";
+import type { GeneratePreferences } from "~/lib/schemas/generate";
 
 type PreferencesStepInput = {
   plan: PlanningStepOutput;
   analysis: GenerationAnalysis;
 };
 
-export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInput, SituationPreferences> {
-  protected buildRequest(input: PreferencesStepInput): LLMResponseRequest<SituationPreferences> {
+export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInput, GeneratePreferences> {
+  protected buildRequest(input: PreferencesStepInput): LLMResponseRequest<GeneratePreferences> {
     return buildPreferencesRequest(input.plan, input.analysis);
   }
 
@@ -20,7 +20,7 @@ export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInpu
     if (!input.analysis) throw new Error("Preferences step requires generation analysis");
   }
 
-  protected async postProcess(result: SituationPreferences): Promise<SituationPreferences> {
-    return situationPreferencesSchema.parse(result);
+  protected async postProcess(result: GeneratePreferences): Promise<GeneratePreferences> {
+    return result;
   }
 }

@@ -247,7 +247,8 @@ function generatePreferencesFile(
 ${cabEntries.join("\n")}  },`
     : "";
 
-  return `import { AnswerType, CabinetStaticId, type SituationPreferences } from "~/types";
+  return `import { AnswerType, CabinetStaticId } from "~/types";
+import type { SituationPreferences } from "~/lib/schemas/situations";
 
 export const ${variableName}: SituationPreferences = {
 ${presBlock}
@@ -404,12 +405,13 @@ function generateSituationIndexFile(
   const typeEnumName = getSituationTypeEnumName(situation.type);
   const staticKey = situation.trigger.staticKey;
 
-  return `import { SituationType, type SituationData } from "~/types";
+  return `import { SituationType } from "~/types";
+import type { SituationDataType } from "~/lib/schemas/situations";
 import { ${outcomesVar} } from "./${outcomesVar}";
 import { ${preferencesVar} } from "./${preferencesVar}";
 import { ${exchangesVar} } from "./exchanges";
 
-export const ${variableName}: SituationData = {
+export const ${variableName}: SituationDataType = {
   trigger: {
     staticKey: "${staticKey}",
     type: SituationType.${typeEnumName},
@@ -510,7 +512,7 @@ function generateUpdatedIndexContent(
 
   // Build imports section
   const imports = [
-    typeImport,
+    'import type { SituationDataType } from "~/lib/schemas/situations";',
     ...sortedImports.map(
       (imp) => `import { ${imp.variable} } from "./${imp.path}";`
     ),
@@ -521,7 +523,7 @@ function generateUpdatedIndexContent(
 
   return `${imports.join("\n")}
 
-export const ${exportArrayName}: SituationData[] = [
+export const ${exportArrayName}: SituationDataType[] = [
 ${exportItems.join("\n")}
 ];
 `;
@@ -562,7 +564,7 @@ async function updateTypeIndex(
       // Create new index file if it doesn't exist
       parsed = {
         typeImport:
-          'import type { SituationData } from "~/types";',
+          'import type { SituationDataType } from "~/lib/schemas/situations";',
         situationImports: [],
         exportArray: [],
       };

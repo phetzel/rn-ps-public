@@ -3,7 +3,7 @@ import { z } from "zod";
 import { idSchema } from "~/lib/schemas/common";
 import { cabinetMemberSchema, subgroupSchema, publicationSchema, textLengthSchema } from "~/lib/schemas/common";
 import { baseSituationDataSchema } from "~/lib/schemas/situations";
-import { baseSituationPreferencesSchema } from "~/lib/schemas/situations/preferences";
+import { preferenceSchema } from "~/lib/schemas/situations/preferences";
 import { baseSituationOutcomeSchema, baseSituationOutcomeArraySchema, consequenceSchema } from "~/lib/schemas/situations/outcomes";
 // baseAnswerSchema moved here for generation use
 import { AnswerType, CabinetStaticId, ExchangeImpactWeight, JournalistStaticId } from "~/types";
@@ -20,8 +20,25 @@ export const generateSituationPlanSchema = baseSituationDataSchema.extend({
 });
 export type GenerateSituationPlan = z.infer<typeof generateSituationPlanSchema>;
 
-// Preferences (use core base schema during generation to satisfy strict JSON Schema)
-export const generatePreferencesSchema = baseSituationPreferencesSchema;
+// Preferences (generation-specific schema for OpenAI strict JSON Schema)
+// We model optional authorizedContent using a strict union of two object shapes,
+// because OpenAI strict mode requires "required" to include all keys in "properties".
+export const generateCabinetPreferenceSchema = z
+  .object({
+    preference: preferenceSchema,
+    // Required for strict mode; set to null when not applicable
+    authorizedContent: textLengthSchema.authorizedContent.nullable(),
+  })
+  .strict();
+
+export const generatePreferencesSchema = z
+  .object({
+    president: preferenceSchema,
+    cabinet: z
+      .record(z.nativeEnum(CabinetStaticId), generateCabinetPreferenceSchema)
+      .optional(),
+  })
+  .strict();
 export type GeneratePreferences = z.infer<typeof generatePreferencesSchema>;
 
 // Outcomes

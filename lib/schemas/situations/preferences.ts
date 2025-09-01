@@ -15,8 +15,10 @@ export const preferenceSchema = z.object({
 
 export const cabinetPreferenceSchema = z.object({
   preference: preferenceSchema,
+  // Optional in core schema; still required when an Authorized answer references this member (enforced in situation schema)
   authorizedContent: textLengthSchema.authorizedContent
-    .describe("Confidential talking points; maximum one cabinet member per situation should include this."),
+    .describe("Confidential talking points; maximum one cabinet member per situation should include this.")
+    .optional(),
 }).strict();
 
 export const baseSituationPreferencesSchema = z.object({
