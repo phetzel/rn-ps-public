@@ -68,6 +68,9 @@ export class ExchangeImpactsSubstep
     // Validate outcome modifiers
     this.validateOutcomeModifiers(parsed, input.outcomes);
 
+    // Enforce at least some cabinet impact presence per question (per prompt rules)
+    this.validateCabinetPresence(parsed, input.plan);
+
     // Validate entity IDs (with warnings for unknown IDs)
     this.validateEntityIds(parsed);
 
@@ -241,6 +244,38 @@ export class ExchangeImpactsSubstep
             }
           }
         }
+      }
+    }
+  }
+
+  /**
+   * Ensure each question includes at least one cabinet impact for an involved cabinet member
+   */
+  private validateCabinetPresence(
+    parsed: GenerateAllQuestionImpacts,
+    plan: GenerateSituationPlan
+  ): void {
+    const allowedCabinet = new Set(plan.involvedEntities.cabinetMembers);
+
+    for (const q of parsed.questionImpacts) {
+      let hasCabinet = false;
+      for (const a of q.answerImpacts) {
+        const c = a.impacts.cabinet;
+        if (c && typeof c === 'object') {
+          // Check if at least one key is a permitted cabinet id
+          for (const key of Object.keys(c)) {
+            if (allowedCabinet.has(key as any)) {
+              hasCabinet = true;
+              break;
+            }
+          }
+          if (hasCabinet) break;
+        }
+      }
+      if (!hasCabinet) {
+        throw new Error(
+          `Each question must include cabinet impacts for at least one involved cabinet member. Question ${q.questionId} has none.`
+        );
       }
     }
   }

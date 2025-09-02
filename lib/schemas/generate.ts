@@ -67,6 +67,23 @@ export const generateOutcomesSchema = z.object({
 }).strict();
 export type GenerateOutcomes = z.infer<typeof generateOutcomesSchema>;
 
+// Outcomes (impacts-only for split generation)
+export const generateOutcomeConsequencesSchema = z
+  .object({
+    outcomeId: idSchema,
+    consequences: consequenceSchema,
+  })
+  .strict();
+
+export const generateOutcomesConsequencesSchema = z
+  .object({
+    outcomeConsequences: z
+      .array(generateOutcomeConsequencesSchema)
+      .min(2, "Provide consequences for each base outcome"),
+  })
+  .strict();
+export type GenerateOutcomesConsequences = z.infer<typeof generateOutcomesConsequencesSchema>;
+
 // Exchanges
 // A single publication’s editorial plan
 export const exchangesPlanSchema = z.object({

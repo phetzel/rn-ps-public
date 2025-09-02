@@ -2,7 +2,6 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
 import type { LLMResponseRequest } from "../../types";
 import {
-  generateExchangeImpactsSchema,
   type GenerateAllQuestionImpacts,
   type GenerateSituationPlan,
   type GeneratePreferences,
@@ -11,7 +10,7 @@ import {
   type ExchangesPlanArray,
 } from "~/lib/schemas/generate";
 import { idSchema } from "~/lib/schemas/common";
-import { ExchangeImpactWeight, CabinetStaticId, JournalistStaticId } from "~/types";
+import { ExchangeImpactWeight } from "~/types";
 
 // Helper to present outcomes for the model (ids must be used in outcomeModifiers)
 function summarizeOutcomes(outcomes: GenerateOutcomes["outcomes"]) {
@@ -86,6 +85,8 @@ export function buildExchangeImpactsRequest(
     `Publication: ${pubPlan.publication}`,
     `EditorialAngle: ${pubPlan.editorialAngle}`,
     ``,
+    `Involved Cabinet (fixed; use only these IDs): ${plan.involvedEntities.cabinetMembers.join(", ")}`,
+    ``,
     `Available Outcomes (for outcomeModifiers – keys must match exactly; sum to 0 per question):`,
     summarizeOutcomes(outcomes.outcomes),
     ``,
@@ -107,10 +108,12 @@ OUTCOME MODIFIERS RULES:
 - Example: If question has 4 answers, their outcomeModifiers combined must total 0
 
 IMPACTS RULES:
-- Each question must include at least one answer with positive impact and one with negative impact overall
-- No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question
+- Each question must include at least one answer with positive impact and one with negative impact overall.
+- Do not impact only the President. For each question, include cabinet impacts for at least one cabinet member from the list above. You may also include President impacts, but cabinet impacts must not be null for all answers in any question.
+- Use only cabinet IDs from the list above; do not invent new IDs.
+- No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question.
 - Impact weights: VeryNegative, Negative, Neutral, Positive, VeryPositive
- - Reaction: 20–100 characters and relevant to the impact; if you cannot provide a meaningful reaction, set it to null
+ - Reaction: 20–100 characters, full sentence ending with punctuation, relevant to the impact; if you cannot provide a meaningful reaction, set it to null
 
 STRUCTURE:
 - Generate exactly ${[questionsContent.rootQuestion, ...questionsContent.secondaryQuestions, ...questionsContent.tertiaryQuestions].length} questionImpacts entries

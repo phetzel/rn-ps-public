@@ -9,7 +9,9 @@ Generate 2–4 distinct outcomes for a fictional political situation.
 
 RULES
 - Each outcome needs a concise satirical title and a clear description.
-- Provide an integer weight 20–60. for each outcome; weights of all outcome must sum to 100.
+- Title length: 20–60 characters; Description length: 60–140 characters.
+- Both title and description must end with a complete sentence; do not trail off.
+- Provide an integer weight 20–60 for each outcome; weights of all outcomes must sum to 100.
 - No real names, places, or events. Follow the JSON Schema exactly (strict mode).
 
 CONTENT RULES

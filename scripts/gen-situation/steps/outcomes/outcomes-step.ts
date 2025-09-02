@@ -1,8 +1,9 @@
 import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../base";
 import { OutcomesBaseSubstep } from "./substeps/outcomes-base-substep";
 import { OutcomesImpactsSubstep } from "./substeps/outcomes-impact-substep";
-import { GenerateOutcomes } from "~/lib/schemas/generate";
+import { GenerateOutcomes, generateOutcomesSchema, type GenerateOutcomesConsequences } from "~/lib/schemas/generate";
 import type { OutcomesStepInput } from "../../types";
+import { logDeep } from "../../utils/logging";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // OUTCOMES STEP IMPLEMENTATION (WITH ENHANCED VALIDATION)
@@ -41,16 +42,30 @@ export class OutcomesStep {
       // Phase 1: Generate outcome narratives with weight validation
       console.log("🎯 Step 3a: Creating base outcomes...");
       const baseOutcomes = await this.outcomesBaseSubstep.execute({ plan: input.plan, preferences: input.preferences });
-      console.log("🎯 Step 3a: Base outcomes:", baseOutcomes);
+      logDeep("🎯 Step 3a: Base outcomes", baseOutcomes);
 
       // Phase 2: Generate outcomes impact matrix with structure validation  
       console.log("🎯 Step 3b: Full outcomes with impacts...");
-      const fullOutcomes = await this.outcomesImpactsSubstep.execute({ plan: input.plan, preferences: input.preferences, baseOutcomes });
-      console.log("🎯 Step 3b: Full outcomes:", fullOutcomes);
+      const consequencesOnly: GenerateOutcomesConsequences = await this.outcomesImpactsSubstep.execute({ plan: input.plan, preferences: input.preferences, baseOutcomes });
+      logDeep("🎯 Step 3b: Consequences mapping", consequencesOnly);
 
+      // Assemble: merge consequences into base outcomes without regenerating core fields
+      const byId = new Map(consequencesOnly.outcomeConsequences.map(o => [o.outcomeId, o.consequences] as const));
+      const assembled: GenerateOutcomes = {
+        outcomes: baseOutcomes.outcomes.map((o) => {
+          const cons = byId.get(o.id);
+          if (!cons) {
+            throw new Error(`Missing consequences for outcome ${o.id}`);
+          }
+          return { ...o, consequences: cons } as any;
+        }),
+      };
 
-      this.logger.logStepSuccess(stepName, this.getResultSummary(fullOutcomes));
-      return fullOutcomes;
+      // Validate final structure
+      const parsed = generateOutcomesSchema.parse(assembled);
+
+      this.logger.logStepSuccess(stepName, this.getResultSummary(parsed));
+      return parsed;
       
     } catch (error) {
       this.logger.logStepError(stepName, error as Error);

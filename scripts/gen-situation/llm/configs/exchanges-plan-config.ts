@@ -32,6 +32,7 @@ AUTHORIZED ACCESS
 
 OUTPUT
 - For every publication given below, return: { publication, editorialAngle (50–200 chars), willHaveAuthorizedAnswer, authorizedCabinetMemberId? }.
+- editorialAngle must be 1–2 complete sentences within 50–200 characters; end with punctuation; do not trail off mid‑word.
 - Follow the JSON Schema exactly (Structured Outputs, strict mode).
 
 CONTENT RULES (Authoritative)

@@ -4,6 +4,7 @@ import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./st
 import { validateFinalSituation } from "./utils/final-validator";
 import { writeSituationFiles } from "./utils/situation-file-writer";
 import { BatchGenerationHelper } from "./utils/batch-helpers";
+import { logDeep } from "./utils/logging";
 import type {
   GenerationStage,
   GenerationResult,
@@ -48,7 +49,7 @@ export class SituationGenerator {
       console.log(`🎯 [${id}] Step 1: Planning...`);
       const plan = await this.planningStep.execute(startingContext);
 
-      console.log("PLAN CREATED: ", plan);
+      logDeep("PLAN CREATED", plan);
 
       // Step 2: Generate entity preferences
       console.log(`⚙️ [${id}] Step 2: Preferences...`);
@@ -57,7 +58,7 @@ export class SituationGenerator {
         analysis: startingContext,
       });
 
-      console.log("PREFERENCES CREATED: ", preferences);
+      logDeep("PREFERENCES CREATED", preferences);
 
       // Step 3: Generate situation outcomes (enhanced)
       console.log(`🎲 [${id}] Step 3: Outcomes...`);
@@ -66,7 +67,7 @@ export class SituationGenerator {
         preferences,
       });
 
-      console.log("OUTCOMES CREATED: ", outcomes);
+      logDeep("OUTCOMES CREATED", outcomes);
 
 
       // Step 4: Generate press exchanges
@@ -77,7 +78,7 @@ export class SituationGenerator {
         outcomes,
       });
 
-      console.log("EXCHANGES CREATED: ", exchanges);
+      logDeep("EXCHANGES CREATED", exchanges);
 
       // Step 5: Final validation
       console.log(`✅ [${id}] Step 5: Final validation...`);

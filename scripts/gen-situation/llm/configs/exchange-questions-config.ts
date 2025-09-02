@@ -57,6 +57,10 @@ DO NOT GENERATE:
 - impacts (will be added in next phase)
 - outcomeModifiers (will be added in next phase)
 
+LENGTH & SENTENCE COMPLETENESS (match schema caps)
+- question.text: 60–150 characters; write complete sentences; end with punctuation.
+- answer.text: 80–180 characters; write complete sentences; end with punctuation.
+
 CONTENT RULES (Authoritative):
 ${GENERATION_GUIDE}
 

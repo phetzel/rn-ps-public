@@ -17,10 +17,21 @@ STRICT RULES
 - NEVER use placeholders like "NO_AUTHORIZED..." or "N/A". Use null instead.
 - At most ONE cabinet member may include "authorizedContent". If none plausibly has it, include it for no one.
 
+LENGTH & SENTENCE COMPLETENESS (match schema caps)
+- president.rationale: 40–120 characters; write 1–2 complete sentences; end with punctuation.
+- cabinet[...].preference.rationale: 40–120 characters; complete sentence(s), no trailing fragments.
+- cabinet[...].authorizedContent (when non-null): 50–300 characters; end with a complete sentence; do NOT trail off.
+
+AUTHORIZED CONTENT STYLE (if present)
+- Sober, actionable, classified-feeling detail relevant to THIS situation.
+- Include concrete specifics (e.g., timelines, counts, internal process notes, constraints, or red‑team findings).
+- Maintain in‑universe plausibility; avoid jokes, memes, or flippancy.
+- Do not include real-world people/places/events.
+
 STYLE
-- President: choose a valid "answerType" and a concise rationale (≤ 40 words).
-- Cabinet: keep rationales concise (≤ 40 words). Favor realistic departmental tensions (e.g., State vs. Defense tone, Justice legal caution, etc.) while staying plausible.
-- Keep tone satirical-but-grounded per the guide.
+- President: choose a valid "answerType" and a concise rationale.
+- Cabinet: favor realistic departmental tensions (e.g., State vs. Defense tone, Justice legal caution, etc.) while staying plausible.
+- Keep tone satirical‑but‑grounded per the guide.
 
 REFERENCE
 ${GENERATION_GUIDE}

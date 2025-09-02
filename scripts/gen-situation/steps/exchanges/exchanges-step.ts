@@ -5,6 +5,7 @@ import { ExchangeFullSubstep } from "./substeps/exchange-full-substep";
 import type { ExchangesStepOutput } from "~/lib/schemas/generate";
 import { validatedExchangeDataSchema, type ValidatedExchangeData } from "~/lib/schemas/exchanges";
 import type { ExchangesStepInput } from "../../types";
+import { logDeep } from "../../utils/logging";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXCHANGES STEP IMPLEMENTATION (CLEAN 2-PHASE SPLIT APPROACH)
@@ -46,7 +47,7 @@ export class ExchangesStep {
         preferences: input.preferences,
         outcomes: input.outcomes
       });
-      console.log("EXCHANGES PLAN RESPONSE: ", exchangesPlanResponse);
+      logDeep("EXCHANGES PLAN RESPONSE", exchangesPlanResponse);
 
       // Log the plan results
       const exchangesPlan = exchangesPlanResponse.exchangePlans;
@@ -71,7 +72,7 @@ export class ExchangesStep {
           outcomes: input.outcomes,
           publicationPlan: planItem,
         });
-        console.log("FULL EXCHANGE RESPONSE: ", fullExchangeResponse);
+        logDeep("FULL EXCHANGE RESPONSE", fullExchangeResponse);
 
         const validatedExchange = validatedExchangeDataSchema.parse({
           content: fullExchangeResponse,

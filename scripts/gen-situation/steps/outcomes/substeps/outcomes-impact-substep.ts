@@ -2,15 +2,15 @@ import { ResponsesGenerationStep } from "../../base";
 import type { LLMResponseRequest } from "../../../types";
 
 import {
-  type GenerateOutcomes,
+  type GenerateOutcomesConsequences,
   type GenerateBaseOutcomes,
   type GenerateSituationPlan,
   type GeneratePreferences,
-  generateOutcomesSchema,
+  generateOutcomesConsequencesSchema,
 } from "~/lib/schemas/generate";
 
 
-import { buildOutcomesImpactsRequest } from "../../../llm/configs/outcomes-impact-config";
+import { buildOutcomesConsequencesRequest } from "../../../llm/configs/outcomes-consequences-config";
 
 type ImpactsInput = {
   plan: GenerateSituationPlan;
@@ -19,10 +19,10 @@ type ImpactsInput = {
 };
 
 export class OutcomesImpactsSubstep
-  extends ResponsesGenerationStep<ImpactsInput, GenerateOutcomes> {
+  extends ResponsesGenerationStep<ImpactsInput, GenerateOutcomesConsequences> {
   
-  protected buildRequest(input: ImpactsInput): LLMResponseRequest<GenerateOutcomes> {
-    return buildOutcomesImpactsRequest(input.plan, input.preferences, input.baseOutcomes);
+  protected buildRequest(input: ImpactsInput): LLMResponseRequest<GenerateOutcomesConsequences> {
+    return buildOutcomesConsequencesRequest(input.plan, input.preferences, input.baseOutcomes);
   }
 
   protected validateInput(input: ImpactsInput): void {
@@ -33,15 +33,15 @@ export class OutcomesImpactsSubstep
   }
 
   protected async postProcess(
-    result: GenerateOutcomes,
-    input: ImpactsInput
-  ): Promise<GenerateOutcomes> {
-    // Strict validation against your full  schema
-    return generateOutcomesSchema.parse(result);
+    result: GenerateOutcomesConsequences,
+    _input: ImpactsInput
+  ): Promise<GenerateOutcomesConsequences> {
+    // Strict validation against consequences-only schema
+    return generateOutcomesConsequencesSchema.parse(result);
   }
 
 
-  protected getResultSummary(result: GenerateOutcomes) {
-    return { count: result.outcomes.length, withConsequences: result.outcomes.filter(o => !!o.consequences).length };
+  protected getResultSummary(result: GenerateOutcomesConsequences) {
+    return { outcomeIds: result.outcomeConsequences.map(o => o.outcomeId).join(", ") };
   }
 }
