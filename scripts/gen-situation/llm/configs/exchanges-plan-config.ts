@@ -1,7 +1,7 @@
 // src/gen-situation/llm/configs/exchanges-publications-planning-config.ts
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
-import { GENERATION_GUIDE } from "../generation-guide";
+import { buildTechnicalPrompt } from "../prompt-constants";
 import {
   generateExchangesPlanSchema,
   type GenerateExchangesPlan,
@@ -21,23 +21,27 @@ function publicationVoice(pub: string): string {
 }
 
 
-const instructions = `
+const EXCHANGES_PLAN_SPECIFIC_INSTRUCTIONS = `
 Plan editorial angles for **each** pre-selected publication in this situation.
 Do **not** add/remove publications.
 
-AUTHORIZED ACCESS
-- At most one publication may receive an answer with confidential authorized content.
-- Only assign authorized access if a cabinet member actually has authorizedContent.
-- If authorized is used, you must specify authorizedCabinetMemberId for that outlet.
+TASK-SPECIFIC REQUIREMENTS
+- Create distinct editorial perspectives that reflect each outlet's voice and priorities
+- Angles should feel authentic to how each publication would approach the story
+- Focus on what each outlet would find most compelling or concerning about the situation
 
-OUTPUT
-- For every publication given below, return: { publication, editorialAngle (50–200 chars), willHaveAuthorizedAnswer, authorizedCabinetMemberId? }.
-- editorialAngle must be 1–2 complete sentences within 50–200 characters; end with punctuation; do not trail off mid‑word.
-- Follow the JSON Schema exactly (Structured Outputs, strict mode).
+AUTHORIZED ACCESS RULES
+- At most one publication may receive an answer with confidential authorized content
+- Only assign authorized access if a cabinet member actually has authorizedContent
+- If authorized is used, you must specify authorizedCabinetMemberId for that outlet
 
-CONTENT RULES (Authoritative)
-${GENERATION_GUIDE}
+TECHNICAL OUTPUT REQUIREMENTS
+- For every publication given below, return: { publication, editorialAngle (50–200 chars), willHaveAuthorizedAnswer, authorizedCabinetMemberId? }
+- editorialAngle must be 1–2 complete sentences within 50–200 characters; end with punctuation; do not trail off mid‑word
+- Follow the JSON Schema exactly (Structured Outputs, strict mode)
 `.trim();
+
+const instructions = buildTechnicalPrompt(EXCHANGES_PLAN_SPECIFIC_INSTRUCTIONS);
 
 export function buildExchangesPlanRequest(
   plan: GenerateSituationPlan,

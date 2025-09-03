@@ -1,17 +1,12 @@
+/**
+ * DEPRECATED: Most content moved to prompt-constants.ts
+ * This guide now focuses on reference data only.
+ * Tone, style, and creative direction are handled by prompt composition functions.
+ */
 export const GENERATION_GUIDE = `
-## 🎯 Content Creation Guidelines
-
-### Tone & Style Requirements
-- **Satirical newsroom humor** (think Veep × Daily Show blend)
-- **Equal-opportunity absurdity** - Mock incompetence, not ideology  
-- **Light political satire** - Satirical but substantive content
-
-### Strict Content Rules  
-- **NO real people** - No actual politicians, officials, or public figures
-- **NO real places** - No actual countries, cities, or organizations
-- **NO real events** - No direct references to actual current events
-- **Use fictional entities** - Create names like "Republic of Reallyfarawaystan" (this is just an example, do not actually use "Republic of Reallyfarawaystan").
-- **Soft-pedal tragedies** - Keep humor light, avoid serious real-world pain
+## 📖 Reference Information Only
+This guide provides entity lists and type information for prompt composition.
+Creative direction, tone, and style are now handled by prompt-constants.ts.
 `;
 
 export const PLANNER_TYPE_GUIDE = `

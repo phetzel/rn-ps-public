@@ -1,22 +1,27 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
 import  { type GenerateSituationPlan, type GenerateBaseOutcomes, type GeneratePreferences, generateBaseOutcomesSchema } from "~/lib/schemas/generate";
-import { GENERATION_GUIDE } from "../generation-guide";
+import { buildCreativePrompt } from "../prompt-constants";
 
 
-const instructions = `
-Generate 2–4 distinct outcomes for a fictional political situation.
+const OUTCOMES_SPECIFIC_INSTRUCTIONS = `
+Generate 2–4 distinct ABSURD outcomes for this fictional political situation.
 
-RULES
-- Each outcome needs a concise satirical title and a clear description.
-- Title length: 20–60 characters; Description length: 60–140 characters.
-- Both title and description must end with a complete sentence; do not trail off.
-- Provide an integer weight 20–60 for each outcome; weights of all outcomes must sum to 100.
-- No real names, places, or events. Follow the JSON Schema exactly (strict mode).
+TASK-SPECIFIC REQUIREMENTS
+- Each outcome should be SURPRISING and OUTLANDISH
+- Create bizarrely unexpected consequences that would be impossible in real politics
+- Embrace the comedically improbable or surreal
+- Outcomes should feel like headlines from The Onion, not actual news
 
-CONTENT RULES
-${GENERATION_GUIDE}
+TECHNICAL RULES
+- Each outcome needs a concise satirical title and a clear description
+- Title length: 20–60 characters; Description length: 60–140 characters
+- Both title and description must end with a complete sentence; do not trail off
+- Provide an integer weight 20–60 for each outcome; weights of all outcomes must sum to 100
+- Follow the JSON Schema exactly (strict mode)
 `.trim();
+
+const instructions = buildCreativePrompt(OUTCOMES_SPECIFIC_INSTRUCTIONS);
 
 
 export function buildOutcomesBaseRequest(

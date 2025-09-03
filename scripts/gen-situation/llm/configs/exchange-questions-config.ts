@@ -1,6 +1,6 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
-import { GENERATION_GUIDE } from "../generation-guide";
+import { buildTechnicalPrompt } from "../prompt-constants";
 import {
   generateQuestionsOnlyContentSchema,
   type GenerateQuestionsOnlyContent,
@@ -35,41 +35,45 @@ export function buildExchangeQuestionsRequest(
       : `- Authorized NOT allowed for this outlet.`,
   ];
 
-  const instructions = `
+  const QUESTIONS_SPECIFIC_INSTRUCTIONS = `
 Generate the QUESTIONS AND ANSWERS STRUCTURE for the press-room exchange for the publication above.
 
-STRUCTURE (exactly):
-- 5 total questions: 1 root, 2 secondary, 2 tertiary.
-- Each question has exactly 4 answers.
-- followUpId rules:
-  - Root question: exactly 2 answers MUST have followUpId pointing to the 2 secondary questions.
-  - Each secondary question: exactly 1 answer MUST have followUpId pointing to one of the tertiary questions.
-  - Tertiary questions: NO answers may have followUpId.
+TASK-SPECIFIC REQUIREMENTS
+- Create engaging questions that align with the outlet's editorial angle
+- Focus on generating thoughtful answer options that reflect different strategic approaches
+- Ensure questions flow logically and build upon each other
 
-ANSWER FIELDS (generate these only):
+STRUCTURE REQUIREMENTS (exactly)
+- 5 total questions: 1 root, 2 secondary, 2 tertiary
+- Each question has exactly 4 answers
+- followUpId rules:
+  - Root question: exactly 2 answers MUST have followUpId pointing to the 2 secondary questions
+  - Each secondary question: exactly 1 answer MUST have followUpId pointing to one of the tertiary questions
+  - Tertiary questions: NO answers may have followUpId
+
+ANSWER FIELDS (generate these only)
 - id: unique identifier
 - text: within game length bounds (your schema enforces)
 - type: one of your core AnswerType values (Authorized only if allowed for this outlet)
 - authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet; null otherwise
 - followUpId: as per rules above; null if no follow-up
 
-DO NOT GENERATE:
+DO NOT GENERATE
 - impacts (will be added in next phase)
 - outcomeModifiers (will be added in next phase)
 
 LENGTH & SENTENCE COMPLETENESS (match schema caps)
-- question.text: 60–150 characters; write complete sentences; end with punctuation.
-- answer.text: 80–180 characters; write complete sentences; end with punctuation.
+- question.text: 60–150 characters; write complete sentences; end with punctuation
+- answer.text: 80–180 characters; write complete sentences; end with punctuation
 
-CONTENT RULES (Authoritative):
-${GENERATION_GUIDE}
+TONE REQUIREMENTS
+- Keep the Q/A satirical-but-substantive, aligned with the outlet's editorial angle
+- Focus on creating engaging questions and thoughtful answer options
 
-TONE/VOICE:
-- Keep the Q/A satirical-but-substantive, and aligned with the outlet's editorial angle.
-- No real people/places/events.
-- Focus on creating engaging questions and thoughtful answer options.
+Return ONLY a JSON object strictly matching the provided JSON Schema (Structured Outputs, strict)
+`.trim();
 
-Return ONLY a JSON object strictly matching the provided JSON Schema (Structured Outputs, strict).`;
+  const instructions = buildTechnicalPrompt(QUESTIONS_SPECIFIC_INSTRUCTIONS);
 
   const jsonSchema = zodToJsonSchema(generateQuestionsOnlyContentSchema, {
     target: "jsonSchema7",

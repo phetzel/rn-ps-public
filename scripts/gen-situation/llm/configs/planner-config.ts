@@ -1,31 +1,31 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
 import type { GenerationAnalysis } from "../../types";
-import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "../generation-guide";
+import { PLANNER_TYPE_GUIDE } from "../generation-guide";
+import { buildCreativePrompt } from "../prompt-constants";
 import { analyzeStrategicRequirements } from "../../utils/situation-balance-analyzer";
 import { generateSituationPlanSchema, type GenerateSituationPlan } from "~/lib/schemas/generate";
 
 
-export const instructions = `
-You are a content strategist for a satirical Press Secretary game.
+const PLANNER_SPECIFIC_INSTRUCTIONS = `
+You are creating an initial situation plan for a Press Secretary game.
 
-GOALS
-- Propose a new situation that fits the requested situation type.
-- Avoid near-duplicate titles to those listed as existing.
-- Improve distribution balance by choosing underrepresented entities when coherent for the story.
-- Keep satire smart, substantive, not slapstick.
+TASK-SPECIFIC GOALS
+- Invent a fresh, witty situation that fits the requested situation type
+- Keep ideas surprising and original, steering away from near-duplicate titles
+- Balance representation naturally by spotlighting less-used entities when it makes sense
+- Emphasize clever imagination and narrative flair over formula
 
 OUTPUT CONTRACT
-- You must follow the provided JSON Schema exactly (Structured Outputs is enabled).
-- Honor all field descriptions and length ranges (title 15–50 chars; description 80–160).
-- Only select entities that fit the scenario and type.
-
-CONTENT RULES (Authoritative)
-${GENERATION_GUIDE}
+- You must follow the provided JSON Schema exactly (Structured Outputs is enabled)
+- Honor all field descriptions and length ranges (title 15–50 chars; description 80–160)
+- Only select entities that fit the scenario and type
 
 REFERENCE — Situation Types & Entities
 ${PLANNER_TYPE_GUIDE}
 `.trim();
+
+export const instructions = buildCreativePrompt(PLANNER_SPECIFIC_INSTRUCTIONS);
 
 export function buildPlannerRequest(
     analysis: GenerationAnalysis

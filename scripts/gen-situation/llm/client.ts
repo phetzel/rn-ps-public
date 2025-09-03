@@ -88,7 +88,7 @@ export class LLMClient {
         input: prompt,
         // temperature,
         max_output_tokens: maxOutputTokens,
-        reasoning: { effort: reasoningEffort },
+        // reasoning: { effort: reasoningEffort },
         text: {
           format: {
             type: "json_schema",
