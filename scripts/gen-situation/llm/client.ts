@@ -49,6 +49,7 @@ export class LLMClient {
       schemaName,
       jsonSchema,
       previousResponseId,
+      reasoningEffort = 'medium', // Default to 'medium' if not specified
     } = opts;
 
     // Helper to strip code fences and try to isolate a JSON object
@@ -87,6 +88,7 @@ export class LLMClient {
         input: prompt,
         // temperature,
         max_output_tokens: maxOutputTokens,
+        reasoning: { effort: reasoningEffort },
         text: {
           format: {
             type: "json_schema",

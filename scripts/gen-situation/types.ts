@@ -79,6 +79,7 @@ export type LLMResponseOptions<T> = {
   schemaName: string;                // response_format.json_schema.name
   jsonSchema: Record<string, any>;   // compiled JSON Schema (strict mode)
   previousResponseId?: string;       // optional chaining
+  reasoningEffort?: 'minimal' | 'low' | 'medium' | 'high'; // NEW: Optional reasoning parameter
 };
 
 /** Full, ready-to-run Responses request built by a config file */

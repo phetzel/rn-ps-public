@@ -240,4 +240,42 @@ export const generateAllQuestionImpactsSchema = z.object({
 export type GenerateQuestionImpacts = z.infer<typeof generateQuestionImpactsSchema>;
 export type GenerateAllQuestionImpacts = z.infer<typeof generateAllQuestionImpactsSchema>;
 
+// Create dynamic schema with explicit outcome ID properties (OpenAI strict mode compatible)
+export function createDynamicImpactsSchema(outcomes: GenerateOutcomes["outcomes"]) {
+  // Create outcomeModifiers object with explicit properties for each outcome ID
+  const outcomeModifiersProperties: Record<string, z.ZodNumber> = {};
+  outcomes.forEach(outcome => {
+    outcomeModifiersProperties[outcome.id] = z.number();
+  });
+
+  // Impact schema for strict mode; enforce reaction length when provided
+  const generateExchangeImpactSchema = z.object({
+    weight: z.nativeEnum(ExchangeImpactWeight),
+    // Match core constraints: 20-100 chars when present; allow null to omit
+    reaction: z.string().min(20).max(100).nullable(),
+  }).strict();
+
+  // Properties required but can be null; dynamic members via catchall
+  const dynamicExchangeImpactsSchema = z.object({
+    president: z.union([generateExchangeImpactSchema, z.null()]),
+    cabinet: z.union([z.object({}).catchall(generateExchangeImpactSchema), z.null()]),
+    journalists: z.union([z.object({}).catchall(generateExchangeImpactSchema), z.null()]),
+  }).strict();
+  
+  const dynamicAnswerImpactSchema = z.object({
+    answerId: idSchema,
+    outcomeModifiers: z.object(outcomeModifiersProperties).strict(), // Keep strict for explicit outcome IDs
+    impacts: dynamicExchangeImpactsSchema,
+  }); // Remove .strict() to allow flexible impact structure
+
+  const dynamicQuestionImpactsSchema = z.object({
+    questionId: idSchema,
+    answerImpacts: z.array(dynamicAnswerImpactSchema),
+  });
+
+  return z.object({
+    questionImpacts: z.array(dynamicQuestionImpactsSchema),
+  });
+}
+
 export type ExchangesStepOutput = ValidatedExchangeData[];
