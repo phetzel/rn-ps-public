@@ -84,10 +84,17 @@ ANSWER FIELDS
 - type: one of your core AnswerType values (Authorized only if allowed for this outlet)
 - authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet
 - outcomeModifiers: object whose KEYS are exactly the outcome IDs listed above; numeric values MUST sum to 0 PER QUESTION (balance)
-- impacts:
-  - president/cabinet relationship impact weights must obey your gameplay rules:
-    • Each question must include at least one answer with a positive impact and one with a negative impact overall
-    • No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question
+
+CRITICAL RELATIONSHIP IMPACT RULES (MUST FOLLOW EXACTLY)
+For each question's 4 answers, the relationship impacts MUST follow these rules:
+- impacts.president: Across the 4 answers, president must have AT LEAST as many negative weight values as positive weight values
+- impacts.cabinet[memberId]: For EACH cabinet member, across the 4 answers, they must have AT LEAST as many negative relationship impacts as positive impacts
+- Distribution: Ensure at least one answer has positive impacts and at least one has negative impacts for variety
+- Balance Examples:
+  • VALID: Cabinet member gets weights [+2, +1, -1, -2] = 2 positive, 2 negative (balanced)
+  • VALID: Cabinet member gets weights [+1, -1, -2, -3] = 1 positive, 3 negative (net negative)
+  • INVALID: Cabinet member gets weights [+2, +1, 0, -1] = 2 positive, 1 negative (net positive)
+- Count the NUMBER of positive vs negative weights, not their sum
 
 TONE REQUIREMENTS
 - Keep the Q/A satirical-but-substantive, and aligned with the outlet's editorial angle
