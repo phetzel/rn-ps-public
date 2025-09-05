@@ -66,9 +66,8 @@ export function buildPreferencesRequest(
         options: {
           model: "gpt-5",
           instructions,
-          // omit temperature for gpt-5 (unsupported)
-          maxOutputTokens: 16000,
-        schema: generatePreferencesSchema, // strict during generation; final validator enforces core too
+          maxOutputTokens: 8000, 
+        schema: generatePreferencesSchema, 
         schemaName: "situation_preferences",
         jsonSchema,
       },

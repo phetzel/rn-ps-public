@@ -44,7 +44,7 @@ export class LLMClient {
       model = this.defaultModel,
       instructions,
       // temperature = 0.7,
-      maxOutputTokens = 16000,
+      maxOutputTokens = 4000, // Default fallback - most steps should specify their own limit
       schema,
       schemaName,
       jsonSchema,
@@ -103,6 +103,7 @@ export class LLMClient {
       let res: any;
       try {
         res = await this.client.responses.create(req);
+        console.log("🔍 Raw model output:", res);
       } catch (apiErr: any) {
         const msg = apiErr?.message || String(apiErr);
         throw new Error(`OpenAI API error: ${msg}`);
@@ -152,7 +153,13 @@ export class LLMClient {
         throw lastError;
       }
 
-      const usage = this.trackUsage((res as any).usage);
+      // Log raw usage as returned by GPT-5 API
+      const rawUsage = (res as any).usage;
+      if (this.debugMode && rawUsage) {
+        console.log("📊 Raw GPT-5 Usage:", JSON.stringify(rawUsage, null, 2));
+      }
+      
+      const usage = this.trackUsage(rawUsage);
       if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(result.data, null, 2));
       return { content: result.data, raw: (res as any).output_text, usage };
     }
@@ -179,29 +186,51 @@ export class LLMClient {
   private trackUsage(usage: any) {
     if (!usage) return undefined;
 
-    // Support BOTH Chat (prompt/completion) and Responses (input/output) shapes
-    const promptTokens = usage.prompt_tokens ?? usage.input_tokens ?? 0;
-    const completionTokens = usage.completion_tokens ?? usage.output_tokens ?? 0;
-    const totalTokens =
-      usage.total_tokens ?? promptTokens + completionTokens;
+    // GPT-5 actual usage structure from your terminal log:
+    // { input_tokens, input_tokens_details: { cached_tokens }, 
+    //   output_tokens, output_tokens_details: { reasoning_tokens }, total_tokens }
+    const inputTokens = usage.input_tokens ?? usage.prompt_tokens ?? 0;
+    const outputTokens = usage.output_tokens ?? usage.completion_tokens ?? 0;
+    const reasoningTokens = usage.output_tokens_details?.reasoning_tokens ?? 0;
+    const cachedTokens = usage.input_tokens_details?.cached_tokens ?? 0;
+    const totalTokens = usage.total_tokens ?? inputTokens + outputTokens;
 
-    // Pricing placeholders (update these to your current model pricing)
-    const inputCostPer1K = 0.00015;
-    const outputCostPer1K = 0.0006;
-
-    const cost =
-      (promptTokens / 1000) * inputCostPer1K +
-      (completionTokens / 1000) * outputCostPer1K;
+    // GPT-5 pricing: $15/1M input, $60/1M output (per 1K tokens)
+    const inputCostPer1K = 0.015;
+    const outputCostPer1K = 0.060;
+    
+    // Reasoning tokens are charged at output token rate
+    const inputCost = (inputTokens / 1000) * inputCostPer1K;
+    const outputCost = (outputTokens / 1000) * outputCostPer1K;
+    const totalCost = inputCost + outputCost;
 
     this.costTracking.totalTokens += totalTokens;
-    this.costTracking.totalCost += cost;
+    this.costTracking.totalCost += totalCost;
     this.costTracking.requestCount++;
 
+    if (this.debugMode) {
+      console.log("💰 Token Breakdown:");
+      console.log(`   Input: ${inputTokens} tokens ($${inputCost.toFixed(4)})`);
+      console.log(`   Output: ${outputTokens} tokens ($${outputCost.toFixed(4)})`);
+      if (reasoningTokens > 0) {
+        console.log(`   Reasoning: ${reasoningTokens} tokens (included in output cost)`);
+      }
+      if (cachedTokens > 0) {
+        console.log(`   Cached: ${cachedTokens} tokens`);
+      }
+      console.log(`   Total: ${totalTokens} tokens ($${totalCost.toFixed(4)})`);
+    }
+
     return {
-      promptTokens,
-      completionTokens,
+      inputTokens,
+      outputTokens, 
+      reasoningTokens,
+      cachedTokens,
       totalTokens,
-      cost,
+      cost: totalCost,
+      // Legacy field names for backward compatibility
+      promptTokens: inputTokens,
+      completionTokens: outputTokens,
     };
   }
 }

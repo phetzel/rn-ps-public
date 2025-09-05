@@ -114,7 +114,7 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 16000,
+      maxOutputTokens: 8000, // Complete exchange for 1 publication: questions + answers + all impacts
       schema: generateExchangeContentSchema,
       schemaName: "exchange_content",
       jsonSchema,
