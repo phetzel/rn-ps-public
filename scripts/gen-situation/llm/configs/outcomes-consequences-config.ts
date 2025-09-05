@@ -91,7 +91,7 @@ export function buildOutcomesConsequencesRequest(
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 12000,
+      maxOutputTokens: 8000, // Consequences for 2-4 outcomes (detailed impact descriptions)
       schema: generateOutcomesConsequencesSchema,
       schemaName: "situation_outcomes_consequences",
       jsonSchema,

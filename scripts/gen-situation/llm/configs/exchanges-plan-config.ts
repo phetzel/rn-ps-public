@@ -75,7 +75,7 @@ export function buildExchangesPlanRequest(
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 16000,
+      maxOutputTokens: 8000, // 2-4 publication plans: editorial angles (200 chars each)
       schema: generateExchangesPlanSchema,
       schemaName: "exchanges_plan",
       jsonSchema,

@@ -43,7 +43,7 @@ export function buildOutcomesBaseRequest(
       options: {
         model: "gpt-5",
         instructions,
-        maxOutputTokens: 10000,
+        maxOutputTokens: 8000, // 2-4 outcomes: titles(60) + descriptions(140) + weights
         schema: generateBaseOutcomesSchema,
         schemaName: "outcome_base_list",
         jsonSchema,

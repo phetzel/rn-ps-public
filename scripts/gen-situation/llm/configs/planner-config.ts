@@ -57,7 +57,7 @@ export function buildPlannerRequest(
         options: {
           model: "gpt-5",
           instructions,               // system/developer guidance
-          maxOutputTokens: 16000,
+          maxOutputTokens: 8000, // Plan: title+desc+reasoning(200) + entities list
           schema: generateSituationPlanSchema,
           schemaName: "situation_plan",
           jsonSchema,

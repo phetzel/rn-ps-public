@@ -3,7 +3,7 @@ import type { LLMResponseRequest } from "../../types";
 import type { GenerationAnalysis } from "../../types";
 import type { GenerateSituationPlan } from "~/lib/schemas/generate";
 import { generatePreferencesSchema, type GeneratePreferences } from "~/lib/schemas/generate";
-import { GENERATION_GUIDE, PLANNER_TYPE_GUIDE } from "../generation-guide";
+import { GENERATION_GUIDE } from "../generation-guide";
 
 const instructions = `
 You are generating preferences for a fictional White House scenario.
@@ -65,9 +65,8 @@ export function buildPreferencesRequest(
         options: {
           model: "gpt-5",
           instructions,
-          // omit temperature for gpt-5 (unsupported)
-          maxOutputTokens: 16000,
-        schema: generatePreferencesSchema, // strict during generation; final validator enforces core too
+          maxOutputTokens: 8000, 
+        schema: generatePreferencesSchema, 
         schemaName: "situation_preferences",
         jsonSchema,
       },

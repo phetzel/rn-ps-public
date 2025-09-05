@@ -97,7 +97,7 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 12000, // Larger for impacts data but still smaller than full exchange
+      maxOutputTokens: 8000, // Just impact data (weights + reactions 20-100 chars) for existing questions
       schema: dynamicSchema,
       schemaName: "exchange_impacts",
       jsonSchema,
