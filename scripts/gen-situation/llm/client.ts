@@ -195,13 +195,22 @@ export class LLMClient {
     const cachedTokens = usage.input_tokens_details?.cached_tokens ?? 0;
     const totalTokens = usage.total_tokens ?? inputTokens + outputTokens;
 
-    // GPT-5 pricing: $15/1M input, $60/1M output (per 1K tokens)
-    const inputCostPer1K = 0.015;
-    const outputCostPer1K = 0.060;
-    
-    // Reasoning tokens are charged at output token rate
-    const inputCost = (inputTokens / 1000) * inputCostPer1K;
-    const outputCost = (outputTokens / 1000) * outputCostPer1K;
+    // GPT-5 pricing (latest):
+    // - Input: $1.25 per 1M tokens
+    // - Cached input: $0.125 per 1M tokens
+    // - Output: $10.00 per 1M tokens
+    const INPUT_COST_PER_M = 1.25;
+    const CACHED_INPUT_COST_PER_M = 0.125;
+    const OUTPUT_COST_PER_M = 10.0;
+
+    const uncachedInputTokens = Math.max(0, inputTokens - cachedTokens);
+    const cachedInputTokens = Math.max(0, Math.min(inputTokens, cachedTokens));
+
+    // Reasoning tokens are billed as output tokens (already included in outputTokens)
+    const uncachedInputCost = (uncachedInputTokens / 1_000_000) * INPUT_COST_PER_M;
+    const cachedInputCost = (cachedInputTokens / 1_000_000) * CACHED_INPUT_COST_PER_M;
+    const inputCost = uncachedInputCost + cachedInputCost;
+    const outputCost = (outputTokens / 1_000_000) * OUTPUT_COST_PER_M;
     const totalCost = inputCost + outputCost;
 
     this.costTracking.totalTokens += totalTokens;
@@ -210,7 +219,8 @@ export class LLMClient {
 
     if (this.debugMode) {
       console.log("💰 Token Breakdown:");
-      console.log(`   Input: ${inputTokens} tokens ($${inputCost.toFixed(4)})`);
+      console.log(`   Input: ${inputTokens} tokens → uncached ${uncachedInputTokens}, cached ${cachedInputTokens}`);
+      console.log(`     Input cost: $${inputCost.toFixed(4)} (uncached $${uncachedInputCost.toFixed(4)} + cached $${cachedInputCost.toFixed(4)})`);
       console.log(`   Output: ${outputTokens} tokens ($${outputCost.toFixed(4)})`);
       if (reasoningTokens > 0) {
         console.log(`   Reasoning: ${reasoningTokens} tokens (included in output cost)`);
