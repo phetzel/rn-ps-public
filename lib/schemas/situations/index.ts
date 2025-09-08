@@ -6,7 +6,7 @@ export * from "~/lib/schemas/situations/outcomes";
 
 // Main situation data schema with cross-validation
 import { z } from "zod";
-import { AnswerType } from "~/types";
+import { AnswerType, CabinetStaticId } from "~/types";
 import { situationTypeSchema, textLengthSchema, publicationSchema } from "../common";
 import { exchangeContentSchema } from "../exchanges";
 import { situationContentSchema } from "./content";
@@ -29,26 +29,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
       })
     ),
   })
-  .refine(
-    (data) => {
-      // All exchanges must have exactly 5 questions
-      const errors: string[] = [];
-
-      data.exchanges.forEach((exchange, exchangeIndex) => {
-        const allQuestions = getAllQuestionsFromExchange(exchange.content);
-        if (allQuestions.length !== 5) {
-          errors.push(
-            `Exchange ${exchangeIndex} has ${allQuestions.length} questions, expected 5`
-          );
-        }
-      });
-
-      return errors.length === 0;
-    },
-    {
-      message: "All exchanges must have exactly 5 questions",
-    }
-  )
+  
   .refine(
     (data) => {
       // Authorized answers must reference cabinet members with authorizedContent
@@ -83,24 +64,110 @@ const situationDataSchema = baseSituationDataSchema.extend({
         "Authorized answers must reference cabinet members with authorizedContent",
     }
   )
+  
   .refine(
     (data) => {
-      // Follow-up questions must exist
+      // Limit Authorized answers across entire situation to at most 1
+      let authorizedCount = 0;
+      data.exchanges.forEach((exchange) => {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((q) => {
+          q.answers.forEach((a) => {
+            if (a.type === AnswerType.Authorized) {
+              authorizedCount++;
+            }
+          });
+        });
+      });
+      return authorizedCount <= 1;
+    },
+    { message: "At most one Authorized answer is allowed per situation (across all exchanges)" }
+  )
+  .refine(
+    (data) => {
+      // Preference alignment at root questions: president and all INVOLVED cabinet (from outcomes) must have a preference and be covered positively
+      const errors: string[] = [];
+      const prefPresident = data.content.preferences.president;
+      const prefCabinet = data.content.preferences.cabinet || {};
+
+      // Derive involved cabinet from outcomes
+      const involvedCabinet = new Set<CabinetStaticId>();
+      data.content.outcomes.forEach((outcome) => {
+        const cab = outcome.consequences.approvalChanges.cabinet || {};
+        Object.keys(cab).forEach((id) =>
+          involvedCabinet.add(id as CabinetStaticId)
+        );
+      });
+
+      // Ensure every involved cabinet member has a preference
+      involvedCabinet.forEach((cabId) => {
+        if (!prefCabinet[cabId]) {
+          errors.push(`Cabinet member ${cabId} is involved in outcomes but has no preference`);
+        }
+      });
+
+      data.exchanges.forEach((exchange, exchangeIndex) => {
+        const rootAnswers = exchange.content.rootQuestion.answers;
+
+        if (prefPresident) {
+          const ok = rootAnswers.some((a) =>
+            a.type === prefPresident.answerType &&
+            a.impacts.president?.weight !== undefined &&
+            a.impacts.president.weight > 0
+          );
+          if (!ok) {
+            errors.push(`Exchange ${exchangeIndex}: Root must include a president-positive answer of type ${prefPresident.answerType}`);
+          }
+        }
+
+        // Check only involved cabinet members
+        involvedCabinet.forEach((cabId) => {
+          const cabPref = prefCabinet[cabId];
+          if (!cabPref) return; // Already recorded as error above
+          const ok = rootAnswers.some((a) => {
+            const impact = a.impacts.cabinet?.[cabId];
+            return (
+              a.type === cabPref.preference.answerType &&
+              impact !== undefined &&
+              impact.weight > 0
+            );
+          });
+          if (!ok) {
+            errors.push(
+              `Exchange ${exchangeIndex}: Root must include a positive answer of type ${cabPref.preference.answerType} for involved cabinet ${cabId}`
+            );
+          }
+        });
+      });
+
+      return errors.length === 0;
+    },
+    { message: "Root questions must include preference-aligned positive answers for president and all involved cabinet (per exchange); and all involved cabinet must have preferences" }
+  )
+  
+  .refine(
+    (data) => {
+      // Each question must have answers that positively and negatively modify every outcome
+      const outcomeIds = data.content.outcomes.map((o) => o.id);
       const errors: string[] = [];
 
       data.exchanges.forEach((exchange, exchangeIndex) => {
         const allQuestions = getAllQuestionsFromExchange(exchange.content);
         allQuestions.forEach((question) => {
-          question.answers.forEach((answer, answerIndex) => {
-            if (answer.followUpId) {
-              const followUpExists = allQuestions.some(
-                (q) => q.id === answer.followUpId
-              );
-              if (!followUpExists) {
-                errors.push(
-                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: Follow-up question ${answer.followUpId} does not exist`
-                );
+          outcomeIds.forEach((outcomeId) => {
+            let hasPos = false;
+            let hasNeg = false;
+            question.answers.forEach((answer) => {
+              const w = answer.outcomeModifiers?.[outcomeId];
+              if (typeof w === "number") {
+                if (w > 0) hasPos = true;
+                if (w < 0) hasNeg = true;
               }
+            });
+            if (!hasPos || !hasNeg) {
+              errors.push(
+                `Exchange ${exchangeIndex}, Question ${question.id}: must include answers with positive and negative modifiers for outcome ${outcomeId}`
+              );
             }
           });
         });
@@ -108,67 +175,90 @@ const situationDataSchema = baseSituationDataSchema.extend({
 
       return errors.length === 0;
     },
-    {
-      message: "Follow-up questions must exist in the exchange",
-    }
+    { message: "Each question must include answers that positively and negatively modify every outcome" }
   )
   .refine(
     (data) => {
-      // Exchanges must have normalized structure
+      // Outcome modifiers must only reference known outcome IDs
+      const outcomeIdSet = new Set(data.content.outcomes.map((o) => o.id));
       const errors: string[] = [];
 
       data.exchanges.forEach((exchange, exchangeIndex) => {
-        const content = exchange.content;
-
-        // Check root question has 2 follow-ups
-        const rootFollowUps = content.rootQuestion.answers.filter(
-          (a) => a.followUpId
-        ).length;
-        if (rootFollowUps !== 2) {
-          errors.push(
-            `Exchange ${exchangeIndex}: Root question must have exactly 2 follow-ups, has ${rootFollowUps}`
-          );
-        }
-
-        // Check secondary questions structure
-        if (content.secondaryQuestions.length !== 2) {
-          errors.push(
-            `Exchange ${exchangeIndex}: Must have exactly 2 secondary questions, has ${content.secondaryQuestions.length}`
-          );
-        }
-
-        content.secondaryQuestions.forEach((question, qIndex) => {
-          const followUps = question.answers.filter((a) => a.followUpId).length;
-          if (followUps !== 1) {
-            errors.push(
-              `Exchange ${exchangeIndex}, Secondary question ${qIndex}: Must have exactly 1 follow-up, has ${followUps}`
-            );
-          }
-        });
-
-        // Check tertiary questions structure
-        if (content.tertiaryQuestions.length !== 2) {
-          errors.push(
-            `Exchange ${exchangeIndex}: Must have exactly 2 tertiary questions, has ${content.tertiaryQuestions.length}`
-          );
-        }
-
-        content.tertiaryQuestions.forEach((question, qIndex) => {
-          const followUps = question.answers.filter((a) => a.followUpId).length;
-          if (followUps !== 0) {
-            errors.push(
-              `Exchange ${exchangeIndex}, Tertiary question ${qIndex}: Must have no follow-ups, has ${followUps}`
-            );
-          }
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((question) => {
+          question.answers.forEach((answer, answerIndex) => {
+            const keys = Object.keys(answer.outcomeModifiers || {});
+            keys.forEach((k) => {
+              if (!outcomeIdSet.has(k)) {
+                errors.push(
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: outcomeModifiers contains unknown outcome ID ${k}`
+                );
+              }
+            });
+          });
         });
       });
 
       return errors.length === 0;
     },
-    {
-      message:
-        "Exchanges must follow normalized structure (1 root + 2 secondary + 2 tertiary questions)",
-    }
+    { message: "Outcome modifiers must reference known outcome IDs" }
+  )
+  .refine(
+    (data) => {
+      // Exchange answers may only impact president and cabinet involved in outcomes
+      const errors: string[] = [];
+      const involvedCabinet = new Set<CabinetStaticId>();
+      data.content.outcomes.forEach((outcome) => {
+        const cab = outcome.consequences.approvalChanges.cabinet || {};
+        Object.keys(cab).forEach((id) =>
+          involvedCabinet.add(id as CabinetStaticId)
+        );
+      });
+
+      data.exchanges.forEach((exchange, exchangeIndex) => {
+        const allQuestions = getAllQuestionsFromExchange(exchange.content);
+        allQuestions.forEach((question) => {
+          question.answers.forEach((answer, answerIndex) => {
+            const cabImpacts = answer.impacts.cabinet || {};
+            Object.keys(cabImpacts).forEach((cabId) => {
+              const typedId = cabId as CabinetStaticId;
+              if (!involvedCabinet.has(typedId)) {
+                errors.push(
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: cabinet ${typedId} is impacted but not involved in outcomes`
+                );
+              }
+            });
+          });
+        });
+      });
+
+      return errors.length === 0;
+    },
+    { message: "Answers may only impact president and involved cabinet" }
+  )
+  .refine(
+    (data) => {
+      // Preferences may only include cabinet that are involved in outcomes
+      const errors: string[] = [];
+      const involvedCabinet = new Set<CabinetStaticId>();
+      data.content.outcomes.forEach((outcome) => {
+        const cab = outcome.consequences.approvalChanges.cabinet || {};
+        Object.keys(cab).forEach((id) =>
+          involvedCabinet.add(id as CabinetStaticId)
+        );
+      });
+
+      const prefCabinet = data.content.preferences.cabinet || {};
+      Object.keys(prefCabinet).forEach((cabId) => {
+        const typedId = cabId as CabinetStaticId;
+        if (!involvedCabinet.has(typedId)) {
+          errors.push(`Preference provided for cabinet ${typedId} which is not involved in outcomes`);
+        }
+      });
+
+      return errors.length === 0;
+    },
+    { message: "Only involved cabinet may have preferences" }
   );
 
 export { situationDataSchema };
