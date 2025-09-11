@@ -19,10 +19,13 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           text: "It's not an either/or proposition. We can and must do both. A stable economy, which this ensures, is what pays for those other programs.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Treasury]: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
           },
@@ -36,7 +39,7 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_cost_admit",
-          type: AnswerType.Admit,
+          type: AnswerType.Inform,
           text: "The cost is significant, and it's a valid concern. Treasury is exploring cost-saving storage solutions to minimize the taxpayer burden.",
           impacts: {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
@@ -45,6 +48,9 @@ export const libPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
               [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
@@ -60,15 +66,15 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_cost_inform",
-          type: AnswerType.Inform,
+          type: AnswerType.Reassure,
           text: "According to economic analysis, coffee price volatility costs the economy $3.2 billion annually in lost productivity. This reserve prevents larger economic shocks.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.Neutral },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.Neutral,
-              },
               [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.HHS]: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
@@ -84,10 +90,22 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_cost_neutral",
-          type: AnswerType.Inform,
+          type: AnswerType.Deflect,
           text: "We will present a full fiscal and policy rationale, including alternatives considered, and invite public comment before finalizing implementation details.",
-          impacts: {},
-          outcomeModifiers: {},
+          impacts: {
+            president: { weight: ExchangeImpactWeight.Positive },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
+          },
+          outcomeModifiers: {
+            outcome_coffee_price_shock_buffer:
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_coffee_market_meddling:
+              OutcomeModifierWeight.SlightPositive, // +4
+          },
         },
       ],
     },
@@ -106,6 +124,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -122,12 +143,12 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             text: "Absolutely not. This will be a fully government-run and secured operation. We will not be creating a new avenue for corporate profiteering.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
-                [CabinetStaticId.Justice]: {
+                [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -146,12 +167,12 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "We're reviewing public-private partnerships, but with ironclad transparency requirements. Any private involvement would be fully audited and publicly reported.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
-                [CabinetStaticId.Justice]: {
+                [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
@@ -168,8 +189,22 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_storage_neutral",
             type: AnswerType.Inform,
             text: "We will publish oversight plans, audit schedules, and transparency rules for any option considered so the public can evaluate risk and safeguards.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_spoilage_scandal:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
@@ -186,6 +221,9 @@ export const libPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -208,14 +246,16 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
               outcome_coffee_price_shock_buffer:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling:
                 OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
@@ -223,25 +263,41 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "HHS data shows 85% of Americans consume coffee daily. Medical research indicates moderate consumption reduces risks of several diseases. This is about public health stability.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_health_neutral",
             type: AnswerType.Inform,
             text: "We will publish clear public health guidance and guardrails in consultation with medical experts while pursuing supply stability goals.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
@@ -260,6 +316,9 @@ export const libPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -281,6 +340,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -296,10 +358,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "We're moving as quickly as responsible governance allows. The alternative - doing nothing while prices potentially spike - would be far worse for American families.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
                 [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -313,8 +378,23 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_timeline_neutral",
             type: AnswerType.Inform,
             text: "We will share a detailed timeline, responsible agencies, and progress updates so people can track delivery and hold us accountable.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
@@ -332,6 +412,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -347,17 +430,18 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The coffee industry employs 1.6 million workers. Supply stability protects these jobs from boom-bust cycles that typically hurt workers most.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
@@ -370,23 +454,41 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
             id: "a_worker_neutral",
             type: AnswerType.Inform,
             text: "We will monitor worker outcomes with labor groups and publish metrics on hours, wages, and staffing to ensure shared benefits.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer:
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling:
+                OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
     ],
   },
 };
+
+

@@ -18,16 +18,16 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
           [CabinetStaticId.Defense]: SituationConsequenceWeight.Positive,
           [CabinetStaticId.Justice]:
             SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Homeland]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.RuralResidents]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -43,6 +43,7 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
         cabinet: {
           [CabinetStaticId.Defense]: SituationConsequenceWeight.Negative,
           [CabinetStaticId.Homeland]: SituationConsequenceWeight.Negative,
+          [CabinetStaticId.Justice]: SituationConsequenceWeight.Neutral,
         },
         subgroups: {
           [SubgroupStaticId.RuralResidents]:
@@ -50,7 +51,7 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -72,8 +73,9 @@ export const cheeseTariffWarOutcomes: SituationOutcome[] = [
         subgroups: {
           [SubgroupStaticId.RuralResidents]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.LeftWingBase]:
+          [SubgroupStaticId.BusinessLeaders]:
+            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },
       },

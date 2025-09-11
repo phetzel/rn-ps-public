@@ -71,7 +71,7 @@ OUTCOME MODIFIERS RULES:
 - Example: If question has 4 answers, their outcomeModifiers combined must total 0
 
 IMPACTS RULES:
-- Each question must include at least one answer with positive impact and one with negative impact overall.
+- Each question must include at least one net-positive and one net-negative answer overall (sum weights across president + cabinet + journalists per answer).
 - Do not impact only the President. For each question, include cabinet impacts for at least one cabinet member from the list above. You may also include President impacts, but cabinet impacts must not be null for all answers in any question.
 - Use only cabinet IDs from the list above; do not invent new IDs.
 - No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question.

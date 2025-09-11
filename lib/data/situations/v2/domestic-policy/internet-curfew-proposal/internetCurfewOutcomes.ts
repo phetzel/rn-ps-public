@@ -47,8 +47,8 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.Negative,
           [SubgroupStaticId.LeftWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative, // Added negative to give IndependentBase both positive and negative
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -70,8 +70,6 @@ export const internetCurfewOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive, // Added positive to give LeftWingBase both positive and negative
-          [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.SlightlyNegative,

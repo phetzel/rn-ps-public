@@ -36,7 +36,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
             outcome_cheese_tariffs_hurt_farmers:
               OutcomeModifierWeight.SlightPositive,
-            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
           },
           followUpId: "q_cheese_war_preparation",
         },
@@ -46,12 +46,17 @@ export const libPrimaryExchange: ExchangeData = {
           text: "You're absolutely right. The President's comment was inappropriate and I take full responsibility for not preventing this diplomatic misstep.",
           impacts: {
             president: { weight: ExchangeImpactWeight.Positive },
+            cabinet: {
+              [CabinetStaticId.Defense]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
           },
           outcomeModifiers: {
             outcome_cheese_tariffs_eased: OutcomeModifierWeight.StrongPositive,
             outcome_cheese_tariffs_hurt_farmers:
               OutcomeModifierWeight.StrongNegative,
-            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
           },
           followUpId: "q_cheese_war_damage_control",
         },
@@ -60,6 +65,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           text: "Our Defense Department maintains that bilateral security partnerships remain unaffected by trade disagreements. We're managing this carefully.",
           impacts: {
+            president: { weight: ExchangeImpactWeight.Negative },
             cabinet: {
               [CabinetStaticId.Defense]: {
                 weight: ExchangeImpactWeight.Positive,
@@ -71,9 +77,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_cheese_tariffs_eased:
-              OutcomeModifierWeight.ModeratePositive,
+              OutcomeModifierWeight.SlightNegative,
             outcome_cheese_tariffs_hurt_farmers:
-              OutcomeModifierWeight.ModerateNegative,
+              OutcomeModifierWeight.SlightPositive,
             outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
           },
         },
@@ -82,6 +88,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           text: "The Justice Department confirms that all retaliatory measures follow proper legal procedures and international trade law frameworks.",
           impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Justice]: {
                 weight: ExchangeImpactWeight.Positive,
@@ -89,12 +96,15 @@ export const libPrimaryExchange: ExchangeData = {
               [CabinetStaticId.Homeland]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
+              [CabinetStaticId.Defense]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
           outcomeModifiers: {
-            outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
+            outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
             outcome_cheese_tariffs_hurt_farmers:
-              OutcomeModifierWeight.SlightNegative,
+              OutcomeModifierWeight.Neutral,
             outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
           },
         },
@@ -115,14 +125,17 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
               outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightPositive,
+                OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
             },
             followUpId: "q_cheese_war_supply_chain",
           },
@@ -136,10 +149,13 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_public_rallies:
@@ -156,6 +172,12 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -163,15 +185,33 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
             },
           },
           {
             id: "a_preparation_neutral",
             type: AnswerType.Inform,
             text: "We will publish interagency roles and coordination protocols so the public understands how risk monitoring supports diplomatic solutions.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
+            },
           },
         ],
       },
@@ -199,7 +239,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
             },
             followUpId: "q_cheese_war_future_prevention",
           },
@@ -223,7 +263,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
@@ -236,6 +276,12 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -243,15 +289,30 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
             id: "a_damage_neutral",
             type: AnswerType.Inform,
             text: "We are documenting outreach steps and timelines with Dairystan and will share progress updates as protocols allow.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+            },
           },
         ],
       },
@@ -266,9 +327,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "The Agriculture Department maintains strategic reserves and has diversified supplier relationships to ensure food security regardless of trade disruptions.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -277,7 +342,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
@@ -290,6 +355,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -297,7 +365,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
             },
           },
           {
@@ -310,13 +378,14 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral,
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
@@ -324,8 +393,26 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_supply_chain_neutral",
             type: AnswerType.Inform,
             text: "We will publish supply-chain contingency options and consult producers, retailers, and consumer groups before taking action.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_hurt_farmers:
+                OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+            },
           },
         ],
       },
@@ -343,13 +430,14 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.SlightNegative,
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
@@ -363,14 +451,15 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_public_rallies:
-                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
@@ -379,12 +468,18 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The President's authentic communication style is one of his strengths. Americans appreciate leaders who speak plainly about trade issues.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.SlightPositive,
               outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
@@ -392,8 +487,22 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_prevention_neutral",
             type: AnswerType.Inform,
             text: "We will formalize cross-team review procedures, training, and escalation paths and publish a summary of improvements.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+            },
           },
         ],
       },

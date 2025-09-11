@@ -35,7 +35,7 @@ export function buildExchangeQuestionsRequest(
       : `- Authorized NOT allowed for this outlet.`,
   ];
 
-  const QUESTIONS_SPECIFIC_INSTRUCTIONS = `
+const QUESTIONS_SPECIFIC_INSTRUCTIONS = `
 Generate the QUESTIONS AND ANSWERS STRUCTURE for the press-room exchange for the publication above.
 
 TASK-SPECIFIC REQUIREMENTS
@@ -46,6 +46,7 @@ TASK-SPECIFIC REQUIREMENTS
 STRUCTURE REQUIREMENTS (exactly)
 - 5 total questions: 1 root, 2 secondary, 2 tertiary
 - Each question has exactly 4 answers
+- Diversity: In any question, no single answer type may appear more than twice among the 4 answers
 - followUpId rules:
   - Root question: exactly 2 answers MUST have followUpId pointing to the 2 secondary questions
   - Each secondary question: exactly 1 answer MUST have followUpId pointing to one of the tertiary questions
@@ -57,6 +58,10 @@ ANSWER FIELDS (generate these only)
 - type: one of your core AnswerType values (Authorized only if allowed for this outlet)
 - authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet; null otherwise
 - followUpId: as per rules above; null if no follow-up
+
+ROOT ALIGNMENT (required in EVERY exchange)
+- Include at least one root answer of the President's preferred answerType that gives the President a positive relationship impact in the impacts phase
+- For EVERY cabinet member with a preference in this situation, include at least one root answer of that cabinet member's preferred answerType that gives that cabinet member a positive relationship impact in the impacts phase
 
 DO NOT GENERATE
 - impacts (will be added in next phase)

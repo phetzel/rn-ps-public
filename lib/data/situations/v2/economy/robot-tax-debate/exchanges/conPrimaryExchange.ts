@@ -14,21 +14,18 @@ export const conPrimaryExchange: ExchangeData = {
       id: "q_business_flight",
       text: "Major tech companies are threatening to move operations overseas because of this tax. Isn't the administration killing American innovation?",
       answers: [
-        {
-          id: "a_flight_challenge",
-          type: AnswerType.Challenge,
-          text: "We're actually boosting innovation by ensuring technology serves everyone, not just shareholders. Real innovators welcome the challenge of building inclusive prosperity.",
-          impacts: {
-            president: { weight: ExchangeImpactWeight.Positive },
-            cabinet: {
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+      {
+        id: "a_flight_challenge",
+        type: AnswerType.Challenge,
+        text: "We're actually boosting innovation by ensuring technology serves everyone, not just shareholders. Real innovators welcome the challenge of building inclusive prosperity.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.Positive },
+          cabinet: {
+            [CabinetStaticId.Treasury]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
           },
+        },
           outcomeModifiers: {
             outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
             outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
@@ -47,7 +44,7 @@ export const conPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.Positive,
               },
               [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.Negative,
               },
             },
           },
@@ -58,46 +55,46 @@ export const conPrimaryExchange: ExchangeData = {
           },
           followUpId: "q_revenue_sustainability",
         },
-        {
-          id: "a_flight_deflect",
-          type: AnswerType.Deflect,
-          text: "These companies are master deflectors - they cry 'innovation' when facing fair taxes but happily automate away American jobs for profit.",
-          impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
-            cabinet: {
-              [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.Positive,
-              },
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+      {
+        id: "a_flight_deflect",
+        type: AnswerType.Deflect,
+        text: "These companies are master deflectors - they cry 'innovation' when facing fair taxes but happily automate away American jobs for profit.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.State]: {
+              weight: ExchangeImpactWeight.SlightlyPositive,
+            },
+            [CabinetStaticId.Treasury]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
           },
+        },
           outcomeModifiers: {
             outcome_tax_offshore_exodus: OutcomeModifierWeight.StrongPositive, // +8
             outcome_tax_global_trend: OutcomeModifierWeight.StrongNegative, // -8
-            outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
-        {
-          id: "a_flight_admit",
-          type: AnswerType.Admit,
-          text: "We're monitoring these concerns closely and are open to adjusting the implementation timeline to address legitimate competitiveness issues.",
-          impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyPositive },
-            cabinet: {
-              [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.SlightlyPositive,
-              },
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+      {
+        id: "a_flight_admit",
+        type: AnswerType.Admit,
+        text: "We're monitoring these concerns closely and are open to adjusting the implementation timeline to address legitimate competitiveness issues.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.State]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
+            },
+            [CabinetStaticId.Treasury]: {
+              weight: ExchangeImpactWeight.SlightlyPositive,
             },
           },
+        },
           outcomeModifiers: {
             outcome_tax_offshore_exodus: OutcomeModifierWeight.ModerateNegative, // -6
             outcome_tax_global_trend: OutcomeModifierWeight.ModeratePositive, // +6
-            outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative, // -4
           },
         },
       ],
@@ -116,6 +113,9 @@ export const conPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -136,6 +136,9 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -154,20 +157,33 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_small_business_neutral",
             type: AnswerType.Inform,
             text: "We will publish a small business navigator, phase-in schedules, and automatic safe harbors to keep compliance straightforward and affordable.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative, // -4
+            },
           },
         ],
       },
@@ -185,6 +201,7 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -199,7 +216,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "The real question is why we should subsidize automation that eliminates jobs while giving corporations tax breaks for destroying communities.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -212,7 +229,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
               outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -222,23 +239,31 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_revenue_neutral",
             type: AnswerType.Inform,
             text: "Treasury will publish sensitivity analyses and contingency plans to maintain workforce funding even under relocation scenarios.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },
@@ -255,15 +280,14 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
@@ -273,9 +297,8 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Negative },
               },
             },
             outcomeModifiers: {
@@ -289,25 +312,36 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "Small businesses already navigate complex tax codes. This adds one line to existing forms while providing access to billions in training funds.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.Neutral, // 0
               outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
             id: "a_compliance_neutral",
             type: AnswerType.Inform,
             text: "We'll publish a one-page compliance checklist and API access to automate reporting; small firms can opt into simplified filing.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },
@@ -325,12 +359,13 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -338,11 +373,12 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "We're not stopping innovation - we're ensuring it benefits everyone. The tax funds research into automation that creates jobs, not just eliminates them.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -361,20 +397,31 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
               outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_disruption_neutral",
             type: AnswerType.Inform,
             text: "We will track productivity, wages, and investment and publish results so policy can be tuned to support sustainable innovation.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },

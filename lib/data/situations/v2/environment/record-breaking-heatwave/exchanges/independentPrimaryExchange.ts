@@ -45,6 +45,12 @@ export const independentPrimaryExchange: ExchangeData = {
               [CabinetStaticId.Homeland]: {
                 weight: ExchangeImpactWeight.Positive,
               },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
           outcomeModifiers: {
@@ -68,6 +74,9 @@ export const independentPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
               [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Treasury]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
@@ -86,8 +95,22 @@ export const independentPrimaryExchange: ExchangeData = {
           id: "a_grid_neutral",
           type: AnswerType.Inform,
           text: "We'll publish outage schedules, cooling center maps, and conservation targets so people can plan hour by hour.",
-          impacts: {},
-          outcomeModifiers: {},
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
+          },
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cooling_grants: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cloud_seeding_backfire: OutcomeModifierWeight.StrongPositive, // +8
+          },
         },
       ],
     },
@@ -121,21 +144,24 @@ export const independentPrimaryExchange: ExchangeData = {
             },
             followUpId: "q_heatwave_federal_coordination",
           },
-          {
-            id: "a_long_term_admit",
-            type: AnswerType.Admit,
-            text: "You're right, the immediate options are limited and imperfect. We're doing everything we can, but this is a stark reminder of our infrastructure debt.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_long_term_admit",
+          type: AnswerType.Admit,
+          text: "You're right, the immediate options are limited and imperfect. We're doing everything we can, but this is a stark reminder of our infrastructure debt.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
+          },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightPositive, // +4
@@ -149,20 +175,20 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_long_term_reassure",
             type: AnswerType.Reassure,
             text: "We're mobilizing every available resource - mobile cooling units, emergency shelters, and medical teams. The response is massive and coordinated.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
+          },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -176,8 +202,21 @@ export const independentPrimaryExchange: ExchangeData = {
           id: "a_long_term_neutral",
           type: AnswerType.Inform,
           text: "A real-time portal shows open centers, transit options, and wait times across affected cities.",
-          impacts: {},
-          outcomeModifiers: {},
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
+          },
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cloud_seeding_backfire: OutcomeModifierWeight.SlightPositive, // +4
+          },
         },
         ],
       },
@@ -185,18 +224,21 @@ export const independentPrimaryExchange: ExchangeData = {
         id: "q_heatwave_emergency_measures",
         text: "Are you considering any emergency weather modification like cloud-seeding to break this heat dome? What about the risks of unproven technology?",
         answers: [
-          {
-            id: "a_emergency_admit",
-            type: AnswerType.Admit,
-            text: "We're exploring all options, including experimental weather modification. The risks are real, but so is the crisis. We're proceeding very cautiously.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_emergency_admit",
+          type: AnswerType.Admit,
+          text: "We're exploring all options, including experimental weather modification. The risks are real, but so is the crisis. We're proceeding very cautiously.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -207,18 +249,24 @@ export const independentPrimaryExchange: ExchangeData = {
             },
             followUpId: "q_heatwave_cost_benefit",
           },
-          {
-            id: "a_emergency_deflect",
-            type: AnswerType.Deflect,
-            text: "Our focus is on proven solutions - cooling centers, grid management, and emergency response. We're not rushing into experimental territory.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+        {
+          id: "a_emergency_deflect",
+          type: AnswerType.Deflect,
+          text: "Our focus is on proven solutions - cooling centers, grid management, and emergency response. We're not rushing into experimental territory.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.Positive,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightPositive, // +4
@@ -228,33 +276,46 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
             },
           },
-          {
-            id: "a_emergency_inform",
-            type: AnswerType.Inform,
-            text: "We have teams evaluating cloud-seeding feasibility, but the technology is inconsistent and could cause flooding. Priority remains on immediate cooling solutions.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
-                },
+        {
+          id: "a_emergency_inform",
+          type: AnswerType.Inform,
+          text: "We have teams evaluating cloud-seeding feasibility, but the technology is inconsistent and could cause flooding. Priority remains on immediate cooling solutions.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_heatwave_grid_collapse: OutcomeModifierWeight.Neutral, // 0
-              outcome_heatwave_cooling_grants:
-                OutcomeModifierWeight.SlightPositive, // +4
-            outcome_heatwave_cloud_seeding_backfire:
+          },
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse: OutcomeModifierWeight.Neutral, // 0
+            outcome_heatwave_cooling_grants:
+              OutcomeModifierWeight.SlightPositive, // +4
+          outcome_heatwave_cloud_seeding_backfire:
               OutcomeModifierWeight.SlightNegative, // -4
+          },
+        },
+        {
+          id: "a_emergency_neutral",
+          type: AnswerType.Inform,
+          text: "Independent scientists are part of our review board, and any pilot would include rapid-stop criteria.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
-          {
-            id: "a_emergency_neutral",
-            type: AnswerType.Inform,
-            text: "Independent scientists are part of our review board, and any pilot would include rapid-stop criteria.",
-            impacts: {},
-            outcomeModifiers: {},
-          },
+          outcomeModifiers: {},
+        },
         ],
       },
     ],
@@ -263,38 +324,44 @@ export const independentPrimaryExchange: ExchangeData = {
         id: "q_heatwave_federal_coordination",
         text: "Cities are struggling to fund these centers. Shouldn't the federal government take direct control rather than just throwing money at the problem?",
         answers: [
-          {
-            id: "a_federal_challenge",
-            type: AnswerType.Challenge,
-            text: "Direct federal management would be slower and less effective. Local officials know their communities' needs better than Washington bureaucrats.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_federal_challenge",
+          type: AnswerType.Challenge,
+          text: "Direct federal management would be slower and less effective. Local officials know their communities' needs better than Washington bureaucrats.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
-            },
-            outcomeModifiers: {
-              outcome_heatwave_grid_collapse: OutcomeModifierWeight.Neutral, // 0
-              outcome_heatwave_cooling_grants:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.SlightNegative, // -4
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
-          {
-            id: "a_federal_reassure",
-            type: AnswerType.Reassure,
-            text: "We're providing both funding and coordination through Homeland Security. This combines federal resources with local expertise for maximum effectiveness.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_heatwave_cooling_grants:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_heatwave_cloud_seeding_backfire:
+              OutcomeModifierWeight.SlightNegative, // -4
+          },
+        },
+        {
+          id: "a_federal_reassure",
+          type: AnswerType.Reassure,
+          text: "We're providing both funding and coordination through Homeland Security. This combines federal resources with local expertise for maximum effectiveness.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -304,55 +371,73 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
-          {
-            id: "a_federal_inform",
-            type: AnswerType.Inform,
-            text: "We're deploying federal emergency management protocols while maintaining local control. FEMA coordinates but cities implement based on their specific needs.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
-              cabinet: {
-                [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.Neutral,
-                },
+        {
+          id: "a_federal_inform",
+          type: AnswerType.Inform,
+          text: "We're deploying federal emergency management protocols while maintaining local control. FEMA coordinates but cities implement based on their specific needs.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
-            outcomeModifiers: {
-              outcome_heatwave_grid_collapse:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_heatwave_cooling_grants:
-                OutcomeModifierWeight.SlightPositive, // +4
+          },
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse:
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cooling_grants:
+              OutcomeModifierWeight.SlightPositive, // +4
             outcome_heatwave_cloud_seeding_backfire:
               OutcomeModifierWeight.Neutral, // 0
+          },
+        },
+        {
+          id: "a_federal_neutral",
+          type: AnswerType.Inform,
+          text: "We'll issue after-action reports and update playbooks so coordination improves each heat event.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
-          {
-            id: "a_federal_neutral",
-            type: AnswerType.Inform,
-            text: "We'll issue after-action reports and update playbooks so coordination improves each heat event.",
-            impacts: {},
-            outcomeModifiers: {},
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse: OutcomeModifierWeight.SlightNegative, // -4
           },
+        },
         ],
       },
       {
         id: "q_heatwave_cost_benefit",
         text: "What's the economic cost of this heatwave response versus the long-term investment needed to prevent future crises?",
         answers: [
-          {
-            id: "a_cost_inform",
-            type: AnswerType.Inform,
-            text: "Treasury estimates this emergency response will cost $2 billion, while grid modernization would require $200 billion over a decade. The math is clear.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_cost_inform",
+          type: AnswerType.Inform,
+          text: "Treasury estimates this emergency response will cost $2 billion, while grid modernization would require $200 billion over a decade. The math is clear.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -362,55 +447,71 @@ export const independentPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.Neutral, // 0
             },
           },
-          {
-            id: "a_cost_admit",
-            type: AnswerType.Admit,
-            text: "The emergency costs are enormous, but they're dwarfed by the long-term economic damage if we don't invest in climate resilience infrastructure.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_cost_admit",
+          type: AnswerType.Admit,
+          text: "The emergency costs are enormous, but they're dwarfed by the long-term economic damage if we don't invest in climate resilience infrastructure.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
-            },
-            outcomeModifiers: {
-              outcome_heatwave_grid_collapse:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_heatwave_cooling_grants:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_heatwave_cloud_seeding_backfire:
-                OutcomeModifierWeight.Neutral, // 0
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
             },
           },
-          {
-            id: "a_cost_deflect",
-            type: AnswerType.Deflect,
-            text: "We can't put a price on human life. The immediate priority is saving lives, and we'll address long-term costs through proper planning and investment.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-              },
-            },
-            outcomeModifiers: {
-              outcome_heatwave_grid_collapse:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_heatwave_cooling_grants:
-                OutcomeModifierWeight.SlightPositive, // +4
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_heatwave_cooling_grants:
+              OutcomeModifierWeight.SlightNegative, // -4
             outcome_heatwave_cloud_seeding_backfire:
-              OutcomeModifierWeight.Neutral, // 0
+              OutcomeModifierWeight.SlightNegative, // -4
+          },
+        },
+        {
+          id: "a_cost_deflect",
+          type: AnswerType.Deflect,
+          text: "We can't put a price on human life. The immediate priority is saving lives, and we'll address long-term costs through proper planning and investment.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
-          {
-            id: "a_cost_neutral",
-            type: AnswerType.Inform,
-            text: "Treasury will publish cost-benefit analyses comparing emergency spending with grid resilience investments.",
-            impacts: {},
-            outcomeModifiers: {},
+          outcomeModifiers: {
+            outcome_heatwave_grid_collapse:
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cooling_grants:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_heatwave_cloud_seeding_backfire:
+              OutcomeModifierWeight.SlightPositive, // +4
           },
+        },
+        {
+          id: "a_cost_neutral",
+          type: AnswerType.Inform,
+          text: "Treasury will publish cost-benefit analyses comparing emergency spending with grid resilience investments.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
+          },
+          outcomeModifiers: {},
+        },
         ],
       },
     ],

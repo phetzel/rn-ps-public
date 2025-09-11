@@ -24,6 +24,8 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -38,8 +40,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Defense]:
-            SituationConsequenceWeight.SlightlyNegative,
+          // Removed Defense to keep involved cabinet ≤3 and match preferences
           [CabinetStaticId.Homeland]:
             SituationConsequenceWeight.StronglyNegative,
         },
@@ -48,6 +49,8 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyNegative,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.YouthVoters]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -62,8 +65,7 @@ export const strategicCoffeeReserveOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Treasury]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Defense]:
-            SituationConsequenceWeight.SlightlyPositive,
+          // Removed Defense to keep involved cabinet ≤3 and match preferences
         },
         subgroups: {
           [SubgroupStaticId.YouthVoters]:

@@ -24,7 +24,7 @@ export const teachersStrikeBackOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.YouthVoters]:
-            SituationConsequenceWeight.SlightlyPositive,
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -46,8 +46,8 @@ export const teachersStrikeBackOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LaborUnions]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -68,7 +68,7 @@ export const teachersStrikeBackOutcomes: SituationOutcome[] = [
         subgroups: {
           [SubgroupStaticId.LaborUnions]:
             SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.LeftWingBase]:
+          [SubgroupStaticId.YouthVoters]:
             SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.IndependentBase]:
             SituationConsequenceWeight.SlightlyNegative,

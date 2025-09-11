@@ -15,18 +15,15 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
-          [CabinetStaticId.Treasury]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Treasury]: SituationConsequenceWeight.SlightlyPositive,
           [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
           [CabinetStaticId.State]: SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.TechIndustry]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -47,10 +44,8 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
         subgroups: {
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.TechIndustry]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -66,7 +61,10 @@ export const droneHackScandalOutcomes: SituationOutcome[] = [
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
         },
-        subgroups: {},
+        subgroups: {
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]: SituationConsequenceWeight.SlightlyNegative,
+        },
       },
     },
   },

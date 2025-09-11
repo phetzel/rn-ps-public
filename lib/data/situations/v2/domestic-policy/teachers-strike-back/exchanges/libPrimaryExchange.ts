@@ -22,7 +22,10 @@ export const libPrimaryExchange: ExchangeData = {
             president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Add negative impact to balance
             cabinet: {
               [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.Positive,
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
           },
@@ -41,6 +44,11 @@ export const libPrimaryExchange: ExchangeData = {
           text: "You're absolutely right. The karaoke policy was a mistake that's now harming student mental health. We're ending it immediately.",
           impacts: {
             president: { weight: ExchangeImpactWeight.Positive },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
           },
           outcomeModifiers: {
             outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
@@ -61,8 +69,8 @@ export const libPrimaryExchange: ExchangeData = {
               [CabinetStaticId.HHS]: {
                 weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance HHS
               },
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
           },
@@ -75,17 +83,17 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         {
-          id: "a_welfare_challenge",
-          type: AnswerType.Challenge,
-          text: "The real crisis is decades of underfunding education. These teachers are fighting for resources students desperately need.",
+          id: "a_welfare_deny",
+          type: AnswerType.Deny,
+          text: "This isn’t a security issue. Karaoke mandates aren’t homeland emergencies — we’re focusing on student well-being, not panic.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.Positive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
-              [CabinetStaticId.Treasury]: {
+              [CabinetStaticId.Homeland]: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
               },
               [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative, // Add negative impact for HHS
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
           },
@@ -116,11 +124,11 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
+                OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4 (changed from +8)
+                OutcomeModifierWeight.Neutral, // 0 (changed from +8)
             },
             followUpId: "q_union_rights",
           },
@@ -128,37 +136,40 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_conditions_reassure",
             type: AnswerType.Reassure,
             text: "We're committed to supporting teachers with additional training, resources, and implementation flexibility going forward.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4
-            },
+          },
+          outcomeModifiers: {
+            outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
+            outcome_strike_security_crisis:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise:
+              OutcomeModifierWeight.SlightNegative, // -4
+          },
           },
           {
             id: "a_conditions_challenge",
             type: AnswerType.Challenge,
             text: "This is about respecting educators as professionals, not treating them as implementers of top-down mandates they had no voice in creating.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance
-                },
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
+          },
             outcomeModifiers: {
               outcome_strike_wellness_focus:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -172,8 +183,18 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_conditions_neutral",
             type: AnswerType.Inform,
             text: "We will convene educators and families to set implementation standards and timelines and publish progress against those metrics.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.StrongPositive, // +8
+              outcome_strike_security_crisis: OutcomeModifierWeight.MajorNegative, // -12
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
@@ -181,21 +202,21 @@ export const libPrimaryExchange: ExchangeData = {
         id: "q_educational_funding",
         text: "Will this crisis finally lead to the major education funding increase that advocates have been demanding?",
         answers: [
-          {
-            id: "a_funding_inform",
-            type: AnswerType.Inform,
-            text: "We're proposing a $15 billion emergency education package focused on mental health services, arts programs, and teacher support.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-              },
+      {
+        id: "a_funding_inform",
+        type: AnswerType.Inform,
+        text: "We're proposing a $15 billion emergency education package focused on mental health services, arts programs, and teacher support.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.Homeland]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
+            [CabinetStaticId.HHS]: {
+              weight: ExchangeImpactWeight.SlightlyPositive,
+            },
+          },
+        },
             outcomeModifiers: {
               outcome_strike_wellness_focus:
                 OutcomeModifierWeight.StrongPositive, // +8
@@ -206,29 +227,29 @@ export const libPrimaryExchange: ExchangeData = {
             },
             followUpId: "q_systemic_reform",
           },
-          {
-            id: "a_funding_challenge",
-            type: AnswerType.Challenge,
-            text: "This crisis proves we can't keep asking teachers to do more with less. It's time for transformational investment in public education.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
-              cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance Treasury
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Add negative impact to balance HHS
-                },
-              },
+      {
+        id: "a_funding_challenge",
+        type: AnswerType.Challenge,
+        text: "This crisis proves we can't keep asking teachers to do more with less. It's time for transformational investment in public education.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.Positive },
+          cabinet: {
+            [CabinetStaticId.Homeland]: {
+              weight: ExchangeImpactWeight.SlightlyNegative, // Replace Treasury with Homeland
             },
-            outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4
+            [CabinetStaticId.HHS]: {
+              weight: ExchangeImpactWeight.Negative, // Make net negative for count
             },
           },
+        },
+        outcomeModifiers: {
+          outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_strike_security_crisis:
+            OutcomeModifierWeight.SlightNegative, // -4
+          outcome_strike_karaoke_compromise:
+            OutcomeModifierWeight.SlightPositive, // +4
+        },
+      },
           {
             id: "a_funding_deflect",
             type: AnswerType.Deflect,
@@ -236,8 +257,11 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -249,13 +273,23 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
             },
           },
-          {
-            id: "a_funding_neutral",
-            type: AnswerType.Inform,
-            text: "We will outline funding options, tradeoffs, and accountability measures, and invite public comment before final proposals are advanced.",
-            impacts: {},
-            outcomeModifiers: {},
+      {
+        id: "a_funding_neutral",
+        type: AnswerType.Inform,
+        text: "We will outline funding options, tradeoffs, and accountability measures, and invite public comment before final proposals are advanced.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyPositive },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+            [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
           },
+        },
+        outcomeModifiers: {
+          outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+          outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive, // +4
+        },
+      },
         ],
       },
     ],
@@ -268,21 +302,24 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_rights_reassure",
             type: AnswerType.Reassure,
             text: "We absolutely support collective bargaining. Teachers have every right to advocate for their students and working conditions.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4
-            },
+          },
+          outcomeModifiers: {
+            outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
+            outcome_strike_security_crisis:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise:
+              OutcomeModifierWeight.SlightNegative, // -4
+          },
           },
           {
             id: "a_rights_challenge",
@@ -291,8 +328,11 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance Justice
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -315,6 +355,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -330,8 +373,18 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_rights_neutral",
             type: AnswerType.Inform,
             text: "We are engaging unions and districts in a structured process to resolve disputes while protecting student learning and workplace rights.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },
@@ -347,7 +400,10 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Positive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -380,18 +436,21 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
-          {
-            id: "a_reform_deflect",
-            type: AnswerType.Deflect,
-            text: "Every crisis is a learning opportunity. We're committed to evidence-based policy making that puts students first.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-              },
+      {
+        id: "a_reform_deflect",
+        type: AnswerType.Deflect,
+        text: "Every crisis is a learning opportunity. We're committed to evidence-based policy making that puts students first.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyPositive },
+          cabinet: {
+            [CabinetStaticId.HHS]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
+            [CabinetStaticId.Homeland]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
+            },
+          },
+        },
             outcomeModifiers: {
               outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0
               outcome_strike_security_crisis:
@@ -400,13 +459,23 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
             },
           },
-          {
-            id: "a_reform_neutral",
-            type: AnswerType.Inform,
-            text: "We will publish a roadmap for educator input, pilot evaluations, and evidence reviews before any systemic policy changes are rolled out.",
-            impacts: {},
-            outcomeModifiers: {},
+      {
+        id: "a_reform_neutral",
+        type: AnswerType.Inform,
+        text: "We will publish a roadmap for educator input, pilot evaluations, and evidence reviews before any systemic policy changes are rolled out.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+            [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
           },
+        },
+        outcomeModifiers: {
+          outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+          outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+        },
+      },
         ],
       },
     ],

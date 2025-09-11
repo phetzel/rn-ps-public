@@ -1,8 +1,8 @@
 import type { SituationDataType } from "~/lib/schemas/situations";
-import { strategicCoffeeReserve } from "./strategic-coffee-reserve";
 import { robotTaxDebate } from "./robot-tax-debate";
+import { strategicCoffeeReserve } from "./strategic-coffee-reserve";
 
 export const economySituationsData: SituationDataType[] = [
-  strategicCoffeeReserve,
   robotTaxDebate,
+  strategicCoffeeReserve,
 ];

@@ -20,6 +20,14 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We're not 'caving' - we're making smart policy decisions based on what works for students, not political posturing.",
           impacts: {
             president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
           },
           outcomeModifiers: {
             outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
@@ -35,6 +43,11 @@ export const conPrimaryExchange: ExchangeData = {
           text: "You're right that we could have handled this better. The karaoke mandate created unnecessary conflict when we should focus on real student needs.",
           impacts: {
             president: { weight: ExchangeImpactWeight.Positive },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
           },
           outcomeModifiers: {
             outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
@@ -52,7 +65,7 @@ export const conPrimaryExchange: ExchangeData = {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.Positive,
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
               [CabinetStaticId.Homeland]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -74,7 +87,7 @@ export const conPrimaryExchange: ExchangeData = {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Homeland]: {
-                weight: ExchangeImpactWeight.Positive,
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
               [CabinetStaticId.HHS]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -103,8 +116,11 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Positive,
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -125,8 +141,11 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance President
               cabinet: {
-                [CabinetStaticId.Treasury]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -146,8 +165,8 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance Treasury
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -163,8 +182,18 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_taxpayer_neutral",
             type: AnswerType.Inform,
             text: "We will provide transparent daily figures, fiscal tradeoffs, and independent verification so families understand both costs and benefits.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative, // -4
+            },
           },
         ],
       },
@@ -179,7 +208,7 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
-                [CabinetStaticId.Justice]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
                 [CabinetStaticId.HHS]: {
@@ -188,11 +217,11 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_security_crisis:
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightNegative, // -4
+                OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_legal_consequences",
           },
@@ -203,8 +232,11 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Justice]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -213,7 +245,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_security_crisis:
                 OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -226,10 +258,13 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_security_crisis:
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_karaoke_compromise:
@@ -240,8 +275,18 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_union_neutral",
             type: AnswerType.Inform,
             text: "We are reviewing accountability options with states while prioritizing swift return-to-learning plans and student support.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },
@@ -258,15 +303,16 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
               outcome_strike_wellness_focus:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_karaoke_compromise:
                 OutcomeModifierWeight.SlightNegative, // -4
             },
@@ -278,9 +324,10 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance President
               cabinet: {
-                [CabinetStaticId.Treasury]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
@@ -298,8 +345,8 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance Treasury
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -308,15 +355,25 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_security_crisis:
                 OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_budget_neutral",
             type: AnswerType.Inform,
             text: "We will publish a full fiscal analysis comparing emergency support with alternative approaches, including projected educational outcomes.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative, // -4
+            },
           },
         ],
       },
@@ -331,9 +388,10 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.Positive,
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -351,13 +409,14 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative }, // Change to negative to balance President
               cabinet: {
-                [CabinetStaticId.Justice]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from +4)
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_security_crisis:
                 OutcomeModifierWeight.SlightNegative, // -4
               outcome_strike_karaoke_compromise:
@@ -371,13 +430,13 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative, // Change to negative to balance Justice
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from -4)
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
               outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
               outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0 (changed from -4)
             },
@@ -386,8 +445,18 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_legal_neutral",
             type: AnswerType.Inform,
             text: "We are coordinating with local authorities and education leaders on lawful remedies that prioritize classroom reopening and student well-being.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },

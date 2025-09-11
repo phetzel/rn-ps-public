@@ -15,19 +15,16 @@ export const recordBreakingHeatwaveOutcomes: SituationOutcome[] = [
     consequences: {
       approvalChanges: {
         cabinet: {
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyNegative,
           [CabinetStaticId.Homeland]: SituationConsequenceWeight.Negative,
           [CabinetStaticId.Treasury]:
             SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.UrbanResidents]:
-            SituationConsequenceWeight.StronglyNegative,
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.BusinessLeaders]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.UrbanResidents]: SituationConsequenceWeight.StronglyNegative,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.Negative,
+          // Generator companies and off-grid startups see a boom amid the chaos
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -44,16 +41,9 @@ export const recordBreakingHeatwaveOutcomes: SituationOutcome[] = [
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Positive,
         },
         subgroups: {
-          [SubgroupStaticId.UrbanResidents]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.BusinessLeaders]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.RuralResidents]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.TechIndustry]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.UrbanResidents]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -74,12 +64,9 @@ export const recordBreakingHeatwaveOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.SlightlyPositive,
         },
         subgroups: {
-          [SubgroupStaticId.RuralResidents]:
-            SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.TechIndustry]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.UrbanResidents]: SituationConsequenceWeight.Negative,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

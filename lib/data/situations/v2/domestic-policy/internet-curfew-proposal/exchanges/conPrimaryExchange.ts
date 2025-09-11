@@ -19,6 +19,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           text: "That's a concern. Pushing users to dark nets and VPNs could make our country less safe. Homeland is studying risks.",
           impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Homeland]: {
                 weight: ExchangeImpactWeight.Positive,
@@ -26,8 +27,8 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
             outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
           },
           followUpId: "q_constitutional_authority",
@@ -37,18 +38,18 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           text: "Let's focus on the health benefits. We're exploring various implementation approaches with tech industry partners.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
             cabinet: {
-              [CabinetStaticId.Homeland]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Negative },
+              [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
           outcomeModifiers: {
             outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
-            outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
             outcome_curfew_voluntary_rollout:
-              OutcomeModifierWeight.SlightPositive, // +4
+              OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_tech_industry_resistance",
         },
@@ -57,10 +58,10 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           text: "HHS research shows sleep deprivation costs $400 billion annually. We're piloting technical solutions carefully.",
           impacts: {
+            president: { weight: ExchangeImpactWeight.Negative },
             cabinet: {
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
           outcomeModifiers: {
@@ -75,17 +76,17 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           text: "We understand privacy concerns. Justice Department ensures any approach respects constitutional protections.",
           impacts: {
+            president: { weight: ExchangeImpactWeight.Negative },
             cabinet: {
-              [CabinetStaticId.Justice]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
           outcomeModifiers: {
-            outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
             outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
             outcome_curfew_voluntary_rollout:
-              OutcomeModifierWeight.SlightPositive, // +4
+              OutcomeModifierWeight.Neutral, // 0
           },
         },
       ],
@@ -100,10 +101,13 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "Our legal team is reviewing all constitutional implications. We won't proceed without proper legal foundation.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -122,9 +126,8 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
@@ -138,11 +141,12 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "That's a misreading of precedent. This is about public health emergency powers, not routine internet regulation.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -156,8 +160,18 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_authority_neutral",
             type: AnswerType.Inform,
             text: "We will seek broad legal and academic input before any proposal advances and will publish a full constitutional analysis for public review.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },
@@ -172,9 +186,8 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
@@ -190,11 +203,10 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Government has broad regulatory authority over public utilities. We're confident we have legal tools for compliance.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -208,14 +220,27 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "These companies profit from sleep deprivation and addiction. Sometimes government must act when industry won't.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
+              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
+            },
+          },
+          {
+            id: "a_resistance_neutral",
+            type: AnswerType.Inform,
+            text: "We will convene industry, labor, and public health experts to evaluate voluntary options, timelines, and safeguards before any enforcement path is considered.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
@@ -223,13 +248,6 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
               outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
             },
-          },
-          {
-            id: "a_resistance_neutral",
-            type: AnswerType.Inform,
-            text: "We will convene industry, labor, and public health experts to evaluate voluntary options, timelines, and safeguards before any enforcement path is considered.",
-            impacts: {},
-            outcomeModifiers: {},
           },
         ],
       },
@@ -248,6 +266,9 @@ export const conPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -269,7 +290,7 @@ export const conPrimaryExchange: ExchangeData = {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -290,6 +311,9 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -302,8 +326,18 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_surveillance_neutral",
             type: AnswerType.Inform,
             text: "Privacy is foundational. We will publish a privacy impact assessment and consult independent advocates before any technical approach is selected.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+            },
           },
         ],
       },
@@ -318,9 +352,7 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive },
               },
             },
             outcomeModifiers: {
@@ -335,17 +367,16 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "Industries will adapt. Companies that profit from sleep deprivation need to find more sustainable business models anyway.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
               outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
               outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.StrongNegative, // -8
             },
           },
           {
@@ -355,13 +386,13 @@ export const conPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
-              outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
+              outcome_curfew_shelved: OutcomeModifierWeight.StrongPositive, // +8
               outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
               outcome_curfew_voluntary_rollout:
                 OutcomeModifierWeight.SlightPositive, // +4
@@ -371,8 +402,19 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_economic_neutral",
             type: AnswerType.Inform,
             text: "Treasury will publish detailed modeling and alternatives, engage small businesses and workers, and phase any changes to minimize disruption.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
+              outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
+            },
           },
         ],
       },
