@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import { z } from "zod";
+import type { ParsedResponse } from "openai/resources/responses/responses";
 import dotenv from "dotenv";
 import type { LLMResponse, LLMResponseOptions } from "../types";
 
@@ -43,132 +43,36 @@ export class LLMClient {
     const {
       model = this.defaultModel,
       instructions,
-      // temperature = 0.7,
-      maxOutputTokens = 4000, // Default fallback - most steps should specify their own limit
+      maxOutputTokens = 4000,
       schema,
       schemaName,
       jsonSchema,
       previousResponseId,
-      reasoningEffort = 'medium', // Default to 'medium' if not specified
     } = opts;
 
-    // Helper to strip code fences and try to isolate a JSON object
-    const extractJsonText = (rawText: string): string => {
-      let txt = (rawText ?? "").trim();
-      if (txt.startsWith("```")) {
-        // Remove leading fence and optional language
-        const firstFenceEnd = txt.indexOf("\n");
-        txt = firstFenceEnd >= 0 ? txt.slice(firstFenceEnd + 1) : txt;
-        const lastFenceStart = txt.lastIndexOf("```");
-        if (lastFenceStart >= 0) txt = txt.slice(0, lastFenceStart);
-        txt = txt.trim();
-      }
-      // Fallback: take the largest {...} block
-      const first = txt.indexOf("{");
-      const last = txt.lastIndexOf("}");
-      if (first >= 0 && last > first) {
-        return txt.slice(first, last + 1);
-      }
-      return txt;
-    };
-
-    const maxAttempts = 1;
-    let lastError: Error | null = null;
-    let priorId: string | undefined = previousResponseId;
-
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-      const attemptInstructions =
-        attempt === 1
-          ? instructions
-          : `${instructions}\n\nReturn ONLY valid JSON that strictly matches the schema. No commentary, no code fences, no trailing text.`;
-
-      const req: any = {
-        model,
-        instructions: attemptInstructions,
-        input: prompt,
-        // temperature,
-        max_output_tokens: maxOutputTokens,
-        // reasoning: { effort: reasoningEffort },
-        text: {
-          format: {
-            type: "json_schema",
-            name: schemaName,
-            schema: jsonSchema,
-            strict: true,
-          },
+    const res = await this.client.responses.parse({
+      model,
+      instructions,
+      input: prompt,
+      max_output_tokens: maxOutputTokens,
+      text: {
+        format: {
+          type: "json_schema",
+          name: schemaName,
+          schema: jsonSchema as Record<string, unknown>,
+          strict: true,
         },
-      };
-      if (priorId) req.previous_response_id = priorId;
+      },
+      ...(previousResponseId ? { previous_response_id: previousResponseId } : {}),
+    }) as ParsedResponse<T>;
+    if (this.debugMode) console.log("🔍 Raw model output:", res);
 
-      let res: any;
-      try {
-        res = await this.client.responses.create(req);
-        console.log("🔍 Raw model output:", res);
-      } catch (apiErr: any) {
-        const msg = apiErr?.message || String(apiErr);
-        throw new Error(`OpenAI API error: ${msg}`);
-      }
-
-      const raw = (res as any).output_text ?? ""; // aggregated text output
-      if (this.debugMode) {
-        console.log(
-          `🧩 [DEBUG] Raw model output (attempt ${attempt}, first 400 chars):`,
-          raw.slice(0, 400)
-        );
-      }
-
-      // Keep id to optionally chain retries
-      priorId = (res as any)?.id ?? priorId;
-
-      // Try JSON.parse with helpful error messages and light repair
-      let parsedJson: unknown;
-      try {
-        const jsonText = extractJsonText(raw);
-        parsedJson = JSON.parse(jsonText);
-      } catch (parseErr: any) {
-        lastError = new Error(
-          `Model returned non-JSON or malformed JSON. Parse error: ${parseErr?.message || parseErr}. Raw snippet: ${(raw ?? "").slice(0, 400)}`
-        );
-        if (attempt < maxAttempts) continue;
-        throw lastError;
-      }
-
-      // Validate with Zod but prefer safeParse for better diagnostics
-      const result = (schema as z.ZodSchema<T>).safeParse(parsedJson);
-      if (!result.success) {
-        const issues = result.error.issues.slice(0, 5).map(i => {
-          const path = i.path?.length ? `[${i.path.join(".")}]` : "";
-          return `${path} ${i.message}`.trim();
-        });
-
-        if (this.debugMode) {
-          console.error("❌ [DEBUG] Zod validation errors:", JSON.stringify(result.error.issues, null, 2));
-          console.error("🧩 [DEBUG] Offending JSON (first 800 chars):", ((res as any).output_text ?? "").slice(0, 800));
-        }
-
-        lastError = new Error(
-          `LLM output failed validation against schema. Top issues: ${issues.join(" | ")}`
-        );
-        if (attempt < maxAttempts) continue;
-        throw lastError;
-      }
-
-      // Log raw usage as returned by GPT-5 API
-      const rawUsage = (res as any).usage;
-      if (this.debugMode && rawUsage) {
-        console.log("📊 Raw GPT-5 Usage:", JSON.stringify(rawUsage, null, 2));
-      }
-      
-      const usage = this.trackUsage(rawUsage);
-      if (this.debugMode) console.log("🔍 [DEBUG] Parsed JSON:", JSON.stringify(result.data, null, 2));
-      return { content: result.data, raw: (res as any).output_text, usage };
-    }
-
-    // Should not reach here
-    throw lastError ?? new Error("Unknown error generating LLM response");
+    const outputParsed = res.output_parsed as T;
+    const outputText = (res as { output_text?: string }).output_text ?? undefined;
+    const usage = this.trackUsage((res as any).usage);
+    return { content: outputParsed, raw: outputText, usage };
   }
   
-
   /**
    * Get usage statistics
    */

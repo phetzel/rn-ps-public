@@ -25,7 +25,7 @@ export abstract class ResponsesGenerationStep<I, O> {
 
     const { prompt, options } = this.buildRequest(input);
     try {
-      const { content } = await this.llmClient.generateResponse<O>(prompt, options);
+      const { content } = await this.llmClient.generateResponse<O>(prompt, options as any);
       return this.postProcess(content, input);
     } catch (err: any) {
       const prefix = this.constructor?.name || "ResponsesGenerationStep";

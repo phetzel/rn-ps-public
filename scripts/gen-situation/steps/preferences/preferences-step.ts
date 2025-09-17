@@ -20,7 +20,7 @@ export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInpu
     if (!input.analysis) throw new Error("Preferences step requires generation analysis");
   }
 
-  protected async postProcess(result: GeneratePreferences): Promise<GeneratePreferences> {
+  protected async postProcess(result: GeneratePreferences, _input: PreferencesStepInput): Promise<GeneratePreferences> {
     return result;
   }
 }
