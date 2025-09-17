@@ -331,7 +331,7 @@ describe("PressExchange Model", () => {
     });
 
     it("should answer a question that has no follow-up", async () => {
-      await pressExchange.answerQuestion("a_welfare_challenge"); // Answer with choice that has no follow-up
+      await pressExchange.answerQuestion("a_welfare_deny"); // Answer with choice that has no follow-up
       const updatedExchange = await database
         .get<PressExchange>("press_exchanges")
         .find(pressExchange.id);
