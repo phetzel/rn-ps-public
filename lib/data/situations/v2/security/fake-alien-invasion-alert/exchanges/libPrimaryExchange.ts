@@ -21,12 +21,9 @@ export const libPrimaryExchange: ExchangeData = {
           impacts: {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyPositive,
-              },
-              [CabinetStaticId.Defense]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
           outcomeModifiers: {
@@ -36,17 +33,15 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         {
-          id: "a_transparency_inform",
-          type: AnswerType.Inform,
-          text: "HHS has protocols for public health communications. We've already begun reviewing how emergency alert systems can better serve public transparency.",
+          id: "a_transparency_reassure",
+          type: AnswerType.Reassure,
+          text: "There is no threat. We’re tightening protocols and reassuring the public immediately when errors occur.",
           impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.Homeland]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.Positive },
+              [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
           outcomeModifiers: {
@@ -61,14 +56,11 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           text: "The focus should be on preventing these communication failures, not relitigating what happened. We're working with Congress on better oversight.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
-              [CabinetStaticId.Defense]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.Positive },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
           outcomeModifiers: {
@@ -79,11 +71,20 @@ export const libPrimaryExchange: ExchangeData = {
           followUpId: "q_alert_public_trust",
         },
         {
-          id: "a_transparency_neutral",
-          type: AnswerType.Inform,
-          text: "We’ll publish a post-incident report and notification thresholds so clarifications go out quickly in the future.",
-          impacts: {},
-          outcomeModifiers: {},
+          id: "a_transparency_deny",
+          type: AnswerType.Deny,
+          text: "This so-called alert was a fabricated screenshot spreading online. There was no government message—period.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.Positive },
+            cabinet: {
+              [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
+            },
+          },
+          outcomeModifiers: {
+            outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
+            outcome_alert_panic: OutcomeModifierWeight.Neutral,
+            outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
+          },
         },
       ],
     },
@@ -97,6 +98,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "We're establishing an independent review board that includes public health experts and civil liberties advocates to review all emergency communications.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -118,11 +120,15 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "This exposes how the defense establishment manipulates public fear for budget increases. Congress must demand full transparency in all defense communications.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -158,8 +164,17 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_oversight_neutral",
             type: AnswerType.Inform,
             text: "We will propose statutory guardrails on emergency messaging to prevent fear-based tactics.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_alert_shelved: OutcomeModifierWeight.SlightNegative,
+              outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive,
+            },
           },
         ],
       },
@@ -180,6 +195,9 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -195,6 +213,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "American democracy is resilient. This incident actually demonstrates that our system prevents bad ideas from moving forward.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
             },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightNegative,
@@ -207,6 +230,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "We're implementing new protocols that require multiple levels of review before any emergency communications can be considered.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
@@ -214,20 +238,31 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
-              outcome_alert_panic: OutcomeModifierWeight.SlightNegative,
-              outcome_alert_funding_pass: OutcomeModifierWeight.Neutral,
+              outcome_alert_panic: OutcomeModifierWeight.SlightPositive,
+              outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
             id: "a_trust_neutral",
             type: AnswerType.Inform,
           text: "We’ll add real-time dashboards and audit trails for emergency communications, with public logs and clear timelines for follow-up.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_alert_shelved: OutcomeModifierWeight.SlightNegative,
+              outcome_alert_funding_pass: OutcomeModifierWeight.SlightPositive,
+            },
           },
         ],
       },
@@ -247,7 +282,10 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
-                [CabinetStaticId.Treasury]: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.Neutral,
+                },
+                [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
@@ -261,12 +299,15 @@ export const libPrimaryExchange: ExchangeData = {
           {
             id: "a_budget_reform_inform",
             type: AnswerType.Inform,
-            text: "Treasury already requires detailed justifications for all defense spending. This incident shows we need better oversight of communications, not budget processes.",
+            text: "Defense budgets already require detailed justifications. This incident shows we need better oversight of communications, not budget processes.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -281,7 +322,11 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "Defense budgets are based on classified intelligence that can't be fully shared with the public. The focus should be on improving communication protocols.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.Positive },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.Neutral },
+              },
             },
             outcomeModifiers: {
               outcome_alert_shelved: OutcomeModifierWeight.SlightNegative,
@@ -292,9 +337,18 @@ export const libPrimaryExchange: ExchangeData = {
           {
             id: "a_budget_reform_neutral",
             type: AnswerType.Inform,
-            text: "Treasury and Defense will deliver joint public briefs explaining assumptions behind budget justifications.",
-            impacts: {},
-            outcomeModifiers: {},
+            text: "Defense and Homeland will deliver joint public briefs explaining assumptions behind budget justifications.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
+              outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
+            },
           },
         ],
       },
@@ -307,6 +361,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             text: "An independent ethics review is exactly what's needed. We're working with Congress to establish oversight that includes public interest advocates.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
@@ -314,6 +369,7 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -330,6 +386,12 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.Neutral,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
@@ -345,6 +407,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Any ethics review would include representatives from HHS, Homeland Security, and independent experts to ensure balanced oversight.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -364,8 +427,17 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_ethics_neutral",
             type: AnswerType.Inform,
             text: "We’ll publish membership criteria and conflict-of-interest rules for any ethics board.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_alert_shelved: OutcomeModifierWeight.SlightPositive,
+              outcome_alert_funding_pass: OutcomeModifierWeight.SlightNegative,
+            },
           },
         ],
       },

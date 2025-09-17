@@ -25,7 +25,7 @@ export const conPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
               [CabinetStaticId.Justice]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
           },
@@ -49,7 +49,7 @@ export const conPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.Positive,
               },
               [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.Negative,
               },
             },
           },
@@ -69,6 +69,11 @@ export const conPrimaryExchange: ExchangeData = {
           text: "This isn't about backpacks - it's about innovative climate leadership. We're creating new export markets while protecting the health of farming communities.",
           impacts: {
             president: { weight: ExchangeImpactWeight.Positive },
+            cabinet: {
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
           },
           outcomeModifiers: {
             outcome_health_benefits_proven:
@@ -90,7 +95,7 @@ export const conPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.Positive,
               },
               [CabinetStaticId.Justice]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.Negative,
               },
             },
           },
@@ -109,17 +114,18 @@ export const conPrimaryExchange: ExchangeData = {
         id: "q_enforcement_reality",
         text: "How does the Justice Department plan to actually enforce this? Are you going to send federal agents to farms to check cow backpacks?",
         answers: [
-          {
-            id: "a_enforcement_deflect",
-            type: AnswerType.Deflect,
-            text: "Enforcement will focus on education and voluntary compliance first. We're not in the business of harassing farmers - we're partners in public health.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-              },
+        {
+          id: "a_enforcement_deflect",
+          type: AnswerType.Deflect,
+          text: "Enforcement will focus on education and voluntary compliance first. We're not in the business of harassing farmers - we're partners in public health.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.Positive },
+          cabinet: {
+            [CabinetStaticId.Justice]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
+          },
+        },
             outcomeModifiers: {
               outcome_health_benefits_proven:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -129,17 +135,21 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongPositive, // +8
             },
           },
-          {
-            id: "a_enforcement_deny",
-            type: AnswerType.Deny,
-            text: "That characterization is completely unfair. We have reasonable inspection protocols that respect property rights while ensuring compliance with public health law.",
-            impacts: {
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-              },
+        {
+          id: "a_enforcement_deny",
+          type: AnswerType.Deny,
+          text: "That characterization is completely unfair. We have reasonable inspection protocols that respect property rights while ensuring compliance with public health law.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.Negative },
+          cabinet: {
+            [CabinetStaticId.Justice]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
+            [CabinetStaticId.HHS]: {
+              weight: ExchangeImpactWeight.SlightlyPositive,
+            },
+          },
+        },
             outcomeModifiers: {
               outcome_health_benefits_proven:
                 OutcomeModifierWeight.SlightPositive, // +4
@@ -154,10 +164,10 @@ export const conPrimaryExchange: ExchangeData = {
         type: AnswerType.Inform,
         text: "We're working with state agriculture departments to implement phased compliance, starting with larger operations before moving to family farms.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.Negative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -174,8 +184,18 @@ export const conPrimaryExchange: ExchangeData = {
           id: "a_enforcement_neutral",
           type: AnswerType.Inform,
           text: "We'll publish clear guidelines and timelines so producers know what's expected well before inspections begin.",
-          impacts: {},
-          outcomeModifiers: {},
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+            },
+          },
+          outcomeModifiers: {
+            outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_legal_battles_intensify: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_enforcement_compromise: OutcomeModifierWeight.StrongPositive, // +8
+          },
         },
         ],
       },
@@ -183,18 +203,21 @@ export const conPrimaryExchange: ExchangeData = {
         id: "q_economic_impact",
         text: "What about the economic burden on small family farms? How do you justify forcing struggling farmers to buy expensive equipment for their cattle?",
         answers: [
-          {
-            id: "a_economic_admit",
-            type: AnswerType.Admit,
-            text: "Small farms face real challenges, which is why we're creating subsidies and grants to help cover costs. No farmer should bear this burden alone.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-              },
+        {
+          id: "a_economic_admit",
+          type: AnswerType.Admit,
+          text: "Small farms face real challenges, which is why we're creating subsidies and grants to help cover costs. No farmer should bear this burden alone.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.HHS]: {
+              weight: ExchangeImpactWeight.SlightlyNegative,
             },
+            [CabinetStaticId.Justice]: {
+              weight: ExchangeImpactWeight.SlightlyPositive,
+            },
+          },
+        },
             outcomeModifiers: {
               outcome_health_benefits_proven:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -209,14 +232,17 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_economic_challenge",
             type: AnswerType.Challenge,
             text: "Health costs from methane pollution far exceed equipment costs. We're preventing expensive medical bills for farming families down the line.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          impacts: {
+            president: { weight: ExchangeImpactWeight.Negative },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_health_benefits_proven:
                 OutcomeModifierWeight.SlightPositive, // +4
@@ -230,25 +256,38 @@ export const conPrimaryExchange: ExchangeData = {
         type: AnswerType.Deflect,
         text: "We're exploring innovative financing options and partnerships with agricultural lenders to minimize upfront costs for farmers.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
             outcomeModifiers: {
-              outcome_health_benefits_proven: OutcomeModifierWeight.Neutral, // 0
-              outcome_legal_battles_intensify: OutcomeModifierWeight.Neutral, // 0
-          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
-        },
+              outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_legal_battles_intensify: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+            },
       },
       {
         id: "a_economic_neutral",
         type: AnswerType.Inform,
         text: "We'll release a cost calculator and technical assistance program so small farms can plan upgrades without surprise expenses.",
-        impacts: {},
-        outcomeModifiers: {},
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+            [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+          },
+        },
+        outcomeModifiers: {
+          outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_legal_battles_intensify: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_enforcement_compromise: OutcomeModifierWeight.StrongPositive, // +8
+        },
       },
       ],
     },
@@ -258,18 +297,21 @@ export const conPrimaryExchange: ExchangeData = {
         id: "q_constitutional_authority",
         text: "Where does the federal government get the constitutional authority to regulate what farmers put on their livestock? Isn't this a state issue?",
         answers: [
-          {
-            id: "a_constitutional_challenge",
-            type: AnswerType.Challenge,
-            text: "The Commerce Clause and Clean Air Act give us clear authority over interstate pollution. Methane emissions don't respect state borders.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+        {
+          id: "a_constitutional_challenge",
+          type: AnswerType.Challenge,
+          text: "The Commerce Clause and Clean Air Act give us clear authority over interstate pollution. Methane emissions don't respect state borders.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
+          },
             outcomeModifiers: {
               outcome_health_benefits_proven:
                 OutcomeModifierWeight.SlightPositive, // +4
@@ -279,18 +321,21 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
             },
           },
-          {
-            id: "a_constitutional_admit",
-            type: AnswerType.Admit,
-            text: "We're working closely with state governments to ensure this program respects federalism while protecting public health across state lines.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_constitutional_admit",
+          type: AnswerType.Admit,
+          text: "We're working closely with state governments to ensure this program respects federalism while protecting public health across state lines.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.Negative },
+            cabinet: {
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
+          },
             outcomeModifiers: {
               outcome_health_benefits_proven:
                 OutcomeModifierWeight.SlightNegative, // -4
@@ -305,10 +350,10 @@ export const conPrimaryExchange: ExchangeData = {
         type: AnswerType.Deflect,
         text: "We're confident in our legal authority and look forward to working with Congress to ensure this program has bipartisan support.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -322,7 +367,12 @@ export const conPrimaryExchange: ExchangeData = {
         id: "a_constitutional_neutral",
         type: AnswerType.Inform,
         text: "We'll publish a legal memorandum outlining statutory authorities and how state partners will be engaged.",
-        impacts: {},
+        impacts: {
+          president: { weight: ExchangeImpactWeight.Negative },
+          cabinet: {
+            [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
+          },
+        },
         outcomeModifiers: {},
       },
       ],
@@ -340,6 +390,9 @@ export const conPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -360,6 +413,9 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
@@ -378,10 +434,13 @@ export const conPrimaryExchange: ExchangeData = {
         type: AnswerType.Deflect,
         text: "This administration has invested billions in rural infrastructure and farm programs. We're partners with farming communities, not adversaries.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -395,7 +454,13 @@ export const conPrimaryExchange: ExchangeData = {
         id: "a_rural_neutral",
         type: AnswerType.Inform,
         text: "We'll expand listening sessions across farm states and adjust implementation where feedback shows unintended burdens.",
-        impacts: {},
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyNegative },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+            [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+          },
+        },
         outcomeModifiers: {},
       },
       ],

@@ -27,6 +27,9 @@ export const independentPrimaryExchange: ExchangeData = {
               [CabinetStaticId.Homeland]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
+              [CabinetStaticId.Treasury]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
             },
           },
           outcomeModifiers: {
@@ -63,15 +66,18 @@ export const independentPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_necessity_admit",
-          type: AnswerType.Admit,
+          type: AnswerType.Challenge,
           text: "You're right to question the precedent. We're establishing strict criteria for strategic reserves to prevent this from becoming a blank check for any commodity.",
           impacts: {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
               [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+              [CabinetStaticId.HHS]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
@@ -87,9 +93,19 @@ export const independentPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_necessity_neutral",
-          type: AnswerType.Inform,
+          type: AnswerType.Reassure,
           text: "We will set clear reserve criteria, publish triggers and safeguards, and consult internationally to avoid unintended precedent.",
-          impacts: {},
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.Homeland]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
+              },
+            },
+          },
           outcomeModifiers: {},
         },
       ],
@@ -108,6 +124,9 @@ export const independentPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -130,6 +149,12 @@ export const independentPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -145,10 +170,16 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Medical research shows 64% of Americans experience withdrawal symptoms without regular caffeine. Supply disruptions would have real physiological impacts.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.Neutral,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -163,10 +194,23 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_health_neutral",
-            type: AnswerType.Inform,
+            type: AnswerType.Reassure,
             text: "We will publish medical guidance and limit-setting principles so this policy addresses disruption risk without promoting consumption.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
@@ -179,10 +223,16 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "We're implementing rotating stock systems, climate-controlled storage, and regular quality testing. Homeland Security is overseeing the facility security and integrity.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -204,11 +254,14 @@ export const independentPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_coffee_market_impact",
@@ -221,22 +274,39 @@ export const independentPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Homeland]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
             id: "a_storage_neutral",
             type: AnswerType.Inform,
             text: "We will publish audit schedules, spoilage thresholds, and corrective protocols with independent oversight.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },
@@ -258,6 +328,9 @@ export const independentPrimaryExchange: ExchangeData = {
                 },
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -282,11 +355,14 @@ export const independentPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -298,22 +374,37 @@ export const independentPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
             outcomeModifiers: {
               outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
               outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_quality_neutral",
             type: AnswerType.Inform,
             text: "Quality protocols and rotating inventory will be published with public dashboards to verify performance and freshness standards are met.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+              },
+            },
+            outcomeModifiers: {
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
+            },
           },
         ],
       },
@@ -326,10 +417,16 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Economic models show minimal market distortion. The reserve only activates during supply emergencies, not normal market conditions. We're stabilizing, not manipulating prices.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -351,11 +448,14 @@ export const independentPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -364,24 +464,37 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "We're committed to transparent reserve management. Market impacts will be monitored and we'll adjust policies if unexpected distortions emerge.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Homeland]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
             outcomeModifiers: {
               outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
             id: "a_market_neutral",
             type: AnswerType.Inform,
             text: "We will publish economic monitoring and guardrails so reserve operations stabilize supply only during genuine emergencies.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+              },
+            },
             outcomeModifiers: {},
           },
         ],

@@ -11,6 +11,7 @@ import {
   createDynamicImpactsSchema,
 } from "~/lib/schemas/generate";
 import { idSchema } from "~/lib/schemas/common";
+import { CabinetStaticId } from "~/types";
 import { ExchangeImpactWeight } from "~/types";
 
 // Helper to present outcomes for the model (ids must be used in outcomeModifiers)
@@ -48,7 +49,24 @@ export function buildExchangeImpactsRequest(
     `Publication: ${pubPlan.publication}`,
     `EditorialAngle: ${pubPlan.editorialAngle}`,
     ``,
-    `Involved Cabinet (fixed; use only these IDs): ${plan.involvedEntities.cabinetMembers.join(", ")}`,
+    `President Preference: {type:${preferences.president.answerType}, rationale:${JSON.stringify(preferences.president.rationale)}}`,
+    (() => {
+      const involvedCabinet = Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      ));
+      if (involvedCabinet.length === 0) return `Cabinet Preferences: (none)`;
+      const prefMap = involvedCabinet.map(id => {
+        const p = preferences.cabinet?.[id as CabinetStaticId]?.preference;
+        return `${id}={type:${p?.answerType ?? "N/A"}, rationale:${JSON.stringify(p?.rationale ?? "N/A")}}`;
+      }).join("; ");
+      return `Cabinet Preferences: ${prefMap}`;
+    })(),
+    ``,
+    `Allowed Cabinet (involved in outcomes only): ${
+      Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      )).join(", ") || "(none)"
+    }`,
     ``,
     `Available Outcomes (for outcomeModifiers – keys must match exactly; sum to 0 per question):`,
     summarizeOutcomes(outcomes.outcomes),
@@ -60,27 +78,33 @@ export function buildExchangeImpactsRequest(
   const instructions = `
 Generate IMPACTS AND OUTCOME MODIFIERS for the existing questions and answers above.
 
-YOUR TASK:
-- For each question, generate impacts and outcomeModifiers for ALL 4 answers
-- Each answer must have both "impacts" and "outcomeModifiers"
+YOUR TASK
+- For each question, produce impacts and outcomeModifiers for ALL 4 answers
 
-OUTCOME MODIFIERS RULES:
-- Keys must match the outcome IDs exactly: ${outcomes.outcomes.map(o => o.id).join(", ")}
-- Values are numbers (positive/negative)
-- ALL answers within ONE QUESTION must have outcomeModifiers that sum to 0 (game balance)
-- Example: If question has 4 answers, their outcomeModifiers combined must total 0
+OUTCOME MODIFIERS
+- Keys must match outcome IDs exactly: ${outcomes.outcomes.map(o => o.id).join(", ")}
+- Per question: outcomeModifiers across the 4 answers must sum to 0
+- Coverage: for EACH outcome ID in that question, include ≥1 answer with a positive modifier and ≥1 with a negative modifier
 
-IMPACTS RULES:
-- Each question must include at least one answer with positive impact and one with negative impact overall.
-- Do not impact only the President. For each question, include cabinet impacts for at least one cabinet member from the list above. You may also include President impacts, but cabinet impacts must not be null for all answers in any question.
-- Use only cabinet IDs from the list above; do not invent new IDs.
-- No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question.
-- Impact weights: VeryNegative, Negative, Neutral, Positive, VeryPositive
- - Reaction: 20–100 characters, full sentence ending with punctuation, relevant to the impact; if you cannot provide a meaningful reaction, set it to null
+IMPACTS — BALANCE RULES
+- Per answer: include at least one positive and at least one negative impact across president/cabinet
+- Root alignment enforcement (root question only):
+-  - Ensure at least one answer of type ${preferences.president.answerType} has a positive President impact
+-  - For each involved cabinet member ${Array.from(new Set(outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {})))).join(", ") || "(none)"}, ensure at least one answer of that member’s preferred type has a positive impact for that member
+- Per question:
+  - Include at least one net‑positive answer and at least one net‑negative answer
+  - At least 3 of the 4 answers must be net‑negative
+  - For president and for each cabinet member, counts of negative weights ≥ counts of positive weights (no entity nets more positive than negative by count)
+- Allowed cabinet ONLY: cabinet IDs must be from the involved set in outcomes
+- Do NOT include journalists impacts (set to null/omit)
 
-STRUCTURE:
+ENUMS & REACTIONS
+- Use the valid numeric enum values for impact weights as enforced by the schema
+- Reaction: 20–100 characters; full sentence; relevant to the impact; or null
+
+STRUCTURE
 - Generate exactly ${[questionsContent.rootQuestion, ...questionsContent.secondaryQuestions, ...questionsContent.tertiaryQuestions].length} questionImpacts entries
-- Each questionImpacts entry must have exactly 4 answerImpacts (matching the 4 answers per question)
+- Each questionImpacts entry has exactly 4 answerImpacts
 - questionId and answerId must match the existing structure exactly
 
 Return ONLY a JSON object strictly matching the provided JSON Schema (Structured Outputs, strict).`;
@@ -97,7 +121,7 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 8000, // Just impact data (weights + reactions 20-100 chars) for existing questions
+      maxOutputTokens: 16000, // Just impact data (weights + reactions 20-100 chars) for existing questions
       schema: dynamicSchema,
       schemaName: "exchange_impacts",
       jsonSchema,

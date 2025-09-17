@@ -1,7 +1,8 @@
 // src/gen-situation/llm/configs/exchange-full-config.ts
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
-import { GENERATION_GUIDE } from "../generation-guide";
+import { buildImplementationPrompt } from "../prompt-constants";
+import { CabinetStaticId } from "~/types";
 import {
   generateExchangeContentSchema,        // == core exchangeContentSchema
   type GenerateExchangeContent,
@@ -40,8 +41,27 @@ export function buildExchangeFullRequest(
     `Publication: ${pubPlan.publication}`,
     `EditorialAngle: ${pubPlan.editorialAngle}`,
     ``,
+    `President Preference: {type:${preferences.president.answerType}, rationale:${JSON.stringify(preferences.president.rationale)}}`,
+    (() => {
+      const involvedCabinet = Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      ));
+      if (involvedCabinet.length === 0) return `Cabinet Preferences: (none)`;
+      const prefMap = involvedCabinet.map(id => {
+        const p = preferences.cabinet?.[id as CabinetStaticId]?.preference;
+        return `${id}={type:${p?.answerType ?? "N/A"}, rationale:${JSON.stringify(p?.rationale ?? "N/A")}}`;
+      }).join("; ");
+      return `Cabinet Preferences: ${prefMap}`;
+    })(),
+    ``,
     `Available Outcomes (for outcomeModifiers – keys must match exactly; sum to 0 per question):`,
     summarizeOutcomes(outcomes.outcomes),
+    ``,
+    `Allowed Cabinet (involved in outcomes only): ${
+      Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      )).join(", ") || "(none)"
+    }`,
     ``,
     `Authorized Answer Policy for this outlet:`,
     authorizedMember
@@ -61,36 +81,54 @@ export function buildExchangeFullRequest(
     );
   }
 
-  const instructions = `
+  const EXCHANGE_FULL_SPECIFIC_INSTRUCTIONS = `
 Generate the FULL press-room exchange for the publication above.
 
-STRUCTURE (exactly):
-- 5 total questions: 1 root, 2 secondary, 2 tertiary.
-- Each question has exactly 4 answers.
+TASK-SPECIFIC REQUIREMENTS
+- Create complete exchange content with full question/answer structure
+- Preserve any provided skeleton structure (IDs and followUp links) exactly
+- Generate realistic outcome modifiers and impact calculations
+- Ensure answers align with editorial angle and authorized access rules
+
+STRUCTURE REQUIREMENTS (exactly)
+- 5 total questions: 1 root, 2 secondary, 2 tertiary
+- Each question has exactly 4 answers
 - followUpId rules:
-  - Root question: exactly 2 answers MUST have followUpId pointing to the 2 secondary questions.
-  - Each secondary question: exactly 1 answer MUST have followUpId pointing to one of the tertiary questions.
-  - Tertiary questions: NO answers may have followUpId.
-- If a fixed structure (IDs/followUps) is provided, PRESERVE all IDs and followUpId links EXACTLY.
+  - Root question: exactly 2 answers MUST have followUpId pointing to the 2 secondary questions
+  - Each secondary question: exactly 1 answer MUST have followUpId pointing to one of the tertiary questions
+  - Tertiary questions: NO answers may have followUpId
+- If a fixed structure (IDs/followUps) is provided, PRESERVE all IDs and followUpId links EXACTLY
 
-ANSWER FIELDS:
-- text: within game length bounds (your schema enforces).
-- type: one of your core AnswerType values (Authorized only if allowed for this outlet).
-- authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet.
-- outcomeModifiers: object whose KEYS are exactly the outcome IDs listed above; numeric values MUST sum to 0 PER QUESTION (balance).
-- impacts:
-  - president/cabinet relationship impact weights must obey your gameplay rules:
-    • Each question must include at least one answer with a positive impact and one with a negative impact overall.
-    • No single entity (president or any cabinet member) should end up with MORE positive than negative impacts across the 4 answers in that question.
+ANSWER FIELDS
+- text: within game length bounds (your schema enforces)
+- type: one of your core AnswerType values (Authorized only if allowed for this outlet)
+- authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet
+- outcomeModifiers: object whose KEYS are exactly the outcome IDs listed above; numeric values MUST sum to 0 PER QUESTION (balance)
 
-CONTENT RULES (Authoritative):
-${GENERATION_GUIDE}
+AUTHORIZED
+ - If this outlet is authorized, include at most ONE Authorized answer across the entire 5-question exchange (must reference the specified cabinet member)
+ - If this outlet is not authorized, include ZERO Authorized answers
 
-TONE/VOICE:
-- Keep the Q/A satirical-but-substantive, and aligned with the outlet's editorial angle.
-- No real people/places/events.
+CRITICAL RELATIONSHIP IMPACT RULES (MUST FOLLOW EXACTLY)
+For each question's 4 answers, the relationship impacts MUST follow these rules:
+- impacts.president: Across the 4 answers, president must have AT LEAST as many negative weight values as positive weight values
+- impacts.cabinet[memberId]: For EACH cabinet member, across the 4 answers, they must have AT LEAST as many negative relationship impacts as positive impacts
+- Distribution: Ensure at least one answer has positive impacts and at least one has negative impacts for variety
+- Per question: At least 3 of the 4 answers must be net-negative (sum of president + cabinet impacts < 0)
+- Do NOT include journalists impacts
+- Balance Examples:
+  • VALID: Cabinet member gets weights [+2, +1, -1, -2] = 2 positive, 2 negative (balanced)
+  • VALID: Cabinet member gets weights [+1, -1, -2, -3] = 1 positive, 3 negative (net negative)
+  • INVALID: Cabinet member gets weights [+2, +1, 0, -1] = 2 positive, 1 negative (net positive)
+- Count the NUMBER of positive vs negative weights, not their sum
 
-Return ONLY a JSON object strictly matching the provided JSON Schema (Structured Outputs, strict).`;
+TONE REQUIREMENTS
+- Keep the Q/A satirical-but-substantive, and aligned with the outlet's editorial angle
+
+Return ONLY a JSON object strictly matching the provided JSON Schema (Structured Outputs, strict)
+`.trim();
+
+  const instructions = buildImplementationPrompt(EXCHANGE_FULL_SPECIFIC_INSTRUCTIONS);
 
   const jsonSchema = zodToJsonSchema(generateExchangeContentSchema, {
     target: "jsonSchema7",

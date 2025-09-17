@@ -13,36 +13,33 @@ export const conPrimaryExchange: ExchangeData = {
     rootQuestion: {
       id: "q_hack_health_systems",
       text: "If hackers can compromise military drones, what about medical drones transporting blood and organs? Are health systems at risk?",
-      answers: [
-        {
-          id: "a_health_inform",
-          type: AnswerType.Inform,
-          text: "HHS has immediately launched a comprehensive review of all medical drone systems and delivery protocols to ensure patient safety remains our top priority.",
-          impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
-            cabinet: {
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.Positive,
-              },
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+        answers: [
+          {
+            id: "a_health_inform",
+            type: AnswerType.Inform,
+            text: "HHS has immediately launched a comprehensive review of all medical drone systems and delivery protocols to ensure patient safety remains our top priority.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
+            outcomeModifiers: {
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+            },
+            followUpId: "q_hack_rural_impact",
           },
-          outcomeModifiers: {
-            outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
-            outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
-            outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
-          },
-          followUpId: "q_hack_rural_impact",
-        },
-        {
-          id: "a_health_challenge",
-          type: AnswerType.Challenge,
-          text: "Medical systems use completely different protocols and security measures. It's irresponsible to create panic by connecting these separate systems.",
+          {
+            id: "a_health_challenge",
+            type: AnswerType.Deny,
+            text: "Medical systems use completely different protocols and security measures. It's irresponsible to create panic by connecting these separate systems.",
           impacts: {
             president: { weight: ExchangeImpactWeight.Positive },
             cabinet: {
@@ -57,43 +54,43 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
           },
-          outcomeModifiers: {
-            outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
-            outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
-            outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
-          },
+            outcomeModifiers: {
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
+            },
           followUpId: "q_hack_system_separation",
         },
         
-        {
-          id: "a_health_reassure",
-          type: AnswerType.Reassure,
-          text: "Treasury has confirmed that all financial infrastructure remains secure. We're taking precautionary measures to reassure markets and investors.",
-          impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
-            cabinet: {
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.Positive,
-              },
-              [CabinetStaticId.HHS]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
-              [CabinetStaticId.State]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+          {
+            id: "a_health_reassure",
+            type: AnswerType.Reassure,
+            text: "Treasury has confirmed that all financial infrastructure remains secure. We're taking precautionary measures to reassure markets and investors.",
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.Positive,
+                },
+                [CabinetStaticId.HHS]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
-          },
           outcomeModifiers: {
-            outcome_hack_economic_impact: OutcomeModifierWeight.StrongPositive,
+            outcome_hack_economic_impact: OutcomeModifierWeight.SlightPositive,
             outcome_hack_diplomatic_crisis:
               OutcomeModifierWeight.SlightNegative,
             outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
           },
         },
-        {
-          id: "a_health_admit",
-          type: AnswerType.Admit,
-          text: "This incident has created some diplomatic complications. The State Department is working to restore confidence among our international partners.",
+          {
+            id: "a_health_admit",
+            type: AnswerType.Admit,
+            text: "This incident has created some diplomatic complications. The State Department is working to restore confidence among our international partners.",
           impacts: {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
@@ -108,12 +105,12 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
           },
-          outcomeModifiers: {
-            outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
-            outcome_hack_diplomatic_crisis:
-              OutcomeModifierWeight.SlightPositive,
-            outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
-          },
+            outcomeModifiers: {
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
+              outcome_hack_diplomatic_crisis:
+                OutcomeModifierWeight.SlightPositive,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+            },
         },
       ],
     },
@@ -127,17 +124,17 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "Rural emergency services are being prioritized in our security review. We will not allow any compromise to life-saving medical deliveries.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
               outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
-              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.SlightPositive,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
             followUpId: "q_hack_rural_funding",
           },
@@ -147,11 +144,16 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The focus should be on catching the criminals responsible for this prank, not creating hypothetical scenarios that haven't happened.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
@@ -164,22 +166,32 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
-            outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
-            },
+          outcomeModifiers: {
+            outcome_hack_economic_impact:
+              OutcomeModifierWeight.SlightPositive,
+            outcome_hack_diplomatic_crisis:
+              OutcomeModifierWeight.SlightNegative,
+            outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
+          },
           },
           {
             id: "a_rural_neutral",
             type: AnswerType.Inform,
             text: "We will publish risk assessments, improvement milestones, and service continuity plans for rural providers in coordination with states.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.SlightPositive,
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+            },
           },
         ],
       },
@@ -192,10 +204,13 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "Those experts are creating unnecessary alarm. Our military and civilian systems have completely different architectures and security protocols.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -220,20 +235,24 @@ export const conPrimaryExchange: ExchangeData = {
                 },
               },
             },
-            outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
-            },
+          outcomeModifiers: {
+            outcome_hack_economic_impact:
+              OutcomeModifierWeight.SlightPositive,
+            outcome_hack_diplomatic_crisis:
+              OutcomeModifierWeight.SlightNegative,
+            outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+          },
           },
           {
             id: "a_separation_deflect",
             type: AnswerType.Deflect,
             text: "We can't discuss specific security architectures in public forums. What matters is that both systems remain fully operational and secure.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
             },
             outcomeModifiers: {
               outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
@@ -246,8 +265,16 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_separation_neutral",
             type: AnswerType.Inform,
             text: "We will provide non-sensitive architecture overviews and third-party validations to strengthen public confidence without disclosing sensitive details.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
+            },
           },
         ],
       },
@@ -270,6 +297,9 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
               },
             },
             outcomeModifiers: {
@@ -277,7 +307,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
           },
           {
@@ -285,7 +315,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "Private companies profiting from medical drone delivery should invest in their own security systems. Taxpayers shouldn't subsidize corporate profits.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -330,8 +360,17 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_funding_neutral",
             type: AnswerType.Inform,
             text: "We will outline funding sources, cost sharing mechanisms, and accountability metrics for any upgrades affecting critical health logistics.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
+            outcomeModifiers: {
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
+            },
           },
         ],
       },
@@ -345,13 +384,17 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We respect all expert input, but policy decisions must be based on comprehensive government assessments, not individual opinions.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
             },
             outcomeModifiers: {
               outcome_hack_economic_impact:
                 OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
@@ -364,6 +407,12 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
+                [CabinetStaticId.State]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Treasury]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -371,7 +420,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
           },
           {
@@ -379,7 +428,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "Some of these so-called experts have financial interests in selling security solutions. We base decisions on objective government analysis.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -401,7 +450,13 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_credibility_neutral",
             type: AnswerType.Inform,
             text: "We appreciate diverse expert perspectives and will publish how inputs inform policy decisions through transparent, conflict-aware processes.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],

@@ -21,8 +21,6 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.Positive,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.RightWingBase]:
             SituationConsequenceWeight.SlightlyNegative,
         },
@@ -45,8 +43,8 @@ export const cowEmissionRegulationsOutcomes: SituationOutcome[] = [
           [SubgroupStaticId.RuralResidents]:
             SituationConsequenceWeight.StronglyNegative,
           [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LeftWingBase]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },

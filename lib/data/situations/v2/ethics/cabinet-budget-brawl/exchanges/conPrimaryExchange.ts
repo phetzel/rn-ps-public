@@ -19,13 +19,13 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Admit,
           text: "You're right that this should have been handled internally. We're working to ensure cabinet discussions stay within appropriate channels going forward.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Treasury]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
               [CabinetStaticId.Defense]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
             },
           },
@@ -41,14 +41,10 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           text: "Healthy debate between departments is how we get the best policies. The American people benefit when we examine every angle of complex issues.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
             cabinet: {
-              [CabinetStaticId.Defense]: {
-                weight: ExchangeImpactWeight.Positive,
-              },
-              [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
-              },
+              [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
             },
           },
           outcomeModifiers: {
@@ -63,7 +59,11 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           text: "The President has full confidence in both departments. This discourse shows we take fiscal responsibility seriously while maintaining strong defense capabilities.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.Positive },
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Negative },
+            },
           },
           outcomeModifiers: {
             outcome_transparency_wins: OutcomeModifierWeight.SlightNegative,
@@ -79,7 +79,7 @@ export const conPrimaryExchange: ExchangeData = {
             president: { weight: ExchangeImpactWeight.SlightlyNegative },
             cabinet: {
               [CabinetStaticId.Treasury]: {
-                weight: ExchangeImpactWeight.Positive,
+                weight: ExchangeImpactWeight.SlightlyPositive,
               },
               [CabinetStaticId.Defense]: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -110,7 +110,7 @@ export const conPrimaryExchange: ExchangeData = {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
                 [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -132,7 +132,7 @@ export const conPrimaryExchange: ExchangeData = {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.Defense]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -148,6 +148,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The President values diverse perspectives from his cabinet. What you're seeing is a healthy administration that doesn't suppress different viewpoints.",
             impacts: {
               president: { weight: ExchangeImpactWeight.StronglyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive,
@@ -159,7 +163,13 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_processes_neutral",
             type: AnswerType.Inform,
             text: "We'll publish a cabinet decision log and clarify escalation paths so disputes are resolved before they spill into public.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],
@@ -173,6 +183,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             text: "Absolutely not. We are not cutting defense spending. We're ensuring every defense dollar is spent wisely to maximize our military strength.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -194,6 +205,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "That's fear-mongering. Our enemies should fear our efficiency and strategic thinking, not just our ability to spend money without oversight.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -214,6 +226,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "Defense spending will remain at current levels. What Treasury is questioning is whether we're getting maximum value from that investment.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
@@ -233,7 +246,13 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_funding_neutral",
             type: AnswerType.Inform,
             text: "We'll release a public scorecard showing defense readiness metrics alongside spending efficiency targets.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],
@@ -252,7 +271,7 @@ export const conPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
@@ -270,7 +289,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "Cabinet members serve the President's agenda, not their own. If they can't work within that framework, they can find other jobs.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -292,9 +311,13 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The real issue isn't process - it's results. Americans want a government that works efficiently, and that requires some coordination.",
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
             },
             outcomeModifiers: {
-              outcome_transparency_wins: OutcomeModifierWeight.Neutral,
+              outcome_transparency_wins: OutcomeModifierWeight.SlightNegative,
               outcome_messy_pr_disaster: OutcomeModifierWeight.SlightPositive,
               outcome_private_resolution: OutcomeModifierWeight.SlightNegative,
             },
@@ -303,8 +326,16 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_autonomy_neutral",
             type: AnswerType.Inform,
             text: "New guidance will codify consultation windows so expertise informs decisions without last-minute surprises.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightPositive,
+            },
           },
         ],
       },
@@ -321,6 +352,9 @@ export const conPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -340,6 +374,9 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
+                [CabinetStaticId.Defense]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
+                },
               },
             },
             outcomeModifiers: {
@@ -353,6 +390,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "That question assumes we can't find waste to cut. The Pentagon has been operating without real oversight for years - there's plenty of fat to trim.",
             impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -365,15 +403,23 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive,
               outcome_messy_pr_disaster: OutcomeModifierWeight.SlightNegative,
-              outcome_private_resolution: OutcomeModifierWeight.Neutral,
+              outcome_private_resolution: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
             id: "a_priorities_neutral",
             type: AnswerType.Inform,
             text: "Treasury will publish options that balance deficit targets with program delivery metrics before any final choices.",
-            impacts: {},
-            outcomeModifiers: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Defense]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              },
+            },
+            outcomeModifiers: {
+              outcome_private_resolution: OutcomeModifierWeight.SlightPositive,
+            },
           },
         ],
       },

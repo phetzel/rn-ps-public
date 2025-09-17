@@ -1,10 +1,9 @@
 import { z } from "zod";
+import type { CabinetStaticId } from "~/types";
+import type { SituationConsequenceWeight } from "~/types";
 
 import { situationPreferencesSchema } from "~/lib/schemas/situations/preferences";
 import { situationOutcomeArraySchema } from "~/lib/schemas/situations/outcomes";
-import {
-  SituationConsequenceWeight,
-} from "~/types";
 
 
 export const situationContentSchema = z
@@ -14,112 +13,68 @@ export const situationContentSchema = z
   })
   .refine(
     (data) => {
-      const totalWeight = data.outcomes.reduce(
-        (sum, outcome) => sum + outcome.weight,
-        0
+      // Cabinet-preferences → consequences rules
+      const prefCabinet = data.preferences.cabinet || {};
+      const prefIds = new Set<CabinetStaticId>(
+        Object.keys(prefCabinet) as CabinetStaticId[]
       );
-      return totalWeight === 100;
-    },
-    {
-      message: "Outcome weights must sum to exactly 100",
-      path: ["outcomes"],
-    }
-  )
-  .refine(
-    (data) => {
-      // NEW: Sum-based outcome validation
-      // Calculate sum of enum values for each outcome
-      const outcomeSums = data.outcomes.map((outcome) => {
-        let sum = 0;
-        
-        // Sum cabinet impacts
-        if (outcome.consequences.approvalChanges.cabinet) {
-          sum += Object.values(outcome.consequences.approvalChanges.cabinet)
-            .reduce((total, weight) => total + weight, 0);
-        }
-        
-        // Sum subgroup impacts  
-        if (outcome.consequences.approvalChanges.subgroups) {
-          sum += Object.values(outcome.consequences.approvalChanges.subgroups)
-            .reduce((total, weight) => total + weight, 0);
-        }
-        
-        return sum;
-      });
 
-      const hasPositiveOutcome = outcomeSums.some(sum => sum > 0);
-      const hasNegativeOutcome = outcomeSums.some(sum => sum < 0);
-      const positiveOutcomeCount = outcomeSums.filter(sum => sum > 0).length;
-      const totalOutcomes = outcomeSums.length;
-      const positivePercentage = (positiveOutcomeCount / totalOutcomes);
-
-      return hasPositiveOutcome && hasNegativeOutcome && positivePercentage <= 0.5;
-    },
-    {
-      message:
-        "Must have at least one positive-sum outcome, one negative-sum outcome, and ≤50% positive outcomes",
-      path: ["outcomes"],
-    }
-  )
-  .refine(
-    (data) => {
-      // NEW: Sum-based entity validation
-      const entityStats = new Map<
-        string,
-        { totalSum: number; hasPositive: boolean; hasNegative: boolean }
-      >();
+      const appearances = new Map<string, { totalSum: number; hasPos: boolean; hasNeg: boolean }>();
+      const nonPreferredUsed: string[] = [];
 
       data.outcomes.forEach((outcome) => {
-        const { cabinet, subgroups } = outcome.consequences.approvalChanges;
-
-        // Process cabinet member impacts
-        if (cabinet) {
-          Object.entries(cabinet).forEach(([entityId, weight]) => {
-            if (!entityStats.has(entityId)) {
-              entityStats.set(entityId, { totalSum: 0, hasPositive: false, hasNegative: false });
-            }
-
-            const stats = entityStats.get(entityId)!;
-            stats.totalSum += weight;
-            if (weight > 0) stats.hasPositive = true;
-            if (weight < 0) stats.hasNegative = true;
-          });
-        }
-
-        // Process subgroup impacts
-        if (subgroups) {
-          Object.entries(subgroups).forEach(([entityId, weight]) => {
-            if (!entityStats.has(entityId)) {
-              entityStats.set(entityId, { totalSum: 0, hasPositive: false, hasNegative: false });
-            }
-
-            const stats = entityStats.get(entityId)!;
-            stats.totalSum += weight;
-            if (weight > 0) stats.hasPositive = true;
-            if (weight < 0) stats.hasNegative = true;
-          });
-        }
+        const cab = outcome.consequences.approvalChanges.cabinet || {};
+        (Object.entries(cab) as Array<[
+          CabinetStaticId,
+          SituationConsequenceWeight
+        ]>).forEach(([id, weight]) => {
+          if (!prefIds.has(id)) {
+            nonPreferredUsed.push(id);
+          }
+          if (!appearances.has(id))
+            appearances.set(id, { totalSum: 0, hasPos: false, hasNeg: false });
+          const s = appearances.get(id)!;
+          s.totalSum += weight;
+          if (weight > 0) s.hasPos = true;
+          if (weight < 0) s.hasNeg = true;
+        });
       });
 
-      // Validate each entity
-      for (const [entityId, stats] of entityStats) {
-        // Must have at least one positive AND one negative consequence
-        if (!stats.hasPositive || !stats.hasNegative) {
-          return false;
-        }
-        
-        // Must have ≤50% positive total sum (≤0 means balanced or net negative)
-        if (stats.totalSum > 0) {
-          return false;
-        }
+      // Rule 1: Only cabinet members with a preference may appear in outcomes
+      if (nonPreferredUsed.length > 0) return false;
+
+      // Rule 2: Every cabinet member with a preference must appear at least once
+      for (const id of prefIds) {
+        if (!appearances.has(id)) return false;
+      }
+
+      // Rule 3: For each preferred cabinet member, require both positive and negative impacts and net neutral or negative total
+      for (const id of prefIds) {
+        const stats = appearances.get(id)!;
+        if (!stats.hasPos || !stats.hasNeg) return false;
+        if (stats.totalSum > 0) return false;
       }
 
       return true;
     },
     {
       message:
-        "Each entity must have at least one positive and one negative consequence, with net neutral or negative total impact (≤50% positive)",
+        "Cabinet outcomes must include only preference-bearing members; each must appear with both positive and negative impacts and net neutral/negative total",
       path: ["outcomes"],
     }
+  )
+  .refine(
+    (data) => {
+      // At most one cabinet member may include authorizedContent per situation
+      const cab = data.preferences.cabinet || {};
+      let count = 0;
+      Object.values(cab).forEach((c) => {
+        if (c?.authorizedContent) count++;
+      });
+      return count <= 1;
+    },
+    {
+      message: "Allow at most one cabinet member with authorizedContent",
+      path: ["preferences", "cabinet"],
+    }
   );
-

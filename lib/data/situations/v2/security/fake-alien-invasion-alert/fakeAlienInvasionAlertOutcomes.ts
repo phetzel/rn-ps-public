@@ -16,18 +16,13 @@ export const fakeAlienInvasionAlertOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Homeland]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Treasury]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Homeland]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
@@ -42,17 +37,13 @@ export const fakeAlienInvasionAlertOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Homeland]: SituationConsequenceWeight.Negative,
-          [CabinetStaticId.Defense]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Homeland]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.SeniorsCitizens]:
-            SituationConsequenceWeight.StronglyNegative,
-          [SubgroupStaticId.RightWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
-          [SubgroupStaticId.BusinessLeaders]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.StronglyNegative,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -67,16 +58,13 @@ export const fakeAlienInvasionAlertOutcomes: SituationOutcome[] = [
       approvalChanges: {
         cabinet: {
           [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyPositive,
-          [CabinetStaticId.Treasury]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Homeland]: SituationConsequenceWeight.SlightlyNegative,
         },
         subgroups: {
-          [SubgroupStaticId.RightWingBase]: SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.BusinessLeaders]:
-            SituationConsequenceWeight.SlightlyPositive,
-          [SubgroupStaticId.LeftWingBase]: SituationConsequenceWeight.Negative,
-          [SubgroupStaticId.IndependentBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },

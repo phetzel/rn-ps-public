@@ -3,23 +3,23 @@ import type { SituationPreferences } from "~/lib/schemas/situations";
 
 export const cabinetBudgetBrawlPreferences: SituationPreferences = {
   president: {
-    answerType: AnswerType.Reassure,
+    answerType: AnswerType.Deflect,
     rationale:
-      "Wants to project unity and reassure the public that these are just healthy internal debates about good governance.",
+      "Wants to avoid taking sides publicly and emphasize process over blame during cabinet disputes.",
   },
   cabinet: {
     [CabinetStaticId.Treasury]: {
       preference: {
-        answerType: AnswerType.Challenge,
+        answerType: AnswerType.Deflect,
         rationale:
-          "Feels the Pentagon's budget is out of control and wants to challenge their spending priorities and accountability.",
+          "Wants to redirect criticism toward procurement efficiency and oversight metrics rather than direct confrontation.",
       },
     },
     [CabinetStaticId.Defense]: {
       preference: {
-        answerType: AnswerType.Deflect,
+        answerType: AnswerType.Reassure,
         rationale:
-          "Believes budget cuts threaten national security and wants to deflect by discussing global threats instead.",
+          "Wants to reassure the public that capability and readiness remain strong regardless of budget debates.",
       },
     },
   },

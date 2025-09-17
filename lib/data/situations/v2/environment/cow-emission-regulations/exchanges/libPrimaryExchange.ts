@@ -19,7 +19,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           text: "Methane from livestock accounts for 14% of greenhouse gases and directly impacts respiratory health in rural communities. This program could prevent thousands of cases of asthma.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            president: { weight: ExchangeImpactWeight.Negative },
             cabinet: {
               [CabinetStaticId.HHS]: {
                 weight: ExchangeImpactWeight.Positive,
@@ -34,7 +34,7 @@ export const libPrimaryExchange: ExchangeData = {
               OutcomeModifierWeight.ModeratePositive, // +6
             outcome_legal_battles_intensify:
               OutcomeModifierWeight.ModerateNegative, // -6
-            outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+            outcome_enforcement_compromise: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_health_data",
         },
@@ -49,7 +49,7 @@ export const libPrimaryExchange: ExchangeData = {
                 weight: ExchangeImpactWeight.SlightlyNegative,
               },
               [CabinetStaticId.Justice]: {
-                weight: ExchangeImpactWeight.SlightlyNegative,
+                weight: ExchangeImpactWeight.Negative,
               },
             },
           },
@@ -67,7 +67,7 @@ export const libPrimaryExchange: ExchangeData = {
         type: AnswerType.Challenge,
         text: "The Justice Department has clear regulatory authority under environmental law. We won't be intimidated by industry lawsuits when public health is at stake.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            president: { weight: ExchangeImpactWeight.Negative },
             cabinet: {
               [CabinetStaticId.Justice]: {
                 weight: ExchangeImpactWeight.Positive,
@@ -82,15 +82,24 @@ export const libPrimaryExchange: ExchangeData = {
               OutcomeModifierWeight.SlightNegative, // -4
             outcome_legal_battles_intensify:
               OutcomeModifierWeight.SlightPositive, // +4
-          outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+          outcome_enforcement_compromise: OutcomeModifierWeight.SlightPositive, // +4
         },
       },
       {
         id: "a_benefits_neutral",
         type: AnswerType.Inform,
         text: "We'll publish pilot program data and implementation timelines so communities can see how benefits are measured.",
-        impacts: {},
-        outcomeModifiers: {},
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyPositive },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+            [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+          },
+        },
+        outcomeModifiers: {
+          outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_enforcement_compromise: OutcomeModifierWeight.SlightPositive, // +4
+        },
       },
       ],
     },
@@ -104,10 +113,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "HHS studies from pilot programs show 22% reduction in methane concentrations and corresponding 15% decrease in respiratory incidents in affected farming areas.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.Negative },
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -147,13 +159,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             text: "The burden of proof shouldn't be on protecting public health - it should be on industries that want to continue polluting our air without accountability.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -168,12 +180,21 @@ export const libPrimaryExchange: ExchangeData = {
           followUpId: "q_industry_resistance",
         },
         {
-          id: "a_data_neutral",
-          type: AnswerType.Inform,
-          text: "Independent evaluators will audit air quality and health outcomes with public dashboards for transparency.",
-          impacts: {},
-          outcomeModifiers: {},
+        id: "a_data_neutral",
+        type: AnswerType.Inform,
+        text: "Independent evaluators will audit air quality and health outcomes with public dashboards for transparency.",
+        impacts: {
+          president: { weight: ExchangeImpactWeight.Positive },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+          },
         },
+        outcomeModifiers: {
+          outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_legal_battles_intensify: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_enforcement_compromise: OutcomeModifierWeight.StrongPositive, // +8
+        },
+      },
         ],
       },
       {
@@ -188,7 +209,7 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -204,58 +225,68 @@ export const libPrimaryExchange: ExchangeData = {
             },
             followUpId: "q_enforcement_strategy",
           },
-          {
-            id: "a_authority_reassure",
-            type: AnswerType.Reassure,
-            text: "We're confident in our legal position and are working with agricultural stakeholders to ensure smooth implementation while defending public health.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+        {
+          id: "a_authority_reassure",
+          type: AnswerType.Reassure,
+          text: "We're confident in our legal position and are working with agricultural stakeholders to ensure smooth implementation while defending public health.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
-            },
-            outcomeModifiers: {
-              outcome_health_benefits_proven:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_legal_battles_intensify:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
             },
           },
-          {
-            id: "a_authority_inform",
-            type: AnswerType.Inform,
-            text: "Federal courts have consistently upheld EPA authority over methane emissions. We have decades of legal precedent supporting environmental health regulations.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
-              cabinet: {
-                [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+          outcomeModifiers: {
+            outcome_health_benefits_proven:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_legal_battles_intensify:
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_enforcement_compromise: OutcomeModifierWeight.SlightNegative, // -4 (new)
+          },
+        },
+        {
+          id: "a_authority_inform",
+          type: AnswerType.Inform,
+          text: "Federal courts have consistently upheld EPA authority over methane emissions. We have decades of legal precedent supporting environmental health regulations.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
+            cabinet: {
+              [CabinetStaticId.Justice]: {
+                weight: ExchangeImpactWeight.SlightlyPositive,
+              },
+              [CabinetStaticId.HHS]: {
+                weight: ExchangeImpactWeight.SlightlyNegative,
               },
             },
-            outcomeModifiers: {
-              outcome_health_benefits_proven:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_legal_battles_intensify:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_enforcement_compromise: OutcomeModifierWeight.Neutral, // 0
+          },
+          outcomeModifiers: {
+            outcome_health_benefits_proven:
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_legal_battles_intensify:
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_enforcement_compromise: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
         {
           id: "a_authority_neutral",
           type: AnswerType.Inform,
           text: "We'll release a legal brief summarizing case law and regulatory authority to address stakeholder concerns.",
-          impacts: {},
-          outcomeModifiers: {},
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+            },
+          },
+          outcomeModifiers: {
+            outcome_enforcement_compromise: OutcomeModifierWeight.StrongPositive, // +8
+            outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_legal_battles_intensify: OutcomeModifierWeight.SlightNegative, // -4
+          },
         },
         ],
       },
@@ -274,6 +305,9 @@ export const libPrimaryExchange: ExchangeData = {
               cabinet: {
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
+                },
+                [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
                 },
               },
             },
@@ -294,6 +328,9 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -315,10 +352,10 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
                 [CabinetStaticId.Justice]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -332,7 +369,13 @@ export const libPrimaryExchange: ExchangeData = {
         id: "a_resistance_neutral",
         type: AnswerType.Inform,
         text: "We'll expand technical assistance and grant programs in partnership with land-grant universities and co-ops.",
-        impacts: {},
+        impacts: {
+          president: { weight: ExchangeImpactWeight.SlightlyPositive },
+          cabinet: {
+            [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+            [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+          },
+        },
         outcomeModifiers: {},
       },
         ],
@@ -346,13 +389,13 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "We're implementing a phased approach starting with larger operations, using existing agricultural inspection frameworks with additional training for methane capture systems.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Neutral },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
                 },
                 [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.Neutral,
+                  weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
             },
@@ -369,7 +412,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "Enforcement will focus on education and voluntary compliance first. We're not in the business of harassing farmers - we're partners in public health.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.Positive },
               cabinet: {
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -393,6 +436,9 @@ export const libPrimaryExchange: ExchangeData = {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
                 [CabinetStaticId.Justice]: {
+                  weight: ExchangeImpactWeight.SlightlyPositive,
+                },
+                [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
                 },
               },
@@ -406,12 +452,22 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.StrongNegative, // -8
           },
         },
-        {
-          id: "a_enforcement_neutral",
-          type: AnswerType.Inform,
-          text: "We will publish enforcement protocols with clear thresholds, appeals, and grace periods for small operators.",
-          impacts: {},
-          outcomeModifiers: {},
+          {
+            id: "a_enforcement_neutral",
+            type: AnswerType.Inform,
+            text: "We will publish enforcement protocols with clear thresholds, appeals, and grace periods for small operators.",
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
+            },
+          },
+          outcomeModifiers: {
+            outcome_health_benefits_proven: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_legal_battles_intensify: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_enforcement_compromise: OutcomeModifierWeight.StrongPositive, // +8
+          },
         },
         ],
       },

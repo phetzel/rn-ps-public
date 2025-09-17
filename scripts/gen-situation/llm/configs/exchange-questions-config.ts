@@ -1,6 +1,7 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
-import { GENERATION_GUIDE } from "../generation-guide";
+import { buildTechnicalPrompt } from "../prompt-constants";
+import { CabinetStaticId } from "~/types";
 import {
   generateQuestionsOnlyContentSchema,
   type GenerateQuestionsOnlyContent,
@@ -29,47 +30,58 @@ export function buildExchangeQuestionsRequest(
     `Publication: ${pubPlan.publication}`,
     `EditorialAngle: ${pubPlan.editorialAngle}`,
     ``,
+    // Provide involved cabinet and their preferences (type + rationale) for root alignment
+    (() => {
+      const involvedCabinet = Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      ));
+      if (involvedCabinet.length === 0) return `Involved Cabinet (from outcomes): (none)`;
+      const prefMap = involvedCabinet.map(id => {
+        const p = preferences.cabinet?.[id as CabinetStaticId]?.preference;
+        return `${id}={type:${p?.answerType ?? "N/A"}, rationale:${JSON.stringify(p?.rationale ?? "N/A")}}`;
+      }).join("; ");
+      return `Involved Cabinet (from outcomes): ${involvedCabinet.join(", ")}\nPresident Preference: {type:${preferences.president.answerType}, rationale:${JSON.stringify(preferences.president.rationale)}}\nCabinet Preferences: ${prefMap}`;
+    })(),
+    ``,
     `Authorized Answer Policy for this outlet:`,
     authorizedMember
       ? `- Authorized allowed. If you produce an Authorized answer, it MUST reference cabinet member: ${authorizedMember}.`
       : `- Authorized NOT allowed for this outlet.`,
   ];
 
-  const instructions = `
-Generate the QUESTIONS AND ANSWERS STRUCTURE for the press-room exchange for the publication above.
+const QUESTIONS_SPECIFIC_INSTRUCTIONS = `
+Generate the QUESTIONS AND ANSWERS STRUCTURE for the publication above.
 
-STRUCTURE (exactly):
-- 5 total questions: 1 root, 2 secondary, 2 tertiary.
-- Each question has exactly 4 answers.
-- followUpId rules:
-  - Root question: exactly 2 answers MUST have followUpId pointing to the 2 secondary questions.
-  - Each secondary question: exactly 1 answer MUST have followUpId pointing to one of the tertiary questions.
-  - Tertiary questions: NO answers may have followUpId.
+TASK-SPECIFIC REQUIREMENTS
+- Align questions to the outlet's editorial angle; ensure logical progression
 
-ANSWER FIELDS (generate these only):
-- id: unique identifier
-- text: within game length bounds (your schema enforces)
-- type: one of your core AnswerType values (Authorized only if allowed for this outlet)
-- authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet; null otherwise
-- followUpId: as per rules above; null if no follow-up
+STRUCTURE (exact)
+- 5 questions: 1 root, 2 secondary, 2 tertiary; 4 answers per question
+- Diversity: In any question, no single answer type appears > 2 times
+- followUpId: root → exactly 2 to secondary; each secondary → exactly 1 to tertiary; tertiary → none
 
-DO NOT GENERATE:
-- impacts (will be added in next phase)
-- outcomeModifiers (will be added in next phase)
+ANSWER FIELDS (generate only these)
+- id, text (schema-bounded), type (Authorized only if allowed), authorizedCabinetMemberId (required when Authorized: ${authorizedMember ?? "N/A"}), followUpId
 
-LENGTH & SENTENCE COMPLETENESS (match schema caps)
-- question.text: 60–150 characters; write complete sentences; end with punctuation.
-- answer.text: 80–180 characters; write complete sentences; end with punctuation.
+ROOT ALIGNMENT
+- Include at least one root answer of the President's preferred type that will be positive for the President in the impacts phase
+- For ALL cabinet involved in outcomes, include at least one root answer of that member’s preferred type that will be positive for them in the impacts phase
 
-CONTENT RULES (Authoritative):
-${GENERATION_GUIDE}
 
-TONE/VOICE:
-- Keep the Q/A satirical-but-substantive, and aligned with the outlet's editorial angle.
-- No real people/places/events.
-- Focus on creating engaging questions and thoughtful answer options.
+AUTHORIZED
+ - If this outlet is authorized, include at most ONE Authorized answer across all 5 questions (must reference the specified cabinet member)
+ - If this outlet is not authorized, include ZERO Authorized answers
 
-Return ONLY a JSON object strictly matching the provided JSON Schema (Structured Outputs, strict).`;
+DO NOT GENERATE
+- impacts or outcomeModifiers (added in next phase)
+
+LENGTH (schema-capped)
+- question.text: 60–150 chars; answer.text: 80–180 chars; complete sentences
+
+Return ONLY a JSON object matching the JSON Schema (strict)
+`.trim();
+
+  const instructions = buildTechnicalPrompt(QUESTIONS_SPECIFIC_INSTRUCTIONS);
 
   const jsonSchema = zodToJsonSchema(generateQuestionsOnlyContentSchema, {
     target: "jsonSchema7",
@@ -81,7 +93,7 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     options: {
       model: "gpt-5",
       instructions,
-      maxOutputTokens: 8000, // 1 root + 2-3 secondary + 1-2 tertiary questions with answers (no impacts)
+      maxOutputTokens: 16000, // 1 root + 2-3 secondary + 1-2 tertiary questions with answers (no impacts)
       schema: generateQuestionsOnlyContentSchema,
       schemaName: "exchange_questions",
       jsonSchema,

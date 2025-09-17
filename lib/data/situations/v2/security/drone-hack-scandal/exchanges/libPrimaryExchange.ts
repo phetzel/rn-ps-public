@@ -19,7 +19,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           text: "The Treasury Department has immediately implemented enhanced security protocols for all financial data systems. Your economic information remains fully protected.",
           impacts: {
-            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            president: { weight: ExchangeImpactWeight.SlightlyPositive },
             cabinet: {
               [CabinetStaticId.Treasury]: {
                 weight: ExchangeImpactWeight.Positive,
@@ -128,11 +128,10 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "We're leading a multinational cybersecurity initiative with NATO partners to share threat intelligence and strengthen collective defenses.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -149,31 +148,31 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             text: "State Department briefings show our allies remain confident in bilateral security arrangements. This incident has actually accelerated cooperation on cybersecurity standards.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyPositive },
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
-            outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightNegative,
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
-            },
+          outcomeModifiers: {
+            outcome_hack_economic_impact:
+              OutcomeModifierWeight.SlightNegative,
+            outcome_hack_diplomatic_crisis:
+              OutcomeModifierWeight.SlightPositive,
+            outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+          },
           },
           {
             id: "a_confidence_deflect",
             type: AnswerType.Deflect,
             text: "Our diplomatic relationships are based on decades of trust, not single incidents. We're focused on preventing future threats, not managing perceptions.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -181,14 +180,21 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
             id: "a_confidence_neutral",
             type: AnswerType.Inform,
             text: "We will publish a declassified framework for partner coordination and share non-sensitive milestones to demonstrate momentum and accountability.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],
@@ -204,9 +210,9 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -225,9 +231,8 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -235,7 +240,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
           },
           {
@@ -243,11 +248,11 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             text: "American financial markets remain the most secure and resilient in the world. One prank doesn't change decades of proven cybersecurity leadership.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.Neutral },
               },
             },
             outcomeModifiers: {
@@ -255,14 +260,21 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
             id: "a_market_neutral",
             type: AnswerType.Inform,
             text: "Treasury and regulators will publish regular status reports and thresholds for additional action to reassure market participants.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],
@@ -277,32 +289,30 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_intelligence_inform",
             type: AnswerType.Inform,
             text: "We're sharing technical vulnerability assessments through established NATO cybersecurity channels while protecting sensitive operational details.",
-            impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
-              cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyPositive,
-                },
-              },
-            },
-            outcomeModifiers: {
-              outcome_hack_economic_impact:
-                OutcomeModifierWeight.SlightPositive,
-              outcome_hack_diplomatic_crisis:
-                OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+          impacts: {
+            president: { weight: ExchangeImpactWeight.SlightlyNegative },
+            cabinet: {
+              [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+              [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
             },
           },
+          outcomeModifiers: {
+            outcome_hack_economic_impact:
+              OutcomeModifierWeight.SlightPositive,
+            outcome_hack_diplomatic_crisis:
+              OutcomeModifierWeight.SlightNegative,
+            outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+          },
+        },
           {
             id: "a_intelligence_deflect",
             type: AnswerType.Deflect,
             text: "Intelligence sharing protocols can't be discussed in public forums. What I can say is that our allies remain fully engaged in collective security efforts.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -310,9 +320,9 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
-          },
+        },
           {
             id: "a_intelligence_reassure",
             type: AnswerType.Reassure,
@@ -320,9 +330,8 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
-                [CabinetStaticId.State]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
             outcomeModifiers: {
@@ -337,7 +346,13 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_intelligence_neutral",
             type: AnswerType.Inform,
             text: "Within classification limits, we will provide public briefings on standards adoption, exercises, and readiness improvements among partners.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],
@@ -353,12 +368,9 @@ export const libPrimaryExchange: ExchangeData = {
             impacts: {
               president: { weight: ExchangeImpactWeight.SlightlyNegative },
               cabinet: {
-                [CabinetStaticId.Treasury]: {
-                  weight: ExchangeImpactWeight.Positive,
-                },
-                [CabinetStaticId.HHS]: {
-                  weight: ExchangeImpactWeight.SlightlyNegative,
-                },
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.Positive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.State]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
             outcomeModifiers: {
@@ -366,7 +378,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
           },
           {
@@ -374,7 +386,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             text: "We won't put a price tag on national security before completing the assessment. Congress will receive detailed budget requests once HHS finishes the review.",
             impacts: {
-              president: { weight: ExchangeImpactWeight.Positive },
+              president: { weight: ExchangeImpactWeight.SlightlyPositive },
               cabinet: {
                 [CabinetStaticId.Treasury]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
@@ -389,7 +401,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
           },
           {
@@ -418,7 +430,13 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_budget_neutral",
             type: AnswerType.Inform,
             text: "We will publish cost estimates, offsets, and timelines in consultation with Congress, with quarterly updates on delivery and spending.",
-            impacts: {},
+            impacts: {
+              president: { weight: ExchangeImpactWeight.SlightlyNegative },
+              cabinet: {
+                [CabinetStaticId.Treasury]: { weight: ExchangeImpactWeight.SlightlyPositive },
+                [CabinetStaticId.HHS]: { weight: ExchangeImpactWeight.SlightlyNegative },
+              },
+            },
             outcomeModifiers: {},
           },
         ],

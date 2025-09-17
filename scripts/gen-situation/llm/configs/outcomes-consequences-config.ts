@@ -7,45 +7,37 @@ import {
   type GenerateSituationPlan,
   type GeneratePreferences,
 } from "~/lib/schemas/generate";
-import { GENERATION_GUIDE } from "../generation-guide";
+import { buildImplementationPrompt } from "../prompt-constants";
 
-const instructions = `
-You will ADD approval impacts (consequences) for each existing outcome in a fictional political situation.
+const CONSEQUENCES_SPECIFIC_INSTRUCTIONS = `
+ADD approval impacts (consequences) for each existing outcome in this fictional political situation.
 
-WHAT TO OUTPUT
-- Return an object with outcomeConsequences: an array where each item preserves the original outcomeId and provides ONLY:
-  - consequences.approvalChanges.{ cabinet?, subgroups? }
+TASK-SPECIFIC REQUIREMENTS
+- Return outcomeConsequences: keep the original outcomeId; provide ONLY consequences.approvalChanges.{ cabinet?, subgroups? }
+- Do not re-emit or alter id, title, description, or weight
 
-DO NOT MODIFY BASE FIELDS
-- Do not re-emit or alter id, title, description, or weight. You will receive base outcomes separately. Only provide consequences mapped by outcomeId.
+BALANCE RULES (must hold overall)
+- Involved cabinet: use ONLY cabinet present in preferences; every preferred cabinet appears in ≥1 outcome
+- For each preferred cabinet: include both positive and negative impacts across outcomes and have all their impacts total sum ≤ 0
+- Entity caps across all outcomes: ≤ 3 distinct cabinet and ≤ 3 distinct subgroups
+- Each outcome must have mixed positive/negative consequences
+- One outcome's consequences must have a net positive sum. All others must net negative sum.
 
-CRITICAL VALIDATION RULES (MUST FOLLOW):
+SELF‑CHECK BEFORE RETURN
+- Verify each outcome is mixed and exactly one outcome is net‑positive overall; if not, adjust impacts accordingly
+- Ensure all other outcomes have net total < 0 (net‑negative)
+- Compute totals per preferred cabinet member across ALL outcomes and ensure each total ≤ 0; if any total > 0, reduce positives or add negatives until ≤ 0
 
-OUTCOME-LEVEL RULES (Sum-Based):
-- Calculate the total enum value sum for each outcome (cabinet + subgroups)
-- At least ONE outcome must have POSITIVE sum (>0)
-- At least ONE outcome must have NEGATIVE sum (<0)
-- Maximum 50% of outcomes can have positive sums
-
-ENTITY-LEVEL RULES (Sum-Based):
-- Each affected entity must have at least ONE positive consequence (>0) AND ONE negative consequence (<0) across all outcomes
-- Each affected entity's total impact sum must be ≤ 0 (net neutral or negative)
-- Use enum values: StronglyPositive=15, Positive=10, SlightlyPositive=5, Neutral=0, SlightlyNegative=-5, Negative=-10, StronglyNegative=-15
-
-CONSTRAINTS (must hold conceptually; final app will validate)
+CONSTRAINTS
 - Per outcome: affects ≥ 1 and ≤ 6 total entities (cabinet + subgroups)
-- Balance the impact distribution to meet the sum requirements above
-
-STYLE & CONTENT
-- Satirical newsroom tone; fictional entities only—no real people, places, or events.
+- Use the valid numeric enum values for consequence weights as enforced by the schema
 
 STRICTNESS
-- Structured Outputs (strict): follow the JSON Schema exactly.
-- If unsure about an entity impact, omit it (better sparse than invalid).
-
-CONTENT RULES (Authoritative)
-${GENERATION_GUIDE}
+- Structured Outputs (strict): follow the JSON Schema exactly
+- If unsure about an entity impact, omit it
 `.trim();
+
+const instructions = buildImplementationPrompt(CONSEQUENCES_SPECIFIC_INSTRUCTIONS);
 
 export function buildOutcomesConsequencesRequest(
   plan: GenerateSituationPlan,
@@ -68,6 +60,9 @@ export function buildOutcomesConsequencesRequest(
             .map(([k, v]) => `${k}: ${v.preference.answerType}`)
             .join("; ")
         : "(none)"
+    }`,
+    `Allowed cabinet (from preferences): ${
+      preferences.cabinet ? Object.keys(preferences.cabinet).join(", ") : "(none)"
     }`,
     ``,
     `InvolvedEntities (for context; don't create new ones):`,

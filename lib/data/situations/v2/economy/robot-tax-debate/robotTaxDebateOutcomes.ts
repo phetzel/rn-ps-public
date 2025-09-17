@@ -23,8 +23,8 @@ export const robotTaxDebateOutcomes: SituationOutcome[] = [
             SituationConsequenceWeight.Negative,
           [SubgroupStaticId.TechIndustry]:
             SituationConsequenceWeight.StronglyNegative,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.LaborUnions]:
+            SituationConsequenceWeight.SlightlyPositive,
         },
       },
     },
@@ -44,10 +44,10 @@ export const robotTaxDebateOutcomes: SituationOutcome[] = [
         },
         subgroups: {
           [SubgroupStaticId.LaborUnions]: SituationConsequenceWeight.Positive,
-          [SubgroupStaticId.LeftWingBase]:
-            SituationConsequenceWeight.SlightlyPositive,
           [SubgroupStaticId.BusinessLeaders]:
             SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.TechIndustry]:
+            SituationConsequenceWeight.SlightlyNegative,
         },
       },
     },
