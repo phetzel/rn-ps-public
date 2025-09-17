@@ -20,6 +20,8 @@ OUTPUT CONTRACT
 - You must follow the provided JSON Schema exactly (Structured Outputs is enabled)
 - Honor all field descriptions and length ranges (title 15–50 chars; description 80–160)
 - Only select entities that fit the scenario and type
+- Select 2–3 publications
+- Select at most 3 cabinet members and at most 3 subgroups
 
 REFERENCE — Situation Types & Entities
 ${PLANNER_TYPE_GUIDE}

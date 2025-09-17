@@ -23,7 +23,7 @@ function publicationVoice(pub: string): string {
 
 const EXCHANGES_PLAN_SPECIFIC_INSTRUCTIONS = `
 Plan editorial angles for **each** pre-selected publication in this situation.
-Do **not** add/remove publications.
+Do **not** add/remove publications. Return exactly one plan for each publication listed below.
 
 TASK-SPECIFIC REQUIREMENTS
 - Create distinct editorial perspectives that reflect each outlet's voice and priorities
@@ -34,6 +34,8 @@ AUTHORIZED ACCESS RULES
 - At most one publication may receive an answer with confidential authorized content
 - Only assign authorized access if a cabinet member actually has authorizedContent
 - If authorized is used, you must specify authorizedCabinetMemberId for that outlet
+- Additionally: across the entire situation, ensure there is at most ONE Authorized answer total
+ - Set willHaveAuthorizedAnswer=true for at most one publication; all other publications must set willHaveAuthorizedAnswer=false
 
 TECHNICAL OUTPUT REQUIREMENTS
 - For every publication given below, return: { publication, editorialAngle (50–200 chars), willHaveAuthorizedAnswer, authorizedCabinetMemberId? }
@@ -62,6 +64,7 @@ export function buildExchangesPlanRequest(
     ``,
     `Publications (fixed):`,
     ...pubs.map(p => `- ${p}: ${publicationVoice(p)}`),
+    `ExpectedPlansCount: ${pubs.length}`,
     ``,
     `Authorized-capable cabinet members: ${authorizedMembers.length ? authorizedMembers.join(", ") : "(none)"}`,
     authorizedMembers.length

@@ -2,6 +2,7 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { LLMResponseRequest } from "../../types";
 import { buildImplementationPrompt } from "../prompt-constants";
+import { CabinetStaticId } from "~/types";
 import {
   generateExchangeContentSchema,        // == core exchangeContentSchema
   type GenerateExchangeContent,
@@ -40,8 +41,27 @@ export function buildExchangeFullRequest(
     `Publication: ${pubPlan.publication}`,
     `EditorialAngle: ${pubPlan.editorialAngle}`,
     ``,
+    `President Preference: {type:${preferences.president.answerType}, rationale:${JSON.stringify(preferences.president.rationale)}}`,
+    (() => {
+      const involvedCabinet = Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      ));
+      if (involvedCabinet.length === 0) return `Cabinet Preferences: (none)`;
+      const prefMap = involvedCabinet.map(id => {
+        const p = preferences.cabinet?.[id as CabinetStaticId]?.preference;
+        return `${id}={type:${p?.answerType ?? "N/A"}, rationale:${JSON.stringify(p?.rationale ?? "N/A")}}`;
+      }).join("; ");
+      return `Cabinet Preferences: ${prefMap}`;
+    })(),
+    ``,
     `Available Outcomes (for outcomeModifiers – keys must match exactly; sum to 0 per question):`,
     summarizeOutcomes(outcomes.outcomes),
+    ``,
+    `Allowed Cabinet (involved in outcomes only): ${
+      Array.from(new Set(
+        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
+      )).join(", ") || "(none)"
+    }`,
     ``,
     `Authorized Answer Policy for this outlet:`,
     authorizedMember
@@ -85,11 +105,17 @@ ANSWER FIELDS
 - authorizedCabinetMemberId: REQUIRED when type=Authorized; must be ${authorizedMember ?? "N/A"} for this outlet
 - outcomeModifiers: object whose KEYS are exactly the outcome IDs listed above; numeric values MUST sum to 0 PER QUESTION (balance)
 
+AUTHORIZED
+ - If this outlet is authorized, include at most ONE Authorized answer across the entire 5-question exchange (must reference the specified cabinet member)
+ - If this outlet is not authorized, include ZERO Authorized answers
+
 CRITICAL RELATIONSHIP IMPACT RULES (MUST FOLLOW EXACTLY)
 For each question's 4 answers, the relationship impacts MUST follow these rules:
 - impacts.president: Across the 4 answers, president must have AT LEAST as many negative weight values as positive weight values
 - impacts.cabinet[memberId]: For EACH cabinet member, across the 4 answers, they must have AT LEAST as many negative relationship impacts as positive impacts
 - Distribution: Ensure at least one answer has positive impacts and at least one has negative impacts for variety
+- Per question: At least 3 of the 4 answers must be net-negative (sum of president + cabinet impacts < 0)
+- Do NOT include journalists impacts
 - Balance Examples:
   • VALID: Cabinet member gets weights [+2, +1, -1, -2] = 2 positive, 2 negative (balanced)
   • VALID: Cabinet member gets weights [+1, -1, -2, -3] = 1 positive, 3 negative (net negative)
