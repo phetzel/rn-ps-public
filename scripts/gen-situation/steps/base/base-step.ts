@@ -1,6 +1,6 @@
 // src/gen/base/responses-generation-step.ts
 import type { LLMClient } from "../../llm/client";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 
 
 export abstract class ResponsesGenerationStep<I, O> {
@@ -11,7 +11,7 @@ export abstract class ResponsesGenerationStep<I, O> {
   }
 
   // ---- subclass must provide these
-  protected abstract buildRequest(input: I): LLMResponseRequest<O>;
+  protected abstract buildRequest(input: I): ResponsesJSONSchemaOptions;
 
   protected validateInput(input: I): void {
     if (input == null) throw new Error("Input required");
@@ -23,9 +23,9 @@ export abstract class ResponsesGenerationStep<I, O> {
   async execute(input: I): Promise<O> {
     this.validateInput(input);
 
-    const { prompt, options } = this.buildRequest(input);
+    const reqOptions = this.buildRequest(input);
     try {
-      const { content } = await this.llmClient.generateResponse<O>(prompt, options as any);
+      const { content } = await this.llmClient.generateResponse<O>(reqOptions);
       return this.postProcess(content, input);
     } catch (err: any) {
       const prefix = this.constructor?.name || "ResponsesGenerationStep";

@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import type { GenerationAnalysis } from "../../types";
 import type { GenerateSituationPlan } from "~/lib/schemas/generate";
 import { generatePreferencesSchema, type GeneratePreferences } from "~/lib/schemas/generate";
@@ -41,8 +41,8 @@ const instructions = buildCreativePrompt(PREFERENCES_SPECIFIC_INSTRUCTIONS);
 export function buildPreferencesRequest(
     plan: GenerateSituationPlan,
     analysis: GenerationAnalysis
-  ): LLMResponseRequest<GeneratePreferences> {
-    const prompt = [
+  ): ResponsesJSONSchemaOptions {
+  const input = [
       `SituationTitle: ${plan.title}`,
       `SituationType: ${plan.type}`,
       `SituationSummary: ${plan.description}`,
@@ -62,14 +62,17 @@ export function buildPreferencesRequest(
   });
 
     return {
-        prompt,
-        options: {
-          model: "gpt-5",
-          instructions,
-          maxOutputTokens: 8000, 
-        schema: generatePreferencesSchema, 
-        schemaName: "situation_preferences",
-        jsonSchema,
+      model: "gpt-5",
+      instructions,
+      input,
+      max_output_tokens: 8000,
+      text: {
+        format: {
+          type: "json_schema",
+          name: "situation_preferences",
+          schema: jsonSchema,
+          strict: true,
+        },
       },
     };
   }

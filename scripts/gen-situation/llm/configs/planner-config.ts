@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import type { GenerationAnalysis } from "../../types";
 import { PLANNER_TYPE_GUIDE } from "../generation-guide";
 import { buildCreativePrompt } from "../prompt-constants";
@@ -31,7 +31,7 @@ export const instructions = buildCreativePrompt(PLANNER_SPECIFIC_INSTRUCTIONS);
 
 export function buildPlannerRequest(
     analysis: GenerationAnalysis
-  ): LLMResponseRequest<GenerateSituationPlan> {
+  ): ResponsesJSONSchemaOptions {
     const s = analyzeStrategicRequirements(analysis);
   
     const lines = [
@@ -47,7 +47,7 @@ export function buildPlannerRequest(
       ``,
     ];
   
-    const prompt = lines.join("\n");
+    const input = lines.join("\n");
 
     const jsonSchema = zodToJsonSchema(generateSituationPlanSchema, {
         target: "jsonSchema7",
@@ -55,15 +55,17 @@ export function buildPlannerRequest(
       });
 
       return {
-        prompt,
-        options: {
-          model: "gpt-5",
-          instructions,               // system/developer guidance
-          maxOutputTokens: 8000, // Plan: title+desc+reasoning(200) + entities list
-          schema: generateSituationPlanSchema,
-          schemaName: "situation_plan",
-          jsonSchema,
-          // previousResponseId?: "..." // if you chain, remember to resend instructions
+        model: "gpt-5",
+        instructions,
+        input,
+        max_output_tokens: 8000,
+        text: {
+          format: {
+            type: "json_schema",
+            name: "situation_plan",
+            schema: jsonSchema,
+            strict: true,
+          },
         },
       };
   }

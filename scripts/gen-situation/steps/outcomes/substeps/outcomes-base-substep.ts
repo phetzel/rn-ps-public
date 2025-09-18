@@ -1,5 +1,5 @@
 import { ResponsesGenerationStep } from "../../base"; // your Responses base-step
-import type { LLMResponseRequest } from "../../../types";
+import type { ResponsesJSONSchemaOptions } from "../../../types";
 import { buildOutcomesBaseRequest } from "../../../llm/configs/outcomes-base-config";
 
 import  {
@@ -18,7 +18,7 @@ type OutcomesBaseInput = {
   export class OutcomesBaseSubstep
     extends ResponsesGenerationStep<OutcomesBaseInput, GenerateBaseOutcomes> {
     
-    protected buildRequest(input: OutcomesBaseInput): LLMResponseRequest<GenerateBaseOutcomes> {
+    protected buildRequest(input: OutcomesBaseInput): ResponsesJSONSchemaOptions {
       // Pass full plan (includes involvedEntities) and preferences so the builder
       // can include them in the prompt (the LLM will understand impacts come later)
       return buildOutcomesBaseRequest(input.plan, input.preferences);

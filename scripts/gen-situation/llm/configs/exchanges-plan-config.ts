@@ -1,6 +1,6 @@
 // src/gen-situation/llm/configs/exchanges-publications-planning-config.ts
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import { buildTechnicalPrompt } from "../prompt-constants";
 import {
   generateExchangesPlanSchema,
@@ -49,7 +49,7 @@ export function buildExchangesPlanRequest(
   plan: GenerateSituationPlan,
   preferences: GeneratePreferences,
   outcomes: GenerateOutcomes
-): LLMResponseRequest<GenerateExchangesPlan> {
+): ResponsesJSONSchemaOptions {
   const pubs = plan.involvedEntities.publications;
   const authorizedMembers =
     Object.entries(preferences.cabinet || {}).filter(([, v]: any) => !!v.authorizedContent).map(([k]) => k);
@@ -57,7 +57,7 @@ export function buildExchangesPlanRequest(
     // const authorizedMembers = Object.entries(preferences.cabinet ?? {})
     // .filter(([, v]) => typeof v?.authorizedContent === "string" && v.authorizedContent.trim().length > 0)
     // .map(([k]) => k);
-  const prompt = [
+  const input = [
     `SituationTitle: ${plan.title}`,
     `Type: ${plan.type}`,
     `Summary: ${plan.description}`,
@@ -78,14 +78,17 @@ export function buildExchangesPlanRequest(
   });
 
   return {
-    prompt,
-    options: {
-      model: "gpt-5",
-      instructions,
-      maxOutputTokens: 8000, // 2-4 publication plans: editorial angles (200 chars each)
-      schema: generateExchangesPlanSchema,
-      schemaName: "exchanges_plan",
-      jsonSchema,
+    model: "gpt-5",
+    instructions,
+    input,
+    max_output_tokens: 8000,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "exchanges_plan",
+        schema: jsonSchema,
+        strict: true,
+      },
     },
   };
 }

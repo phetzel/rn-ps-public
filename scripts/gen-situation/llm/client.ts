@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import type { ParsedResponse } from "openai/resources/responses/responses";
 import dotenv from "dotenv";
-import type { LLMResponse, LLMResponseOptions } from "../types";
+import type { LLMResponse, ResponsesJSONSchemaOptions } from "../types";
 
 dotenv.config({ path: [".env.local", ".env"] });
 
@@ -36,35 +36,8 @@ export class LLMClient {
    * - Structured:    pass options.jsonSchema (and optionally options.schema for local Zod validation)
    * - Stateful:      pass options.previousResponseId to chain turns in Responses
    */
-  async generateResponse<T>(
-    prompt: string,
-    opts: LLMResponseOptions<T>
-  ): Promise<LLMResponse<T>> {
-    const {
-      model = this.defaultModel,
-      instructions,
-      maxOutputTokens = 4000,
-      schema,
-      schemaName,
-      jsonSchema,
-      previousResponseId,
-    } = opts;
-
-    const res = await this.client.responses.parse({
-      model,
-      instructions,
-      input: prompt,
-      max_output_tokens: maxOutputTokens,
-      text: {
-        format: {
-          type: "json_schema",
-          name: schemaName,
-          schema: jsonSchema as Record<string, unknown>,
-          strict: true,
-        },
-      },
-      ...(previousResponseId ? { previous_response_id: previousResponseId } : {}),
-    }) as ParsedResponse<T>;
+  async generateResponse<T>(options: ResponsesJSONSchemaOptions): Promise<LLMResponse<T>> {
+    const res = await this.client.responses.parse(options) as ParsedResponse<T>;
     if (this.debugMode) console.log("🔍 Raw model output:", res);
 
     const outputParsed = res.output_parsed as T;

@@ -1,6 +1,6 @@
 // src/gen-situation/steps/exchanges/exchange-publications-planning-substep.ts
 import { ResponsesGenerationStep } from "../../base";
-import type { LLMResponseRequest } from "../../../types";
+import type { ResponsesJSONSchemaOptions } from "../../../types";
 import {
   buildExchangesPlanRequest
 } from "../../../llm/configs/exchanges-plan-config";
@@ -22,7 +22,7 @@ type ExchangesPlanInput = {
 export class ExchangesPlanSubstep
   extends ResponsesGenerationStep<ExchangesPlanInput, GenerateExchangesPlan> {
 
-  protected buildRequest(input: ExchangesPlanInput): LLMResponseRequest<GenerateExchangesPlan> {
+  protected buildRequest(input: ExchangesPlanInput): ResponsesJSONSchemaOptions {
     return buildExchangesPlanRequest(input.plan, input.preferences, input.outcomes);
   }
 

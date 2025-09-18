@@ -1,5 +1,5 @@
 import { ResponsesGenerationStep } from "../../base";
-import type { LLMResponseRequest, StepDependencies } from "../../../types";
+import type { ResponsesJSONSchemaOptions, StepDependencies } from "../../../types";
 import {
   buildExchangeImpactsRequest
 } from "../../../llm/configs/exchange-impacts-config";
@@ -34,7 +34,7 @@ export class ExchangeImpactsSubstep
     super({ llmClient: dependencies.llmClient });
   }
 
-  protected buildRequest(input: ExchangeImpactsInput): LLMResponseRequest<GenerateAllQuestionImpacts> {
+  protected buildRequest(input: ExchangeImpactsInput): ResponsesJSONSchemaOptions {
     return buildExchangeImpactsRequest(
       input.plan,
       input.preferences,

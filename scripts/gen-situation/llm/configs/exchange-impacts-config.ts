@@ -1,6 +1,6 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import { z } from "zod";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import {
   type GenerateAllQuestionImpacts,
   type GenerateSituationPlan,
@@ -39,7 +39,7 @@ export function buildExchangeImpactsRequest(
   outcomes: GenerateOutcomes,
   pubPlan: ExchangesPlanArray[number],
   questionsContent: GenerateQuestionsOnlyContent
-): LLMResponseRequest<any> {
+): ResponsesJSONSchemaOptions {
 
   const promptLines: string[] = [
     `SituationTitle: ${plan.title}`,
@@ -117,15 +117,17 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
   });
 
   return {
-    prompt: promptLines.join("\n"),
-    options: {
-      model: "gpt-5",
-      instructions,
-      maxOutputTokens: 16000, // Just impact data (weights + reactions 20-100 chars) for existing questions
-      schema: dynamicSchema,
-      schemaName: "exchange_impacts",
-      jsonSchema,
-      reasoningEffort: 'high',
+    model: "gpt-5",
+    instructions,
+    input: promptLines.join("\n"),
+    max_output_tokens: 16000,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "exchange_impacts",
+        schema: jsonSchema,
+        strict: true,
+      },
     },
   };
 }

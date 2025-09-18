@@ -4,7 +4,6 @@
 
 export { ResponsesGenerationStep } from "./base-step";
 export type { 
-  LLMConfig, 
   GenerationLogger, 
   StepDependencies 
 } from "../../types";
