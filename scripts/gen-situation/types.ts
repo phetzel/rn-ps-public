@@ -65,12 +65,7 @@ export interface BatchGenerationStats {
 export interface LLMResponse<T = any> {
   content: T;
   raw?: string;
-  usage?: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-    cost?: number;
-  };
+  usage?: ResponseUsage;
   toolCalls?: any[];
 }
 
