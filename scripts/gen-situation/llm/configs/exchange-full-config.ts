@@ -1,6 +1,6 @@
 // src/gen-situation/llm/configs/exchange-full-config.ts
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import { buildImplementationPrompt } from "../prompt-constants";
 import { CabinetStaticId } from "~/types";
 import {
@@ -26,7 +26,7 @@ export function buildExchangeFullRequest(
   outcomes: GenerateOutcomes,
   pubPlan: ExchangesPlanArray[number],           // one publication entry from the exchanges plan
   baseExchange?: typeof generateBaseExchangeContentSchema._type // optional skeleton to preserve IDs/followUps
-): LLMResponseRequest<GenerateExchangeContent> {
+): ResponsesJSONSchemaOptions {
 
   const authorizedMember = pubPlan.willHaveAuthorizedAnswer
     ? pubPlan.authorizedCabinetMemberId ?? null
@@ -136,14 +136,17 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
   });
 
   return {
-    prompt: promptLines.join("\n"),
-    options: {
-      model: "gpt-5",
-      instructions,
-      maxOutputTokens: 8000, // Complete exchange for 1 publication: questions + answers + all impacts
-      schema: generateExchangeContentSchema,
-      schemaName: "exchange_content",
-      jsonSchema,
+    model: "gpt-5",
+    instructions,
+    input: promptLines.join("\n"),
+    max_output_tokens: 8000,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "exchange_content",
+        schema: jsonSchema,
+        strict: true,
+      },
     },
   };
 }

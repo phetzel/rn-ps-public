@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import  { type GenerateSituationPlan, type GenerateBaseOutcomes, type GeneratePreferences, generateBaseOutcomesSchema } from "~/lib/schemas/generate";
 import { buildCreativePrompt } from "../prompt-constants";
 
@@ -27,8 +27,8 @@ const instructions = buildCreativePrompt(OUTCOMES_SPECIFIC_INSTRUCTIONS);
 export function buildOutcomesBaseRequest(
     plan: GenerateSituationPlan,
     prefs: GeneratePreferences
-  ): LLMResponseRequest<GenerateBaseOutcomes> {
-    const prompt = [
+  ): ResponsesJSONSchemaOptions {
+    const input = [
       `SituationTitle: ${plan.title}`,
       `Type: ${plan.type}`,
       `Summary: ${plan.description}`,
@@ -44,14 +44,17 @@ export function buildOutcomesBaseRequest(
       });  
 
     return {
-      prompt,
-      options: {
-        model: "gpt-5",
-        instructions,
-        maxOutputTokens: 8000, // 2-4 outcomes: titles(60) + descriptions(140) + weights
-        schema: generateBaseOutcomesSchema,
-        schemaName: "outcome_base_list",
-        jsonSchema,
+      model: "gpt-5",
+      instructions,
+      input,
+      max_output_tokens: 8000,
+      text: {
+        format: {
+          type: "json_schema",
+          name: "outcome_base_list",
+          schema: jsonSchema,
+          strict: true,
+        },
       },
     };
   }

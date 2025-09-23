@@ -1,5 +1,5 @@
 import { ResponsesGenerationStep } from "../../base";
-import type { LLMResponseRequest } from "../../../types";
+import type { ResponsesJSONSchemaOptions } from "../../../types";
 
 import {
   type GenerateOutcomesConsequences,
@@ -21,7 +21,7 @@ type ImpactsInput = {
 export class OutcomesImpactsSubstep
   extends ResponsesGenerationStep<ImpactsInput, GenerateOutcomesConsequences> {
   
-  protected buildRequest(input: ImpactsInput): LLMResponseRequest<GenerateOutcomesConsequences> {
+  protected buildRequest(input: ImpactsInput): ResponsesJSONSchemaOptions {
     return buildOutcomesConsequencesRequest(input.plan, input.preferences, input.baseOutcomes);
   }
 

@@ -1,5 +1,10 @@
 import { z } from "zod";
 import { LLMClient } from "./llm/client";
+import type {
+  ResponseCreateParamsNonStreaming,
+  ResponseUsage,
+  ResponseFormatTextJSONSchemaConfig,
+} from "openai/resources/responses/responses";
 import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, SubgroupStaticId } from "~/types";
 import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes, ExchangesStepOutput } from "~/lib/schemas/generate";
 
@@ -60,48 +65,21 @@ export interface BatchGenerationStats {
 export interface LLMResponse<T = any> {
   content: T;
   raw?: string;
-  usage?: {
-    promptTokens: number;
-    completionTokens: number;
-    totalTokens: number;
-    cost?: number;
-  };
+  usage?: ResponseUsage;
   toolCalls?: any[];
 }
 
-/** Options passed to LLMClient.generateResponse (Responses + Structured Outputs only) */
-export type LLMResponseOptions<T> = {
-  model?: string;                    // defaults inside LLMClient
-  instructions: string;              // "system" guidance; resend each call
-  temperature?: number;
-  maxOutputTokens?: number;          // Responses uses max_output_tokens
-  schema: z.ZodSchema<T>;            // local Zod validation (domain invariants)
-  schemaName: string;                // response_format.json_schema.name
-  jsonSchema: Record<string, any>;   // compiled JSON Schema (strict mode)
-  previousResponseId?: string;       // optional chaining
-  reasoningEffort?: 'minimal' | 'low' | 'medium' | 'high'; // NEW: Optional reasoning parameter
-};
-
-/** Full, ready-to-run Responses request built by a config file */
-export type LLMResponseRequest<T> = {
-  prompt: string;                    // user input string
-  options: LLMResponseOptions<T>;
-};
+// Unified OpenAI-shaped options for Structured Outputs (json_schema)
+export type ResponsesJSONSchemaOptions =
+  Omit<ResponseCreateParamsNonStreaming, 'text' | 'input'> & {
+    input: string;
+    text: { format: ResponseFormatTextJSONSchemaConfig };
+  };
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// BASE STEP TYPES
+// LOGGING TYPES
 // ═══════════════════════════════════════════════════════════════════════════════
-
-/**
- * Configuration for LLM calls
- */
-export interface LLMConfig<T> {
-  schema: z.ZodSchema<T>;
-  schemaName: string;
-  temperature: number;
-  systemPrompt: string;
-}
 
 /**
  * Logger interface for generation steps

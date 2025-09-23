@@ -1,5 +1,5 @@
 import { ResponsesGenerationStep } from "../base";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import { buildPreferencesRequest } from "../../llm/configs/preferences-config";
 import type { PlanningStepOutput, GenerationAnalysis } from "../../types";
 import type { GeneratePreferences } from "~/lib/schemas/generate";
@@ -10,7 +10,7 @@ type PreferencesStepInput = {
 };
 
 export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInput, GeneratePreferences> {
-  protected buildRequest(input: PreferencesStepInput): LLMResponseRequest<GeneratePreferences> {
+  protected buildRequest(input: PreferencesStepInput): ResponsesJSONSchemaOptions {
     return buildPreferencesRequest(input.plan, input.analysis);
   }
 
@@ -20,7 +20,7 @@ export class PreferencesStep extends ResponsesGenerationStep<PreferencesStepInpu
     if (!input.analysis) throw new Error("Preferences step requires generation analysis");
   }
 
-  protected async postProcess(result: GeneratePreferences): Promise<GeneratePreferences> {
+  protected async postProcess(result: GeneratePreferences, _input: PreferencesStepInput): Promise<GeneratePreferences> {
     return result;
   }
 }

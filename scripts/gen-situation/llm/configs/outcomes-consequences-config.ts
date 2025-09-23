@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import {
   generateOutcomesConsequencesSchema,
   type GenerateOutcomesConsequences,
@@ -43,7 +43,7 @@ export function buildOutcomesConsequencesRequest(
   plan: GenerateSituationPlan,
   preferences: GeneratePreferences,
   baseOutcomes: GenerateBaseOutcomes
-): LLMResponseRequest<GenerateOutcomesConsequences> {
+): ResponsesJSONSchemaOptions {
   const cabinetList = plan.involvedEntities?.cabinetMembers?.join(", ") || "(none)";
   const subgroupList = plan.involvedEntities?.subgroups?.join(", ") || "(none)";
   const publicationList = plan.involvedEntities?.publications?.join(", ") || "(none)";
@@ -74,7 +74,7 @@ export function buildOutcomesConsequencesRequest(
     ...baseOutcomes.outcomes.map(o => `- ${o.id} • ${o.title} • ${o.weight}`),
   ];
 
-  const prompt = lines.join("\n");
+  const input = lines.join("\n");
 
   const jsonSchema = zodToJsonSchema(generateOutcomesConsequencesSchema, {
     target: "jsonSchema7",
@@ -82,14 +82,17 @@ export function buildOutcomesConsequencesRequest(
   });
 
   return {
-    prompt,
-    options: {
-      model: "gpt-5",
-      instructions,
-      maxOutputTokens: 8000, // Consequences for 2-4 outcomes (detailed impact descriptions)
-      schema: generateOutcomesConsequencesSchema,
-      schemaName: "situation_outcomes_consequences",
-      jsonSchema,
+    model: "gpt-5",
+    instructions,
+    input,
+    max_output_tokens: 8000,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "situation_outcomes_consequences",
+        schema: jsonSchema,
+        strict: true,
+      },
     },
   };
 }

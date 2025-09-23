@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Base classes
-export { GenerationStep, ConsoleGenerationLogger } from "./base";
+export { ConsoleGenerationLogger } from "./base";
 
 // Individual steps
 export { PlanningStep } from "./planning";
@@ -13,7 +13,6 @@ export { ExchangesStep } from "./exchanges";
 
 // All types from centralized location
 export type { 
-  LLMConfig, 
   GenerationLogger, 
   StepDependencies,
   PlanningStepInput, 

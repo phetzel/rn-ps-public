@@ -1,5 +1,5 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
-import type { LLMResponseRequest } from "../../types";
+import type { ResponsesJSONSchemaOptions } from "../../types";
 import { buildTechnicalPrompt } from "../prompt-constants";
 import { CabinetStaticId } from "~/types";
 import {
@@ -16,7 +16,7 @@ export function buildExchangeQuestionsRequest(
   preferences: GeneratePreferences,
   outcomes: GenerateOutcomes,
   pubPlan: ExchangesPlanArray[number]
-): LLMResponseRequest<GenerateQuestionsOnlyContent> {
+): ResponsesJSONSchemaOptions {
 
   const authorizedMember = pubPlan.willHaveAuthorizedAnswer
     ? pubPlan.authorizedCabinetMemberId ?? null
@@ -89,14 +89,17 @@ Return ONLY a JSON object matching the JSON Schema (strict)
   });
 
   return {
-    prompt: promptLines.join("\n"),
-    options: {
-      model: "gpt-5",
-      instructions,
-      maxOutputTokens: 16000, // 1 root + 2-3 secondary + 1-2 tertiary questions with answers (no impacts)
-      schema: generateQuestionsOnlyContentSchema,
-      schemaName: "exchange_questions",
-      jsonSchema,
+    model: "gpt-5",
+    instructions,
+    input: promptLines.join("\n"),
+    max_output_tokens: 16000,
+    text: {
+      format: {
+        type: "json_schema",
+        name: "exchange_questions",
+        schema: jsonSchema,
+        strict: true,
+      },
     },
   };
 }

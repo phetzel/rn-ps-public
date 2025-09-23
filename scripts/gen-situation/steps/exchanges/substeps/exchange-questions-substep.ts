@@ -1,5 +1,5 @@
 import { ResponsesGenerationStep } from "../../base";
-import type { LLMResponseRequest, StepDependencies } from "../../../types";
+import type { ResponsesJSONSchemaOptions, StepDependencies } from "../../../types";
 import {
   buildExchangeQuestionsRequest
 } from "../../../llm/configs/exchange-questions-config";
@@ -32,7 +32,7 @@ export class ExchangeQuestionsSubstep
     super({ llmClient: dependencies.llmClient });
   }
 
-  protected buildRequest(input: ExchangeQuestionsInput): LLMResponseRequest<GenerateQuestionsOnlyContent> {
+  protected buildRequest(input: ExchangeQuestionsInput): ResponsesJSONSchemaOptions {
     return buildExchangeQuestionsRequest(
       input.plan,
       input.preferences,
