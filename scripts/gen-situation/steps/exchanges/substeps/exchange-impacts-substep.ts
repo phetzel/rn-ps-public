@@ -12,7 +12,9 @@ import type {
   GenerateAllQuestionImpacts,
   ExchangesPlanArray,
 } from "~/lib/schemas/generate";
-import { generateAllQuestionImpactsSchema } from "~/lib/schemas/generate";
+import { generateAllQuestionImpactsSchema, generateExchangeContentSchema } from "~/lib/schemas/generate";
+import { exchangeContentSchema } from "~/lib/schemas/exchanges";
+import { assertParse } from "../../../utils/validation";
 import { CabinetStaticId, JournalistStaticId } from "~/types";
 
 type ExchangeImpactsInput = {
@@ -74,6 +76,15 @@ export class ExchangeImpactsSubstep
     // Validate entity IDs (with warnings for unknown IDs)
     this.validateEntityIds(parsed);
 
+    // Assemble a temporary full exchange (using existing questions content) to validate against core exchange schema
+    const tempExchange = this.assembleTemporaryExchange(input.questionsContent, parsed);
+
+    // Normalize (nullable → optional) by reusing the questions+impacts assembly rules from full step
+    const normalized = this.normalizeForCore(tempExchange);
+
+    // Validate against core exchange schema here (substep-level)
+    assertParse(exchangeContentSchema, normalized, "Exchange content (core)");
+
     return parsed;
   }
 
@@ -130,6 +141,95 @@ export class ExchangeImpactsSubstep
             impacts: transformedImpacts,
           };
         }),
+      })),
+    };
+  }
+
+  private assembleTemporaryExchange(
+    questions: GenerateQuestionsOnlyContent,
+    impacts: GenerateAllQuestionImpacts
+  ) {
+    const impactsMap = new Map();
+    for (const questionImpact of impacts.questionImpacts) {
+      const answerImpactsMap = new Map();
+      for (const answerImpact of questionImpact.answerImpacts) {
+        answerImpactsMap.set(answerImpact.answerId, {
+          outcomeModifiers: answerImpact.outcomeModifiers,
+          impacts: answerImpact.impacts,
+        });
+      }
+      impactsMap.set(questionImpact.questionId, answerImpactsMap);
+    }
+
+    const mergeAnswersWithImpacts = (answers: any[], questionId: string) => {
+      const questionImpacts = impactsMap.get(questionId);
+      if (!questionImpacts) throw new Error(`Missing impacts for question ${questionId}`);
+      return answers.map((answer) => {
+        const answerImpacts = questionImpacts.get(answer.id);
+        if (!answerImpacts) throw new Error(`Missing impacts for answer ${answer.id} in question ${questionId}`);
+        return {
+          ...answer,
+          outcomeModifiers: answerImpacts.outcomeModifiers,
+          impacts: answerImpacts.impacts,
+        };
+      });
+    };
+
+    return {
+      rootQuestion: {
+        ...questions.rootQuestion,
+        answers: mergeAnswersWithImpacts(questions.rootQuestion.answers, questions.rootQuestion.id),
+      },
+      secondaryQuestions: questions.secondaryQuestions.map((q) => ({
+        ...q,
+        answers: mergeAnswersWithImpacts(q.answers, q.id),
+      })),
+      tertiaryQuestions: questions.tertiaryQuestions.map((q) => ({
+        ...q,
+        answers: mergeAnswersWithImpacts(q.answers, q.id),
+      })),
+    };
+  }
+
+  private normalizeForCore(content: any) {
+    const cleanAnswer = (a: any) => {
+      const out: any = { ...a };
+      if (out.authorizedCabinetMemberId === null) delete out.authorizedCabinetMemberId;
+      if (out.followUpId === null) delete out.followUpId;
+
+      if (out.impacts) {
+        const imp = { ...out.impacts };
+        if (imp.president === null) delete imp.president;
+        if (imp.cabinet === null) delete imp.cabinet;
+        if (imp.journalists === null) delete imp.journalists;
+        if (imp.president && imp.president.reaction === null) delete imp.president.reaction;
+        if (imp.cabinet) {
+          Object.keys(imp.cabinet).forEach((k) => {
+            if (imp.cabinet[k]?.reaction === null) delete imp.cabinet[k].reaction;
+          });
+        }
+        if (imp.journalists) {
+          Object.keys(imp.journalists).forEach((k) => {
+            if (imp.journalists[k]?.reaction === null) delete imp.journalists[k].reaction;
+          });
+        }
+        out.impacts = imp;
+      }
+      return out;
+    };
+
+    return {
+      rootQuestion: {
+        ...content.rootQuestion,
+        answers: content.rootQuestion.answers.map(cleanAnswer),
+      },
+      secondaryQuestions: content.secondaryQuestions.map((q: any) => ({
+        ...q,
+        answers: q.answers.map(cleanAnswer),
+      })),
+      tertiaryQuestions: content.tertiaryQuestions.map((q: any) => ({
+        ...q,
+        answers: q.answers.map(cleanAnswer),
       })),
     };
   }

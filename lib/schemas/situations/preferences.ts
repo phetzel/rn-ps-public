@@ -31,6 +31,17 @@ export const baseSituationPreferencesSchema = z.object({
 export const situationPreferencesSchema = baseSituationPreferencesSchema.extend({})
   .refine(
     (data) => {
+      // Enforce at most 3 cabinet preferences (plus president)
+      const keys = Object.keys(data.cabinet || {});
+      return keys.length <= 3;
+    },
+    {
+      message: "At most 3 cabinet preferences are allowed (plus president)",
+      path: ["cabinet"],
+    }
+  )
+  .refine(
+    (data) => {
       // No Authorized preferences allowed
       const allPrefs = [
         data.president?.answerType,

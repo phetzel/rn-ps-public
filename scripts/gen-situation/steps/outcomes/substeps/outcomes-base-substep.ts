@@ -8,6 +8,7 @@ import  {
     type GenerateBaseOutcomes,
     generateBaseOutcomesSchema,
   } from "~/lib/schemas/generate";
+import { assertParse } from "../../../utils/validation";
 
 
 type OutcomesBaseInput = {
@@ -32,8 +33,8 @@ type OutcomesBaseInput = {
     
       // Keep it consistent with your pattern: normalize then validate with the base array schema
       protected async postProcess(result: GenerateBaseOutcomes, _input: OutcomesBaseInput): Promise<GenerateBaseOutcomes> {
-        // Validate the full wrapper object
-        return generateBaseOutcomesSchema.parse(result);
+        // Validate the full wrapper object against the generation schema (already backed by core base array)
+        return assertParse<GenerateBaseOutcomes>(generateBaseOutcomesSchema, result, "Outcomes (base)");
       }
 
         // Optional: tiny summary for your logger

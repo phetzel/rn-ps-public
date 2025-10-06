@@ -18,8 +18,6 @@ function summarizeOutcomes(outcomes: GenerateOutcomes["outcomes"]) {
   return outcomes.map(o => `- ${o.id}: "${o.title}" (weight ${o.weight})`).join("\n");
 }
 
-
-
 export function buildExchangeFullRequest(
   plan: GenerateSituationPlan,
   preferences: GeneratePreferences,

@@ -2,6 +2,7 @@ import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../
 import { OutcomesBaseSubstep } from "./substeps/outcomes-base-substep";
 import { OutcomesImpactsSubstep } from "./substeps/outcomes-impact-substep";
 import { GenerateOutcomes, generateOutcomesSchema, type GenerateOutcomesConsequences } from "~/lib/schemas/generate";
+import { assertParse } from "../../utils/validation";
 import type { OutcomesStepInput } from "../../types";
 import { logDeep } from "../../utils/logging";
 
@@ -61,8 +62,8 @@ export class OutcomesStep {
         }),
       };
 
-      // Validate final structure
-      const parsed = generateOutcomesSchema.parse(assembled);
+      // Validate final structure (generate wrapper)
+      const parsed = assertParse<GenerateOutcomes>(generateOutcomesSchema, assembled, "Outcomes (wrapper)");
 
       this.logger.logStepSuccess(stepName, this.getResultSummary(parsed));
       return parsed;

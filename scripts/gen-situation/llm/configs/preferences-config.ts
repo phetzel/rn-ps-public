@@ -34,6 +34,11 @@ AUTHORIZED CONTENT STYLE (if present)
 STYLE REQUIREMENTS
 - President: choose a valid "answerType" and a concise rationale
 - Cabinet: create ABSURD departmental tensions while staying in-character
+
+STRICT ENTITY RULES (ids only)
+- Create preferences ONLY for cabinet ids listed in "RelevantCabinet" in the input. Do not include any other cabinet ids.
+- At most THREE cabinet entries in the "cabinet" map. If more ids are listed, choose any up to three.
+- Use exact lowercase enum ids (not labels).
 `.trim();
 
 const instructions = buildCreativePrompt(PREFERENCES_SPECIFIC_INSTRUCTIONS);

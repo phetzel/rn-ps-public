@@ -95,11 +95,9 @@ export const situationOutcomeArraySchema = z
     },
     { message: "Use at most 3 cabinet and 3 subgroups across outcomes" }
   )
-  // Mixedness and net coverage: all mixed; include both net-positive and net-negative; exactly one net-positive
+  // Mixedness and net coverage: each outcome mixed; exactly one net-positive; all others strictly net-negative
   .refine(
     (outcomes) => {
-      let hasNetPositive = false;
-      let hasNetNegative = false;
       let netPositiveCount = 0;
 
       for (const outcome of outcomes) {
@@ -121,25 +119,21 @@ export const situationOutcomeArraySchema = z
           if (w < 0) hasNeg = true;
         });
 
-        // All outcomes must be mixed
+        // Each outcome must be mixed
         if (!(hasPos && hasNeg)) return false;
 
         if (net > 0) {
-          hasNetPositive = true;
           netPositiveCount++;
+        } else if (net >= 0) {
+          // Disallow zero-sum for non-positive outcomes
+          return false;
         }
-        if (net < 0) hasNetNegative = true;
       }
 
-      // Must include both net-positive and net-negative outcomes
-      if (!hasNetPositive || !hasNetNegative) return false;
-
-      // Exactly one net-positive outcome
-      if (netPositiveCount !== 1) return false;
-
-      return true;
+      // Exactly one net-positive outcome overall
+      return netPositiveCount === 1;
     },
-    { message: "All outcomes must include both positive and negative impacts; include exactly one net-positive outcome" }
+    { message: "Exactly one outcome must be net-positive; all others net-negative; each outcome must include both positive and negative impacts" }
   );
 
   export type SituationOutcome = z.infer<typeof situationOutcomeSchema>;

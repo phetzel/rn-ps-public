@@ -1,6 +1,5 @@
 import { writeFile, mkdir, readFile } from "fs/promises";
 import { join } from "path";
-import { z } from "zod";
 import {
   SituationType,
   CabinetStaticId,
@@ -10,6 +9,7 @@ import {
   ExchangeImpactWeight,
   OutcomeModifierWeight,
   SituationConsequenceWeight,
+  JournalistStaticId,
   type SituationData,
   type SituationOutcome,
   type SituationPreferences,
@@ -105,6 +105,113 @@ function getPublicationFileName(publication: PublicationStaticId): string {
   }
 }
 
+const ENUM_VALUE_PREFIX = "__ENUM__";
+const ENUM_KEY_PREFIX = "__ENUMKEY__";
+const ENUM_PLACEHOLDER_SUFFIX = "__";
+
+function isEnumForwardKey(key: string): boolean {
+  return Number.isNaN(Number(key));
+}
+
+function findEnumMemberName(
+  enumObj: Record<string, string | number>,
+  rawValue: unknown
+): string | undefined {
+  return Object.entries(enumObj)
+    .filter(([key]) => isEnumForwardKey(key))
+    .find(([, value]) => value === rawValue)?.[0];
+}
+
+function ensureEnumMember(
+  enumObj: Record<string, string | number>,
+  rawValue: unknown,
+  enumName: string
+): string {
+  const member = findEnumMemberName(enumObj, rawValue);
+  if (!member) {
+    throw new Error(`Value ${String(rawValue)} is not a valid member of ${enumName}`);
+  }
+  return member;
+}
+
+function asEnumValue(
+  enumObj: Record<string, string | number>,
+  rawValue: unknown,
+  enumName: string
+): string {
+  const member = ensureEnumMember(enumObj, rawValue, enumName);
+  return `${ENUM_VALUE_PREFIX}${enumName}.${member}${ENUM_PLACEHOLDER_SUFFIX}`;
+}
+
+function asEnumKey(
+  enumObj: Record<string, string | number>,
+  rawValue: unknown,
+  enumName: string
+): string {
+  const member = ensureEnumMember(enumObj, rawValue, enumName);
+  return `${ENUM_KEY_PREFIX}${enumName}.${member}${ENUM_PLACEHOLDER_SUFFIX}`;
+}
+
+function mapEnumRecord(
+  record: Record<string, any> | undefined,
+  keyEnum: Record<string, string | number>,
+  keyEnumName: string,
+  valueMapper: (value: any) => any
+): Record<string, any> | undefined {
+  if (!record) return undefined;
+
+  const result: Record<string, any> = {};
+  for (const [rawKey, rawValue] of Object.entries(record)) {
+    if (rawValue === undefined) continue;
+    const enumKey = asEnumKey(keyEnum, rawKey, keyEnumName);
+    result[enumKey] = valueMapper(rawValue);
+  }
+
+  return Object.keys(result).length > 0 ? result : undefined;
+}
+
+function replaceEnumPlaceholders(serialized: string): string {
+  return serialized
+    .replace(
+      new RegExp(`"${ENUM_VALUE_PREFIX}([A-Za-z0-9_.]+)${ENUM_PLACEHOLDER_SUFFIX}"`, "g"),
+      "$1"
+    )
+    .replace(
+      new RegExp(`"${ENUM_KEY_PREFIX}([A-Za-z0-9_.]+)${ENUM_PLACEHOLDER_SUFFIX}"`, "g"),
+      (_match, group) => `[${group}]`
+    );
+}
+
+function stripQuotesFromKeys(serialized: string): string {
+  return serialized.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, "$1:");
+}
+
+function formatSerialized(value: unknown): string {
+  const json = JSON.stringify(value, null, 2);
+  const withEnums = replaceEnumPlaceholders(json);
+  return stripQuotesFromKeys(withEnums);
+}
+
+function mapOutcomeModifiers(
+  modifiers: Record<string, OutcomeModifierWeight>,
+  context?: string
+): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [key, rawValue] of Object.entries(modifiers || {})) {
+    result[key] = asEnumValue(
+      OutcomeModifierWeight,
+      rawValue,
+      "OutcomeModifierWeight"
+    );
+  }
+  if (Object.keys(result).length === 0) {
+    throw new Error(
+      `No outcome modifiers found${context ? ` for ${context}` : ""}`
+    );
+  }
+  return result;
+}
+
 /**
  * Generate outcomes file content
  */
@@ -112,80 +219,62 @@ function generateOutcomesFile(
   outcomes: SituationOutcome[],
   variableName: string
 ): string {
-  const cabKey = (k: string) => {
-    const map: Record<string, string> = {
-      state: "CabinetStaticId.State",
-      treasury: "CabinetStaticId.Treasury",
-      defense: "CabinetStaticId.Defense",
-      justice: "CabinetStaticId.Justice",
-      hhs: "CabinetStaticId.HHS",
-      homeland: "CabinetStaticId.Homeland",
+  const transformed = outcomes.map((outcome) => {
+    const cabinetImpacts = mapEnumRecord(
+      outcome.consequences?.approvalChanges?.cabinet,
+      CabinetStaticId,
+      "CabinetStaticId",
+      (value) =>
+        asEnumValue(
+          SituationConsequenceWeight,
+          value,
+          "SituationConsequenceWeight"
+        )
+    );
+    const subgroupImpacts = mapEnumRecord(
+      outcome.consequences?.approvalChanges?.subgroups,
+      SubgroupStaticId,
+      "SubgroupStaticId",
+      (value) =>
+        asEnumValue(
+          SituationConsequenceWeight,
+          value,
+          "SituationConsequenceWeight"
+        )
+    );
+
+    const approvalChanges: Record<string, any> = {};
+    if (cabinetImpacts) {
+      approvalChanges.cabinet = cabinetImpacts;
+    }
+    if (subgroupImpacts) {
+      approvalChanges.subgroups = subgroupImpacts;
+    }
+
+    if (Object.keys(approvalChanges).length === 0) {
+      throw new Error(
+        `Outcome ${outcome.id} has no approval changes to serialize`
+      );
+    }
+
+    const transformedOutcome: Record<string, any> = {
+      id: outcome.id,
+      title: outcome.title,
+      description: outcome.description,
+      weight: outcome.weight,
+      consequences: {
+        approvalChanges,
+      },
     };
-    return map[k] ?? `CabinetStaticId.${k}`;
-  };
-  const subgroupKey = (k: string) => {
-    const map: Record<string, string> = {
-      left_wing_base: "SubgroupStaticId.LeftWingBase",
-      right_wing_base: "SubgroupStaticId.RightWingBase",
-      independent_base: "SubgroupStaticId.IndependentBase",
-      youth_voters: "SubgroupStaticId.YouthVoters",
-      seniors_citizens: "SubgroupStaticId.SeniorsCitizens",
-      rural_residents: "SubgroupStaticId.RuralResidents",
-      urban_residents: "SubgroupStaticId.UrbanResidents",
-      labor_unions: "SubgroupStaticId.LaborUnions",
-      business_leaders: "SubgroupStaticId.BusinessLeaders",
-      tech_industry: "SubgroupStaticId.TechIndustry",
-    };
-    return map[k] ?? `SubgroupStaticId.${k}`;
-  };
-  const consWeight = (n: number) => {
-    if (n >= 13) return "SituationConsequenceWeight.StronglyPositive";
-    if (n >= 9) return "SituationConsequenceWeight.Positive";
-    if (n >= 4) return "SituationConsequenceWeight.SlightlyPositive";
-    if (n <= -13) return "SituationConsequenceWeight.StronglyNegative";
-    if (n <= -9) return "SituationConsequenceWeight.Negative";
-    if (n <= -4) return "SituationConsequenceWeight.SlightlyNegative";
-    return "SituationConsequenceWeight.Neutral";
-  };
 
-  const items = outcomes
-    .map((o) => {
-      const cabEntries = o.consequences?.approvalChanges?.cabinet
-        ? Object.entries(o.consequences.approvalChanges.cabinet).map(
-            ([k, v]) => `          [${cabKey(k)}]: ${consWeight(v as any)},`
-          )
-        : [];
+    if (outcome.followUpId) {
+      transformedOutcome.followUpId = outcome.followUpId;
+    }
 
-      const subgroupEntries = o.consequences?.approvalChanges?.subgroups
-        ? Object.entries(o.consequences.approvalChanges.subgroups).map(
-            ([k, v]) => `          [${subgroupKey(k)}]: ${consWeight(v as any)},`
-          )
-        : [];
+    return transformedOutcome;
+  });
 
-      const cabBlock = cabEntries.length
-        ? `        cabinet: {
-${cabEntries.join("\n")}
-        },\n`
-        : "";
-      const subgroupBlock = subgroupEntries.length
-        ? `        subgroups: {
-${subgroupEntries.join("\n")}
-        },\n`
-        : "";
-
-      return `  {
-    id: ${JSON.stringify(o.id)},
-    title: ${JSON.stringify(o.title)},
-    description: ${JSON.stringify(o.description)},
-    weight: ${o.weight},
-    consequences: {
-      approvalChanges: {
-${cabBlock}${subgroupBlock}      },
-    },
-  }`;
-    })
-    .join(",\n");
-
+  const serialized = formatSerialized(transformed);
   return `import {
   SituationConsequenceWeight,
   CabinetStaticId,
@@ -193,9 +282,7 @@ ${cabBlock}${subgroupBlock}      },
 } from "~/types";
 import type { SituationOutcome } from "~/lib/schemas/situations";
 
-export const ${variableName}: SituationOutcome[] = [
-${items}
-];
+export const ${variableName}: SituationOutcome[] = ${serialized};
 `;
 }
 
@@ -206,54 +293,51 @@ function generatePreferencesFile(
   preferences: SituationPreferences,
   variableName: string
 ): string {
-  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-  const answerTypeEnum = (s: string) => `AnswerType.${cap(s)}`;
-  const cabKey = (k: string) => {
-    const map: Record<string, string> = {
-      state: "CabinetStaticId.State",
-      treasury: "CabinetStaticId.Treasury",
-      defense: "CabinetStaticId.Defense",
-      justice: "CabinetStaticId.Justice",
-      hhs: "CabinetStaticId.HHS",
-      homeland: "CabinetStaticId.Homeland",
-    };
-    return map[k] ?? `CabinetStaticId.${k}`;
+  const presidentPreference = preferences.president;
+  if (!presidentPreference) {
+    throw new Error("President preference is required for serialization");
+  }
+
+  const transformed: Record<string, any> = {
+    president: {
+      answerType: asEnumValue(AnswerType, presidentPreference.answerType, "AnswerType"),
+      rationale: presidentPreference.rationale,
+    },
   };
 
-  const pres = preferences.president;
-  const presBlock = `  president: {
-    answerType: ${answerTypeEnum((pres as any).answerType)},
-    rationale: ${JSON.stringify(pres ? pres.rationale : null)},
-  },`;
+  const cabinetPreferences = mapEnumRecord(
+    preferences.cabinet,
+    CabinetStaticId,
+    "CabinetStaticId",
+    (value: any) => {
+      const preferenceBlock: Record<string, any> = {
+        preference: {
+          answerType: asEnumValue(
+            AnswerType,
+            value.preference.answerType,
+            "AnswerType"
+          ),
+          rationale: value.preference.rationale,
+        },
+      };
 
-  const cab = preferences.cabinet || {};
-  const cabEntries = Object.entries(cab).map(([k, v]) => {
-    const pref = (v as any).preference;
-    const auth = (v as any).authorizedContent;
-    const lines = [
-      `    [${cabKey(k)}]: {`,
-      `      preference: {`,
-      `        answerType: ${answerTypeEnum(pref.answerType)},`,
-      `        rationale: ${JSON.stringify(pref.rationale)},`,
-      `      },`,
-    ];
-    if (auth) lines.push(`      authorizedContent: ${JSON.stringify(auth)},`);
-    lines.push(`    },`);
-    return lines.join("\n");
-  });
+      if (value.authorizedContent) {
+        preferenceBlock.authorizedContent = value.authorizedContent;
+      }
 
-  const cabBlock = cabEntries.length
-    ? `  cabinet: {
-${cabEntries.join("\n")}  },`
-    : "";
+      return preferenceBlock;
+    }
+  );
 
+  if (cabinetPreferences) {
+    transformed.cabinet = cabinetPreferences;
+  }
+
+  const serialized = formatSerialized(transformed);
   return `import { AnswerType, CabinetStaticId } from "~/types";
 import type { SituationPreferences } from "~/lib/schemas/situations";
 
-export const ${variableName}: SituationPreferences = {
-${presBlock}
-${cabBlock}
-};
+export const ${variableName}: SituationPreferences = ${serialized};
 `;
 }
 
@@ -264,72 +348,112 @@ function generateExchangeFile(
   exchange: ExchangeData,
   variableName: string
 ): string {
-  // Start from JSON and progressively transform to idiomatic TS with enums
-  let body = JSON.stringify(exchange, null, 2);
+  const transformImpact = (impact: { weight: ExchangeImpactWeight; reaction?: string }) => {
+    const transformedImpact: Record<string, any> = {
+      weight: asEnumValue(
+        ExchangeImpactWeight,
+        impact.weight,
+        "ExchangeImpactWeight"
+      ),
+    };
 
-  // Map publication string to PublicationStaticId enum
-  const pubMap: Record<string, string> = {
-    lib_primary: "PublicationStaticId.LibPrimary",
-    con_primary: "PublicationStaticId.ConPrimary",
-    independent_primary: "PublicationStaticId.IndependentPrimary",
-    investigative: "PublicationStaticId.Investigative",
+    if (impact.reaction !== undefined) {
+      transformedImpact.reaction = impact.reaction;
+    }
+
+    return transformedImpact;
   };
-  body = body.replace(/"publication"\s*:\s*"(lib_primary|con_primary|independent_primary|investigative)"/g, (_m, p1) => {
-    return `publication: ${pubMap[p1]}`;
-  });
 
-  // Map answer type strings to AnswerType enum
-  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
-  body = body.replace(/"type"\s*:\s*"(deflect|reassure|challenge|admit|deny|inform|authorized)"/g, (_m, p1) => {
-    return `type: AnswerType.${cap(p1)}`;
-  });
+  const transformImpacts = (
+    impacts: ExchangeData["content"]["rootQuestion"]["answers"][number]["impacts"]
+  ) => {
+    const result: Record<string, any> = {};
 
-  // Map authorizedCabinetMemberId strings to CabinetStaticId enum
-  const cabMap: Record<string, string> = {
-    state: "CabinetStaticId.State",
-    treasury: "CabinetStaticId.Treasury",
-    defense: "CabinetStaticId.Defense",
-    justice: "CabinetStaticId.Justice",
-    hhs: "CabinetStaticId.HHS",
-    homeland: "CabinetStaticId.Homeland",
+    if (impacts.president) {
+      result.president = transformImpact(impacts.president);
+    }
+
+    const cabinetImpacts = mapEnumRecord(
+      impacts.cabinet,
+      CabinetStaticId,
+      "CabinetStaticId",
+      (value) => transformImpact(value)
+    );
+    if (cabinetImpacts) {
+      result.cabinet = cabinetImpacts;
+    }
+
+    const journalistImpacts = mapEnumRecord(
+      impacts.journalists,
+      JournalistStaticId,
+      "JournalistStaticId",
+      (value) => transformImpact(value)
+    );
+    if (journalistImpacts) {
+      result.journalists = journalistImpacts;
+    }
+
+    return result;
   };
-  body = body.replace(/"authorizedCabinetMemberId"\s*:\s*"(state|treasury|defense|justice|hhs|homeland)"/g, (_m, p1) => {
-    return `authorizedCabinetMemberId: ${cabMap[p1]}`;
-  });
 
-  // Map impact weights numbers to ExchangeImpactWeight enum when they match exactly known values
-  const weightMap: Record<string, string> = {
-    "6": "ExchangeImpactWeight.StronglyPositive",
-    "4": "ExchangeImpactWeight.Positive",
-    "2": "ExchangeImpactWeight.SlightlyPositive",
-    "0": "ExchangeImpactWeight.Neutral",
-    "-2": "ExchangeImpactWeight.SlightlyNegative",
-    "-4": "ExchangeImpactWeight.Negative",
-    "-6": "ExchangeImpactWeight.StronglyNegative",
+  const transformAnswer = (
+    answer: ExchangeData["content"]["rootQuestion"]["answers"][number]
+  ) => {
+    const outcomeModifiers = mapOutcomeModifiers(
+      answer.outcomeModifiers,
+      `answer ${answer.id}`
+    );
+    const impacts = transformImpacts(answer.impacts);
+
+    if (Object.keys(impacts).length === 0) {
+      throw new Error(`Answer ${answer.id} has no impacts to serialize`);
+    }
+
+    const transformedAnswer: Record<string, any> = {
+      id: answer.id,
+      text: answer.text,
+      type: asEnumValue(AnswerType, answer.type, "AnswerType"),
+      outcomeModifiers,
+      impacts,
+    };
+
+    if (answer.authorizedCabinetMemberId) {
+      transformedAnswer.authorizedCabinetMemberId = asEnumValue(
+        CabinetStaticId,
+        answer.authorizedCabinetMemberId,
+        "CabinetStaticId"
+      );
+    }
+
+    if (answer.followUpId) {
+      transformedAnswer.followUpId = answer.followUpId;
+    }
+
+    return transformedAnswer;
   };
-  body = body.replace(/"weight"\s*:\s*(-?\d+)/g, (_m, p1) => {
-    return weightMap[p1] ? `weight: ${weightMap[p1]}` : `weight: ${p1}`;
+
+  const transformQuestion = (
+    question: ExchangeData["content"]["rootQuestion"]
+  ) => ({
+    id: question.id,
+    text: question.text,
+    answers: question.answers.map(transformAnswer),
   });
 
-  // Map outcomeModifiers values to OutcomeModifierWeight enum (best-fit buckets)
-  const outWeight = (n: number) => {
-    if (n >= 11) return "OutcomeModifierWeight.MajorPositive";
-    if (n >= 7) return "OutcomeModifierWeight.StrongPositive";
-    if (n >= 5) return "OutcomeModifierWeight.ModeratePositive";
-    if (n >= 1) return "OutcomeModifierWeight.SlightPositive";
-    if (n <= -11) return "OutcomeModifierWeight.MajorNegative";
-    if (n <= -7) return "OutcomeModifierWeight.StrongNegative";
-    if (n <= -5) return "OutcomeModifierWeight.ModerateNegative";
-    if (n <= -1) return "OutcomeModifierWeight.SlightNegative";
-    return "OutcomeModifierWeight.Neutral";
+  const transformed = {
+    publication: asEnumValue(
+      PublicationStaticId,
+      exchange.publication,
+      "PublicationStaticId"
+    ),
+    content: {
+      rootQuestion: transformQuestion(exchange.content.rootQuestion),
+      secondaryQuestions: exchange.content.secondaryQuestions.map(transformQuestion),
+      tertiaryQuestions: exchange.content.tertiaryQuestions.map(transformQuestion),
+    },
   };
-  body = body.replace(/("outcomeModifiers"\s*:\s*\{)([\s\S]*?)(\})/g, (_m, p1, p2, p3) => {
-    const replaced = p2.replace(/:\s*(-?\d+)/g, (_m2: string, n: string) => `: ${outWeight(parseInt(n, 10))}`);
-    return `${p1}${replaced}${p3}`;
-  });
 
-  // Finally, remove quotes around object keys for cleaner TS
-  body = body.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, "$1:");
+  const serialized = formatSerialized(transformed);
 
   return `import {
   AnswerType,
@@ -337,10 +461,11 @@ function generateExchangeFile(
   OutcomeModifierWeight,
   CabinetStaticId,
   PublicationStaticId,
+  JournalistStaticId,
 } from "~/types";
 import type { ExchangeData } from "~/lib/schemas/exchanges";
 
-export const ${variableName}: ExchangeData = ${body};
+export const ${variableName}: ExchangeData = ${serialized};
 `;
 }
 
