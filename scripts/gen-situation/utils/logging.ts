@@ -1,6 +1,12 @@
 import util from "util";
 
 export function logDeep(label: string, value: unknown): void {
+  const globalFlag = (globalThis as { __LLM_GEN_DEBUG__?: boolean }).__LLM_GEN_DEBUG__;
+  const envEnabled = process.env.LLM_DEBUG_MODE === "true";
+  if (!globalFlag && !envEnabled) {
+    return;
+  }
+
   // Pretty-print deeply to avoid [Object]/[Array] collapsing
   const rendered = util.inspect(value, {
     colors: false,
@@ -14,4 +20,3 @@ export function logDeep(label: string, value: unknown): void {
   // eslint-disable-next-line no-console
   console.log(`${label}:\n${rendered}`);
 }
-

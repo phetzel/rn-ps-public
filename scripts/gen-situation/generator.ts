@@ -22,10 +22,16 @@ export class SituationGenerator {
   private preferencesStep: PreferencesStep;
   private outcomesStep: OutcomesStep;
   private exchangesStep: ExchangesStep;
+  private debugMode: boolean;
 
   constructor(llmClient: LLMClient) {
     this.llmClient = llmClient;
-    
+    this.debugMode = typeof (llmClient as any).isDebugEnabled === "function"
+      ? (llmClient as any).isDebugEnabled()
+      : false;
+
+    (globalThis as { __LLM_GEN_DEBUG__?: boolean }).__LLM_GEN_DEBUG__ = this.debugMode;
+
     this.planningStep = new PlanningStep({ llmClient });
     this.preferencesStep = new PreferencesStep({ llmClient });
     
@@ -49,7 +55,7 @@ export class SituationGenerator {
       console.log(`🎯 [${id}] Step 1: Planning...`);
       const plan = await this.planningStep.execute(startingContext);
 
-      logDeep("PLAN CREATED", plan);
+      if (this.debugMode) logDeep("PLAN CREATED", plan);
 
       // Step 2: Generate entity preferences
       console.log(`⚙️ [${id}] Step 2: Preferences...`);
@@ -58,7 +64,7 @@ export class SituationGenerator {
         analysis: startingContext,
       });
 
-      logDeep("PREFERENCES CREATED", preferences);
+      if (this.debugMode) logDeep("PREFERENCES CREATED", preferences);
 
       // Step 3: Generate situation outcomes (enhanced)
       console.log(`🎲 [${id}] Step 3: Outcomes...`);
@@ -67,7 +73,7 @@ export class SituationGenerator {
         preferences,
       });
 
-      logDeep("OUTCOMES CREATED", outcomes);
+      if (this.debugMode) logDeep("OUTCOMES CREATED", outcomes);
 
 
       // Step 4: Generate press exchanges
@@ -78,7 +84,7 @@ export class SituationGenerator {
         outcomes,
       });
 
-      logDeep("EXCHANGES CREATED", exchanges);
+      if (this.debugMode) logDeep("EXCHANGES CREATED", exchanges);
 
       // Step 5: Final validation
       console.log(`✅ [${id}] Step 5: Final validation...`);
