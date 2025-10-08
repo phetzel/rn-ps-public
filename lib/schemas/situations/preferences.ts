@@ -4,8 +4,9 @@ import { textLengthSchema } from "~/lib/schemas/common";
 import { AnswerType, CabinetStaticId } from "~/types";
 
 // Helper to exclude Authorized from AnswerType for preferences
-const AllowedPrefAnswerType = z.enum(
-  Object.values(AnswerType).filter(v => v !== AnswerType.Authorized) as [string, ...string[]]
+const AllowedPrefAnswerType = z.nativeEnum(AnswerType).refine(
+  (value) => value !== AnswerType.Authorized,
+  { message: "Authorized answer type not allowed in preferences" }
 ).describe("Answer type for the preference");
 
 export const preferenceSchema = z.object({
@@ -38,23 +39,6 @@ export const situationPreferencesSchema = baseSituationPreferencesSchema.extend(
     {
       message: "At most 3 cabinet preferences are allowed (plus president)",
       path: ["cabinet"],
-    }
-  )
-  .refine(
-    (data) => {
-      // No Authorized preferences allowed
-      const allPrefs = [
-        data.president?.answerType,
-        ...Object.values(data.cabinet || {}).map(
-          (c) => c.preference.answerType
-        ),
-      ].filter(Boolean);
-
-      return !allPrefs.includes(AnswerType.Authorized);
-    },
-    {
-      message: "Authorized answer type not allowed in preferences",
-      path: ["preferences"],
     }
   );
 
