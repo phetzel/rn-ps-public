@@ -13,7 +13,6 @@ import {
   JournalistStaticId,
   OutcomeModifierWeight,
 } from "~/types";
-import { ValidatedExchangeData } from "./exchanges";
 
 // Plan
 export const generateSituationPlanSchema = baseSituationDataSchema.extend({
@@ -292,5 +291,3 @@ export function createDynamicImpactsSchema(outcomes: GenerateOutcomes["outcomes"
     questionImpacts: z.array(dynamicQuestionImpactsSchema),
   });
 }
-
-export type ExchangesStepOutput = ValidatedExchangeData[];

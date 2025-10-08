@@ -33,7 +33,7 @@ export class ExchangesPlanSubstep
     }
   }
 
-  protected async postProcess(
+  protected async transform(
     result: GenerateExchangesPlan,
     input: ExchangesPlanInput
   ): Promise<GenerateExchangesPlan> {

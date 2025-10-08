@@ -2,10 +2,15 @@ import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../
 import { ExchangesPlanSubstep } from "./substeps/exchanges-plan-substep";
 
 import { ExchangeFullSubstep } from "./substeps/exchange-full-substep";
-import type { ExchangesStepOutput } from "~/lib/schemas/generate";
 import { validatedExchangeDataSchema, type ValidatedExchangeData } from "~/lib/schemas/exchanges";
 import type { ExchangesStepInput } from "../../types";
 import { logDeep } from "../../utils/logging";
+import {
+  toExchangeDataArray,
+  toGenerateOutcomes,
+  toGeneratePreferences,
+} from "../../utils/schema-adapters";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXCHANGES STEP IMPLEMENTATION (CLEAN 2-PHASE SPLIT APPROACH)
@@ -31,7 +36,7 @@ export class ExchangesStep {
   /**
    * Execute the complete exchanges generation process
    */
-  async execute(input: ExchangesStepInput): Promise<ExchangesStepOutput> {
+  async execute(input: ExchangesStepInput): Promise<ExchangeData[]> {
     const stepName = "Exchanges Generation";
     
     try {
@@ -40,12 +45,15 @@ export class ExchangesStep {
       
       console.log("🎯 Step 4: Generating exchanges using clean 2-phase split approach...");
 
+      const generationPreferences = toGeneratePreferences(input.preferences);
+      const generationOutcomes = toGenerateOutcomes(input.outcomes);
+
       // Phase 1: Plan publication editorial angles
       console.log("🎯 Step 4a: Planning publication exchanges...");
       const exchangesPlanResponse = await this.exchangesPlanSubstep.execute({
         plan: input.plan,
-        preferences: input.preferences,
-        outcomes: input.outcomes
+        preferences: generationPreferences,
+        outcomes: generationOutcomes,
       });
       logDeep("EXCHANGES PLAN RESPONSE", exchangesPlanResponse);
 
@@ -68,8 +76,8 @@ export class ExchangesStep {
         
         const fullExchangeResponse = await this.exchangeFullSubstep.execute({
           plan: input.plan,
-          preferences: input.preferences,
-          outcomes: input.outcomes,
+          preferences: generationPreferences,
+          outcomes: generationOutcomes,
           publicationPlan: planItem,
         });
         logDeep("FULL EXCHANGE RESPONSE", fullExchangeResponse);
@@ -83,8 +91,10 @@ export class ExchangesStep {
         console.log(`✅ Completed exchange for ${planItem.publication}`);
       };
 
-      this.logger.logStepSuccess(stepName, this.getResultSummary(validatedExchanges));
-      return validatedExchanges;
+      const coreExchanges = toExchangeDataArray(validatedExchanges);
+
+      this.logger.logStepSuccess(stepName, this.getResultSummary(coreExchanges));
+      return coreExchanges;
       
     } catch (error) {
       this.logger.logStepError(stepName, error as Error);
@@ -121,7 +131,7 @@ export class ExchangesStep {
       situationTitle: input.plan.title,
       situationType: input.plan.type,
       publicationsCount: input.plan.involvedEntities.publications.length,
-      outcomesCount: input.outcomes.outcomes?.length || 0,
+      outcomesCount: input.outcomes.length,
       step: "simplified-exchanges",
     };
   }
@@ -129,14 +139,14 @@ export class ExchangesStep {
   /**
    * Get result summary for logging
    */
-  private getResultSummary(result: ExchangesStepOutput): any {
+  private getResultSummary(result: ExchangeData[]): any {
     return {
       exchangesCount: result.length,
       publicationsProcessed: result.map(e => e.publication).join(", "),
       withAuthorized: result.filter(e => 
-        e.content.rootQuestion.answers?.some((a: any) => a.authorizedCabinetMember) ||
-        e.content.secondaryQuestions.some((q: any) => q.answers?.some((a: any) => a.authorizedCabinetMember)) ||
-        e.content.tertiaryQuestions.some((q: any) => q.answers?.some((a: any) => a.authorizedCabinetMember))
+        e.content.rootQuestion.answers?.some((a) => a.authorizedCabinetMemberId) ||
+        e.content.secondaryQuestions.some((q) => q.answers?.some((a) => a.authorizedCabinetMemberId)) ||
+        e.content.tertiaryQuestions.some((q) => q.answers?.some((a) => a.authorizedCabinetMemberId))
       ).length,
     };
   }

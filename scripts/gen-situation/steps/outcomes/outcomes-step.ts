@@ -5,6 +5,11 @@ import { GenerateOutcomes, generateOutcomesSchema, type GenerateOutcomesConseque
 import { assertParse } from "../../utils/validation";
 import type { OutcomesStepInput } from "../../types";
 import { logDeep } from "../../utils/logging";
+import {
+  toGeneratePreferences,
+  toSituationOutcomes,
+} from "../../utils/schema-adapters";
+import type { SituationOutcome } from "~/lib/schemas/situations/outcomes";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // OUTCOMES STEP IMPLEMENTATION (WITH ENHANCED VALIDATION)
@@ -31,7 +36,7 @@ export class OutcomesStep {
   /**
    * Execute the complete unified outcomes generation process
    */
-  async execute(input: OutcomesStepInput): Promise<GenerateOutcomes> {
+  async execute(input: OutcomesStepInput): Promise<SituationOutcome[]> {
     const stepName = "Outcomes Generation";
     
     try {
@@ -42,12 +47,17 @@ export class OutcomesStep {
 
       // Phase 1: Generate outcome narratives with weight validation
       console.log("🎯 Step 3a: Creating base outcomes...");
-      const baseOutcomes = await this.outcomesBaseSubstep.execute({ plan: input.plan, preferences: input.preferences });
+      const generationPreferences = toGeneratePreferences(input.preferences);
+      const baseOutcomes = await this.outcomesBaseSubstep.execute({ plan: input.plan, preferences: generationPreferences });
       logDeep("🎯 Step 3a: Base outcomes", baseOutcomes);
 
       // Phase 2: Generate outcomes impact matrix with structure validation  
       console.log("🎯 Step 3b: Full outcomes with impacts...");
-      const consequencesOnly: GenerateOutcomesConsequences = await this.outcomesImpactsSubstep.execute({ plan: input.plan, preferences: input.preferences, baseOutcomes });
+      const consequencesOnly: GenerateOutcomesConsequences = await this.outcomesImpactsSubstep.execute({
+        plan: input.plan,
+        preferences: generationPreferences,
+        baseOutcomes,
+      });
       logDeep("🎯 Step 3b: Consequences mapping", consequencesOnly);
 
       // Assemble: merge consequences into base outcomes without regenerating core fields
@@ -64,9 +74,10 @@ export class OutcomesStep {
 
       // Validate final structure (generate wrapper)
       const parsed = assertParse<GenerateOutcomes>(generateOutcomesSchema, assembled, "Outcomes (wrapper)");
+      const coreOutcomes = toSituationOutcomes(parsed);
 
-      this.logger.logStepSuccess(stepName, this.getResultSummary(parsed));
-      return parsed;
+      this.logger.logStepSuccess(stepName, this.getResultSummary(coreOutcomes));
+      return coreOutcomes;
       
     } catch (error) {
       this.logger.logStepError(stepName, error as Error);
@@ -103,12 +114,12 @@ export class OutcomesStep {
   /**
    * Get result summary for logging
    */
-  private getResultSummary(result: GenerateOutcomes): any {
-    const weights = result.outcomes.map((o: any) => `${o.weight}%`).join(", ");
-    const totalWeight = result.outcomes.reduce((sum: number, o: any) => sum + o.weight, 0);
-    
+  private getResultSummary(result: SituationOutcome[]): any {
+    const weights = result.map((o) => `${o.weight}%`).join(", ");
+    const totalWeight = result.reduce((sum, o) => sum + o.weight, 0);
+
     return {
-      outcomesCount: result.outcomes.length,
+      outcomesCount: result.length,
       weights: weights,
       totalWeight: totalWeight,
       isValidWeight: totalWeight === 100,

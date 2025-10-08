@@ -3,7 +3,7 @@ import type { LLMClient } from "../../llm/client";
 import type { ResponsesJSONSchemaOptions } from "../../types";
 
 
-export abstract class ResponsesGenerationStep<I, O> {
+export abstract class ResponsesGenerationStep<I, R, O = R> {
   protected llmClient: LLMClient;
 
   constructor({ llmClient }: { llmClient: LLMClient }) {
@@ -17,7 +17,9 @@ export abstract class ResponsesGenerationStep<I, O> {
     if (input == null) throw new Error("Input required");
   }
 
-  protected async postProcess(result: O, _input: I): Promise<O> { return result; }
+  protected async transform(result: R, _input: I): Promise<O> {
+    return result as unknown as O;
+  }
 
   // ---- main runner
   async execute(input: I): Promise<O> {
@@ -25,8 +27,8 @@ export abstract class ResponsesGenerationStep<I, O> {
 
     const reqOptions = this.buildRequest(input);
     try {
-      const { content } = await this.llmClient.generateResponse<O>(reqOptions);
-      return this.postProcess(content, input);
+      const { content } = await this.llmClient.generateResponse<R>(reqOptions);
+      return this.transform(content, input);
     } catch (err: any) {
       const prefix = this.constructor?.name || "ResponsesGenerationStep";
       const message = err?.message || String(err);

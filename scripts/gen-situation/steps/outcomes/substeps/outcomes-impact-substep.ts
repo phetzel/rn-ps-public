@@ -34,7 +34,7 @@ export class OutcomesImpactsSubstep
     if (!input?.baseOutcomes?.outcomes?.length) throw new Error("Impacts sub-step requires base outcomes");
   }
 
-  protected async postProcess(
+  protected async transform(
     result: GenerateOutcomesConsequences,
     input: ImpactsInput
   ): Promise<GenerateOutcomesConsequences> {

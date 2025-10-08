@@ -32,7 +32,7 @@ type OutcomesBaseInput = {
       }
     
       // Keep it consistent with your pattern: normalize then validate with the base array schema
-      protected async postProcess(result: GenerateBaseOutcomes, _input: OutcomesBaseInput): Promise<GenerateBaseOutcomes> {
+      protected async transform(result: GenerateBaseOutcomes, _input: OutcomesBaseInput): Promise<GenerateBaseOutcomes> {
         // Validate the full wrapper object against the generation schema (already backed by core base array)
         return assertParse<GenerateBaseOutcomes>(generateBaseOutcomesSchema, result, "Outcomes (base)");
       }
