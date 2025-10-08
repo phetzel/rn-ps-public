@@ -65,4 +65,8 @@ export class LLMClient {
   resetUsageStats() {
     this.costTracking = { totalTokens: 0, totalCost: 0, requestCount: 0 };
   }
+
+  isDebugEnabled() {
+    return this.debugMode;
+  }
 }

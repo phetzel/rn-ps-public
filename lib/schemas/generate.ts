@@ -6,8 +6,13 @@ import { baseSituationDataSchema } from "~/lib/schemas/situations";
 import { preferenceSchema } from "~/lib/schemas/situations/preferences";
 import { baseSituationOutcomeSchema, baseSituationOutcomeArraySchema, consequenceSchema } from "~/lib/schemas/situations/outcomes";
 // baseAnswerSchema moved here for generation use
-import { AnswerType, CabinetStaticId, ExchangeImpactWeight, JournalistStaticId } from "~/types";
-import { ValidatedExchangeData } from "./exchanges";
+import {
+  AnswerType,
+  CabinetStaticId,
+  ExchangeImpactWeight,
+  JournalistStaticId,
+  OutcomeModifierWeight,
+} from "~/types";
 
 // Plan
 export const generateSituationPlanSchema = baseSituationDataSchema.extend({
@@ -126,7 +131,10 @@ export const generateBaseAnswerSchema = z.object({
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
   followUpId: idSchema.nullable(),
-  outcomeModifiers: z.record(z.string(), z.number()),
+  outcomeModifiers: z.record(
+    z.string(),
+    z.nativeEnum(OutcomeModifierWeight)
+  ),
 }).strict();
 
 export const generateBaseQuestionSchema = z.object({
@@ -178,7 +186,10 @@ export const generateFullAnswerSchema = z.object({
   type: z.nativeEnum(AnswerType),
   authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).nullable(),
   followUpId: idSchema.nullable(),
-  outcomeModifiers: z.record(z.string(), z.number()),
+  outcomeModifiers: z.record(
+    z.string(),
+    z.nativeEnum(OutcomeModifierWeight)
+  ),
   impacts: generateExchangeImpactsSchema,
 }).strict();
 
@@ -224,7 +235,10 @@ export type GenerateQuestionsOnlyContent = z.infer<typeof generateQuestionsOnlyC
 // The real schema is dynamically created in exchange-impacts-config.ts with explicit outcome ID properties
 export const generateAnswerImpactSchema = z.object({
   answerId: idSchema,
-  outcomeModifiers: z.record(z.string(), z.number()),
+  outcomeModifiers: z.record(
+    z.string(),
+    z.nativeEnum(OutcomeModifierWeight)
+  ),
   impacts: generateExchangeImpactsSchema,
 });
 
@@ -243,9 +257,9 @@ export type GenerateAllQuestionImpacts = z.infer<typeof generateAllQuestionImpac
 // Create dynamic schema with explicit outcome ID properties (OpenAI strict mode compatible)
 export function createDynamicImpactsSchema(outcomes: GenerateOutcomes["outcomes"]) {
   // Create outcomeModifiers object with explicit properties for each outcome ID
-  const outcomeModifiersProperties: Record<string, z.ZodNumber> = {};
+  const outcomeModifiersProperties: Record<string, z.ZodTypeAny> = {};
   outcomes.forEach(outcome => {
-    outcomeModifiersProperties[outcome.id] = z.number();
+    outcomeModifiersProperties[outcome.id] = z.nativeEnum(OutcomeModifierWeight);
   });
 
   // Impact schema for strict mode; enforce reaction length when provided
@@ -277,5 +291,3 @@ export function createDynamicImpactsSchema(outcomes: GenerateOutcomes["outcomes"
     questionImpacts: z.array(dynamicQuestionImpactsSchema),
   });
 }
-
-export type ExchangesStepOutput = ValidatedExchangeData[];

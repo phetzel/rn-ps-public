@@ -1,8 +1,6 @@
 import { ResponsesGenerationStep } from "../../base";
 import type { ResponsesJSONSchemaOptions, StepDependencies } from "../../../types";
-import {
-  buildExchangeImpactsRequest
-} from "../../../llm/configs/exchange-impacts-config";
+import { buildExchangeImpactsRequest } from "../../../llm/configs/exchange-impacts-config";
 
 import type {
   GenerateSituationPlan,
@@ -13,7 +11,6 @@ import type {
   ExchangesPlanArray,
 } from "~/lib/schemas/generate";
 import { generateAllQuestionImpactsSchema } from "~/lib/schemas/generate";
-import { CabinetStaticId, JournalistStaticId } from "~/types";
 
 type ExchangeImpactsInput = {
   plan: GenerateSituationPlan;
@@ -24,12 +21,14 @@ type ExchangeImpactsInput = {
 };
 
 /**
- * Generates impacts and outcome modifiers for existing questions and answers
- * This is the second phase of the split exchange generation process
+ * Second half of the exchange pipeline: adds impacts + outcome modifiers to the
+ * questions generated in the first phase. We keep validation lean by relying on
+ * the generation schema here and letting the full exchange assembly validate
+ * against the core schema in the next step.
  */
 export class ExchangeImpactsSubstep
-  extends ResponsesGenerationStep<ExchangeImpactsInput, GenerateAllQuestionImpacts> {
-
+  extends ResponsesGenerationStep<ExchangeImpactsInput, GenerateAllQuestionImpacts>
+{
   constructor(dependencies: StepDependencies) {
     super({ llmClient: dependencies.llmClient });
   }
@@ -47,236 +46,21 @@ export class ExchangeImpactsSubstep
   protected validateInput(input: ExchangeImpactsInput): void {
     super.validateInput(input);
     if (!input.plan?.title) throw new Error("Missing situation plan");
-    if (!input.outcomes?.outcomes?.length) throw new Error("Missing outcomes for outcomeModifiers keys");
-    if (!input.publicationPlan?.publication) throw new Error("Missing publication plan entry");
-    if (!input.questionsContent) throw new Error("Missing questions content from previous phase");
+    if (!input.outcomes?.outcomes?.length) {
+      throw new Error("Missing outcomes for outcomeModifiers keys");
+    }
+    if (!input.publicationPlan?.publication) {
+      throw new Error("Missing publication plan entry");
+    }
+    if (!input.questionsContent) {
+      throw new Error("Missing questions content from previous phase");
+    }
   }
 
-  protected async postProcess(
+  protected async transform(
     result: GenerateAllQuestionImpacts,
-    input: ExchangeImpactsInput
+    _input: ExchangeImpactsInput
   ): Promise<GenerateAllQuestionImpacts> {
-    // Transform generated data to match core schema expectations
-    const transformed = this.transformImpactsToMatchCoreSchema(result);
-
-    // Validate the structure using Zod
-    const parsed = generateAllQuestionImpactsSchema.parse(transformed);
-
-    // Validate that the impacts match the questions structure
-    this.validateImpactsMatchQuestions(parsed, input.questionsContent);
-
-    // Validate outcome modifiers
-    this.validateOutcomeModifiers(parsed, input.outcomes);
-
-    // Enforce at least some cabinet impact presence per question (per prompt rules)
-    this.validateCabinetPresence(parsed, input.plan);
-
-    // Validate entity IDs (with warnings for unknown IDs)
-    this.validateEntityIds(parsed);
-
-    return parsed;
-  }
-
-  /**
-   * Transform OpenAI-generated data to match core schema format
-   */
-  private transformImpactsToMatchCoreSchema(result: any): GenerateAllQuestionImpacts {
-    return {
-      questionImpacts: result.questionImpacts.map((questionImpact: any) => ({
-        questionId: questionImpact.questionId,
-        answerImpacts: questionImpact.answerImpacts.map((answerImpact: any) => {
-          // Simplified transformation - let nulls pass through
-          const transformedImpacts: any = {
-            president: answerImpact.impacts.president,
-            cabinet: answerImpact.impacts.cabinet,  
-            journalists: answerImpact.impacts.journalists,
-          };
-
-          // Only transform non-null objects
-          if (transformedImpacts.president !== null && transformedImpacts.president) {
-            transformedImpacts.president = {
-              weight: transformedImpacts.president.weight,
-              reaction: transformedImpacts.president.reaction,
-            };
-          }
-
-          // Transform cabinet impacts if present
-          if (transformedImpacts.cabinet !== null && transformedImpacts.cabinet) {
-            const cabinetImpacts: Record<string, any> = {};
-            for (const [key, value] of Object.entries(transformedImpacts.cabinet)) {
-              cabinetImpacts[key] = {
-                weight: (value as any).weight,
-                reaction: (value as any).reaction,
-              };
-            }
-            transformedImpacts.cabinet = cabinetImpacts;
-          }
-
-          // Transform journalist impacts if present  
-          if (transformedImpacts.journalists !== null && transformedImpacts.journalists) {
-            const journalistImpacts: Record<string, any> = {};
-            for (const [key, value] of Object.entries(transformedImpacts.journalists)) {
-              journalistImpacts[key] = {
-                weight: (value as any).weight,
-                reaction: (value as any).reaction,
-              };
-            }
-            transformedImpacts.journalists = journalistImpacts;
-          }
-
-          return {
-            answerId: answerImpact.answerId,
-            outcomeModifiers: answerImpact.outcomeModifiers,
-            impacts: transformedImpacts,
-          };
-        }),
-      })),
-    };
-  }
-
-  /**
-   * Validate that the impacts data matches the questions structure
-   */
-  private validateImpactsMatchQuestions(
-    impacts: GenerateAllQuestionImpacts,
-    questions: GenerateQuestionsOnlyContent
-  ): void {
-    const allQuestions = [
-      questions.rootQuestion,
-      ...questions.secondaryQuestions,
-      ...questions.tertiaryQuestions
-    ];
-
-    // Check that we have impacts for each question
-    if (impacts.questionImpacts.length !== allQuestions.length) {
-      throw new Error(
-        `Expected ${allQuestions.length} question impacts, got ${impacts.questionImpacts.length}`
-      );
-    }
-
-    // Check that question IDs match
-    const questionIds = new Set(allQuestions.map(q => q.id));
-    for (const questionImpact of impacts.questionImpacts) {
-      if (!questionIds.has(questionImpact.questionId)) {
-        throw new Error(`Unknown question ID in impacts: ${questionImpact.questionId}`);
-      }
-
-      // Find the corresponding question
-      const question = allQuestions.find(q => q.id === questionImpact.questionId);
-      if (!question) continue;
-
-      // Check that we have impacts for each answer
-      if (questionImpact.answerImpacts.length !== question.answers.length) {
-        throw new Error(
-          `Question ${questionImpact.questionId} expected ${question.answers.length} answer impacts, got ${questionImpact.answerImpacts.length}`
-        );
-      }
-
-      // Check that answer IDs match
-      const answerIds = new Set(question.answers.map(a => a.id));
-      for (const answerImpact of questionImpact.answerImpacts) {
-        if (!answerIds.has(answerImpact.answerId)) {
-          throw new Error(
-            `Unknown answer ID in impacts for question ${questionImpact.questionId}: ${answerImpact.answerId}`
-          );
-        }
-      }
-    }
-  }
-
-  /**
-   * Validate outcome modifiers keys and balance
-   */
-  private validateOutcomeModifiers(
-    impacts: GenerateAllQuestionImpacts,
-    outcomes: GenerateOutcomes
-  ): void {
-    const outcomeIds = new Set(outcomes.outcomes.map(o => o.id));
-
-    for (const questionImpact of impacts.questionImpacts) {
-      // Check that outcome modifiers sum to 0 per question (game balance)
-      const totalQuestionSum = questionImpact.answerImpacts.reduce((total, answerImpact) => {
-        return total + Object.values(answerImpact.outcomeModifiers).reduce((s, v) => s + v, 0);
-      }, 0);
-
-      if (totalQuestionSum !== 0) {
-        throw new Error(
-          `Outcome modifiers must sum to 0 per question for game balance. Question ${questionImpact.questionId} sums to ${totalQuestionSum}`
-        );
-      }
-
-      // Check that all outcome modifier keys are valid
-      for (const answerImpact of questionImpact.answerImpacts) {
-        for (const key of Object.keys(answerImpact.outcomeModifiers)) {
-          if (!outcomeIds.has(key)) {
-            throw new Error(
-              `Invalid outcomeModifiers key "${key}" in answer ${answerImpact.answerId}. Keys must be one of: ${[...outcomeIds].join(", ")}`
-            );
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * Validate entity IDs and warn about unknown ones
-   */
-  private validateEntityIds(parsed: GenerateAllQuestionImpacts): void {
-    const validCabinetIds = Object.values(CabinetStaticId);
-    const validJournalistIds = Object.values(JournalistStaticId);
-
-    for (const questionImpact of parsed.questionImpacts) {
-      for (const answerImpact of questionImpact.answerImpacts) {
-        // Validate cabinet member IDs if present
-        if (answerImpact.impacts.cabinet && typeof answerImpact.impacts.cabinet === 'object') {
-          for (const [cabinetId] of Object.entries(answerImpact.impacts.cabinet)) {
-            if (!validCabinetIds.includes(cabinetId as CabinetStaticId)) {
-              console.warn(`Generated unknown cabinet ID: ${cabinetId}. Consider adding to enum.`);
-            }
-          }
-        }
-
-        // Validate journalist IDs if present  
-        if (answerImpact.impacts.journalists && typeof answerImpact.impacts.journalists === 'object') {
-          for (const [journalistId] of Object.entries(answerImpact.impacts.journalists)) {
-            if (!validJournalistIds.includes(journalistId as JournalistStaticId)) {
-              console.warn(`Generated unknown journalist ID: ${journalistId}. Consider adding to enum.`);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
-   * Ensure each question includes at least one cabinet impact for an involved cabinet member
-   */
-  private validateCabinetPresence(
-    parsed: GenerateAllQuestionImpacts,
-    plan: GenerateSituationPlan
-  ): void {
-    const allowedCabinet = new Set(plan.involvedEntities.cabinetMembers);
-
-    for (const q of parsed.questionImpacts) {
-      let hasCabinet = false;
-      for (const a of q.answerImpacts) {
-        const c = a.impacts.cabinet;
-        if (c && typeof c === 'object') {
-          // Check if at least one key is a permitted cabinet id
-          for (const key of Object.keys(c)) {
-            if (allowedCabinet.has(key as any)) {
-              hasCabinet = true;
-              break;
-            }
-          }
-          if (hasCabinet) break;
-        }
-      }
-      if (!hasCabinet) {
-        throw new Error(
-          `Each question must include cabinet impacts for at least one involved cabinet member. Question ${q.questionId} has none.`
-        );
-      }
-    }
+    return generateAllQuestionImpactsSchema.parse(result);
   }
 }

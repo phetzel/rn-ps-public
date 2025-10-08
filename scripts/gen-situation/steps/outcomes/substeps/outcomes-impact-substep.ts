@@ -11,6 +11,8 @@ import {
 
 
 import { buildOutcomesConsequencesRequest } from "../../../llm/configs/outcomes-consequences-config";
+import { assertParse } from "../../../utils/validation";
+import { situationOutcomeArraySchema } from "~/lib/schemas/situations/outcomes";
 
 type ImpactsInput = {
   plan: GenerateSituationPlan;
@@ -32,12 +34,28 @@ export class OutcomesImpactsSubstep
     if (!input?.baseOutcomes?.outcomes?.length) throw new Error("Impacts sub-step requires base outcomes");
   }
 
-  protected async postProcess(
+  protected async transform(
     result: GenerateOutcomesConsequences,
-    _input: ImpactsInput
+    input: ImpactsInput
   ): Promise<GenerateOutcomesConsequences> {
     // Strict validation against consequences-only schema
-    return generateOutcomesConsequencesSchema.parse(result);
+    const parsed = assertParse<GenerateOutcomesConsequences>(
+      generateOutcomesConsequencesSchema,
+      result,
+      "Outcomes consequences"
+    );
+    console.log("🎯 Step 3b: Consequences mapping", parsed);
+
+    // Assemble outcomes and validate core rules here (substep-level)
+    const byId = new Map(parsed.outcomeConsequences.map(o => [o.outcomeId, o.consequences] as const));
+    const assembledOutcomes = input.baseOutcomes.outcomes.map((o) => ({
+      ...o,
+      consequences: byId.get(o.id)!,
+    }));
+
+    assertParse(situationOutcomeArraySchema, assembledOutcomes, "Outcomes (core)");
+
+    return parsed;
   }
 
 

@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { LLMClient } from "./llm/client";
 import type {
   ResponseCreateParamsNonStreaming,
@@ -6,7 +5,10 @@ import type {
   ResponseFormatTextJSONSchemaConfig,
 } from "openai/resources/responses/responses";
 import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, SubgroupStaticId } from "~/types";
-import type { GenerateSituationPlan, GeneratePreferences,  GenerateOutcomes, ExchangesStepOutput } from "~/lib/schemas/generate";
+import type { GenerateSituationPlan } from "~/lib/schemas/generate";
+import type { SituationPreferences } from "~/lib/schemas/situations/preferences";
+import type { SituationOutcome } from "~/lib/schemas/situations/outcomes";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -222,20 +224,19 @@ export interface PreferencesStepInput {
   plan: PlanningStepOutput;
   analysis: GenerationAnalysis;
 }
-export type PreferencesStepOutput = GeneratePreferences;
+export type PreferencesStepOutput = SituationPreferences;
 
 // Outcomes Step Types
 export interface OutcomesStepInput {
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
 }
-export type OutcomesStepOutput = GenerateOutcomes;
+export type OutcomesStepOutput = SituationOutcome[];
 
 
 // Exchanges Step Types
 export interface ExchangesStepInput {
   plan: PlanningStepOutput;
   preferences: PreferencesStepOutput;
-  outcomes: GenerateOutcomes;
+  outcomes: OutcomesStepOutput;
 }
-

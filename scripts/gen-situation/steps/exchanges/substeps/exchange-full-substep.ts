@@ -11,7 +11,6 @@ import type {
   GenerateAllQuestionImpacts,
   ExchangesPlanArray,
 } from "~/lib/schemas/generate";
-import { generateExchangeContentSchema } from "~/lib/schemas/generate";
 import { exchangeContentSchema } from "~/lib/schemas/exchanges";
 import { AnswerType } from "~/types";
 
@@ -213,41 +212,18 @@ export class ExchangeFullSubstep {
     // Validate against core exchange schema (strict, non-nullable optionals)
     const parsed = exchangeContentSchema.parse(exchange as any);
 
-    // Additional business logic validation
-    const outcomeIds = new Set(input.outcomes.outcomes.map(o => o.id));
-    const allQuestions = [
-      parsed.rootQuestion,
-      ...parsed.secondaryQuestions,
-      ...parsed.tertiaryQuestions,
-    ];
-
-    for (const q of allQuestions) {
-      // Check that all answers in this question sum to 0 collectively (for game balance)
-      const totalQuestionSum = q.answers.reduce((total, answer) => {
-        return total + Object.values(answer.outcomeModifiers ?? {}).reduce((s, v) => s + v, 0);
-      }, 0);
-      if (totalQuestionSum !== 0) {
-        throw new Error(`Outcome modifiers must sum to 0 per question. Question ${q.id} sums to ${totalQuestionSum}`);
-      }
-
-      for (const a of q.answers) {
-        for (const key of Object.keys(a.outcomeModifiers ?? {})) {
-          if (!outcomeIds.has(key)) {
-            throw new Error(`Invalid outcomeModifiers key "${key}". Keys must be one of: ${[...outcomeIds].join(", ")}`);
-          }
-        }
-      }
-    }
-
-    // Validate authorized answers if required
     if (input.publicationPlan.willHaveAuthorizedAnswer) {
       const requiredMember = input.publicationPlan.authorizedCabinetMemberId;
+      const allQuestions = [
+        parsed.rootQuestion,
+        ...parsed.secondaryQuestions,
+        ...parsed.tertiaryQuestions,
+      ];
+
       for (const q of allQuestions) {
         for (const a of q.answers) {
           if (a.type === AnswerType.Authorized && a.authorizedCabinetMemberId !== requiredMember) {
-            throw new Error(
-              `Authorized answer must reference ${requiredMember} for this outlet.`
-            );
+            throw new Error(`Authorized answer must reference ${requiredMember} for this outlet.`);
           }
         }
       }

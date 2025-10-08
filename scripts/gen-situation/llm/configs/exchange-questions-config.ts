@@ -67,7 +67,6 @@ ROOT ALIGNMENT
 - Include at least one root answer of the President's preferred type that will be positive for the President in the impacts phase
 - For ALL cabinet involved in outcomes, include at least one root answer of that member’s preferred type that will be positive for them in the impacts phase
 
-
 AUTHORIZED
  - If this outlet is authorized, include at most ONE Authorized answer across all 5 questions (must reference the specified cabinet member)
  - If this outlet is not authorized, include ZERO Authorized answers

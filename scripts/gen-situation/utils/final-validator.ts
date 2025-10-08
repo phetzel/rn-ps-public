@@ -1,65 +1,9 @@
 import { situationDataSchema } from "~/lib/schemas/situations";
 import type { SituationData } from "~/types";
-import { AnswerType } from "~/types";
-import type {
-  GenerateSituationPlan,
-  GeneratePreferences,
-  GenerateOutcomes,
-  ExchangesStepOutput,
-} from "~/lib/schemas/generate";
-
-/**
- * Convert string answerType to proper AnswerType enum
- */
-function convertAnswerType(answerType: string): AnswerType {
-  // Handle case where it's already the correct enum value
-  if (Object.values(AnswerType).includes(answerType as AnswerType)) {
-    return answerType as AnswerType;
-  }
-  
-  // Convert common string variations to proper enum values
-  const normalizedType = answerType.toLowerCase().trim();
-  
-  switch (normalizedType) {
-    case 'deflect': return AnswerType.Deflect;
-    case 'reassure': return AnswerType.Reassure;
-    case 'challenge': return AnswerType.Challenge;
-    case 'admit': return AnswerType.Admit;
-    case 'deny': return AnswerType.Deny;
-    case 'inform': return AnswerType.Inform;
-    case 'authorized': return AnswerType.Authorized;
-    default:
-      throw new Error(`Unknown answerType: ${answerType}`);
-  }
-}
-
-/**
- * Convert preferences to ensure proper answerType enum values
- */
-function convertPreferences(preferences: any): any {
-  const converted = JSON.parse(JSON.stringify(preferences)); // Deep clone
-  
-  // Convert president answerType
-  if (converted.president?.answerType && typeof converted.president.answerType === 'string') {
-    converted.president.answerType = convertAnswerType(converted.president.answerType);
-  }
-  
-  // Convert cabinet answerTypes
-  if (converted.cabinet) {
-    Object.keys(converted.cabinet).forEach(cabinetId => {
-      const cabinetMember = converted.cabinet[cabinetId];
-      if (cabinetMember?.preference?.answerType && typeof cabinetMember.preference.answerType === 'string') {
-        cabinetMember.preference.answerType = convertAnswerType(cabinetMember.preference.answerType);
-      }
-      // Drop null authorizedContent to align with core schema (optional string)
-      if (cabinetMember && cabinetMember.authorizedContent === null) {
-        delete cabinetMember.authorizedContent;
-      }
-    });
-  }
-  
-  return converted;
-}
+import type { GenerateSituationPlan } from "~/lib/schemas/generate";
+import type { SituationPreferences } from "~/lib/schemas/situations/preferences";
+import type { SituationOutcome } from "~/lib/schemas/situations/outcomes";
+import type { ExchangeData } from "~/lib/schemas/exchanges";
 
 /**
  * Simple final validation utility
@@ -67,9 +11,9 @@ function convertPreferences(preferences: any): any {
  */
 export function validateFinalSituation(
   plan: GenerateSituationPlan,
-  preferences: GeneratePreferences,
-  outcomes: GenerateOutcomes,
-  exchanges: ExchangesStepOutput
+  preferences: SituationPreferences,
+  outcomes: SituationOutcome[],
+  exchanges: ExchangeData[]
 ): SituationData {
   // Assemble the situation with proper type conversions
   const assembled = {
@@ -90,14 +34,11 @@ export function validateFinalSituation(
     },
     
     content: {
-      preferences: convertPreferences(preferences),
-      outcomes: outcomes.outcomes,
+      preferences,
+      outcomes,
     },
     
-    exchanges: exchanges.map(exchange => ({
-      publication: exchange.publication,
-      content: exchange.content,
-    })),
+    exchanges,
   };
 
   // Validate against final schema

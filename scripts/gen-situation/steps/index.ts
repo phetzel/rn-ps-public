@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Base classes
-export { ConsoleGenerationLogger } from "./base";
+export { ResponsesGenerationStep, ConsoleGenerationLogger } from "./base";
 
 // Individual steps
 export { PlanningStep } from "./planning";
