@@ -39,7 +39,8 @@ AUTHORIZED ACCESS RULES
 
 TECHNICAL OUTPUT REQUIREMENTS
 - For every publication given below, return: { publication, editorialAngle (50–200 chars), willHaveAuthorizedAnswer, authorizedCabinetMemberId? }
-- editorialAngle must be 1–2 complete sentences within 50–200 characters; end with punctuation; do not trail off mid‑word
+- editorialAngle must be a single complete sentence within 50–200 characters; end with punctuation; do not trail off mid‑word
+- If you approach the character ceiling, tighten earlier—never end with dangling commas, conjunctions, or unfinished clauses
 - Follow the JSON Schema exactly (Structured Outputs, strict mode)
 `.trim();
 
@@ -81,7 +82,7 @@ export function buildExchangesPlanRequest(
     model: "gpt-5",
     instructions,
     input,
-    max_output_tokens: 8000,
+    max_output_tokens: 16000,
     text: {
       format: {
         type: "json_schema",

@@ -18,15 +18,17 @@ export class LLMClient {
     totalCost: 0,
     requestCount: 0,
   };
-  private debugMode: boolean;
+  private stepDebug: boolean;
+  private traceResponses: boolean;
 
-  constructor(options?: { debugMode?: boolean }) {
+  constructor(options?: { debugMode?: boolean; traceResponses?: boolean }) {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) {
       throw new Error("OPENAI_API_KEY environment variable is required");
     }
     this.client = new OpenAI({ apiKey });
-    this.debugMode = options?.debugMode ?? false;
+    this.stepDebug = options?.debugMode ?? false;
+    this.traceResponses = options?.traceResponses ?? false;
   }
 
     /**
@@ -34,7 +36,7 @@ export class LLMClient {
    */
   async generateResponse<T>(options: ResponsesJSONSchemaOptions): Promise<LLMResponse<T>> {
     const res = await this.client.responses.parse(options) as ParsedResponse<T>;
-    if (this.debugMode) console.log("🔍 Raw model output:", res);
+    if (this.traceResponses) console.log("🛰️ Raw model output:", res);
 
     const outputParsed = res.output_parsed as T;
     const outputText = (res as { output_text?: string }).output_text ?? undefined;
@@ -67,6 +69,10 @@ export class LLMClient {
   }
 
   isDebugEnabled() {
-    return this.debugMode;
+    return this.stepDebug;
+  }
+
+  isTraceEnabled() {
+    return this.traceResponses;
   }
 }

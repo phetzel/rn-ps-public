@@ -47,7 +47,7 @@ export function buildOutcomesBaseRequest(
       model: "gpt-5",
       instructions,
       input,
-      max_output_tokens: 8000,
+      max_output_tokens: 16000,
       text: {
         format: {
           type: "json_schema",

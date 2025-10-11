@@ -440,13 +440,13 @@ export enum JournalistEngagementWeight {
 }
 
 export enum SituationConsequenceWeight {
-  StronglyPositive = 15,
-  Positive = 10,
-  SlightlyPositive = 5,
+  StronglyPositive = 12,
+  Positive = 6,
+  SlightlyPositive = 3,
   Neutral = 0,
-  SlightlyNegative = -5,
-  Negative = -10,
-  StronglyNegative = -15,
+  SlightlyNegative = -3,
+  Negative = -6,
+  StronglyNegative = -12,
 }
 
 // Create Game

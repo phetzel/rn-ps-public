@@ -66,14 +66,14 @@ Each situation contains:
 
 ### Text Length Requirements:
 
-- **Situation Title**: 15-50 characters
+- **Situation Title**: 15-32 characters
 - **Situation Description**: 80-160 characters
 - **Outcome Title**: 20-60 characters
 - **Outcome Description**: 60-140 characters
 - **Question Text**: 60-150 characters
 - **Answer Text**: 80-180 characters
 - **Intel/Reaction Text**: 20-100 characters
-- **Authorized Content**: 50-300 characters
+- **Authorized Content**: 40-140 characters
 
 ## 🏛️ Entity References
 

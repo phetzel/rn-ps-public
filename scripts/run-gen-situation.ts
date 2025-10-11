@@ -1,6 +1,5 @@
 #!/usr/bin/env tsx
 
-import path from "path";
 import { LLMClient } from "./gen-situation/llm/client";
 import { SituationGenerator } from "./gen-situation/generator";
 
@@ -19,14 +18,18 @@ async function main(): Promise<void> {
   const batchCount = batchCountArg ? parseInt(batchCountArg.split('=')[1]) : 1;
   const isBatch = batchCount > 1;
   const debugMode = args.includes('--debug') || process.env.LLM_DEBUG_MODE === 'true';
+  const traceMode = args.includes('--trace-llm') || process.env.LLM_TRACE_MODE === 'true';
 
   try {
     console.log("🤖 Initializing situation generator...");
     if (debugMode) {
-      console.log("🔍 Debug mode enabled - verbose logging active");
+      console.log("🔍 Debug mode enabled - step-level logging active");
+    }
+    if (traceMode) {
+      console.log("🛰️ LLM trace enabled - raw model outputs will be logged");
     }
 
-    const llmClient = new LLMClient({ debugMode });
+    const llmClient = new LLMClient({ debugMode, traceResponses: traceMode });
     const generator = new SituationGenerator(llmClient);
 
     if (isBatch) {
@@ -69,17 +72,21 @@ Usage: npm run gen-situation [options]
 
 Options:
   --count=N     Generate N situations in batch (default: 1)
-  --debug       Enable verbose debug logging
+  --debug       Enable verbose step logging
+  --trace-llm   Log raw model responses (very noisy)
   --help, -h    Show this help message
 
 Environment Variables:
   LLM_DEBUG_MODE=true   Enable debug mode globally
+  LLM_TRACE_MODE=true   Enable raw LLM response logging globally
 
 Examples:
   npm run gen-situation                        # Generate single situation (clean output)
   npm run gen-situation -- --debug            # Generate with debug logging
+  npm run gen-situation -- --trace-llm        # Generate with raw LLM output
   npm run gen-situation -- --count=5          # Generate 5 situations in batch
   LLM_DEBUG_MODE=true npm run gen-situation   # Generate with debug via env var
+  LLM_TRACE_MODE=true npm run gen-situation   # Generate with raw output via env var
 `);
   process.exit(0);
 }

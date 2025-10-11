@@ -137,7 +137,7 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     model: "gpt-5",
     instructions,
     input: promptLines.join("\n"),
-    max_output_tokens: 8000,
+    max_output_tokens: 16000,
     text: {
       format: {
         type: "json_schema",
