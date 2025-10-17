@@ -121,6 +121,9 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
     instructions,
     input: promptLines.join("\n"),
     max_output_tokens: 16000,
+    reasoning: {
+      effort: "high",
+    },
     text: {
       format: {
         type: "json_schema",

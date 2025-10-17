@@ -136,6 +136,17 @@ export enum AnswerType {
   Authorized = "authorized", // Cabinet Relationship based classified intel, not availible for preferences
 }
 
+export const PREFERENCE_ANSWER_TYPES = [
+  AnswerType.Deflect,
+  AnswerType.Reassure,
+  AnswerType.Challenge,
+  AnswerType.Admit,
+  AnswerType.Deny,
+  AnswerType.Inform,
+] as const;
+
+export type PreferenceAnswerType = typeof PREFERENCE_ANSWER_TYPES[number];
+
 export interface Answer {
   id: string;
   text: string;

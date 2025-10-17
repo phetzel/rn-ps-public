@@ -79,7 +79,7 @@ export function buildExchangesPlanRequest(
   });
 
   return {
-    model: "gpt-5",
+    model: "gpt-5-mini",
     instructions,
     input,
     max_output_tokens: 16000,

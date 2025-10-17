@@ -14,9 +14,9 @@ export const PRICES: Record<string, PriceEntry> = {
   "gpt-5-mini":  { inputPerM: 0.25, outputPerM: 2.0,  cachedInputPerM: 0.025 },
   "gpt-5-nano":  { inputPerM: 0.05, outputPerM: 0.4,  cachedInputPerM: 0.005 },
 
-  // GPT‑4o family (example values – keep in sync with OpenAI pricing)
-  "gpt-4o":        { inputPerM: 5.0,  outputPerM: 15.0, cachedInputPerM: 0.5 },
-  "gpt-4o-mini":   { inputPerM: 0.5,  outputPerM: 1.5,  cachedInputPerM: 0.05 },
+  // GPT‑4o family (Standard tier)
+  "gpt-4o":        { inputPerM: 2.5,  outputPerM: 10.0, cachedInputPerM: 1.25 },
+  "gpt-4o-mini":   { inputPerM: 0.15, outputPerM: 0.6,  cachedInputPerM: 0.075 },
 };
 
 export function normalizeModelForPricing(model: string): keyof typeof PRICES {
@@ -48,5 +48,4 @@ export function computeUsageCost(usage: ResponseUsage | undefined, model: string
 
   return { inputCost, outputCost, total };
 }
-
 

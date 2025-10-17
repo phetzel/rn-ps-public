@@ -109,6 +109,9 @@ export function buildOutcomesConsequencesRequest(
     instructions,
     input,
     max_output_tokens: 16000,
+    reasoning: {
+      effort: "high",
+    },
     text: {
       format: {
         type: "json_schema",
