@@ -2,6 +2,7 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { ResponsesJSONSchemaOptions } from "../../types";
 import { buildTechnicalPrompt } from "../prompt-constants";
+import { GPT_5_MINI } from "../llm-constants";
 import {
   generateExchangesPlanSchema,
   type GenerateExchangesPlan,
@@ -79,7 +80,7 @@ export function buildExchangesPlanRequest(
   });
 
   return {
-    model: "gpt-5-mini",
+    model: GPT_5_MINI,
     instructions,
     input,
     max_output_tokens: 16000,

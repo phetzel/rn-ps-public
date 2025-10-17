@@ -4,6 +4,7 @@ import type { GenerationAnalysis } from "../../types";
 import type { GenerateSituationPlan } from "~/lib/schemas/generate";
 import { generatePreferencesSchema, type GeneratePreferences } from "~/lib/schemas/generate";
 import { buildCreativePrompt } from "../prompt-constants";
+import { GPT_5 } from "../llm-constants";
 
 const PREFERENCES_SPECIFIC_INSTRUCTIONS = `
 Generate OUTLANDISH preferences for cabinet members in this fictional scenario.
@@ -70,7 +71,7 @@ export function buildPreferencesRequest(
   });
 
     return {
-      model: "gpt-5",
+      model: GPT_5,
       instructions,
       input,
       max_output_tokens: 16000,
