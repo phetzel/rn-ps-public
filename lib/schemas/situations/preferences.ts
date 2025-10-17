@@ -1,13 +1,14 @@
 import { z } from "zod";
 
 import { textLengthSchema } from "~/lib/schemas/common";
-import { AnswerType, CabinetStaticId } from "~/types";
+import { CabinetStaticId, PREFERENCE_ANSWER_TYPES } from "~/types";
 
 // Helper to exclude Authorized from AnswerType for preferences
-const AllowedPrefAnswerType = z.nativeEnum(AnswerType).refine(
-  (value) => value !== AnswerType.Authorized,
-  { message: "Authorized answer type not allowed in preferences" }
-).describe("Answer type for the preference");
+const AllowedPrefAnswerType = z.enum(PREFERENCE_ANSWER_TYPES, {
+  errorMap: () => ({
+    message: "Authorized answer type not allowed in preferences",
+  }),
+}).describe("Answer type for the preference");
 
 export const preferenceSchema = z.object({
   answerType: AllowedPrefAnswerType,

@@ -72,7 +72,7 @@ export function calculateTableColumnWidths(columnCount: number) {
 // Boost Helpers
 export const calculateAdBoost = (delta: number) => {
   if (delta >= 0) {
-    // Positive values get amplified: 10 -> 15
+    // Positive values get amplified (e.g., 6 -> 9)
     return Math.round(delta * AD_BOOST_MULTIPLIER);
   } else {
     // Negative values move toward positive: -10 -> -7 (reduced magnitude)

@@ -20,7 +20,7 @@ export const generateSituationPlanSchema = baseSituationDataSchema.extend({
     .string()
     .min(10)
     .max(200)
-    .describe("Why this situation improves balance"),
+    .describe("Why this situation improves balance; provide a complete sentence within 10–200 characters."),
   involvedEntities: z.object({
     cabinetMembers: z.array(cabinetMemberSchema).min(1),
     subgroups: z.array(subgroupSchema).min(1),
@@ -93,10 +93,11 @@ export type GenerateOutcomesConsequences = z.infer<typeof generateOutcomesConseq
 // A single publication’s editorial plan
 export const exchangesPlanSchema = z.object({
   publication: publicationSchema,
-  editorialAngle: textLengthSchema.rationale
+  editorialAngle: z
+    .string()
     .min(50)
     .max(200)
-    .describe("Unique editorial angle for this outlet (50–200 chars)"),
+    .describe("Single complete editorial sentence for this outlet (50–200 chars). End decisively with punctuation; no dangling clauses."),
   willHaveAuthorizedAnswer: z.boolean().describe(
     "Whether this outlet will receive an answer that includes confidential authorized content"
   ),

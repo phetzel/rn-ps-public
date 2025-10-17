@@ -1,6 +1,7 @@
 import { zodToJsonSchema } from "zod-to-json-schema";
 import type { ResponsesJSONSchemaOptions } from "../../types";
 import { buildTechnicalPrompt } from "../prompt-constants";
+import { GPT_5 } from "../llm-constants";
 import { CabinetStaticId } from "~/types";
 import {
   generateQuestionsOnlyContentSchema,
@@ -88,7 +89,7 @@ Return ONLY a JSON object matching the JSON Schema (strict)
   });
 
   return {
-    model: "gpt-5",
+    model: GPT_5,
     instructions,
     input: promptLines.join("\n"),
     max_output_tokens: 16000,

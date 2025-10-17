@@ -4,6 +4,7 @@ import type { GenerationAnalysis } from "../../types";
 import type { GenerateSituationPlan } from "~/lib/schemas/generate";
 import { generatePreferencesSchema, type GeneratePreferences } from "~/lib/schemas/generate";
 import { buildCreativePrompt } from "../prompt-constants";
+import { GPT_5 } from "../llm-constants";
 
 const PREFERENCES_SPECIFIC_INSTRUCTIONS = `
 Generate OUTLANDISH preferences for cabinet members in this fictional scenario.
@@ -25,11 +26,13 @@ TECHNICAL RULES
 LENGTH & SENTENCE COMPLETENESS (match schema caps)
 - president.rationale: 40–120 characters; write 1–2 complete sentences; end with punctuation
 - cabinet[...].preference.rationale: 40–120 characters; complete sentence(s), no trailing fragments
-- cabinet[...].authorizedContent (when non-null): 50–300 characters; end with a complete sentence; do NOT trail off
+- cabinet[...].authorizedContent (when non-null): 40–140 characters; write 1–2 full sentences in plain language; end with punctuation
 
 AUTHORIZED CONTENT STYLE (if present)
-- Must feel actionable, EXTREMELY kooky, and classified, tied directly to THIS situation
-- Include concrete specifics: timelines, counts, acronyms, constraints, or internal process notes
+- Deliver concise, podium-ready intel the Press Secretary can repeat verbatim
+- State the concrete fact, timing, or consequence in plain language—no gossip, nicknames, or code phrases
+- Keep it tight (40–140 chars), 1–2 complete sentences tied directly to THIS situation
+- Show how reporters can use it and hint at the tradeoff or risk if it spreads
 
 STYLE REQUIREMENTS
 - President: choose a valid "answerType" and a concise rationale
@@ -58,6 +61,7 @@ export function buildPreferencesRequest(
       `Preference Guidance:`,
       `- Aim for some conflicting approaches across departments (legal caution vs. political spin, econ prudence vs. comms urgency, etc.).`,
       `- Only one cabinet member may include authorizedContent (as non-null) if they plausibly have confidential insight on THIS situation.`,
+      `- Authorized intel must be plain-language detail the Press Secretary can cite to sway journalists while accepting potential backlash elsewhere.`,
     ].join("\n");
   
   // Use strict schema for Structured Outputs (OpenAI requires additionalProperties=false)
@@ -67,10 +71,10 @@ export function buildPreferencesRequest(
   });
 
     return {
-      model: "gpt-5",
+      model: GPT_5,
       instructions,
       input,
-      max_output_tokens: 8000,
+      max_output_tokens: 16000,
       text: {
         format: {
           type: "json_schema",

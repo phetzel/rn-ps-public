@@ -13,6 +13,7 @@ import {
 import { idSchema } from "~/lib/schemas/common";
 import { CabinetStaticId } from "~/types";
 import { ExchangeImpactWeight } from "~/types";
+import { GPT_5 } from "../llm-constants";
 
 // Helper to present outcomes for the model (ids must be used in outcomeModifiers)
 function summarizeOutcomes(outcomes: GenerateOutcomes["outcomes"]) {
@@ -117,10 +118,13 @@ Return ONLY a JSON object strictly matching the provided JSON Schema (Structured
   });
 
   return {
-    model: "gpt-5",
+    model: GPT_5,
     instructions,
     input: promptLines.join("\n"),
     max_output_tokens: 16000,
+    reasoning: {
+      effort: "high",
+    },
     text: {
       format: {
         type: "json_schema",

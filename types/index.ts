@@ -133,8 +133,19 @@ export enum AnswerType {
   Admit = "admit",
   Deny = "deny",
   Inform = "inform",
-  Authorized = "authorized", // Cabinet Relationship based classified intel, not availible for preferences
+  Authorized = "authorized", // Cabinet Relationship based classified intel, not available for preferences
 }
+
+export const PREFERENCE_ANSWER_TYPES = [
+  AnswerType.Deflect,
+  AnswerType.Reassure,
+  AnswerType.Challenge,
+  AnswerType.Admit,
+  AnswerType.Deny,
+  AnswerType.Inform,
+] as const;
+
+export type PreferenceAnswerType = typeof PREFERENCE_ANSWER_TYPES[number];
 
 export interface Answer {
   id: string;
@@ -440,13 +451,13 @@ export enum JournalistEngagementWeight {
 }
 
 export enum SituationConsequenceWeight {
-  StronglyPositive = 15,
-  Positive = 10,
-  SlightlyPositive = 5,
+  StronglyPositive = 12,
+  Positive = 6,
+  SlightlyPositive = 3,
   Neutral = 0,
-  SlightlyNegative = -5,
-  Negative = -10,
-  StronglyNegative = -15,
+  SlightlyNegative = -3,
+  Negative = -6,
+  StronglyNegative = -12,
 }
 
 // Create Game

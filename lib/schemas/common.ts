@@ -13,8 +13,8 @@ export const idSchema = z
 export const textLengthSchema = {
   situationTitle: z.string()
     .min(15)
-    .max(50)
-    .describe("Satirical news headline for the political situation. Should be catchy and newsworthy."),
+    .max(32)
+    .describe("Satirical news headline for the political situation. Keep it punchy (15–32 chars) and newsworthy."),
 
   situationDescription: z.string()
     .min(80)
@@ -44,12 +44,12 @@ export const textLengthSchema = {
   rationale: z.string()
     .min(40)
     .max(120)
-    .describe("Explanation of why this entity (President/Cabinet member) prefers this answer type. Should reflect their political position and departmental interests."),
+    .describe("Explanation of why this entity (President/Cabinet member) prefers this answer type. Should reflect their political position and departmental interests; write a complete sentence within 40–120 characters."),
 
   authorizedContent: z.string()
-    .min(50)
-    .max(300)
-    .describe("Confidential information this Cabinet member has to share.")
+    .min(40)
+    .max(140)
+    .describe("Classified intel the Press Secretary can quote verbatim at the podium. Provide 1–2 complete sentences (40–140 chars) in plain language that spell out a concrete, actionable fact or consequence; never use gossip, nicknames, or code words.")
 };
 
 // Enums

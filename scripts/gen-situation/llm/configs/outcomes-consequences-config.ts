@@ -8,6 +8,7 @@ import {
   type GeneratePreferences,
 } from "~/lib/schemas/generate";
 import { buildImplementationPrompt } from "../prompt-constants";
+import { GPT_5 } from "../llm-constants";
 
 const CONSEQUENCES_SPECIFIC_INSTRUCTIONS = `
 ADD approval impacts (consequences) for each existing outcome in this fictional political situation.
@@ -105,10 +106,13 @@ export function buildOutcomesConsequencesRequest(
   });
 
   return {
-    model: "gpt-5",
+    model: GPT_5,
     instructions,
     input,
-    max_output_tokens: 8000,
+    max_output_tokens: 16000,
+    reasoning: {
+      effort: "high",
+    },
     text: {
       format: {
         type: "json_schema",
@@ -119,4 +123,3 @@ export function buildOutcomesConsequencesRequest(
     },
   };
 }
-

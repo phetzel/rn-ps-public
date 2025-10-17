@@ -2,6 +2,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import type { ResponsesJSONSchemaOptions } from "../../types";
 import  { type GenerateSituationPlan, type GenerateBaseOutcomes, type GeneratePreferences, generateBaseOutcomesSchema } from "~/lib/schemas/generate";
 import { buildCreativePrompt } from "../prompt-constants";
+import { GPT_5 } from "../llm-constants";
 
 
 const OUTCOMES_SPECIFIC_INSTRUCTIONS = `
@@ -44,10 +45,10 @@ export function buildOutcomesBaseRequest(
       });  
 
     return {
-      model: "gpt-5",
+      model: GPT_5,
       instructions,
       input,
-      max_output_tokens: 8000,
+      max_output_tokens: 16000,
       text: {
         format: {
           type: "json_schema",
