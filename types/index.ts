@@ -133,7 +133,7 @@ export enum AnswerType {
   Admit = "admit",
   Deny = "deny",
   Inform = "inform",
-  Authorized = "authorized", // Cabinet Relationship based classified intel, not availible for preferences
+  Authorized = "authorized", // Cabinet Relationship based classified intel, not available for preferences
 }
 
 export const PREFERENCE_ANSWER_TYPES = [
