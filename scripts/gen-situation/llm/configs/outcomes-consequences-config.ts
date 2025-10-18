@@ -19,7 +19,7 @@ TASK-SPECIFIC REQUIREMENTS
 
 ALLOWED ENTITIES (ids only)
 - Use ONLY the ids provided in the input section below under “Allowed cabinet” and “Subgroups”. Do not invent new ids.
-- Select at most THREE cabinet members to impact across ALL outcomes. If more cabinet preferences exist, choose any up to three; do not include others.
+- Every cabinet member that has a preference in this scenario MUST appear in the consequences at least once. Do not omit preference-bearing members.
 - Use the exact lowercase enum ids (not labels).
 
 BALANCE RULES (must ALL hold)
@@ -32,6 +32,7 @@ SELF‑CHECK BEFORE RETURN (mandatory)
 - Verify each outcome is “mixed”.
 - Compute NetScore for each outcome. Ensure exactly one NetScore > 0; every other NetScore < 0.
 - For each preferred cabinet member you impacted, ensure their total ≤ 0 and includes both positive and negative across the scenario.
+- Confirm every preference-bearing cabinet member appears in at least one outcome consequence entry.
 
 CONSTRAINTS
 - Per outcome: affects ≥ 1 and ≤ 6 total entities (cabinet + subgroups)

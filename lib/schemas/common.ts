@@ -33,23 +33,23 @@ export const textLengthSchema = {
 
   questionText: z.string()
     .min(60)
-    .max(150)
-    .describe("Press conference question from a journalist."),
+    .max(170)
+    .describe("Press conference question from a journalist. Finish the thought cleanly and avoid trailing fragments."),
 
   answerText: z.string()
     .min(80)
-    .max(180)
-    .describe("Press Secretary response option. Should reflect the answer type (deflect, reassure, challenge, etc.) and feel authentic to the context"),
+    .max(220)
+    .describe("Press Secretary response option. Should reflect the answer type (deflect, reassure, challenge, etc.), feel authentic to the context, and end on a full sentence."),
 
   rationale: z.string()
     .min(40)
-    .max(120)
-    .describe("Explanation of why this entity (President/Cabinet member) prefers this answer type. Should reflect their political position and departmental interests; write a complete sentence within 40–120 characters."),
+    .max(150)
+    .describe("Explanation of why this entity (President/Cabinet member) prefers this answer type. Reflect their political position and departmental interests; use complete sentences within 40–150 characters."),
 
   authorizedContent: z.string()
-    .min(40)
-    .max(140)
-    .describe("Classified intel the Press Secretary can quote verbatim at the podium. Provide 1–2 complete sentences (40–140 chars) in plain language that spell out a concrete, actionable fact or consequence; never use gossip, nicknames, or code words.")
+    .min(50)
+    .max(220)
+    .describe("Classified intel the Press Secretary can quote verbatim at the podium. Provide 1–2 complete sentences (50–220 chars) in plain language that spell out a concrete, actionable fact or consequence; never use gossip, nicknames, or code words.")
 };
 
 // Enums
