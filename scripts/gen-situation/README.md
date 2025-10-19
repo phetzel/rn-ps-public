@@ -2,7 +2,7 @@
 
 ## Overview
 
-The `gen-situation` scripts generate fully‑validated situation data (plan → preferences → outcomes → exchanges) using the OpenAI Responses API. Each step returns core game types so the output can be validated and written directly into `lib/data/situations/v2` and consumed by the app without additional transforms.
+The `gen-situation` scripts generate fully‑validated situation data (plan → preferences → outcomes → exchanges) using the OpenAI Responses API. Each step returns core game types so the output can be validated and written directly into `lib/data/situations/v1` and consumed by the app without additional transforms.
 
 ## Prerequisites
 
@@ -22,7 +22,7 @@ The `gen-situation` scripts generate fully‑validated situation data (plan → 
    - `ExchangeQuestionsSubstep` – generates the Q&A skeleton.
    - `ExchangeImpactsSubstep` – adds outcome modifiers & relationship impacts.
    - `ExchangeFullSubstep` – assembles and validates the complete exchange.
-6. **Validation + Write** – `validateFinalSituation` assembles everything and the writer exports TypeScript modules in `lib/data/situations/v2`.
+6. **Validation + Write** – `validateFinalSituation` assembles everything and the writer exports TypeScript modules in `lib/data/situations/v1`.
 
 Each sub-step validates model output twice: first with generation schemas to keep the prompts satisfied, then with the core Zod schemas to ensure gameplay constraints.
 
@@ -40,7 +40,7 @@ Passing `--debug` or setting `LLM_DEBUG_MODE=true` enables `logDeep` dumps of in
 
 ## Output Structure
 
-Successful runs create a folder under `lib/data/situations/v2/<type>/<slug>/` with:
+Successful runs create a folder under `lib/data/situations/v1/<type>/<slug>/` with:
 
 - `index.ts` – exported `SituationDataType`
 - `<slug>Outcomes.ts` – situation outcomes

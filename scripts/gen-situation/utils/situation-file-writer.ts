@@ -31,7 +31,7 @@ function extractSituationComponents(situation: SituationData): {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// SITUATION FILE WRITER - WRITES COMPLETE SITUATIONS TO V2 STRUCTURE
+// SITUATION FILE WRITER - WRITES COMPLETE SITUATIONS TO V1 STRUCTURE
 // ═══════════════════════════════════════════════════════════════════════════════
 
 /**
@@ -667,7 +667,7 @@ async function updateTypeIndex(
   error?: string;
 }> {
   try {
-    const baseDir = join(process.cwd(), "lib", "data", "situations", "v2");
+    const baseDir = join(process.cwd(), "lib", "data", "situations", "v1");
     const typeDir = getTypeDirectory(situationType);
     const indexPath = join(baseDir, typeDir, "index.ts");
 
@@ -739,7 +739,7 @@ async function updateTypeIndex(
 }
 
 /**
- * Write complete situation files to disk using v2 structure
+ * Write complete situation files to disk using v1 structure
  */
 export async function writeSituationFiles(
   situation: SituationData
@@ -753,7 +753,7 @@ export async function writeSituationFiles(
     // Extract components from complete situation
     const { outcomes, preferences, exchanges } = extractSituationComponents(situation);
 
-    const baseDir = join(process.cwd(), "lib", "data", "situations", "v2");
+    const baseDir = join(process.cwd(), "lib", "data", "situations", "v1");
     const typeDir = getTypeDirectory(situation.type);
     const situationDir = toKebabCase(situation.title);
     const fullPath = join(baseDir, typeDir, situationDir);

@@ -13,7 +13,7 @@ import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
 import { createGame } from "~/__tests__/support/factories/gameFactory";
 import { createLevel } from "~/__tests__/support/factories/levelFactory";
 import { createSituation } from "~/__tests__/support/factories/situationFactory";
-import { teachersStrikeBack } from "~/lib/data/situations/v2/domestic-policy/teachers-strike-back";
+import { teachersStrikeBack } from "~/lib/data/situations/v1/domestic-policy/teachers-strike-back";
 
 // Models & Types
 import { Situation } from "~/lib/db/models";

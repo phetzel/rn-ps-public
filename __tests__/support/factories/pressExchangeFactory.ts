@@ -5,7 +5,7 @@ import {
   ExchangeProgress,
   JournalistEngagementWeight,
 } from "~/types";
-import { teachersStrikeBackExchanges } from "~/lib/data/situations/v2/domestic-policy/teachers-strike-back/exchanges";
+import { teachersStrikeBackExchanges } from "~/lib/data/situations/v1/domestic-policy/teachers-strike-back/exchanges";
 
 type ExchangeOverrides = {
   levelId: string;
