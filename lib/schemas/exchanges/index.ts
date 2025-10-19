@@ -14,13 +14,39 @@ export const exchangeDataSchema = z.object({
   publication: z.nativeEnum(PublicationStaticId),
 });
 
-// Validate that root question exists in questions
-export const validatedExchangeDataSchema = exchangeDataSchema.refine(
-  (data) => {
-    return data.content.rootQuestionId in data.content.questions;
-  },
-  {
-    message: "Root question ID must exist in questions",
-    path: ["content", "rootQuestionId"],
-  }
-);
+// Validate that followUpIds reference correct questions
+export const validatedExchangeDataSchema = exchangeDataSchema
+  .refine(
+    (data) => {
+      // Validate root followUpIds point to secondary questions
+      const rootFollowUps = data.content.rootQuestion.answers
+        .filter((a) => a.followUpId)
+        .map((a) => a.followUpId);
+
+      const secondaryIds = data.content.secondaryQuestions.map((q) => q.id);
+
+      return rootFollowUps.every((id) => secondaryIds.includes(id!));
+    },
+    { message: "Root question followUpIds must reference secondary questions" }
+  )
+  .refine(
+    (data) => {
+      // Validate secondary followUpIds point to tertiary questions
+      const secondaryFollowUps = data.content.secondaryQuestions
+        .flatMap((q) => q.answers)
+        .filter((a) => a.followUpId)
+        .map((a) => a.followUpId);
+
+      const tertiaryIds = data.content.tertiaryQuestions.map((q) => q.id);
+
+      return secondaryFollowUps.every((id) => tertiaryIds.includes(id!));
+    },
+    {
+      message:
+        "Secondary question followUpIds must reference tertiary questions",
+    }
+  );
+
+// Export TypeScript types derived from Zod schemas
+export type ExchangeData = z.infer<typeof exchangeDataSchema>;
+export type ValidatedExchangeData = z.infer<typeof validatedExchangeDataSchema>;

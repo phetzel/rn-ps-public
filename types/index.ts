@@ -133,8 +133,19 @@ export enum AnswerType {
   Admit = "admit",
   Deny = "deny",
   Inform = "inform",
-  Authorized = "authorized", // Cabinet Relationship based classified intel, not availible for preferences
+  Authorized = "authorized", // Cabinet Relationship based classified intel, not available for preferences
 }
+
+export type PreferenceAnswerType = Exclude<AnswerType, AnswerType.Authorized>;
+
+export const PREFERENCE_ANSWER_TYPES = [
+  AnswerType.Deflect,
+  AnswerType.Reassure,
+  AnswerType.Challenge,
+  AnswerType.Admit,
+  AnswerType.Deny,
+  AnswerType.Inform,
+] as const satisfies readonly PreferenceAnswerType[];
 
 export interface Answer {
   id: string;
@@ -151,14 +162,13 @@ export interface Answer {
 export interface Question {
   id: string;
   text: string;
-  depth: number; // 0 for main questions, 1+ for follow-ups
-  answers: Answer[];
+  answers: Answer[]; // 3+ answers
 }
 
 export interface ExchangeContent {
-  // Static JSON data
-  questions: Record<string, Question>; // Map of questions by ID
-  rootQuestionId: string; // The starting question ID
+  rootQuestion: Question;
+  secondaryQuestions: [Question, Question];
+  tertiaryQuestions: [Question, Question];
 }
 
 export interface ExchangeHistoryItem {
@@ -168,9 +178,15 @@ export interface ExchangeHistoryItem {
 }
 
 export interface ExchangeProgress {
-  // User progress/choices
+  // Detailed history - needed for consequence calculations
   history: ExchangeHistoryItem[];
-  currentQuestionId: string | null; // Current question the user is on, null if complete
+  currentQuestionId: string | null;
+
+  // Cached computed values for efficiency
+  questionsAnswered: number; // 0-3
+  hasSkipped: boolean;
+  completed: boolean;
+  journalistEngagement?: JournalistEngagementWeight; // Optional - only set after completion
 }
 
 export interface ExchangeData {
@@ -223,7 +239,7 @@ export interface SituationTrigger {
 }
 
 export interface Preference {
-  answerType: AnswerType;
+  answerType: PreferenceAnswerType;
   rationale: string;
 }
 
@@ -233,7 +249,7 @@ export interface CabinetPreference {
 }
 
 export interface SituationPreferences {
-  president?: Preference;
+  president: Preference;
   cabinet?: {
     [key in CabinetStaticId]?: CabinetPreference;
   };
@@ -428,14 +444,20 @@ export enum JournalistInteractionImpact {
   AuthorizedAnswer = 10,
 }
 
+export enum JournalistEngagementWeight {
+  Ignored = -10,
+  Partial = -5,
+  Complete = 5,
+}
+
 export enum SituationConsequenceWeight {
-  StronglyPositive = 15,
-  Positive = 10,
-  SlightlyPositive = 5,
+  StronglyPositive = 12,
+  Positive = 6,
+  SlightlyPositive = 3,
   Neutral = 0,
-  SlightlyNegative = -5,
-  Negative = -10,
-  StronglyNegative = -15,
+  SlightlyNegative = -3,
+  Negative = -6,
+  StronglyNegative = -12,
 }
 
 // Create Game

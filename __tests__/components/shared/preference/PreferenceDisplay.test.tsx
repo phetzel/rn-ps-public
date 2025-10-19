@@ -13,7 +13,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react-native";
 
 import PreferenceDisplay from "~/components/shared/preference/PreferenceDisplay";
-import { AnswerType, Preference } from "~/types";
+import { AnswerType, Preference, PreferenceAnswerType } from "~/types";
 
 // No mocks - testing actual component behavior
 
@@ -56,8 +56,10 @@ describe("PreferenceDisplay", () => {
       { answerType: AnswerType.Admit, expectedLabel: "Admit" },
       { answerType: AnswerType.Deny, expectedLabel: "Deny" },
       { answerType: AnswerType.Inform, expectedLabel: "Inform" },
-      { answerType: AnswerType.Authorized, expectedLabel: "Authorized" },
-    ];
+    ] as const satisfies ReadonlyArray<{
+      answerType: PreferenceAnswerType;
+      expectedLabel: string;
+    }>;
 
     testCases.forEach(({ answerType, expectedLabel }) => {
       it(`shows correct label for ${expectedLabel}`, () => {
@@ -104,29 +106,22 @@ describe("PreferenceDisplay", () => {
         answerType: AnswerType.Inform,
         expectedColors: "text-teal-600 bg-teal-50",
       },
-      {
-        answerType: AnswerType.Authorized,
-        expectedColors: "text-emerald-600 bg-emerald-50",
-      },
-    ];
+    ] as const satisfies ReadonlyArray<{
+      answerType: PreferenceAnswerType;
+      expectedColors: string;
+    }>;
+
+    const labelMap: Record<PreferenceAnswerType, string> = {
+      [AnswerType.Deflect]: "Deflect",
+      [AnswerType.Reassure]: "Reassure",
+      [AnswerType.Challenge]: "Challenge",
+      [AnswerType.Admit]: "Admit",
+      [AnswerType.Deny]: "Deny",
+      [AnswerType.Inform]: "Inform",
+    };
 
     colorTestCases.forEach(({ answerType, expectedColors }) => {
-      const answerTypeLabel =
-        answerType === AnswerType.Deflect
-          ? "Deflect"
-          : answerType === AnswerType.Reassure
-          ? "Reassure"
-          : answerType === AnswerType.Challenge
-          ? "Challenge"
-          : answerType === AnswerType.Admit
-          ? "Admit"
-          : answerType === AnswerType.Deny
-          ? "Deny"
-          : answerType === AnswerType.Inform
-          ? "Inform"
-          : answerType === AnswerType.Authorized
-          ? "Authorized"
-          : "Unknown";
+      const answerTypeLabel = labelMap[answerType];
 
       it(`applies correct colors for ${answerTypeLabel}`, () => {
         const preference: Preference = {

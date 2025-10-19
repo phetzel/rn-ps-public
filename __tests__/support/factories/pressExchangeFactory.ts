@@ -1,7 +1,11 @@
 import { Database } from "@nozbe/watermelondb";
 import { PressExchange } from "~/lib/db/models";
-import { ExchangeContent, ExchangeProgress } from "~/types";
-import { teachersStrikeBackExchanges } from "~/lib/data/situations/v2/domestic-policy/teachers-strike-back/exchanges";
+import {
+  ExchangeContent,
+  ExchangeProgress,
+  JournalistEngagementWeight,
+} from "~/types";
+import { teachersStrikeBackExchanges } from "~/lib/data/situations/v1/domestic-policy/teachers-strike-back/exchanges";
 
 type ExchangeOverrides = {
   levelId: string;
@@ -24,7 +28,11 @@ export async function createPressExchange(
 
   const defaultProgress: ExchangeProgress = {
     history: [],
-    currentQuestionId: contentToUse.rootQuestionId, // Use the correct rootQuestionId
+    currentQuestionId: contentToUse.rootQuestion.id, // Use the correct rootQuestion.id
+    questionsAnswered: 0,
+    hasSkipped: false,
+    completed: false,
+    // journalistEngagement is not set initially - only after completion
   };
 
   const finalContent = JSON.stringify(contentToUse);

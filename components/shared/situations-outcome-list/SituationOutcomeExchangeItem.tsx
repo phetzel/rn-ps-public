@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 
+import { findQuestionById } from "~/lib/db/helpers/exchangeApi";
 // Components
 import { Separator } from "~/components/ui/separator";
 import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
@@ -38,7 +39,7 @@ function SituationOutcomeExchangeItem({
     .filter((item) => {
       if (item.skipped || !item.answerId) return false;
 
-      const question = content.questions[item.questionId];
+      const question = findQuestionById(item.questionId, content);
       if (!question) return false;
 
       const answer = question.answers.find((a) => a.id === item.answerId);
@@ -50,13 +51,22 @@ function SituationOutcomeExchangeItem({
       );
     })
     .map((item) => {
-      const question = content.questions[item.questionId];
-      const answer = question.answers.find((a) => a.id === item.answerId);
+      const question = findQuestionById(item.questionId, content);
+      const answer = question?.answers.find((a) => a.id === item.answerId);
       // Get all outcome modifiers
       const outcomeModifiers = answer?.outcomeModifiers || {};
 
       return { question, answerId: item.answerId, outcomeModifiers };
-    });
+    })
+    .filter(
+      (
+        item
+      ): item is {
+        question: NonNullable<typeof item.question>;
+        answerId: string;
+        outcomeModifiers: Record<string, number>;
+      } => item.question !== null
+    );
 
   if (relevantExchanges.length === 0) return null;
 

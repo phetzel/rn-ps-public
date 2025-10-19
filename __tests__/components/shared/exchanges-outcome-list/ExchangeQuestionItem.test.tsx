@@ -70,7 +70,6 @@ describe("ExchangeQuestionItem", () => {
   const mockQuestion: Question = {
     id: "q1",
     text: "What is your response to these allegations?",
-    depth: 0,
     answers: [
       {
         id: "a1",

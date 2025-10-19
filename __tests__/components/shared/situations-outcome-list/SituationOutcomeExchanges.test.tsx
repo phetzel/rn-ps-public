@@ -85,25 +85,23 @@ describe("SituationOutcomeExchanges", () => {
   const mockRelevantExchange = {
     id: "exchange-1",
     parseContent: {
-      questions: {
-        q1: {
-          id: "q1",
-          text: "What's the response?",
-          depth: 0,
-          answers: [
-            {
-              id: "a1",
-              text: "We're handling it",
-              type: AnswerType.Inform,
-              impacts: {},
-              outcomeModifiers: {
-                "outcome-1": OutcomeModifierWeight.SlightPositive,
-              }, // Has impact
-            },
-          ],
-        },
+      rootQuestion: {
+        id: "q1",
+        text: "What's the response?",
+        answers: [
+          {
+            id: "a1",
+            text: "We're handling it",
+            type: AnswerType.Inform,
+            impacts: {},
+            outcomeModifiers: {
+              "outcome-1": OutcomeModifierWeight.SlightPositive,
+            }, // Has impact
+          },
+        ],
       },
-      rootQuestionId: "q1",
+      secondaryQuestions: [],
+      tertiaryQuestions: [],
     },
     parseProgress: {
       history: [
@@ -120,23 +118,21 @@ describe("SituationOutcomeExchanges", () => {
   const mockIrrelevantExchange = {
     id: "exchange-2",
     parseContent: {
-      questions: {
-        q1: {
-          id: "q1",
-          text: "Irrelevant question?",
-          depth: 0,
-          answers: [
-            {
-              id: "a1",
-              text: "Some answer",
-              type: AnswerType.Inform,
-              impacts: {},
-              outcomeModifiers: {}, // No impact
-            },
-          ],
-        },
+      rootQuestion: {
+        id: "q1",
+        text: "Irrelevant question?",
+        answers: [
+          {
+            id: "a1",
+            text: "Some answer",
+            type: AnswerType.Inform,
+            impacts: {},
+            outcomeModifiers: {}, // No impact
+          },
+        ],
       },
-      rootQuestionId: "q1",
+      secondaryQuestions: [],
+      tertiaryQuestions: [],
     },
     parseProgress: {
       history: [
@@ -286,7 +282,11 @@ describe("SituationOutcomeExchanges", () => {
   it("handles exchanges with missing progress", () => {
     const noProgressExchange = {
       id: "exchange-no-progress",
-      parseContent: { questions: {} },
+      parseContent: {
+        rootQuestion: { id: "empty", text: "", answers: [] },
+        secondaryQuestions: [],
+        tertiaryQuestions: [],
+      },
       parseProgress: null,
     } as unknown as PressExchange;
 
@@ -337,25 +337,23 @@ describe("SituationOutcomeExchanges", () => {
     const zeroImpactExchange = {
       id: "exchange-zero",
       parseContent: {
-        questions: {
-          q1: {
-            id: "q1",
-            text: "Question?",
-            depth: 0,
-            answers: [
-              {
-                id: "a1",
-                text: "Answer",
-                type: AnswerType.Inform,
-                impacts: {},
-                outcomeModifiers: {
-                  "outcome-1": OutcomeModifierWeight.Neutral,
-                }, // Zero impact
-              },
-            ],
-          },
+        rootQuestion: {
+          id: "q1",
+          text: "Question?",
+          answers: [
+            {
+              id: "a1",
+              text: "Answer",
+              type: AnswerType.Inform,
+              impacts: {},
+              outcomeModifiers: {
+                "outcome-1": OutcomeModifierWeight.Neutral,
+              }, // Zero impact
+            },
+          ],
         },
-        rootQuestionId: "q1",
+        secondaryQuestions: [],
+        tertiaryQuestions: [],
       },
       parseProgress: {
         history: [

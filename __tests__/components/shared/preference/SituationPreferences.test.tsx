@@ -196,7 +196,7 @@ describe("SituationPreferences", () => {
       cabinet: {
         [CabinetStaticId.Defense]: {
           preference: {
-            answerType: AnswerType.Authorized,
+            answerType: AnswerType.Inform,
             rationale: "Use classified intelligence",
           },
           authorizedContent:
@@ -216,7 +216,8 @@ describe("SituationPreferences", () => {
     );
     fireEvent.press(accordionTrigger);
 
-    expect(screen.getByText("Authorized")).toBeTruthy();
+    expect(screen.getByText("Inform")).toBeTruthy();
+    expect(screen.getByText("Classified Info Withheld")).toBeTruthy();
   });
 
   it("filters out cabinet members not in preferences", () => {

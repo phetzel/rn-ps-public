@@ -69,22 +69,20 @@ describe("ExchangeOutcomeItem", () => {
   } as any;
 
   const mockExchangeContent = {
-    questions: {
-      q1: {
-        id: "q1",
-        text: "What is the administration's stance on the budget crisis?",
-        answers: [
-          {
-            id: "a1",
-            text: "We are working around the clock to resolve this issue",
-            type: "reassure",
-            impacts: {},
-          },
-        ],
-        followUpQuestions: {},
-      },
+    rootQuestion: {
+      id: "q1",
+      text: "What is the administration's stance on the budget crisis?",
+      answers: [
+        {
+          id: "a1",
+          text: "We are working around the clock to resolve this issue",
+          type: "reassure",
+          impacts: {},
+        },
+      ],
     },
-    rootQuestionId: "q1",
+    secondaryQuestions: [],
+    tertiaryQuestions: [],
   };
 
   const mockExchangeProgress = {
@@ -186,15 +184,13 @@ describe("ExchangeOutcomeItem", () => {
       ...mockExchange,
       parseContent: {
         ...mockExchangeContent,
-        questions: {
-          ...mockExchangeContent.questions,
-          q2: {
+        secondaryQuestions: [
+          {
             id: "q2",
             text: "Follow-up: Can you provide more details?",
             answers: [],
-            followUpQuestions: {},
           },
-        },
+        ],
       },
       parseProgress: {
         history: [
@@ -274,10 +270,9 @@ describe("ExchangeOutcomeItem", () => {
     const invalidHistoryExchange = {
       ...mockExchange,
       parseContent: {
-        questions: {
-          q1: mockExchangeContent.questions.q1,
-        },
-        rootQuestionId: "q1",
+        rootQuestion: mockExchangeContent.rootQuestion,
+        secondaryQuestions: [],
+        tertiaryQuestions: [],
       },
       parseProgress: {
         history: [

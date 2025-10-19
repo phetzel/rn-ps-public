@@ -45,6 +45,30 @@ export interface EntityCoverageAnalysis {
 }
 
 /**
+ * Helper function to get all questions from an exchange in the new structure
+ */
+function getAllQuestionsFromExchange(
+  exchange: any
+): Array<{ question: any; depth: number }> {
+  const questions: Array<{ question: any; depth: number }> = [];
+
+  // Add root question (depth 0)
+  questions.push({ question: exchange.content.rootQuestion, depth: 0 });
+
+  // Add secondary questions (depth 1)
+  exchange.content.secondaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 1 });
+  });
+
+  // Add tertiary questions (depth 2)
+  exchange.content.tertiaryQuestions.forEach((question: any) => {
+    questions.push({ question, depth: 2 });
+  });
+
+  return questions;
+}
+
+/**
  * Analyzes situation type distribution across all situations
  */
 export function analyzeSituationTypes(): SituationTypeAnalysis {
@@ -91,11 +115,14 @@ export function analyzeGlobalAnswerTypes(): GlobalAnswerTypeAnalysis {
   // Count answers by type
   situationsData.forEach((situation) => {
     situation.exchanges.forEach((exchange) => {
-      Object.values(exchange.content.questions).forEach((question) => {
-        question.answers.forEach((answer) => {
+      const allQuestions = getAllQuestionsFromExchange(exchange);
+
+      allQuestions.forEach(({ question, depth }) => {
+        question.answers.forEach((answer: any) => {
           totalAnswers++;
-          const currentCount = answerTypeDistribution[answer.type] ?? 0;
-          answerTypeDistribution[answer.type] = currentCount + 1;
+          const answerType = answer.type as AnswerType;
+          const currentCount = answerTypeDistribution[answerType] ?? 0;
+          answerTypeDistribution[answerType] = currentCount + 1;
         });
       });
     });

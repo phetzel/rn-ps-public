@@ -1,0 +1,72 @@
+import {
+  SituationConsequenceWeight,
+  CabinetStaticId,
+  SubgroupStaticId,
+} from "~/types";
+import type { SituationOutcome } from "~/lib/schemas/situations";
+
+export const fakeAlienInvasionAlertOutcomes: SituationOutcome[] = [
+  {
+    id: "outcome_alert_shelved",
+    title: "Plan Shelved - Ethics Win",
+    description:
+      "Administration responds to outrage by immediately scrapping the plan, showing ethical leadership and transparent governance.",
+    weight: 35,
+    consequences: {
+      approvalChanges: {
+        cabinet: {
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Homeland]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyNegative,
+        },
+        subgroups: {
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
+        },
+      },
+    },
+  },
+  {
+    id: "outcome_alert_panic",
+    title: "Leaked Memo Sparks Widespread Panic",
+    description:
+      "Leaked plan causes real public fear, hoarding, and chaos. Citizens lose trust in government competence and ethics.",
+    weight: 45,
+    consequences: {
+      approvalChanges: {
+        cabinet: {
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.Negative,
+          [CabinetStaticId.Homeland]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyNegative,
+        },
+        subgroups: {
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.StronglyNegative,
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyPositive,
+        },
+      },
+    },
+  },
+  {
+    id: "outcome_alert_funding_pass",
+    title: "Fear Works, Funding Passes",
+    description:
+      "Despite unethical nature, the fear successfully drives massive defense spending through Congress with bipartisan support.",
+    weight: 20,
+    consequences: {
+      approvalChanges: {
+        cabinet: {
+          [CabinetStaticId.Defense]: SituationConsequenceWeight.SlightlyPositive,
+          [CabinetStaticId.HHS]: SituationConsequenceWeight.SlightlyNegative,
+          [CabinetStaticId.Homeland]: SituationConsequenceWeight.SlightlyNegative,
+        },
+        subgroups: {
+          [SubgroupStaticId.BusinessLeaders]: SituationConsequenceWeight.SlightlyPositive,
+          [SubgroupStaticId.IndependentBase]: SituationConsequenceWeight.SlightlyNegative,
+          [SubgroupStaticId.SeniorsCitizens]: SituationConsequenceWeight.SlightlyNegative,
+        },
+      },
+    },
+  },
+];

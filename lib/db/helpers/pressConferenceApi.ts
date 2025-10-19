@@ -8,6 +8,7 @@ import {
   JournalistInteractionImpact,
   AnswerType,
 } from "~/types";
+import { findQuestionById, findAnswerById } from "~/lib/db/helpers/exchangeApi";
 
 // Calculate impacts from press exchanges
 export async function calculatePressConferenceRawEffects(
@@ -59,7 +60,8 @@ export async function calculatePressConferenceRawEffects(
 
         // Handle answered questions
         if (historyItem.questionId && historyItem.answerId) {
-          const question = content.questions[historyItem.questionId];
+          // Use utility function to find question
+          const question = findQuestionById(historyItem.questionId, content);
           if (!question) {
             console.warn(
               `Question ${historyItem.questionId} not found in exchange ${exchange.id}. Skipping.`
@@ -67,9 +69,8 @@ export async function calculatePressConferenceRawEffects(
             continue;
           }
 
-          const selectedAnswer = question.answers.find(
-            (a) => a.id === historyItem.answerId
-          );
+          // Use utility function to find answer
+          const selectedAnswer = findAnswerById(historyItem.answerId, content);
           if (
             !selectedAnswer ||
             !selectedAnswer.impacts ||
@@ -149,18 +150,18 @@ export async function calculatePressConferenceRawEffects(
         }
       }
 
-      // Handle follow-up questions
-      const lastHistory = progress.history[progress.history.length - 1];
-      if (!lastHistory.skipped && lastHistory.questionId) {
-        const lastQuestion = content.questions[lastHistory.questionId];
-        const lastAnswer = lastQuestion.answers.find(
-          (a) => a.id === lastHistory.answerId
-        );
-
-        if (lastAnswer && lastAnswer.followUpId) {
-          psRelationshipDeltas.journalists[journalistStaticId] =
-            (psRelationshipDeltas.journalists[journalistStaticId] || 0) +
-            JournalistInteractionImpact.HadFollowUp;
+      // Handle follow-up questions using new logic
+      // Since we now have normalized structure, we can use the hasSkipped and completed flags
+      if (progress.completed && !progress.hasSkipped) {
+        // Check if the last answered question had a follow-up
+        const lastHistory = progress.history[progress.history.length - 1];
+        if (!lastHistory.skipped && lastHistory.answerId) {
+          const lastAnswer = findAnswerById(lastHistory.answerId, content);
+          if (lastAnswer && lastAnswer.followUpId) {
+            psRelationshipDeltas.journalists[journalistStaticId] =
+              (psRelationshipDeltas.journalists[journalistStaticId] || 0) +
+              JournalistInteractionImpact.HadFollowUp;
+          }
         }
       }
     }

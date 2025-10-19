@@ -161,20 +161,6 @@ describe("PresidentPreference", () => {
     ).toBeTruthy();
   });
 
-  it("handles authorized answer type", () => {
-    const preference: Preference = {
-      answerType: AnswerType.Authorized,
-      rationale: "Use classified information to respond",
-    };
-
-    render(<PresidentPreference gameId="game1" preference={preference} />);
-
-    expect(screen.getByText("Authorized")).toBeTruthy();
-    expect(
-      screen.getByText("Use classified information to respond")
-    ).toBeTruthy();
-  });
-
   it("has proper header accessibility role", () => {
     const preference: Preference = {
       answerType: AnswerType.Inform,

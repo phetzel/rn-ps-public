@@ -11,6 +11,7 @@ import {
 import { Text } from "~/components/ui/text";
 import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 import ExchangeQuestionItem from "~/components/shared/exchanges-outcome-list/ExchangeQuestionItem";
+import { findQuestionById } from "~/lib/db/helpers/exchangeApi";
 
 interface ExchangeOutcomeItemProps {
   exchange: PressExchange;
@@ -32,9 +33,9 @@ function ExchangeOutcomeItem({
 
   const { history } = progress;
   const isJournalistCalledOn = history.length > 0;
-  const rootQuestion = content.questions[content.rootQuestionId];
+  const rootQuestion = content.rootQuestion;
   const pendingFollowUpQuestion = !!progress.currentQuestionId
-    ? content.questions[progress.currentQuestionId]
+    ? findQuestionById(progress.currentQuestionId, content)
     : null;
 
   return (
@@ -106,7 +107,10 @@ function ExchangeOutcomeItem({
               }`}
             >
               {history.map((interaction, index) => {
-                const question = content.questions[interaction.questionId];
+                const question = findQuestionById(
+                  interaction.questionId,
+                  content
+                );
                 if (!question) return null;
 
                 return (

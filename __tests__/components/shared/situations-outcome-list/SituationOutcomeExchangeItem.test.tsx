@@ -89,22 +89,22 @@ describe("SituationOutcomeExchangeItem", () => {
   ];
 
   const mockExchangeContent = {
-    questions: {
-      q1: {
-        id: "q1",
-        text: "What is your response to the crisis?",
-        answers: [
-          {
-            id: "a1",
-            text: "We are handling it appropriately",
-            outcomeModifiers: {
-              "outcome-1": -10,
-              "outcome-2": 15,
-            },
+    rootQuestion: {
+      id: "q1",
+      text: "What is your response to the crisis?",
+      answers: [
+        {
+          id: "a1",
+          text: "We are handling it appropriately",
+          outcomeModifiers: {
+            "outcome-1": -10,
+            "outcome-2": 15,
           },
-        ],
-      },
-      q2: {
+        },
+      ],
+    },
+    secondaryQuestions: [
+      {
         id: "q2",
         text: "Will you resign over this?",
         answers: [
@@ -117,7 +117,9 @@ describe("SituationOutcomeExchangeItem", () => {
           },
         ],
       },
-      q3: {
+    ],
+    tertiaryQuestions: [
+      {
         id: "q3",
         text: "What about the economy?",
         answers: [
@@ -128,7 +130,7 @@ describe("SituationOutcomeExchangeItem", () => {
           },
         ],
       },
-    },
+    ],
   };
 
   const mockExchangeProgress = {
@@ -229,19 +231,19 @@ describe("SituationOutcomeExchangeItem", () => {
     const noImpactExchange = {
       ...mockExchange,
       parseContent: {
-        questions: {
-          q1: {
-            id: "q1",
-            text: "Irrelevant question",
-            answers: [
-              {
-                id: "a1",
-                text: "Some answer",
-                outcomeModifiers: {}, // No impact
-              },
-            ],
-          },
+        rootQuestion: {
+          id: "q1",
+          text: "Irrelevant question",
+          answers: [
+            {
+              id: "a1",
+              text: "Some answer",
+              outcomeModifiers: {}, // No impact
+            },
+          ],
         },
+        secondaryQuestions: [],
+        tertiaryQuestions: [],
       },
       parseProgress: {
         history: [
@@ -369,19 +371,19 @@ describe("SituationOutcomeExchangeItem", () => {
     const noAnswerExchange = {
       ...mockExchange,
       parseContent: {
-        questions: {
-          q1: {
-            id: "q1",
-            text: "What is your response?",
-            answers: [
-              {
-                id: "a1",
-                text: "Response",
-                outcomeModifiers: { "outcome-1": 10 },
-              },
-            ],
-          },
+        rootQuestion: {
+          id: "q1",
+          text: "What is your response?",
+          answers: [
+            {
+              id: "a1",
+              text: "Response",
+              outcomeModifiers: { "outcome-1": 10 },
+            },
+          ],
         },
+        secondaryQuestions: [],
+        tertiaryQuestions: [],
       },
       parseProgress: {
         history: [

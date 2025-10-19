@@ -1,276 +1,80 @@
 import { z } from "zod";
+import type { CabinetStaticId } from "~/types";
+import type { SituationConsequenceWeight } from "~/types";
 
-import { idSchema, textLengthSchema } from "~/lib/schemas/common";
 import { situationPreferencesSchema } from "~/lib/schemas/situations/preferences";
-import {
-  SituationConsequenceWeight,
-  CabinetStaticId,
-  SubgroupStaticId,
-} from "~/types";
+import { situationOutcomeArraySchema } from "~/lib/schemas/situations/outcomes";
 
-export const consequenceSchema = z.object({
-  approvalChanges: z.object({
-    cabinet: z
-      .record(
-        z.nativeEnum(CabinetStaticId),
-        z.nativeEnum(SituationConsequenceWeight)
-      )
-      .optional(),
-    subgroups: z
-      .record(
-        z.nativeEnum(SubgroupStaticId),
-        z.nativeEnum(SituationConsequenceWeight)
-      )
-      .optional(),
-  }),
-});
-
-export const situationOutcomeSchema = z.object({
-  id: idSchema,
-  title: textLengthSchema.outcomeTitle,
-  description: textLengthSchema.outcomeDescription,
-  weight: z.number().min(1).max(100),
-  consequences: consequenceSchema,
-  followUpId: z.string().optional(),
-});
 
 export const situationContentSchema = z
   .object({
     preferences: situationPreferencesSchema,
-    outcomes: z
-      .array(situationOutcomeSchema)
-      .min(2, "At least 2 outcomes required for meaningful choice")
-      .max(4, "Maximum 4 outcomes for mobile UI constraints"),
+    outcomes: situationOutcomeArraySchema
   })
   .refine(
     (data) => {
-      const totalWeight = data.outcomes.reduce(
-        (sum, outcome) => sum + outcome.weight,
-        0
-      );
-      return totalWeight === 100;
-    },
-    {
-      message: "Outcome weights must sum to exactly 100",
-      path: ["outcomes"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Ensure at least one positive and one negative outcome
-      const positiveWeights = [
-        SituationConsequenceWeight.StronglyPositive,
-        SituationConsequenceWeight.Positive,
-        SituationConsequenceWeight.SlightlyPositive,
-      ];
-      const negativeWeights = [
-        SituationConsequenceWeight.StronglyNegative,
-        SituationConsequenceWeight.Negative,
-        SituationConsequenceWeight.SlightlyNegative,
-      ];
-
-      const hasPositive = data.outcomes.some(
-        (outcome) =>
-          Object.values(
-            outcome.consequences.approvalChanges.cabinet || {}
-          ).some((weight) => positiveWeights.includes(weight)) ||
-          Object.values(
-            outcome.consequences.approvalChanges.subgroups || {}
-          ).some((weight) => positiveWeights.includes(weight))
+      // Cabinet-preferences → consequences rules
+      const prefCabinet = data.preferences.cabinet || {};
+      const prefIds = new Set<CabinetStaticId>(
+        Object.keys(prefCabinet) as CabinetStaticId[]
       );
 
-      const hasNegative = data.outcomes.some(
-        (outcome) =>
-          Object.values(
-            outcome.consequences.approvalChanges.cabinet || {}
-          ).some((weight) => negativeWeights.includes(weight)) ||
-          Object.values(
-            outcome.consequences.approvalChanges.subgroups || {}
-          ).some((weight) => negativeWeights.includes(weight))
-      );
-
-      return hasPositive && hasNegative;
-    },
-    {
-      message:
-        "Each situation must have at least one positive and one negative outcome",
-      path: ["outcomes"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Each individual entity cannot have more positive than negative impacts (per-entity balance)
-      const positiveWeights = [
-        SituationConsequenceWeight.StronglyPositive,
-        SituationConsequenceWeight.Positive,
-        SituationConsequenceWeight.SlightlyPositive,
-      ];
-      const negativeWeights = [
-        SituationConsequenceWeight.StronglyNegative,
-        SituationConsequenceWeight.Negative,
-        SituationConsequenceWeight.SlightlyNegative,
-      ];
-
-      const entityStats = new Map<
-        string,
-        { positive: number; negative: number }
-      >();
+      const appearances = new Map<string, { totalSum: number; hasPos: boolean; hasNeg: boolean }>();
+      const nonPreferredUsed: string[] = [];
 
       data.outcomes.forEach((outcome) => {
-        const { cabinet, subgroups } = outcome.consequences.approvalChanges;
-
-        // Count cabinet member changes
-        if (cabinet) {
-          Object.entries(cabinet).forEach(([entityId, weight]) => {
-            if (!entityStats.has(entityId)) {
-              entityStats.set(entityId, { positive: 0, negative: 0 });
-            }
-
-            const stats = entityStats.get(entityId)!;
-            if (positiveWeights.includes(weight)) {
-              stats.positive++;
-            } else if (negativeWeights.includes(weight)) {
-              stats.negative++;
-            }
-          });
-        }
-
-        // Count subgroup changes
-        if (subgroups) {
-          Object.entries(subgroups).forEach(([entityId, weight]) => {
-            if (!entityStats.has(entityId)) {
-              entityStats.set(entityId, { positive: 0, negative: 0 });
-            }
-
-            const stats = entityStats.get(entityId)!;
-            if (positiveWeights.includes(weight)) {
-              stats.positive++;
-            } else if (negativeWeights.includes(weight)) {
-              stats.negative++;
-            }
-          });
-        }
+        const cab = outcome.consequences.approvalChanges.cabinet || {};
+        (Object.entries(cab) as Array<[
+          CabinetStaticId,
+          SituationConsequenceWeight
+        ]>).forEach(([id, weight]) => {
+          if (!prefIds.has(id)) {
+            nonPreferredUsed.push(id);
+          }
+          if (!appearances.has(id))
+            appearances.set(id, { totalSum: 0, hasPos: false, hasNeg: false });
+          const s = appearances.get(id)!;
+          s.totalSum += weight;
+          if (weight > 0) s.hasPos = true;
+          if (weight < 0) s.hasNeg = true;
+        });
       });
 
-      // Check that no entity has more positive than negative impacts
-      for (const [, stats] of entityStats) {
-        if (stats.positive > stats.negative && stats.positive > 0) {
-          return false;
-        }
+      // Rule 1: Only cabinet members with a preference may appear in outcomes
+      if (nonPreferredUsed.length > 0) return false;
+
+      // Rule 2: Every cabinet member with a preference must appear at least once
+      for (const id of prefIds) {
+        if (!appearances.has(id)) return false;
+      }
+
+      // Rule 3: For each preferred cabinet member, require both positive and negative impacts and net neutral or negative total
+      for (const id of prefIds) {
+        const stats = appearances.get(id)!;
+        if (!stats.hasPos || !stats.hasNeg) return false;
+        if (stats.totalSum > 0) return false;
       }
 
       return true;
     },
     {
       message:
-        "No entity can have more positive than negative approval changes across outcomes in this situation",
+        "Cabinet outcomes must include only preference-bearing members; each must appear with both positive and negative impacts and net neutral/negative total",
       path: ["outcomes"],
     }
   )
   .refine(
     (data) => {
-      // Each outcome must affect at least one entity
-      return data.outcomes.every((outcome) => {
-        const cabinetCount = Object.keys(
-          outcome.consequences.approvalChanges.cabinet || {}
-        ).length;
-        const subgroupCount = Object.keys(
-          outcome.consequences.approvalChanges.subgroups || {}
-        ).length;
-        return cabinetCount + subgroupCount >= 1;
+      // At most one cabinet member may include authorizedContent per situation
+      const cab = data.preferences.cabinet || {};
+      let count = 0;
+      Object.values(cab).forEach((c) => {
+        if (c?.authorizedContent) count++;
       });
+      return count <= 1;
     },
     {
-      message: "Each outcome must affect at least one entity",
-      path: ["outcomes"],
-    }
-  )
-  .refine(
-    (data) => {
-      // No single outcome can have excessive entity impacts (max 5 entities per outcome)
-      return data.outcomes.every((outcome) => {
-        const cabinetCount = Object.keys(
-          outcome.consequences.approvalChanges.cabinet || {}
-        ).length;
-        const subgroupCount = Object.keys(
-          outcome.consequences.approvalChanges.subgroups || {}
-        ).length;
-        return cabinetCount + subgroupCount <= 6;
-      });
-    },
-    {
-      message:
-        "No outcome can affect more than 6 entities (keeps impacts focused)",
-      path: ["outcomes"],
-    }
-  )
-  .refine(
-    (data) => {
-      // Each entity affected by a situation must have at least one positive AND one negative impact
-      const positiveWeights = [
-        SituationConsequenceWeight.StronglyPositive,
-        SituationConsequenceWeight.Positive,
-        SituationConsequenceWeight.SlightlyPositive,
-      ];
-      const negativeWeights = [
-        SituationConsequenceWeight.StronglyNegative,
-        SituationConsequenceWeight.Negative,
-        SituationConsequenceWeight.SlightlyNegative,
-      ];
-
-      const entityStats = new Map<
-        string,
-        { positive: number; negative: number }
-      >();
-
-      data.outcomes.forEach((outcome) => {
-        const { cabinet, subgroups } = outcome.consequences.approvalChanges;
-
-        // Count cabinet member changes
-        if (cabinet) {
-          Object.entries(cabinet).forEach(([entityId, weight]) => {
-            if (!entityStats.has(entityId)) {
-              entityStats.set(entityId, { positive: 0, negative: 0 });
-            }
-
-            const stats = entityStats.get(entityId)!;
-            if (positiveWeights.includes(weight)) {
-              stats.positive++;
-            } else if (negativeWeights.includes(weight)) {
-              stats.negative++;
-            }
-          });
-        }
-
-        // Count subgroup changes
-        if (subgroups) {
-          Object.entries(subgroups).forEach(([entityId, weight]) => {
-            if (!entityStats.has(entityId)) {
-              entityStats.set(entityId, { positive: 0, negative: 0 });
-            }
-
-            const stats = entityStats.get(entityId)!;
-            if (positiveWeights.includes(weight)) {
-              stats.positive++;
-            } else if (negativeWeights.includes(weight)) {
-              stats.negative++;
-            }
-          });
-        }
-      });
-
-      // Check that each entity has BOTH positive and negative impacts
-      for (const [entityId, stats] of entityStats) {
-        if (stats.positive === 0 || stats.negative === 0) {
-          return false;
-        }
-      }
-
-      return true;
-    },
-    {
-      message:
-        "Each entity affected by a situation must have at least one positive AND one negative approval change across outcomes (ensures meaningful trade-offs)",
-      path: ["outcomes"],
+      message: "Allow at most one cabinet member with authorizedContent",
+      path: ["preferences", "cabinet"],
     }
   );

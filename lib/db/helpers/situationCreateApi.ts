@@ -14,6 +14,7 @@ import {
   PublicationStaticId,
   JournalistStaticId,
 } from "~/types";
+import { initializeExchangeProgressForContent } from "~/lib/db/helpers/exchangeApi";
 
 export async function createSituationsForLevel(
   game: Game,
@@ -96,11 +97,10 @@ export async function createSituationsForLevel(
         // Mark this journalist as assigned
         assignedJournalists.add(journalist.id);
 
-        // Create initial progress
-        const initialProgress = {
-          history: [],
-          currentQuestionId: exchange.content.rootQuestionId,
-        };
+        // Use the new utility function to create initial progress with proper currentQuestionId
+        const initialProgress = initializeExchangeProgressForContent(
+          exchange.content
+        );
 
         // Check if journalist already has an exchange for this level
         const existingExchange = await fetchPressExchangeForJournalistLevel(

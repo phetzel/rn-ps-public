@@ -14,6 +14,12 @@ import type Situation from "./Situation";
 import type Journalist from "./Journalist";
 import { exchangeContentSchema, exchangeProgressSchema } from "~/lib/schemas";
 import { ExchangeContent, ExchangeProgress, Question, Answer } from "~/types";
+import {
+  getCurrentQuestion,
+  updateProgressWithAnswer,
+  updateProgressWithSkip,
+  initializeExchangeProgress,
+} from "~/lib/db/helpers/exchangeApi";
 
 export default class PressExchange extends Model {
   static table = "press_exchanges";
@@ -50,6 +56,10 @@ export default class PressExchange extends Model {
         console.warn(
           "PressExchange.content getter: Invalid data structure found in DB:",
           validationResult.error.format()
+        );
+        console.warn(
+          "Raw content causing validation error:",
+          JSON.stringify(parsed, null, 2)
         );
         return null;
       }
@@ -88,12 +98,12 @@ export default class PressExchange extends Model {
     const content = this.parseContent;
     const progress = this.parseProgress;
 
-    if (!content || !progress || !progress.currentQuestionId) {
+    if (!content || !progress) {
       return null;
     }
 
-    // Return the current question from content based on currentQuestionId
-    return content.questions[progress.currentQuestionId] || null;
+    // Use the new utility function instead of direct JSON manipulation
+    return getCurrentQuestion(progress, content);
   }
 
   // --- Press Conference Actions ---
@@ -103,68 +113,56 @@ export default class PressExchange extends Model {
 
     if (!content || !progress)
       throw new Error("Exchange content or progress not found");
-    if (!progress.currentQuestionId)
-      throw new Error("No current question to answer");
 
-    const currentQuestion = content.questions[progress.currentQuestionId];
-    if (!currentQuestion)
-      throw new Error(`Question ${progress.currentQuestionId} not found`);
-
-    // Find the selected answer
-    const selectedAnswer = currentQuestion.answers.find(
-      (a) => a.id === answerId
-    );
-    if (!selectedAnswer)
-      throw new Error(
-        `Answer ${answerId} not found in question ${progress.currentQuestionId}`
+    try {
+      // Use the new utility function to update progress
+      const updatedProgress = updateProgressWithAnswer(
+        progress,
+        answerId,
+        content
       );
 
-    // Record this answer in history
-    const updatedHistory = [
-      ...progress.history,
-      {
-        questionId: progress.currentQuestionId,
-        answerId,
-        skipped: false,
-      },
-    ];
-
-    // Determine the next question (if any)
-    const nextQuestionId = selectedAnswer.followUpId || null;
-
-    // Update progress
-    const updatedProgress = {
-      history: updatedHistory,
-      currentQuestionId: nextQuestionId,
-    };
-
-    await this.update((exchange) => {
-      exchange.progress = JSON.stringify(updatedProgress);
-    });
+      await this.update((exchange) => {
+        exchange.progress = JSON.stringify(updatedProgress);
+      });
+    } catch (error) {
+      throw new Error(
+        `Failed to answer question: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
   }
 
   @writer async skipQuestion() {
+    const content = this.parseContent;
     const progress = this.parseProgress;
-    if (!progress || !progress.currentQuestionId)
-      throw new Error("No current question to skip");
 
-    // Record this skip in history
-    const updatedHistory = [
-      ...progress.history,
-      {
-        questionId: progress.currentQuestionId,
-        skipped: true,
-      },
-    ];
+    if (!content || !progress)
+      throw new Error("Exchange content or progress not found");
 
-    // Update progress (skipping means ending this question path)
-    const updatedProgress = {
-      history: updatedHistory,
-      currentQuestionId: null,
-    };
+    try {
+      // Use the new utility function to update progress
+      const updatedProgress = updateProgressWithSkip(progress, content);
+
+      await this.update((exchange) => {
+        exchange.progress = JSON.stringify(updatedProgress);
+      });
+    } catch (error) {
+      throw new Error(
+        `Failed to skip question: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
+    }
+  }
+
+  // --- Initialization ---
+  @writer async initializeProgress() {
+    const initialProgress = initializeExchangeProgress();
 
     await this.update((exchange) => {
-      exchange.progress = JSON.stringify(updatedProgress);
+      exchange.progress = JSON.stringify(initialProgress);
     });
   }
 }
