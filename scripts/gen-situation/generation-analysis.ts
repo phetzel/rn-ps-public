@@ -118,10 +118,7 @@ export function generationAnalysis(): GenerationAnalysis {
     });
 
     // Analyze president preferences (excluding authorized)
-    if (
-      situation.content?.preferences?.president?.answerType &&
-      situation.content.preferences.president.answerType !== AnswerType.Authorized
-    ) {
+    if (situation.content?.preferences?.president?.answerType) {
       presidentPreferences.appearanceCount++;
       const answerType = situation.content.preferences.president.answerType as AnswerType;
       presidentPreferences.preferenceTypes[answerType]++;
@@ -133,10 +130,7 @@ export function generationAnalysis(): GenerationAnalysis {
         ([cabinetId, pref]) => {
           const id = cabinetId as CabinetStaticId;
           const cabinetPref = pref as CabinetPreference;
-          if (
-            cabinetPref?.preference?.answerType &&
-            cabinetPref.preference.answerType !== AnswerType.Authorized
-          ) {
+          if (cabinetPref?.preference?.answerType) {
             cabinetPreferences[id].appearanceCount++;
             const answerType = cabinetPref.preference.answerType as AnswerType;
             cabinetPreferences[id].preferenceTypes[answerType]++;

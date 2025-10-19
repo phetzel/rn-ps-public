@@ -35,7 +35,6 @@ describe("ExchangeQuestionHeader", () => {
   const mockQuestion: Question = {
     id: "q1",
     text: "What is the administration's position on this matter?",
-    depth: 0,
     answers: [],
   };
 
@@ -113,7 +112,6 @@ describe("ExchangeQuestionHeader", () => {
     const differentQuestion: Question = {
       id: "q2",
       text: "Can you provide more details about the budget proposal?",
-      depth: 0,
       answers: [],
     };
 

@@ -136,6 +136,8 @@ export enum AnswerType {
   Authorized = "authorized", // Cabinet Relationship based classified intel, not available for preferences
 }
 
+export type PreferenceAnswerType = Exclude<AnswerType, AnswerType.Authorized>;
+
 export const PREFERENCE_ANSWER_TYPES = [
   AnswerType.Deflect,
   AnswerType.Reassure,
@@ -143,9 +145,7 @@ export const PREFERENCE_ANSWER_TYPES = [
   AnswerType.Admit,
   AnswerType.Deny,
   AnswerType.Inform,
-] as const;
-
-export type PreferenceAnswerType = typeof PREFERENCE_ANSWER_TYPES[number];
+] as const satisfies readonly PreferenceAnswerType[];
 
 export interface Answer {
   id: string;
@@ -239,7 +239,7 @@ export interface SituationTrigger {
 }
 
 export interface Preference {
-  answerType: AnswerType;
+  answerType: PreferenceAnswerType;
   rationale: string;
 }
 
@@ -249,7 +249,7 @@ export interface CabinetPreference {
 }
 
 export interface SituationPreferences {
-  president?: Preference;
+  president: Preference;
   cabinet?: {
     [key in CabinetStaticId]?: CabinetPreference;
   };
