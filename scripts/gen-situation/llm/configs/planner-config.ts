@@ -2,7 +2,7 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 import type { ResponsesJSONSchemaOptions } from "../../types";
 import type { GenerationAnalysis } from "../../types";
 import { buildCreativePrompt } from "../prompt-constants";
-import { GPT_5_MINI } from "../llm-constants";
+import { GPT_5_MINI, GPT_5 } from "../llm-constants";
 import { analyzeStrategicRequirements } from "../../utils/situation-balance-analyzer";
 import { generateSituationPlanSchema, type GenerateSituationPlan } from "~/lib/schemas/generate";
 
@@ -15,6 +15,7 @@ TASK-SPECIFIC GOALS
 - Keep ideas surprising and original, steering away from near-duplicate titles
 - Balance representation naturally by spotlighting less-used entities when it makes sense
 - Emphasize clever imagination and narrative flair over formula
+- Treat 'CabinetOver' and 'SubgroupsOver' entries as off-limits unless absolutely unavoidable—prioritize 'CabinetUnder' and 'SubgroupsUnder', and only include an over-represented entity if the concept demands it
 
 OUTPUT CONTRACT
 - You must follow the provided JSON Schema exactly (Structured Outputs is enabled)
@@ -61,6 +62,7 @@ export function buildPlannerRequest(
     analysis: GenerationAnalysis
   ): ResponsesJSONSchemaOptions {
     const s = analyzeStrategicRequirements(analysis);
+    console.log("Strategic requirements for planning:", s);
   
     const lines = [
       `TargetSituationType: ${s.targetSituationType}`,
