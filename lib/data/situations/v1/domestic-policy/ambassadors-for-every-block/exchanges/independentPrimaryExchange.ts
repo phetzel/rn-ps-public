@@ -13,7 +13,7 @@ export const independentPrimaryExchange: ExchangeData = {
   content: {
     rootQuestion: {
       id: "q_root",
-      text: "The 'Block Embassy' plan drafts neighborhood ambassadors to mediate bin wars; will it actually speed resolutions or just add sashes, stipends, and a fresh layer of bureau",
+      text: "The 'Block Embassy' plan drafts block ambassadors to mediate bin wars; will it actually speed resolutions or just add sashes, stipends, and fresh bureaucracy?",
       answers: [
         {
           id: "a_root_1",
