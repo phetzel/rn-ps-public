@@ -69,7 +69,7 @@ export function buildExchangeImpactsRequest(
       )).join(", ") || "(none)"
     }`,
     ``,
-    `Available Outcomes (for outcomeModifiers – keys must match exactly; sum to 0 per question):`,
+    `Available Outcomes (for outcomeModifiers – keys must match exactly; each answer must sum to 0):`,
     summarizeOutcomes(outcomes.outcomes),
     ``,
     `EXISTING QUESTIONS STRUCTURE:`,
@@ -84,7 +84,7 @@ YOUR TASK
 
 OUTCOME MODIFIERS
 - Keys must match outcome IDs exactly: ${outcomes.outcomes.map(o => o.id).join(", ")}
-- Per question: outcomeModifiers across the 4 answers must sum to 0
+- Per answer: outcomeModifiers must sum to 0 (pair positive and negative values inside the same answer)
 - Coverage: for EACH outcome ID in that question, include ≥1 answer with a positive modifier and ≥1 with a negative modifier
 
 IMPACTS — BALANCE RULES
