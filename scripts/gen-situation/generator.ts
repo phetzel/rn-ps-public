@@ -3,12 +3,10 @@ import { generationAnalysis } from "./generation-analysis";
 import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./steps";
 import { validateFinalSituation } from "./utils/final-validator";
 import { writeSituationFiles } from "./utils/situation-file-writer";
-import { BatchGenerationHelper } from "./utils/batch-helpers";
 import { logDeep } from "./utils/logging";
 import type {
   GenerationStage,
   GenerationResult,
-  BatchGenerationStats,
 } from "./types";
 
 
@@ -165,46 +163,5 @@ export class SituationGenerator {
         },
       };
     }
-  }
-
-  /**
-   * Generate multiple situations in batch with comprehensive error handling
-   */
-  async generateBatch(count: number): Promise<BatchGenerationStats> {
-    console.log(`🚀 Starting ENHANCED batch generation of ${count} situations...`);
-    console.log("============================================================");
-    
-    const batchStartTime = new Date();
-    const results: GenerationResult[] = [];
-
-    for (let i = 1; i <= count; i++) {
-      BatchGenerationHelper.logGenerationProgress(i, count);
-      
-      // Reset LLM client usage stats for clean per-generation tracking
-      this.llmClient.resetUsageStats();
-      
-      try {
-        const result = await this.generateComplete(`batch-${i}`);
-        results.push(result);
-        
-        // Brief pause between generations to avoid rate limiting
-        if (i < count) {
-          await BatchGenerationHelper.rateLimitPause();
-        }
-      } catch (error) {
-        // Handle unexpected errors that escape the generateComplete method
-        console.error(`💥 Unexpected error in generation ${i}: ${error instanceof Error ? error.message : error}`);
-        
-        const usage = this.llmClient.getUsageStats();
-        const errorResult = BatchGenerationHelper.createErrorResult(`batch-${i}`, error, usage);
-        results.push(errorResult);
-      }
-    }
-
-    const batchEndTime = new Date();
-    const stats = BatchGenerationHelper.calculateBatchStats(results, batchStartTime, batchEndTime);
-    
-    BatchGenerationHelper.logBatchSummary(stats);
-    return stats;
   }
 }

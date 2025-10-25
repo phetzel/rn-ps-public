@@ -1,9 +1,45 @@
 /**
  * Centralized Prompt Constants System
- * 
- * This file declares mood, tone, and creative direction ONCE to eliminate
- * repetitive guidance across multiple LLM prompt configs.
  */
+
+export const ENUM_REFERENCE_GUIDE = `
+### Situation Types:
+- **domestic_policy**: Internal government policies, regulations, domestic initiatives
+- **foreign_affairs**: International relations, diplomacy, trade, foreign conflicts  
+- **economy**: Economic policy, budgets, taxation, financial markets, trade
+- **security**: National security, military, cybersecurity, terrorism, defense
+- **environment**: Climate policy, environmental regulations, natural disasters
+- **ethics**: Government ethics, corruption, scandals, institutional integrity
+
+### Cabinet Members:
+- **state**: Secretary of State (foreign affairs, diplomacy)
+- **treasury**: Secretary of Treasury (economy, finances, budgets)
+- **defense**: Secretary of Defense (military, national security)
+- **justice**: Attorney General (law enforcement, legal matters)
+- **hhs**: Health and Human Services (health, social services)
+- **homeland**: Homeland Security (domestic security, border, emergency response)
+
+### Subgroups:
+#### Political: 
+- **left_wing_base**
+- **right_wing_base**
+- **independent_base**
+#### Demographic:
+- **youth_voters**
+- **seniors_citizens**
+- **rural_residents**
+- **urban_residents**
+#### Economic:
+- **labor_unions**
+- **business_leaders**
+- **tech_industry**
+
+### Publications:
+- **lib_primary**: Liberal-leaning primary news outlet
+- **con_primary**: Conservative-leaning primary news outlet  
+- **independent_primary**: Independent/centrist news outlet
+- **investigative**: Investigative journalism outlet
+`.trim();
 
 /**
  * Core creative mood and absurdity level - applied to creative content generation

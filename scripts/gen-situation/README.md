@@ -30,7 +30,6 @@ Each sub-step validates model output twice: first with generation schemas to kee
 
 ```bash
 npm run gen-situation               # generate a single situation
-npm run gen-situation -- --count=5  # batch generation
 npm run gen-situation -- --debug    # enable debug logging
 ```
 

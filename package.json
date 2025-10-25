@@ -21,9 +21,7 @@
     "test": "jest --watchAll",
     "test:ci": "jest --watchAll=false --passWithNoTests",
     "typecheck": "tsc --noEmit",
-    "gen-situation": "tsx scripts/run-gen-situation.ts",
-    "gen-situation:batch": "tsx scripts/run-gen-situation.ts --count=10",
-    "gen-situation:batch-large": "tsx scripts/run-gen-situation.ts --count=100"
+    "gen-situation": "tsx scripts/run-gen-situation.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
@@ -50,7 +48,7 @@
     "clsx": "^2.1.0",
     "expo": "^52.0.25",
     "expo-build-properties": "~0.13.2",
-    "expo-dev-client": "~5.0.17",
+    "expo-dev-client": "~5.0.20",
     "expo-linking": "~7.0.5",
     "expo-navigation-bar": "~4.0.9",
     "expo-router": "4.0.20",

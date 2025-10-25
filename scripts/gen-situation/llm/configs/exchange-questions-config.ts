@@ -76,9 +76,9 @@ DO NOT GENERATE
 - impacts or outcomeModifiers (added in next phase)
 
 LENGTH (schema-capped)
-- question.text: 60–170 chars (aim 90–140). End with punctuation and stop at least 10 chars shy of the cap.
+- question.text: 60–170 chars (keep ≤150; aim 90–130). End with punctuation and leave at least ~20 characters of headroom.
 - answer.text: 80–220 chars (aim 110–190). Use 1–2 sentences, end cleanly, and leave comfortable headroom.
-- If you approach the ceiling, tighten wording—never stop mid-word or without closing punctuation.
+- If wording creeps toward the ceiling, tighten earlier—never rely on the hard cap or stop mid-word/punctuation.
 
 Return ONLY a JSON object matching the JSON Schema (strict)
 `.trim();
