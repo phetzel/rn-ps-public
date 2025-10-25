@@ -44,22 +44,6 @@ export interface GenerationResult {
   duration?: number;
 }
 
-export interface BatchGenerationStats {
-  total: number;
-  successful: number;
-  failed: number;
-  successRate: number;
-  failuresByStage: Record<GenerationStage, number>;
-  totalUsage: {
-    requests: number;
-    totalTokens: number;
-    totalCost: number;
-  };
-  totalDuration: number;
-  averageDuration: number;
-  results: GenerationResult[];
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════
 // LLM CLIENT TYPES
 // ═══════════════════════════════════════════════════════════════════════════════
