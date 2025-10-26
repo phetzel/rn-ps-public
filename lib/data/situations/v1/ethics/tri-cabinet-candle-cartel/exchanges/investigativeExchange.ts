@@ -20,10 +20,10 @@ export const investigativeExchange: ExchangeData = {
           text: "I’ll challenge the candles to a trial by bathtub: if they out‑scent a skunk, they’re contraband; if not, they’re demoted to break‑room fresheners. Auditors will follow the waxy money trail.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -49,12 +49,12 @@ export const investigativeExchange: ExchangeData = {
           id: "a2",
           text: "We call those items ceremonial ‘smell treaties’—protocol props that calm rooms, not laws that bind them. The paperwork is seating charts and citrus oil, not backdoor indemnity schemes or scented loopholes.",
           type: AnswerType.Deflect,
-          outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.MajorNegative
-          },
+            outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.Neutral
+            },
           impacts: {
             president: {
               weight: ExchangeImpactWeight.Negative,
@@ -82,9 +82,9 @@ export const investigativeExchange: ExchangeData = {
           text: "Justice opened an ethics quarantine on all novelty wax, tagged every batch, and paused sales while we compare labels to casework. The memos sort aromas by tone, not legal effect, and the chain is under review.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.ModeratePositive,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -115,7 +115,7 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.Neutral
           },
@@ -154,7 +154,7 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -214,8 +214,8 @@ export const investigativeExchange: ExchangeData = {
             text: "We did find burner‑wax ledgers with vendor stamps and typos that would make a notary cry. Those records are under independent scrub, and we’ll publish a clean trail with corrected entries.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -283,7 +283,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -378,7 +378,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -415,7 +415,7 @@ export const investigativeExchange: ExchangeData = {
             text: "No one authorized a ‘pardon candle’ label; the template engine mashed ‘parade candle’ with ‘morale flare.’ We’ve purged the template, and the intern now proofs fireworks and fonts before anything ships.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.SlightNegative
@@ -446,7 +446,7 @@ export const investigativeExchange: ExchangeData = {
             text: "We’ll admit a handful of mislabeled cartons slipped past QA during a hurry‑up order. The flares were never issued as legal instruments and are quarantined with their snarky stickers.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
@@ -511,7 +511,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -547,7 +547,7 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -578,7 +578,7 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -607,10 +607,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Bring a case number and the alleged candle. We’ll test the wick, trace the paperwork, and read the label into the record—dramatically, with a desk fan for effect.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -637,10 +637,10 @@ export const investigativeExchange: ExchangeData = {
             text: "The loopholes you fear are sealed with something stronger than wax: plain policy in plain words. Teams are being re‑briefed so no one confuses ambiance with amnesty again.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

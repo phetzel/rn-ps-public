@@ -20,10 +20,10 @@ export const investigativeExchange: ExchangeData = {
           text: "We did pilot limited contrition hedges to steady chaotic spikes in diplomatic awkwardness. It was reported, bounded, and we’re unwinding transparently so the national mood stays boring on purpose.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -43,10 +43,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Remorse on the Exchange is fully sigh‑collateralized and redeemable for direct eye contact. No apology clears without human accountability and audits, and State is tightening the guardrails this week.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -70,7 +70,7 @@ export const investigativeExchange: ExchangeData = {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -91,10 +91,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Let’s not pretend a novelty market replaced actual apology. The Exchange is an optics tool, not a conscience, and the loudest outrage often comes from people short on facts.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.Neutral
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -122,9 +122,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -145,10 +145,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We won’t referee compensation rumor bingo from the podium. Independent reviewers are under NDAs, and the inspectorate enjoys reading footnotes much more than I do.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -168,10 +168,10 @@ export const investigativeExchange: ExchangeData = {
             text: "If someone claims graders are secretly shorting sorrow, they should show the receipts. Vague vibes are not evidence, even in a market built from vibes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -219,12 +219,12 @@ export const investigativeExchange: ExchangeData = {
             id: "c1",
             text: "Some approvals moved too fast under pilot waivers, and that’s on us. We’ve frozen new variants, pulled every waiver for review, and will publish a timeline with signatures attached.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyPositive,
@@ -242,12 +242,12 @@ export const investigativeExchange: ExchangeData = {
             id: "c2",
             text: "We have no evidence that any official personally profited from their own approval decisions. If we find otherwise, that’s a career‑ending day, not a wrist slap.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -322,10 +322,10 @@ export const investigativeExchange: ExchangeData = {
             text: "The Office of Public Candor audits the data streams and recalibrates devices against control blushes monthly. Violations trigger clawbacks, suspensions, and public downgrades of prior mea culpas.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -345,10 +345,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We built this assuming someone would try to cheat. Cross‑checks, decoy scripts, and whistleblower bounties make gaming the metrics a losing hobby.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -421,9 +421,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -443,9 +443,9 @@ export const investigativeExchange: ExchangeData = {
             text: "The release will include counterparties, timestamps, and hedge rationales, with redactions only for active negotiations. Voids will be listed alongside restitution math.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -492,7 +492,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

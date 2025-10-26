@@ -20,7 +20,7 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We don't back a puppet; we back stability. The interim setup is a civic metronome with strings for accountability, not a loophole carnival. Calm beats chaos, and services will keep time.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.ModeratePositive,
             o4: OutcomeModifierWeight.ModerateNegative
@@ -49,7 +49,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -76,7 +76,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.ModeratePositive
           },
@@ -137,9 +137,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We'll seek swift judicial review because signatures require sentient accountability, not varnish. If the court agrees, interim authority reverts to a human officer so paperwork can move again.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -167,7 +167,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -193,7 +193,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -252,7 +252,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We focus on lanes, lights, and ladders, not casting choices. If string clutter blocks egress, we cut it, tag it, and fine the stagehands; the only hands on the controller during crises are trained ones.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -282,7 +282,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -308,7 +308,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -369,7 +369,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "City charters name a human contingency chain-typically the clerk, comptroller, or a deputy-already sworn and ready. We'll file to have that chain activated so no one plays mayor by prop closet.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -398,7 +398,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -424,7 +424,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -483,7 +483,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Yes. Temporary event rules require clear emergency bays, ban overhead rigging within forty feet of ER doors, and mandate labeled cut-points on big puppets. Violations earn citations, not souvenir lanyards.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -512,7 +512,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -538,7 +538,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },

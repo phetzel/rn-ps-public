@@ -20,7 +20,7 @@ export const investigativeExchange: ExchangeData = {
           text: "We didn’t sell indulgences; we sold sunlight. I’m inviting audits, hearings, and the weirdest questions you’ve got, because confidence beats rumor when you turn the lights on.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.ModerateNegative
           },
@@ -50,7 +50,7 @@ export const investigativeExchange: ExchangeData = {
           text: "State‑ish issued commemorative bookmarks, not absolution tokens. A haunted spreadsheet mislabeled a batch, and we’re redirecting outrage into a ribbon‑cutting for an audit‑proof ink lab.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.Neutral
           },
@@ -81,7 +81,7 @@ export const investigativeExchange: ExchangeData = {
           text: "Justice opened a document integrity review tracking serials, sign‑offs, and payments. No immunity implied; nothing about these slips is redeemable in court or policy.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.ModeratePositive
           },
@@ -148,11 +148,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s1_1",
             text: "Those timestamps cluster like buses. The printer queued ceremonial reprints while accountants reconciled donations; the overlap is noise, not a cash carousel.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -209,9 +209,9 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s1_3",
             text: "We’ve hired an outside auditor to match serials to requisitions and delivery logs. Every dollar path will be traced from receipt to storage, with exceptions flagged for review.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -240,7 +240,7 @@ export const investigativeExchange: ExchangeData = {
             text: "If anyone thinks these slips bought favors, show one policy moved because of them. We’ll project it wall‑size and let the haunted spreadsheet argue back.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -276,7 +276,7 @@ export const investigativeExchange: ExchangeData = {
             text: "Authorized from Just‑ish: those boxes record receipt, not endorsement. A records probe is underway, and we’ll release a timeline and redaction standards so process outshouts rumor.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -307,11 +307,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s2_2",
             text: "The sign‑offs tracked chain of custody, not policy consent. We’ve paused related disbursements and notified labor councils and residents panels about the review steps.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -338,7 +338,7 @@ export const investigativeExchange: ExchangeData = {
             text: "Health‑ish used mock forms and crayons in a training room, not on live files. We’re moving to digital redaction with checklists and coaching to keep lines inside the lines.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.ModeratePositive
             },
@@ -406,7 +406,7 @@ export const investigativeExchange: ExchangeData = {
             text: "We’re publishing a style guide and a commit history showing who changed what and when. The audit log, minus personal data, goes online with an appendix for haunted anomalies.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -465,10 +465,10 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t1_3",
             text: "Corrections don’t erase accountability; they clarify it. Stakeholders will get a plain‑English summary so unions, voters, and graveyard‑shift clerks can sleep.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -497,8 +497,8 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -532,7 +532,7 @@ export const investigativeExchange: ExchangeData = {
             text: "Subpoenas roll out in phases this month with rolling disclosures. Valid redactions cover private data, not embarrassment, and liaisons will brief unions and residents in plain talk.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -562,7 +562,7 @@ export const investigativeExchange: ExchangeData = {
             text: "We won’t publish anything that exposes personal info or active probes. Transparency has a speed limit, and we’re not mowing down rights just to beat a headline.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -592,9 +592,9 @@ export const investigativeExchange: ExchangeData = {
             text: "Union reps get seats at the table, not the hallway. We’ll share legible receipts and translations of legalese so people understand what did and didn’t happen.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -622,9 +622,9 @@ export const investigativeExchange: ExchangeData = {
             text: "If someone swears there’s a secret deal, bring invoices and policies side by side. We’ll host a projector showdown and let facts bully rumor in front of everyone.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

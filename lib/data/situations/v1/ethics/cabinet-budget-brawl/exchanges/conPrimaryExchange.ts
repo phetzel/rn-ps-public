@@ -318,7 +318,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightNegative,
-              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightPositive,
+              outcome_messy_pr_disaster: OutcomeModifierWeight.StrongPositive,
               outcome_private_resolution: OutcomeModifierWeight.SlightNegative,
             },
           },
@@ -335,6 +335,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive,
+              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightNegative,
             },
           },
         ],
@@ -402,7 +403,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_transparency_wins: OutcomeModifierWeight.SlightPositive,
-              outcome_messy_pr_disaster: OutcomeModifierWeight.SlightNegative,
+              outcome_messy_pr_disaster: OutcomeModifierWeight.Neutral,
               outcome_private_resolution: OutcomeModifierWeight.SlightNegative,
             },
           },
@@ -418,6 +419,7 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
+              outcome_transparency_wins: OutcomeModifierWeight.SlightNegative,
               outcome_private_resolution: OutcomeModifierWeight.SlightPositive,
             },
           },
