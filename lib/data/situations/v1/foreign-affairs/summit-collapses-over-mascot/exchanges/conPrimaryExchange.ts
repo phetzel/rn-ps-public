@@ -21,7 +21,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -47,8 +47,8 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.StrongPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -75,7 +75,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -133,7 +133,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Yes. We’ll publish costume rules of engagement, stage joint de‑escalation rehearsals, and sanity‑check props at the door. If you bring larger beaks, expect stricter choreography.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -160,9 +160,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Defense, State, and the Office of Ceremonial Logic are running an after‑action. In 72 hours a memo will define no‑peck zones, handler cues, safe words, and a one‑page incident ladder.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -214,7 +214,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -245,8 +245,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -273,7 +273,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -298,9 +298,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We missed a prop‑handling footnote and it bit us. We’ll own it, fix it, and publish ‘Don’t Duel the Mascot,’ a friendly checklist for handlers, hosts, and hype crews.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -358,8 +358,8 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ll trial simple drills—approach, bow, tap wings, retreat—plus neutral stage judges for disputes. A published checklist and signal cards will keep the comedy from turning kinetic.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -384,9 +384,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Bigger beaks won’t bait us into stunts; they’ll earn more precise rules. We’ll out‑plan theatrics so deterrence stays credible and costumes stay squarely in the harmless column.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -412,7 +412,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -436,9 +436,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Deterrence with a wink works. Clear lines, padded egos, and quick apologies keep peace intact while the pageantry does its harmless dance.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -468,9 +468,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Protocol updates add prop audits, handler training, an apology ladder, and a costume‑incident hotline. Quarterly morale checks will track whether pageantry is helping, not hurting.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -495,7 +495,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -521,8 +521,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

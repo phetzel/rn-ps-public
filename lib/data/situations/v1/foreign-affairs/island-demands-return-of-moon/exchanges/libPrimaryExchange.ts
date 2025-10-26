@@ -47,8 +47,8 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Photons are stateless under the Treaty of Light, but culture isn’t. We’ve ordered a hush-bright pause on metering and opened talks with Glowstrand’s stewards to define respectful access.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.StrongPositive
           },
@@ -76,8 +76,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModeratePositive,
             o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -103,9 +103,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "No one is getting an invoice for moonbeams tonight. Glowstrand’s rites and everyone’s evenings proceed while we set the sky to courtesy mode and sort out the paperwork.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {

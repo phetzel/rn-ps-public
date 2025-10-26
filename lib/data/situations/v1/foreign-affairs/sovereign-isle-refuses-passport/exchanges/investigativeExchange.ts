@@ -21,7 +21,7 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.SlightNegative
           },
@@ -47,8 +47,8 @@ export const investigativeExchange: ExchangeData = {
           text: "Funding came from the public diplomacy contingency fund with legislative notice. The isle honors seafoam-scented IDs, so we certified aromas and redirected envoy training accordingly.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.SlightPositive
           },
@@ -101,7 +101,7 @@ export const investigativeExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
@@ -134,9 +134,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -160,13 +160,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_s1_2",
             text: "The deputy for recognition policy initialed the map and the scented-ID buy, with dual-controller approval and scent-chain custody logs. Drawdowns used escrow to frustrate grift.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -183,13 +183,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_s1_3",
             text: "No, we did not launder cash through beach kiosks or shell marinas. The fund is audited quarterly, and the only shells involved were decorative and fully receipted.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -210,13 +210,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_s1_4",
             text: "We admit the first draft carried a goofy legend and a typo that turned 'scented IDs' into 'scented IEDs.' It was corrected within an hour and logged with the fix.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -243,13 +243,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_s2_1",
             text: "When a micro-state tosses protocol overboard, we answer with buoyant presence. The bobbing group is lawful, unarmed, and very visible, and it says, 'Take us seriously or get seasick'.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -325,13 +325,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_s2_4",
             text: "If you want identical envoys, blame our tailor's bulk discount. HR moved fast, and we will brief process details once the tailor stops invoicing us in buttons.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -360,13 +360,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_t1_1",
             text: "The marina address is a mail proxy for a bonded warehouse, and the beneficial owner cleared conflict screens. Prices tracked within 3% of resin and fragrance indices, with penalties for foam.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Neutral,
@@ -387,13 +387,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_t1_2",
             text: "No kickbacks, no cousins, no sand-dollar briefcases. The only perk was a swatch that smelled like a beach postcard, logged as a promotional sample.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -414,13 +414,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_t1_3",
             text: "Independent auditors from the Office of Nose Integrity are already sniff-testing batches and matching invoices. Any card that smells like fraud will be canceled.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -474,13 +474,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_t2_1",
             text: "Yes, we leased surplus showcraft from a touring maritime pageant because it was cheaper and perfectly on brand. The per-bob price is capped, with penalties for dramatic deflation.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -501,12 +501,12 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_t2_2",
             text: "Per bob costs about a stadium hot dog, with a flotilla bulk rate. Leasing avoided storage and patch crews, and every repair has chain-of-bob forms.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -528,13 +528,13 @@ export const investigativeExchange: ExchangeData = {
           {
             id: "a_t2_3",
             text: "Call them props if you like; they still pull cameras and compliance. If spectacle is the language here, we will speak it until paperwork smells like seafoam again.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,

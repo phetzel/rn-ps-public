@@ -21,8 +21,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModeratePositive
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -48,8 +48,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.ModerateNegative
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -76,7 +76,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -102,7 +102,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -135,7 +135,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -161,8 +161,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -186,9 +186,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Let’s not confuse glitter with graft; this was a cultural fumble, not a crime saga. The priority is restoring talks and publishing costs, not chasing feathers down rabbit holes.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -213,7 +213,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -244,9 +244,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "State is finalizing a public MOU with a color-coded custody calendar, handoff checklists, and QR codes for citizens in their language. Breach penalties and appeal steps will be posted alongside.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -271,9 +271,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If either side ducks the schedule, we’ll shift to a neutral custodian and lock the beak in a sealable case. Miss the deadline, lose the weekend photo ops—no exceptions.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -297,9 +297,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one’s passport, paycheck, or permit hinges on a foam head. Embassy services continue, with crowd caps, clear exits, and medics on site so pageantry never outruns public safety.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -324,7 +324,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -357,9 +357,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll publish a searchable ledger with amounts, sources, and in-kind perks, plus overtime by unit. Off-book sponsorships are barred under a new circular to all agencies and embassies.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -383,9 +383,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No hush money, no mystery mascot committee, and no beak naming rights. Any attempt at stealth funding gets the contract shredded and referred for administrative review.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -410,8 +410,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -436,8 +436,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -467,9 +467,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re tracking duel-free days, incident counts, and consular wait times on a monthly dashboard. Compliance inspections ride along with every handoff to verify crowd limits and exits.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -493,9 +493,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If costumes crowd out citizens, we’ll cut pageantry to zero and move talks to a windowless room with folding chairs. Policy beats props, every time, and we’ll enforce it.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -519,9 +519,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Embassy services remain open, with barriers, caps, and trained staff to keep events calm. If conditions wobble, we pause before risk rises and resume only when safe.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -547,7 +547,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {

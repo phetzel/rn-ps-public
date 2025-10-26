@@ -21,9 +21,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -48,9 +48,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "HHS is mapping doses to licensed clinics onshore, with cold-chain custody and consent at every step. Any request from the barge would move through lawful providers, invoices, and inspectors, not side hatches.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Taxpayers are not funding a pageant at sea. Whatever we do will be by the book, audited, and transparent, and no vial leaves a freezer without a lawful purpose, a patient, and a paper trail.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -136,12 +136,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec1_1",
             text: "On the authority of the Secretary of Ports and Perimeters, we can share a declassified snapshot: spoofed manifests, falsified crew health, and unsecured samples. Detailed methods remain protected for operational security",
             type: AnswerType.Authorized,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -164,12 +164,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec1_2",
             text: "We will not publish playbooks that let smugglers color inside the lines. The barge does not earn disclosure by shouting sovereignty into a foghorn, and yes, that means some details stay classified.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -191,12 +191,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec1_3",
             text: "Unclassified takeaway: zero credible sovereignty, moderate biohazard from spoiled cargo, and elevated spoofing risk at ports. Those factors justify targeted holds while labs and inspectors verify claims.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -219,12 +219,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec1_4",
             text: "Independent inspectors are reviewing the basis for delays now. We will release a timeline and criteria so taxpayers see exactly when holds lift, and what proof turns the green light on.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -252,11 +252,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec2_1",
             text: "Line items are storage, transport, staffing, and testing, billed through standard claims with serials and GPS custody. Auditors cross-check doses to patients. No cash goes to a captain in a costume hat.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -280,11 +280,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec2_2",
             text: "There are no recognition stipends, hazard coupons, or sovereign splash fees. We deny funds to any barge governance entity and pay only licensed providers for lawful services rendered.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -307,11 +307,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec2_3",
             text: "Yes, surge testing and overtime strain budgets. We will flag supplemental needs publicly and claw back costs from violators where law allows, because cosplay flags do not entitle anyone to overtime on the taxpayer.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -334,11 +334,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_sec2_4",
             text: "Barcode-to-patient logs, temperature trackers, and surprise audits make grifts hard and paperwork heavy. The cold chain is locked tighter than a penguin's lunchbox, and we publish discrepancies.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -369,11 +369,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter1_1",
             text: "Emergency maritime health codes under Republic Statutes 12.4B let us hold risky cargo and adjust port posture, with court review. Holds are tied to lab timelines, not vibes or speeches from the poop deck.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -396,11 +396,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter1_2",
             text: "We deny any drift toward permanent checkpoints. Orders have explicit sunsets linked to metrics, and no commander can extend them without fresh findings and a paper trail a mile long.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -423,11 +423,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter1_3",
             text: "If the barge wants lanes reopened faster, it can beat our drills: clean manifests, verified crew tests, and a zero-spoof week. Win on the field of facts, not on a floating stage.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -450,11 +450,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter1_4",
             text: "Courts and legislative auditors sit on the oversight board for these measures. If they smell mission creep, valves close fast and we publish the receipts in font you can read from shore.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -483,11 +483,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter2_1",
             text: "Crates get swab PCR panels for influenza lookalikes and chain-of-custody seals; gulls get tag-and-release sampling through certified wildlife labs. Labs are pre-vetted for quality and re-checked by blind proficiency sets",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -510,11 +510,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter2_2",
             text: "We deny boutique tests demanded by the barge's 'ministry of vibes.' Only validated assays count, and any attempt to swap samples or shop labs gets the whole shipment iced.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -537,11 +537,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter2_3",
             text: "Yes, wildlife patrols can balloon if you let every seabird audition. We cap hours, tie spend to sampling targets, and cut flights the moment the curve flattens below the trigger threshold.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -564,11 +564,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_ter2_4",
             text: "Public dashboards will show tests run, labs used, and spend by pier. If a gull line item starts flapping upward, it triggers an audit before the feathers hit the ledger.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
