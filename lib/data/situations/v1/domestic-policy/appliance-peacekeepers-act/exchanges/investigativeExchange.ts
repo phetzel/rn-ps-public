@@ -20,7 +20,7 @@ export const investigativeExchange: ExchangeData = {
           text: "If I can turn a toaster standoff into a handshake, that is not small - it is practice for bigger, messier things. We are building muscle memory for civility, one extension cord at a time.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.Neutral
@@ -47,10 +47,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Funding comes through the Household Harmony pilot, competitively bid with public scoring. Trainers are accredited by the Boundary Bureau, and the curriculum, including leaf-blower etiquette, is posted for audit.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const investigativeExchange: ExchangeData = {
           text: "No one is cashing secret checks off your sprinklers, and we are not hoovering living-room audio. Data is minimal and consent-based; the only thing we harvest is eye-rolls and whether the toast got burnt.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -136,12 +136,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_1",
             text: "The curriculum was drafted by the Civic Mediation Institute with input from the Department of Neighborly Affairs, not donors. Scoring excluded bidders tied to contributions, and reviewers were disclosed.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -163,12 +163,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_2",
             text: "The fixation on donor bingo misses the headline: the rules teach 'ask before blast' and 'mower curfew.' If a firm meets standards and keeps the peace, we will not apologize for competence.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -190,12 +190,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_3",
             text: "From defense: we did not write leaf-blower ROEs, and we do not pick vendors. Our role is training de-escalation, not procurement theater. For scope and guardrails, we will brief further.",
             type: AnswerType.Authorized,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -252,12 +252,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_1",
             text: "No household is getting a social credit score for hedge symmetry. Logs capture the dispute type, what steps were offered, and whether both parties consented - no appliance serial numbers, no snooping.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -279,12 +279,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_2",
             text: "Yes, there is metadata - time, place, anonymized issue tags - to spot hotspots like the 7 a.m. blower crowd. That visibility lets us target outreach, and we purge personal notes after resolution.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -306,12 +306,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_3",
             text: "Access is tiered: mediators see case notes; oversight sees aggregates; and residents can request their file. Protocols mirror neighborhood accords, not spy playbooks, and we are codifying them next.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -369,12 +369,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_1",
             text: "Veterans are not appliance cops; they are coaches for calm. No weapons, no arrests, and no authority beyond what neighbors invite. Mission creep is blocked by scope rules and public dashboards.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -396,12 +396,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_2",
             text: "We are pairing lived experience with mediation ethics, so the vibe is whistle, not siren. If a toaster tiff smells like something bigger, the right agency gets a call, not a power grab.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -450,12 +450,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_4",
             text: "If we cannot trust vets to call a timeout on a leaf-blower blitz, who can we trust? They have seen worse than lawn drama and know the difference between firm and force.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -510,12 +510,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_2",
             text: "We tried to stamp 'Summit' on the driveway, but the podium sank into the mulch. Reality check: it is two neighbors, two chairs, and a laminated map of the hedge.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -537,12 +537,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_3",
             text: "Protocols exist to lower the temperature, not to cosplay geopolitics. If a checklist makes it easier to apologize for the wandering rake, that is the only treaty you will notice.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -564,12 +564,12 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_4",
             text: "Sure, some language sounds grand - 'memorandum of mowing' made us laugh too - but the effect is simple: fewer fights, clearer norms, and faster exits when people want out.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,

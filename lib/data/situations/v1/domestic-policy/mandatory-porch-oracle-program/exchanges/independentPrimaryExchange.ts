@@ -21,9 +21,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -47,8 +47,8 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "No one is being voluntold to surrender their porch soul; Oracles get empathy training, safety checks, and ergonomic rocking chairs. The app purrs, limits alerts to daylight, and nudges by design.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightPositive
           },
@@ -78,10 +78,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Front stoops already watch horizons; we are standardizing lantern signals and publishing the playbook. Data stays block-level by default with no location trails. We can walk through privacy specifics next.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -111,9 +111,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -148,11 +148,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_1",
             text: "Collection is minimal: timestamped directive IDs and whether a block acknowledged, not who did. No audio, video, or location histories. Independent audits and deletion timers are built in; details next.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -180,9 +180,9 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_2",
             text: "Think dimmer switch, not spotlight. Residents can view, correct, or mute data tied to their block feed, and the default cadence is gentle. If it feels creepy, we dial it back, not up.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -211,11 +211,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_3",
             text: "No, the app is not a backdoor to doorbells or porch cams, and it does not scrape social posts. If someone bolts a loudhailer to their stoop, that is a hobby, not our codebase.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -242,11 +242,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_4",
             text: "Before we panic about dystopias, remember the current chaos: rumor chains and ten competing flyers. This replaces noise with clarity so your morning coffee survives intact.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -279,11 +279,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_1",
             text: "Abuse risk is real. We are capping directives per day, banning personal call-outs, and creating a fast appeal clock with neutral reviewers. Training and audits come from a transparent line item.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -311,9 +311,9 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_2",
             text: "Funding covers chairs, whistles, and workshops, not ticket books. The goal is calmer blocks, fewer 3 a.m. panics, and a culture of check-ins, not citations.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -342,9 +342,9 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_3",
             text: "If an Oracle starts peacocking with a whistle, I expect neighbors to out-organize with better norms. Beat bad behavior with sunlight, not shouting, and tell us so we can swap in a calmer lead.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModerateNegative
             },
@@ -369,11 +369,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_4",
             text: "Look, the alternative is the group chat where three neighbors and a raccoon argue at volume eleven. We are budgeting to lower chaos, not to crown a block emperor with push powers.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -408,11 +408,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter1_1",
             text: "Logs are hashed, rotated, and inspected by an independent civic lab quarterly. Default deletion purges acknowledgments after 14 days, aggregates after 90, and no device IDs are stored.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -439,9 +439,9 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter1_2",
             text: "Residents can see exactly what exists about their block and hit a one-tap purge for past nudges. If a setting feels too nosy, the slider goes left and the Oracle goes quiet.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -470,11 +470,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter1_3",
             text: "No unified porch panopticon. Doorbells and sensors stay on their own islands unless a resident opts in for a household, and even then it never flows beyond the block rollup.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -501,9 +501,9 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter1_4",
             text: "Hold us to nerd standards. If you spot a data overreach, file it, publish it, and embarrass us into fixing it by Tuesday. Civic tech works best when citizens heckle the code.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModerateNegative
             },
@@ -534,11 +534,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_1",
             text: "We got overexcited about alerts; appeals must be faster than the coffee cools. We are setting a 24-hour reversal window, with emergency pauses in minutes if bias or bunk is alleged.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -565,11 +565,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_2",
             text: "Enforcement is soft power: visibility and reminders. There are no fines, no porch confiscations, and no knock-and-ticket squads. Noncompliance simply reduces your block's dashboard green.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -596,11 +596,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_3",
             text: "A rotating panel from outside the block reviews disputes, and training steers Oracles toward suggestions, not orders. Whistles are for safety, not swagger.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -627,11 +627,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_4",
             text: "No, a push notification cannot draft you into leaf-raking service or mandate synchronized waving. It can suggest, it cannot compel, and it definitely cannot blow your lawn chair away.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

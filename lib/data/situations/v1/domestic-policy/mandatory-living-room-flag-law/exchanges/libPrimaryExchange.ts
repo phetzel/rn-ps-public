@@ -55,7 +55,7 @@ export const libPrimaryExchange: ExchangeData = {
             flag_olympics: OutcomeModifierWeight.SlightNegative,
             pillow_peg: OutcomeModifierWeight.StrongNegative,
             sofa_clinics: OutcomeModifierWeight.ModeratePositive,
-            drone_audit: OutcomeModifierWeight.SlightPositive
+            drone_audit: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -86,7 +86,7 @@ export const libPrimaryExchange: ExchangeData = {
             flag_olympics: OutcomeModifierWeight.StrongNegative,
             pillow_peg: OutcomeModifierWeight.StrongPositive,
             sofa_clinics: OutcomeModifierWeight.SlightNegative,
-            drone_audit: OutcomeModifierWeight.ModeratePositive
+            drone_audit: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -152,11 +152,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec1_1",
             text: "Penalties scale with intent, not income: renters are shielded, first‑timers get warnings, and waivers trigger when mounts need landlord consent. HHS safe‑craft tips ship with notices to keep nights sane.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               flag_olympics: OutcomeModifierWeight.SlightPositive,
-              pillow_peg: OutcomeModifierWeight.MajorPositive,
+              pillow_peg: OutcomeModifierWeight.StrongPositive,
               sofa_clinics: OutcomeModifierWeight.SlightNegative,
-              drone_audit: OutcomeModifierWeight.ModerateNegative
+              drone_audit: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -184,11 +184,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec1_2",
             text: "If a block wants to flex its couch game, we’ll reward compliance sprints, not nickel‑and‑diming slipups. Beat the fine by beating your street’s average—make accountability a scoreboard, not a shakedown.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.StrongNegative,
+          outcomeModifiers: {
+              flag_olympics: OutcomeModifierWeight.ModerateNegative,
               pillow_peg: OutcomeModifierWeight.StrongNegative,
-              sofa_clinics: OutcomeModifierWeight.SlightPositive,
-              drone_audit: OutcomeModifierWeight.SlightPositive
+              sofa_clinics: OutcomeModifierWeight.ModeratePositive,
+              drone_audit: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -215,11 +215,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec1_3",
             text: "Early drafts were too rigid on shared housing and sublets. We heard the feedback and rewired the form so roommates aren’t triple‑charged for the same tragically unplucked fringe.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.StrongPositive,
+          outcomeModifiers: {
+              flag_olympics: OutcomeModifierWeight.SlightPositive,
               pillow_peg: OutcomeModifierWeight.SlightNegative,
               sofa_clinics: OutcomeModifierWeight.Neutral,
-              drone_audit: OutcomeModifierWeight.ModeratePositive
+              drone_audit: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -246,11 +246,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec1_4",
             text: "We’re not deputizing landlords as flag sheriffs. If a building blocks mounts, that tussle lives in the lease, not in a fantasy where Treasury rides in with tassel badges.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              flag_olympics: OutcomeModifierWeight.Neutral,
               pillow_peg: OutcomeModifierWeight.Neutral,
               sofa_clinics: OutcomeModifierWeight.Neutral,
-              drone_audit: OutcomeModifierWeight.SlightNegative
+              drone_audit: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -283,11 +283,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec2_1",
             text: "Contracts include fixed‑price ceilings, open ledgers, and a rotating‑slogan audit that flags recycled puns. Bid data, winners, and unit costs go on a dashboard before the first tassel ships.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              flag_olympics: OutcomeModifierWeight.Neutral,
               pillow_peg: OutcomeModifierWeight.StrongPositive,
               sofa_clinics: OutcomeModifierWeight.SlightNegative,
-              drone_audit: OutcomeModifierWeight.ModerateNegative
+              drone_audit: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -314,12 +314,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec2_2",
             text: "Materials pass the boring‑spec test: no embedded electronics, no conductive thread, no secret pockets. It’s fabric, not a spy‑novel scarf—Homeland checks stitches, not your living room soundscape.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightNegative,
-              pillow_peg: OutcomeModifierWeight.SlightNegative,
-              sofa_clinics: OutcomeModifierWeight.SlightPositive,
-              drone_audit: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            flag_olympics: OutcomeModifierWeight.SlightNegative,
+            pillow_peg: OutcomeModifierWeight.SlightNegative,
+            sofa_clinics: OutcomeModifierWeight.SlightPositive,
+            drone_audit: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -346,11 +346,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec2_3",
             text: "If ribbon barons want to staple policy to their mood boards, they’ll do it under stadium lights. We’re publishing judges’ scorecards and flub reels, not just a triumphant press release.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.StrongPositive,
-              pillow_peg: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              flag_olympics: OutcomeModifierWeight.SlightPositive,
+              pillow_peg: OutcomeModifierWeight.ModeratePositive,
               sofa_clinics: OutcomeModifierWeight.ModerateNegative,
-              drone_audit: OutcomeModifierWeight.SlightPositive
+              drone_audit: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -377,11 +377,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sec2_4",
             text: "No, the slogans aren’t subliminal whispers coaxing you to salute the ottoman. They’re big, sleepy letters printed by a machine that mostly dreams of nap time and maintenance oil.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.StrongNegative,
-              pillow_peg: OutcomeModifierWeight.StrongNegative,
-              sofa_clinics: OutcomeModifierWeight.ModeratePositive,
-              drone_audit: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              flag_olympics: OutcomeModifierWeight.SlightNegative,
+              pillow_peg: OutcomeModifierWeight.SlightNegative,
+              sofa_clinics: OutcomeModifierWeight.SlightPositive,
+              drone_audit: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -417,10 +417,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Clinicians found glitter levels consistent with birthday parties, not biohazards. Use non‑toxic kits and crack a window; we’ll post a ‘safe sparkle’ sheet you can tape to the fridge.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightNegative,
-              pillow_peg: OutcomeModifierWeight.StrongNegative,
-              sofa_clinics: OutcomeModifierWeight.ModeratePositive,
-              drone_audit: OutcomeModifierWeight.SlightNegative
+              flag_olympics: OutcomeModifierWeight.Neutral,
+              pillow_peg: OutcomeModifierWeight.SlightNegative,
+              sofa_clinics: OutcomeModifierWeight.SlightPositive,
+              drone_audit: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -448,10 +448,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re issuing craft‑night guidance: ventilation, low‑VOC adhesives, breaks for small hands, and a hotline for reactions. Insurance will not hinge on tassel compliance, full stop.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightPositive,
+              flag_olympics: OutcomeModifierWeight.ModeratePositive,
               pillow_peg: OutcomeModifierWeight.SlightPositive,
               sofa_clinics: OutcomeModifierWeight.ModerateNegative,
-              drone_audit: OutcomeModifierWeight.Neutral
+              drone_audit: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -479,10 +479,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If your living room sounds like a tinsel storm, choose a pre‑assembled flag shipped flat. No glue guns, no blisters—just a dependable rectangle of mild, constitutionally sufficient enthusiasm.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.StrongNegative,
+              flag_olympics: OutcomeModifierWeight.SlightNegative,
               pillow_peg: OutcomeModifierWeight.StrongPositive,
               sofa_clinics: OutcomeModifierWeight.SlightPositive,
-              drone_audit: OutcomeModifierWeight.SlightPositive
+              drone_audit: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -548,9 +548,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               flag_olympics: OutcomeModifierWeight.SlightPositive,
-              pillow_peg: OutcomeModifierWeight.Neutral,
+              pillow_peg: OutcomeModifierWeight.SlightPositive,
               sofa_clinics: OutcomeModifierWeight.SlightNegative,
-              drone_audit: OutcomeModifierWeight.StrongNegative
+              drone_audit: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -579,9 +579,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               flag_olympics: OutcomeModifierWeight.SlightNegative,
-              pillow_peg: OutcomeModifierWeight.SlightNegative,
+              pillow_peg: OutcomeModifierWeight.Neutral,
               sofa_clinics: OutcomeModifierWeight.Neutral,
-              drone_audit: OutcomeModifierWeight.SlightNegative
+              drone_audit: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -609,10 +609,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Inspection criteria are public: seam durability, mount stability, label readability. We post visit windows and checklist PDFs—no body cams, no wiretaps, just boring furniture safety.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.Neutral,
+              flag_olympics: OutcomeModifierWeight.SlightNegative,
               pillow_peg: OutcomeModifierWeight.SlightPositive,
-              sofa_clinics: OutcomeModifierWeight.SlightPositive,
-              drone_audit: OutcomeModifierWeight.StrongPositive
+              sofa_clinics: OutcomeModifierWeight.SlightNegative,
+              drone_audit: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -643,7 +643,7 @@ export const libPrimaryExchange: ExchangeData = {
               flag_olympics: OutcomeModifierWeight.Neutral,
               pillow_peg: OutcomeModifierWeight.Neutral,
               sofa_clinics: OutcomeModifierWeight.Neutral,
-              drone_audit: OutcomeModifierWeight.SlightPositive
+              drone_audit: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {

@@ -28,7 +28,7 @@ export const conPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
-            outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
             outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
           },
           followUpId: "q_constitutional_authority",
@@ -49,7 +49,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
             outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
             outcome_curfew_voluntary_rollout:
-              OutcomeModifierWeight.SlightNegative, // -4
+              OutcomeModifierWeight.Neutral, // 0
           },
           followUpId: "q_tech_industry_resistance",
         },
@@ -373,11 +373,11 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Homeland]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
-            outcomeModifiers: {
-              outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.StrongNegative, // -8
-            },
+          outcomeModifiers: {
+            outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.StrongNegative, // -8
+          },
           },
           {
             id: "a_economic_deflect",
@@ -391,12 +391,12 @@ export const conPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyNegative },
               },
             },
-            outcomeModifiers: {
-              outcome_curfew_shelved: OutcomeModifierWeight.StrongPositive, // +8
-              outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_curfew_voluntary_rollout:
-                OutcomeModifierWeight.SlightPositive, // +4
-            },
+          outcomeModifiers: {
+            outcome_curfew_shelved: OutcomeModifierWeight.ModeratePositive, // +6
+            outcome_curfew_black_market: OutcomeModifierWeight.ModerateNegative, // -6
+            outcome_curfew_voluntary_rollout:
+              OutcomeModifierWeight.Neutral, // 0
+          },
           },
           {
             id: "a_economic_neutral",

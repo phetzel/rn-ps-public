@@ -29,7 +29,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
             outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
           },
           followUpId: "q_digital_equity",
         },
@@ -83,7 +83,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
             outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
           },
         },
       ],
@@ -108,7 +108,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
             outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
             outcome_curfew_voluntary_rollout:
-              OutcomeModifierWeight.MajorPositive, // +12
+              OutcomeModifierWeight.StrongPositive, // +8
           },
           followUpId: "q_implementation_timeline",
         },
@@ -161,7 +161,7 @@ export const libPrimaryExchange: ExchangeData = {
         outcomeModifiers: {
           outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
           outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-          outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
         },
       },
         ],
@@ -294,12 +294,12 @@ export const libPrimaryExchange: ExchangeData = {
                 [CabinetStaticId.Justice]: { weight: ExchangeImpactWeight.SlightlyPositive },
               },
             },
-            outcomeModifiers: {
-              outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_curfew_voluntary_rollout:
-                OutcomeModifierWeight.SlightPositive, // +4
-            },
+          outcomeModifiers: {
+            outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_voluntary_rollout:
+              OutcomeModifierWeight.SlightPositive, // +4
+          },
           },
           {
             id: "a_timeline_challenge",
@@ -316,11 +316,11 @@ export const libPrimaryExchange: ExchangeData = {
                 },
               },
             },
-            outcomeModifiers: {
-              outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
-            },
+          outcomeModifiers: {
+            outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
+          },
           },
           {
             id: "a_timeline_neutral",

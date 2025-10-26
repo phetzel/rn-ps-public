@@ -21,7 +21,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.ModerateNegative,
             o4: OutcomeModifierWeight.SlightPositive
           },
@@ -83,10 +83,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We're issuing a swap-rights bulletin: consent standards, fee bans, and a fast complaint portal. Landlords can't invent 'swap surcharges,' and retaliatory billing will trigger immediate penalties.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.MajorPositive,
-            o4: OutcomeModifierWeight.StrongNegative
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -117,8 +117,8 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -152,12 +152,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s1_1",
             text: "Aid won't be a scavenger hunt. Kits and wipes arrive automatically, with caregiver add-ons. High-risk homes get a simple opt-out and zero penalties for staying put during Swap Week.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -246,12 +246,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s1_4",
             text: "Let's not pre-season the panic. First bites, then budgets; logistics are being plated by people who alphabetize spice racks for both fun and government-grade accuracy.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Neutral,
@@ -283,12 +283,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_1",
             text: "Renters get a one-page challenge, 48-hour rulings, and fee bans with teeth. Pairing fairness comes with a public dashboard and audits, which I'll detail in the next round.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -315,12 +315,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_2",
             text: "To the granite-class: if your island has a name, it's hosting guests. We dare the backsplash aristocracy to share a burner like everyone else this one week.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -347,10 +347,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No swap-related surprise walkthroughs are authorized. Entry rules remain unchanged, and any landlord fishing expedition will be treated as a violation with fines.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -377,12 +377,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_4",
             text: "We're not launching a reality show about countertops. Our job is safe swaps, not judging grout lines by torchlight like a moody kitchen noir.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Neutral,
@@ -447,12 +447,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t1_2",
             text: "No one must dramatize their germs to qualify. Minimal clicks, no paperwork, and volunteers can assist if you want help. The aim is clean counters, not red tape.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -478,12 +478,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t1_3",
             text: "Day one may be a little sudsy as trucks roll. That's why we set up neighborhood swap depots for backup supplies and same-day fixes to keep dinners on track.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -513,7 +513,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -546,12 +546,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t2_1",
             text: "Pairings use a fairness algorithm: balance by income and risk, cap distance, and ban self-exemptions. Audit logs publish weekly, and appeals get live decisions within 24 hours.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -578,10 +578,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If you can sear a good egg, you can handle a fair draw. Share the stove, prove granite isn't just a counter-it's your chance to model neighborly courage.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -609,10 +609,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Unsafe mismatches trigger automatic safe-harbor pauses. Report it, halt the swap, and you won't be penalized or billed while it's checked and corrected.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -642,8 +642,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

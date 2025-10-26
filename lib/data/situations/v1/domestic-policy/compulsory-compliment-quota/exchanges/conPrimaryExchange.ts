@@ -22,7 +22,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongNegative
+            o3: OutcomeModifierWeight.MajorNegative
           },
           impacts: {
             president: {
@@ -46,7 +46,7 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Projected rollout is budget-neutral: funded by time-limited Kindness Bonds and an app built in-house. To curb adjective inflation, we’ll meter “amazing” to three taps a week.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive
           },
@@ -74,8 +74,8 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -101,8 +101,8 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -133,9 +133,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Micro-merchants under 5 staff get automatic credits, and shop hours auto-generate baseline praise so you’re not kiosk-shopping. We’re adding a refundable Compliment Credit at filing.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -161,7 +161,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -187,7 +187,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -212,9 +212,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Early guidance read like it was written by a thesaurus having a breakdown. We’ve rewritten it in plain language and cut the forms from seven screens to two.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -246,7 +246,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -271,7 +271,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Credits decay if hoarded, transfers are capped, and compliments carry rotating QR stamps tied to time and place. Bots can spam, but they can’t fake a park bench at 3:07 PM.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative
             },
@@ -297,9 +297,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If a flattery farm wants to out-nice a nation, I welcome the duel. We’ll win on authenticity, and they’ll retire early from carpal tunnel and diminishing adjectives.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -324,8 +324,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -359,7 +359,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -384,7 +384,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -409,7 +409,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We won’t greenlight a tip-jar for manners. If someone invents a ‘smile fee,’ existing anti-gouging and deceptive-pricing rules apply, and we’ll shut it down fast.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive
             },
@@ -436,8 +436,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -467,9 +467,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Only coarse metadata stays: time window and a general zone, not faces or voices. Processing happens on-device, and users can purge logs in 24 hours without losing compliance credit.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -495,7 +495,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -520,7 +520,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -545,9 +545,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ll spare you a seminar on bloom filters and entropy right now. The privacy board will brief with diagrams so no one has to pretend to enjoy cryptography live.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
