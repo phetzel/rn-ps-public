@@ -20,9 +20,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Yes, I embraced the market on purpose. We'll publish a daily Cuddle Index, fund conversion desks for payroll, and if prices pout, I'll average down with a national bear hug and nachos.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            "hug-peg": OutcomeModifierWeight.StrongPositive,
-            "algo-applause": OutcomeModifierWeight.StrongNegative,
-            "quilt-index": OutcomeModifierWeight.ModeratePositive
+            "hug-peg": OutcomeModifierWeight.SlightPositive,
+            "algo-applause": OutcomeModifierWeight.SlightNegative,
+            "quilt-index": OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -46,9 +46,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "The Department of Treasurekeeping will standardize units, apply consent audits, and set haircuts: side-hugs get bigger trims than full embraces. Fee bands and T+0 conversions keep payroll moving.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            "hug-peg": OutcomeModifierWeight.ModerateNegative,
-            "algo-applause": OutcomeModifierWeight.ModeratePositive,
-            "quilt-index": OutcomeModifierWeight.SlightNegative
+            "hug-peg": OutcomeModifierWeight.SlightPositive,
+            "algo-applause": OutcomeModifierWeight.Neutral,
+            "quilt-index": OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -73,9 +73,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "To the hand-wringers: affection is risk-managed PPE for the soul. Our three-beat standard, sanitizer checks, and consent chimes will keep traders limber and the floor safer than a spreadsheet cuddle.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            "hug-peg": OutcomeModifierWeight.SlightPositive,
-            "algo-applause": OutcomeModifierWeight.SlightNegative,
-            "quilt-index": OutcomeModifierWeight.ModerateNegative
+            "hug-peg": OutcomeModifierWeight.StrongPositive,
+            "algo-applause": OutcomeModifierWeight.SlightPositive,
+            "quilt-index": OutcomeModifierWeight.MajorNegative,
           },
           impacts: {
             president: {
@@ -100,9 +100,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "No one's paycheck hinges on vibes. We're guaranteeing a floor conversion rate for wages, capping per-hug fees, and shielding small accounts with anti-squeeze circuit breakers.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            "hug-peg": OutcomeModifierWeight.ModerateNegative,
-            "algo-applause": OutcomeModifierWeight.ModeratePositive,
-            "quilt-index": OutcomeModifierWeight.SlightPositive
+            "hug-peg": OutcomeModifierWeight.SlightNegative,
+            "algo-applause": OutcomeModifierWeight.Neutral,
+            "quilt-index": OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -133,9 +133,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Fee caps scale down for micro-accounts, with a daily free-quota and nickel ceilings thereafter. Side-hugs carry a 25 bp haircut, conversions run T+0, and anti-hoard limits block pre-payday corners.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.StrongPositive,
-              "algo-applause": OutcomeModifierWeight.ModerateNegative,
-              "quilt-index": OutcomeModifierWeight.SlightPositive
+              "hug-peg": OutcomeModifierWeight.SlightPositive,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -160,9 +160,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Gig workers won't miss rent because cuddle clocks lag. Payrolls auto-convert at a guaranteed floor each night, and we built circuit breakers that throttle spikes before whales splash.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.ModerateNegative,
-              "algo-applause": OutcomeModifierWeight.StrongPositive,
-              "quilt-index": OutcomeModifierWeight.ModerateNegative
+              "hug-peg": OutcomeModifierWeight.SlightNegative,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -187,8 +187,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               "hug-peg": OutcomeModifierWeight.SlightPositive,
-              "algo-applause": OutcomeModifierWeight.ModerateNegative,
-              "quilt-index": OutcomeModifierWeight.ModerateNegative
+              "algo-applause": OutcomeModifierWeight.SlightNegative,
+              "quilt-index": OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -212,9 +212,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No, per-hug fees aren't a stealth tax on small traders. The schedule is public, capped at five micro-hugs per day, and reviewed with actual humans instead of feral spreadsheets.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.ModerateNegative,
+              "hug-peg": OutcomeModifierWeight.SlightNegative,
               "algo-applause": OutcomeModifierWeight.SlightPositive,
-              "quilt-index": OutcomeModifierWeight.StrongPositive
+              "quilt-index": OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -244,9 +244,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Safety isn't red tape; it's why people show up. If consent chimes slow you down, try trading spreadsheets-then watch how fast a sneeze halts a floor without standards.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.ModerateNegative,
-              "algo-applause": OutcomeModifierWeight.StrongPositive,
-              "quilt-index": OutcomeModifierWeight.SlightNegative
+              "hug-peg": OutcomeModifierWeight.StrongPositive,
+              "algo-applause": OutcomeModifierWeight.SlightPositive,
+              "quilt-index": OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -271,9 +271,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "The Department of Health & Hugs will bulk-buy kits, subsidize sensors, and integrate chimes into badges. Cost per trade stays under a fifth of a cent with random audits and swift fixes.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.StrongPositive,
-              "algo-applause": OutcomeModifierWeight.ModerateNegative,
-              "quilt-index": OutcomeModifierWeight.ModeratePositive
+              "hug-peg": OutcomeModifierWeight.SlightPositive,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -297,9 +297,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "The three-beat rhythm is ergonomic, not theatrical. We tested it with actual humans, and it keeps lines moving while keeping shoulders un-sprained and spirits un-soured.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.ModerateNegative,
-              "algo-applause": OutcomeModifierWeight.SlightPositive,
-              "quilt-index": OutcomeModifierWeight.ModerateNegative
+              "hug-peg": OutcomeModifierWeight.SlightNegative,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -324,8 +324,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               "hug-peg": OutcomeModifierWeight.SlightPositive,
-              "algo-applause": OutcomeModifierWeight.ModerateNegative,
-              "quilt-index": OutcomeModifierWeight.SlightPositive
+              "algo-applause": OutcomeModifierWeight.SlightNegative,
+              "quilt-index": OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -357,9 +357,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We mark by time-stamped contact and audible enthusiasm, averaged across venues with outliers tossed. Fees cap at five micro-hugs per trade, and the Snuggle Stabilization Fund fronts payroll at the floor.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.ModeratePositive,
-              "algo-applause": OutcomeModifierWeight.ModerateNegative,
-              "quilt-index": OutcomeModifierWeight.SlightPositive
+              "hug-peg": OutcomeModifierWeight.SlightPositive,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -384,8 +384,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               "hug-peg": OutcomeModifierWeight.SlightNegative,
-              "algo-applause": OutcomeModifierWeight.SlightPositive,
-              "quilt-index": OutcomeModifierWeight.ModerateNegative
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -409,9 +409,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If anyone thinks they can game the close with staged bear hugs, our auditors will meet them at the bell with penalties that cling longer than glitter on a cardigan.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.SlightPositive,
-              "algo-applause": OutcomeModifierWeight.SlightNegative,
-              "quilt-index": OutcomeModifierWeight.ModeratePositive
+              "hug-peg": OutcomeModifierWeight.StrongPositive,
+              "algo-applause": OutcomeModifierWeight.SlightPositive,
+              "quilt-index": OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -435,9 +435,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "The algebra could sedate a rhino. What matters is paychecks land on Fridays and nobody pays a hidden aww surcharge tucked between compliance and coffee.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.ModerateNegative,
-              "algo-applause": OutcomeModifierWeight.ModeratePositive,
-              "quilt-index": OutcomeModifierWeight.SlightNegative
+              "hug-peg": OutcomeModifierWeight.SlightPositive,
+              "algo-applause": OutcomeModifierWeight.SlightNegative,
+              "quilt-index": OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -467,9 +467,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Chimes pair with badges via tap-to-consent, and group hugs auto-flag for audit without freezing trades. The lunch quiet window trims noise, not flow, so settlement queues stay green.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.MajorPositive,
-              "algo-applause": OutcomeModifierWeight.StrongNegative,
-              "quilt-index": OutcomeModifierWeight.SlightNegative
+              "hug-peg": OutcomeModifierWeight.SlightPositive,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -493,9 +493,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Floor gear won't resemble a parade. Devices are sticker-sized, battery-miserly, and silent except the chime, and the refill cart is quieter than the coffee machine.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.StrongNegative,
-              "algo-applause": OutcomeModifierWeight.MajorPositive,
-              "quilt-index": OutcomeModifierWeight.Neutral
+              "hug-peg": OutcomeModifierWeight.SlightNegative,
+              "algo-applause": OutcomeModifierWeight.Neutral,
+              "quilt-index": OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -519,9 +519,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No, we aren't charging per sanitizer squirt. Consumables sit under exchange dues, and vendors compete on refill costs so the price stays boring and low.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.Neutral,
-              "algo-applause": OutcomeModifierWeight.SlightNegative,
-              "quilt-index": OutcomeModifierWeight.MajorPositive
+              "hug-peg": OutcomeModifierWeight.SlightNegative,
+              "algo-applause": OutcomeModifierWeight.SlightPositive,
+              "quilt-index": OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -545,9 +545,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We admit week one will be clumsy. That's why we've posted floor coaches to calibrate chime timing, untangle badge woes, and keep compliance breezy while everyone finds their rhythm.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.SlightNegative,
-              "algo-applause": OutcomeModifierWeight.Neutral,
-              "quilt-index": OutcomeModifierWeight.StrongNegative
+              "hug-peg": OutcomeModifierWeight.SlightPositive,
+              "algo-applause": OutcomeModifierWeight.SlightNegative,
+              "quilt-index": OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {

@@ -20,9 +20,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Think less ‘bubble,’ more ‘friendship bond.’ We’re letting households park lunch‑money amounts in bite‑size, transparent savings so enthusiasm fuels stability, not wild swings.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            outcome_foil_standard: OutcomeModifierWeight.StrongPositive,
-            outcome_kindergarten: OutcomeModifierWeight.ModerateNegative,
-            outcome_oracle: OutcomeModifierWeight.SlightPositive
+            outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
+            outcome_kindergarten: OutcomeModifierWeight.Neutral,
+            outcome_oracle: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -42,9 +42,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We structured mini‑bonds with clear maturities, posted yields, and serial tracking. Packs sell like cards, but settlement runs on boring rails with compliance stamped in holograms.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
-            outcome_kindergarten: OutcomeModifierWeight.ModeratePositive,
-            outcome_oracle: OutcomeModifierWeight.SlightPositive
+            outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+            outcome_kindergarten: OutcomeModifierWeight.Neutral,
+            outcome_oracle: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -65,9 +65,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "If you want a bubble, check the vintage sneaker aisle. This is about financial literacy with training wheels while the macro work—growth, jobs, rates—happens in the engine room.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
-            outcome_kindergarten: OutcomeModifierWeight.Neutral,
-            outcome_oracle: OutcomeModifierWeight.SlightNegative
+            outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+            outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
+            outcome_oracle: OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -88,9 +88,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "It isn’t a scheme to goose deficits. Each card is funded like any bond, and the books treat it that way. Speculators can trade wrappers; the debt math doesn’t suddenly lie.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            outcome_foil_standard: OutcomeModifierWeight.Neutral,
-            outcome_kindergarten: OutcomeModifierWeight.Neutral,
-            outcome_oracle: OutcomeModifierWeight.SlightNegative
+            outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
+            outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
+            outcome_oracle: OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -117,9 +117,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Receipts are segregated; proceeds reduce current gross funding needs one‑for‑one. We publish maturity ladders and coupon maps weekly, so you can trace glitter to the line item.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.ModeratePositive,
-              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+              outcome_kindergarten: OutcomeModifierWeight.Neutral,
+              outcome_oracle: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -140,9 +140,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Marketing makes the borrowing look fun, not smaller. The liability is real and lands on the ledger; we’re just spreading it across millions of micro‑holders instead of a few whales.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.ModerateNegative,
-              outcome_kindergarten: OutcomeModifierWeight.StrongPositive,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
+              outcome_oracle: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -162,9 +162,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Deficits are arithmetic, not pyrotechnics. If someone claims confetti hides numbers, show the page where math stopped working, and we’ll bring a calculator and a broom.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.Neutral,
-              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_foil_standard: OutcomeModifierWeight.StrongPositive,
+              outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
+              outcome_oracle: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -184,9 +184,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The novelty lives on the wrapper. The accounting lives in the books, audited and dull, so nobody wakes up to a surprise dragon eating the budget.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.Neutral,
+              outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
               outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_oracle: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -212,9 +212,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We cap pack premiums, publish a reference NAV, and throttle issuance when spreads drift. Market makers must quote inside bands, with penalties for pumpy theatrics and spoof quotes.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.StrongPositive,
+              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
               outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_oracle: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -236,8 +236,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
-              outcome_kindergarten: OutcomeModifierWeight.ModeratePositive,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_kindergarten: OutcomeModifierWeight.Neutral,
+              outcome_oracle: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -258,8 +258,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
-              outcome_kindergarten: OutcomeModifierWeight.ModerateNegative,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
+              outcome_oracle: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -279,9 +279,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If brokers are tacking on junk fees, name them. We’ll happily shine a klieg light on that party, and you can bring the popcorn while the fees head for the exit.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.Neutral,
-              outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_foil_standard: OutcomeModifierWeight.StrongPositive,
+              outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
+              outcome_oracle: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -309,9 +309,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Secondary‑market losses sit with investors; the issuer owes coupons and par at maturity, nothing more. We don’t back resale prices, and we print that in very large, very readable type.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.ModeratePositive,
-              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+              outcome_kindergarten: OutcomeModifierWeight.Neutral,
+              outcome_oracle: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -331,9 +331,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We sized packs so a wobble is a paper cut, not a cliff. Diversifying across series keeps any one shiny rarity from capsizing a family budget or the public balance sheet.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.ModerateNegative,
-              outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
+              outcome_kindergarten: OutcomeModifierWeight.Neutral,
+              outcome_oracle: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -353,9 +353,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There’s no secret bailout jar for rare misprints. If someone overpays for a glitter dragon, that’s a lesson in price discovery, not a liability for their neighbors.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.Neutral,
-              outcome_kindergarten: OutcomeModifierWeight.StrongPositive,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
+              outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
+              outcome_oracle: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -375,9 +375,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Risk is why every box ships with a budgeting zine and a ‘don’t spend the rent’ sticker. If you’re chasing a grail, maybe set aside bus money before chasing sparkles.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.Neutral,
-              outcome_kindergarten: OutcomeModifierWeight.StrongNegative,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
+              outcome_oracle: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -404,8 +404,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
-              outcome_kindergarten: OutcomeModifierWeight.ModerateNegative,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_kindergarten: OutcomeModifierWeight.Neutral,
+              outcome_oracle: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -425,9 +425,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Bad actors test fences; we may miss a stunt. But penalties escalate, data are public, and repeat performers discover the joy of quarterly audits and uncaffeinated hearings.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
-              outcome_kindergarten: OutcomeModifierWeight.ModeratePositive,
-              outcome_oracle: OutcomeModifierWeight.SlightPositive
+              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
+              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
+              outcome_oracle: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -448,8 +448,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               outcome_foil_standard: OutcomeModifierWeight.StrongPositive,
-              outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_kindergarten: OutcomeModifierWeight.SlightPositive,
+              outcome_oracle: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -469,9 +469,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ve run stress drills so drama doesn’t warp the rails. Headlines will shout; the plumbing will hum, and households can collect without feeling like they’re defusing a bomb.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.StrongNegative,
+              outcome_foil_standard: OutcomeModifierWeight.SlightNegative,
               outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative
+              outcome_oracle: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {

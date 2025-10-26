@@ -21,9 +21,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.MajorPositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative,
           },
           impacts: {
             president: {
@@ -44,10 +44,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "In plain terms, the jar speeds money velocity and morale while bigger reforms move. Coins are sterilized by patriotic lasers, tallied transparently, and routed to essentials without selling access.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.MajorNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -67,10 +67,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "The jar is voluntary theater, not the budget’s backbone. Perks are capped, no policy is for sale, and no one’s shamed for not tipping; we’re fixing the code while the jar rallies small wins.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
-            o2: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.MajorNegative
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -91,10 +91,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We are not outsourcing governance to a novelty glass. It’s a visible civic piggy bank alongside real policy, not a replacement for taxes, wages, or the work of serious budgeting.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.MajorPositive
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -121,10 +121,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Shout-outs are standardized acknowledgments, not favors. No meetings are bought. There’s a public log, randomized rotation, and clear walls between comms and policy. You can audit it live.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -145,10 +145,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No naming rights, no velvet rope. A barista pun doesn’t buy a briefing; it buys a thank-you that disappears in 24 hours, with caps to keep megaphones from drowning out regular people.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -168,10 +168,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If someone tries to buy influence with a jar selfie, they’ll get a complimentary eye roll and a link to civics class. The jar’s for morale; policy still happens in boring rooms.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -191,10 +191,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Influencers love a spotlight? Great—challenge them to aim it at community projects, not clout hoarding. The loudest tip should be the one funding the quietest need.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -220,10 +220,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re advancing structural fixes—loophole closures, modernized enforcement, fair rates—while the jar remains optional and fee-free. Think bridge, not band-aid, and we’ll brief the timeline.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -244,10 +244,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one is nickel-shamed. There are zero fees, opt-out by default, and matching funds steered to under-served areas. The budget isn’t leaning on quarters; it’s paced by policy.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -267,10 +267,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Yes, a jar can feel cringe if you’re stretched thin. That’s why we barred gamified leaderboards, capped shout-outs, and banned guilt messaging. Policy carries the load; the jar lifts morale.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -290,10 +290,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If shame were revenue, we’d be in surplus. The point is joyfully low-stakes civic mischief while the heavy lifts happen in tax code pages thicker than the jar’s glass.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -321,10 +321,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The jar is emptied on a set schedule by dual-control teams, livestreamed for anyone with a browser. Totals sync to an open ledger, and an independent inspector signs off monthly.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -344,10 +344,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Coins are zapped by patriotic lasers—read: lab-grade sterilizers with a flag sticker—before sorting. Chain-of-custody seals every step so no one pockets a commemorative quarter.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -367,10 +367,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Every receipt is public within 24 hours, with rollups by program, not person. Donor data is minimized; we publish nickels, not names, so good deeds don’t turn into shadow Rolodexes.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -390,10 +390,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The only special access belongs to the janitor with the keys and an ancient mop named Democracy. The rest of us watch the stream and argue about the playlist like normal people.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -419,10 +419,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "A revenue package is queued: closing carve-outs, automating compliance, and funding auditors who drink decaf. Draft text posts next month, with phased rollouts tied to real metrics.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -442,10 +442,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "While we grind the bill, we dare deep-pocketed brands to tip until it passes—call it a public layaway. Prove your civic swagger now, then enjoy lower grandstanding later.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -465,10 +465,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The jar sunsets automatically after the first reform milestones. If the legislature misses dates, we adjust; if reforms land early, the jar becomes museum-grade kitsch.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -488,10 +488,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No, the jar isn’t a distraction; it’s a rally prop that keeps attention on the finish line. The work is the bill, the enforcement, and the equity math, and that’s where staff time goes.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {

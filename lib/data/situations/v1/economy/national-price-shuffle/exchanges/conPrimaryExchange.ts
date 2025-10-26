@@ -21,9 +21,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             shuffle_outcome_1: OutcomeModifierWeight.StrongPositive,
-            shuffle_outcome_2: OutcomeModifierWeight.ModerateNegative,
-            shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
-            shuffle_outcome_4: OutcomeModifierWeight.ModerateNegative
+            shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+            shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+            shuffle_outcome_4: OutcomeModifierWeight.StrongNegative,
           },
           impacts: {
             president: {
@@ -47,10 +47,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Treasury ring-fenced staples with guardrails and rebates, and published a 12-month spin map for contracts. Spins randomize within bands, so payrolls and suppliers aren't guessing blind.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
-            shuffle_outcome_2: OutcomeModifierWeight.ModeratePositive,
-            shuffle_outcome_3: OutcomeModifierWeight.StrongNegative,
-            shuffle_outcome_4: OutcomeModifierWeight.ModeratePositive
+            shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+            shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+            shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+            shuffle_outcome_4: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -77,8 +77,8 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
             shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
-            shuffle_outcome_3: OutcomeModifierWeight.StrongPositive,
-            shuffle_outcome_4: OutcomeModifierWeight.StrongNegative
+            shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+            shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "No one's retirement gets fed to the wheel. Savings accounts, mortgages, and long-term care rates are insulated, while small businesses get stabilizers and grace periods to catch their breath.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            shuffle_outcome_1: OutcomeModifierWeight.StrongNegative,
-            shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
-            shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
-            shuffle_outcome_4: OutcomeModifierWeight.StrongPositive
+            shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
+            shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+            shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
+            shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -138,9 +138,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               shuffle_outcome_1: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_2: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
-              shuffle_outcome_4: OutcomeModifierWeight.ModerateNegative
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.ModerateNegative,
             },
             impacts: {
               president: {
@@ -166,10 +166,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The spinner's randomness is bounded by commodity bands; suppliers get a pre-spin forecast cone and can hedge with micro-futures. Shelf tags update digitally, not by exhausted sticker brigades.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.StrongPositive,
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
               shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.ModeratePositive
+              shuffle_outcome_4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -193,10 +193,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We've pre-positioned buffer stock for baby basics, common meds, and pantry staples, and we cover costs from mid-cycle swings. Shoppers should see steady aisles even when the wheel does a cheeky samba.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
               shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.ModeratePositive
+              shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -222,8 +222,8 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
               shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_4: OutcomeModifierWeight.ModerateNegative
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -253,10 +253,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Public safety is boring until it isn't. We're not auditing algebra; we're preventing stampedes, scanner-skimming rings, and trunkloads of underpriced soap. Policy follows safety because ambulances aren't coupons.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.MajorPositive,
-              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
-              shuffle_outcome_3: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.StrongPositive
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -281,10 +281,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Interagency teams track bulk-buy anomalies and cross-district arbitrage flows. Purchase caps trigger ID checks, and heat maps go to local chiefs to preempt flash-raids before they trend.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.MajorNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_4: OutcomeModifierWeight.StrongNegative
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -308,10 +308,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Let's not romanticize the old sticker-gun cartel. The Shuffle breaks hoarding games and forces lazy monopolists to hustle. Disorderly profit-taking just lost its reserved table.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_2: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.SlightNegative
+              shuffle_outcome_1: OutcomeModifierWeight.StrongPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -335,10 +335,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one's getting cuffed for clipping coupons. Guardrails target organized exploitation, not grandma's list, and stores get panic-button support lines to de-escalate when crowds get spicy.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive
+              shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -370,10 +370,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Bands have hard ceilings for essentials, audited by the Comptroller of Novelty and mirrored offline. If the spinner hiccups, failsafes roll back to the prior band rather than sudden-death roulette.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_2: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_3: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_4: OutcomeModifierWeight.ModeratePositive
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We've seen zero 'confetti spikes.' The only gremlin so far was a warehouse hamster named Slabs chewing a cable sleeve. Prices held steady; IT bought him a proper chew toy.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.ModerateNegative
+              shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -424,10 +424,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Consumers won't face surprise jumps at checkout. Alerts freeze point-of-sale prices instantly, and stores are auto-compensated, so glitches become back-office bedtime stories, not aisle drama.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_2: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_4: OutcomeModifierWeight.StrongPositive
+              shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -451,10 +451,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We'll let the coders wrestle gremlins. Shoppers want milk, not mythologies, and the corridor delivers calm receipts while the geeks chase whatever is nibbling cables this week.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.StrongNegative
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -484,10 +484,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Labels guide the public, not the accountants. If the meter says BOGO, we surge greeters, stagger door counts, and park cruisers at hot spots. The slogan is goofy; the playbook isn't.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_3: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -511,10 +511,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "It triggers staggered hours, mobile crowd teams, and a hotline that routes to humans, not a beeping maze. Retail partners get scripts and extra scanners to outrun rumor-driven swells.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_2: OutcomeModifierWeight.ModerateNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.ModeratePositive,
-              shuffle_outcome_4: OutcomeModifierWeight.SlightNegative
+              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -539,9 +539,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               shuffle_outcome_1: OutcomeModifierWeight.SlightNegative,
-              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongNegative,
-              shuffle_outcome_4: OutcomeModifierWeight.StrongPositive
+              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If accountability's on sale, check the receipt: public dashboards with response times and incident counts. Price our performance in daylight and judge the markdowns yourself.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              shuffle_outcome_1: OutcomeModifierWeight.SlightPositive,
-              shuffle_outcome_2: OutcomeModifierWeight.SlightNegative,
-              shuffle_outcome_3: OutcomeModifierWeight.StrongPositive,
-              shuffle_outcome_4: OutcomeModifierWeight.StrongNegative
+              shuffle_outcome_1: OutcomeModifierWeight.StrongPositive,
+              shuffle_outcome_2: OutcomeModifierWeight.SlightPositive,
+              shuffle_outcome_3: OutcomeModifierWeight.SlightNegative,
+              shuffle_outcome_4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {

@@ -21,8 +21,8 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.MajorNegative,
           },
           impacts: {
             president: {
@@ -50,9 +50,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Temporary stewardship stabilizes clearing, prices are marked to stress, and senior claims take first loss. We’re swapping panic for liquidity with jumbo dice audited by boring spreadsheets.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -83,7 +83,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -113,7 +113,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongNegative
+            o3: OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -149,9 +149,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Taxpayer risk is capped by a first‑loss buffer funded by shareholders and dice dealers; collateral is haircutted up to 60%, and rent cards get stress‑priced, not par. Details are public in the term sheet.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -180,9 +180,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We built escape ramps: sunset dates, ratchets that shrink exposure as markets thaw, and a watchdog with a magnifying glass the size of a dinner plate. The goal is boring stability, not empire‑building.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -210,9 +210,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The stark alternative was spontaneous combustion across hobby‑finance. We can litigate metaphors all week, or we can put out the fire and send the bill to those who lit the scented candles.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -240,9 +240,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Authorized by the Treasure Ministry: our exclusive numbers show a maximum gross backstop equal to three rainy days, offset by fees and equity warrants. The public isn’t buying thimbles; it’s renting calm.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.ModerateNegative,
             },
             impacts: {
               president: {
@@ -277,9 +277,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We deny any snack‑state. Perimeter control ends when the table stops wobbling. No curfews, no raids, no Patriot Snack Act—just a pause on chaos while we inventory dice and apologize to the neighbors.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -308,9 +308,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We admit morale care is squishy. Tokens don’t need IVs; they need boundaries and a shuffle. We’ll publish discharge criteria so no one gets kept for observation just because a top hat looks sad.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -338,9 +338,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Civil checks include a civilian rules lawyer, a public log of every confiscated die, and appeal rights faster than pizza delivery. If a move feels authoritarian, it gets vetoed before the slice arrives.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -368,9 +368,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "I challenge the melodrama. Guarding snacks isn’t martial law; it’s parenting for markets. If someone wants to conflate pretzels with habeas corpus, I’m happy to grade their homework on live TV.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -406,9 +406,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If swaps jam, we auto‑roll collateral haircuts wider, activate a standby credit line funded by windfall taxes on dice dealers, and auction assets via blind bid to price discovery, not nostalgia.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -437,8 +437,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -466,9 +466,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Snake eyes is a colorful hypothetical. The more relevant risk was stampede psychology, which we’ve tranquilized with transparency and sobriety that could put a caffeinated hyena to sleep.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -496,9 +496,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We deny that a jam equals doom. The dice are redundant, audited, and frankly boring. If excitement appears, it’s because someone is performing for the livestream, not because the math changed.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -532,9 +532,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We deny any secret tribunals. Dice confiscations require a signed form, two witnesses, and a bowl of unguarded chips as a sting for entrapment purposes. The goal is comedy‑free compliance, not control.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -563,8 +563,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -592,9 +592,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "A temporary Oversight of Play Board, chaired by a retired librarian, reviews all actions within 24 hours. Players can appeal online, by hotline, or by returning the confiscated die under seal.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -622,9 +622,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "I challenge the doom‑scrolling. Stacks get guarded like museum exhibits, not seized like contraband. If anyone claims otherwise, we can livestream a walkthrough with the rulebook at eye level.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {

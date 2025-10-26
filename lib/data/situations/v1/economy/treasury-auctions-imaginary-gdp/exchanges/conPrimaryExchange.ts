@@ -20,9 +20,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Markets already price vibes, narratives, and weather forecasts. Show me a purely real economy with no storytelling or derivatives, and I'll shred these credits on live TV, confetti and all.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.MajorPositive
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.MajorNegative,
           },
           impacts: {
             president: {
@@ -42,9 +42,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We already price risks that don't exist; this program simply labels and fences them. Issuance is capped, usage is audited, and nothing lets executives swap credits for real investment obligations.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.MajorPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -65,9 +65,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Credits settle like permits, not money. Weekly auctions, hard expirations, and a no-collateral rule keep them in the bragging-rights lane, so if traders overpay, that theater doesn't tax anyone's savings.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.MajorPositive,
-            o3: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -88,9 +88,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "It's not a stealth tax. Savers still earn market rates; the credits trade in a separate sandbox where participation is voluntary and priced by adults with calculators, not anyone's retirement account.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -117,9 +117,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Eligibility is tethered to real inputs: audited capex, payroll, and energy use. You can't buy credits unless you build, and the ratio of credits to output is capped with clawbacks that bite.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -139,9 +139,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If you think CEOs will skip profits to chase imaginary stickers, that's a compensation problem, not a policy one. We're capping the stickers and tying them to receipts, not vibes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.MajorPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -161,9 +161,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Authorized on behalf of the Treasury: the Secretary directs that credits be issued only against verified capital formation, maintained payrolls, and clean energy targets, with public audits and penalties for fluff.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.ModerateNegative,
             },
             impacts: {
               president: {
@@ -184,9 +184,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Valuations are marked-to-myth under a published rubric with conservative haircuts and error bands. A rotating panel of myth-accountants sets baselines, and appeals are logged in daylight.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -213,9 +213,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No. The auctions are small, ring-fenced, and forbidden from collateral chains, so they don't crowd out bonds. If yields move, it'll be because the real economy did, not a novelty coupon.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -235,9 +235,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Let's not confuse volume with risk before we see data. The Reserve of Imaginaries will publish liquidity heat maps after the pilot, and we'll tweak knobs with evidence, not headlines.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -259,7 +259,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorPositive
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -280,9 +280,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Participation is elective and proceeds offset fees elsewhere, making the program budget-neutral to savers. The mechanics live on a separate rail with its own risk capital and disclosures.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -310,9 +310,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The Myth Index is compiled by a rotating, diverse panel with published methods, back-testing, and confidence bands. We score narratives like risk factors, then haircut the poetry.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -332,9 +332,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If stories run hotter than stats, the cap ratchets down automatically. Think of it as a circuit breaker for rhetoric so the myth can't outrun the math for long.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.MajorPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -354,9 +354,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If the nation wants fewer myths, it can start by shrinking footnotes and earnings theater. We're just labeling what's already on stage so people stop tripping over it.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -376,9 +376,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Yes, it's whimsical labeling for spin that already floats through glossy decks. Better to corral it with rules and sunlight than pretend the imaginary doesn't move real prices.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -404,9 +404,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Contracts ban rehypothecation, the clearinghouse blocks any repo tagging, and violations vaporize credits and hit capital. You can't turn these into plumbing without tripping alarms.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -426,9 +426,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We monitor cross-asset margin with exchange feeds and tripwires. If desks try basket alchemy, alerts fire, margins jump, and compliance shows up before the leverage does.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -448,9 +448,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If a shadow desk MacGyvers a loophole, we'll weld it shut fast. Innovation can be clever, but regulation can be faster when the toy is capped, small, and fully visible.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -471,8 +471,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {

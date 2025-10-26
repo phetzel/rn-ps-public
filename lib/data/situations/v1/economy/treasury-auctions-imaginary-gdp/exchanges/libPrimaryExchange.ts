@@ -21,8 +21,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.MajorPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.MajorNegative,
           },
           impacts: {
             president: {
@@ -43,8 +43,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.StrongNegative
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -65,9 +65,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Proceeds fund tangible projects—rails, routers, and rainy-day wage subsidies—while credits sit on balance sheets like novelty paperweights. The scoreboard glows; the shop floor gets the cash.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -89,8 +89,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.Neutral
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
           },
           impacts: {
             president: {
@@ -117,9 +117,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Primary auctions prioritize broad participation, with anti-collusion screens and randomized lots. If concentration spikes, an automatic pause triggers a review before any more fog gets minted.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -140,9 +140,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Risk sits with bidders, not households. Credits don’t entitle payouts, and capital buffers are required, like seatbelts on a clown car that we triple-checked for actual clowns.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -162,9 +162,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re not socializing losses for private myth-chasing. There is no hidden backstop, no wink-nudge facility, and no bailout bucket labeled ‘Break Glass When Vibes Break.’",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -184,9 +184,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Let’s not pretend the status quo is pure. Today, elites already arbitrage narrative and policy. This forces the game onto a lit field with rules, refs, and a visible scoreboard.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -212,9 +212,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Labor standards are welded on: wage floors, no credit-as-compensation, and clawbacks if hiring lags. Workers get dollars; firms get bragging rights they must earn the loud way.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -235,9 +235,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Every auction dollar is appropriated to worker-facing outlays—training grants, childcare slots, and transit passes—audited quarterly. The ledger gets glitter; neighborhoods get plumbing.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -257,9 +257,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Yes, glossy metrics can tempt corner-cutting. That’s why we cap issuance and tie executive bonuses to payroll growth, not paper glow. The mirror only gets a nightlight.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -281,7 +281,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -309,9 +309,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "An independent Oversight of Imaginaries Board publishes monthly concentration stats and can freeze auctions. Funds are legally earmarked for buses, clinics, and breaks you can actually take.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -331,9 +331,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Anti-hoarding rules use declining marginal allowances and sunset dates, with resale taxes that fund boring things on purpose. It’s fiscal fiber, not a bubble diet.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -353,9 +353,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Credit hoarding isn’t a feature; it’s a violation. If three megafunds corner the myth, their credits evaporate into forfeiture, which is our polite word for ‘nice try.’",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -375,9 +375,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If anyone builds a dragon hoard of credits, we’ll send the auditor with a measuring tape and a fire extinguisher labeled ‘Reality.’ Dragons hate paperwork.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
@@ -403,9 +403,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Yes. Worker councils and local boards get a binding say on issuance that affects their wages or rents, and the statute sunsets in three years unless renewed after public hearings.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -425,9 +425,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The sunset pairs with a kill-switch indexed to real wage growth. If wages lag output by a set spread, issuance auto-winds down while the legislature rethinks the magic show.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -447,9 +447,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If you want permanence, earn it: show rising pay, lower commute times, and fewer ‘Help Wanted’ signs gathering dust. Otherwise, the credits ride off with the circus.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
             },
             impacts: {
               president: {
@@ -469,9 +469,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We can’t promise zero unintended consequences. That’s why we built veto points and a short leash, so the imaginary never becomes wallpaper you stop noticing.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
             },
             impacts: {
               president: {
