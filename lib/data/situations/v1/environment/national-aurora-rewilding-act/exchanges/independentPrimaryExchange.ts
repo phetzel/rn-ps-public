@@ -44,7 +44,7 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "State is coordinating sky-gardening corridors with air agencies and local curfews. The license spec stays open, and ad content is barred in the base protocol by design.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            outcome_1: OutcomeModifierWeight.ModerateNegative,
+            outcome_1: OutcomeModifierWeight.StrongNegative,
             outcome_2: OutcomeModifierWeight.ModeratePositive,
             outcome_3: OutcomeModifierWeight.ModerateNegative,
             outcome_4: OutcomeModifierWeight.StrongPositive
@@ -91,10 +91,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Let's not skip to dystopia just because the lights are pretty. We have rulebooks thicker than a blimp sandwich, and we'll publish them for comment before launch.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            outcome_1: OutcomeModifierWeight.ModerateNegative,
-            outcome_2: OutcomeModifierWeight.ModeratePositive,
+            outcome_1: OutcomeModifierWeight.StrongNegative,
+            outcome_2: OutcomeModifierWeight.StrongPositive,
             outcome_3: OutcomeModifierWeight.StrongNegative,
-            outcome_4: OutcomeModifierWeight.ModeratePositive
+            outcome_4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -121,10 +121,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Pilots get published aurora lanes, altitude buffers, and real-time beacons. Cities can set quiet-night windows, and the array throttles brightness automatically when people need dark.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.ModeratePositive,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.StrongPositive,
-              outcome_4: OutcomeModifierWeight.ModerateNegative
+              outcome_1: OutcomeModifierWeight.StrongPositive,
+              outcome_2: OutcomeModifierWeight.StrongNegative,
+              outcome_3: OutcomeModifierWeight.MajorPositive,
+              outcome_4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -171,7 +171,7 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_1: OutcomeModifierWeight.StrongPositive,
               outcome_2: OutcomeModifierWeight.StrongNegative,
               outcome_3: OutcomeModifierWeight.StrongNegative,
-              outcome_4: OutcomeModifierWeight.ModeratePositive
+              outcome_4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -221,9 +221,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.SlightPositive,
-              outcome_4: OutcomeModifierWeight.StrongNegative
+              outcome_2: OutcomeModifierWeight.StrongNegative,
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -270,7 +270,7 @@ export const independentPrimaryExchange: ExchangeData = {
               outcome_1: OutcomeModifierWeight.ModeratePositive,
               outcome_2: OutcomeModifierWeight.StrongNegative,
               outcome_3: OutcomeModifierWeight.StrongPositive,
-              outcome_4: OutcomeModifierWeight.SlightPositive
+              outcome_4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -292,8 +292,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.ModerateNegative,
               outcome_2: OutcomeModifierWeight.StrongPositive,
-              outcome_3: OutcomeModifierWeight.ModerateNegative,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -321,10 +321,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Local councils set dimming calendars with wildlife agencies. Sensors watch bird and bat activity, and the system yields to migration and exam weeks before it makes pretty.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.ModeratePositive,
+              outcome_1: OutcomeModifierWeight.StrongPositive,
               outcome_2: OutcomeModifierWeight.StrongNegative,
-              outcome_3: OutcomeModifierWeight.SlightPositive,
-              outcome_4: OutcomeModifierWeight.ModerateNegative
+              outcome_3: OutcomeModifierWeight.StrongPositive,
+              outcome_4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -344,10 +344,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If owls glare at us, we back off. The schedule can fade to zero in minutes, and it defaults to dark when in doubt.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.ModerateNegative,
+              outcome_1: OutcomeModifierWeight.StrongNegative,
               outcome_2: OutcomeModifierWeight.StrongPositive,
-              outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.ModeratePositive
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -368,8 +368,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.MajorPositive,
+              outcome_2: OutcomeModifierWeight.StrongNegative,
+              outcome_3: OutcomeModifierWeight.StrongPositive,
               outcome_4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -391,8 +391,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongNegative,
-              outcome_2: OutcomeModifierWeight.ModeratePositive,
-              outcome_3: OutcomeModifierWeight.MajorNegative,
+              outcome_2: OutcomeModifierWeight.StrongPositive,
+              outcome_3: OutcomeModifierWeight.StrongNegative,
               outcome_4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -420,8 +420,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.MajorPositive,
+              outcome_2: OutcomeModifierWeight.StrongNegative,
+              outcome_3: OutcomeModifierWeight.StrongPositive,
               outcome_4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -443,7 +443,7 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongNegative,
-              outcome_2: OutcomeModifierWeight.ModeratePositive,
+              outcome_2: OutcomeModifierWeight.StrongPositive,
               outcome_3: OutcomeModifierWeight.StrongNegative,
               outcome_4: OutcomeModifierWeight.StrongPositive
             },
@@ -465,10 +465,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If a rogue blimp tries product placement, we'll outshine it with a giant 'Nope' and dock its corridor time. The night belongs to the public, full stop.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.ModeratePositive,
+              outcome_1: OutcomeModifierWeight.StrongPositive,
               outcome_2: OutcomeModifierWeight.StrongNegative,
-              outcome_3: OutcomeModifierWeight.SlightPositive,
-              outcome_4: OutcomeModifierWeight.ModerateNegative
+              outcome_3: OutcomeModifierWeight.StrongPositive,
+              outcome_4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {

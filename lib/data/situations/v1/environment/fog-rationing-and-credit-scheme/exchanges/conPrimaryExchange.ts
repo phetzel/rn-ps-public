@@ -20,10 +20,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "The President denies that fog can be rationed; it's weather with a side hustle. We are not metering moods of water; if it invoices us, he'll pay in coupons, not policy.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.MajorPositive,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.MajorNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -47,10 +47,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Public health hinges on calm breathing, not cargo jams. We're smoothing checkpoints into 90-second mist checks, issuing towels and charts, and keeping harvesters and rooftops moving safely.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Homeland Atmospherics will post checkpoint windows, swap limits by zone, and anti-laundering triggers. Vendors can scan a cloud-status board to plan routes and avoid bottlenecks.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Allocation auctions and swap math are run by the Ministry of Mists, not the podium. We'll let the modelers model while we focus on clarity and calm.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.MajorNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.MajorPositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -134,13 +134,13 @@ export const conPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_s1_1",
-            text: "We are opening a perishables lane, pre-clearing coastal boats by radio, and front-loading swaps before dawn. No one should lose a day’s catch to a clipboard.",
+            text: "We are opening a perishables lane, pre-clearing coastal boats by radio, and front-loading swaps before dawn. No one should lose a day's catch to a clipboard.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -165,10 +165,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The rollout had first-week friction; we stacked too many pilots on one pier. We are staggering windows, adding mobile staff, and fixing the hold-music purgatory.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -192,10 +192,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Median dwell is 11 minutes outside fog spikes, and marked crates get seal-through. A roaming auditor team is empowered to bust clogs and reroute on the hour.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -219,10 +219,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Some choke is self-inflicted by credit hoarding and viral queue theatrics. If traders stop cosplay-panicking, the line moves like, well, fog.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -252,10 +252,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Authorized: Homeland has traced clusters of sequential swaps, seized counterfeit voucher sheets, and flagged gray-mist shells. Tipline 707-MIST gets priority; repeat fraud loses licenses.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.MajorPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -281,10 +281,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Evidence includes time-stamped swap chains hopping rooftops to coast in minutes, plus duplicate serials. We target networks, not neighborhoods, and publish redacted maps weekly.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -308,10 +308,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We are not punishing honest swappers. First hits are warnings with fixes, and only willful rerouters see fines after a clean appeal path.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -335,10 +335,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Hype about laundering often comes from fog-credit speculators who profit on panic. We will not let market theater write enforcement scripts.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -370,10 +370,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Baseline risk is low; fog is damp air, not doom. Calm pacing reduces cough spikes, and yes, towels and lullabies work because slowing breath beats sprinting through checkpoints.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We are collecting voluntary spirometry and pulse-ox samples at booths, with weekly dashboards and clear caveats. Data guide tweaks to queue length and swap timing.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -424,10 +424,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There is no evidence of an asthma surge tied to checkpoints. If clinic alerts rise above thresholds, we will pause segments and retool immediately.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -451,10 +451,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "For anyone craving extra calm, our federally unaccompanied Fog Choir holds open rehearsals Tuesdays. Participation is free, pitch optional.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -484,10 +484,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We are not barcoding clouds; we are serializing vouchers and anomaly-scanning flows. The 'midnight bell' is an app alert, and stings are scheduled off-pattern to avoid theater.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.MajorPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -511,10 +511,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Capacity is finite; we will not chase every wisp. We prioritize high-risk rings and cut low-yield stops so honest traders spend minutes, not hours, under clipboards.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -538,10 +538,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "This is not pageant policing. Every checkpoint needs a measurable fraud delta, or it gets shut down and re-tasked.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Mist-mobs hate paperwork. Drown them in it, and the honest folks breeze through on a fast lane of transparency and predictability.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

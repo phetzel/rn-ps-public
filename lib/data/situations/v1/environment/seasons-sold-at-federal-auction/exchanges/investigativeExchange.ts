@@ -150,13 +150,13 @@ export const investigativeExchange: ExchangeData = {
         answers: [
           {
             id: "a_sec1_1",
-            text: "As authorized, Treasury will publish a consolidated order book and beneficial-owner map next week. We’ll also log pre-quote pings, so any leak trail leads to a door with a nameplate.",
+            text: "As authorized, Treasury will publish a consolidated order book and beneficial-owner map next week. We'll also log pre-quote pings, so any leak trail leads to a door with a nameplate.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
               autumn_spice: OutcomeModifierWeight.ModeratePositive,
               groundhog_marshals: OutcomeModifierWeight.StrongNegative,
-              august_46: OutcomeModifierWeight.SlightPositive,
-              noa_spring: OutcomeModifierWeight.ModerateNegative
+              august_46: OutcomeModifierWeight.ModeratePositive,
+              noa_spring: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -188,8 +188,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               autumn_spice: OutcomeModifierWeight.ModerateNegative,
               groundhog_marshals: OutcomeModifierWeight.StrongPositive,
-              august_46: OutcomeModifierWeight.SlightNegative,
-              noa_spring: OutcomeModifierWeight.ModeratePositive
+              august_46: OutcomeModifierWeight.ModerateNegative,
+              noa_spring: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -477,13 +477,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_ter1_3",
-            text: "No bank can roll a tow truck up to dusk. Consumer seasons remain inalienable; the memo doesn’t authorize repossession of weather, picnics, or cousins’ birthdays.",
+            text: "No bank can roll a tow truck up to dusk. Consumer seasons remain inalienable; the memo doesn't authorize repossession of weather, picnics, or cousins' birthdays.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              autumn_spice: OutcomeModifierWeight.SlightPositive,
+              autumn_spice: OutcomeModifierWeight.ModeratePositive,
               groundhog_marshals: OutcomeModifierWeight.StrongNegative,
               august_46: OutcomeModifierWeight.ModeratePositive,
-              noa_spring: OutcomeModifierWeight.ModerateNegative
+              noa_spring: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -508,13 +508,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_ter1_4",
-            text: "Let’s separate paperwork poetry from policy. Drafts get dramatic titles so lawyers stay awake; operational authority still rests on statutes, not stationery bravado.",
+            text: "Let's separate paperwork poetry from policy. Drafts get dramatic titles so lawyers stay awake; operational authority still rests on statutes, not stationery bravado.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              autumn_spice: OutcomeModifierWeight.SlightNegative,
+              autumn_spice: OutcomeModifierWeight.ModerateNegative,
               groundhog_marshals: OutcomeModifierWeight.StrongPositive,
               august_46: OutcomeModifierWeight.ModerateNegative,
-              noa_spring: OutcomeModifierWeight.ModeratePositive
+              noa_spring: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -548,10 +548,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Alerts go over sirens, cell broadcast, and library tickers, with multilingual drills. If a cue misfires, fallbacks trigger, and appeal channels reopen the window within minutes.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              autumn_spice: OutcomeModifierWeight.SlightNegative,
+              autumn_spice: OutcomeModifierWeight.ModerateNegative,
               groundhog_marshals: OutcomeModifierWeight.StrongPositive,
               august_46: OutcomeModifierWeight.ModeratePositive,
-              noa_spring: OutcomeModifierWeight.ModerateNegative
+              noa_spring: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -579,10 +579,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Residents get a simple app and hotline, plus paper notices for low-connectivity areas. Appeals can pause execution blocks, and farms get longer buffers than city parks.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              autumn_spice: OutcomeModifierWeight.SlightPositive,
+              autumn_spice: OutcomeModifierWeight.ModeratePositive,
               groundhog_marshals: OutcomeModifierWeight.StrongNegative,
               august_46: OutcomeModifierWeight.ModerateNegative,
-              noa_spring: OutcomeModifierWeight.ModeratePositive
+              noa_spring: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

@@ -48,9 +48,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -79,7 +79,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.StrongNegative
           },
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_4",
-          text: "On ownership and litigation, we can’t referee lawsuits filed by scarecrows, gourds, or the Tumbleweed League. The Air Clause is, by design, permeable to common sense.",
+          text: "On ownership and litigation, we can't referee lawsuits filed by scarecrows, gourds, or the Tumbleweed League. The Air Clause is, by design, permeable to common sense.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.SlightPositive
@@ -196,13 +196,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec1_3",
-            text: "Let’s challenge the math: compare it to silent heat taxes—lost yields, overtime, ER bills. A planned breeze beats paying peak rates to pray your tomatoes don’t faint.",
+            text: "Let's challenge the math: compare it to silent heat taxes—lost yields, overtime, ER bills. A planned breeze beats paying peak rates to pray your tomatoes don't faint.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -223,13 +223,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec1_4",
-            text: "Authorized: Treasury confirms quarterly rebates to operations under 50 acres and requires fee transparency in municipal contracts. We’ll audit gust ledgers and claw back fluff.",
+            text: "Authorized: Treasury confirms quarterly rebates to operations under 50 acres and requires fee transparency in municipal contracts. We'll audit gust ledgers and claw back fluff.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -563,13 +563,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter2_3",
-            text: "We’re not asserting vertical dominion like a ladder to space. The program times flows across corridors already shared by weather and common sense.",
+            text: "We're not asserting vertical dominion like a ladder to space. The program times flows across corridors already shared by weather and common sense.",
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -596,7 +596,7 @@ export const conPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

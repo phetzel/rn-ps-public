@@ -21,9 +21,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -44,7 +44,7 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.SlightPositive
           },
@@ -68,7 +68,7 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.ModeratePositive
           },
@@ -96,7 +96,7 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.SlightNegative
           },
@@ -129,7 +129,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Auctions launch with a soft floor and caps to curb hoarding. Certified nurseries can list lots weekly, and bundle packs let buildings buy shade-loving credits without scalpers muscling in.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.SlightNegative
@@ -185,7 +185,7 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
@@ -214,7 +214,7 @@ export const independentPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -271,10 +271,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Protocol is simple: timestamped photos, chalked perimeters, and an HOA liaison list. Disputes trigger a 72-hour cooling-off and a neutral visit, not a citation parade.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.MajorPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -303,9 +303,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.MajorNegative,
               o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -329,7 +329,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Edge cases land in small-claims or arbitration, and we'll publish model neighbor agreements. We'd rather write fewer rules and more checklists than litigate every patch.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -366,7 +366,7 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -419,10 +419,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "It doesn't listen to conversations, scrape contacts, or map your grill habits. If it can't see moss, it shrugs and asks you to try again in daylight.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -450,8 +450,8 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We're allergic to soggy data. If anyone proposes biometric dew-tracking, we'll send them to the Department of Overthinking and a very dry room.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.SlightNegative
             },

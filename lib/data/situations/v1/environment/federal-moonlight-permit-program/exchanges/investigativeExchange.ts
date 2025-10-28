@@ -17,13 +17,13 @@ export const investigativeExchange: ExchangeData = {
       answers: [
         {
           id: "a_root_admit",
-          text: "I promised the Moon free curb space and moths a union break. Permits keep nightlife from double‑booking the sky, and we’ll post fee ladders and vendor logs so you can audit us.",
+          text: "I promised the Moon free curb space and moths a union break. Permits keep nightlife from double‑booking the sky, and we'll post fee ladders and vendor logs so you can audit us.",
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.MajorNegative
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -45,13 +45,13 @@ export const investigativeExchange: ExchangeData = {
         },
         {
           id: "a_root_reassure",
-          text: "Health‑wise, this lowers insomnia flare‑ups and stops migratory moths from rage‑spiraling into porch riots. We’re prescribing dimmer dinners and federally approved nightcaps, not panic.",
+          text: "Health‑wise, this lowers insomnia flare‑ups and stops migratory moths from rage‑spiraling into porch riots. We're prescribing dimmer dinners and federally approved nightcaps, not panic.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.MajorPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -72,13 +72,13 @@ export const investigativeExchange: ExchangeData = {
         },
         {
           id: "a_root_challenge",
-          text: "Unlicensed glow is a soft target. We treat lumen‑laundering like contraband, and we’ll audit floodlights before the disco balls revolt, because rule‑breakers shouldn’t choreograph the night.",
+          text: "Unlicensed glow is a soft target. We treat lumen‑laundering like contraband, and we'll audit floodlights before the disco balls revolt, because rule‑breakers shouldn't choreograph the night.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.StrongNegative
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -139,9 +139,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -166,10 +166,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No contractor moonwalked into policymaking. They filed technical notes during a public review window, and we rejected anything that read like sales copy.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -190,13 +190,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_s1_deflect",
-            text: "Let’s not confuse rehearsal access with ghost‑writing. Nights have deadlines; we invited testers so the sky didn’t trip over its own cords.",
+            text: "Let's not confuse rehearsal access with ghost‑writing. Nights have deadlines; we invited testers so the sky didn't trip over its own cords.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -220,9 +220,9 @@ export const investigativeExchange: ExchangeData = {
             text: "An ethics firewall separates spec writers from vendor coffees, with weekly conflict checks that are gloriously dull. Anyone slow‑dancing with bidders sits out.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -254,9 +254,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -278,13 +278,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_s2_challenge",
-            text: "Publishing raw grids would hand a treasure map to lumen‑launderers. We’ll share criteria and safeguards, but we won’t gift wrap the getaway routes.",
+            text: "Publishing raw grids would hand a treasure map to lumen‑launderers. We'll share criteria and safeguards, but we won't gift wrap the getaway routes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -309,9 +309,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -332,13 +332,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_s2_deflect",
-            text: "Think less “hush‑hush dragnet,” more “boring rota with headlamps.” The drama is in the name; the work is tedious, logged, and reviewable.",
+            text: 'Think less "hush‑hush dragnet," more "boring rota with headlamps." The drama is in the name; the work is tedious, logged, and reviewable.',
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -367,13 +367,13 @@ export const investigativeExchange: ExchangeData = {
         answers: [
           {
             id: "a_t1_admit",
-            text: "Early drafts weighted one vendor’s calibration too heavily; we corrected before launch and posted the change log. That’s why pilots exist—so math stumbles before the moths do.",
+            text: "Early drafts weighted one vendor's calibration too heavily; we corrected before launch and posted the change log. That's why pilots exist—so math stumbles before the moths do.",
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const investigativeExchange: ExchangeData = {
             text: "A cross‑agency Night Science panel reruns models using open test suites, and we rotate devices to avoid gadget monoculture. Moth corridors outrank marketing.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -425,9 +425,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -451,10 +451,10 @@ export const investigativeExchange: ExchangeData = {
             text: "This melodrama over a decimal point ignores the bigger picture: the Moon is punctual, lanes are clearer, and porch karaoke finally ends on time.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -485,9 +485,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -508,13 +508,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_t2_inform",
-            text: "Private patios aren’t exempt; they’re on rotation, and laundering patterns pop in meter data and complaints. We’ve even seized counterfeit chandeliers pretending to be porch lights.",
+            text: "Private patios aren't exempt; they're on rotation, and laundering patterns pop in meter data and complaints. We've even seized counterfeit chandeliers pretending to be porch lights.",
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -535,13 +535,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_t2_reassure",
-            text: "We measure success in quieter nights and steadier sleep surveys, not ticket tallies. If enforcement spikes, it’s to fix a spike, then it recedes.",
+            text: "We measure success in quieter nights and steadier sleep surveys, not ticket tallies. If enforcement spikes, it's to fix a spike, then it recedes.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -562,13 +562,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_t2_challenge",
-            text: "If venues game the rules, we’ll pull the plug and bring charges. The night belongs to everyone, not just whoever rents the biggest spotlight.",
+            text: "If venues game the rules, we'll pull the plug and bring charges. The night belongs to everyone, not just whoever rents the biggest spotlight.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

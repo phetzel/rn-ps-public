@@ -17,13 +17,13 @@ export const conPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_root_1",
-          text: "We’re taking on the heat itself. If the choice is a sun that trespasses on every porch or a palm‑sized glacier you actually control, we’ll pick the fight and win it in broad daylight.",
+          text: "We're taking on the heat itself. If the choice is a sun that trespasses on every porch or a palm‑sized glacier you actually control, we'll pick the fight and win it in broad daylight.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.MajorPositive,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.MajorNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -44,13 +44,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_2",
-          text: "Most families won’t pay upfront. We’re issuing chill credits at purchase, offering frost‑backed bonds for cities, and phasing costs in gently so mortgages stay calm and lenders keep their mittens on.",
+          text: "Most families won't pay upfront. We're issuing chill credits at purchase, offering frost‑backed bonds for cities, and phasing costs in gently so mortgages stay calm and lenders keep their mittens on.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Rules are crisp: host maintains safe paths; invited guests are covered; trespassers skate at their own risk; shared driveways split duties; and ice creep across lines triggers a simple notice‑and‑fix process.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -100,13 +100,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_4",
-          text: "Before we litigate hypothetical penguins on hypothetical patios, let’s cool the rhetoric. Details land this week, and yes, we’ll brief with diagrams big enough for a snowman to read.",
+          text: "Before we litigate hypothetical penguins on hypothetical patios, let's cool the rhetoric. Details land this week, and yes, we'll brief with diagrams big enough for a snowman to read.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.MajorNegative,
             o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o3: OutcomeModifierWeight.MajorPositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -137,10 +137,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Homeowners see credits at checkout, not bills in the mail. We cap add‑on charges, ban surprise liens, and time payments to winter energy savings so budgets glide instead of skid.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -161,13 +161,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_fin_2",
-            text: "Financing options include point‑of‑sale credits, city bulk buys, and on‑bill plans that don’t touch your mortgage. There’s a frost clause shielding borrowers in hardship and a public calculator for costs.",
+            text: "Financing options include point‑of‑sale credits, city bulk buys, and on‑bill plans that don't touch your mortgage. There's a frost clause shielding borrowers in hardship and a public calculator for costs.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -189,13 +189,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_fin_3",
-            text: "Yes, some gear prices spiked post‑announcement. We’ve triggered anti‑gouging rules, pooled purchases across towns, and opened domestic molds so supply can thaw and prices settle.",
+            text: "Yes, some gear prices spiked post‑announcement. We've triggered anti‑gouging rules, pooled purchases across towns, and opened domestic molds so supply can thaw and prices settle.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.StrongPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -216,13 +216,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_fin_4",
-            text: "If a spreadsheet makes you shiver, remember the setup is smaller than a kiddie pool. Let’s not let doomsday accounting salt the driveway before the first snowflake lands.",
+            text: "If a spreadsheet makes you shiver, remember the setup is smaller than a kiddie pool. Let's not let doomsday accounting salt the driveway before the first snowflake lands.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -249,13 +249,13 @@ export const conPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_sec_insp_1",
-            text: "Inspectors verify footprint, melt channels, and safety markers. They issue fix‑it notices, not raids, and can’t enter homes. Appeals run through a 10‑day portal with an independent review clock.",
+            text: "Inspectors verify footprint, melt channels, and safety markers. They issue fix‑it notices, not raids, and can't enter homes. Appeals run through a 10‑day portal with an independent review clock.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -280,10 +280,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Year one favors warnings and free help. Fines are capped like a parking ticket, night checks are banned, and every visit is recorded, because transparency should be warmer than the weather.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -304,13 +304,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_insp_3",
-            text: "If someone waves a rumor about glacier police, we’ll meet it fact for fact. The only thing we’re confiscating is excessive heat trying to loiter on your lawn.",
+            text: "If someone waves a rumor about glacier police, we'll meet it fact for fact. The only thing we're confiscating is excessive heat trying to loiter on your lawn.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -331,13 +331,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_insp_4",
-            text: "No, inspectors won’t grade your lawn furniture or your politics; their checklist is physics, not vibes. No fashion points, no loyalty oaths, and no style citations.",
+            text: "No, inspectors won't grade your lawn furniture or your politics; their checklist is physics, not vibes. No fashion points, no loyalty oaths, and no style citations.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -369,10 +369,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Runoff crossing a boundary is treated like shared gutter water: upstream must channel it, downstream must not block it. Liability follows ordinary negligence, not magic ice law.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -393,13 +393,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_liens_2",
-            text: "Banks don’t repossess slush. Mortgages attach to land and structures, not seasonal ice, and rules bar any lender from freezing a family over a missed brine refill.",
+            text: "Banks don't repossess slush. Mortgages attach to land and structures, not seasonal ice, and rules bar any lender from freezing a family over a missed brine refill.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -420,13 +420,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_liens_3",
-            text: "No, your neighbor can’t claim your drift by squatting with a lawn chair. Adverse possession needs permanence, and ice is famously bad at permanence.",
+            text: "No, your neighbor can't claim your drift by squatting with a lawn chair. Adverse possession needs permanence, and ice is famously bad at permanence.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.StrongPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -447,13 +447,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_liens_4",
-            text: "If a bank shows up with a plow, film it, call the hotline, and maybe offer cocoa while we sort the paperwork. Panic isn’t policy, and neither is snow‑theft theater.",
+            text: "If a bank shows up with a plow, film it, call the hotline, and maybe offer cocoa while we sort the paperwork. Panic isn't policy, and neither is snow‑theft theater.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -483,10 +483,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Pass/fail centers on melt management, height limits, and visible markers. Titanium racks are optional, not sacred. Appeals get 15 days, with fast tracks for seniors and small landlords.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "First misses top out below a parking ticket, timelines flex for weather, and we send a free fix kit before any fine. The goal is safe yards, not a ticket blizzard.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -534,13 +534,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_std_3",
-            text: "Some rookies think a crampon is a pastry. We’re correcting training, publishing the checklist, and auditing routes so enforcement learns before anyone pays.",
+            text: "Some rookies think a crampon is a pastry. We're correcting training, publishing the checklist, and auditing routes so enforcement learns before anyone pays.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -561,13 +561,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_std_4",
-            text: "If anyone tries to turn safety rules into a gotcha scheme, we’ll melt the racket in the sun and post receipts. This stays fair, or it gets fixed fast.",
+            text: "If anyone tries to turn safety rules into a gotcha scheme, we'll melt the racket in the sun and post receipts. This stays fair, or it gets fixed fast.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.StrongPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

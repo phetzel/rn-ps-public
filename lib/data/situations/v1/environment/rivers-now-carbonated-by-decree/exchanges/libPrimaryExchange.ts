@@ -17,13 +17,13 @@ export const libPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "r1a1",
-          text: "We’re carbonating opportunity, not confiscating rivers. If anglers fear bubbles, they’ll find serenity in the Quiet Puddles while youth launch jobs that actually float.",
+          text: "We're carbonating opportunity, not confiscating rivers. If anglers fear bubbles, they'll find serenity in the Quiet Puddles while youth launch jobs that actually float.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.MajorPositive,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.MajorNegative
           },
           impacts: {
             president: {
@@ -44,13 +44,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "r1a2",
-          text: "Markets like predictable bubbles. We’ll price fizz in transparent tiers, publish a foam schedule, keep rights nonexclusive, and reinvest revenue into ramps, docks, and access.",
+          text: "Markets like predictable bubbles. We'll price fizz in transparent tiers, publish a foam schedule, keep rights nonexclusive, and reinvest revenue into ramps, docks, and access.",
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.MajorPositive,
             o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -72,13 +72,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "r1a3",
-          text: "No, fizzy water won’t summon hostile submarines or feral soda whirlpools. We’ve got anti-foam patrols, cupholder life vests, and zero plans to militarize your creeks.",
+          text: "No, fizzy water won't summon hostile submarines or feral soda whirlpools. We've got anti-foam patrols, cupholder life vests, and zero plans to militarize your creeks.",
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -100,12 +100,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "r1a4",
-          text: "Let’s not pretend a pilot is a hostile takeover. We’ll listen to anglers at open Fizz Feedback nights, and no one is being charged for merely standing near a river.",
+          text: "Let's not pretend a pilot is a hostile takeover. We'll listen to anglers at open Fizz Feedback nights, and no one is being charged for merely standing near a river.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
@@ -138,9 +138,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.MajorNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -162,13 +162,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "s1a2",
-            text: "A public good isn’t sacred just because it’s flat. Fizz can fund cleanup, and any startup that profits must cut community dividends before cashing out their foam.",
+            text: "A public good isn't sacred just because it's flat. Fizz can fund cleanup, and any startup that profits must cut community dividends before cashing out their foam.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -192,10 +192,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We capped dock surcharges and banned shoreline tolling for ordinary use. Vendors must provide free cupholder vests and post plain-English fee signs at every launch.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -216,13 +216,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "s1a4",
-            text: "Rollout pace beat our outreach oars. We should’ve formed river councils first, so we’re doing that now and pausing new fizzy zones until they’ve weighed in.",
+            text: "Rollout pace beat our outreach oars. We should've formed river councils first, so we're doing that now and pausing new fizzy zones until they've weighed in.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -252,10 +252,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There is no surveillance-by-seltzer plan. Patrols check pressure valves, not picnic coolers, and authority is pinned to the Fizzy Rivers Act with body cams on by default.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.MajorPositive,
+              o2: OutcomeModifierWeight.MajorNegative,
               o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -280,10 +280,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Safety drills are scheduled, locks are retrofitted, and emergency de-fizz is a literal big red button. Fish are not carbonated, and yes, we have a rogue foam hotline.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -308,9 +308,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongPositive
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -370,9 +370,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o2: OutcomeModifierWeight.MajorNegative,
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -397,9 +397,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -420,13 +420,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "t1a3",
-            text: "We’ve hard-capped shoreline surcharges, exempted low-income anglers, and scheduled fee holidays during spawning so traditions and tackle budgets both survive.",
+            text: "We've hard-capped shoreline surcharges, exempted low-income anglers, and scheduled fee holidays during spawning so traditions and tackle budgets both survive.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -451,9 +451,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -483,10 +483,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There is no 'no-sip' list, and we require warrants for cooler searches. Lawful protest is protected on the banks and the barge, with discipline for any overreach.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.MajorPositive,
+              o2: OutcomeModifierWeight.MajorNegative,
               o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Every stop is logged with location, reason, and duration, and a civilian aquatic board reviews footage quarterly. Records auto-release after 30 days unless privacy laws bar it.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -561,13 +561,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "t2a4",
-            text: "Early drills sloshed into clumsy. We’ve halted random checks, updated guidance with civil-liberty advocates, and added community observers on every fizz route.",
+            text: "Early drills sloshed into clumsy. We've halted random checks, updated guidance with civil-liberty advocates, and added community observers on every fizz route.",
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {

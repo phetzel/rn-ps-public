@@ -23,7 +23,7 @@ export const investigativeExchange: ExchangeData = {
             o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.SlightNegative
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -47,7 +47,7 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.Neutral
           },
@@ -75,7 +75,7 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.Neutral
           },
@@ -99,13 +99,13 @@ export const investigativeExchange: ExchangeData = {
         },
         {
           id: "q_root_a4",
-          text: "No one gets rich in the shadows. Fees, rents, and export royalties will be posted quarterly so taxpayers can see who’s composting cash versus just gardening.",
+          text: "No one gets rich in the shadows. Fees, rents, and export royalties will be posted quarterly so taxpayers can see who's composting cash versus just gardening.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -166,7 +166,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -188,13 +188,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "q_sec_money_a3",
-            text: "There’s no pay-to-peel scheme hiding in the mulch. No official has taken embassy rent kickbacks, and any rumor to the contrary wilts under audit.",
+            text: "There's no pay-to-peel scheme hiding in the mulch. No official has taken embassy rent kickbacks, and any rumor to the contrary wilts under audit.",
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -219,7 +219,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.Neutral
             },
@@ -251,7 +251,7 @@ export const investigativeExchange: ExchangeData = {
             text: "Authorized by the Ministry of Statecraft: peel annexes cover spoiled organics, not bribes. Immunity is functional, not blanket. For limits, we will table the immunity brief.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.Neutral
@@ -277,13 +277,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "q_sec_peel_a2",
-            text: "We do not negotiate with fruit flies on live television. If a peel shows up with a diplomatic passport, we’ll let it ripen until the lawyers arrive.",
+            text: "We do not negotiate with fruit flies on live television. If a peel shows up with a diplomatic passport, we'll let it ripen until the lawyers arrive.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -310,7 +310,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -371,7 +371,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -392,11 +392,11 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "q_ter_market_a2",
-            text: "If you turn compost into a casino, we’ll shut the table. Freeze accounts, margin-call the hype, and reassign hot traders to literal dung duty.",
+            text: "If you turn compost into a casino, we'll shut the table. Freeze accounts, margin-call the hype, and reassign hot traders to literal dung duty.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.Neutral
             },
@@ -423,7 +423,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.Neutral
             },
@@ -452,7 +452,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -512,7 +512,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -539,7 +539,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -560,11 +560,11 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "q_ter_immunity_a4",
-            text: "Try to launder soil with a smile and a sash, and we’ll sanction every scoop. Titles don’t trump the nose test or the statute book.",
+            text: "Try to launder soil with a smile and a sash, and we'll sanction every scoop. Titles don't trump the nose test or the statute book.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.Neutral
             },

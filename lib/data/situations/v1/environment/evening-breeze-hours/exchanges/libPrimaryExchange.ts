@@ -17,13 +17,13 @@ export const libPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_r1",
-          text: "We’re not selling shade; we’re organizing it. If the wind wants to unionize, I’ll bargain at sunset and honor its shifts. Until then, we’ll direct breezes where heat hits hardest.",
+          text: "We're not selling shade; we're organizing it. If the wind wants to unionize, I'll bargain at sunset and honor its shifts. Until then, we'll direct breezes where heat hits hardest.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -54,7 +54,7 @@ export const libPrimaryExchange: ExchangeData = {
             o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.MajorPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -112,13 +112,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r4",
-          text: "We can’t comment on suits from scarecrows or the tumbleweed collective. The charter is wind-permeable by design, and we’ll follow the courts while keeping people cooled and safe.",
+          text: "We can't comment on suits from scarecrows or the tumbleweed collective. The charter is wind-permeable by design, and we'll follow the courts while keeping people cooled and safe.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -150,13 +150,13 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_s1_1",
-            text: "Guardrails include a heat-index trigger, a mandated 60% allocation to top-need blocks, and automatic free bursts during outages. We’ll publish live maps so residents can see their share.",
+            text: "Guardrails include a heat-index trigger, a mandated 60% allocation to top-need blocks, and automatic free bursts during outages. We'll publish live maps so residents can see their share.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -182,12 +182,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_2",
-            text: "Zip-code multipliers raise prices in cooler districts and drop them in hotter ones; VIP lounges can’t siphon priority breezes under the gust zoning rule enforced by curbside sensors.",
+            text: "Zip-code multipliers raise prices in cooler districts and drop them in hotter ones; VIP lounges can't siphon priority breezes under the gust zoning rule enforced by curbside sensors.",
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -213,12 +213,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_3",
-            text: "No, we’re not turning alleys into wind deserts to polish lobbyist bangs; any private gusts happen only after community tiers clear and comfort sensors say the block is safe to breathe.",
+            text: "No, we're not turning alleys into wind deserts to polish lobbyist bangs; any private gusts happen only after community tiers clear and comfort sensors say the block is safe to breathe.",
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -248,8 +248,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -281,12 +281,12 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_s2_1",
-            text: "Active litigation by scarecrows and windmill cosplays is ongoing, so I can’t brief line by line. I’ll say the breeze has rights, and so do farmers, and the court will meet them.",
+            text: "Active litigation by scarecrows and windmill cosplays is ongoing, so I can't brief line by line. I'll say the breeze has rights, and so do farmers, and the court will meet them.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -344,12 +344,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_3",
-            text: "No farmer pays to cool a banker’s neck. Community slots fill first, and a make-whole fund ensures crops get either their wind or a check before the next sunset.",
+            text: "No farmer pays to cool a banker's neck. Community slots fill first, and a make-whole fund ensures crops get either their wind or a check before the next sunset.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -378,10 +378,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Early pilots mis-aimed a patio gust that flattened a melon display; we updated vane logic and added gust governors. When we flub, refunds and apologies go out fast.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -476,13 +476,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_3",
-            text: "No, there isn’t a secret hat lobby. Ruffle is a comfort proxy we tune so gust edges cool skin, not launch hair, and it never overrides heat-risk priorities.",
+            text: "No, there isn't a secret hat lobby. Ruffle is a comfort proxy we tune so gust edges cool skin, not launch hair, and it never overrides heat-risk priorities.",
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -507,13 +507,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_4",
-            text: "Bring better data and we’ll plug it in. The system will chase whatever keeps people upright at dusk, and if that means fewer gusts and more misters, we adapt.",
+            text: "Bring better data and we'll plug it in. The system will chase whatever keeps people upright at dusk, and if that means fewer gusts and more misters, we adapt.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -544,12 +544,12 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_t2_1",
-            text: "I won’t litigate from the lectern. Our filings speak for themselves, and the judge can read the wind without me narrating the weather.",
+            text: "I won't litigate from the lectern. Our filings speak for themselves, and the judge can read the wind without me narrating the weather.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -581,7 +581,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -606,13 +606,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_3",
-            text: "No, we’re not selling the sky or privatizing dusk; we’re scheduling gust delivery within noise and safety limits the public already uses.",
+            text: "No, we're not selling the sky or privatizing dusk; we're scheduling gust delivery within noise and safety limits the public already uses.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -640,8 +640,8 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Whatever the ruling, farmers and hot blocks will be kept whole. If auctions are nixed, we pivot to free, sensor-driven flows with the same equity rules built in.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModerateNegative
             },
