@@ -475,15 +475,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t1_3",
-            text: "If someone is gaming the line, we’ll show their fluff footprint and invite them to defend it in daylight. That quiets bravado faster than a deflated pouf.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              "pillow-code-chaos": OutcomeModifierWeight.SlightPositive,
-              "down-feather-dome": OutcomeModifierWeight.ModerateNegative,
-              "fluffstice-sovereignty": OutcomeModifierWeight.ModerateNegative,
-              "sofa-strike": OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_t1_3",
+          text: "If someone is gaming the line, we'll show their fluff footprint and invite them to defend it in daylight. That quiets bravado faster than a deflated pouf.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            "pillow-code-chaos": OutcomeModifierWeight.SlightPositive,
+            "down-feather-dome": OutcomeModifierWeight.SlightNegative,
+            "fluffstice-sovereignty": OutcomeModifierWeight.ModerateNegative,
+            "sofa-strike": OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -506,15 +506,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t1_4",
-            text: "Some logs are messy—timestamps drifted and notes got cryptic. We’re backfilling, standardizing fields, and inviting inspectors and press to bang on the data until it squeaks.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              "pillow-code-chaos": OutcomeModifierWeight.SlightNegative,
-              "down-feather-dome": OutcomeModifierWeight.SlightPositive,
-              "fluffstice-sovereignty": OutcomeModifierWeight.ModeratePositive,
-              "sofa-strike": OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_t1_4",
+          text: "Some logs are messy—timestamps drifted and notes got cryptic. We're backfilling, standardizing fields, and inviting inspectors and press to bang on the data until it squeaks.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            "pillow-code-chaos": OutcomeModifierWeight.SlightNegative,
+            "down-feather-dome": OutcomeModifierWeight.SlightPositive,
+            "fluffstice-sovereignty": OutcomeModifierWeight.SlightPositive,
+            "sofa-strike": OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -605,15 +605,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t2_3",
-            text: "No one is being fined for lacking brand‑name fluff. Citations target price predators and counterfeit gear, not a dishwasher improvising with a folded hoodie.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              "pillow-code-chaos": OutcomeModifierWeight.ModerateNegative,
-              "down-feather-dome": OutcomeModifierWeight.SlightPositive,
-              "fluffstice-sovereignty": OutcomeModifierWeight.SlightPositive,
-              "sofa-strike": OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_t2_3",
+          text: "No one is being fined for lacking brand‑name fluff. Citations target price predators and counterfeit gear, not a dishwasher improvising with a folded hoodie.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            "pillow-code-chaos": OutcomeModifierWeight.SlightNegative,
+            "down-feather-dome": OutcomeModifierWeight.SlightPositive,
+            "fluffstice-sovereignty": OutcomeModifierWeight.SlightPositive,
+            "sofa-strike": OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -636,15 +636,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t2_4",
-            text: "If a contractor diverts supplies to VIP dens, we suspend them, seize the shipment, and send the Duvet Brigade to their loading dock with clipboards and consequences.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              "pillow-code-chaos": OutcomeModifierWeight.ModeratePositive,
-              "down-feather-dome": OutcomeModifierWeight.ModerateNegative,
-              "fluffstice-sovereignty": OutcomeModifierWeight.SlightNegative,
-              "sofa-strike": OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_t2_4",
+          text: "If a contractor diverts supplies to VIP dens, we suspend them, seize the shipment, and send the Duvet Brigade to their loading dock with clipboards and consequences.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            "pillow-code-chaos": OutcomeModifierWeight.SlightPositive,
+            "down-feather-dome": OutcomeModifierWeight.ModerateNegative,
+            "fluffstice-sovereignty": OutcomeModifierWeight.SlightNegative,
+            "sofa-strike": OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,

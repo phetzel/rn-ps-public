@@ -17,12 +17,12 @@ export const conPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_root_challenge",
-          text: "If a rogue drone wants quiet skies, it picked the wrong parade. We’ll out-honk threats with smart bellows that wake up only on cue, and we won’t soak taxpayers to do it.",
+          text: "If a rogue drone wants quiet skies, it picked the wrong parade. We'll out-honk threats with smart bellows that wake up only on cue, and we won't soak taxpayers to do it.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -51,9 +51,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Tests in five mock towns cut drone control links by 87% within a safe bubble. Arrays fire in narrow bursts under 100 dB at the source, with costs capped per block and independently verified.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -79,10 +79,10 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_reassure",
-          text: "No, we’re not cranking polka at 3 a.m. Sites have quiet hours, pet-safe profiles, and community drills branded as Homeland Hootenannies so evacuations feel like dance steps, not sirens.",
+          text: "No, we're not cranking polka at 3 a.m. Sites have quiet hours, pet-safe profiles, and community drills branded as Homeland Hootenannies so evacuations feel like dance steps, not sirens.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.StrongNegative
           },
@@ -112,9 +112,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We recognize the Noise Clause and the Fourth Accordianment are real legal knots. We will require warrants for sustained sound sweeps and publish bias audits before any switch is flipped.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -145,14 +145,14 @@ export const conPrimaryExchange: ExchangeData = {
         text: "What’s the decibel math—how do 'foldable forts' spook drones without rattling seniors, pets, or hospital gear, and who audits false alarms?",
         answers: [
           {
-            id: "a_sec_tech_inform",
-            text: "Decibels drop fast with distance; the rigs are directional and idle until a drone signature appears. False alarms are logged, reviewed by an independent panel, and retraining kicks in after trends.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a_sec_tech_inform",
+          text: "Decibels drop fast with distance; the rigs are directional and idle until a drone signature appears. False alarms are logged, reviewed by an independent panel, and retraining kicks in after trends.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -176,14 +176,14 @@ export const conPrimaryExchange: ExchangeData = {
             followUpId: "q_ter_legal"
           },
           {
-            id: "a_sec_tech_reassure",
-            text: "We tuned the reeds for gentler overtones and teach operators a 'polka pause' if a senior center is nearby. Community boards can set soft-reed nights and cap volumes during nap windows.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          id: "a_sec_tech_reassure",
+          text: "We tuned the reeds for gentler overtones and teach operators a 'polka pause' if a senior center is nearby. Community boards can set soft-reed nights and cap volumes during nap windows.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -206,14 +206,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec_tech_deny",
-            text: "We’re not rattling hospital gear. The emission window is narrow, the duty cycle short, and labs certified the system doesn’t interfere with common monitors or hearing aids in normal operation.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          id: "a_sec_tech_deny",
+          text: "We're not rattling hospital gear. The emission window is narrow, the duty cycle short, and labs certified the system doesn't interfere with common monitors or hearing aids in normal operation.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -273,14 +273,14 @@ export const conPrimaryExchange: ExchangeData = {
         text: "You tout Main Street jobs from bellows brigades; how much is real manufacturing versus grant theater, and what guards against pork-barrel squeezebox deals?",
         answers: [
           {
-            id: "a_sec_jobs_inform",
-            text: "Budget is capped with open bidding and clawbacks. At least 60% is real manufacturing, not ribbon-cutting cosplay, and we’ll publish job-creation ledgers by town with an automatic sunset review.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          id: "a_sec_jobs_inform",
+          text: "Budget is capped with open bidding and clawbacks. At least 60% is real manufacturing, not ribbon-cutting cosplay, and we'll publish job-creation ledgers by town with an automatic sunset review.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -304,14 +304,14 @@ export const conPrimaryExchange: ExchangeData = {
             followUpId: "q_ter_funding"
           },
           {
-            id: "a_sec_jobs_challenge",
-            text: "Some tech lobbyists call any hometown job a subsidy unless it ships profits to their cloud. We’ll pick builders who can hold a wrench and a tune, not just write a memo about disruption.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a_sec_jobs_challenge",
+          text: "Some tech lobbyists call any hometown job a subsidy unless it ships profits to their cloud. We'll pick builders who can hold a wrench and a tune, not just write a memo about disruption.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -334,14 +334,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec_jobs_admit",
-            text: "Procurement can attract pork like bees to spilled soda. So we’re banning no-bid bellows, posting contracts in plain language, and empowering whistleblowers with prizes, not paperweights.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          id: "a_sec_jobs_admit",
+          text: "Procurement can attract pork like bees to spilled soda. So we're banning no-bid bellows, posting contracts in plain language, and empowering whistleblowers with prizes, not paperweights.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -364,14 +364,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec_jobs_reassure",
-            text: "Small shops won’t be stage props. Microgrants go to actual fabricators with storefronts and apprentices, and payments hinge on verified deliveries, not glossy press releases.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          id: "a_sec_jobs_reassure",
+          text: "Small shops won't be stage props. Microgrants go to actual fabricators with storefronts and apprentices, and payments hinge on verified deliveries, not glossy press releases.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -402,14 +402,14 @@ export const conPrimaryExchange: ExchangeData = {
         text: "On legality, will sound sweeps require warrants, and how will you prevent discriminatory 'polka zoning' targeting certain blocks or lawful protests?",
         answers: [
           {
-            id: "a_ter_legal_admit",
-            text: "Yes, sustained sound sweeps need warrants, and emergency use is time-limited with a written record. We’re banning 'polka zoning' that targets communities, with quarterly civil-rights audits.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          id: "a_ter_legal_admit",
+          text: "Yes, sustained sound sweeps need warrants, and emergency use is time-limited with a written record. We're banning 'polka zoning' that targets communities, with quarterly civil-rights audits.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -432,14 +432,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter_legal_inform",
-            text: "A public legal memo lands in 30 days. Every activation writes a hashed log, reviewed by a judge and a community board. Training includes bias drills and a prohibition on surveillance-by-sound.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a_ter_legal_inform",
+          text: "A public legal memo lands in 30 days. Every activation writes a hashed log, reviewed by a judge and a community board. Training includes bias drills and a prohibition on surveillance-by-sound.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -462,14 +462,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter_legal_reassure",
-            text: "A civil-liberties watchdog from the fictional Ombuds of Acoustics sits in oversight meetings, and there’s a hotline for complaints that triggers rapid review within 48 hours.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          id: "a_ter_legal_reassure",
+          text: "A civil-liberties watchdog from the fictional Ombuds of Acoustics sits in oversight meetings, and there's a hotline for complaints that triggers rapid review within 48 hours.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -528,14 +528,14 @@ export const conPrimaryExchange: ExchangeData = {
         text: "If taxpayers fund this rollout, what’s the total cap, the timeline, the success metric, and who holds the kill-switch if it starts chewing up commerce?",
         answers: [
           {
-            id: "a_ter_funding_inform",
-            text: "Total cap is 2.1 billion chits, phased over three years; target is a 75% drop in drone incursions. A neutral grid operator holds the kill-switch and must publish every flip.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          id: "a_ter_funding_inform",
+          text: "Total cap is 2.1 billion chits, phased over three years; target is a 75% drop in drone incursions. A neutral grid operator holds the kill-switch and must publish every flip.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -558,14 +558,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter_funding_reassure",
-            text: "If the metrics miss by two reviews, the sunset hits and the bellows pack up. Hardware gets repurposed to schools and festivals, not a dusty warehouse of broken promises.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          id: "a_ter_funding_reassure",
+          text: "If the metrics miss by two reviews, the sunset hits and the bellows pack up. Hardware gets repurposed to schools and festivals, not a dusty warehouse of broken promises.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -588,14 +588,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter_funding_deny",
-            text: "This isn’t a slush geyser. No naming rights, no mascot IPOs, and no payments for idle reeds—if a block doesn’t need it, it doesn’t buy it.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a_ter_funding_deny",
+          text: "This isn't a slush geyser. No naming rights, no mascot IPOs, and no payments for idle reeds—if a block doesn't need it, it doesn't buy it.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -618,14 +618,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter_funding_challenge",
-            text: "Claims that the network will 'chew up commerce' come from folks selling drones that chew up porch naps. Safe streets and open markets aren’t at odds; we can have both.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          id: "a_ter_funding_challenge",
+          text: "Claims that the network will 'chew up commerce' come from folks selling drones that chew up porch naps. Safe streets and open markets aren't at odds; we can have both.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyPositive,

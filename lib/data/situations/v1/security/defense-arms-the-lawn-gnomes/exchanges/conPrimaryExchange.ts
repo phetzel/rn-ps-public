@@ -153,10 +153,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Per Defense: In pilot zones, porch thefts fell 27% versus 8% for lights alone, verified by the Inspector of Miscellany. We froze add-ons, capped margins, and will post redacted audits this week.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+                o1: OutcomeModifierWeight.SlightNegative,
+                o2: OutcomeModifierWeight.SlightPositive,
+                o3: OutcomeModifierWeight.SlightNegative,
+                o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -217,10 +217,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one is rubber-stamping garden cosplay. Payment milestones hinge on verified deterrence, safety checks, and a boredom test so they ignore squirrels, grills, and toddlers in dinosaur pajamas.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+                o1: OutcomeModifierWeight.ModeratePositive,
+                o2: OutcomeModifierWeight.Neutral,
+                o3: OutcomeModifierWeight.ModerateNegative,
+                o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -248,10 +248,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re not paying couture rates for plastic hats. Accessories are commodity-priced, and any gilded garden gear was flagged and clawed back before it left procurement.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+                o1: OutcomeModifierWeight.SlightNegative,
+                o2: OutcomeModifierWeight.Neutral,
+                o3: OutcomeModifierWeight.Neutral,
+                o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -285,10 +285,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We overestimated 'hedge outreach.' We’ve apologized, suspended serenade modules near missions, and sent teams to debrief partners before any leaf whispers again without consent.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
+                o1: OutcomeModifierWeight.MajorNegative,
+                o2: OutcomeModifierWeight.SlightPositive,
+                o3: OutcomeModifierWeight.StrongPositive,
+                o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -317,10 +317,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re moving from novelty to normalcy. A joint tasker with Defense is rewriting geofences and etiquette packs so gnomes default to silent mode within a generous bubble around diplomatic sites.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+                o1: OutcomeModifierWeight.ModeratePositive,
+                o2: OutcomeModifierWeight.ModerateNegative,
+                o3: OutcomeModifierWeight.SlightNegative,
+                o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -348,10 +348,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Cross-border legalities can get thorny fast. We’ll let State manage diplomacy while we assess whether any code or contractor conduct crossed lines that would merit action.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+                o1: OutcomeModifierWeight.Neutral,
+                o2: OutcomeModifierWeight.Neutral,
+                o3: OutcomeModifierWeight.Neutral,
+                o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -382,7 +382,7 @@ export const conPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -418,10 +418,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Line items, unit costs, and maintenance schedules will post with test footage, with private data masked. The kill-switch is dual-control, hardware plus software, and audited by people who hate surprises.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+                o1: OutcomeModifierWeight.StrongPositive,
+                o2: OutcomeModifierWeight.StrongNegative,
+                o3: OutcomeModifierWeight.Neutral,
+                o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -449,10 +449,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Taxpayers didn’t swallow novelty markups; overruns hit vendor holdbacks. If an invoice tried to bill luxury beards, it met a shredder and a very caffeinated auditor.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.Neutral
+                o1: OutcomeModifierWeight.MajorNegative,
+                o2: OutcomeModifierWeight.ModeratePositive,
+                o3: OutcomeModifierWeight.ModeratePositive,
+                o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -480,10 +480,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We added a 'do not engage barbecue' rule and a boring-by-design mode. If a porch party reads as fog-of-war, the system times out and pings a human, not a hedge hero.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+                o1: OutcomeModifierWeight.Neutral,
+                o2: OutcomeModifierWeight.Neutral,
+                o3: OutcomeModifierWeight.SlightNegative,
+                o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -511,10 +511,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Perfection at zero cost is a fairy tale with a pointy hat. We’ll beat prowlers and spies by sharing code reviews and fixes, not by pretending grill smoke is an existential scandal.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+                o1: OutcomeModifierWeight.Neutral,
+                o2: OutcomeModifierWeight.Neutral,
+                o3: OutcomeModifierWeight.SlightNegative,
+                o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -549,7 +549,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -581,8 +581,8 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -611,9 +611,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -641,7 +641,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re issuing a public directive and a bilateral annex listing banned behaviors—singing, clapping, wink LEDs—plus a plain-language consent template any mission can customize.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.Neutral

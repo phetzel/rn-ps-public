@@ -51,9 +51,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "The program is a limited pilot for non‑lethal yard diplomacy, with strict geofences and zero retention of porch footage. We’ll publish the line item and brief appropriators before anyone waters a ceramic.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -85,7 +85,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -116,7 +116,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
@@ -152,12 +152,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sb1",
             text: "Approvals ran through the Advanced Lawn Operations board, then a pilot line item capped at peanuts. Audit flags, memos, and change logs will be released this week, including which vendors touched glitter.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -184,12 +184,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sb2",
             text: "This was fenced as a prototype, not operational surveillance, with concurrency checks and independent cost caps. We’ll seat appropriators in the test yard and post a readable budget summary.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -215,12 +215,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sb3",
             text: "Nothing ‘vanished.’ Oversight sat in every review, and each gnome shipped with a test plan, not a blank check. Claims of beard-shaped slush funds are simply wrong.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -246,12 +246,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sb4",
             text: "Because procurement reviews are in motion, we won’t itemize vendors today. Records are preserved, and auditors—not memes—will sort what’s allowable and what gets composted.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -283,12 +283,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sp1",
             text: "No continuous monitoring occurred; test yards were geofenced and non-participating porches were auto-blurred. No face analytics were used, and we’re pausing new placements pending a privacy board review.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -314,12 +314,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sp2",
             text: "Legal standards and any ‘public garden’ definitions live with Justice right now, and we won’t preempt them. They’ll brief the committee; we’re cooperating and have halted anything even close to gray.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -346,12 +346,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sp3",
             text: "A few units sang while scanning, which was ill-advised. We disabled that module, tightened data retention to hours, and are rewriting rules so optics don’t hum while optics work.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -377,12 +377,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_sp4",
             text: "Collected telemetry stayed in a sandbox with strict retention and access logs. Under 200 controlled sorties ran, all under test notices, and datasets were purged after algorithm validation.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -416,12 +416,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tc1",
             text: "The seed grants used mini-competitions with three bids minimum; redacted receipts and vendor lists post within 72 hours. Test logs are queued for the committee and the inspector.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -447,12 +447,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tc2",
             text: "No shortcuts here: we kept awards small to cap risk and invited external auditors. Next trials add live oversight in the yard, not just on paper.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -478,12 +478,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tc3",
             text: "We did not sidestep competition. ‘Seed’ is a standard pilot label, and rumors about ‘friends-and-gnomes’ favoritism don’t match the documentation or the timelines.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -509,12 +509,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tc4",
             text: "If the alternative is testing on your block instead of a fenced lawn lab, say the quiet part. We chose the safer sandbox so mistakes land on grass, not people.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -546,12 +546,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tl1",
             text: "Active matters limit what we can parse in public, including alleged gnome entrapment. We’ll deliver definitions and policy fixes to the committee before we brief the internet.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -577,12 +577,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tl2",
             text: "Driveways are private approachways, not ‘public gardens.’ Singing modules are classified as non-persistent audio decoys and are disabled pending a charter that requires warrants for targeted capture.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -608,12 +608,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tl3",
             text: "Our Venn diagram of garden law and drone law was sloppy; that’s on us. We’re drafting a clean warrant‑first rule and deleting cute exceptions that smuggled surveillance past common sense.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -639,12 +639,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_tl4",
             text: "No one’s rights hinge on a ceramic chorus. Any search requires human probable cause and judicial approval, and training now bans charm features during sensing.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,

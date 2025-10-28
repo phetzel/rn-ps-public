@@ -20,10 +20,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "If critics aren’t drones in botanist costumes, they can bring facts, not feints. We can guard borders and backyards at once, and we’ll prove it without poking anyone but bad actors.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            cacti_union: OutcomeModifierWeight.StrongPositive,
-            latin_captcha: OutcomeModifierWeight.ModeratePositive,
-            hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
-            armwrestle_gravity: OutcomeModifierWeight.MajorPositive
+            cacti_union: OutcomeModifierWeight.ModeratePositive,
+            latin_captcha: OutcomeModifierWeight.SlightPositive,
+            hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
+            armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -47,10 +47,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "These units read rotor patterns and unusual motion, then chirp, not scream. They log minimal metadata, process locally, and flag likely threats, which helps sheriffs while keeping porches pleasantly quiet.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            cacti_union: OutcomeModifierWeight.StrongNegative,
-            latin_captcha: OutcomeModifierWeight.ModerateNegative,
-            hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
-            armwrestle_gravity: OutcomeModifierWeight.StrongNegative
+            cacti_union: OutcomeModifierWeight.ModerateNegative,
+            latin_captcha: OutcomeModifierWeight.SlightNegative,
+            hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
+            armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "We value privacy, even for thorny volunteers. Permissions are audited fence by fence, and we’re teaching the LEDs to blink 'please' before recording, because manners matter when a plant joins the neighborhood watch.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            cacti_union: OutcomeModifierWeight.SlightPositive,
+            cacti_union: OutcomeModifierWeight.ModeratePositive,
             latin_captcha: OutcomeModifierWeight.SlightPositive,
-            hoa_pricklistan: OutcomeModifierWeight.StrongPositive,
-            armwrestle_gravity: OutcomeModifierWeight.SlightNegative
+            hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
+            armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Participation on private fences requires clear consent, and HOAs get opt-in templates that won’t torpedo lawn harmony. If a cactus misbehaves, removal is swift, and the homeowner keeps control of their space.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            cacti_union: OutcomeModifierWeight.SlightNegative,
+            cacti_union: OutcomeModifierWeight.ModerateNegative,
             latin_captcha: OutcomeModifierWeight.SlightNegative,
-            hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
-            armwrestle_gravity: OutcomeModifierWeight.Neutral
+            hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
+            armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -136,12 +136,12 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "sec1_a1",
             text: "Homeowners own their cactus data by default. It’s encrypted on the post, retention is short, and access requires consent or a warrant. There’s an audit trail, and HOA fines don’t unlock a single byte.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.ModeratePositive,
-              latin_captcha: OutcomeModifierWeight.StrongNegative,
-              hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
-              armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
-            },
+          outcomeModifiers: {
+            cacti_union: OutcomeModifierWeight.ModeratePositive,
+            latin_captcha: OutcomeModifierWeight.ModerateNegative,
+            hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
+            armwrestle_gravity: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -164,12 +164,12 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "sec1_a2",
             text: "Opting out is as easy as a form and a screwdriver, and no one gets a citation bouquet for saying no. We’ve briefed HOAs with plain-English guides and a hotline staffed by humans, not potted AI.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightNegative,
-              latin_captcha: OutcomeModifierWeight.StrongPositive,
-              hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
-              armwrestle_gravity: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            cacti_union: OutcomeModifierWeight.SlightNegative,
+            latin_captcha: OutcomeModifierWeight.SlightPositive,
+            hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
+            armwrestle_gravity: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -191,12 +191,12 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "sec1_a3",
             text: "We won’t arbitrate leaf-to-gavel disputes between neighbors and HOAs. Our lane is security with consent; choreography for cul-de-sac politics belongs to local bylaws and the HOA’s mysteriously long emails.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.ModerateNegative,
-              latin_captcha: OutcomeModifierWeight.SlightNegative,
-              hoa_pricklistan: OutcomeModifierWeight.StrongPositive,
-              armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            cacti_union: OutcomeModifierWeight.ModerateNegative,
+            latin_captcha: OutcomeModifierWeight.SlightNegative,
+            hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
+            armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -219,7 +219,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We did underestimate the paperwork maze at first, and a few approvals sprouted slowly. We’ve since standardized permission slips and posted a consent checker so nobody gets prickled by process again.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightPositive,
+              cacti_union: OutcomeModifierWeight.ModeratePositive,
               latin_captcha: OutcomeModifierWeight.SlightPositive,
               hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
               armwrestle_gravity: OutcomeModifierWeight.SlightNegative
@@ -252,10 +252,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Field tests show low false positives and strong drone detection. The cactus ignores pets and inflatables, filters wind patterns, and cross-checks motion with sound so your cat’s 3 a.m. parkour doesn’t trigger DEFCON BAS-",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.StrongPositive,
+              cacti_union: OutcomeModifierWeight.SlightPositive,
               latin_captcha: OutcomeModifierWeight.ModeratePositive,
-              hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
-              armwrestle_gravity: OutcomeModifierWeight.SlightPositive
+              hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
+              armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -279,10 +279,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Quiet mode caps chirps, and neighbors can set block-level schedules for sleep and school hours. If a unit proves jumpy, calibration is remote, and the most dramatic alert you’ll hear is a polite boop.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.StrongNegative,
-              latin_captcha: OutcomeModifierWeight.ModerateNegative,
+              cacti_union: OutcomeModifierWeight.ModerateNegative,
+              latin_captcha: OutcomeModifierWeight.SlightNegative,
               hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
-              armwrestle_gravity: OutcomeModifierWeight.SlightNegative
+              armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -306,10 +306,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No, your yard will not become a runway to nowhere. We tested in windy, noisy, and inflatable-rich suburbs, and the units stayed calmer than the average committee meeting.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightPositive,
+              cacti_union: OutcomeModifierWeight.ModeratePositive,
               latin_captcha: OutcomeModifierWeight.SlightNegative,
-              hoa_pricklistan: OutcomeModifierWeight.ModeratePositive,
-              armwrestle_gravity: OutcomeModifierWeight.StrongPositive
+              hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
+              armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -333,10 +333,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Happy to dig into upkeep and cost next, because settings and service matter as much as sensors. There’s a maintenance cycle that keeps batteries alive without constantly watering the budget.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightNegative,
+              cacti_union: OutcomeModifierWeight.ModerateNegative,
               latin_captcha: OutcomeModifierWeight.SlightPositive,
               hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
-              armwrestle_gravity: OutcomeModifierWeight.StrongNegative
+              armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -370,9 +370,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               cacti_union: OutcomeModifierWeight.ModeratePositive,
-              latin_captcha: OutcomeModifierWeight.StrongNegative,
+              latin_captcha: OutcomeModifierWeight.ModerateNegative,
               hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
-              armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
+              armwrestle_gravity: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -397,8 +397,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               cacti_union: OutcomeModifierWeight.SlightNegative,
-              latin_captcha: OutcomeModifierWeight.StrongPositive,
-              hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
+              latin_captcha: OutcomeModifierWeight.SlightPositive,
+              hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
               armwrestle_gravity: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -425,7 +425,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               cacti_union: OutcomeModifierWeight.ModerateNegative,
               latin_captcha: OutcomeModifierWeight.SlightNegative,
-              hoa_pricklistan: OutcomeModifierWeight.StrongPositive,
+              hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
               armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -450,7 +450,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "There are no covert backdoors or endless livestreams. Bluetooth pairing is limited and consent-gated, and anything that tries to eavesdrop without permission gets pruned from the network.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightPositive,
+              cacti_union: OutcomeModifierWeight.ModeratePositive,
               latin_captcha: OutcomeModifierWeight.SlightPositive,
               hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
               armwrestle_gravity: OutcomeModifierWeight.SlightNegative
@@ -483,10 +483,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Units are modest-cost, solar-sipping, and serviced quarterly. Rural fences get grants; urban pilots use shared hubs. Watering is optional, dignity is not, and removal includes patching your fence back to boring.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.StrongPositive,
+              cacti_union: OutcomeModifierWeight.SlightPositive,
               latin_captcha: OutcomeModifierWeight.ModeratePositive,
-              hoa_pricklistan: OutcomeModifierWeight.ModerateNegative,
-              armwrestle_gravity: OutcomeModifierWeight.SlightPositive
+              hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
+              armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Early pilots overspent on novelty planters shaped like sheriff stars. We cut the flair, rebid maintenance, and tied payments to uptime so budgets stop bleeding where the décor started.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.StrongNegative,
-              latin_captcha: OutcomeModifierWeight.ModerateNegative,
+              cacti_union: OutcomeModifierWeight.ModerateNegative,
+              latin_captcha: OutcomeModifierWeight.SlightNegative,
               hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
-              armwrestle_gravity: OutcomeModifierWeight.SlightNegative
+              armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -537,10 +537,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Homeowners don’t pay a thorn unless they opt in, and even then caps apply. If a community wants out, we remove, recycle, and restore at program expense, not on your weekend with a spade.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightPositive,
+              cacti_union: OutcomeModifierWeight.ModeratePositive,
               latin_captcha: OutcomeModifierWeight.SlightNegative,
-              hoa_pricklistan: OutcomeModifierWeight.ModeratePositive,
-              armwrestle_gravity: OutcomeModifierWeight.StrongPositive
+              hoa_pricklistan: OutcomeModifierWeight.SlightPositive,
+              armwrestle_gravity: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -564,10 +564,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If voters prefer binoculars over botanicals, we’ll take that to the budgeteers. Our job is to test, measure, and report before anyone writes a check big enough to irrigate a stadium.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              cacti_union: OutcomeModifierWeight.SlightNegative,
+              cacti_union: OutcomeModifierWeight.ModerateNegative,
               latin_captcha: OutcomeModifierWeight.SlightPositive,
               hoa_pricklistan: OutcomeModifierWeight.SlightNegative,
-              armwrestle_gravity: OutcomeModifierWeight.StrongNegative
+              armwrestle_gravity: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {

@@ -308,7 +308,7 @@ export const investigativeExchange: ExchangeData = {
             text: "We don't staple first; we staple never unless a toaster tries to wrestle a runway. The clause was a hammock of hypotheticals, and we've replaced it with a seatbelt you can actually see.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive
@@ -335,10 +335,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Operationally, any binding routine requires two officers and a visual verification. The so-called auto mode is restricted to simulations and maintenance pings.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -486,7 +486,7 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -511,7 +511,7 @@ export const investigativeExchange: ExchangeData = {
             text: "There will be warrants for any elevated action, a 10-minute pause-and-notify, and an un-staple hotline staffed by humans. A public log posts timestamps, locations, and system reasons.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -539,9 +539,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -566,9 +566,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

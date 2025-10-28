@@ -30,7 +30,7 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
               outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
@@ -55,7 +55,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
             outcomeModifiers: {
-              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
               outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
@@ -84,7 +84,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcome_hack_economic_impact: OutcomeModifierWeight.SlightPositive,
             outcome_hack_diplomatic_crisis:
               OutcomeModifierWeight.SlightNegative,
-            outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
+            outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
           },
         },
           {
@@ -109,7 +109,7 @@ export const conPrimaryExchange: ExchangeData = {
               outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
             },
         },
       ],
@@ -132,8 +132,8 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
-              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.SlightPositive,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
+              outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
               outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
             },
             followUpId: "q_hack_rural_funding",
@@ -151,7 +151,7 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.Neutral,
               outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
             },
@@ -171,7 +171,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
           outcomeModifiers: {
             outcome_hack_economic_impact:
-              OutcomeModifierWeight.SlightPositive,
+              OutcomeModifierWeight.StrongPositive,
             outcome_hack_diplomatic_crisis:
               OutcomeModifierWeight.SlightNegative,
             outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
@@ -191,6 +191,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_hack_diplomatic_crisis: OutcomeModifierWeight.SlightPositive,
               outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
             },
           },
         ],
@@ -237,7 +238,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
           outcomeModifiers: {
             outcome_hack_economic_impact:
-              OutcomeModifierWeight.SlightPositive,
+              OutcomeModifierWeight.Neutral,
             outcome_hack_diplomatic_crisis:
               OutcomeModifierWeight.SlightNegative,
             outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
@@ -273,7 +274,7 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_hack_economic_impact: OutcomeModifierWeight.SlightNegative,
+              outcome_hack_economic_impact: OutcomeModifierWeight.Neutral,
             },
           },
         ],
@@ -307,7 +308,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+            outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
             },
           },
           {
@@ -370,6 +371,7 @@ export const conPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
+              outcome_hack_economic_impact: OutcomeModifierWeight.SlightPositive,
             },
           },
         ],
@@ -394,7 +396,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightNegative,
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
             },
           },
           {
@@ -420,7 +422,7 @@ export const conPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_hack_diplomatic_crisis:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_hack_health_scare: OutcomeModifierWeight.SlightPositive,
+              outcome_hack_health_scare: OutcomeModifierWeight.Neutral,
             },
           },
           {

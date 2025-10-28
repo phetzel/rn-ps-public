@@ -17,12 +17,12 @@ export const libPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_root_1",
-          text: "We challenge the premise: rogue drones already blast and pry; we’ll outplay them, not outshout rights. Oom‑pah is brief, bounded, and aimed at hardware, not people, with the President waving the baton on limits.",
+          text: "We challenge the premise: rogue drones already blast and pry; we'll outplay them, not outshout rights. Oom‑pah is brief, bounded, and aimed at hardware, not people, with the President waving the baton on limits.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModeratePositive
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -47,12 +47,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_2",
-          text: "On performance, the array uses phased squeezers to throw interference lobes; trials show roughly 40 dB masking within 300 meters, forcing hostile drones to wobble home. It’s a foldable fort, not a curfew.",
+          text: "On performance, the array uses phased squeezers to throw interference lobes; trials show roughly 40 dB masking within 300 meters, forcing hostile drones to wobble home. It's a foldable fort, not a curfew.",
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModerateNegative
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -81,9 +81,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "For neighbors and seniors, activations are rare, mapped, and announced like weather alerts. We pair each surge with respite hubs—quiet tents and 'Homeland Hootenannies' that guide, not corral them.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -113,7 +113,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.MajorPositive,
-            o3: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -145,14 +145,14 @@ export const libPrimaryExchange: ExchangeData = {
         text: "Noise as probable cause: will accordion squads trigger stop‑and‑blare, and what guardrails stop warrantless sweeps in poor areas and near protests?",
         answers: [
           {
-            id: "a_sec1_1",
-            text: "We admit past sound tools went rogue; ours stay bound by law: warrants for sweeps, decibel caps, public dashboards. We’ll publish vendor logs and deployment maps so the chorus can see the sheet music.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_sec1_1",
+          text: "We admit past sound tools went rogue; ours stay bound by law: warrants for sweeps, decibel caps, public dashboards. We'll publish vendor logs and deployment maps so the chorus can see the sheet music.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -176,14 +176,14 @@ export const libPrimaryExchange: ExchangeData = {
             followUpId: "q_ter1"
           },
           {
-            id: "a_sec1_2",
-            text: "No stop‑and‑blare dragnets. Each activation needs two sign‑offs, a geofence that avoids protests, and a cooldown timer. Community observers get front‑row seats and a mute button if we overplay.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_sec1_2",
+          text: "No stop‑and‑blare dragnets. Each activation needs two sign‑offs, a geofence that avoids protests, and a cooldown timer. Community observers get front‑row seats and a mute button if we overplay.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -206,14 +206,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec1_3",
-            text: "Calling it 'noise policing' is catchy, but wrong key. The mission is counter‑sensor shielding; we jam the eavesdroppers, not the neighbors, and we won’t trade civil rights for a louder metronome.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_sec1_3",
+          text: "Calling it 'noise policing' is catchy, but wrong key. The mission is counter‑sensor shielding; we jam the eavesdroppers, not the neighbors, and we won't trade civil rights for a louder metronome.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -236,14 +236,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec1_4",
-            text: "Policy specs: no use within 500 feet of permitted assemblies, automated redaction of incidental audio, and zero retention beyond 24 hours unless a judge says otherwise. That’s printed, not penciled.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_sec1_4",
+          text: "Policy specs: no use within 500 feet of permitted assemblies, automated redaction of incidental audio, and zero retention beyond 24 hours unless a judge says otherwise. That's printed, not penciled.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -272,14 +272,14 @@ export const libPrimaryExchange: ExchangeData = {
         text: "Why turn public accordions into a drone‑jamming grid that funds noise policing and risks burying seniors’ protests and poor blocks under state oom‑pah?",
         answers: [
           {
-            id: "a_sec2_1",
-            text: "Cost is capped and sunsetted: retrofits are modular, under 1% of the safety slice, with clawbacks if drones adapt. A community fund offsets any nuisance with grants for insulation and arts, not just earplugs.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_sec2_1",
+          text: "Cost is capped and sunsetted: retrofits are modular, under 1% of the safety slice, with clawbacks if drones adapt. A community fund offsets any nuisance with grants for insulation and arts, not just earplugs.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -302,14 +302,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec2_2",
-            text: "Don’t pit band against bandage. Clinic money comes from a different pocket, and transit stays fully tuned. If anything, safer skies keep ambulances and buses moving in tempo.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_sec2_2",
+          text: "Don't pit band against bandage. Clinic money comes from a different pocket, and transit stays fully tuned. If anything, safer skies keep ambulances and buses moving in tempo.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -332,14 +332,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_sec2_3",
-            text: "Equity plan rotates activations, limits sessions to under 90 seconds, and credits quiet hours to impacted blocks. Seniors get opt‑in alert calls, pet‑safe shelters, and a hotline that actually picks up.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_sec2_3",
+          text: "Equity plan rotates activations, limits sessions to under 90 seconds, and credits quiet hours to impacted blocks. Seniors get opt‑in alert calls, pet‑safe shelters, and a hotline that actually picks up.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -363,14 +363,14 @@ export const libPrimaryExchange: ExchangeData = {
             followUpId: "q_ter2"
           },
           {
-            id: "a_sec2_4",
-            text: "Quiet neighborhoods aren’t VIP velvet ropes. They face the same rules, the same decibel caps, and the same cooldowns; no zip code gets a hush subsidy while others take the brass.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_sec2_4",
+          text: "Quiet neighborhoods aren't VIP velvet ropes. They face the same rules, the same decibel caps, and the same cooldowns; no zip code gets a hush subsidy while others take the brass.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -401,14 +401,14 @@ export const libPrimaryExchange: ExchangeData = {
         text: "Who picks vendors and reeds, and will contracts disclose decibel efficacy, hidden kickbacks, and repair duties, or are we marching to the bill’s cadence?",
         answers: [
           {
-            id: "a_ter1_1",
-            text: "Vendor selection uses blind scoring on decibel efficacy, interference precision, and repairability, with independent lab tests. Contracts publish pricing, maintenance, and failure rates on a public portal.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_ter1_1",
+          text: "Vendor selection uses blind scoring on decibel efficacy, interference precision, and repairability, with independent lab tests. Contracts publish pricing, maintenance, and failure rates on a public portal.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -431,14 +431,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter1_2",
-            text: "If a bidder tries to sneak kickbacks under 'consulting reeds,' we’ll flag it, bar them, and refer it for prosecution. We’ve been burned before; that’s why the receipts are digital and loud.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_ter1_2",
+          text: "If a bidder tries to sneak kickbacks under 'consulting reeds,' we'll flag it, bar them, and refer it for prosecution. We've been burned before; that's why the receipts are digital and loud.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -461,14 +461,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter1_3",
-            text: "We’re not grading on swagger or sequins. If it doesn’t jam drones without jamming rights, it doesn’t get a dime, no matter how catchy the jingle or how shiny the bellows.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_ter1_3",
+          text: "We're not grading on swagger or sequins. If it doesn't jam drones without jamming rights, it doesn't get a dime, no matter how catchy the jingle or how shiny the bellows.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -491,14 +491,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter1_4",
-            text: "Repairs are prepaid and local; no orphaned instruments gathering dust. A public repair clock shows when a unit is down so communities see, in real time, that silence isn’t neglect.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_ter1_4",
+          text: "Repairs are prepaid and local; no orphaned instruments gathering dust. A public repair clock shows when a unit is down so communities see, in real time, that silence isn't neglect.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -527,14 +527,14 @@ export const libPrimaryExchange: ExchangeData = {
         text: "Studies cite noise fatigue; how will you protect seniors’ protests, pets, and night‑shift blocks from polka overexposure while still keeping drones at bay?",
         answers: [
           {
-            id: "a_ter2_1",
-            text: "We bake in rest: short bursts, long quiet, health reviews each quarter, and opt‑out zones for elder centers. Protest corridors are hard‑blocked from activation, full stop.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_ter2_1",
+          text: "We bake in rest: short bursts, long quiet, health reviews each quarter, and opt‑out zones for elder centers. Protest corridors are hard‑blocked from activation, full stop.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -557,14 +557,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter2_2",
-            text: "Acoustic profile targets drone sensors, not human ears: narrow bands, directional lobes, and automatic dip when ambient levels peak. Independent clinics will run hearing checks near pilots.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_ter2_2",
+          text: "Acoustic profile targets drone sensors, not human ears: narrow bands, directional lobes, and automatic dip when ambient levels peak. Independent clinics will run hearing checks near pilots.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -587,14 +587,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter2_3",
-            text: "Let’s not let bad actors hide behind puppies and polka jokes. Drones don’t take naps; our system does. We’ll keep the beat light on people and heavy on intruders.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_ter2_3",
+          text: "Let's not let bad actors hide behind puppies and polka jokes. Drones don't take naps; our system does. We'll keep the beat light on people and heavy on intruders.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -617,14 +617,14 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_ter2_4",
-            text: "Yes, some folks are more sensitive. We’ll log complaints, adjust routes, and compensate when we miss. If the data shows harm outweighs gain, the sunset clause ends the show.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_ter2_4",
+          text: "Yes, some folks are more sensitive. We'll log complaints, adjust routes, and compensate when we miss. If the data shows harm outweighs gain, the sunset clause ends the show.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,

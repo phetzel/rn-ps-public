@@ -17,13 +17,13 @@ export const conPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "q_root_a1",
-          text: "We’re not just flipping switches; we’re issuing a dare. The President vows porches that outshine the sulking moon and invites the mystery gadget to a dusk duel it won’t enjoy.",
+          text: "We're not just flipping switches; we're issuing a dare. The President vows porches that outshine the sulking moon and invites the mystery gadget to a dusk duel it won't enjoy.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -49,13 +49,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "q_root_a2",
-          text: "Defense will field Light Infantry—photon teams—and moth-decoy drones, with rural lines and seniors first. Layered patrols and spare bulbs mean one gizmo can’t black out a block.",
+          text: "Defense will field Light Infantry—photon teams—and moth-decoy drones, with rural lines and seniors first. Layered patrols and spare bulbs mean one gizmo can't black out a block.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -84,9 +84,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -112,13 +112,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "q_root_a4",
-          text: "We’ll admit the Bulb Registry Act is dimly drafted. Sockets are private spaces; we’re adding warrants, audit trails, and a sunset timer so security doesn’t unscrew civil rights.",
+          text: "We'll admit the Bulb Registry Act is dimly drafted. Sockets are private spaces; we're adding warrants, audit trails, and a sunset timer so security doesn't unscrew civil rights.",
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -149,15 +149,15 @@ export const conPrimaryExchange: ExchangeData = {
         text: "What proof shows the registry foils the outage device, not herding porches into one certified bulb cartel with markups, QR tags, and a monthly glow fee?",
         answers: [
           {
-            id: "q_sec1_a1",
-            text: "Under authorization from the Homeland Lantern Office, surge crews use registry pings to triangulate attacks in minutes. If needed, we swap wavelengths on the fly. I can brief specifics in closed session.",
-            type: AnswerType.Authorized,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_sec1_a1",
+          text: "Under authorization from the Homeland Lantern Office, surge crews use registry pings to triangulate attacks in minutes. If needed, we swap wavelengths on the fly. I can brief specifics in closed session.",
+          type: AnswerType.Authorized,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -182,15 +182,15 @@ export const conPrimaryExchange: ExchangeData = {
             followUpId: "q_ter1"
           },
           {
-            id: "q_sec1_a2",
-            text: "In pilot blocks, outage durations dropped sharply and spread chains broke after the third house, not the tenth. The registry alerted runners with exact bulb specs; the device lost its favorite targets.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "q_sec1_a2",
+          text: "In pilot blocks, outage durations dropped sharply and spread chains broke after the third house, not the tenth. The registry alerted runners with exact bulb specs; the device lost its favorite targets.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -213,15 +213,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_sec1_a3",
-            text: "There is no vendor lock. The spec is open, sockets are interoperable, and any certified bulb that meets the anti-spoof standard gets equal shelf space in the program.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_sec1_a3",
+          text: "There is no vendor lock. The spec is open, sockets are interoperable, and any certified bulb that meets the anti-spoof standard gets equal shelf space in the program.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -244,15 +244,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_sec1_a4",
-            text: "We wrote anti-cartel guardrails into procurement: rotating lots, price caps by lumen, and a consumer opt-out for brand choice. If a vendor gouges, we dim their contract fast.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "q_sec1_a4",
+          text: "We wrote anti-cartel guardrails into procurement: rotating lots, price caps by lumen, and a consumer opt-out for brand choice. If a vendor gouges, we dim their contract fast.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -281,15 +281,15 @@ export const conPrimaryExchange: ExchangeData = {
         text: "How will you prevent costs from ballooning for renters and seniors, and what stops socket audits from turning into nosy moths with clipboards at our thresholds?",
         answers: [
           {
-            id: "q_sec2_a1",
-            text: "Fair point: costs can creep and authority can wander. We’ll cap fees at a nickel per porch per month, ban surprise inspections, and require warrants for any inside-the-threshold check.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "q_sec2_a1",
+          text: "Fair point: costs can creep and authority can wander. We'll cap fees at a nickel per porch per month, ban surprise inspections, and require warrants for any inside-the-threshold check.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -313,15 +313,15 @@ export const conPrimaryExchange: ExchangeData = {
             followUpId: "q_ter2"
           },
           {
-            id: "q_sec2_a2",
-            text: "Seniors and low-income renters get automatic credits and free swaps by neighborhood crews. Compliance is app-less and paper-light; a postcard works if your phone sleeps at 9.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_sec2_a2",
+          text: "Seniors and low-income renters get automatic credits and free swaps by neighborhood crews. Compliance is app-less and paper-light; a postcard works if your phone sleeps at 9.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -344,15 +344,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_sec2_a3",
-            text: "No one wants clipboard moths. We’re allergic to them, and so are the courts. Our focus is outside fixtures; if anyone flutters inside, we’ll swat the policy and the pen that wrote it.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "q_sec2_a3",
+          text: "No one wants clipboard moths. We're allergic to them, and so are the courts. Our focus is outside fixtures; if anyone flutters inside, we'll swat the policy and the pen that wrote it.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -375,15 +375,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_sec2_a4",
-            text: "Data collected is minimal—bulb type, socket ID, and location grid, not names. It’s encrypted, purged quarterly, and cannot be shared with landlords or loyalty programs by rule.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_sec2_a4",
+          text: "Data collected is minimal—bulb type, socket ID, and location grid, not names. It's encrypted, purged quarterly, and cannot be shared with landlords or loyalty programs by rule.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -414,15 +414,15 @@ export const conPrimaryExchange: ExchangeData = {
         text: "If the outage device evolves around registered bulbs, what is Plan B—more lumens, odd wavelengths, or neighborhood lantern parties until the gizmo gets bored?",
         answers: [
           {
-            id: "q_ter1_a1",
-            text: "Plan B is Plan Brighter. We’ll escalate to spectrum tricks and schedule a dusk ‘shine line’ that dares the device to show up anywhere the community can clap it into retirement.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_ter1_a1",
+          text: "Plan B is Plan Brighter. We'll escalate to spectrum tricks and schedule a dusk 'shine line' that dares the device to show up anywhere the community can clap it into retirement.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -445,15 +445,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_ter1_a2",
-            text: "Our labs are testing frequency-hopping filaments and decoy heat signatures. If the device adapts, firmware in smart sockets can pivot profiles in hours, not weeks.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "q_ter1_a2",
+          text: "Our labs are testing frequency-hopping filaments and decoy heat signatures. If the device adapts, firmware in smart sockets can pivot profiles in hours, not weeks.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -476,15 +476,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_ter1_a3",
-            text: "We don’t accept the premise that adaptation equals failure. It’s expected cat-and-moth. The registry lets us iterate faster than the gadget mutates.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_ter1_a3",
+          text: "We don't accept the premise that adaptation equals failure. It's expected cat-and-moth. The registry lets us iterate faster than the gadget mutates.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -507,15 +507,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_ter1_a4",
-            text: "If it somehow surges, we can isolate blocks, flood them with loaner lamps, and restore normal within a single evening, no all-night gloom required.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "q_ter1_a4",
+          text: "If it somehow surges, we can isolate blocks, flood them with loaner lamps, and restore normal within a single evening, no all-night gloom required.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -544,15 +544,15 @@ export const conPrimaryExchange: ExchangeData = {
         text: "Can you commit to a hard sunset for the registry and independent audits, and what exact conditions flip the switch back to normal porch-life?",
         answers: [
           {
-            id: "q_ter2_a1",
-            text: "Yes—we’ll admit the law needs an exit ramp. We’ll bake in a one-year sunset with renewal only by public vote and court review, plus monthly warrant stats published in plain light.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "q_ter2_a1",
+          text: "Yes—we'll admit the law needs an exit ramp. We'll bake in a one-year sunset with renewal only by public vote and court review, plus monthly warrant stats published in plain light.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Neutral,
@@ -575,15 +575,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_ter2_a2",
-            text: "Audits will be led by the Nonpartisan Institute of Domestic Illumination, not procurement pals. Findings, including flubs, will go public before any renewal talk.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_ter2_a2",
+          text: "Audits will be led by the Nonpartisan Institute of Domestic Illumination, not procurement pals. Findings, including flubs, will go public before any renewal talk.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -606,15 +606,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_ter2_a3",
-            text: "Switch-off triggers: ninety days without a coordinated outage, demonstrated device capture or neutralization, and three consecutive months of sub–two-minute response times.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "q_ter2_a3",
+          text: "Switch-off triggers: ninety days without a coordinated outage, demonstrated device capture or neutralization, and three consecutive months of sub–two-minute response times.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -637,15 +637,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "q_ter2_a4",
-            text: "If normal porch-life means fewer committee hearings about bulbs, we’re fans. But yes, we’ll formalize the criteria and print them big enough to read by candle if needed.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "q_ter2_a4",
+          text: "If normal porch-life means fewer committee hearings about bulbs, we're fans. But yes, we'll formalize the criteria and print them big enough to read by candle if needed.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,

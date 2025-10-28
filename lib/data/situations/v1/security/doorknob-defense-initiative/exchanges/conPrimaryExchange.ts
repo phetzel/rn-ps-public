@@ -21,9 +21,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             "outcome-1": OutcomeModifierWeight.StrongPositive,
-            "outcome-2": OutcomeModifierWeight.StrongPositive,
-            "outcome-3": OutcomeModifierWeight.StrongPositive,
-            "outcome-4": OutcomeModifierWeight.StrongPositive
+            "outcome-2": OutcomeModifierWeight.SlightNegative,
+            "outcome-3": OutcomeModifierWeight.SlightNegative,
+            "outcome-4": OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -52,8 +52,8 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             "outcome-1": OutcomeModifierWeight.SlightNegative,
-            "outcome-2": OutcomeModifierWeight.SlightNegative,
-            "outcome-3": OutcomeModifierWeight.SlightNegative,
+            "outcome-2": OutcomeModifierWeight.StrongPositive,
+            "outcome-3": OutcomeModifierWeight.Neutral,
             "outcome-4": OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -83,10 +83,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "These are not weapons; they’re morale devices with incidental sparkle. Procurement is standardized, not a glitter arms race, and deterrence beats drywall repairs every time.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            "outcome-1": OutcomeModifierWeight.SlightNegative,
+            "outcome-1": OutcomeModifierWeight.Neutral,
             "outcome-2": OutcomeModifierWeight.SlightNegative,
-            "outcome-3": OutcomeModifierWeight.SlightNegative,
-            "outcome-4": OutcomeModifierWeight.SlightNegative
+            "outcome-3": OutcomeModifierWeight.SlightPositive,
+            "outcome-4": OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -117,8 +117,8 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             "outcome-1": OutcomeModifierWeight.Neutral,
             "outcome-2": OutcomeModifierWeight.Neutral,
-            "outcome-3": OutcomeModifierWeight.Neutral,
-            "outcome-4": OutcomeModifierWeight.Neutral
+            "outcome-3": OutcomeModifierWeight.SlightNegative,
+            "outcome-4": OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -154,9 +154,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.StrongPositive,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.StrongPositive,
-              "outcome-4": OutcomeModifierWeight.StrongPositive
+              "outcome-2": OutcomeModifierWeight.Neutral,
+              "outcome-3": OutcomeModifierWeight.SlightNegative,
+              "outcome-4": OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -186,9 +186,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-2": OutcomeModifierWeight.SlightPositive,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -219,7 +219,7 @@ export const conPrimaryExchange: ExchangeData = {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
               "outcome-2": OutcomeModifierWeight.SlightNegative,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -248,8 +248,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.Neutral,
-              "outcome-2": OutcomeModifierWeight.Neutral,
-              "outcome-3": OutcomeModifierWeight.Neutral,
+              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
               "outcome-4": OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -285,9 +285,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.StrongPositive,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.StrongPositive,
-              "outcome-4": OutcomeModifierWeight.StrongPositive
+              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-3": OutcomeModifierWeight.SlightNegative,
+              "outcome-4": OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -316,9 +316,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.SlightNegative,
-              "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-2": OutcomeModifierWeight.SlightPositive,
+              "outcome-3": OutcomeModifierWeight.Neutral,
+              "outcome-4": OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -347,9 +347,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We won’t be fingerprinting toddlers or training cats to file appeals. The user manual and hotline handle edge cases faster than a committee ever will.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightNegative,
+              "outcome-1": OutcomeModifierWeight.SlightPositive,
               "outcome-2": OutcomeModifierWeight.SlightNegative,
-              "outcome-3": OutcomeModifierWeight.SlightNegative,
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
               "outcome-4": OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -380,8 +380,8 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.Neutral,
               "outcome-2": OutcomeModifierWeight.Neutral,
-              "outcome-3": OutcomeModifierWeight.Neutral,
-              "outcome-4": OutcomeModifierWeight.Neutral
+              "outcome-3": OutcomeModifierWeight.SlightNegative,
+              "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -417,10 +417,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Yes. Redacted contracts, uptime, jam rates, and repair times will post quarterly with a plain-language glossary. An independent board will grade vendors in charts, not mascot suits.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.StrongPositive,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.StrongPositive,
-              "outcome-4": OutcomeModifierWeight.StrongPositive
+              "outcome-1": OutcomeModifierWeight.SlightPositive,
+              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
+              "outcome-4": OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -449,9 +449,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-2": OutcomeModifierWeight.SlightPositive,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -482,7 +482,7 @@ export const conPrimaryExchange: ExchangeData = {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
               "outcome-2": OutcomeModifierWeight.SlightNegative,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -511,8 +511,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.Neutral,
-              "outcome-2": OutcomeModifierWeight.Neutral,
-              "outcome-3": OutcomeModifierWeight.Neutral,
+              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
               "outcome-4": OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -547,10 +547,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re drafting procedures requiring warrants for access, with prompt user notice unless a court delays it. A simple motion to quash will exist without needing a silk-tie attorney.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.StrongPositive,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.StrongPositive,
-              "outcome-4": OutcomeModifierWeight.StrongPositive
+            "outcome-1": OutcomeModifierWeight.SlightPositive,
+            "outcome-2": OutcomeModifierWeight.SlightNegative,
+            "outcome-3": OutcomeModifierWeight.SlightNegative,
+            "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -579,9 +579,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.SlightNegative,
+              "outcome-2": OutcomeModifierWeight.SlightPositive,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -609,10 +609,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one needs to hire counsel to answer a doorknob. We’ll publish clear pamphlets, not a 600-page sparkle statute, so folks know their rights without legal confetti.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightNegative,
+              "outcome-1": OutcomeModifierWeight.SlightPositive,
               "outcome-2": OutcomeModifierWeight.SlightNegative,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

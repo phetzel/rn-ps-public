@@ -153,9 +153,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We traced supply disruptions to a narrow band of goose-honk interference near docks. Once the patch deploys, we will issue refund guidance for documented delays and reroute maps.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -185,9 +185,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Detentions by geese are theatrical, not legal. Carriers will find docks clear as wind windows stabilize, and our incident counts are already trending down in test counties.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -286,7 +286,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -315,10 +315,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If insurers want to litigate against hay, we invite them to the trial range. We'll demonstrate that upgraded posture deters geese and vandals alike without blocking commerce.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -347,10 +347,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "A centralized portal will log incidents, reimbursements, and chain-impact metrics. Expect daily dashboards so businesses can plan around remaining hotspots during the pause.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -419,7 +419,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -450,7 +450,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -480,7 +480,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -511,7 +511,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.ModerateNegative
             },
@@ -609,10 +609,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "This is not cosplay; safety capes meet wind and visibility standards. No one is authorizing scarecrows to arrest, and no citations will flow from their couture.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
               o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -640,9 +640,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Independent trials in three test counties will verify performance before broader spend. If results wobble, the default is de-escalate, not double down.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.MajorNegative,
               o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {

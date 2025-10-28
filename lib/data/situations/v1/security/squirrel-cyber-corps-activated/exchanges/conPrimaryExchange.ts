@@ -44,13 +44,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "root-a2",
-          text: "Defense ran twelve controlled sims: squirrel teams cut patch time by 41% and false alerts by 28%. We’re staging a 60‑day hardening sprint and a 90‑site pilot, with procurement doors already unlatched.",
+          text: "Defense ran twelve controlled sims: squirrel teams cut patch time by 41% and false alerts by 28%. We're staging a 60‑day hardening sprint and a 90‑site pilot, with procurement doors already unlatched.",
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -100,11 +100,11 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "root-a4",
-          text: "On the Defense Secretary’s authority, the mission is defensive hardening of critical I/O trunks, not gadget cosplay. Units deploy only on signed cyber orders with Homeland coordination and audited paw logs.",
+          text: "On the Defense Secretary's authority, the mission is defensive hardening of critical I/O trunks, not gadget cosplay. Units deploy only on signed cyber orders with Homeland coordination and audited paw logs.",
           type: AnswerType.Authorized,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.StrongPositive
           },
@@ -163,12 +163,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "sec-ops-a2",
-            text: "We don’t timestamp patrol routes for the same reason we don’t publish passwords. Announcing when the teams rappel onto branches would help intruders pre‑position their ladders.",
+            text: "We don't timestamp patrol routes for the same reason we don't publish passwords. Announcing when the teams rappel onto branches would help intruders pre‑position their ladders.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -194,9 +194,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -394,12 +394,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "ter-permits-a2",
-            text: "We won’t litigate specific forms at a podium. The teams will be where the law and safety say yes, and we’ll file the paperwork without inviting sabotage by itinerary.",
+            text: "We won't litigate specific forms at a podium. The teams will be where the law and safety say yes, and we'll file the paperwork without inviting sabotage by itinerary.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -421,13 +421,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "ter-permits-a3",
-            text: "Some of the paperwork prose is archaic—one clause still defines a ‘woodland modem’ as a whisper. We’re modernizing that language so it governs encryption, not poetry.",
+            text: "Some of the paperwork prose is archaic—one clause still defines a 'woodland modem' as a whisper. We're modernizing that language so it governs encryption, not poetry.",
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
