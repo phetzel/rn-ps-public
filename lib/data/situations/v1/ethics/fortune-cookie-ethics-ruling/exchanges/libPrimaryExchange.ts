@@ -240,9 +240,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No, communities aren’t stuck with crumbs while officials get fortunes. Any official caught munching a bribe gets their career toasted, and grants still flow to real needs, not snack drawers.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -260,7 +260,7 @@ export const libPrimaryExchange: ExchangeData = {
                 },
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.Positive,
-                  reaction: "Welcomes clear assurance to residents that aid isn’t being skimmed."
+                  reaction: "Welcomes clear assurance to residents that aid isn't being skimmed."
                 }
               }
             }
@@ -465,9 +465,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll argue that a bribe in a cookie is still, wait for it, a bribe. Dressing it in sprinkles doesn’t convert influence into symbolism, and we’ll press that point relentlessly.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -495,9 +495,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one is waiting on a mythical Snack Court to rescue integrity. Processes are underway, and the referee is still the law, not the dessert cart.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -618,12 +618,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_4",
-            text: "No, we’re not creating Big Pastry Surveillance. We’re targeting concealment, not birthdays; regular treats can keep being regular treats as long as they carry zero favors inside.",
+            text: "No, we're not creating Big Pastry Surveillance. We're targeting concealment, not birthdays; regular treats can keep being regular treats as long as they carry zero favors inside.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {

@@ -47,10 +47,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Defense does not classify lawn décor as combatants. No tanks or jets—just logistics support and night-bright drones to guide city crews so streets reopen without a single tread mark.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Homeland has mapped cone clusters by corridor, issued guidance under the Urban Fixtures Act, and greenlit non-injury tools to de-link chat beacons. Crews begin staged clearances within hours.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive, // +4
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
+            o4: OutcomeModifierWeight.MajorNegative // -12
           },
           impacts: {
             president: {
@@ -370,10 +370,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "By 8 p.m., 70% of flagged lanes, all hospital routes, and 90% of freight spines. Emergency: no notice; routine: 30-minute post. Safeguard: six-foot access path and manager consent unless egress is blocked.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {

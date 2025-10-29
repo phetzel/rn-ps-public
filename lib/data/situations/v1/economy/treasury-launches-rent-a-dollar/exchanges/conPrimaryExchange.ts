@@ -307,10 +307,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one is deputizing landlords of pockets. People will not be sued by dollar bills, and coins are not entering court as emancipated minors. The law still recognizes reality.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.Neutral, // 0
             },
             impacts: {
               president: {

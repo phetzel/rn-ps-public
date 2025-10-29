@@ -221,10 +221,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Preliminary audits show sub-kilowatt draws per unit and duty cycles under 40 percent. We'll release site meter data, costs by square foot, and third-party verification next week.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.MajorPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.Neutral // 0
           },
             impacts: {
               president: {
@@ -245,10 +245,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Units idle on low-traffic hours, throttle during peaks, and shut off in air quality alerts. Costs are capped to pilot budgets, not transit, and renewable credits cover the baseline.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.MajorPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
+            o4: OutcomeModifierWeight.StrongNegative // -8
           },
             impacts: {
               president: {
@@ -291,10 +291,10 @@ export const investigativeExchange: ExchangeData = {
           text: "If someone can power a plaza on hot takes, we'll license the technology. Until then, our kilowatt cap stands, and we'll cut fragrance before we cut lights or safety systems.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.MajorPositive // +12 = 0
           },
             impacts: {
               president: {

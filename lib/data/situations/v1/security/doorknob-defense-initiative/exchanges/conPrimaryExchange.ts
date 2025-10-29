@@ -547,10 +547,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re drafting procedures requiring warrants for access, with prompt user notice unless a court delays it. A simple motion to quash will exist without needing a silk-tie attorney.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-            "outcome-1": OutcomeModifierWeight.SlightPositive,
-            "outcome-2": OutcomeModifierWeight.SlightNegative,
-            "outcome-3": OutcomeModifierWeight.SlightNegative,
-            "outcome-4": OutcomeModifierWeight.SlightPositive
+            "outcome-1": OutcomeModifierWeight.Neutral, // 0
+            "outcome-2": OutcomeModifierWeight.SlightPositive, // +4
+            "outcome-3": OutcomeModifierWeight.Neutral, // 0
+            "outcome-4": OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -578,10 +578,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The system stores as little as possible and defaults to purge. Logs flag a twist, not a biography, and court oversight is the rule, not a party trick.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.SlightPositive,
-              "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightPositive
+              "outcome-1": OutcomeModifierWeight.SlightPositive, // +4
+              "outcome-2": OutcomeModifierWeight.SlightNegative, // -4
+              "outcome-3": OutcomeModifierWeight.Neutral, // 0
+              "outcome-4": OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -609,10 +609,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one needs to hire counsel to answer a doorknob. We’ll publish clear pamphlets, not a 600-page sparkle statute, so folks know their rights without legal confetti.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightPositive,
-              "outcome-2": OutcomeModifierWeight.SlightNegative,
-              "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.SlightPositive
+              "outcome-1": OutcomeModifierWeight.Neutral, // 0
+              "outcome-2": OutcomeModifierWeight.Neutral, // 0
+              "outcome-3": OutcomeModifierWeight.SlightNegative, // -4
+              "outcome-4": OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -640,10 +640,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There is no dragnet collection. If the knob doesn’t fire, nothing gets saved, and even fired events aren’t browsable without a judge saying so.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.Neutral,
-              "outcome-2": OutcomeModifierWeight.Neutral,
-              "outcome-3": OutcomeModifierWeight.Neutral,
-              "outcome-4": OutcomeModifierWeight.Neutral
+              "outcome-1": OutcomeModifierWeight.SlightNegative, // -4
+              "outcome-2": OutcomeModifierWeight.Neutral, // 0
+              "outcome-3": OutcomeModifierWeight.SlightPositive, // +4
+              "outcome-4": OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {

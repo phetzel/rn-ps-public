@@ -293,12 +293,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_3",
-            text: "Classifications happen when interns panic at weather jargon. We’re fixing the labels so the debate is about policy, not cloud cartography mystique.",
+            text: "Classifications happen when interns panic at weather jargon. We're fixing the labels so the debate is about policy, not cloud cartography mystique.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

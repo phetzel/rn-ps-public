@@ -212,10 +212,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No, the app is not a backdoor to doorbells or porch cams, and it does not scrape social posts. If someone bolts a loudhailer to their stoop, that is a hobby, not our codebase.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -597,10 +597,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "A rotating panel from outside the block reviews disputes, and training steers Oracles toward suggestions, not orders. Whistles are for safety, not swagger.",
             type: AnswerType.Reassure,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -628,10 +628,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No, a push notification cannot draft you into leaf-raking service or mandate synchronized waving. It can suggest, it cannot compel, and it definitely cannot blow your lawn chair away.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

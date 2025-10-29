@@ -335,10 +335,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Bad actors trade on fear, not facts. We won't hand them a headline; instead we're funding watch groups, hardening old bridges, and hiring locals who notice a sketchy drone before it buzzes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

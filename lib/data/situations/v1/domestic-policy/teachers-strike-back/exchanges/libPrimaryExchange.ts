@@ -247,9 +247,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
-            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative,
-            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative, // -8
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.MajorPositive // +12
             },
           },
       {
@@ -264,9 +264,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
-            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive,
-            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral // 0
         },
       },
         ],
@@ -418,9 +418,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
             outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
-            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative,
-            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative, // -8
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.MajorPositive // +12
             },
           },
       {
@@ -435,9 +435,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
-            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive,
-            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral // 0
         },
       },
         ],

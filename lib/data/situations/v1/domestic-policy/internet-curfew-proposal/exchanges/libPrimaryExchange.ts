@@ -27,9 +27,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
             outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_digital_equity",
         },
@@ -46,8 +46,8 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
-            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_vulnerable_populations",
         },
@@ -143,8 +143,8 @@ export const libPrimaryExchange: ExchangeData = {
         },
         outcomeModifiers: {
           outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
-          outcome_curfew_black_market: OutcomeModifierWeight.SlightNegative, // -4
-          outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+          outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
+          outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
         },
       },
       {
@@ -159,9 +159,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-          outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
           outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
-          outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+          outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
         },
       },
         ],

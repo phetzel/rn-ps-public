@@ -189,10 +189,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We don't litigate from the lectern, and the memo speaks in more footnotes than English. Let the docket breathe, and you'll see process oxygenate the prose.",
             type: AnswerType.Deflect,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
+              o4: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -546,10 +546,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We do not sell, rent, or barter compliance metrics, even for artisanal scones. If you see an ad, it's for your own block's bake sale, not surveillance.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -573,10 +573,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We built a fat, obvious red button: if a vendor sneezes wrong, we pause feeds, notify blocks, and roll back to paper lanterns while engineers scrub the gears.",
             type: AnswerType.Reassure,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

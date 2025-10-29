@@ -165,10 +165,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Let’s not let glow‑in‑the‑dark MBAs redline constellations before diplomats get coffee. We’re not litigating lunar folklore at a podium built by the lighting department.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.StrongNegative, // -8
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.StrongPositive // +8
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If your business plan collapses when a cloud blinks, it belongs in a planetarium gift shop, not a port ledger. We’ll keep the spectacle out of payroll.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

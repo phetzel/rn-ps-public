@@ -397,10 +397,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We deny any 'black-box' shield from review beyond trade secrets. Models must deposit coefficients with the Ombuds Vault so a judge can peek without gifting competitors.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.Neutral, // 0
             },
             impacts: {
               president: {

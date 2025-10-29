@@ -465,12 +465,12 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_t2_1",
-            text: "Yields are inversely weighted to audience size and uniqueness, so one neighbor’s sincere nod beats a thousand bots. Anti-sybil checks and decay curves make hoarding and cross-posting pointless.",
+            text: "Yields are inversely weighted to audience size and uniqueness, so one neighbor's sincere nod beats a thousand bots. Anti-sybil checks and decay curves make hoarding and cross-posting pointless.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -491,12 +491,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_2",
-            text: "There’s no payout for raw volume. Repeat senders and cross-linked accounts get auto-discounted, so bot farms register as white noise, not treasure.",
+            text: "There's no payout for raw volume. Repeat senders and cross-linked accounts get auto-discounted, so bot farms register as white noise, not treasure.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -520,9 +520,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We expect arbitrage attempts, so we budgeted audits and periodic resets. If a loophole pops, we nerf it in days and claw back credits quietly, no public shaming.",
             type: AnswerType.Admit,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -543,12 +543,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_4",
-            text: "If someone builds a bot that makes people feel genuinely seen, we’ll hire them to fix our help desk. Until then, real connection outperforms spam in every weighting.",
+            text: "If someone builds a bot that makes people feel genuinely seen, we'll hire them to fix our help desk. Until then, real connection outperforms spam in every weighting.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

@@ -20,9 +20,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We’re challenging this snack loophole head-on. I’m filing rebuttals baked into biscotti and asking the board to un-crunch the rule so ethics clarify, not crumble.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.ModeratePositive, // +6
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.ModerateNegative // -6
           },
           impacts: {
             president: {
@@ -82,9 +82,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Justice can’t comment on snack-based hypotheticals while the soy-ink dries. We’re preserving evidence, not fingerprints, and we won’t taste-test exhibits in public.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -112,9 +112,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "From a health standpoint, cookies are not tracking devices. We’ll issue guidance so seniors and coders know a fortune isn’t a waiver, and sodium stays optional.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -241,9 +241,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Your lunch won’t be frisked. We’ll target risk, not napkins, and keep screenings quick so citizens can eat in peace without a metal detector for sesame seeds.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

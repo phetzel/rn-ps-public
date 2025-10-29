@@ -212,9 +212,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Treaties do not reanimate without mutual notice and entry into force. Any 'yesterday' notices are non-operative; we're reviewing dormant texts for modernization, not resurrection, before courts get involved.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.ModerateNegative, // -6
+            o3: OutcomeModifierWeight.ModeratePositive // +6
           },
             impacts: {
               president: {
@@ -403,9 +403,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We'll issue a legal determination and diplomatic note clarifying temporal competence, and back it with guidance to agencies. We are also drafting a narrowly tailored 'temporal non-recognition' statute.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.MajorPositive,
-            o3: OutcomeModifierWeight.MajorNegative
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.MajorNegative, // -12
+            o3: OutcomeModifierWeight.MajorPositive // +12
           },
             impacts: {
               president: {

@@ -20,9 +20,9 @@ export const investigativeExchange: ExchangeData = {
           text: "The President has been candid: he shorted indifference and went long tenderness. If prices sulk, he'll average down with a national bear hug and a nacho break, then disclose the receipts.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            "hug-peg": OutcomeModifierWeight.SlightPositive,
-            "algo-applause": OutcomeModifierWeight.SlightNegative,
-            "quilt-index": OutcomeModifierWeight.Neutral,
+            "hug-peg": OutcomeModifierWeight.SlightNegative, // -4
+            "algo-applause": OutcomeModifierWeight.Neutral, // 0
+            "quilt-index": OutcomeModifierWeight.SlightPositive, // +4
           },
           impacts: {
             president: {
@@ -72,9 +72,9 @@ export const investigativeExchange: ExchangeData = {
           text: "Treasury of Monetary Hugs will regulate like soft commodities: consent audits, timestamped embraces, and side-hugs face higher haircuts to tame cuddle inflation and close custody gaps.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            "hug-peg": OutcomeModifierWeight.SlightPositive,
-            "algo-applause": OutcomeModifierWeight.Neutral,
-            "quilt-index": OutcomeModifierWeight.SlightNegative,
+            "hug-peg": OutcomeModifierWeight.Neutral, // 0
+            "algo-applause": OutcomeModifierWeight.SlightNegative, // -4
+            "quilt-index": OutcomeModifierWeight.SlightPositive, // +4
           },
           impacts: {
             president: {
@@ -494,9 +494,9 @@ export const investigativeExchange: ExchangeData = {
             text: "Spread fees cap at five basis cuddles per hundred warmth units, disclosed in plain language and machine-readable form. Tip-offs route to an encrypted snuggleline with time-stamped custody proofs.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              "hug-peg": OutcomeModifierWeight.SlightPositive,
-              "algo-applause": OutcomeModifierWeight.Neutral,
-              "quilt-index": OutcomeModifierWeight.SlightNegative,
+              "hug-peg": OutcomeModifierWeight.Neutral, // 0
+              "algo-applause": OutcomeModifierWeight.SlightNegative, // -4
+              "quilt-index": OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {

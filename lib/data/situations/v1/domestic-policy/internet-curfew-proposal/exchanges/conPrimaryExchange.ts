@@ -27,9 +27,9 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_shelved: OutcomeModifierWeight.SlightPositive, // +4
             outcome_curfew_black_market: OutcomeModifierWeight.Neutral, // 0
-            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.Neutral, // 0
+            outcome_curfew_voluntary_rollout: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_constitutional_authority",
         },
@@ -46,10 +46,10 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_curfew_shelved: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_curfew_shelved: OutcomeModifierWeight.Neutral, // 0
             outcome_curfew_black_market: OutcomeModifierWeight.SlightPositive, // +4
             outcome_curfew_voluntary_rollout:
-              OutcomeModifierWeight.Neutral, // 0
+              OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_tech_industry_resistance",
         },

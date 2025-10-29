@@ -293,13 +293,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_2",
-            text: "We’ll use online registration tied to existing household tax IDs, opt‑in reminders, and a hotline staffed by botanically literate humans, not an algorithm that calls every fern ‘Dave’.",
+            text: "We'll use online registration tied to existing household tax IDs, opt‑in reminders, and a hotline staffed by botanically literate humans, not an algorithm that calls every fern 'Dave'.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.StrongPositive, // +8
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -355,13 +355,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_4",
-            text: "Yes, the first week may include confusion and two mislabeled succulents. That’s why we’re piloting, writing plain guides, and ditching any requirement that ends up feeling silly.",
+            text: "Yes, the first week may include confusion and two mislabeled succulents. That's why we're piloting, writing plain guides, and ditching any requirement that ends up feeling silly.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {

@@ -192,10 +192,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If a contractor or landlord hikes prices to cash‑grab off ice, we'll treat that as heat profiteering. Expect revoked permits and a public shaming colder than the product.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {

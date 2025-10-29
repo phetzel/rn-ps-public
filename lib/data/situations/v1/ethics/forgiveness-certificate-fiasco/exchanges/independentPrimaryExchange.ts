@@ -81,9 +81,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Justice Bureau has frozen the program, preserved records, and queued clawbacks under statute 11‑B. We’ll publish the refund protocol and chain of custody so outside auditors can verify each step.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.Neutral // 0
           },
           impacts: {
             president: {
@@ -240,9 +240,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If someone tried to buy virtue with a coupon, they can enjoy a brisk walk to the returns desk. The price of rejoining polite society is a receipt and a thank‑you to taxpayers.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -367,9 +367,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We missed the obvious—ethics guardrails weren’t bolted tight. We’re owning that, overbuilding the rails, and stapling a transparency portal where you can see the bolts.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -618,12 +618,12 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_4",
-            text: "Let’s not confuse firewall math with daily life. Permits, potholes, and prescriptions keep moving while the nerds quietly solder the ethics circuits.",
+            text: "Let's not confuse firewall math with daily life. Permits, potholes, and prescriptions keep moving while the nerds quietly solder the ethics circuits.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {

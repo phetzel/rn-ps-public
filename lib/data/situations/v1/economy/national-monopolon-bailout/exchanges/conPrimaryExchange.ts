@@ -47,12 +47,12 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a1_2",
-          text: "Temporary stewardship stabilizes clearing, prices are marked to stress, and senior claims take first loss. We’re swapping panic for liquidity with jumbo dice audited by boring spreadsheets.",
+          text: "Temporary stewardship stabilizes clearing, prices are marked to stress, and senior claims take first loss. We're swapping panic for liquidity with jumbo dice audited by boring spreadsheets.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.StrongPositive, // +8
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightNegative, // -4
           },
           impacts: {
             president: {
@@ -108,12 +108,12 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a1_4",
-          text: "We deny there’s a market apocalypse. It’s an unruly game night, and we’re sealing the living room, confiscating loaded dice, and guarding snacks so nobody escalates from tantrum to table‑flip economy.",
+          text: "We deny there's a market apocalypse. It's an unruly game night, and we're sealing the living room, confiscating loaded dice, and guarding snacks so nobody escalates from tantrum to table‑flip economy.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.StrongNegative, // -8
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
           },
           impacts: {
             president: {
@@ -149,9 +149,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Taxpayer risk is capped by a first‑loss buffer funded by shareholders and dice dealers; collateral is haircutted up to 60%, and rent cards get stress‑priced, not par. Details are public in the term sheet.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
             },
             impacts: {
               president: {
@@ -532,9 +532,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We deny any secret tribunals. Dice confiscations require a signed form, two witnesses, and a bowl of unguarded chips as a sting for entrapment purposes. The goal is comedy‑free compliance, not control.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {

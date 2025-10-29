@@ -432,12 +432,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "ans_ter1_4",
-            text: "We won’t over-index on cumulonimbus jurisprudence. Success is dry socks and paid shifts, which we’ll secure while lawyers write footnotes about the sky’s legal surname.",
+            text: "We won't over-index on cumulonimbus jurisprudence. Success is dry socks and paid shifts, which we'll secure while lawyers write footnotes about the sky's legal surname.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.ModerateNegative, // -6
+              o2: OutcomeModifierWeight.ModeratePositive, // +6
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {

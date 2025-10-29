@@ -51,9 +51,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-            outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-            outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
           },
           followUpId: "q_corporate_accountability",
         },
@@ -73,9 +73,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-            outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative,
-            outcome_tax_trade_war: OutcomeModifierWeight.Neutral,
+            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+            outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
         {
@@ -94,9 +94,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-            outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative,
-            outcome_tax_trade_war: OutcomeModifierWeight.Neutral,
+            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+            outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
       ],
@@ -182,9 +182,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-          outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-          outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+          outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
         },
       },
         ],
@@ -266,9 +266,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-          outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-          outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+          outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
         },
       },
         ],
@@ -354,9 +354,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-          outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-          outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+          outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
         },
       },
         ],
@@ -423,9 +423,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
         },
         outcomeModifiers: {
-          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-          outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-          outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+          outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+          outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+          outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
         },
       },
       {

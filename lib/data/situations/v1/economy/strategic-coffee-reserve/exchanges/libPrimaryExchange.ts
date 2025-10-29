@@ -76,9 +76,9 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative,
-            outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral,
-            outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive,
+            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+            outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
           },
           followUpId: "q_coffee_health_benefits",
         },
@@ -307,9 +307,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative,
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral,
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive,
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -398,9 +398,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative,
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral,
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive,
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -419,7 +419,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral,
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -438,7 +440,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral,
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {

@@ -185,10 +185,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No, we did not launder cash through beach kiosks or shell marinas. The fund is audited quarterly, and the only shells involved were decorative and fully receipted.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.ModerateNegative, // -6
+            o2: OutcomeModifierWeight.ModerateNegative, // -6
+            o3: OutcomeModifierWeight.ModeratePositive, // +6
+            o4: OutcomeModifierWeight.ModeratePositive // +6
           },
             impacts: {
               president: {
@@ -327,10 +327,10 @@ export const investigativeExchange: ExchangeData = {
             text: "If you want identical envoys, blame our tailor's bulk discount. HR moved fast, and we will brief process details once the tailor stops invoicing us in buttons.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
             impacts: {
               president: {
@@ -389,10 +389,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No kickbacks, no cousins, no sand-dollar briefcases. The only perk was a swatch that smelled like a beach postcard, logged as a promotional sample.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.ModerateNegative, // -6
+            o2: OutcomeModifierWeight.ModerateNegative, // -6
+            o3: OutcomeModifierWeight.ModeratePositive, // +6
+            o4: OutcomeModifierWeight.ModeratePositive // +6
           },
             impacts: {
               president: {
@@ -530,10 +530,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Call them props if you like; they still pull cameras and compliance. If spectacle is the language here, we will speak it until paperwork smells like seafoam again.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {

@@ -117,9 +117,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Primary auctions prioritize broad participation, with anti-collusion screens and randomized lots. If concentration spikes, an automatic pause triggers a review before any more fog gets minted.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {
@@ -212,9 +212,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Labor standards are welded on: wage floors, no credit-as-compensation, and clawbacks if hiring lags. Workers get dollars; firms get bragging rights they must earn the loud way.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {
@@ -235,9 +235,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Every auction dollar is appropriated to worker-facing outlays—training grants, childcare slots, and transit passes—audited quarterly. The ledger gets glitter; neighborhoods get plumbing.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
             },
             impacts: {
               president: {

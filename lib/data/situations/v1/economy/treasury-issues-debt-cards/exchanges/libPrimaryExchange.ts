@@ -137,12 +137,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a2_2",
-            text: "There’s a 2% wallet limit, anti-collusion checks on linked accounts, and clawbacks for wash trades. Happy to detail the rulebook, including mint windows and penalties.",
+            text: "There's a 2% wallet limit, anti-collusion checks on linked accounts, and clawbacks for wash trades. Happy to detail the rulebook, including mint windows and penalties.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
-              outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative,
+              outcome_foil_standard: OutcomeModifierWeight.Neutral, // 0
+              outcome_kindergarten: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_oracle: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {
@@ -185,9 +185,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Bigger question: do small savers get yield without a finance degree? The answer is yes, because the UI is crayons-simple while the math is lab-grade under the hood.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
-              outcome_kindergarten: OutcomeModifierWeight.SlightNegative,
-              outcome_oracle: OutcomeModifierWeight.Neutral,
+              outcome_foil_standard: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_kindergarten: OutcomeModifierWeight.Neutral, // 0
+              outcome_oracle: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {
@@ -310,9 +310,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Pack odds are public and fixed; mints cap at 50 per verified ID per window; windows randomize within a day. Pyramiding via shells triggers freezes, audits, and escalating forfeitures.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
-              outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative,
+              outcome_foil_standard: OutcomeModifierWeight.Neutral, // 0
+              outcome_kindergarten: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_oracle: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {

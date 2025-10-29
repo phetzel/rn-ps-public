@@ -133,9 +133,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Arbor drops use reserve logistics wings during their regularly scheduled boredom. Critical response units remain fully staffed; we can handle a wildfire and a woodpile simultaneously.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -271,9 +271,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We've drawn bright lines: asphalt stays sovereign pavement, roots get easements under marked medians, and commuters retain right-of-way over any plant weighing less than a picnic.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -383,9 +383,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We've war‑gamed the squirrel scenario to boredom. Their vests are bite‑resistant, visors are snack‑proof, and pilots treat rodents as colleagues with union‑level snack breaks.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

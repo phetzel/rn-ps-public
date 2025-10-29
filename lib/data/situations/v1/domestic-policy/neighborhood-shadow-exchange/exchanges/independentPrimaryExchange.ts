@@ -213,13 +213,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec1_3",
-            text: "No, a mismatch won’t trigger fines or confiscations. Friday is for returns, not raids, and the only citation we’re writing is a reminder card with a smiley.",
+            text: "No, a mismatch won't trigger fines or confiscations. Friday is for returns, not raids, and the only citation we're writing is a reminder card with a smiley.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.SlightNegative,
-            outcome2: OutcomeModifierWeight.SlightNegative,
-            outcome3: OutcomeModifierWeight.Neutral,
-            outcome4: OutcomeModifierWeight.StrongPositive
+            outcome1: OutcomeModifierWeight.SlightNegative, // -4
+            outcome2: OutcomeModifierWeight.SlightNegative, // -4
+            outcome3: OutcomeModifierWeight.SlightPositive, // +4
+            outcome4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -347,10 +347,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No fees, no tickets, and no shadow curfews. Participation stays voluntary, and night-shift residents get flexible windows so life and light can coexist.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.SlightNegative,
-            outcome2: OutcomeModifierWeight.SlightNegative,
-            outcome3: OutcomeModifierWeight.Neutral,
-            outcome4: OutcomeModifierWeight.StrongPositive
+            outcome1: OutcomeModifierWeight.SlightNegative, // -4
+            outcome2: OutcomeModifierWeight.SlightPositive, // +4
+            outcome3: OutcomeModifierWeight.SlightNegative, // -4
+            outcome4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -375,13 +375,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec2_4",
-            text: "If your block wants a different rhythm, local councils can remix it. The pilot sets guardrails, not a metronome, and we’re listening for better beats.",
+            text: "If your block wants a different rhythm, local councils can remix it. The pilot sets guardrails, not a metronome, and we're listening for better beats.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.SlightPositive,
-            outcome2: OutcomeModifierWeight.SlightNegative,
-            outcome3: OutcomeModifierWeight.SlightNegative,
-            outcome4: OutcomeModifierWeight.SlightPositive
+            outcome1: OutcomeModifierWeight.SlightPositive, // +4
+            outcome2: OutcomeModifierWeight.SlightPositive, // +4
+            outcome3: OutcomeModifierWeight.SlightNegative, // -4
+            outcome4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {

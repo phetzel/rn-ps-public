@@ -414,13 +414,13 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_ter1_1",
-            text: "Clinicians found glitter levels consistent with birthday parties, not biohazards. Use non‑toxic kits and crack a window; we’ll post a ‘safe sparkle’ sheet you can tape to the fridge.",
+            text: "Clinicians found glitter levels consistent with birthday parties, not biohazards. Use non‑toxic kits and crack a window; we'll post a 'safe sparkle' sheet you can tape to the fridge.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.Neutral,
-              pillow_peg: OutcomeModifierWeight.SlightNegative,
-              sofa_clinics: OutcomeModifierWeight.SlightPositive,
-              drone_audit: OutcomeModifierWeight.Neutral
+              flag_olympics: OutcomeModifierWeight.SlightNegative, // -4
+              pillow_peg: OutcomeModifierWeight.SlightNegative, // -4
+              sofa_clinics: OutcomeModifierWeight.SlightPositive, // +4
+              drone_audit: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -507,13 +507,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter1_4",
-            text: "Social feeds love a rash photo. Remember, toddlers lick everything; correlation is not causation. Let’s not turn a glitter sneeze into a national epidemiology thesis.",
+            text: "Social feeds love a rash photo. Remember, toddlers lick everything; correlation is not causation. Let's not turn a glitter sneeze into a national epidemiology thesis.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.StrongPositive,
-              pillow_peg: OutcomeModifierWeight.SlightNegative,
-              sofa_clinics: OutcomeModifierWeight.SlightNegative,
-              drone_audit: OutcomeModifierWeight.Neutral
+              flag_olympics: OutcomeModifierWeight.StrongPositive, // +8
+              pillow_peg: OutcomeModifierWeight.SlightNegative, // -4
+              sofa_clinics: OutcomeModifierWeight.SlightNegative, // -4
+              drone_audit: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -575,13 +575,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter2_2",
-            text: "There is no microphone‑thread program. The only whisper we endorse is, ‘Please lift the corner while I check for wobbly ottomans,’ followed by a polite thank‑you.",
+            text: "There is no microphone‑thread program. The only whisper we endorse is, 'Please lift the corner while I check for wobbly ottomans,' followed by a polite thank‑you.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightNegative,
-              pillow_peg: OutcomeModifierWeight.Neutral,
-              sofa_clinics: OutcomeModifierWeight.Neutral,
-              drone_audit: OutcomeModifierWeight.SlightPositive
+              flag_olympics: OutcomeModifierWeight.SlightNegative, // -4
+              pillow_peg: OutcomeModifierWeight.SlightNegative, // -4
+              sofa_clinics: OutcomeModifierWeight.SlightPositive, // +4
+              drone_audit: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -640,10 +640,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If conspiracy entrepreneurs want to hawk Faraday throws, they can audition on Mandate Idol and lose in round one. Facts beat merch; your couch can stay gloriously unplugged.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.Neutral,
-              pillow_peg: OutcomeModifierWeight.Neutral,
-              sofa_clinics: OutcomeModifierWeight.Neutral,
-              drone_audit: OutcomeModifierWeight.Neutral
+              flag_olympics: OutcomeModifierWeight.SlightPositive, // +4
+              pillow_peg: OutcomeModifierWeight.Neutral, // 0
+              sofa_clinics: OutcomeModifierWeight.SlightPositive, // +4
+              drone_audit: OutcomeModifierWeight.StrongNegative // -8
             },
             impacts: {
               president: {

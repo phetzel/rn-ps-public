@@ -20,10 +20,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "I challenge the doom-sayers: swap a skillet before you swap conspiracy theories. Empathy tastes better than panic, and yes, my stove just impeached my toaster.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.StrongPositive, // +8
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "This is a resilience drill: if strangers can find your can opener, we win. Expect casserole checkpoints and fondue no-fly zones to keep traffic calm and tantrums brief.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.StrongPositive, // +8
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
           impacts: {
             president: {
@@ -153,10 +153,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The fine schedule goes to public comment; first offenses draw warnings, not wallops. Appeals live on a two-page form with upload, and hearings happen by video within a week.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightPositive, // +4
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
             impacts: {
               president: {
@@ -247,10 +247,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Pilot first, codify second. We'd rather learn from real spills than forecast imaginary souffle collapses, so the playbook will evolve after the first batch of swaps completes.",
             type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {

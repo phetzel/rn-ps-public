@@ -280,9 +280,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We're finalizing a standard refund-and-reaccommodation rule tied to document validity, not timestamps. Expect uniform passenger treatment, not terminal roulette.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {

@@ -73,9 +73,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Before any root diplomacy, we must verify worm easements and moss visas. Until soil passports exist, any border dispute between ramp and rhizome is brilliantly hypothetical.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightNegative // -4
           },
           impacts: {
             president: {
@@ -97,12 +97,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_4",
-          text: "No one is waking up to a redwood through the windshield. We’re talking saplings the size of traffic cones, staked off-lane with more padding than a toddler’s helmet.",
+          text: "No one is waking up to a redwood through the windshield. We're talking saplings the size of traffic cones, staked off-lane with more padding than a toddler's helmet.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {

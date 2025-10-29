@@ -51,9 +51,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Tests in five mock towns cut drone control links by 87% within a safe bubble. Arrays fire in narrow bursts under 100 dB at the source, with costs capped per block and independently verified.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -277,9 +277,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Budget is capped with open bidding and clawbacks. At least 60% is real manufacturing, not ribbon-cutting cosplay, and we'll publish job-creation ledgers by town with an automatic sunset review.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {
@@ -308,9 +308,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Some tech lobbyists call any hometown job a subsidy unless it ships profits to their cloud. We'll pick builders who can hold a wrench and a tune, not just write a memo about disruption.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightNegative // -4
           },
             impacts: {
               president: {
@@ -532,9 +532,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Total cap is 2.1 billion chits, phased over three years; target is a 75% drop in drone incursions. A neutral grid operator holds the kill-switch and must publish every flip.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightPositive, // +4
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.Neutral // 0
           },
             impacts: {
               president: {
@@ -562,9 +562,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "If the metrics miss by two reviews, the sunset hits and the bellows pack up. Hardware gets repurposed to schools and festivals, not a dusty warehouse of broken promises.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {
@@ -592,9 +592,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "This isn't a slush geyser. No naming rights, no mascot IPOs, and no payments for idle reeds—if a block doesn't need it, it doesn't buy it.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightNegative // -4
           },
             impacts: {
               president: {

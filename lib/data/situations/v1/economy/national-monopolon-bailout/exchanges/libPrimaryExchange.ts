@@ -47,12 +47,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "q_root_a2",
-          text: "Stability first: we’ll swap panic for liquidity using transparent buy‑ins, posted odds, and sober spreadsheets. No secret jackpots—every chip movement will be publicly tallied.",
+          text: "Stability first: we'll swap panic for liquidity using transparent buy‑ins, posted odds, and sober spreadsheets. No secret jackpots—every chip movement will be publicly tallied.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.StrongPositive, // +8
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightNegative, // -4
           },
           impacts: {
             president: {
@@ -77,12 +77,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "q_root_a3",
-          text: "We admit we don’t practice token medicine. What we do is calm nerves: gentle shuffling, clear waitlists, and daily triage logs so anxious players see care without cosplay lab coats.",
+          text: "We admit we don't practice token medicine. What we do is calm nerves: gentle shuffling, clear waitlists, and daily triage logs so anxious players see care without cosplay lab coats.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.StrongPositive, // +8
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightNegative, // -4
           },
           impacts: {
             president: {
@@ -108,12 +108,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "q_root_a4",
-          text: "We deny this is a collapse; it’s a noisy game night. HomeGuard will seal only unsafe stacks, confiscate loaded dice, and post sweep reports so snacks and rights stay intact.",
+          text: "We deny this is a collapse; it's a noisy game night. HomeGuard will seal only unsafe stacks, confiscate loaded dice, and post sweep reports so snacks and rights stay intact.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.StrongNegative, // -8
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
           },
           impacts: {
             president: {
@@ -146,12 +146,12 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "q_sec_triage_a1",
-            text: "Distress is measurable: bent corners past 15 degrees, ink smears, and panic‑trade velocity above baseline. We’ll publish daily caseloads and outcome dashboards with anonymized token IDs.",
+            text: "Distress is measurable: bent corners past 15 degrees, ink smears, and panic‑trade velocity above baseline. We'll publish daily caseloads and outcome dashboards with anonymized token IDs.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
             },
             impacts: {
               president: {
@@ -273,12 +273,12 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "q_sec_sweeps_a1",
-            text: "They’re not raids; they’re safety straightens. We seal stacks only when wobble risk is high, bag only contraband dice, and log each touch. An independent auditor reviews every sweep.",
+            text: "They're not raids; they're safety straightens. We seal stacks only when wobble risk is high, bag only contraband dice, and log each touch. An independent auditor reviews every sweep.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.StrongPositive, // +8
             },
             impacts: {
               president: {
@@ -401,9 +401,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We use a decision tree: rehab if structure is intact and loss stems from grime; retire if damage undermines identity. All outcomes are logged with photos and plainly written notes.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
             },
             impacts: {
               president: {
@@ -520,12 +520,12 @@ export const libPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "q_ter_sweeps_a1",
-            text: "We’re barred from closets, cushions, pantries, and poetry journals. Scope is tabletop only, with blue‑tape borders, and violations carry penalties that actually sting.",
+            text: "We're barred from closets, cushions, pantries, and poetry journals. Scope is tabletop only, with blue‑tape borders, and violations carry penalties that actually sting.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.StrongPositive, // +8
             },
             impacts: {
               president: {

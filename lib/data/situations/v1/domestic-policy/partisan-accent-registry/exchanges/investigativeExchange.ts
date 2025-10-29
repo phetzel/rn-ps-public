@@ -606,13 +606,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "t2a3",
-            text: "There’s no secret accent police lurking behind curtains. Any enforcement must be public, posted, and appealable—otherwise it doesn’t happen.",
+            text: "There's no secret accent police lurking behind curtains. Any enforcement must be public, posted, and appealable—otherwise it doesn't happen.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.SlightNegative,
-            outcome2: OutcomeModifierWeight.SlightNegative,
-            outcome3: OutcomeModifierWeight.Neutral,
-            outcome4: OutcomeModifierWeight.StrongPositive
+            outcome1: OutcomeModifierWeight.SlightNegative, // -4
+            outcome2: OutcomeModifierWeight.SlightNegative, // -4
+            outcome3: OutcomeModifierWeight.SlightPositive, // +4
+            outcome4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

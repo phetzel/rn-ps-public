@@ -185,10 +185,10 @@ export const investigativeExchange: ExchangeData = {
             text: "There are no sweetheart sole-sources or hush-hush side letters. Procurement pulled three quotes, logged daylight checks, and rejected a bid that tried to bill for 'extra darkness.'",
             type: AnswerType.Deny,
             outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.SlightNegative,
-            outcome2: OutcomeModifierWeight.SlightNegative,
-            outcome3: OutcomeModifierWeight.Neutral,
-            outcome4: OutcomeModifierWeight.StrongPositive
+            outcome1: OutcomeModifierWeight.SlightNegative, // -4
+            outcome2: OutcomeModifierWeight.SlightNegative, // -4
+            outcome3: OutcomeModifierWeight.SlightPositive, // +4
+            outcome4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

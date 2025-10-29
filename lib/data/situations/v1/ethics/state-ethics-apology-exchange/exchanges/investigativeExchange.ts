@@ -322,10 +322,10 @@ export const investigativeExchange: ExchangeData = {
             text: "The Office of Public Candor audits the data streams and recalibrates devices against control blushes monthly. Violations trigger clawbacks, suspensions, and public downgrades of prior mea culpas.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
+              o4: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -345,10 +345,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We built this assuming someone would try to cheat. Cross‑checks, decoy scripts, and whistleblower bounties make gaming the metrics a losing hobby.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.Neutral, // 0
+              o4: OutcomeModifierWeight.StrongPositive // +8
             },
             impacts: {
               president: {
@@ -368,10 +368,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No, a high score can’t be bought with gift baskets or dramatic pauses. Attempts to purchase grade inflation are caught and reported to enforcement.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.Neutral, // 0
+              o4: OutcomeModifierWeight.StrongNegative // -8
             },
             impacts: {
               president: {
@@ -391,10 +391,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Let’s keep scale in mind: we’re measuring etiquette, not oxygen levels. Sanctions are proportionate, swift, and designed to deter grandstanding, not to ruin lives.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.StrongNegative // -8
             },
             impacts: {
               president: {

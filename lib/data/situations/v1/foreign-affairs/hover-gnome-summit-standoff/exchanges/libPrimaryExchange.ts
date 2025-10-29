@@ -280,10 +280,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No rent is being skipped because of this mission. Operational costs come from existing readiness funds, not from anyone’s paycheck or pantry.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.StrongNegative, // -8
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.MajorPositive // +12
           },
             impacts: {
               president: {
@@ -564,10 +564,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re not here to script hypotheticals about lawn statues. We’re here to keep crews safe and cargo moving, which is how families make rent in Port Quadrant.",
             type: AnswerType.Deflect,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.StrongPositive // +8
             },
             impacts: {
               president: {

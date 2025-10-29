@@ -46,9 +46,9 @@ export const investigativeExchange: ExchangeData = {
           text: "Sovereignty needs borders you can stub a toe on. Until something waves a flag from a place with doors and guards, Defense won’t salute it, grant immunity, or call it an embassy.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.StrongNegative, // -8
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.StrongPositive // +8
           },
           impacts: {
             president: {
@@ -245,9 +245,9 @@ export const investigativeExchange: ExchangeData = {
             text: "Code can’t hold a passport, so it can’t hold immunity. If it demands privileges, we’ll unplug, reimage, and escort it to a sandbox; Defense won’t salute a string of bits in a suit.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.ModeratePositive, // +6
+              o3: OutcomeModifierWeight.ModerateNegative // -6
             },
             impacts: {
               president: {
@@ -358,9 +358,9 @@ export const investigativeExchange: ExchangeData = {
             text: "The timeline posts within 72 hours, with necessary redactions and an independent checksum by the Neutral Guild of Cyber Notaries. Names of drafters will be listed with roles, not gossip.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.ModeratePositive, // +6
+              o3: OutcomeModifierWeight.ModerateNegative // -6
             },
             impacts: {
               president: {
@@ -384,9 +384,9 @@ export const investigativeExchange: ExchangeData = {
             text: "We moved fast, stapled a 'do no harm' note to a draft, and then took a breath. Process will be tidier next time, including a real wake‑up call to Protocol before any labels stick.",
             type: AnswerType.Admit,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.ModerateNegative, // -6
+              o3: OutcomeModifierWeight.ModeratePositive // +6
             },
             impacts: {
               president: {
@@ -465,12 +465,12 @@ export const investigativeExchange: ExchangeData = {
         answers: [
           {
             id: "a_t2_1",
-            text: "We’ve implemented one‑way data diodes, fresh credentials with attestation, and manual kill‑cords tested in drills. Red‑team exercises start this week, with an after‑action readout.",
+            text: "We've implemented one‑way data diodes, fresh credentials with attestation, and manual kill‑cords tested in drills. Red‑team exercises start this week, with an after‑action readout.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.ModeratePositive, // +6
+              o3: OutcomeModifierWeight.ModerateNegative // -6
             },
             impacts: {
               president: {

@@ -121,10 +121,10 @@ export const investigativeExchange: ExchangeData = {
             text: "There were no secret previews to favored desks. Draft memos circulated inside a narrow policy sandbox, and external access began only at the public timestamp. Anything else is bedtime lore.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightNegative, // -4
             },
             impacts: {
               president: {

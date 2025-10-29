@@ -71,9 +71,9 @@ export const conPrimaryExchange: ExchangeData = {
           },
         },
           outcomeModifiers: {
-            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-            outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative,
-            outcome_tax_trade_war: OutcomeModifierWeight.Neutral,
+            outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+            outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
       {
@@ -205,9 +205,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-              outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-              outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
             followUpId: "q_economic_disruption",
           },
@@ -227,9 +227,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative,
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral,
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
@@ -302,9 +302,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative,
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral,
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_tax_trade_war: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
@@ -321,9 +321,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative,
-              outcome_tax_trade_war: OutcomeModifierWeight.Neutral,
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
@@ -401,9 +401,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_tax_offshore_exodus: OutcomeModifierWeight.SlightPositive,
-              outcome_tax_global_trend: OutcomeModifierWeight.Neutral,
-              outcome_tax_trade_war: OutcomeModifierWeight.SlightNegative,
+              outcome_tax_offshore_exodus: OutcomeModifierWeight.Neutral, // 0
+              outcome_tax_global_trend: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_tax_trade_war: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {

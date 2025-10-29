@@ -547,10 +547,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Standards forbid off‑brand noisemakers and require mold and heat benchmarks before any confetti install. Passing costs to renters is prohibited and punishable with fines and forfeited subsidies.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.Neutral,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-1": OutcomeModifierWeight.Neutral, // 0
+              "outcome-2": OutcomeModifierWeight.SlightPositive, // +4
+              "outcome-3": OutcomeModifierWeight.SlightPositive, // +4
+              "outcome-4": OutcomeModifierWeight.StrongNegative // -8
             },
             impacts: {
               president: {

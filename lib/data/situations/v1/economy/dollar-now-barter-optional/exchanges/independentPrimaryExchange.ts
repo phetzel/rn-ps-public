@@ -370,10 +370,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Provable reach means platform‑agnostic proofs: cryptographic impressions, independent timestamps, and bot‑scrubbed counts. Originality uses similarity scores plus creator attestations reviewed by a panel.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
+              o4: OutcomeModifierWeight.Neutral, // 0
             },
             impacts: {
               president: {
@@ -424,10 +424,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We deny that cringe equals fraud. Bad taste is not a crime; fabrication is. Justice steps in only when numbers are forged or bots are hired, not when puns take the long way home.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightNegative, // -4
             },
             impacts: {
               president: {

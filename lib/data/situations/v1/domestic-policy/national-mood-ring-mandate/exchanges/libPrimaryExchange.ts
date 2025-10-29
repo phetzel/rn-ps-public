@@ -373,9 +373,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Perks are capped micro-rebates, with means-tested uplifts that boost low-income mauve and gray. We expanded off-peak credits for night shifts and caregiving windows to redirect net gains toward stressed groups.",
             type: AnswerType.Inform,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -399,9 +399,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one is penalized for stress. Relief tiers auto-adjust when community mood dips, and hardship flags lock in access and rebates regardless of color swings during hard seasons.",
             type: AnswerType.Reassure,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -422,12 +422,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_3",
-            text: "Emerald isn’t a VIP pass. It moves sequence inside a time window, not eligibility or core benefit size. The base promise stays the base promise, full stop.",
+            text: "Emerald isn't a VIP pass. It moves sequence inside a time window, not eligibility or core benefit size. The base promise stays the base promise, full stop.",
             type: AnswerType.Deny,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -452,12 +452,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_4",
-            text: "We’re not gamifying empathy; we’re gamifying paperwork. The vibe is a line manager with a dimmer switch, not a bouncer with a velvet rope, and it’s better than the old maze.",
+            text: "We're not gamifying empathy; we're gamifying paperwork. The vibe is a line manager with a dimmer switch, not a bouncer with a velvet rope, and it's better than the old maze.",
             type: AnswerType.Deflect,
           outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

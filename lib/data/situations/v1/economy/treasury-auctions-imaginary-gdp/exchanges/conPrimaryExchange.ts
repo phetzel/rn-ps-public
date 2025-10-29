@@ -42,9 +42,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We already price risks that don't exist; this program simply labels and fences them. Issuance is capped, usage is audited, and nothing lets executives swap credits for real investment obligations.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
           },
           impacts: {
             president: {
@@ -117,9 +117,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Eligibility is tethered to real inputs: audited capex, payroll, and energy use. You can't buy credits unless you build, and the ratio of credits to output is capped with clawbacks that bite.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {
@@ -161,9 +161,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Authorized on behalf of the Treasury: the Secretary directs that credits be issued only against verified capital formation, maintained payrolls, and clean energy targets, with public audits and penalties for fluff.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
             },
             impacts: {
               president: {
@@ -310,9 +310,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The Myth Index is compiled by a rotating, diverse panel with published methods, back-testing, and confidence bands. We score narratives like risk factors, then haircut the poetry.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
             },
             impacts: {
               president: {
@@ -426,9 +426,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We monitor cross-asset margin with exchange feeds and tripwires. If desks try basket alchemy, alerts fire, margins jump, and compliance shows up before the leverage does.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {

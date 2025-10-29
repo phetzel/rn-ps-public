@@ -20,9 +20,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We challenge the premise: rogue drones already blast and pry; we'll outplay them, not outshout rights. Oom‑pah is brief, bounded, and aimed at hardware, not people, with the President waving the baton on limits.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -210,9 +210,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Calling it 'noise policing' is catchy, but wrong key. The mission is counter‑sensor shielding; we jam the eavesdroppers, not the neighbors, and we won't trade civil rights for a louder metronome.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {
@@ -306,9 +306,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Don't pit band against bandage. Clinic money comes from a different pocket, and transit stays fully tuned. If anything, safer skies keep ambulances and buses moving in tempo.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {
@@ -405,9 +405,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Vendor selection uses blind scoring on decibel efficacy, interference precision, and repairability, with independent lab tests. Contracts publish pricing, maintenance, and failure rates on a public portal.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightNegative // -4
           },
             impacts: {
               president: {
@@ -435,9 +435,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "If a bidder tries to sneak kickbacks under 'consulting reeds,' we'll flag it, bar them, and refer it for prosecution. We've been burned before; that's why the receipts are digital and loud.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {
@@ -531,9 +531,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We bake in rest: short bursts, long quiet, health reviews each quarter, and opt‑out zones for elder centers. Protest corridors are hard‑blocked from activation, full stop.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.Neutral // 0
           },
             impacts: {
               president: {
@@ -591,9 +591,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Let's not let bad actors hide behind puppies and polka jokes. Drones don't take naps; our system does. We'll keep the beat light on people and heavy on intruders.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
             impacts: {
               president: {

@@ -212,9 +212,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We cap pack premiums, publish a reference NAV, and throttle issuance when spreads drift. Market makers must quote inside bands, with penalties for pumpy theatrics and spoof quotes.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_foil_standard: OutcomeModifierWeight.SlightPositive,
-              outcome_kindergarten: OutcomeModifierWeight.Neutral,
-              outcome_oracle: OutcomeModifierWeight.SlightNegative,
+              outcome_foil_standard: OutcomeModifierWeight.Neutral, // 0
+              outcome_kindergarten: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_oracle: OutcomeModifierWeight.SlightPositive, // +4
             },
             impacts: {
               president: {

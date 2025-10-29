@@ -418,15 +418,15 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Line items, unit costs, and maintenance schedules will post with test footage, with private data masked. The kill-switch is dual-control, hardware plus software, and audited by people who hate surprises.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-                o1: OutcomeModifierWeight.StrongPositive,
-                o2: OutcomeModifierWeight.StrongNegative,
-                o3: OutcomeModifierWeight.Neutral,
-                o4: OutcomeModifierWeight.Neutral
+                o1: OutcomeModifierWeight.StrongPositive, // +8
+                o2: OutcomeModifierWeight.SlightNegative, // -4
+                o3: OutcomeModifierWeight.Neutral, // 0
+                o4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
-                reaction: "Fine, but spreadsheets won’t win tonight’s narrative."
+                reaction: "Fine, but spreadsheets won't win tonight's narrative."
               },
               cabinet: {
                 [CabinetStaticId.Defense]: {

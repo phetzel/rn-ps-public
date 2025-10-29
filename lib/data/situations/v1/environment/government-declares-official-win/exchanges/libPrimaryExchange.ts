@@ -20,10 +20,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Naming a breeze doesn't make it charge rent, and we're not escalating a turf war with the sky. His hair remains under diplomatic immunity; let's not confuse scheduling with a paywall.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
