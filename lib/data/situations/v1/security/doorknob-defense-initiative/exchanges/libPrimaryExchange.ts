@@ -21,9 +21,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             "outcome-1": OutcomeModifierWeight.StrongPositive,
-            "outcome-2": OutcomeModifierWeight.StrongNegative,
-            "outcome-3": OutcomeModifierWeight.StrongPositive,
-            "outcome-4": OutcomeModifierWeight.ModerateNegative
+            "outcome-2": OutcomeModifierWeight.SlightNegative,
+            "outcome-3": OutcomeModifierWeight.Neutral,
+            "outcome-4": OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -52,10 +52,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Public safety first: sensors record a twist, not a person, and encryption is party‑grade strong. Cannons are calibrated to startle intruders, not pets or night‑shift neighbors.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            "outcome-1": OutcomeModifierWeight.ModerateNegative,
-            "outcome-2": OutcomeModifierWeight.ModeratePositive,
-            "outcome-3": OutcomeModifierWeight.MajorNegative,
-            "outcome-4": OutcomeModifierWeight.SlightPositive
+            "outcome-1": OutcomeModifierWeight.SlightNegative,
+            "outcome-2": OutcomeModifierWeight.StrongPositive,
+            "outcome-3": OutcomeModifierWeight.SlightNegative,
+            "outcome-4": OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -84,7 +84,7 @@ export const libPrimaryExchange: ExchangeData = {
           text: "These aren’t weapons; they’re morale devices with incidental sparkle, not militarization of hallways. Deterrence, not deployment, and no one is arming a foyer.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            "outcome-1": OutcomeModifierWeight.ModerateNegative,
+            "outcome-1": OutcomeModifierWeight.SlightPositive,
             "outcome-2": OutcomeModifierWeight.SlightNegative,
             "outcome-3": OutcomeModifierWeight.SlightPositive,
             "outcome-4": OutcomeModifierWeight.SlightNegative
@@ -115,7 +115,7 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We admit the law never foresaw self‑reporting doorknobs. We’re drafting clear warrant rules so streamers don’t substitute for signatures or rights.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            "outcome-1": OutcomeModifierWeight.SlightPositive,
+            "outcome-1": OutcomeModifierWeight.MajorNegative,
             "outcome-2": OutcomeModifierWeight.ModeratePositive,
             "outcome-3": OutcomeModifierWeight.Neutral,
             "outcome-4": OutcomeModifierWeight.ModeratePositive
@@ -155,8 +155,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
               "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.Neutral,
-              "outcome-4": OutcomeModifierWeight.ModerateNegative
+              "outcome-3": OutcomeModifierWeight.SlightNegative,
+              "outcome-4": OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -186,8 +186,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.ModeratePositive,
               "outcome-2": OutcomeModifierWeight.ModerateNegative,
-              "outcome-3": OutcomeModifierWeight.StrongPositive,
-              "outcome-4": OutcomeModifierWeight.SlightPositive
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
+              "outcome-4": OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -215,10 +215,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll publish the full data‑handling rulebook with nerdy footnotes next week. Today, rollout focuses on not peppering cats with party favors.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightPositive,
+              "outcome-1": OutcomeModifierWeight.StrongPositive,
               "outcome-2": OutcomeModifierWeight.ModerateNegative,
-              "outcome-3": OutcomeModifierWeight.MajorNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-3": OutcomeModifierWeight.ModerateNegative,
+              "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -247,8 +247,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.ModerateNegative,
-              "outcome-2": OutcomeModifierWeight.SlightPositive,
-              "outcome-3": OutcomeModifierWeight.SlightPositive,
+              "outcome-2": OutcomeModifierWeight.Neutral,
+              "outcome-3": OutcomeModifierWeight.Neutral,
               "outcome-4": OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -286,7 +286,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.ModerateNegative,
               "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.Neutral,
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
               "outcome-4": OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -317,8 +317,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.ModeratePositive,
               "outcome-2": OutcomeModifierWeight.ModerateNegative,
-              "outcome-3": OutcomeModifierWeight.MajorPositive,
-              "outcome-4": OutcomeModifierWeight.SlightPositive
+              "outcome-3": OutcomeModifierWeight.SlightPositive,
+              "outcome-4": OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -381,7 +381,7 @@ export const libPrimaryExchange: ExchangeData = {
               "outcome-1": OutcomeModifierWeight.SlightPositive,
               "outcome-2": OutcomeModifierWeight.ModerateNegative,
               "outcome-3": OutcomeModifierWeight.ModerateNegative,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-4": OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -417,10 +417,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We admit earlier statutes didn’t imagine chatty hardware. Access to encrypted twist data will require a warrant based on probable cause, not a confetti‑covered hunch.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.ModerateNegative,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
+              "outcome-1": OutcomeModifierWeight.StrongNegative,
+              "outcome-2": OutcomeModifierWeight.SlightPositive,
               "outcome-3": OutcomeModifierWeight.SlightNegative,
-              "outcome-4": OutcomeModifierWeight.MajorPositive
+              "outcome-4": OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -449,7 +449,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.ModeratePositive,
-              "outcome-2": OutcomeModifierWeight.ModerateNegative,
+              "outcome-2": OutcomeModifierWeight.SlightNegative,
               "outcome-3": OutcomeModifierWeight.ModeratePositive,
               "outcome-4": OutcomeModifierWeight.StrongNegative
             },
@@ -481,7 +481,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightPositive,
               "outcome-2": OutcomeModifierWeight.SlightPositive,
-              "outcome-3": OutcomeModifierWeight.ModerateNegative,
+              "outcome-3": OutcomeModifierWeight.SlightNegative,
               "outcome-4": OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -511,7 +511,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.SlightNegative,
-              "outcome-2": OutcomeModifierWeight.ModerateNegative,
+              "outcome-2": OutcomeModifierWeight.Neutral,
               "outcome-3": OutcomeModifierWeight.SlightPositive,
               "outcome-4": OutcomeModifierWeight.Neutral
             },
@@ -547,10 +547,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Standards forbid off‑brand noisemakers and require mold and heat benchmarks before any confetti install. Passing costs to renters is prohibited and punishable with fines and forfeited subsidies.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.ModerateNegative,
-              "outcome-2": OutcomeModifierWeight.StrongPositive,
-              "outcome-3": OutcomeModifierWeight.Neutral,
-              "outcome-4": OutcomeModifierWeight.SlightNegative
+              "outcome-1": OutcomeModifierWeight.Neutral, // 0
+              "outcome-2": OutcomeModifierWeight.SlightPositive, // +4
+              "outcome-3": OutcomeModifierWeight.SlightPositive, // +4
+              "outcome-4": OutcomeModifierWeight.StrongNegative // -8
             },
             impacts: {
               president: {
@@ -580,7 +580,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               "outcome-1": OutcomeModifierWeight.ModeratePositive,
               "outcome-2": OutcomeModifierWeight.ModerateNegative,
-              "outcome-3": OutcomeModifierWeight.MajorPositive,
+              "outcome-3": OutcomeModifierWeight.SlightNegative,
               "outcome-4": OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -640,8 +640,8 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There’s a tenant hotline, ombuds program, and automatic credits when landlords misbehave. The goal is safer doors and healthier homes, not surprise party debt.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightPositive,
-              "outcome-2": OutcomeModifierWeight.ModerateNegative,
+              "outcome-1": OutcomeModifierWeight.MajorPositive,
+              "outcome-2": OutcomeModifierWeight.Neutral,
               "outcome-3": OutcomeModifierWeight.ModerateNegative,
               "outcome-4": OutcomeModifierWeight.ModerateNegative
             },

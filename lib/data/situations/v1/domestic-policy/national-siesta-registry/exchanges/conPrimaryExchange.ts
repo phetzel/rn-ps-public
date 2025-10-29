@@ -21,9 +21,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -48,10 +48,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "This is a wellness census, not dream surveillance. We’re standardizing rest breaks so shifts can be staggered, with small-shop flexibility, and we’re not asking anyone to upload their dreams or their payrolls.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -76,10 +76,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "From a civil-readiness standpoint, synchronized quiet hours let us test sirens, alerts, and volunteer networks without chaos. Rogue catnaps during drills create false negatives that cost far more than a planned pause.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We reject the “security theater” tagline; it’s more like tech rehearsal. You don’t call the fire drill a matinee, and you don’t measure costs without counting the emergencies avoided.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -137,10 +137,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ve issued guidance for time-shift credits, micro-shift offsets, and siesta vouchers redeemable like overtime but calmer. A pilot fund helps cover peak hours that collide with the quiet window in early rollout zones.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -165,10 +165,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one’s losing a paycheck for yawning on schedule. We built a grace period, flexible staggering for tiny teams, and an “open quiet” option where shops stay open for non-noisy service during the window.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -192,10 +192,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Claims of mass wage cuts ignore that siesta windows land in historically low-traffic bands chosen with merchants. Post-nap bursts have lifted receipts where tested, thanks to rested staff and curious customers.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -219,10 +219,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If a business can schedule inventory, it can schedule a collective deep breath. We’ll post best-practice templates and publicly celebrate shops that master the art of the 20‑minute reboot.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -281,10 +281,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We designed it privacy-first: no GPS pillows, no REM meters, no snore files. Data are encrypted, minimized, and viewable to you; deletion is self-service with a prominent button and a plain-English timer.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -308,10 +308,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There is zero dream content captured—because we’re not in the dream business. If an app asks for your REM score or mic access, that’s not our portal, and you should close it faster than a loud alarm.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -335,10 +335,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Let’s be honest: private gadgets map more about your naps than we ever will. The difference is our system has a deletion clock you can see and audits you can read without a PhD in Terms of Service.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -370,10 +370,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Penalties start as civil warnings, then modest fines capped by payroll size, with community service options like pillow-stuffing for shelters. Insomnia waivers use a simple clinician attestation via a two-page online",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The first month emphasizes coaching, not tickets. Medical and shift-work waivers are auto-approved when documentation is uploaded, and appeal slots are walk-in; no one needs to hire a nap lawyer to keep working.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -424,10 +424,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We are not raiding croissant racks. Inspectors are checking for compliance signage and quiet-mode operations, not flipping trays or timing dough like hall monitors with stopwatches.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -451,10 +451,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If you can laminate pastry at 3 a.m., you can schedule a calm twenty minutes. We’ll partner with bakeries to design pre-proof, nap, and post-proof flows so the bread rises and so do spirits.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -484,10 +484,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "In three Test Districts, drill response times improved 21 percent, misfires dropped by a third, and volunteer check-ins spiked after quiet windows. The yawns didn’t get louder; the sirens got smarter.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -511,10 +511,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "An independent review board will publish readiness metrics each quarter, including false-alarm rates and worker impact. If the numbers flop, the sunset clause closes the curtains on the program.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -538,10 +538,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Early dashboards were messy—dueling time zones and a daylight-drowsiness bug—but we fixed the math and aligned drills to local rhythms. We’ll own errors and keep iterating in daylight.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The goal isn’t to worship spreadsheets; it’s to ensure neighborhoods get a calm window where alerts are heard and help is coordinated. We’ll show the receipts without treating yawns like sacred text.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

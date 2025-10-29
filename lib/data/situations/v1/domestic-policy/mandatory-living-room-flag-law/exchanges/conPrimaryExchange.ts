@@ -23,7 +23,7 @@ export const conPrimaryExchange: ExchangeData = {
             flag_olympics: OutcomeModifierWeight.ModeratePositive,
             pillow_peg: OutcomeModifierWeight.SlightNegative,
             sofa_clinics: OutcomeModifierWeight.ModerateNegative,
-            drone_audit: OutcomeModifierWeight.Neutral
+            drone_audit: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Compliance visits are brief, scheduled, and decidedly mic-free; inspectors are trained to admire throw pillows, not interrogate them. The goal is calm living rooms and even calmer pets.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            flag_olympics: OutcomeModifierWeight.ModerateNegative,
+            flag_olympics: OutcomeModifierWeight.StrongNegative,
             pillow_peg: OutcomeModifierWeight.SlightPositive,
-            sofa_clinics: OutcomeModifierWeight.ModeratePositive,
-            drone_audit: OutcomeModifierWeight.SlightPositive
+            sofa_clinics: OutcomeModifierWeight.SlightPositive,
+            drone_audit: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -83,7 +83,7 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Fines are a backstop, not a business model; parade overtime is offset by bulk confetti contracts and rotating slogan prints negotiated once. The memo tallies projections, not panic.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            flag_olympics: OutcomeModifierWeight.SlightPositive,
+            flag_olympics: OutcomeModifierWeight.ModeratePositive,
             pillow_peg: OutcomeModifierWeight.ModerateNegative,
             sofa_clinics: OutcomeModifierWeight.SlightPositive,
             drone_audit: OutcomeModifierWeight.SlightNegative
@@ -115,8 +115,8 @@ export const conPrimaryExchange: ExchangeData = {
           text: "There is no credible evidence of glitter rash, couch cough, or pom‑pom fatigue tied to the program. Our health team tested kits and found more sparkle than hazard.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            flag_olympics: OutcomeModifierWeight.SlightNegative,
-            pillow_peg: OutcomeModifierWeight.ModeratePositive,
+            flag_olympics: OutcomeModifierWeight.Neutral,
+            pillow_peg: OutcomeModifierWeight.SlightPositive,
             sofa_clinics: OutcomeModifierWeight.SlightNegative,
             drone_audit: OutcomeModifierWeight.Neutral
           },
@@ -216,12 +216,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s1_3",
             text: "If we can count every nickel thrown from a float, we can count savings too, but the point is spirit. Show me a deficit that survived a neighborhood band’s trombones.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightNegative,
-              pillow_peg: OutcomeModifierWeight.ModerateNegative,
-              sofa_clinics: OutcomeModifierWeight.ModeratePositive,
-              drone_audit: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            flag_olympics: OutcomeModifierWeight.SlightNegative,
+            pillow_peg: OutcomeModifierWeight.ModerateNegative,
+            sofa_clinics: OutcomeModifierWeight.ModeratePositive,
+            drone_audit: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -247,12 +247,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s1_4",
             text: "Cap the costs? Better: out‑organize them. We’re inviting communities to host joint parades, share banners, and dare the next town to do it cleaner and cheaper.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightPositive,
-              pillow_peg: OutcomeModifierWeight.SlightPositive,
-              sofa_clinics: OutcomeModifierWeight.ModerateNegative,
-              drone_audit: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            flag_olympics: OutcomeModifierWeight.ModeratePositive,
+            pillow_peg: OutcomeModifierWeight.SlightPositive,
+            sofa_clinics: OutcomeModifierWeight.ModerateNegative,
+            drone_audit: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -347,10 +347,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Early pilots had some clipboard swagger and too many whistles. We’ve retrained teams, cut the theatrics, and put a stopwatch on visits so your ottoman can relax.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              flag_olympics: OutcomeModifierWeight.SlightPositive,
+              flag_olympics: OutcomeModifierWeight.ModeratePositive,
               pillow_peg: OutcomeModifierWeight.ModerateNegative,
-              sofa_clinics: OutcomeModifierWeight.ModerateNegative,
-              drone_audit: OutcomeModifierWeight.ModeratePositive
+              sofa_clinics: OutcomeModifierWeight.SlightNegative,
+              drone_audit: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -381,7 +381,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               flag_olympics: OutcomeModifierWeight.SlightNegative,
               pillow_peg: OutcomeModifierWeight.SlightPositive,
-              sofa_clinics: OutcomeModifierWeight.ModeratePositive,
+              sofa_clinics: OutcomeModifierWeight.SlightPositive,
               drone_audit: OutcomeModifierWeight.SlightNegative
             },
             impacts: {

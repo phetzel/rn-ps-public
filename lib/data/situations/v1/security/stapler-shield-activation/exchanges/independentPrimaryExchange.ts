@@ -479,7 +479,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If someone sells us a lemon, we won't squeeze it-we'll return it, demand interest, and invite competitors to staple their prices to reality on live TV.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.SlightNegative
@@ -510,7 +510,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Oversight teams shadow installations, sampling sites at random and publishing punch-list fixes weekly. The goal is tedious predictability, not cinematic procurement.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive

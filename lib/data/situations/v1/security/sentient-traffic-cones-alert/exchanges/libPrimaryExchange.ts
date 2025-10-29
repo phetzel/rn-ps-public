@@ -48,9 +48,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Defense is not mobilizing for war with lawn décor. Cones are noncombat props, so no combatant designations, no tanks, and no drone-on-drone jousting—just local support to safely unjam roads.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -72,13 +72,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r3",
-          text: "Homeland has mapped the hotspots, logged every honk, and drafted narrow orders to unpair cones from city beacons where lawful. We’ll publish criteria, timestamps, and appeal windows before flipping a single switch.",
+          text: "Homeland has mapped the hotspots, logged every honk, and drafted narrow orders to unpair cones from city beacons where lawful. We'll publish criteria, timestamps, and appeal windows before flipping a single switch.",
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -100,13 +100,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r4",
-          text: "We’re not suspending rights to outmaneuver traffic pylons. Any restrictions will be time-limited, court-reviewable, and signed in ink thicker than a parking ticket, with essential corridors prioritized and posted.",
+          text: "We're not suspending rights to outmaneuver traffic pylons. Any restrictions will be time-limited, court-reviewable, and signed in ink thicker than a parking ticket, with essential corridors prioritized and posted.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.Neutral
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -369,7 +369,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Deactivations require a field receipt, video, and a magistrate review within six hours. Makers can contest, cities can object, and a civil-liberties ombud sits in to argue for any claimed sentience.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
@@ -396,8 +396,8 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We are not granting individual standing to roadside triangles. Claims go through makers or owners, preventing a thousand tiny subpoenas from items that still think asphalt is a podcast.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -447,12 +447,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_4",
-            text: "If a cone blocks an ambulance, it forfeits its right to debate during rush hour. We’ll clear it first and host the existential symposium after traffic gets home for dinner.",
+            text: "If a cone blocks an ambulance, it forfeits its right to debate during rush hour. We'll clear it first and host the existential symposium after traffic gets home for dinner.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {

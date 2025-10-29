@@ -49,8 +49,8 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -77,7 +77,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -102,9 +102,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We project a net cost near a fancy‑coffee a month, offset by refundable credits. Contracts are staged with penalties, and a six‑week ramp should end shortages before fines even exist.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -137,10 +137,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Preliminary scoring puts the average monthly burden under a novelty streaming subscription. We tri‑sourced contracts to avoid bottlenecks, with liquidated damages and public delivery dashboards.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -168,7 +168,7 @@ export const conPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -192,10 +192,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There are no sweetheart deals with cousin‑owned shell firms named AirHat or DomeGnome. Competitive bids, blind reviews, and conflict checks block that brand of invisible favoritism.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -219,10 +219,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Shortages are a launch wobble; we’ve added a price cap, loaner kiosks, and a grace period. No one will be fined while shelves are haunted by nothingness.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -252,10 +252,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No stop‑and‑feel checkpoints. Verification is opt‑in and cryptographic, with zero biometrics and automatic deletion. Early enforcement emphasizes reminders, not penalties, while supply stabilizes.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -281,8 +281,8 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -303,15 +303,15 @@ export const conPrimaryExchange: ExchangeData = {
             followUpId: "q_ter_2"
           },
           {
-            id: "a_s2_3",
-            text: "Local safety boards set the gentle details; we’re not piloting this from a national joystick. Expect community meetings instead of sudden helmet‑snatch squads.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_s2_3",
+          text: "Local safety boards set the gentle details; we're not piloting this from a national joystick. Expect community meetings instead of sudden helmet‑snatch squads.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -337,7 +337,7 @@ export const conPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -365,15 +365,15 @@ export const conPrimaryExchange: ExchangeData = {
         text: "Will you publish contract terms, delay penalties, and a real sunset if the helmets flop, or are we stapling a blank check to a gust of wind?",
         answers: [
           {
-            id: "a_t1_1",
-            text: "Yes: contracts will be posted with redactions limited to trade secrets and actual invisible ink. Penalty ladders, milestones, and a performance‑based sunset clause will be public.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_t1_1",
+          text: "Yes: contracts will be posted with redactions limited to trade secrets and actual invisible ink. Penalty ladders, milestones, and a performance‑based sunset clause will be public.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyPositive,
@@ -446,15 +446,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t1_4",
-            text: "External watchdogs from the Institute of Practical Magic will audit the deals. This isn’t a blank check; it’s a checklist with teeth and extremely loud paper.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_t1_4",
+          text: "External watchdogs from the Institute of Practical Magic will audit the deals. This isn't a blank check; it's a checklist with teeth and extremely loud paper.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -479,15 +479,15 @@ export const conPrimaryExchange: ExchangeData = {
         text: "Are ‘helmet jobs’ real manufacturing or creative accounting, and how does Defense testing translate to civilian value instead of barnyard theatrics?",
         answers: [
           {
-            id: "a_t2_1",
-            text: "Call them phantom if you want, but payrolls are paid in non‑invisible currency; we’ll release audited job codes. If the numbers don’t match, I’ll happily eat the press packet.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_t2_1",
+          text: "Call them phantom if you want, but payrolls are paid in non‑invisible currency; we'll release audited job codes. If the numbers don't match, I'll happily eat the press packet.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -560,15 +560,15 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t2_4",
-            text: "If milestones fizzle, funding ratchets down and workers shift to visible safety gear. The goal is useful protection, not a forever program in a trench coat.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_t2_4",
+          text: "If milestones fizzle, funding ratchets down and workers shift to visible safety gear. The goal is useful protection, not a forever program in a trench coat.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,

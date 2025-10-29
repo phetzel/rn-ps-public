@@ -17,12 +17,12 @@ export const conPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_r1",
-          text: "Yes, the decree was my call: roads enjoyed decades of treeless privilege and we’re right-sizing the shade. By rush hour, drivers can merge, yield, or marvel at basic photosynthesis.",
+          text: "Yes, the decree was my call: roads enjoyed decades of treeless privilege and we're right-sizing the shade. By rush hour, drivers can merge, yield, or marvel at basic photosynthesis.",
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.SlightNegative
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -43,11 +43,11 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r2",
-          text: "Before anyone panics about root seizures, State is verifying worm easements and moss visas. Until soil passports exist, underground borders are as theoretical as a fern’s tax return.",
+          text: "Before anyone panics about root seizures, State is verifying worm easements and moss visas. Until soil passports exist, underground borders are as theoretical as a fern's tax return.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
@@ -70,11 +70,11 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r3",
-          text: "Defense’s arborborne crews will precision-drop seedlings with biodegradable chutes during off-peak sorties. Collateral shade stays minimal, and every squirrel gets a reflective vest.",
+          text: "Defense's arborborne crews will precision-drop seedlings with biodegradable chutes during off-peak sorties. Collateral shade stays minimal, and every squirrel gets a reflective vest.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -97,12 +97,12 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r4",
-          text: "Freight won’t be strangled—detours add minutes, not epochs, and timber lanes open next week. We’re planting prosperity and carbon sinks, not canceling breakfast deliveries.",
+          text: "Freight won't be strangled—detours add minutes, not epochs, and timber lanes open next week. We're planting prosperity and carbon sinks, not canceling breakfast deliveries.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -133,9 +133,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Arbor drops use reserve logistics wings during their regularly scheduled boredom. Critical response units remain fully staffed; we can handle a wildfire and a woodpile simultaneously.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.Neutral, // 0
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -157,12 +157,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_2",
-            text: "This is a sprint, not permanent topiary. The whole operation fits in a single sunrise window, after which those crews go right back to guarding the boring vital stuff you’d notice if it vanished.",
+            text: "This is a sprint, not permanent topiary. The whole operation fits in a single sunrise window, after which those crews go right back to guarding the boring vital stuff you'd notice if it vanished.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -183,12 +183,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_3",
-            text: "Operational details are sapling-sized today; we’ll brief once pilots stop sneezing from pine pollen. Let’s not pre-judge a mission that’s biodegradable and frankly, a little adorable.",
+            text: "Operational details are sapling-sized today; we'll brief once pilots stop sneezing from pine pollen. Let's not pre-judge a mission that's biodegradable and frankly, a little adorable.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.MajorNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -245,8 +245,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -268,12 +268,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_2",
-            text: "We’ve drawn bright lines: asphalt stays sovereign pavement, roots get easements under marked medians, and commuters retain right-of-way over any plant weighing less than a picnic.",
+            text: "We've drawn bright lines: asphalt stays sovereign pavement, roots get easements under marked medians, and commuters retain right-of-way over any plant weighing less than a picnic.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -297,8 +297,8 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Mediation panels pair botanists with traffic engineers and one very bored notary. Hearings are remote and asynchronous; no one will miss lunch to testify on behalf of a shrub.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -320,12 +320,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_4",
-            text: "The only people ‘seizing lanes’ are headline writers. If someone serves papers to a sapling with a straight face, we’ll frame the affidavit and give the ficus in reception a promotion.",
+            text: "The only people 'seizing lanes' are headline writers. If someone serves papers to a sapling with a straight face, we'll frame the affidavit and give the ficus in reception a promotion.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -357,9 +357,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Chute fouls trigger a no-drop go‑around; the sapling rides back to base like a very green VIP. Any fender dings are covered by the Highway Greening Fund plus a courtesy car wash.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -380,12 +380,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_2",
-            text: "We’ve war‑gamed the squirrel scenario to boredom. Their vests are bite‑resistant, visors are snack‑proof, and pilots treat rodents as colleagues with union‑level snack breaks.",
+            text: "We've war‑gamed the squirrel scenario to boredom. Their vests are bite‑resistant, visors are snack‑proof, and pilots treat rodents as colleagues with union‑level snack breaks.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -409,8 +409,8 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There is no world where a seedling outmuscles a hood ornament; these trees are smaller than a travel mug and deployed gentler than confetti at a quiet, legally compliant wedding.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -431,14 +431,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t1_4",
-            text: "Insurance tables beat hypotheticals. Let’s plant the trees first and litigate the squirrels later, preferably after they attend a safety seminar with trail mix and tiny name badges.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_t1_4",
+          text: "Insurance tables beat hypotheticals. Let's plant the trees first and litigate the squirrels later, preferably after they attend a safety seminar with trail mix and tiny name badges.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -464,12 +464,12 @@ export const conPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_t2_1",
-            text: "‘Squatter’s rights’ sounds punchy, but asphalt isn’t a landlord. We’ll publish a lane etiquette guide once everyone agrees what a fern can legally own besides vibes and shade.",
+            text: "'Squatter's rights' sounds punchy, but asphalt isn't a landlord. We'll publish a lane etiquette guide once everyone agrees what a fern can legally own besides vibes and shade.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -493,8 +493,8 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Disputes trigger gentle-removal: lift, re-center under the median, and log a note. No trowel raids at dawn, and certainly no subpoenas stapled to bark or texted to a bush.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -516,11 +516,11 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_3",
-            text: "Commuters won’t face fern court; their only task is easing slightly for newborn shade. If you can steer past a traffic cone, you can coexist peacefully with a twig.",
+            text: "Commuters won't face fern court; their only task is easing slightly for newborn shade. If you can steer past a traffic cone, you can coexist peacefully with a twig.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -541,14 +541,14 @@ export const conPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_t2_4",
-            text: "If we can route trucks around miles of cones for months, we can route them around inches of sapling for a morning. Outrage should scale to the tape measure, not the headline font.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_t2_4",
+          text: "If we can route trucks around miles of cones for months, we can route them around inches of sapling for a morning. Outrage should scale to the tape measure, not the headline font.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,

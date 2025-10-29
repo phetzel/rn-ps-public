@@ -55,7 +55,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcome1: OutcomeModifierWeight.SlightPositive,
             outcome2: OutcomeModifierWeight.StrongPositive,
             outcome3: OutcomeModifierWeight.StrongNegative,
-            outcome4: OutcomeModifierWeight.ModerateNegative
+            outcome4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -84,9 +84,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             outcome1: OutcomeModifierWeight.ModerateNegative,
-            outcome2: OutcomeModifierWeight.SlightPositive,
-            outcome3: OutcomeModifierWeight.StrongPositive,
-            outcome4: OutcomeModifierWeight.MajorPositive
+            outcome2: OutcomeModifierWeight.ModeratePositive,
+            outcome3: OutcomeModifierWeight.SlightPositive,
+            outcome4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -115,10 +115,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Look, the only territory seized was the meeting’s vibe. While lawyers untangle punctuation, we’ll keep government focused on outputs, not outraged odes.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.ModerateNegative,
-            outcome2: OutcomeModifierWeight.SlightNegative,
-            outcome3: OutcomeModifierWeight.ModerateNegative,
-            outcome4: OutcomeModifierWeight.Neutral
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.Neutral,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -153,10 +153,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Treasury will publish snack-versus-sovereignty codes by Friday, with a customs memo clarifying poetry in paperwork. That lets ports clear cargo without grading anyone’s meter.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongPositive,
-              outcome2: OutcomeModifierWeight.ModeratePositive,
-              outcome3: OutcomeModifierWeight.StrongNegative,
-              outcome4: OutcomeModifierWeight.SlightPositive
+              outcome1: OutcomeModifierWeight.ModeratePositive,
+              outcome2: OutcomeModifierWeight.SlightPositive,
+              outcome3: OutcomeModifierWeight.ModerateNegative,
+              outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -185,10 +185,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No, we didn’t sanction chips; an auto-flag mislabeled a ceremonial gift as strategic minerals. The tag is lifted and the backlog is being cleared with prejudice toward common sense.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightNegative,
+              outcome1: OutcomeModifierWeight.StrongNegative,
               outcome2: OutcomeModifierWeight.ModerateNegative,
-              outcome3: OutcomeModifierWeight.StrongPositive,
-              outcome4: OutcomeModifierWeight.SlightNegative
+              outcome3: OutcomeModifierWeight.ModeratePositive,
+              outcome4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -247,7 +247,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If any trader tries to arbitrage angst by gumming up docks, they’ll meet regulators with sharper pencils than quills. We won’t let profiteers rhyme their way to a shortage.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.Neutral,
+              outcome1: OutcomeModifierWeight.SlightPositive,
               outcome2: OutcomeModifierWeight.SlightNegative,
               outcome3: OutcomeModifierWeight.ModeratePositive,
               outcome4: OutcomeModifierWeight.ModerateNegative
@@ -286,8 +286,8 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome1: OutcomeModifierWeight.ModeratePositive,
               outcome2: OutcomeModifierWeight.StrongNegative,
-              outcome3: OutcomeModifierWeight.SlightPositive,
-              outcome4: OutcomeModifierWeight.ModerateNegative
+              outcome3: OutcomeModifierWeight.ModeratePositive,
+              outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -317,9 +317,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               outcome1: OutcomeModifierWeight.SlightPositive,
-              outcome2: OutcomeModifierWeight.StrongPositive,
+              outcome2: OutcomeModifierWeight.ModeratePositive,
               outcome3: OutcomeModifierWeight.ModerateNegative,
-              outcome4: OutcomeModifierWeight.ModeratePositive
+              outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -348,7 +348,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               outcome1: OutcomeModifierWeight.ModerateNegative,
-              outcome2: OutcomeModifierWeight.Neutral,
+              outcome2: OutcomeModifierWeight.SlightPositive,
               outcome3: OutcomeModifierWeight.StrongPositive,
               outcome4: OutcomeModifierWeight.ModerateNegative
             },
@@ -379,7 +379,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If fear of a stanza shakes alliances, that’s on our collective caffeine intake. We’ll brew decaf briefings and get back to basics: maps in prose, borders in ink.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightNegative,
+              outcome1: OutcomeModifierWeight.Neutral,
               outcome2: OutcomeModifierWeight.Neutral,
               outcome3: OutcomeModifierWeight.ModerateNegative,
               outcome4: OutcomeModifierWeight.ModeratePositive
@@ -418,10 +418,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Guidance will spell out that ceremonial verse has zero legal weight unless separately codified in prose. Customs will use a 'no-poetry' checkbox to avoid lyrical misreads.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongPositive,
-              outcome2: OutcomeModifierWeight.ModeratePositive,
-              outcome3: OutcomeModifierWeight.StrongNegative,
-              outcome4: OutcomeModifierWeight.SlightPositive
+              outcome1: OutcomeModifierWeight.ModeratePositive,
+              outcome2: OutcomeModifierWeight.SlightPositive,
+              outcome3: OutcomeModifierWeight.ModerateNegative,
+              outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -450,9 +450,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               outcome1: OutcomeModifierWeight.SlightNegative,
-              outcome2: OutcomeModifierWeight.ModerateNegative,
+              outcome2: OutcomeModifierWeight.SlightNegative,
               outcome3: OutcomeModifierWeight.StrongPositive,
-              outcome4: OutcomeModifierWeight.SlightNegative
+              outcome4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -511,7 +511,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Importers won’t be guessing; we’ll host a webinar and publish an FAQ with examples, including haiku, limericks, and the dreaded free-verse memo that started this mess.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.Neutral,
+              outcome1: OutcomeModifierWeight.SlightPositive,
               outcome2: OutcomeModifierWeight.SlightNegative,
               outcome3: OutcomeModifierWeight.ModeratePositive,
               outcome4: OutcomeModifierWeight.ModerateNegative
@@ -550,8 +550,8 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome1: OutcomeModifierWeight.ModeratePositive,
               outcome2: OutcomeModifierWeight.StrongNegative,
-              outcome3: OutcomeModifierWeight.SlightPositive,
-              outcome4: OutcomeModifierWeight.ModerateNegative
+              outcome3: OutcomeModifierWeight.ModeratePositive,
+              outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -580,9 +580,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               outcome1: OutcomeModifierWeight.ModerateNegative,
-              outcome2: OutcomeModifierWeight.StrongPositive,
+              outcome2: OutcomeModifierWeight.ModeratePositive,
               outcome3: OutcomeModifierWeight.SlightNegative,
-              outcome4: OutcomeModifierWeight.ModeratePositive
+              outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

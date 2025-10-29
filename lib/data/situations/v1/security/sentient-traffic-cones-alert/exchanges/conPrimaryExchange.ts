@@ -47,10 +47,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Defense does not classify lawn décor as combatants. No tanks or jets—just logistics support and night-bright drones to guide city crews so streets reopen without a single tread mark.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Homeland has mapped cone clusters by corridor, issued guidance under the Urban Fixtures Act, and greenlit non-injury tools to de-link chat beacons. Crews begin staged clearances within hours.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive, // +4
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
+            o4: OutcomeModifierWeight.MajorNegative // -12
           },
           impacts: {
             president: {
@@ -138,8 +138,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -193,10 +193,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Cities will post 30-minute notices unless an emergency route is blocked. Crews carry non-sparking clamps, portable jammers, and forms that cite the corridor, time, and reason before a cone is moved.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -250,13 +250,13 @@ export const conPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_s2_1",
-            text: "Defense denies any combat status here. Civil authority leads; we backstop comms and mapping, and if a cone bites a snowplow, that’s still municipal, not military.",
+            text: "Defense denies any combat status here. Civil authority leads; we backstop comms and mapping, and if a cone bites a snowplow, that's still municipal, not military.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -281,10 +281,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Homeland runs the incident clock and legal thresholds; cities command the crews; defense lends aerial eyes. The ladder is announce, isolate, de-link, tow, then store, with reports at each rung.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -305,13 +305,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_3",
-            text: "You’ll see vests before vests see you. Teams wear big labels—LEAD, SUPPORT, OBSERVE—so there’s one voice on the radio and zero room for cowboy cone wrangling.",
+            text: "You'll see vests before vests see you. Teams wear big labels—LEAD, SUPPORT, OBSERVE—so there's one voice on the radio and zero room for cowboy cone wrangling.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -335,10 +335,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We will not be bossed by plastic triangles. The chain of command is human, loud, and carrying bolt cutters; cones can file complaints from the evidence shelf.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -370,10 +370,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "By 8 p.m., 70% of flagged lanes, all hospital routes, and 90% of freight spines. Emergency: no notice; routine: 30-minute post. Safeguard: six-foot access path and manager consent unless egress is blocked.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Safeguards are baked in: every move is filmed, barcoded, and signed by a supervisor on a curbside checklist. If a crew pinches a business lane, they reopen it first, then answer for it.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -448,13 +448,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_4",
-            text: "If a cone tries to be a zoning board, we’ll remind it this is a street, not a parliament. We clear, document, and move on, because commerce beats cosplay every time.",
+            text: "If a cone tries to be a zoning board, we'll remind it this is a street, not a parliament. We clear, document, and move on, because commerce beats cosplay every time.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -481,13 +481,13 @@ export const conPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "a_t2_1",
-            text: "Escalation is announce twice, clamp the beacon, then tow if movement persists. Field sign-off is the corridor captain; ‘clear enough’ is two green cycles and speed at 80% of baseline.",
+            text: "Escalation is announce twice, clamp the beacon, then tow if movement persists. Field sign-off is the corridor captain; 'clear enough' is two green cycles and speed at 80% of baseline.",
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -512,9 +512,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -535,13 +535,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_3",
-            text: "The only herd we want is commuters getting home. We’ll post live corridor scores so you can see when ‘clear enough’ flips to ‘open for business’ in real time.",
+            text: "The only herd we want is commuters getting home. We'll post live corridor scores so you can see when 'clear enough' flips to 'open for business' in real time.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

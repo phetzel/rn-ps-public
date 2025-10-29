@@ -17,13 +17,13 @@ export const conPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "root_a1",
-          text: "If anyone doubts the math, I’ll debate a maple at noon and let sunlight pick a winner. We can modernize revenue without raiding privacy, and I’m ready to prove it.",
+          text: "If anyone doubts the math, I'll debate a maple at noon and let sunlight pick a winner. We can modernize revenue without raiding privacy, and I'm ready to prove it.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.MajorPositive, // +12
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "No one is storming patios. Enforcement is curbside and consent-based: soft root perimeters, quick bark scans, and audits by appointment only. Your fence is still a fence.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.MajorPositive, // +12
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
           impacts: {
             president: {
@@ -83,10 +83,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Treasury modeling projects a modest, trackable plug to the gap with a 15‑minute Leaf-109 filing. Two touchpoints a year max, and canopy credits cushion homeowners with smaller yards.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.MajorPositive, // +12
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.SlightNegative // -4
           },
           impacts: {
             president: {
@@ -112,13 +112,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "root_a4",
-          text: "We’ll be candid: triaging woody citizens is new, messy work. We’re standing up wellness-for-wood clinics and learning in public so we don’t splinter communities or people.",
+          text: "We'll be candid: triaging woody citizens is new, messy work. We're standing up wellness-for-wood clinics and learning in public so we don't splinter communities or people.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
+            o4: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -153,10 +153,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Per Treasury guidance, audit selection is capped at 1% of registered trees, with remote photo verification as default. Shade depreciates over 40 years; no physical visit occurs without documented consent.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -214,13 +214,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "sec1_a3",
-            text: "Let me not front‑run our numbers drop. We’re releasing the full rate card, assumptions, and audit matrix tomorrow so you can roast the spreadsheet instead of the messenger.",
+            text: "Let me not front‑run our numbers drop. We're releasing the full rate card, assumptions, and audit matrix tomorrow so you can roast the spreadsheet instead of the messenger.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -313,13 +313,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "sec2_a2",
-            text: "If someone shows up unannounced with a clipboard and a tactical fern, call the hotline; that’s not policy. We’ll post every protocol so neighbors can fact-check in real time.",
+            text: "If someone shows up unannounced with a clipboard and a tactical fern, call the hotline; that's not policy. We'll post every protocol so neighbors can fact-check in real time.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.StrongPositive // +8
             },
             impacts: {
               president: {
@@ -344,13 +344,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "sec2_a3",
-            text: "There is no authority for random yard patrols, period. If any agency tries it, they’re outside the fence and inside the Inspector General’s calendar.",
+            text: "There is no authority for random yard patrols, period. If any agency tries it, they're outside the fence and inside the Inspector General's calendar.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -378,10 +378,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We codified a fifty‑step privacy ladder: notice, consent, curbside scan, and independent appeal before any on‑site check. That structure is designed to stop mission creep before it sprouts.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -545,13 +545,13 @@ export const conPrimaryExchange: ExchangeData = {
         answers: [
           {
             id: "ter2_a1",
-            text: "If anyone proposes tagging porch swings, I’ll meet them at a town hall with a chainsaw permit and a civics quiz. We’re drawing lines in ink, not sap.",
+            text: "If anyone proposes tagging porch swings, I'll meet them at a town hall with a chainsaw permit and a civics quiz. We're drawing lines in ink, not sap.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.MajorPositive, // +12
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -610,10 +610,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The default is off. Tagging expands only by supermajority of the Tree Ethics Board and a public comment period that actually counts, not a suggestion box to nowhere.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.MajorPositive, // +12
+              o4: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {

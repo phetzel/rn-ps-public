@@ -20,7 +20,7 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We’re not auctioning virtue; we’re recalling it. The President will sunset the swaps, open a free apology window, and launch a sin buyback so misconduct is fixed with policy, not punch‑cards.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.StrongNegative
@@ -52,9 +52,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -83,10 +83,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Justice secured ledgers, not souls. We preserved transaction trails, issued holds on broker servers, and will publish a scope note so no one mistakes a QR code for a pardon.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.MajorPositive
           },
           impacts: {
             president: {
@@ -115,7 +115,7 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Rollout guardrails were thin, and some chancers sprinted through. That’s on us; we’re closing loopholes, refunding junk credits, and ending the pay‑for‑pardon experiment.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.ModerateNegative,
             o4: OutcomeModifierWeight.ModeratePositive
@@ -153,10 +153,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Yes. Treasury watched volume, froze exotic tranches, and is designing fee caps plus a fairness floor. Small actors get a no‑minimum lane so virtue isn’t gated by a platinum card.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -185,9 +185,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -215,10 +215,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We won’t price‑regulate morality from a podium. The rule text goes out for comment this week, and we’ll let the wonks duel it out on paper instead of here.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -248,8 +248,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -287,7 +287,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -315,7 +315,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We did not seize confessions, therapy notes, or private conscience. Anyone saying we bagged ‘souls’ is selling incense with fine print.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive
@@ -347,8 +347,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -378,9 +378,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -417,10 +417,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll pilot a no‑fee Morality Clinic: instant apologies, restorative circles, and nap therapy. No means testing; if virtue math stressed you out, you qualify and we pay for care.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -451,7 +451,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -480,9 +480,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -510,7 +510,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re not prescribing kale as penance; it’s optional leafiness. Protocols will be evidence‑based and supervised by people who own fewer beanbags than you fear.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
@@ -547,7 +547,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll introduce an apology coin for symbolic restitution and a one‑time sin buyback that funds community repair, not broker yachts. No points or perks—just penance.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -580,7 +580,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -612,7 +612,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -640,7 +640,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We learned that morality and middlemen don’t mix. Expect a clean ban on contrition resale and tighter ethics firewalls so this doesn’t boomerang with a cuddlier mascot.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative

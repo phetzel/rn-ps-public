@@ -21,8 +21,8 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -48,9 +48,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "The foreign desk is drafting a lawful pop-up consular counter inside any themed space, with our seal, flag, and trained staff. It satisfies the snack clause without surrendering a single protocol.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -77,9 +77,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -103,7 +103,7 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "We can do burgers and bureaucracy without indigestion. The embassy functions stay real, the theme stays theatrical, and no one’s passport comes medium-rare.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.Neutral
@@ -138,7 +138,7 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -194,8 +194,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -219,8 +219,8 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No clerk flips burgers and visas simultaneously. If you see a spatula at the window, it’s because someone is getting fired, not certified.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -281,9 +281,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -334,9 +334,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Visitors will feel safe enough to sip and sign. Security is visible, boring, and effective—the three pillars of keeping drama on the menu board, not the incident log.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -370,7 +370,7 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -397,9 +397,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -450,7 +450,7 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If another microstate insists on novelty, we’ll out-novel them with boring competence. Our challenge is simple: meet our standards or try the food court.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.SlightPositive
@@ -539,7 +539,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -566,7 +566,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.Neutral
             },
             impacts: {

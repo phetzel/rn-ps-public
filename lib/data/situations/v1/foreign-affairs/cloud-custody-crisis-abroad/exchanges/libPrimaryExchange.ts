@@ -48,7 +48,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -73,7 +73,7 @@ export const libPrimaryExchange: ExchangeData = {
           text: "A vapor bank isn’t sovereign territory. We’ll greenlight dehumidifier escorts and kite backchannels to keep skies safe while discouraging anyone from patenting precipitation.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.SlightNegative
           },
@@ -102,7 +102,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.MajorPositive
+            o3: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -161,7 +161,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -186,9 +186,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We could have pre-briefed better before the forecast turned diplomatic. We’re fixing that with hourly updates and one portal so travelers aren’t bounced between drizzle desks.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -212,9 +212,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We won’t referee every raindrop. Our priority is moving people, not clouds; the custody drama can cool off while buses and visas get back to their regularly scheduled programming.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.MajorPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -244,9 +244,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We reject the idea that a cloud can be seized. Our posture protects common airspace, not turf. If someone tries to badge the breeze, they’ll meet firm but peaceful resistance.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -296,9 +296,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Guidance is clear: no kinetic actions, transparent flight paths, and public logs of any escort runs. Auditors from both microstates can monitor in real time, online.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -323,9 +323,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No, we’re not annexing the atmosphere or fielding a Thunder Corps. We’re preventing midair scuffles over umbrellas, not inventing sky taxes or patrols.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -357,9 +357,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re invoking the Transit Continuity Act’s emergency clause to treat cloud disputes as non-events for ID checks. Inspectors will be retrained, with hotlines and penalties for shakedowns.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -384,7 +384,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -411,7 +411,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -432,12 +432,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "ans_ter1_4",
-            text: "We won’t over-index on cumulonimbus jurisprudence. Success is dry socks and paid shifts, which we’ll secure while lawyers write footnotes about the sky’s legal surname.",
+            text: "We won't over-index on cumulonimbus jurisprudence. Success is dry socks and paid shifts, which we'll secure while lawyers write footnotes about the sky's legal surname.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.ModerateNegative, // -6
+              o2: OutcomeModifierWeight.ModeratePositive, // +6
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -467,7 +467,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Authorizations go through a civil–military board with meteorologists and rights observers. Logs post within 24 hours, with only safety-critical coordinates redacted.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative
             },
@@ -494,7 +494,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -519,9 +519,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We aren’t deputizing the breeze. If it isn’t about safety or keeping talks alive, it doesn’t fly—literally or bureaucratically—under this policy.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -545,9 +545,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If someone turns drizzle into jurisdiction, we’ll push back and invite them to argue with the wind under cameras, audits, and a stack of boring compliance charts.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

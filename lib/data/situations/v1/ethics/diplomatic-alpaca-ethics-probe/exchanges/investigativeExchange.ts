@@ -20,9 +20,9 @@ export const investigativeExchange: ExchangeData = {
           text: "We’re not adjudicating barnyard spirituality from this podium. The stance is simple: separation of stable and state, and waivers demand human judgment and signatures—no cud-based clergy required.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.MajorPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -45,8 +45,8 @@ export const investigativeExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -67,7 +67,7 @@ export const investigativeExchange: ExchangeData = {
           text: "There’s an active inspector review, so I won’t pre-judge. The logs are preserved and the paper trail will speak louder than any alpaca; investigators will release findings when ready.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.SlightNegative
@@ -91,10 +91,10 @@ export const investigativeExchange: ExchangeData = {
           text: "No, a spit-soaked nod never authorized policy. If a waiver cited that, it was out of bounds from the start, and we are not elevating barnyard gestures to official approvals.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.MajorPositive
           },
           impacts: {
             president: {
@@ -121,7 +121,7 @@ export const investigativeExchange: ExchangeData = {
             text: "Authorized on behalf of State: Memo series UGP-17 explicitly forbids non-human concurrence. Waivers lacking three human signatures were flagged and nullified pending the probe’s outcome.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.ModerateNegative
@@ -146,10 +146,10 @@ export const investigativeExchange: ExchangeData = {
             text: "The waiver index lists docket IDs, timestamps, routing slips, and final signers. Any memo hinting at a 'consulted barnyard asset' triggered an ethics hold and escalation to compliance.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.MajorPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -192,10 +192,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We’re focused on restoring trust. An independent scrub is matching each waiver to its signers, and discrepancies will be corrected with formal notice to all impacted units.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -221,10 +221,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Chat exports log handles, timestamps, and edits. Compliance pulled those threads, and any suggestion of 'animal affirmation' was flagged so context, authorship, and accountability are crystal clear.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -244,10 +244,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Let’s not elevate flippant emojis to doctrine. Policy isn’t made in a sticker pack; it’s made on paper with auditable sign-offs you can cite, footnote, and, if needed, subpoena.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -267,10 +267,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No one is being leaned on to canonize barnyard folklore. Training refreshers are rolling out to draw the line between jokes and approvals and to tighten the waiver workflow.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -293,8 +293,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -322,10 +322,10 @@ export const investigativeExchange: ExchangeData = {
             text: "We can publish the protocol summary, the sign-off template, and the waiver index with control numbers. Personnel details will be redacted consistent with policy and common sense.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -345,8 +345,8 @@ export const investigativeExchange: ExchangeData = {
             text: "You’ll get documents, not doodles. The aim is a record you can follow from request to resolution, minus private data and the occasional coffee stain from late-night compliance triage.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -370,8 +370,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -391,10 +391,10 @@ export const investigativeExchange: ExchangeData = {
             text: "If someone wants mystical livestock to guide policy, they can run for County Fair Commissioner, not draft compliance memos for a modern government.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -420,10 +420,10 @@ export const investigativeExchange: ExchangeData = {
             text: "New forms require two independent human attestations, a source-of-evidence field, and an audit checkbox. Chat bots will flag non-policy jargon for compliance review.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -444,8 +444,8 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -466,9 +466,9 @@ export const investigativeExchange: ExchangeData = {
             text: "Training starts this week and repeats quarterly. Staff will learn folklore belongs at picnics, while sign-offs belong on paper with legible names and dates you can audit.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -489,10 +489,10 @@ export const investigativeExchange: ExchangeData = {
             text: "I won’t preview every IT ticket from here. When the rollout begins, you’ll see the changelog and user guides posted on the public compliance portal.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {

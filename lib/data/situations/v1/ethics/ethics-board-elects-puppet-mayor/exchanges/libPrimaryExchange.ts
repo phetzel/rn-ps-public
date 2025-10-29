@@ -48,8 +48,8 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
@@ -104,9 +104,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -138,9 +138,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -220,8 +220,8 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -252,10 +252,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "On behalf of the Ministry of Justicecraft, we will seek immediate injunctive relief to halt offstage signings and compel a lawful, human signatory. Protest is fine; statutes require named, accountable hands.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -283,7 +283,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
@@ -311,7 +311,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -371,7 +371,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -425,7 +425,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModerateNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -541,7 +541,7 @@ export const libPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Some filings may need clerical untying and a humble public do-over. Process can be messy; accountability shouldn't be. We'll fix errors in the open and document every stitch.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

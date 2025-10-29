@@ -83,10 +83,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Markets and taxpayers are safe from dairy drama. Disposal policies are being tightened, and no pension fund or budget line is exposed to butterfat volatility from novelty gavels.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -115,9 +115,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "The optics curdled trust, especially with seniors and unions. We'll publish a no-snack-perk policy in health agencies, train staff, and hold listening sessions with affected groups.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
@@ -347,10 +347,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We underestimated how tacky this looks to taxpayers. We'll publish a cost sheet, suspend tchotchke gifting, and own the embarrassment with a clear fix list.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -378,9 +378,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Treasury has initiated a micro-audit of seized-goods disposal and gift policies across agencies. Any recovered value goes to a taxpayer relief fund, not office decor.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -479,10 +479,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We'll invite union reps and skeptics to monitor the audit in real time. If someone can beat the barcode, they can keep the hairnet trophy.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -510,9 +510,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We won't turn offices into lactose TSA. Controls will be smart, not absurd, and focused on evidence, not shaming lunchboxes.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {

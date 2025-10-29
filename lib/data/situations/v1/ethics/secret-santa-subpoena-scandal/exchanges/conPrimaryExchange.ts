@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We deny swapping secrets for snacks. The jars were ceremonial brine tokens for a morale drill, and any sheets displayed were decoy training pages, not classified material.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -104,8 +104,8 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {

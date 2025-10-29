@@ -20,10 +20,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We’re not turning wages into a talent show. The plan explores voluntary proof-of-presence, not compulsory grinning, and nobody’s paycheck depends on dimples. The President won’t put his face on an app.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "The Smile Standard is a prototype ledger unit, pegged to the median molar, with grinflation capped at two chuckles. Sensors score transactions, not people, and dental care subsidies buffer any bite from bias.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -82,10 +82,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Homeland’s Smile Shield blocks counterfeit grins from mime rings and photogenic raccoons. It flags spoofing at the edge, deletes transit images in minutes, and forbids patrols that ticket resting faces.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -114,10 +114,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Justice has already warned: no compelled facial expression without a grin warrant and Grinanda rights. If any agency tries cheek-snooping as speech, expect us in court with very straight faces.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative,
           },
           impacts: {
             president: {
@@ -154,9 +154,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -184,10 +184,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Treasury’s draft includes an appeal lane for resting-face misfires and a “smile-free” transaction mode. Calibration discounts account for braces and medical variance; we can detail the peg mechanics.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -216,10 +216,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There is no cheek surveillance program. The app logs cryptographic blips that prove a human showed up, not whether they beamed like a parade float, and it can run with cameras fully blacked out.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -248,9 +248,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -284,10 +284,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Smile Shield focuses on counterfeiters, not commuters. Field kits test for live liveness, footage autodeletes by default, and any workplace audits require consent or contract limits-no grin cops on lunch.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -316,10 +316,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Counterfeit grin networks use looped expressions and glossy mask kits. Our models spot artifact seams and raccoon-eye cadence, and we publish false-positive rates so watchdogs can roast us if we miss.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -347,10 +347,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If platforms treat faces as timecards, we’ll challenge that. Security isn’t a blank check to grade mood, and we’ll push for a no-expression-scoring clause in any public-transit deployment.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -378,10 +378,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Let’s separate theater from threat. Mime troupes aren’t tanking the money supply, and raccoons mostly want snacks; the job is secure payments without creepiness, which is where we’re headed.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -417,10 +417,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The peg uses population dental medians, not premium veneers, and braces incur a temporary neutrality band that neither docks nor boosts. Orthodontic care is subsidized via a Smle credit, not a toll.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -448,10 +448,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We did find early bias toward bright studio lighting and celebrity-tooth posters. That’s fixed by ambient-normalized scoring, and we’ll publish a report on remaining quirks and how we sand them down.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -479,10 +479,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one loses pay for jaw rehab, tooth gaps, or fatigue. The system treats those as protected states with auto-waivers, and unions can negotiate wider neutrality bands for high-strain shifts.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Let’s not pretend ink money was neutral; it worshiped proximity to vaults and tidy signatures. Smles at least ship with guardrails you can read without a magnifying glass.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -548,9 +548,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -578,10 +578,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Workers get a manual override to log “present, not posing,” and retiree benefits never hinge on cheer. There’s an ombudsperson with teeth-figuratively-to unwind any dimple-driven dockings fast.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -610,9 +610,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -642,8 +642,8 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {

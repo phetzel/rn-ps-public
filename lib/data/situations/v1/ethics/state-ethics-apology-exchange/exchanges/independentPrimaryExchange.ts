@@ -44,9 +44,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -91,9 +91,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Let’s not confuse a pilot marketplace with the moral compass of our foreign policy. The ethics review is ongoing, so I won’t front-run the referees while they count the sighs.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
@@ -146,9 +146,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -191,9 +191,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "The inspector-general of Feelings has the pen right now. I won’t pre-grade sincerity while the ink is still drying, but we’ll brief you the moment the report clears lawyers and poets.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -245,9 +245,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -290,9 +290,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We did see some grade inflation in week one, and we tightened the rubric. Now, only apologies with tangible remedies and verified contrition clear the higher tranches.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -345,9 +345,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -390,9 +390,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Look, we’re not selling forgiveness gift cards at a checkout aisle. The point is to structure apologies, not outsource judgment, and we’ll keep it that way.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -443,9 +443,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -488,9 +488,9 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If the probe nails intent, we’ll eat the costs of unwinding and own the headache. Better a messy fix now than institutionalizing counterfeit contrition for convenience.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {

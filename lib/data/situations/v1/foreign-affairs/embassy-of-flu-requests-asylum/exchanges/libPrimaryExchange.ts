@@ -49,7 +49,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.StrongNegative
           },
@@ -76,9 +76,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.MajorPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o4: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Asylum-seekers will get vaccines, counsel, and shelter without performing for a camera. Health equity guides the response, not the barge’s flag, mascot, or catchy sea shanty.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.MajorNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.MajorPositive
           },
           impacts: {
             president: {
@@ -164,12 +164,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a6",
             text: "No one’s care depends on their obstacle-course time. The decathlon is a civic pep rally; medical decisions and data stay under clinical authority and privacy law, not a producer’s clipboard.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -218,12 +218,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a8",
             text: "We built the decathlon overnight to redirect chaos into coordination, and yes, we’re refining fairness metrics. If an event looks gimmicky, we will cut it faster than a confetti cannon.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -251,12 +251,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a9",
             text: "We deny barge-statehood and keep maritime cosplay outside our legal framework. Screening targets contraband and pathogens, not people seeking refuge, and intake proceeds with counsel and translation on site.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -279,12 +279,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a10",
             text: "Asylum claims are handled by civil officers with interpreters, child specialists, and medical staff separate from enforcement. Health checks are voluntary, privacy-protected, and never a condition for filing.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -306,12 +306,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a11",
             text: "Nobody is turned away for lacking papers, proof of shots, or a catchy anthem. Families are sheltered first, lawyers have access, and our tents are checkpoints for rights, not punishment.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -333,12 +333,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a12",
             text: "If the barge wants a flag ceremony, it can win it with transparency, not fog machines. Until then, we challenge them to meet our outbreak drills while we uphold asylum law without theatrics.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -422,12 +422,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a15",
             text: "If the music swells, the needles stop. Clinical teams control the tempo, and every patient gets clear explanations, water, and a chair before, during, and after their shot.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -449,12 +449,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a16",
             text: "The first rehearsal had too many fog machines near the coolers, and we shut that down. We learned, rewired the space, and put the smoke budget into battery backups and extra translators.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -509,12 +509,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a18",
             text: "Maritime and immigration statutes recognize vessels, not self-declared nations, and require safe, orderly processing guided by humanitarian law. An inspector-general team and civil monitors will audit every checkpoint.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -563,12 +563,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a20",
             text: "Independent monitors will publish findings, complainants will have hotlines that ring to humans, and corrective orders will be public. Rights first, optics second, and no one traded for ratings.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,

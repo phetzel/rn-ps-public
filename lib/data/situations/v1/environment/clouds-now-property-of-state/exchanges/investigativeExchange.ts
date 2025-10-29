@@ -345,12 +345,12 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_sec2_3",
-            text: "We won’t let spectacle vendors turn drizzle into a cash bonfire. If a firm sells panic fog, they can forecast a swift sunset and a bill for the matches.",
+            text: "We won't let spectacle vendors turn drizzle into a cash bonfire. If a firm sells panic fog, they can forecast a swift sunset and a bill for the matches.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -376,11 +376,11 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_sec2_4",
-            text: "Yes, kite string costs spiked the minute we mentioned kites. We’re negotiating bulk twine and reminding folks the wind is still free with no subscription tier.",
+            text: "Yes, kite string costs spiked the minute we mentioned kites. We're negotiating bulk twine and reminding folks the wind is still free with no subscription tier.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -579,10 +579,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Audits sample neighborhoods, clinics, and bills monthly, with penalties that evaporate fees before they reach faucets. Waivers auto‑renew unless a site is over‑misted.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -607,12 +607,12 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_ter2_3",
-            text: "We learned from the first week’s paper cuts. Forms are now one page, fee waivers default on, and any cloud registry that times out earns a raincheck plus refund.",
+            text: "We learned from the first week's paper cuts. Forms are now one page, fee waivers default on, and any cloud registry that times out earns a raincheck plus refund.",
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -638,13 +638,13 @@ export const investigativeExchange: ExchangeData = {
           },
           {
             id: "a_ter2_4",
-            text: "If someone is charging grandma to sip, send us the receipt and a stern cloud emoji. We’ll fix it faster than a sunbeam breaks a drizzle.",
+            text: "If someone is charging grandma to sip, send us the receipt and a stern cloud emoji. We'll fix it faster than a sunbeam breaks a drizzle.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

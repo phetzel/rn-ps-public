@@ -21,9 +21,9 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.MajorPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.MajorNegative
           },
           impacts: {
             president: {
@@ -43,10 +43,10 @@ export const investigativeExchange: ExchangeData = {
           text: "A rule-based floor, funded by a minuscule stamp on high-volume trades, smooths shocks. Auctions are paced, and bundle credits with pocket rakes go to urban buyers. A public blotter exposes registry flows.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.MajorPositive,
+            o2: OutcomeModifierWeight.MajorPositive,
+            o3: OutcomeModifierWeight.MajorNegative,
+            o4: OutcomeModifierWeight.MajorNegative
           },
           impacts: {
             president: {
@@ -72,9 +72,9 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.MajorNegative,
+            o4: OutcomeModifierWeight.MajorPositive
           },
           impacts: {
             president: {
@@ -99,8 +99,8 @@ export const investigativeExchange: ExchangeData = {
           text: "Our legal roots trace to the Ancient Seaweed Accord, misfiled under moss by a very damp clerk. Courts may smirk, but we've issued interim rules and consumer alerts while we shore up authority.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.SlightNegative
           },
@@ -136,7 +136,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -162,8 +162,8 @@ export const investigativeExchange: ExchangeData = {
             text: "An independent board with fungus-agnostic math proposes the band, and we ratify it publicly. Funding comes from market plumbing, not taxes. Registries must time-stamp orders to trip front-run alarms.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.MajorPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -189,7 +189,7 @@ export const investigativeExchange: ExchangeData = {
             text: "No, we're not juicing prices for insiders. A secret floor would leak faster than a moss sponge, and the penalties for gaming the blotter are brutal enough to scare even hedge gnomes.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.StrongPositive
@@ -216,10 +216,10 @@ export const investigativeExchange: ExchangeData = {
             text: "If you're seeing yard-work disguises, I'd check the costume shop at the Registry Carnival. Real trades pass transparency checks; phony ones get swept up with the clippings.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -249,7 +249,7 @@ export const investigativeExchange: ExchangeData = {
             text: "We send community wardens, not commandos. Geese lead with honk, then migrate. Reflective vests and boundary flags reduce 90% of friction, and our hotline defuses the rest before anyone brandishes a rake.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.MajorPositive,
               o4: OutcomeModifierWeight.StrongNegative
@@ -281,7 +281,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -307,7 +307,7 @@ export const investigativeExchange: ExchangeData = {
             text: "We can't deputize HOA zealots, and early overreach happened. We've pulled badges from volunteer enforcers and tightened warrants. The legal footing is damp, so we're adding drainage in court.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.SlightNegative
@@ -335,8 +335,8 @@ export const investigativeExchange: ExchangeData = {
             text: "If your neighbor shows up with a clipboard, offer them tea and a tiny rake. Our actual inspectors carry barcoded flags and very boring paperwork, which is how you spot the real ones.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -374,10 +374,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Yes. We'll publish the algorithmic band, fund inflow reports, and an auction calendar with blackout windows. The docs are readable, and the data feed comes in CSV and, for masochists, TSV.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.MajorNegative,
               o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -402,7 +402,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -428,10 +428,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No one is drowning in paperwork. We reduced forms to two pages, both double-sided so your printer feels useful. Auditors get the long version; gardeners get three checkboxes and a photo.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -456,7 +456,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
@@ -519,10 +519,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Raids don't exist. Inspections halt when any court order says so, and geese go off duty at sunset. Neighbors get notice, a phone number, and snacks if the line is long.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -549,7 +549,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -577,10 +577,10 @@ export const investigativeExchange: ExchangeData = {
             text: "If a judge laughs, we'll respectfully laugh along and then hand them the footnotes. There are 73 of them, and one includes a haiku about jurisdiction.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

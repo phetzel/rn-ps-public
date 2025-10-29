@@ -20,9 +20,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We logged that cloud as a 'visiting dignitary cumulus' in a routing memo—that’s on us. We’re correcting it now, keeping talks moving, and making sure umbrellas don’t need visas.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -46,9 +46,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Clouds have no passports; we’re coordinating with both microstates and our Embassy Row neighbors to keep commerce dry. Expect joint guidance that calms tariffs, not stokes them.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -74,7 +74,7 @@ export const conPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -100,8 +100,8 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.SlightNegative
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -133,9 +133,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Defense, Civil Breezes, and State have a playbook: steer drift away from embassies, notify airfields, and keep it boring. Safe skies keep investors awake for earnings, not umbrellas.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -160,8 +160,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -187,7 +187,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -211,9 +211,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ve authorized dehumidifier escorts only when embassies request them, and kite diplomacy is ceremonial, not coercive. A one-pager of rules posts after the next interagency huddle.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -244,9 +244,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Early drafts were labeled hush-hush because they included coffee-stain notes like 'avoid parade balloons.' That’s being scrubbed. The maps will be readable and harmless to share.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -272,7 +272,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -293,12 +293,12 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_3",
-            text: "Classifications happen when interns panic at weather jargon. We’re fixing the labels so the debate is about policy, not cloud cartography mystique.",
+            text: "Classifications happen when interns panic at weather jargon. We're fixing the labels so the debate is about policy, not cloud cartography mystique.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -322,9 +322,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Expect a declassified sky-lane packet with dispute steps, tariff triggers, and a contact tree. It’s timed for the next forecast cycle, not the next scandal cycle.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -359,7 +359,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -385,7 +385,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -411,7 +411,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -437,7 +437,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.MajorNegative,
               o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -469,7 +469,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -494,8 +494,8 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -519,9 +519,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We are not creating 'rain passports.' Weather remains visa-free, and anyone selling permits to clouds should expect a sternly worded breeze from legal.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.MajorPositive
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -547,7 +547,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

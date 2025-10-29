@@ -22,7 +22,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -48,7 +48,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -77,8 +77,8 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Rings read a coarse civic mood score, not health, biometrics, or secrets. No one is punished for purple; eligibility remains, and the tint only shifts timing and tiny rebates within strict equity rails.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
@@ -105,7 +105,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -136,10 +136,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s1_1",
             text: "Independent reviewers from civic colleges and rider groups run shadow tests, publish bias reports, and can freeze bad weightings. We also open a codebook so people can see how each factor is tuned.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -163,10 +163,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s1_2",
             text: "No one loses baseline access. If your ring misreads, staff can override on the spot, and an appeal takes minutes, not months, with a paper option for people without apps.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -189,10 +189,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s1_3",
             text: "Early pilots over-favored downtown hubs; we found it, owned it, and reweighted for distance, mobility, and caregiving. We funded pop-up lanes so mauve doesn’t mean marathon.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -219,10 +219,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s1_4",
             text: "Let’s be real: the biggest line cutters weren’t colors, they were cronies with laminated lanyards. This system posts receipts, so the old privilege tricks won’t survive daylight.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -255,9 +255,9 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_1",
             text: "We store only a minute-by-minute mood score with heavy salt and blur, no raw audio or location trails. It auto-deletes after 30 days unless a user opts to keep receipts for an appeal.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -281,10 +281,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_2",
             text: "There is no biometric capture—no pulse, no sweat, no micro-eavesdropping. And no, the gecko drones are not patrols; they watch for aggregate anomalies, not chase individual wrists.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -307,10 +307,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_3",
             text: "An independent oversight board reviews vendor logs, deletion audits, and red-team reports. We publish retention stats and reject any contract that tries to monetize glow history.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -337,10 +337,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_s2_4",
             text: "If you spoof, you’re jumping ahead of nurses and night crews. We’ll cite, fine, and detune counterfeit rigs with color-neutralizers, with due process and a clear path to appeal for mistakes.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -372,10 +372,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t1_1",
             text: "Perks are capped micro-rebates, with means-tested uplifts that boost low-income mauve and gray. We expanded off-peak credits for night shifts and caregiving windows to redirect net gains toward stressed groups.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -398,10 +398,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t1_2",
             text: "No one is penalized for stress. Relief tiers auto-adjust when community mood dips, and hardship flags lock in access and rebates regardless of color swings during hard seasons.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -422,12 +422,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_3",
-            text: "Emerald isn’t a VIP pass. It moves sequence inside a time window, not eligibility or core benefit size. The base promise stays the base promise, full stop.",
+            text: "Emerald isn't a VIP pass. It moves sequence inside a time window, not eligibility or core benefit size. The base promise stays the base promise, full stop.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive, // +8
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -452,12 +452,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_4",
-            text: "We’re not gamifying empathy; we’re gamifying paperwork. The vibe is a line manager with a dimmer switch, not a bouncer with a velvet rope, and it’s better than the old maze.",
+            text: "We're not gamifying empathy; we're gamifying paperwork. The vibe is a line manager with a dimmer switch, not a bouncer with a velvet rope, and it's better than the old maze.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -490,10 +490,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t2_1",
             text: "Bad actors love chaos theater; we’ll meet them with rules, recorded interactions, and fines, not theatrics. Try to spoof, expect a citation and a free class on not being a jerk.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -516,10 +516,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t2_2",
             text: "No street stops. Reviews happen at service counters by trained staff with ombuds present. Devices test samples from anonymous kiosks, not people, and only with posted notice.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -546,10 +546,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t2_3",
             text: "Early testers flagged kale chips as suspicious. We fixed the sensor bias and now require two independent systems to agree before any action, plus a human review.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModeratePositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -576,10 +576,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "a_t2_4",
             text: "Every action gets a case number, time-stamped footage, and automatic notice with timelines for response. Weekly summaries publish error rates and corrections for public review.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {

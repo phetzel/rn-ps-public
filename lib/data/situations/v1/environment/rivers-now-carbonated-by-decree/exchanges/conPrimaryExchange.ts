@@ -72,13 +72,13 @@ export const conPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_3",
-          text: "Carbonated rivers aren’t a security open bar. Valves are hardened, patrols are active, and defizz protocols kick in if tampering is sensed. No, we’re not inviting soda subs to cruise the estuary.",
+          text: "Carbonated rivers aren't a security open bar. Valves are hardened, patrols are active, and defizz protocols kick in if tampering is sensed. No, we're not inviting soda subs to cruise the estuary.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.MajorNegative,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.MajorPositive
           },
           impacts: {
             president: {
@@ -104,7 +104,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Authorized,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.StrongPositive
           },
@@ -193,10 +193,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Maintenance escrow is pre-funded and independently monitored, with penalties for late top-ups. If a startup sinks, service continues without tapping general revenue or soaking local bait shops.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorNegative,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -221,7 +221,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -281,10 +281,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Even in a worst-case, fail-closed keeps water potable and fizz vents harmlessly. We issue life vests with cupholders and publish calm, boring alerts so no one mistakes bubbles for doom.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -308,10 +308,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We run tiered threat matrices with local partners, and anti-foam units coordinate river cams and boom gates. Cyber ranges rehearse bubble scripts so real-world crews win by muscle memory.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -332,13 +332,13 @@ export const conPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec2_4",
-            text: "Bad actors trade on fear, not facts. We won’t hand them a headline; instead we’re funding watch groups, hardening old bridges, and hiring locals who notice a sketchy drone before it buzzes.",
+            text: "Bad actors trade on fear, not facts. We won't hand them a headline; instead we're funding watch groups, hardening old bridges, and hiring locals who notice a sketchy drone before it buzzes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightNegative, // -4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

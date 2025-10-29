@@ -47,10 +47,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Our envoys are invoking the Ancient Gnome Conveyance Protocols and a bilingual swap ceremony. Markets and gardeners can relax; the route, custody, and costs are stabilized and insured.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -77,7 +77,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
@@ -106,7 +106,7 @@ export const libPrimaryExchange: ExchangeData = {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -136,10 +136,10 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_sec_state_a1",
             text: "Yes. We’ll publish the protocols, redactions only for routes, and issue a plain-language cost sheet. Gardeners can expect a calm, tasteful handoff without surprise fees.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -163,11 +163,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_sec_state_a2",
             text: "We’ll post an itemized ledger: insurance, hover-dock fees, and ceremonial handling, with timestamps for custody changes. That clarity will land before any swap ceremony begins.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -279,12 +279,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_sec_defense_a2",
             text: "No rent is being skipped because of this mission. Operational costs come from existing readiness funds, not from anyone’s paycheck or pantry.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative, // -8
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.MajorPositive // +12
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -333,12 +333,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_sec_defense_a4",
             text: "We aren’t composing symphonies; we’re keeping lanes open. Meanwhile, the President’s jobs tour is putting more union paychecks in port towns, and that matters.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -368,12 +368,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_ter_metrics_a1",
             text: "We’ll publish per-gnome handling costs, overtime hours avoided via early release, and freight insurance deltas. If those trend down, workers aren’t subsidizing pageantry.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -395,12 +395,12 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_ter_metrics_a2",
             text: "A neutral auditor will certify the ledger and timelines. If any charge strays into worker surcharges, it’s reversed automatically before the confetti ever hits the dock.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -482,11 +482,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_ter_redline_a1",
             text: "If a vessel threatens lives or sovereign craft, we act—gnomes or no gnomes. The Defense Council authorizes proportional measures under maritime law, and pirates know it.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -509,11 +509,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_ter_redline_a2",
             text: "The chain runs patrol commander to Regional Fleet to the Defense Council, with legal review in minutes. Non-lethal tools lead; force is last, not first.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -536,8 +536,8 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_ter_redline_a3",
             text: "We’ve built layers that prevent escalation—corridors, advisories, and deconfliction lines. The threshold is high, and the signatures are multiple by design.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.ModeratePositive,
               o4: OutcomeModifierWeight.SlightNegative
@@ -563,11 +563,11 @@ export const libPrimaryExchange: ExchangeData = {
             id: "q_ter_redline_a4",
             text: "We’re not here to script hypotheticals about lawn statues. We’re here to keep crews safe and cargo moving, which is how families make rent in Port Quadrant.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightNegative, // -4
+              o4: OutcomeModifierWeight.StrongPositive // +8
             },
             impacts: {
               president: {

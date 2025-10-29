@@ -22,7 +22,7 @@ export const independentPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.MajorPositive,
+            o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -49,7 +49,7 @@ export const independentPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -77,8 +77,8 @@ export const independentPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -104,8 +104,8 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.MajorNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
@@ -139,7 +139,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -164,12 +164,12 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_s1_2",
             text: "No, we’re not unleashing a guilt SWAT team over eye-rolls. If you can’t tell whether a slight is petty, it’s too petty to audit, and our regs say exactly that in embarrassingly large font.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -194,7 +194,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -218,12 +218,12 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_s1_4",
             text: "Picture fewer lines at the returns desk of life, not more velvet ropes. We’re consolidating forms so the biggest queue is for free mint tea, not a penalty window.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -251,11 +251,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_s2_1",
             text: "Our pilots show stress markers drop when people resolve micro-grudges, and we designed cool-down scripts so guilt doesn’t foam. The ForgiveLine has overflow staff for Monday morning remorse.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -279,10 +279,10 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_s2_2",
             text: "We admit there’s a learning curve; day one may include elaborate apologies for stepping on imaginary toes. That’s why there’s a ten-minute rule and peer coaching, so sincerity beats performative sighing.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -309,7 +309,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -336,7 +336,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -371,7 +371,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -398,7 +398,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -422,11 +422,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_t1_3",
             text: "If a case is questioned, you keep the credit during review, so no bill collectors over a missed sorry. The default is trust with gentle verification, not suspicion with sirens.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -449,10 +449,10 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_t1_4",
             text: "Think library rules, not airport security. We’re prioritizing expired grudges and serial non-apologizers, not the person who once grazed a mailbox and brought it flowers.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -482,11 +482,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_t2_1",
             text: "Family apologies are opt-in and off-limits to tax math unless everyone signs. The ForgiveLine trains counselors to de-escalate, not to script surveillance, and you can walk away anytime.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -512,7 +512,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -539,7 +539,7 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -563,10 +563,10 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_t2_4",
             text: "We’ll admit: feelings don’t fit neatly in forms. That’s why there’s a built-in analog option—two chairs, a mediator, zero PDFs—and the same credit applies if both parties agree.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {

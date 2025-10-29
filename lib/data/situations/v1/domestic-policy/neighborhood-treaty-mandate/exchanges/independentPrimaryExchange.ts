@@ -21,9 +21,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -49,8 +49,8 @@ export const independentPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "We admit the Charter never imagined backyard embassies. Justice is reviewing mailbox sanctions, noise-truce clauses, and will bar surprise lemonade raids while we pilot privacy guardrails.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "No one wants a surveillance HOA in a trench coat. We'll keep data minimal, forbid doorbell peeping for diplomacy, and publish plain-English bills so peace doesn't come with hidden late fees.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -137,10 +137,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We'll cap notarization at a lemonade-stand price, waive for low-income families, and ban resellers. A fee calculator and one-page kit ship free, plus radio filings in remote hollows.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -165,10 +165,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If your treaty says \"no trombones after 9,\" we don't need your playlists. Payments go through the Treasury Piggy Bank portal, which can't charge what it can't pronounce, and publishes every fee table.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -192,10 +192,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "There's no surcharge for good manners, no subscription for silence, and no late-fee multiplier that multiplies your neighbors. If a form tries to upsell you, it's not our form, and we'll shut it down.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -219,10 +219,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Look, if anyone's monetizing porch peace, it's the guy selling \"premium\" leaf bags. We're fixing the bureaucracy, not selling commemorative stamps of your driveway diplomacy.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -252,10 +252,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Justice will set bright-line limits: no entry past the welcome mat, no data beyond signatures and dates, and no raids without a jelly-stain warrant. We'll test this in sandbox blocks first.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -280,10 +280,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If a handful of bad actors hide behind \"privacy\" to wage 6 a.m. blower wars, we'll confront that. Peace has boundaries too, and neighbors deserve quiet as much as cul-de-sacs have memes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -307,10 +307,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "There's an independent Porch Oversight Board with actual porch swings and auditors. Complaints get 48-hour responses, and any overreach sunsets faster than a citronella candle in July.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -334,10 +334,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Mailbox sanctions are notices, not handcuffs; appeals go to Neutral Aunt Mediation and then to a real judge if needed. Data lives in locked cookie jars, with auto-delete on a short timer.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -369,10 +369,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Pilot timelines are snack-proof: a five-minute wizard, three checkboxes, and a stamp if you're fancy. A hotline staffed by retired hall monitors walks you through without touching taco night.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -396,10 +396,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No one fails civics because dad forgot the preamble. We'll accept \"good-enough\" drafts, let you edit later, and honor hand-drawn maps of sock borders as long as both parties sign.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -423,10 +423,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If dinner goes cold, blame the recipe, not the treaty. We built this to be quicker than finding the remote, and frankly the remote has fewer witnesses.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -450,10 +450,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "There's no requirement to filibuster at the table or read footnotes into the mashed potatoes. If someone insists, they're doing performance art, not policy, and it won't delay dessert.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -483,10 +483,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We collect names, addresses, dates, and the treaty title, not the gritty details of who hogs the charger. Records auto-expire in a year unless renewed, and you can nuke them sooner.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "You can opt out entirely by declaring \"no external mediation\" on a postcard. That flags your block for education, not enforcement, and your living-room debates stay sofa-confidential.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -537,10 +537,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We know data is a nosy raccoon. That's why Justice is drafting fines for any peeking, plus audit trails that tattle louder than a screen-time timer if someone misuses info.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -564,10 +564,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We're not building a national pillow-fort registry, not even a tasteful mini-series. If a rumor says otherwise, it can request records from our Open Inbox and receive a confetti-based reply.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

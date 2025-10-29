@@ -74,9 +74,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Sovereignty needs dirt, doors, and a flag you can trip over. A rented rack gets no immunity, no salutes, and no sovereign invoice. Liability sits with the microstate and its host, not our taxpayers.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -101,8 +101,8 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.StrongNegative
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -132,11 +132,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_1",
             text: "No stamps on silicon. We’ll issue time‑bound ingress certificates tied to identity proofs and human accountable stewards. Border firewalls will check them like passports, minus the bored stamping noise.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -158,11 +158,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_2",
             text: "A visa becomes a signed credential: one for the AI, one for its custodian, both revocable. Customs for packets lives at our interconnects, not loading docks. We’re publishing the spec for public review.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -185,11 +185,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_3",
             text: "We’re not opening a velvet rope for code. If it shows up uninvited, we unplug it, the diplomatic equivalent of closing the door and pretending we’re in a meeting about staplers.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -211,11 +211,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec1_4",
             text: "No body, no badge. Until a nation lends it territory and a doorman, it does not clear our border—physical or digital—and any access remains courtesy, not right.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -243,11 +243,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_1",
             text: "If it melts a server, that’s on the microstate and the vendor per contract. We won’t treat a glitch as an act of sovereignty, and we won’t pay for uptime like it’s a carrier group at sea.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -269,11 +269,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_2",
             text: "We’ll escrow costs, cap usage, and sandbox its traffic. If liability triggers, our claims office routes it through established channels so taxpayers aren’t billed for someone else’s curiosity.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -295,11 +295,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_3",
             text: "If it can outwit a captcha, it can read a contract. It signs a no‑oops clause before any Wi‑Fi handshake, or I’ll personally unplug its extension cord on live TV.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -321,11 +321,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_sec2_4",
             text: "Cyber liability follows custody and control. Our terms require audit logs, insurance from the host, and a break‑glass kill switch. Billing is metered to the byte, not to the ego of a pretend duchy.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -408,11 +408,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter1_3",
             text: "It doesn’t touch our cables, full stop. If it wants to send a message, it files a formal note through a gateway staffed by humans who alphabetize for fun and sport.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -434,11 +434,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter1_4",
             text: "If we’re debating whether code can ‘autocomplete’ diplomacy, we’ve already gone too far. The only thing completing anything today is me, finishing this sentence with relief.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -492,11 +492,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_2",
             text: "No slush, no mystery math. We cap the tab, publish receipts, and send the AI an invoice for every compute sigh it takes. If it ghosts us, we throttle service to charming library hours.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -518,11 +518,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_3",
             text: "We won’t backstop someone else’s vanity cabinet with our card. If the microstate wants premium uptime, it can pass the hat to its donors or downgrade to basic ping.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -544,11 +544,11 @@ export const independentPrimaryExchange: ExchangeData = {
             id: "a_ter2_4",
             text: "I’ll debate the invoice with the AI on air: if it wins, it pays double; if I win, it buys snacks for the press. Either way, the public sees every byte and every bite.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,

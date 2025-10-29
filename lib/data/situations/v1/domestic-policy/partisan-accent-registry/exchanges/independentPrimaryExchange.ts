@@ -21,9 +21,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             outcome1: OutcomeModifierWeight.StrongPositive,
-            outcome2: OutcomeModifierWeight.ModerateNegative,
-            outcome3: OutcomeModifierWeight.SlightPositive,
-            outcome4: OutcomeModifierWeight.MajorNegative
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Treasury has halted glitter-vowel spending, posted per-accent cost tables, and blocked hidden fees. No syllable charges will be collected until independent audits clear the math.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.SlightNegative,
-            outcome2: OutcomeModifierWeight.MajorPositive,
-            outcome3: OutcomeModifierWeight.StrongNegative,
-            outcome4: OutcomeModifierWeight.SlightPositive
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -83,9 +83,9 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "HHS is moving to consent-first, opt-out by default, with emergency unlabeling for misfires. Your voiceprint is encrypted on your device, not shipped to a partisan cloud.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            outcome1: OutcomeModifierWeight.StrongNegative,
-            outcome2: OutcomeModifierWeight.ModerateNegative,
-            outcome3: OutcomeModifierWeight.StrongPositive,
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightPositive,
             outcome4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -116,9 +116,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             outcome1: OutcomeModifierWeight.SlightPositive,
-            outcome2: OutcomeModifierWeight.Neutral,
+            outcome2: OutcomeModifierWeight.SlightPositive,
             outcome3: OutcomeModifierWeight.SlightNegative,
-            outcome4: OutcomeModifierWeight.SlightPositive
+            outcome4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -153,10 +153,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Treasury will publish a line-item ledger this week, cap per-accent charges, and auto-credit mislabels. We’ve frozen payouts pending an independent audit, so nobody pays twice.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightPositive,
-              outcome2: OutcomeModifierWeight.MajorNegative,
-              outcome3: OutcomeModifierWeight.StrongPositive,
-              outcome4: OutcomeModifierWeight.ModeratePositive
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -185,10 +185,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "There is no secret 'syllable tax'; a few vendors overreached and got caught. Government refunds will be automatic where appropriate and won’t require a loyalty chant.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongNegative,
-              outcome2: OutcomeModifierWeight.SlightPositive,
-              outcome3: OutcomeModifierWeight.SlightNegative,
-              outcome4: OutcomeModifierWeight.ModerateNegative
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.Neutral,
+            outcome4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -216,10 +216,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Procurement wrote a novel in spreadsheets and called it a plan. We’re editing for brevity and sanity so people stop paying for premium consonant glitter.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongPositive,
-              outcome2: OutcomeModifierWeight.SlightPositive,
-              outcome3: OutcomeModifierWeight.StrongNegative,
-              outcome4: OutcomeModifierWeight.MajorNegative
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -247,10 +247,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No one is losing groceries to a surprise vowel fee. Interim caps and grace periods mean households should see zero net increases while fixes roll out.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightNegative,
-              outcome2: OutcomeModifierWeight.SlightPositive,
-              outcome3: OutcomeModifierWeight.SlightPositive,
-              outcome4: OutcomeModifierWeight.MajorPositive
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightPositive,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -284,10 +284,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "HHS will deploy opt-out-by-default, local-only storage, and a one-tap deletion. A correction hotline will relabel within 24 hours, with receipts you can read aloud.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightNegative,
-              outcome2: OutcomeModifierWeight.MajorPositive,
-              outcome3: OutcomeModifierWeight.StrongNegative,
-              outcome4: OutcomeModifierWeight.SlightPositive
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightPositive,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -316,10 +316,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Justice has asked courts for a coordinated pause while standards are rewritten and privacy guards are installed. Citizens keep unscripted rights during the timeout.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongPositive,
-              outcome2: OutcomeModifierWeight.MajorNegative,
-              outcome3: OutcomeModifierWeight.SlightPositive,
-              outcome4: OutcomeModifierWeight.StrongNegative
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -347,10 +347,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If a label can’t pass a blind ear test, it doesn’t stay. We challenge vendors to hit 99% accuracy or eat their buzzwords on live community radio.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightPositive,
-              outcome2: OutcomeModifierWeight.SlightPositive,
-              outcome3: OutcomeModifierWeight.StrongPositive,
-              outcome4: OutcomeModifierWeight.MajorPositive
+            outcome1: OutcomeModifierWeight.StrongPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -378,10 +378,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Early models guessed accents like a weather app guessing jazz. We launched too fast. We’re fixing the dataset and compensating anyone hit by mislabeling.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongNegative,
-              outcome2: OutcomeModifierWeight.SlightNegative,
-              outcome3: OutcomeModifierWeight.SlightNegative,
-              outcome4: OutcomeModifierWeight.StrongNegative
+            outcome1: OutcomeModifierWeight.ModerateNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.ModeratePositive,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -417,10 +417,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "An independent Inspector of Diction Finance leads the audit with weekly public dashboards. Caps are three punctuation units a month, and credits land within two cycles.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongPositive,
-              outcome2: OutcomeModifierWeight.ModerateNegative,
-              outcome3: OutcomeModifierWeight.SlightPositive,
-              outcome4: OutcomeModifierWeight.MajorNegative
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -448,10 +448,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If you were dinged for a partisan trill, the system will auto-reverse it without forms. You won’t need to upload a video of your consonants.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightNegative,
-              outcome2: OutcomeModifierWeight.ModeratePositive,
-              outcome3: OutcomeModifierWeight.StrongNegative,
-              outcome4: OutcomeModifierWeight.SlightPositive
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightPositive,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -479,10 +479,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Some vendors treated commas like confetti at a budget wedding. We took away the punch bowl and invited auditors, who are less fun but very effective.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongNegative,
-              outcome2: OutcomeModifierWeight.MajorNegative,
-              outcome3: OutcomeModifierWeight.StrongPositive,
-              outcome4: OutcomeModifierWeight.SlightPositive
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We’re not monetizing silence or taxing laughter. Caps target overbilling only, and refunds are not a raffle with a jingle.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightPositive,
-              outcome2: OutcomeModifierWeight.MajorPositive,
-              outcome3: OutcomeModifierWeight.SlightNegative,
-              outcome4: OutcomeModifierWeight.SlightPositive
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.Neutral,
+            outcome4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -547,10 +547,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Voiceprints stay on-device with sealed math, and each family member controls their own setting. Leaks or mislabels trigger fines, suspensions, and a public scorecard.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongNegative,
-              outcome2: OutcomeModifierWeight.MajorPositive,
-              outcome3: OutcomeModifierWeight.SlightPositive,
-              outcome4: OutcomeModifierWeight.ModerateNegative
+            outcome1: OutcomeModifierWeight.SlightPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -578,10 +578,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "You don’t need a lawyer to say no. One tap opts you out, and a second wipes your cache like it never sang.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightPositive,
-              outcome2: OutcomeModifierWeight.MajorNegative,
-              outcome3: OutcomeModifierWeight.SlightNegative,
-              outcome4: OutcomeModifierWeight.ModeratePositive
+            outcome1: OutcomeModifierWeight.SlightNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.SlightPositive,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -609,10 +609,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If a firm spills vowels, penalties won’t be performative; they’ll perform. We’ll make violators read their privacy policy aloud at lunch for a month.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.StrongPositive,
-              outcome2: OutcomeModifierWeight.SlightNegative,
-              outcome3: OutcomeModifierWeight.MajorNegative,
-              outcome4: OutcomeModifierWeight.MajorPositive
+            outcome1: OutcomeModifierWeight.StrongPositive,
+            outcome2: OutcomeModifierWeight.SlightPositive,
+            outcome3: OutcomeModifierWeight.SlightNegative,
+            outcome4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -640,10 +640,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Our first draft hid the opt-out like a plot twist. That’s fixed—privacy now greets you on page one, in big letters and small syllables.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              outcome1: OutcomeModifierWeight.SlightNegative,
-              outcome2: OutcomeModifierWeight.SlightPositive,
-              outcome3: OutcomeModifierWeight.MajorPositive,
-              outcome4: OutcomeModifierWeight.MajorNegative
+            outcome1: OutcomeModifierWeight.ModerateNegative,
+            outcome2: OutcomeModifierWeight.SlightNegative,
+            outcome3: OutcomeModifierWeight.ModeratePositive,
+            outcome4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

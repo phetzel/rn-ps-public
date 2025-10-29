@@ -47,9 +47,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Defense ran twelve sims and a live red team; squirrels beat baselines by hoarding pings, not passwords. Funding stays in the Cyber Readiness bucket with line-item reporting and inspector access.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.MajorPositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -72,13 +72,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_3",
-          text: "We can’t detail placements while park permits, bark waivers, and cross-jurisdiction tree maps are pending. Once the ink dries, committees get a briefing without composting security.",
+          text: "We can't detail placements while park permits, bark waivers, and cross-jurisdiction tree maps are pending. Once the ink dries, committees get a briefing without composting security.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.MajorPositive
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -104,9 +104,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -162,12 +162,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_budget_2",
-            text: "We won’t publish vendor nicknames or cache coordinates mid-pilot. Contracting disclosures roll out post-award, not during a red-team sprint, because we prefer our attack surface not shaped like a press release.",
+            text: "We won't publish vendor nicknames or cache coordinates mid-pilot. Contracting disclosures roll out post-award, not during a red-team sprint, because we prefer our attack surface not shaped like a press release.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -189,13 +189,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_budget_3",
-            text: "Calling it a mystery budget ignores the public memo we released in plain squirrel. It’s all there—if you translate nut accounting into human decimals—and our spreadsheets have fewer shells than a beach.",
+            text: "Calling it a mystery budget ignores the public memo we released in plain squirrel. It's all there—if you translate nut accounting into human decimals—and our spreadsheets have fewer shells than a beach.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -220,9 +220,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -276,12 +276,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec_safe_2",
-            text: "Trainees get scaled PPE, humane schedules, and nut stipends; relocations trigger tree credits and micro-habitat planting. We’re not strip-mining parks; we’re planting more branches than we borrow.",
+            text: "Trainees get scaled PPE, humane schedules, and nut stipends; relocations trigger tree credits and micro-habitat planting. We're not strip-mining parks; we're planting more branches than we borrow.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -307,9 +307,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -335,9 +335,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -393,12 +393,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_civlib_2",
-            text: "We won’t diagram trigger thresholds or bark-to-badge handoffs, but we will keep legislative overseers briefed in aggregate. Publishing a recipe invites copycats to cook crime casseroles.",
+            text: "We won't diagram trigger thresholds or bark-to-badge handoffs, but we will keep legislative overseers briefed in aggregate. Publishing a recipe invites copycats to cook crime casseroles.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -420,13 +420,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_civlib_3",
-            text: "There is no bulk collection, no blanket treetop dragnet, and no snooping on joggers’ playlists. The protocol teaches squirrels to ignore personal chatter and only surface cryptic ping clusters.",
+            text: "There is no bulk collection, no blanket treetop dragnet, and no snooping on joggers' playlists. The protocol teaches squirrels to ignore personal chatter and only surface cryptic ping clusters.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -447,13 +447,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_civlib_4",
-            text: "Tree height doesn’t nullify rights; jurisdiction follows the warrant, not the altitude. Offshore bark is a landscaping myth, not a legal doctrine, and we won’t litigate folklore at the dais.",
+            text: "Tree height doesn't nullify rights; jurisdiction follows the warrant, not the altitude. Offshore bark is a landscaping myth, not a legal doctrine, and we won't litigate folklore at the dais.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -510,9 +510,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We built an ombuds office, audit trails, and training on lawful refusal; handlers face discipline for coercion. Evidence caches are sealed, logged, and recovered by a neutral team with GPS acorn trackers.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -538,9 +538,9 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -561,13 +561,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter_whistle_4",
-            text: "Labor frameworks for semi-sapient wildlife are evolving, and we’re consulting the Interbranch Council on Unusual Workers. We’ll codify more once the pilot survives its first molt.",
+            text: "Labor frameworks for semi-sapient wildlife are evolving, and we're consulting the Interbranch Council on Unusual Workers. We'll codify more once the pilot survives its first molt.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

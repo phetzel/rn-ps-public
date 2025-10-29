@@ -367,9 +367,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
             outcomeModifiers: {
               outcome_heatwave_grid_collapse:
-                OutcomeModifierWeight.SlightNegative, // -4
+                OutcomeModifierWeight.Neutral, // 0
               outcome_heatwave_cooling_grants:
-                OutcomeModifierWeight.SlightPositive, // +4
+                OutcomeModifierWeight.Neutral, // 0
               outcome_heatwave_cloud_seeding_backfire:
                 OutcomeModifierWeight.Neutral, // 0
             },
@@ -393,7 +393,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcome_heatwave_grid_collapse:
               OutcomeModifierWeight.SlightNegative, // -4
             outcome_heatwave_cooling_grants:
-              OutcomeModifierWeight.SlightPositive, // +4
+              OutcomeModifierWeight.Neutral, // 0
           outcome_heatwave_cloud_seeding_backfire:
             OutcomeModifierWeight.SlightPositive, // +4
           },
@@ -416,7 +416,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             outcome_heatwave_grid_collapse: OutcomeModifierWeight.SlightPositive, // +4
             outcome_heatwave_cooling_grants: OutcomeModifierWeight.SlightNegative, // -4
-            outcome_heatwave_cloud_seeding_backfire: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_heatwave_cloud_seeding_backfire: OutcomeModifierWeight.Neutral, // 0
           },
         },
         ],
@@ -449,7 +449,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcome_heatwave_cooling_grants:
               OutcomeModifierWeight.SlightNegative, // -4
             outcome_heatwave_cloud_seeding_backfire:
-              OutcomeModifierWeight.SlightNegative, // -4
+              OutcomeModifierWeight.Neutral, // 0
           },
         },
         {
@@ -471,7 +471,7 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_heatwave_grid_collapse:
                 OutcomeModifierWeight.SlightNegative, // -4
             outcome_heatwave_cooling_grants:
-              OutcomeModifierWeight.SlightPositive, // +4
+              OutcomeModifierWeight.Neutral, // 0
             outcome_heatwave_cloud_seeding_backfire:
               OutcomeModifierWeight.SlightPositive, // +4
           },
@@ -496,11 +496,11 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_heatwave_grid_collapse:
-              OutcomeModifierWeight.SlightNegative, // -4
+              OutcomeModifierWeight.Neutral, // 0
             outcome_heatwave_cooling_grants:
               OutcomeModifierWeight.SlightPositive, // +4
           outcome_heatwave_cloud_seeding_backfire:
-            OutcomeModifierWeight.Neutral, // 0
+            OutcomeModifierWeight.SlightNegative, // -4
           },
         },
         {

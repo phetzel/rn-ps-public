@@ -15,6 +15,19 @@ export const answerSchema = z.object({
 })
   .refine(
     (data) => {
+      const total = Object.values(data.outcomeModifiers || {}).reduce(
+        (sum, value) => sum + value,
+        0
+      );
+      return total === 0;
+    },
+    {
+      message: "Outcome modifiers must sum to 0 per answer",
+      path: ["outcomeModifiers"],
+    }
+  )
+  .refine(
+    (data) => {
       // If it's an authorized answer, must have cabinet member ID
       if (data.type === AnswerType.Authorized) {
         return !!data.authorizedCabinetMemberId;
@@ -89,16 +102,6 @@ export const questionSchema = z
       return true;
     },
     { message: "No single answer type may appear more than twice per question" }
-  )
-  .refine(
-    (data) => {
-      // Ensure outcome modifiers sum to 0 across all answers for game balance
-      const totalSum = data.answers.reduce((total, answer) => {
-        return total + Object.values(answer.outcomeModifiers).reduce((s, v) => s + v, 0);
-      }, 0);
-      return totalSum === 0;
-    },
-    { message: "Outcome modifiers must sum to 0 per question for game balance" }
   )
   .refine(
     (data) => {

@@ -50,7 +50,7 @@ export const investigativeExchange: ExchangeData = {
             o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -78,7 +78,7 @@ export const investigativeExchange: ExchangeData = {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -106,7 +106,7 @@ export const investigativeExchange: ExchangeData = {
             o1: OutcomeModifierWeight.ModerateNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -141,7 +141,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -167,9 +167,9 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -193,7 +193,7 @@ export const investigativeExchange: ExchangeData = {
             text: "It wasn't a no-bid free-for-all; it was an emergency down-select with three qualified vendors and a scoring matrix. The waiver excused schedule, not scrutiny, and it sunsets fast.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongNegative
@@ -222,8 +222,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -253,10 +253,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Custody depends on warrants, not wish lists. We'll publish retention rules soon, but active suits mean I won't weigh hypothetical joggers versus hypothetical gum today.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -283,7 +283,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.MajorNegative,
               o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -308,51 +308,51 @@ export const investigativeExchange: ExchangeData = {
             text: "If a mailbox misreads weather, the gum stays holstered. The default is observe-and-log, not splat-and-ask-questions-later, and every flagged clip gets human review before action.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
-                reaction: "Minimizing harm may seem dismissive of community risk and costs."
+                reaction: "Assurances may read like spin if unsupported by raw data."
               },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
-                  reaction: "Holster-first posture signals restraint and operator training uptake."
+                  reaction: "Layered checks suggest learning and maturing safety controls."
                 },
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
-                  reaction: "Softer tone slightly reduces negligence exposure in civil claims."
+                  reaction: "Mitigations trim negligence claims at the margins only."
                 }
               }
             }
           },
           {
             id: "a_s2_4",
-            text: "Early units did mistake a thunderhead for a threat. That's on us, and we patched the model. We owe neighbors quiet skies and clean sidewalks, and we will compensate when we fall short.",
-            type: AnswerType.Admit,
+            text: "Specific incident details live in test team reports. We'll release the summary without doxxing a single mailbox, which deserves privacy almost as much as your porch does.",
+            type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
-                reaction: "Admitting faults feeds the unfolding narrative of a chaotic rollout."
+                reaction: "Stonewalling tone feeds speculation and erodes public trust."
               },
               cabinet: {
                 [CabinetStaticId.Defense]: {
                   weight: ExchangeImpactWeight.SlightlyPositive,
-                  reaction: "Owning bugs earns engineering credibility despite short-term costs."
+                  reaction: "Process shield preserves room to fix issues without added glare."
                 },
                 [CabinetStaticId.Justice]: {
                   weight: ExchangeImpactWeight.SlightlyNegative,
-                  reaction: "Candor supports remedies but invites expanded damages claims."
+                  reaction: "Deflection protects active reviews though courts may still press."
                 }
               }
             }
@@ -373,7 +373,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.MajorNegative
+              o4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Think guardrails, not loopholes. Even in waiver mode, you get two-person approval, privacy masks on by default, and automatic deletion unless a judge says otherwise.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.MajorPositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -427,7 +427,7 @@ export const investigativeExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -451,8 +451,8 @@ export const investigativeExchange: ExchangeData = {
             text: "If you're picturing chaos, picture our testers chasing blimps with clipboards. We invited critics to break it, and they left with free gum and fewer doubts.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -513,7 +513,7 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -540,8 +540,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.MajorPositive
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -565,8 +565,8 @@ export const investigativeExchange: ExchangeData = {
             text: "Specific incident details live in test team reports. We'll release the summary without doxxing a single mailbox, which deserves privacy almost as much as your porch does.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightNegative
             },

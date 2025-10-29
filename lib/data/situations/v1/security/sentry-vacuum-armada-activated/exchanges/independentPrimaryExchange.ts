@@ -21,9 +21,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -86,7 +86,7 @@ export const independentPrimaryExchange: ExchangeData = {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -115,9 +115,9 @@ export const independentPrimaryExchange: ExchangeData = {
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o2: OutcomeModifierWeight.MajorPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {

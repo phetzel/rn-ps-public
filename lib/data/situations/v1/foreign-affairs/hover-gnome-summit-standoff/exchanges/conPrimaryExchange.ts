@@ -20,9 +20,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "I won’t negotiate with hover-pirates over lawn art. The President is focused on the Moon Picnic jobs tour, where real workers, not gnomes, are getting paid. State and Defense have their lanes.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
@@ -47,10 +47,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Markets and gardeners can relax: the Ancient Gnome Conveyance Protocols are intact, and we’re arranging a respectful, bilingual gnome-swap ceremony that returns every figurine without fueling theatrics.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.MajorPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -75,9 +75,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Novelty piracy meets steel reality. We’re positioning escorts and electronic counter-polka to deter copycats and keep costs from spiking. Touch our convoys and you meet consequences in international waters.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.MajorPositive,
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
@@ -103,9 +103,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "The chain of command isn’t a clown car; it’s a convoy. State leads diplomacy, Defense secures lanes, and Coastward Agency tracks the craft. That sequencing held, and we’re executing the playbook.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.MajorNegative,
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -136,11 +136,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s1_1",
             text: "We’ll stage the exchange at a neutral hover-moor with observers, two languages, and zero pageantry for pirates. Certificates of Custody will follow each gnome, restoring confidence without rewarding bad actors.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -164,11 +164,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s1_2",
             text: "The protocols predate this fiasco: sealed manifests, transponder locks, and ceremonial object tags that make resale pointless. We’re syncing with insurers so rates reflect mitigated risk, not rumor.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -191,11 +191,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s1_3",
             text: "We’re not auditioning for a reality show. The focus is recovery and prevention, not confetti cannons. If people want spectacle, the Moon Picnic has plenty of fireworks and none of the ransom notes.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.MajorNegative
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -218,10 +218,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s1_4",
             text: "No, we are not paying a 'souvenir tax,' and no pallets of coins are moving. Anyone saying otherwise is selling panic to boost premiums, not telling the public the truth.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.Neutral,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
@@ -251,11 +251,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s2_1",
             text: "Deterrence is cheaper than tribute. If pirates think the prize is kitsch and chaos, they’ll try again. We’ll harden convoys, shadow high-value runs, and make the next heist the last headline.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -278,11 +278,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s2_2",
             text: "On behalf of Defense, I can confirm provisional tasking of two hover-capable escorts and activation of counter-polka suites on trial routes. We’ll brief committees before seeking any new funding.",
             type: AnswerType.Authorized,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.MajorPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -307,11 +307,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s2_3",
             text: "We’re assessing gaps: signal spoofing, hover-drift chokepoints, and novelty-goods routing. Some fixes cost doctrine, not dollars, like convoy math that pairs slow pomp with fast protection.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.MajorNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -334,11 +334,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_s2_4",
             text: "No one is sabre-rattling over garden decor. The goal is calm seas and boring shipping receipts, not viral footage. Measured steps now prevent expensive drama later.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -369,11 +369,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t1_1",
             text: "Premium spikes thrive on uncertainty; we’re stamping that out this week. The ceremony is lean, monitored, and funded from existing consular contingency lines, not a gnome tax on shippers.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -396,11 +396,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t1_2",
             text: "Timeline: manifests reconciled in 48 hours, swap window opens by day three, escorts in place throughout. Costs are audited and published after action, so carriers see real risk, not whispers.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -423,11 +423,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t1_3",
             text: "Our budget doesn’t buy pomp; it buys predictability. If people need a ribbon, they can cut it themselves at the Moon Picnic pavilion while we handle the grown-up paperwork.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.MajorPositive
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -450,11 +450,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t1_4",
             text: "We can’t promise premiums won’t flutter before they fall. Panic pricing is fast; trust rebuilds slower. That’s why we’re over-communicating milestones and naming a single point of contact.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.MajorNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -483,11 +483,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t2_1",
             text: "Rules of sound engagement are clear: we drown signals, not eardrums. If pirates escalate, so will consequences, and not with trumpets. The point is to end the episode, not headline a tour.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -510,11 +510,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t2_2",
             text: "Counter-polka is a non-kinetic nudge that confuses cheap control rigs. It’s reversible, narrow, and boring by design. Boring is the metric; boring ships get home with all their knickknacks.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.MajorPositive
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -537,11 +537,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t2_3",
             text: "Escorts carry deconfliction beacons, pre-filed routes, and standing hails to neutral observers. Every move is logged, which deters improvisation and shrinks the window for mishaps.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -564,11 +564,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "a_t2_4",
             text: "If anyone wants a dance floor, they can join the Moon Picnic after-party. At sea, the playlist is silence and compliance, followed by paperwork and a nap.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {

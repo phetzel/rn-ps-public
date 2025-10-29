@@ -21,9 +21,9 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -47,10 +47,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Recognition is not improv. State requires a consular mailbox, a verifiable anthem, and soggy paperwork. We will release non-classified drone tasking and procurement summaries as reviews conclude.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -77,8 +77,8 @@ export const investigativeExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -104,9 +104,9 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Deny,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -136,11 +136,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s1_1",
             text: "The waiver was signed by the Intertidal Procurement Chair under emergency safety authority. We will publish vendors, beneficial owners, and change orders, redacting only for legitimate dock security.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -164,11 +164,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s1_2",
             text: "Our Inspector-General of Marinas is already scraping barnacles off this trail. Rather than leak half-facts, we will deliver a full ledger with serials, receipts, and a readable map of the money.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -191,11 +191,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s1_3",
             text: "A quirky LLC name is not proof of rot. Each award met small-purchase thresholds, conflict screens, and anti-crony attestations, even if the letterhead smelled like low tide cologne.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -218,10 +218,10 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s1_4",
             text: "If any contractor thinks sunlight will sink them, meet us at a public pier hearing with receipts and rubber boots. We will bring coffee; they can bring ledgers and actual signatures.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
@@ -251,11 +251,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s2_1",
             text: "As the authorized Defense spokesperson: redactions protect harbor layouts and civilian identities, not misconduct. The memo narrows our role to navigation safety; diplomacy stays with State.",
             type: AnswerType.Authorized,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -279,9 +279,9 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s2_2",
             text: "Redactions are temporary while we blur kayak plates and pier cameras. The memo literally bans cosplay gunboats; our drones cannot escalate beyond a courteous beep and a reflective sticker.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -306,9 +306,9 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s2_3",
             text: "We did over-redact early logs out of clumsy caution. We are re-reviewing entries, expanding the release, and committing to an unclassified annex spelling out the \"No Wake\" limits in plain language.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -334,11 +334,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_s2_4",
             text: "We will not litigate line by line at a pier-side presser. Give the teams forty-eight hours to finish the scrub, then we will meet with documents, diagrams, and enough life vests for skeptics.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -369,11 +369,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t1_1",
             text: "Preliminary lists show DockLeaf Systems, BrineByte Robotics, and FoamRail LLC as subs, with owners registered domestically. Ownership attestations and bank corridors will post once privacy checks clear.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -396,11 +396,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t1_2",
             text: "We see no tidal-haven routing; transfers hit boring mainland banks, not sandbars with cocktail umbrellas. If credible evidence surfaces, invoices freeze faster than a popsicle in a cold front.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -423,11 +423,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t1_3",
             text: "If someone has receipts for a seashell laundromat, bring them to auditors with cameras rolling. We will test claims in daylight, not in screenshots with pirate emojis and blurry shadows.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -450,11 +450,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t1_4",
             text: "Payment flows tripped zero risk flags. Controls include duplicate-invoice traps and salinity-themed fraud checks, so taxpayers are not buying gold-plated oars or velvet life rings.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -483,11 +483,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t2_1",
             text: "Rules allow navigation nudges, hazard alerts, and buoy babysitting - no interdictions or detentions. Only the Harbor Safety Watch can raise volume, and renewals require public notice after two cycles.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -510,9 +510,9 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t2_2",
             text: "There is no stealth escalation switch. Firmware locks out mission creep, and any change logs ping civilian oversight before a single beep grows louder than courteous-seagull levels.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightPositive
             },
@@ -537,9 +537,9 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t2_3",
             text: "We treated the first renewal like a fog bank and were too cautious with transparency. Going forward, we will add comment windows before extending limits beyond a short pilot period.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -564,11 +564,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_t2_4",
             text: "The fine-grained honk matrix lives in annexes best read on a dock with diagrams, not in a soundbite. We will bring charts to committee rather than improvise on a wind-blown podium.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.Neutral,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {

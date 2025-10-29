@@ -19,7 +19,7 @@ export const investigativeExchange: ExchangeData = {
           id: "a_r1",
           text: "Yes—we piloted neighborhood diplomacy because cul-de-sac feuds were burning hours and budgets. If a porch-flag summit prevents a pothole war, that’s a win for taxpayers.",
           type: AnswerType.Admit,
-          outcomeModifiers: {
+            outcomeModifiers: {
             outcome_1: OutcomeModifierWeight.StrongPositive,
             outcome_2: OutcomeModifierWeight.StrongNegative,
             outcome_3: OutcomeModifierWeight.SlightPositive,
@@ -42,7 +42,7 @@ export const investigativeExchange: ExchangeData = {
           id: "a_r2",
           text: "Contracts ran through the public bid portal; mediation immunity is narrow and time-bound; complaint benchmarks guide triage, not quotas. We can walk you through the line items.",
           type: AnswerType.Inform,
-          outcomeModifiers: {
+            outcomeModifiers: {
             outcome_1: OutcomeModifierWeight.StrongNegative,
             outcome_2: OutcomeModifierWeight.StrongPositive,
             outcome_3: OutcomeModifierWeight.SlightNegative,
@@ -66,7 +66,7 @@ export const investigativeExchange: ExchangeData = {
           id: "a_r3",
           text: "We won’t litigate half-baked drafts at the podium. Our auditors—and their very loud staplers—are chewing through the paper trail and will beep if anything smells smoky.",
           type: AnswerType.Deflect,
-          outcomeModifiers: {
+            outcomeModifiers: {
             outcome_1: OutcomeModifierWeight.ModeratePositive,
             outcome_2: OutcomeModifierWeight.ModerateNegative,
             outcome_3: OutcomeModifierWeight.ModerateNegative,
@@ -89,7 +89,7 @@ export const investigativeExchange: ExchangeData = {
           id: "a_r4",
           text: "If someone thinks specs were written for a buddy, bring the clause and the calendar, not vibes. Meanwhile, residents report fewer driveway standoffs this month.",
           type: AnswerType.Challenge,
-          outcomeModifiers: {
+            outcomeModifiers: {
             outcome_1: OutcomeModifierWeight.ModerateNegative,
             outcome_2: OutcomeModifierWeight.ModeratePositive,
             outcome_3: OutcomeModifierWeight.ModeratePositive,
@@ -170,8 +170,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.SlightPositive,
               outcome_2: OutcomeModifierWeight.SlightPositive,
-              outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.SlightPositive
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -194,7 +194,7 @@ export const investigativeExchange: ExchangeData = {
               outcome_1: OutcomeModifierWeight.SlightNegative,
               outcome_2: OutcomeModifierWeight.SlightNegative,
               outcome_3: OutcomeModifierWeight.SlightPositive,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -221,7 +221,7 @@ export const investigativeExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
+              outcome_2: OutcomeModifierWeight.StrongNegative,
               outcome_3: OutcomeModifierWeight.SlightPositive,
               outcome_4: OutcomeModifierWeight.SlightNegative
             },
@@ -245,7 +245,7 @@ export const investigativeExchange: ExchangeData = {
             text: "Off-duty means zero protection—citations stick. Abuse voids perks and triggers removal. Quotas are banned; the dashboard measures time-to-mediation and resolution quality, not complaint counts.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.StrongNegative,
+              outcome_1: OutcomeModifierWeight.ModerateNegative,
               outcome_2: OutcomeModifierWeight.ModeratePositive,
               outcome_3: OutcomeModifierWeight.SlightNegative,
               outcome_4: OutcomeModifierWeight.SlightPositive
@@ -324,8 +324,8 @@ export const investigativeExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.ModeratePositive,
               outcome_2: OutcomeModifierWeight.StrongNegative,
-              outcome_3: OutcomeModifierWeight.SlightPositive,
-              outcome_4: OutcomeModifierWeight.ModerateNegative
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -345,10 +345,10 @@ export const investigativeExchange: ExchangeData = {
             text: "No recent ex-staffers lobbied the committee. Revolving-door cooling periods apply, and we bounced one calendar invite for skirting close. The message was sent: wait your turn.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.ModerateNegative,
+              outcome_1: OutcomeModifierWeight.StrongNegative,
               outcome_2: OutcomeModifierWeight.StrongPositive,
               outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.ModeratePositive
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -368,9 +368,9 @@ export const investigativeExchange: ExchangeData = {
             text: "We did accept vendor demos—under recorded, equal-time rules—because touching vinyl beats reading specs. That said, scoring used blind criteria; brand names were masked.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.ModeratePositive,
-              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_1: OutcomeModifierWeight.SlightPositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.MajorNegative,
               outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
@@ -391,10 +391,10 @@ export const investigativeExchange: ExchangeData = {
             text: "Every contract includes a kill switch and repurchase rights. If a tent wheezes, the vendor replaces it within 48 hours or we claw back fees plus a ‘you made us camp’ penalty.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.StrongNegative,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.StrongPositive,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_1: OutcomeModifierWeight.ModerateNegative,
+              outcome_2: OutcomeModifierWeight.SlightNegative,
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

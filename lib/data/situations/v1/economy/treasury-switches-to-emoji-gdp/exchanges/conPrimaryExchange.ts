@@ -20,10 +20,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "I admit I once pitched scratch-and-sniff currency; emojis are the calmer compromise. Numbers spook skittish traders, but this translates sentiment into signals without ditching fiscal discipline.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -47,10 +47,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Under the hood, GDP still clears as numbers; the emoji basket is the dashboard layer. We’ll publish conversion bands, volatility collars, and a plain-English key so markets don’t chase sparkles.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o4: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "The Shield Department salutes flags, not reaction GIFs; operational math stays strictly decimal. Procurement and readiness questions route to Treasury and Budget, not to submarine captains.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.Neutral
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "This is a phased rollout with sandbox trading, not a confetti cannon. Pensions, mortgages, and paychecks get guardrails so no one wakes up paid in eggplants or thunderclouds by surprise.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -138,9 +138,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.ModerateNegative,
             },
             impacts: {
               president: {
@@ -166,10 +166,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Certification lives with the Macro Signals Board; credentials require tedious math, not mere virality. Sparkle rates are damped with circuit breakers so a trending llama can’t goose factory wages.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -193,10 +193,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one is forcing firms to hire meme-economists; translation can be outsourced like payroll. The basket is public, and boring decimals remain available for anyone allergic to tiny faces.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -220,10 +220,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Labor talks won’t become emoji ransom notes; indexation flows through a corridor with auto-stabilizers. If the bread loaf spikes, the spread narrows before it bleeds into paychecks.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -253,10 +253,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Operational comms stay emoji-free; the Shield Department runs on coalition-style numerics and plain text. For anything finance-adjacent, Treasury leads, and we’ll route your concern to the right map people.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -282,9 +282,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -308,10 +308,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Cross-agency filters strip pictograms from encrypted traffic, and navigational overlays are double-validated. If a stray icon appears, systems quarantine it and auto-start a review checklist.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -335,10 +335,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If a submarine confuses a laugh-cry with SOS, the issue isn’t the GDP metric; it’s a vessel that needs new glasses. Professionals are expected to read the manual before the memes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -370,10 +370,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "The tie-breaker is a stability rule that favors prior-period trend and basket neutrality. A three-member panel triggers it, and decisions post with timestamps plus a human-readable note.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ll admit the model is new and can wobble at the edges; that’s why limits are tight and review is fast. If a heart-eyes face misprices bread, we recalibrate before it reaches tills.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -424,10 +424,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Bond desks see the number first and emojis second, so auctions price cleanly. Paychecks ride a glide path that smooths any emoji scuffle across multiple cycles.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -451,10 +451,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If there’s a debate over smileys versus carbs, that’s for the independent Index Board. Our metric is stability, not curating the nation’s mood board.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -484,10 +484,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "A pre-rollout gauntlet runs simulated traffic through comms, mapping, and logistics with randomized emoji injections. An independent test directorate signs off, and public summaries will be posted.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -512,9 +512,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -538,10 +538,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "There’s no plan to plaster emojis onto field systems; that rumor is as sturdy as a wet sticker. The economic dashboard lives in a separate sandbox from anything that goes boom.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re not turning soldiers into meme curators. If someone wants to litigate party hats on radar screens, bring data—not vibes—to the next oversight brief.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {

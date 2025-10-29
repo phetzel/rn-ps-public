@@ -20,7 +20,7 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We’re challenging the snack loophole head-on, including filing rebuttals baked into biscotti to make a point. Ethics shouldn’t crunch; they should clarify, and we’ll move to close it fast.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.Neutral
           },
@@ -52,7 +52,7 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Deflect,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -149,7 +149,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’re drafting an anti-snack subrule and backing legislation to outlaw concealment-by-confection across agencies. For legal muscle, we’re preparing a challenge through the proper channels.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
@@ -180,7 +180,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Inspectors will treat any 'symbolic' item that alters decisions as a reportable gift, cookie or not. New audit protocols track serial crumbs from office to office with timestamped photos.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -210,7 +210,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Some of this lives with the independent board that thought fortune cookies were handbags with jokes. We won’t prejudge their rehearing, but we’ve slid them a napkin labeled 'No.'",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -240,9 +240,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No, communities aren’t stuck with crumbs while officials get fortunes. Any official caught munching a bribe gets their career toasted, and grants still flow to real needs, not snack drawers.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -260,7 +260,7 @@ export const libPrimaryExchange: ExchangeData = {
                 },
                 [CabinetStaticId.HHS]: {
                   weight: ExchangeImpactWeight.Positive,
-                  reaction: "Welcomes clear assurance to residents that aid isn’t being skimmed."
+                  reaction: "Welcomes clear assurance to residents that aid isn't being skimmed."
                 }
               }
             }
@@ -307,9 +307,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Whistleblowers keep full protection whether the NDA is PDF or pie crust. We’re adding a 'spit-it-out' clause: consuming a cookie doesn’t waive rights, and legal aid is on speed dial.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o3: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -338,7 +338,7 @@ export const libPrimaryExchange: ExchangeData = {
             type: AnswerType.Admit,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -367,7 +367,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Procurement is a labyrinth built by minotaurs with clipboards. Our architects are simplifying the maze, but we won’t narrate live construction to avoid more minotaurs showing up.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -435,7 +435,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "I won’t litigate live from the podium; the soy-ink would vanish mid-sentence. The Justicey team will file at the right time so our case arrives crisp, not half-baked.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -465,9 +465,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll argue that a bribe in a cookie is still, wait for it, a bribe. Dressing it in sprinkles doesn’t convert influence into symbolism, and we’ll press that point relentlessly.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {
@@ -495,9 +495,9 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one is waiting on a mythical Snack Court to rescue integrity. Processes are underway, and the referee is still the law, not the dessert cart.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightNegative // -4
             },
             impacts: {
               president: {
@@ -531,7 +531,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Homeland Happenings is deploying crumb-mapping audits, random cookie scans at building entry, and a hotline that understands muffled tips between bites. Data goes to cross-agency dashboards.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
@@ -561,7 +561,7 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Health & Helpful Stuff will publish a one-page 'Spot the Snack Bribe' guide, translate it into twelve fictional languages, and staff clinics to answer compliance questions without jargon.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -618,12 +618,12 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_4",
-            text: "No, we’re not creating Big Pastry Surveillance. We’re targeting concealment, not birthdays; regular treats can keep being regular treats as long as they carry zero favors inside.",
+            text: "No, we're not creating Big Pastry Surveillance. We're targeting concealment, not birthdays; regular treats can keep being regular treats as long as they carry zero favors inside.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral // 0
             },
             impacts: {
               president: {

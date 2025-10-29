@@ -20,7 +20,7 @@ export const conPrimaryExchange: ExchangeData = {
           text: "I’ll be candid: I pre-signed a timeshare for the moon’s Tuesday glow to pelicans during an overzealous coastal briefing. We’ll rotate nights so everyone gets turns and honor the island’s rituals.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.StrongNegative,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.SlightNegative
@@ -50,7 +50,7 @@ export const conPrimaryExchange: ExchangeData = {
             o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -76,9 +76,9 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Ports and patrols will not chase shadows. We’re walling off core freight and security from any glow derivatives play, so cranes lift on time and coast guards sleep under honest stars.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -138,9 +138,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -165,10 +165,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Let’s not let glow‑in‑the‑dark MBAs redline constellations before diplomats get coffee. We’re not litigating lunar folklore at a podium built by the lighting department.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.StrongNegative, // -8
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.StrongPositive // +8
             },
             impacts: {
               president: {
@@ -192,8 +192,8 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ll hard‑cap pilot arrangements, require community sign‑off, and sunset any exceptions before egos inflate. The pause is a brake pedal, not a green light to annex twilight.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.SlightNegative
             },
@@ -220,9 +220,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -255,7 +255,7 @@ export const conPrimaryExchange: ExchangeData = {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -280,9 +280,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Deflect,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -306,8 +306,8 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Authorized from Treasury: we will list standardized nightlight contracts only after liquidity and port impact tests, and we will sanction unlicensed glow brokers. Detailed guardrails will post with the term sheet.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.Neutral
             },
@@ -335,7 +335,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re coordinating with port authorities and patrols to pre‑clear nighttime lanes and ring‑fence critical cargo from any glow tolls. If financing is needed, we’ll deploy tide‑stable credit lines.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.Neutral,
               o4: OutcomeModifierWeight.Neutral
@@ -370,7 +370,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Recognition means scheduled observances, co‑authored calendars, and guaranteed ritual vistas—no property titles, no exclusive orbits. We’ll codify it as access, audited by a neutral stargazer panel.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
               o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
@@ -425,7 +425,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
               o4: OutcomeModifierWeight.ModeratePositive
             },
@@ -451,10 +451,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No one owns the moonlight; at best, we coordinate its enjoyment. We won’t mint sky property rights because someone brought a notarized glow stick.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -484,10 +484,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Contracts will carry cloud clauses, mandatory reserves, and port‑first carve‑outs. Clearinghouses must pre‑fund weather risk, and a public backstop kicks in only for critical freight lanes—not for yacht lanterns.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -512,9 +512,9 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.Neutral,
+              o4: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If your business plan collapses when a cloud blinks, it belongs in a planetarium gift shop, not a port ledger. We’ll keep the spectacle out of payroll.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {

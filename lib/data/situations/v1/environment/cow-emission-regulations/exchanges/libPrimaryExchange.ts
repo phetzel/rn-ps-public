@@ -31,9 +31,9 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_health_benefits_proven:
-              OutcomeModifierWeight.ModeratePositive, // +6
+              OutcomeModifierWeight.StrongPositive, // +8
             outcome_legal_battles_intensify:
-              OutcomeModifierWeight.ModerateNegative, // -6
+              OutcomeModifierWeight.SlightNegative, // -4
             outcome_enforcement_compromise: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_health_data",
@@ -79,7 +79,7 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_health_benefits_proven:
-              OutcomeModifierWeight.SlightNegative, // -4
+              OutcomeModifierWeight.StrongNegative, // -8
             outcome_legal_battles_intensify:
               OutcomeModifierWeight.SlightPositive, // +4
           outcome_enforcement_compromise: OutcomeModifierWeight.SlightPositive, // +4
@@ -242,7 +242,7 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_health_benefits_proven:
-              OutcomeModifierWeight.SlightPositive, // +4
+              OutcomeModifierWeight.StrongPositive, // +8
             outcome_legal_battles_intensify:
               OutcomeModifierWeight.SlightNegative, // -4
             outcome_enforcement_compromise: OutcomeModifierWeight.SlightNegative, // -4 (new)
@@ -265,10 +265,10 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_health_benefits_proven:
-              OutcomeModifierWeight.SlightPositive, // +4
+              OutcomeModifierWeight.StrongPositive, // +8
             outcome_legal_battles_intensify:
               OutcomeModifierWeight.SlightNegative, // -4
-            outcome_enforcement_compromise: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_enforcement_compromise: OutcomeModifierWeight.SlightNegative, // -4
           },
         },
         {

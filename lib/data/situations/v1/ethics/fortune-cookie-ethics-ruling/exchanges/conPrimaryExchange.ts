@@ -20,9 +20,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "We’re challenging this snack loophole head-on. I’m filing rebuttals baked into biscotti and asking the board to un-crunch the rule so ethics clarify, not crumble.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.ModeratePositive, // +6
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.ModerateNegative // -6
           },
           impacts: {
             president: {
@@ -52,7 +52,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -82,9 +82,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Justice can’t comment on snack-based hypotheticals while the soy-ink dries. We’re preserving evidence, not fingerprints, and we won’t taste-test exhibits in public.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -112,9 +112,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "From a health standpoint, cookies are not tracking devices. We’ll issue guidance so seniors and coders know a fortune isn’t a waiver, and sodium stays optional.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightPositive // +4
           },
           impacts: {
             president: {
@@ -150,7 +150,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Authorized,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
               o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -181,9 +181,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’re coordinating with customs, couriers, and bakeries to harden supply chains. Tamper‑evident wrappers and randomized inspections make dessert the least convenient place to hide anything.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -212,7 +212,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Challenge,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
@@ -241,9 +241,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Your lunch won’t be frisked. We’ll target risk, not napkins, and keep screenings quick so citizens can eat in peace without a metal detector for sesame seeds.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.Neutral, // 0
+              o3: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -277,7 +277,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We don’t pre-announce prosecutions, especially when evidence might flake. Our job is to investigate quietly, not season the headlines with half-baked charges.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -307,9 +307,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We’ve directed investigators to treat cookie concealment like any covert conduit. Charging decisions will follow facts, not frosting, and we’re coordinating with inspectors across agencies.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongPositive
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -338,7 +338,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "No, we’re not blessing bribes because they arrived with chopsticks. A loophole isn’t a hall pass, and anyone laundering favors via dessert should expect legal indigestion.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
@@ -368,7 +368,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If the ethics rule invites abuse, we’ll test it in court and seek clarity. Corruption doesn’t get diplomatic immunity just because it’s fortune-sized.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
@@ -406,7 +406,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "Crumb analytics link residue patterns with shipment metadata to spot anomalies. K‑9s are trained on inks and polymers, not vanilla, and scanners verify contents without unboxing every treat.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },
@@ -437,7 +437,7 @@ export const conPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -466,9 +466,9 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We won’t publish our full recipe. Broadcasting thresholds teaches smugglers to season around them, and we prefer their surprises to be ours, not theirs.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.Neutral,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive
+              o3: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -534,7 +534,7 @@ export const conPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.ModerateNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -562,7 +562,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "We use fast-track tools for perishable leads, so a stale cookie doesn’t mean a stale case. Victims—taxpayers included—get updates without spoiling investigations.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
@@ -622,7 +622,7 @@ export const conPrimaryExchange: ExchangeData = {
             text: "If the carveout muddies the law, we’ll invite a judge to clarify and treat the ruling like a dough we can knead into precedent, not a forever snack pass.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.SlightNegative
             },

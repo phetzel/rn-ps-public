@@ -20,10 +20,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Markets already put froth premiums on lattes; pricing goat hugs just cleans the mirror. Forcing bids on the unpriceable drags hidden value into daylight without fearing a little comic chaos.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModeratePositive,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative,
           },
           impacts: {
             president: {
@@ -47,10 +47,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Treasury will post reference bands: couches via the Comparable Sofa Census, casseroles by Ingredient Cost plus Effort Minutes, and cat-sits at neighborhood medians. Meme receipts get time-stamped hashes.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative,
           },
           impacts: {
             president: {
@@ -75,10 +75,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Justice denies that barter buys innocence. A lasagna cannot quash a subpoena, and no tractor ride outruns due process. Payments satisfy taxes, not charges, and that wall stays high.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.SlightNegative
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -103,10 +103,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Audits won’t rummage your linen closet. Expect light-touch checks and a clear app, not clipboard zealotry. If you can photograph it, you can document it, and most folks will never see an audit.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive,
           },
           impacts: {
             president: {
@@ -137,10 +137,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Benchmarks drive it: couches map to the Household Fixtures Index, casseroles to Ingredients+Labor Minutes, and IOUs to sitter medians. Memes require provable reach and originality attestations in the annex.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -165,10 +165,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Per Treasury’s Section 4.2, memes are accepted until Fiscaltober 31 at 11:59 Civic, with a 24-hour grace for outages. Filenames must carry hash IDs, and reposts need creator consent on file.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.ModeratePositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.ModerateNegative,
             },
             impacts: {
               president: {
@@ -193,10 +193,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If your casserole can’t clear a bid, perhaps it’s priceless only to your aunt. This forces candor: either bake better or pay cash, and that’s a helpful feedback loop for taste and taxes.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -221,9 +221,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Reassure,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -255,8 +255,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -281,10 +281,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Audit selection fires on risk flags: oversized valuations, recycled memes, or barter chains that never close. Reviews start remote via your BarterLog and escalate only if numbers fight physics.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -308,10 +308,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We’ll publish the audit playbook after public comment so we don’t beta-test on your grandma’s end table. Better to get it right than cosplay certainty this afternoon.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -335,10 +335,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Auditors will not taste-test stew or nap-test couches. Photos, receipts, and a short sworn note beat drama. Keep honest records and an audit is a brisk jog, not a marathon.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -370,10 +370,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Provable reach means platform‑agnostic proofs: cryptographic impressions, independent timestamps, and bot‑scrubbed counts. Originality uses similarity scores plus creator attestations reviewed by a panel.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.SlightPositive, // +4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.StrongNegative, // -8
+              o4: OutcomeModifierWeight.Neutral, // 0
             },
             impacts: {
               president: {
@@ -397,10 +397,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "If a goat wink funds streetlights faster than a spreadsheet, the market has spoken. This policy lets cultural value stop hiding behind eye‑rolls and start paying its civic rent.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.StrongNegative,
             },
             impacts: {
               president: {
@@ -424,10 +424,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We deny that cringe equals fraud. Bad taste is not a crime; fabrication is. Justice steps in only when numbers are forged or bots are hired, not when puns take the long way home.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.SlightPositive, // +4
+              o4: OutcomeModifierWeight.SlightNegative, // -4
             },
             impacts: {
               president: {
@@ -451,10 +451,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We won’t crown a Meme of the Month. The annex is calibration, not a talent show, and we’ll iterate after pilot data rather than decree aesthetic law from a windowless room.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -484,10 +484,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We deny any barter‑to‑justice pipeline. Charging and sentencing are firewalled from revenue collection, with discipline for violators and public logs to expose cozy detours.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -511,10 +511,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Tax disputes get a fast‑track appeal: 30 days to contest valuation, independent reviewers, and plain‑language rulings. Penalties scale with intent, and first‑time errors default to education.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o4: OutcomeModifierWeight.SlightNegative,
             },
             impacts: {
               president: {
@@ -538,10 +538,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Whistleblower shields and anonymized audit stats keep sunlight on the process. If a VIP tractor winks at a prosecutor, expect a report and consequences, not a nod and a wink.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {
@@ -565,10 +565,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We admit gray zones will surface—barter is messy by design. That’s why the wildest bits sunset unless data supports them, and cities can A/B test before anything becomes permanent.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightPositive,
             },
             impacts: {
               president: {

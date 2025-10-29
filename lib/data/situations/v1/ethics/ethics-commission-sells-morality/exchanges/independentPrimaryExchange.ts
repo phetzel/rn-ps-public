@@ -346,10 +346,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Justice is issuing a rule blocking prepay virtue schemes, with debarment for vendors and discipline for officials. Bulk buys trigger automatic alerts, and we’ll publish enforcement dashboards for the curious.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.Neutral,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -380,8 +380,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -479,10 +479,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "There is no secret amnesty appendix, no backstage pass, and no “gold tier” absolution for insiders. The vending code never granted privileges, and it never will under this administration.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -512,8 +512,8 @@ export const independentPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
               o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.SlightNegative,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

@@ -30,10 +30,9 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_strike_security_crisis: OutcomeModifierWeight.MajorNegative, // -12
-            outcome_strike_karaoke_compromise:
-              OutcomeModifierWeight.StrongPositive, // +8
+            outcome_strike_wellness_focus: OutcomeModifierWeight.StrongPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative
           },
           followUpId: "q_taxpayer_costs",
         },
@@ -50,10 +49,9 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
-            outcome_strike_security_crisis:
-              OutcomeModifierWeight.SlightPositive, // +4
-            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            outcome_strike_wellness_focus: OutcomeModifierWeight.ModerateNegative,
+            outcome_strike_security_crisis: OutcomeModifierWeight.ModeratePositive,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral
           },
           followUpId: "q_union_accountability",
         },
@@ -73,10 +71,9 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-            outcome_strike_security_crisis:
-              OutcomeModifierWeight.SlightNegative, // -4
-            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongPositive
           },
         },
         {
@@ -95,11 +92,9 @@ export const conPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0
-            outcome_strike_security_crisis:
-              OutcomeModifierWeight.StrongPositive, // +8
-            outcome_strike_karaoke_compromise:
-              OutcomeModifierWeight.StrongNegative, // -8
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral
           },
         },
       ],
@@ -125,12 +120,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.StrongPositive, // +8
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative
             },
             followUpId: "q_budget_priorities",
           },
@@ -150,12 +142,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.StrongNegative, // -8
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative, // -8
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.MajorPositive // +12
             },
           },
           {
@@ -171,11 +160,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.StrongPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative
             },
           },
           {
@@ -190,9 +177,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral // 0
             },
           },
         ],
@@ -217,11 +204,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.Neutral, // 0
+            outcome_strike_wellness_focus: OutcomeModifierWeight.StrongPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative
             },
             followUpId: "q_legal_consequences",
           },
@@ -241,11 +226,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive
             },
           },
           {
@@ -264,11 +247,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongPositive
             },
           },
           {
@@ -283,9 +264,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative
             },
           },
         ],
@@ -310,11 +291,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative // -8
             },
           },
           {
@@ -331,11 +310,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0 (changed from -4)
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightNegative, // -4 (changed from -8)
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive // +4
             },
           },
           {
@@ -351,11 +328,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.StrongPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative
             },
           },
           {
@@ -370,9 +345,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative // -8
             },
           },
         ],
@@ -395,11 +370,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.Neutral, // 0
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.StrongNegative
             },
           },
           {
@@ -416,11 +389,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_security_crisis:
-                OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise:
-                OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.StrongNegative, // -8
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.MajorPositive // +12
             },
           },
           {
@@ -436,9 +407,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.Neutral, // 0
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0 (changed from -4)
+            outcome_strike_wellness_focus: OutcomeModifierWeight.StrongPositive,
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative,
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.SlightNegative
             },
           },
           {
@@ -453,9 +424,9 @@ export const conPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_strike_wellness_focus: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_strike_security_crisis: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral, // 0
+            outcome_strike_wellness_focus: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_strike_security_crisis: OutcomeModifierWeight.SlightPositive, // +4
+            outcome_strike_karaoke_compromise: OutcomeModifierWeight.Neutral // 0
             },
           },
         ],

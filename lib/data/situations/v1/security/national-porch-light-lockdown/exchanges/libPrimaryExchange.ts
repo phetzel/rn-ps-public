@@ -48,12 +48,12 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a2",
-          text: "Our defense teams are rolling out Light Infantry drills—photon formations and moth-decoy drones—to stabilize nights, with seniors and rural blocks first. No one’s staging a blackout coup.",
+          text: "Our defense teams are rolling out Light Infantry drills—photon formations and moth-decoy drones—to stabilize nights, with seniors and rural blocks first. No one's staging a blackout coup.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
             o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
@@ -84,7 +84,7 @@ export const libPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -149,15 +149,15 @@ export const libPrimaryExchange: ExchangeData = {
         text: "What exactly is collected, who sees it, and how long is bulb data kept before every porch becomes a case file tagged ‘ambient suspicion’?",
         answers: [
           {
-            id: "a5",
-            text: "We collect make, watt rating, install address, and outage timestamps, nothing inside the home. Access is tiered to repair teams and auditors, with deletion clocks instead of dusty archives.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a5",
+          text: "We collect make, watt rating, install address, and outage timestamps, nothing inside the home. Access is tiered to repair teams and auditors, with deletion clocks instead of dusty archives.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -181,15 +181,15 @@ export const libPrimaryExchange: ExchangeData = {
             followUpId: "q4"
           },
           {
-            id: "a6",
-            text: "No, there is no secret switch logging doorbell gossip or kettle boil times. The registry cannot see inside your life, because it is blissfully too dim to try.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          id: "a6",
+          text: "No, there is no secret switch logging doorbell gossip or kettle boil times. The registry cannot see inside your life, because it is blissfully too dim to try.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -212,15 +212,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a7",
-            text: "Look, the mystery device isn’t filing paperwork; it’s tripping neighborhoods. Let’s fix the infrastructure before composing poetry about metadata in the moonlight.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a7",
+          text: "Look, the mystery device isn't filing paperwork; it's tripping neighborhoods. Let's fix the infrastructure before composing poetry about metadata in the moonlight.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -243,15 +243,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a8",
-            text: "We’ll publish a plain-language data menu and retention schedule and let a citizen board veto creep. If it smells like snooping, it’s out before it’s in.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a8",
+          text: "We'll publish a plain-language data menu and retention schedule and let a citizen board veto creep. If it smells like snooping, it's out before it's in.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -280,15 +280,15 @@ export const libPrimaryExchange: ExchangeData = {
         text: "Renters report fines for flickers they can’t fix or outages tied to landlord wiring. Who’s liable, and how do appeals work without a light-fee maze?",
         answers: [
           {
-            id: "a9",
-            text: "Early citations were premature. Liability must ride with property owners for wiring faults, and renters need automatic shields and no-cost appeals before any bill is licked.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a9",
+          text: "Early citations were premature. Liability must ride with property owners for wiring faults, and renters need automatic shields and no-cost appeals before any bill is licked.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -312,15 +312,15 @@ export const libPrimaryExchange: ExchangeData = {
             followUpId: "q5"
           },
           {
-            id: "a10",
-            text: "We’re pausing renter fines and back-billing landlords for system neglect. Until appeals are automatic and simple, no one owes a nickel for a blinking bulb.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          id: "a10",
+          text: "We're pausing renter fines and back-billing landlords for system neglect. Until appeals are automatic and simple, no one owes a nickel for a blinking bulb.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -374,15 +374,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a12",
-            text: "Appeals will be one form, ten days, digital or paper, with live help. If the outage stems from faulty lines or device interference, fees zero out automatically.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a12",
+          text: "Appeals will be one form, ten days, digital or paper, with live help. If the outage stems from faulty lines or device interference, fees zero out automatically.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -475,15 +475,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a15",
-            text: "Users will get a portal showing who peeked and why, plus a nuke-my-data button at sunset. Think porch control, not porch parole.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a15",
+          text: "Users will get a portal showing who peeked and why, plus a nuke-my-data button at sunset. Think porch control, not porch parole.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -506,15 +506,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a16",
-            text: "We found two clauses that could be twisted into fishing expeditions and are cutting them. Dry law beats wet loopholes, even if the lobbyists bring umbrellas.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a16",
+          text: "We found two clauses that could be twisted into fishing expeditions and are cutting them. Dry law beats wet loopholes, even if the lobbyists bring umbrellas.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -605,15 +605,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a19",
-            text: "If an enforcer tries to weaponize a watt, we’ll unscrew their authority on live TV. The point is safety, not turning stoops into subpoena traps.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a19",
+          text: "If an enforcer tries to weaponize a watt, we'll unscrew their authority on live TV. The point is safety, not turning stoops into subpoena traps.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -636,15 +636,15 @@ export const libPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a20",
-            text: "Training is mandatory: officers learn ‘bulb is not probable cause,’ and inspectors carry warrant checklists the size of a billboard. Overreach should trip alarms, not citizens.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          id: "a20",
+          text: "Training is mandatory: officers learn 'bulb is not probable cause,' and inspectors carry warrant checklists the size of a billboard. Overreach should trip alarms, not citizens.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,

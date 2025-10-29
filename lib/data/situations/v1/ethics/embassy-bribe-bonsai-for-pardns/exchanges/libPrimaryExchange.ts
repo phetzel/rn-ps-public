@@ -19,9 +19,9 @@ export const libPrimaryExchange: ExchangeData = {
           id: "a_root_1",
           text: "We didn’t swap justice for houseplants. Expedited reviews exist for security and statute, not shrubbery. A bonsai is a plant, not a pardon, and no plant dictates prosecutions.",
           type: AnswerType.Deny,
-          outcomeModifiers: {
+            outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.Neutral
           },
@@ -46,10 +46,10 @@ export const libPrimaryExchange: ExchangeData = {
           id: "a_root_2",
           text: "Let’s not confuse cultural diplomacy with crime drama. The State Ministry engages citizens with art, music, and, yes, living symbols. Policy is made by people, not pots.",
           type: AnswerType.Deflect,
-          outcomeModifiers: {
+            outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
-            o3: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
@@ -74,9 +74,9 @@ export const libPrimaryExchange: ExchangeData = {
           id: "a_root_3",
           text: "Justice tracks immunities via a public docket with timestamps, reviewers, and criteria. We can walk you through that boring spreadsheet rather than a spicy bonsai fanfic.",
           type: AnswerType.Inform,
-          outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.Neutral,
+            outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.StrongPositive,
             o4: OutcomeModifierWeight.ModerateNegative
           },
@@ -102,11 +102,11 @@ export const libPrimaryExchange: ExchangeData = {
           id: "a_root_4",
           text: "An independent ethics office is already clipping through the facts. If anyone tried to fertilize favors with gifts, it will be exposed quickly and addressed in the open.",
           type: AnswerType.Reassure,
-          outcomeModifiers: {
+            outcomeModifiers: {
             o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.MajorPositive
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -137,11 +137,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Authorized by the Justice Ministry: docket 14-Q lists 27 expedite requests over six weeks; 9 approved, 18 denied, none tied to gifts by reviewer notes. A redacted audit log posts at 5 p.m.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -166,11 +166,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The spike tracks to a cyber backlog fix, not botany. Requests moved from manual queue to auto triage on the 12th; criteria unchanged; all gift disclosures sit in a separate registry.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -220,11 +220,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If someone has a ledger alleging quid pro shrub, publish it in full. Selective fragments make memorable headlines and terrible evidence.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.MajorPositive
-            },
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -253,11 +253,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Cultural gifts are handshakes with roots. They’re logged, quarantined, and displayed under ethics rules. Our visa honors celebrate people, not planters, and no pot has a stamp.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -280,11 +280,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Intake uses Form 602-Green; valuations by third-party botanists; protocol tracks custody; visas assessed by law. We’ll release the workflow and a scrubbed registry excerpt.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.MajorPositive,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -308,11 +308,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ve commissioned a top-to-soil review of our gift pipeline with outside auditors. Where policy needs trimming, we’ll prune and show the clippings.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -335,11 +335,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Calling a potted tree a bribe ignores the firewall between protocol and visas. It’s a punchline that wilts when you read the policy manual.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -370,11 +370,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The Compliance Director and the Deputy for Immunities signed; three of twenty-seven expedites were reversed after second-level review. The full timeline posts with the audit tonight.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -397,11 +397,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No one traded favors for foliage, and the audit found no gift-linked anomalies in case notes. The only spike was from a backlog purge after a software fix.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -424,11 +424,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll release the audit packet, reviewer matrix, and anonymized case paths so the public can trace every step without outing litigants or staff.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -451,11 +451,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We can’t litigate live with plant metaphors. Read the audit; if you still think ficus equals favoritism, we’ll bring a botanist and a lawyer to office hours.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.MajorPositive
-            },
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -484,11 +484,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We’ll publish the registry with valuations, custody chain, and display locations, minus sensitive donor data. The symbolism memo will be released with standard redactions.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -511,11 +511,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We don’t hang policy from a bonsai branch. The registry is a museum list, not a lever, and we won’t stage-manage ethics for a press montage.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.StrongNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -538,11 +538,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Expect a transparency bundle this week: registry excerpts, training decks, and an FAQ that translates our plant puns into policy plain-speak.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.MajorPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -565,11 +565,11 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If every ribbon-cutting is cast as a kickback, nothing will satisfy that narrative. We’ll meet the law and disclosure, not conspiracy fan fiction.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,

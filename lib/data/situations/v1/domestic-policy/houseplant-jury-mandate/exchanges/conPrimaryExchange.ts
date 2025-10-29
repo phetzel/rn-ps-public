@@ -54,7 +54,7 @@ export const conPrimaryExchange: ExchangeData = {
             o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightPositive,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o4: OutcomeModifierWeight.Neutral
           },
           impacts: {
             president: {
@@ -118,7 +118,7 @@ export const conPrimaryExchange: ExchangeData = {
             o1: OutcomeModifierWeight.StrongNegative,
             o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -179,16 +179,16 @@ export const conPrimaryExchange: ExchangeData = {
               }
             }
           },
-          {
-            id: "q2_a2",
-            text: "Authorized: Our bean-counters project single-digit credits, low-cost tags, and quarterly sampling of claims. We’ll detail pot metrics and anti-counterfeit features, and publish the audit toolkit for comment.",
-            type: AnswerType.Authorized,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+        {
+          id: "q2_a2",
+          text: "Authorized: Our bean-counters project single-digit credits, low-cost tags, and quarterly sampling of claims. We’ll detail pot metrics and anti-counterfeit features, and publish the audit toolkit for comment.",
+          type: AnswerType.Authorized,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -243,16 +243,16 @@ export const conPrimaryExchange: ExchangeData = {
               }
             }
           },
-          {
-            id: "q2_a4",
-            text: "Final scoring and enforcement tables arrive with the rule text. We’re not going to freelance numbers that could change after public input and a reality check with actual living rooms.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+        {
+          id: "q2_a4",
+          text: "Final scoring and enforcement tables arrive with the rule text. We’re not going to freelance numbers that could change after public input and a reality check with actual living rooms.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -315,12 +315,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q3_a2",
             text: "Certification and training live with the health folks. We’ll pre-approve calm, non-judgmental species, include allergy accommodations, and publish de-escalation tips for humans who yell at ferns.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -378,12 +378,12 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q3_a4",
             text: "If your argument requires a heat lamp bribe, your case isn’t strong. The fern cannot be swayed, doesn’t eat compost, and has zero patience for drama or decorative subpoenas.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -444,16 +444,16 @@ export const conPrimaryExchange: ExchangeData = {
               }
             }
           },
-          {
-            id: "q4_a2",
-            text: "No, we are not installing scanners in your ficus or sending drones to judge your soil. Audits are minimal, scheduled, and triggered by red flags, not curiosity about your decor.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+        {
+          id: "q4_a2",
+          text: "No, we are not installing scanners in your ficus or sending drones to judge your soil. Audits are minimal, scheduled, and triggered by red flags, not curiosity about your decor.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -506,16 +506,16 @@ export const conPrimaryExchange: ExchangeData = {
               }
             }
           },
-          {
-            id: "q4_a4",
-            text: "Penalties are civil and proportionate: denied credits, small fines for deliberate fakery, and education for honest mistakes. No one is doing hard time over a mislabeled pothos.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+        {
+          id: "q4_a4",
+          text: "Penalties are civil and proportionate: denied credits, small fines for deliberate fakery, and education for honest mistakes. No one is doing hard time over a mislabeled pothos.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -574,16 +574,16 @@ export const conPrimaryExchange: ExchangeData = {
               }
             }
           },
-          {
-            id: "q5_a2",
-            text: "Certification looks at noise tolerance, leaf reactivity, and bias proxies like leaning toward the loudest speaker. Results go in a transparent registry updated with field data from pilot homes.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+        {
+          id: "q5_a2",
+          text: "Certification looks at noise tolerance, leaf reactivity, and bias proxies like leaning toward the loudest speaker. Results go in a transparent registry updated with field data from pilot homes.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -636,16 +636,16 @@ export const conPrimaryExchange: ExchangeData = {
               }
             }
           },
-          {
-            id: "q5_a4",
-            text: "Early pilots found a few species were, frankly, judgy and spiky about it. We dropped them from the list, tightened watering neutrality rules, and improved training materials for humans.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
-            },
+        {
+          id: "q5_a4",
+          text: "Early pilots found a few species were, frankly, judgy and spiky about it. We dropped them from the list, tightened watering neutrality rules, and improved training materials for humans.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.StrongPositive,
+            o4: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,

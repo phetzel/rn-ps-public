@@ -17,13 +17,13 @@ export const independentPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_root_1",
-          text: "I’ll level with you: we promised the Moon curb space and moths a union break. Permits keep nightlife from double‑booking the sky and let neighbors weigh in before a deli installs a lighthouse.",
+          text: "I'll level with you: we promised the Moon curb space and moths a union break. Permits keep nightlife from double‑booking the sky and let neighbors weigh in before a deli installs a lighthouse.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
+            o1: OutcomeModifierWeight.MajorPositive,
             o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.MajorNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -44,13 +44,13 @@ export const independentPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_2",
-          text: "Unlicensed glow is a soft target for bad actors. We’re treating lumen‑laundering like contraband and auditing floodlights before the disco balls organize a riot.",
+          text: "Unlicensed glow is a soft target for bad actors. We're treating lumen‑laundering like contraband and auditing floodlights before the disco balls organize a riot.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -74,10 +74,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Health‑wise, this is dull on purpose: dimmer dinners, calmer bedrooms, and moth corridors that keep the flutter far from pillows. Permits put guardrails on glare without snuffing out business.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
-            o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.StrongPositive
           },
           impacts: {
             president: {
@@ -102,10 +102,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "The rule sets tiers by brightness, hours, and spectrum. Quiet‑hours caps, warm‑tone filters, and carve‑outs for emergency beacons aim to protect sleep and migration while keeping shop signs legal.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -137,10 +137,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Fees scale with output and hours: micro‑vendors under 500 lumens pay a token, heavier rigs pay more. Audits are scheduled, with self‑attestation first and grants to swap in moth‑friendly bulbs.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -165,10 +165,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We built a grace period, a fix‑it ticket for first offenses, and a live human hotline. No surprise ladder ambushes; inspectors call ahead and bring charts, not bolt cutters.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -189,13 +189,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec1_3",
-            text: "Some sticker shock is coming from landlords and the Lantern League. We’ll publish a transparent calculator so complaints can graduate from vibes to math.",
+            text: "Some sticker shock is coming from landlords and the Lantern League. We'll publish a transparent calculator so complaints can graduate from vibes to math.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -216,13 +216,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec1_4",
-            text: "It isn’t a stealth tax; it’s a licensing standard with ceilings on fines. If a corner bakery runs a tasteful glow, they’ll pay less than they spend on napkins.",
+            text: "It isn't a stealth tax; it's a licensing standard with ceilings on fines. If a corner bakery runs a tasteful glow, they'll pay less than they spend on napkins.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -252,10 +252,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No bedroom snooping. We use neighborhood lumen logs, hospital insomnia trends, and moth counts from gentle traps, then target the biggest glare sources first—usually the billboards, not the porches.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -279,10 +279,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We triage by spectrum, intensity, and timing. Blue‑white glare during quiet hours ranks high; warm, early‑evening shop signs rank low, and we adjust limits when migratory forecasts flag a corridor.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -304,13 +304,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec2_3",
-            text: "If you’re lighting the block like a stadium, expect a chat and a dimmer. The right to swing your floodlight ends where someone else’s REM sleep begins.",
+            text: "If you're lighting the block like a stadium, expect a chat and a dimmer. The right to swing your floodlight ends where someone else's REM sleep begins.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -331,13 +331,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_sec2_4",
-            text: "Moths have seats on the Nightlife Advisory Council. They’re surprisingly process‑oriented and have already demanded fewer reflective vests.",
+            text: "Moths have seats on the Nightlife Advisory Council. They're surprisingly process‑oriented and have already demanded fewer reflective vests.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -369,10 +369,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Notice, 30 days to cure, and a local review panel come before fines. Penalties are capped, and repeat offenders can swap dollars for community service at bug‑friendly bulb clinics.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -396,10 +396,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No one is zip‑tying your sconce. We use tamper seals, not padlocks, and the first step is always an advisory sticker plus a textable appeal code.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -420,13 +420,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter1_3",
-            text: "We launched the warning stickers a week before the FAQ was readable. That rollout was too cute by half, and we’ve corrected it with plainer guides and slower clocks.",
+            text: "We launched the warning stickers a week before the FAQ was readable. That rollout was too cute by half, and we've corrected it with plainer guides and slower clocks.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -450,10 +450,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Chronic glare barons get firmer consequences because the night is shared infrastructure. Hoarding darkness is weird; hoarding brightness is worse.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -483,10 +483,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Yes, seasonal variance exists. Waivers cover short festivals with capped lumen budgets, and corridor maps update weekly so adjustments are block‑level, not county‑wide.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.ModeratePositive,
+              o3: OutcomeModifierWeight.ModerateNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -507,13 +507,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter2_2",
-            text: "Festivals won’t go dark; they’ll glow smarter—warm spectrum, timed dimming, and signage kits that guide feet without roasting retinas or confusing the migration.",
+            text: "Festivals won't go dark; they'll glow smarter—warm spectrum, timed dimming, and signage kits that guide feet without roasting retinas or confusing the migration.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -534,13 +534,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter2_3",
-            text: "We’re not rerouting entire counties’ nightlife. The corridors are ribbons, not blankets, and the limits apply in narrow windows when the moth highways get busy.",
+            text: "We're not rerouting entire counties' nightlife. The corridors are ribbons, not blankets, and the limits apply in narrow windows when the moth highways get busy.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.MajorPositive,
               o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.MajorNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -561,13 +561,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_ter2_4",
-            text: "If a barn rave outshines the Moon, that’s a scheduling dispute with the cosmos. We’ll happily mediate between DJs and the night sky’s calendar.",
+            text: "If a barn rave outshines the Moon, that's a scheduling dispute with the cosmos. We'll happily mediate between DJs and the night sky's calendar.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.StrongNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.ModerateNegative,
+              o3: OutcomeModifierWeight.ModeratePositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

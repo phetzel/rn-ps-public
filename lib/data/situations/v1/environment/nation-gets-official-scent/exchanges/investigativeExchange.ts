@@ -165,15 +165,15 @@ export const investigativeExchange: ExchangeData = {
             authorizedCabinetMemberId: CabinetStaticId.State
           },
           {
-            id: "a_s1_3",
-            text: "No, officials weren’t wined and dined by scent reps. The fanciest perk anyone got was a sample vial and municipal tap water, which, for the record, smells like government transparency.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a_s1_3",
+          text: "No, officials weren't wined and dined by scent reps. The fanciest perk anyone got was a sample vial and municipal tap water, which, for the record, smells like government transparency.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.StrongPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -188,15 +188,15 @@ export const investigativeExchange: ExchangeData = {
             }
           },
           {
-            id: "a_s1_4",
-            text: "If a lobbyist seasoned the recipe, name the note and the meeting. Otherwise, let’s stop ghost-sniffing conspiracies and judge the program by documents, not dramatised rumor.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
-            },
+          id: "a_s1_4",
+          text: "If a lobbyist seasoned the recipe, name the note and the meeting. Otherwise, let's stop ghost-sniffing conspiracies and judge the program by documents, not dramatised rumor.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.StrongPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.ModerateNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyPositive,
@@ -217,15 +217,15 @@ export const investigativeExchange: ExchangeData = {
         text: "What’s the energy footprint to pipe Eau Official, who pays, and what reviews back it up; are peak-hour blasts throttled or is the grid now a cologne machine?",
         answers: [
           {
-            id: "a_s2_1",
-            text: "Preliminary audits show sub-kilowatt draws per unit and duty cycles under 40 percent. We’ll release site meter data, costs by square foot, and third-party verification next week.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.StrongNegative
-            },
+          id: "a_s2_1",
+          text: "Preliminary audits show sub-kilowatt draws per unit and duty cycles under 40 percent. We'll release site meter data, costs by square foot, and third-party verification next week.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.Neutral, // 0
+            o4: OutcomeModifierWeight.Neutral // 0
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -241,15 +241,15 @@ export const investigativeExchange: ExchangeData = {
             followUpId: "q_t2"
           },
           {
-            id: "a_s2_2",
-            text: "Units idle on low-traffic hours, throttle during peaks, and shut off in air quality alerts. Costs are capped to pilot budgets, not transit, and renewable credits cover the baseline.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_s2_2",
+          text: "Units idle on low-traffic hours, throttle during peaks, and shut off in air quality alerts. Costs are capped to pilot budgets, not transit, and renewable credits cover the baseline.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral, // 0
+            o2: OutcomeModifierWeight.SlightPositive, // +4
+            o3: OutcomeModifierWeight.SlightPositive, // +4
+            o4: OutcomeModifierWeight.StrongNegative // -8
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -264,15 +264,15 @@ export const investigativeExchange: ExchangeData = {
             }
           },
           {
-            id: "a_s2_3",
-            text: "No, the grid isn’t becoming a cologne machine, and nobody’s raiding bus repairs to buy diffusers. The financing is ring-fenced, and penalties don’t kick in if cities opt to pause.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_s2_3",
+          text: "No, the grid isn't becoming a cologne machine, and nobody's raiding bus repairs to buy diffusers. The financing is ring-fenced, and penalties don't kick in if cities opt to pause.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.Neutral,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -287,15 +287,15 @@ export const investigativeExchange: ExchangeData = {
             }
           },
           {
-            id: "a_s2_4",
-            text: "If someone can power a plaza on hot takes, we’ll license the technology. Until then, our kilowatt cap stands, and we’ll cut fragrance before we cut lights or safety systems.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          id: "a_s2_4",
+          text: "If someone can power a plaza on hot takes, we'll license the technology. Until then, our kilowatt cap stands, and we'll cut fragrance before we cut lights or safety systems.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.SlightNegative, // -4
+            o3: OutcomeModifierWeight.SlightNegative, // -4
+            o4: OutcomeModifierWeight.MajorPositive // +12 = 0
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyPositive,

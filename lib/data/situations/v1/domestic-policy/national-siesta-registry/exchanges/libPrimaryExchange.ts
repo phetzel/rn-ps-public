@@ -21,9 +21,9 @@ export const libPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongNegative,
-            o3: OutcomeModifierWeight.ModeratePositive,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -48,10 +48,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "It’s a wellness snapshot, not dream surveillance. We log duration and timing to spot community fatigue, and households can opt out of narrative notes entirely.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -76,9 +76,9 @@ export const libPrimaryExchange: ExchangeData = {
           text: "Synchronizing community rest helps keep emergency drills in rhythm and staffing alert. No dreams, no content, just nap windows to coordinate sirens and responders.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
+            o1: OutcomeModifierWeight.SlightPositive,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -103,8 +103,8 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We’re finalizing the rule text and consultation memos; half the acronyms are still asleep. Let us publish the plain-language guide this week, then grill us.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.SlightNegative,
             o4: OutcomeModifierWeight.SlightPositive
           },
@@ -137,10 +137,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There are no fines for missed days in the baseline rollout. Warnings are automated nudges, and nobody is getting a midnight tuck-in from anyone with a badge.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -164,10 +164,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If a report is missed for weeks, local health partners offer support calls, not penalties, targeted to neighborhoods requesting help. Pilot data shows reminders reduce gaps.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -191,10 +191,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Any scary scenario from early pilots predates the current guidance and was yanked. We’ll publish the corrective memo before the next nap cycle, and you can measure it.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -219,10 +219,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The program waives costs for low-income households and bans fee-based compliance tools. Help centers will file reports by phone so families aren’t juggling apps.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -252,10 +252,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We collect timestamp, duration, and optional ZIP code, not dreams or audio. Access is limited to de-identified dashboards with legal firewalls and a firm sunset clause.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -279,10 +279,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Data flows to the Wellness Bureau with strict role-based access; emergency use requires a signed activation. Vendor logs are auditable and published quarterly.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -307,10 +307,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No agency is scraping dream keywords or pillow brands; that rumor came from a parody instruction sheet. The real form is five fields and a big skip button.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -334,10 +334,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The pilot intake form asked for too much context, and we cut it after feedback. We’re purging unnecessary fields and notifying participants about the change.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -369,10 +369,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "No federal team is authorized to visit at 3 a.m. over naps. If you saw that, it was an overzealous local pilot we suspended and retrained out of existence.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModeratePositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -396,10 +396,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Compliance contacts are digital first, then daytime phone calls through community clinics. Field visits need layered approval and occur only when households request wellness checks.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.SlightNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -423,10 +423,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "We are codifying a hard ban on nocturnal outreach and a warning-only default. Families should sleep, not fear a knock during REM.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModeratePositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -450,10 +450,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "If anyone swears there was a midnight raid, give us the address and we’ll bring cameras and coffee to prove policy in daylight. Our apology will be as loud as the rumor.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -483,10 +483,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "The app was built by two domestic small firms under open-source licenses, with code posted for review. No algorithm rates naps; it timestamps and aggregates.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.StrongNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightNegative,
+            o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "There is no dream-mining or behavioral scoring, and ad-tracking SDKs are banned. Contracts carry kill switches if a vendor tries to sneak in monetization.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral,
+            o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -537,10 +537,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Independent audits test for bias and leaks, and results go public by default. We would sooner can the app than label anyone’s yawn as seditious.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -564,10 +564,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Early prototypes flirted with a productivity tag, and we scrapped it after community pushback. Future metrics require feature flags and public comment first.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.Neutral
+            o1: OutcomeModifierWeight.ModerateNegative,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.ModeratePositive,
+            o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {

@@ -153,10 +153,10 @@ export const libPrimaryExchange: ExchangeData = {
             text: "Soft checks are pop‑up shade tents with handheld scanners, no rakes at dawn. A five‑minute bark scan, a QR tag if needed, and a clear appeal path for mis‑tagged maples.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongNegative, // -8
+              o2: OutcomeModifierWeight.SlightPositive, // +4
+              o3: OutcomeModifierWeight.Neutral, // 0
+              o4: OutcomeModifierWeight.SlightPositive // +4
             },
             impacts: {
               president: {
@@ -213,13 +213,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_se_deflect",
-            text: "Let’s not confuse leaf‑blower drama with policy. The priority is fixing bare‑sun blocks, and that means mapping canopy and funding new plantings, not ticketing garden gnomes.",
+            text: "Let's not confuse leaf‑blower drama with policy. The priority is fixing bare‑sun blocks, and that means mapping canopy and funding new plantings, not ticketing garden gnomes.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative, // -4
+              o2: OutcomeModifierWeight.StrongPositive, // +8
+              o3: OutcomeModifierWeight.StrongPositive, // +8
+              o4: OutcomeModifierWeight.MajorNegative // -12
             },
             impacts: {
               president: {

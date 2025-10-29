@@ -33,10 +33,10 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
+            outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral, // 0
             outcome_cheese_tariffs_hurt_farmers:
-              OutcomeModifierWeight.SlightPositive,
-            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
+              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_cheese_war_preparation",
         },
@@ -53,10 +53,10 @@ export const libPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_cheese_tariffs_eased: OutcomeModifierWeight.StrongPositive,
+            outcome_cheese_tariffs_eased: OutcomeModifierWeight.StrongPositive, // +8
             outcome_cheese_tariffs_hurt_farmers:
-              OutcomeModifierWeight.StrongNegative,
-            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative, // -4
           },
           followUpId: "q_cheese_war_damage_control",
         },
@@ -77,10 +77,10 @@ export const libPrimaryExchange: ExchangeData = {
           },
           outcomeModifiers: {
             outcome_cheese_tariffs_eased:
-              OutcomeModifierWeight.SlightNegative,
+              OutcomeModifierWeight.SlightNegative, // -4
             outcome_cheese_tariffs_hurt_farmers:
-              OutcomeModifierWeight.SlightPositive,
-            outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+              OutcomeModifierWeight.Neutral, // 0
+            outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
         {
@@ -131,11 +131,10 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive, // +4
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral, // 0
             },
             followUpId: "q_cheese_war_supply_chain",
           },
@@ -158,8 +157,7 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_public_rallies:
-                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
           {
@@ -181,8 +179,7 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased:
-                OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
@@ -207,7 +204,7 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
@@ -239,7 +236,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
             followUpId: "q_cheese_war_future_prevention",
           },
@@ -261,8 +258,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_cheese_tariffs_eased:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral,
               outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
             },
           },
@@ -289,7 +285,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightPositive,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
           {
@@ -308,10 +304,10 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative, // -4
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.Neutral,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+                OutcomeModifierWeight.Neutral, // 0
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
         ],
@@ -342,7 +338,7 @@ export const libPrimaryExchange: ExchangeData = {
                 OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers:
                 OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
             },
           },
           {
@@ -364,7 +360,7 @@ export const libPrimaryExchange: ExchangeData = {
               outcome_cheese_tariffs_eased:
                 OutcomeModifierWeight.SlightNegative,
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.SlightPositive,
+                OutcomeModifierWeight.Neutral,
               outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
             },
           },
@@ -408,10 +404,10 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.Neutral, // 0
               outcome_cheese_tariffs_hurt_farmers:
-                OutcomeModifierWeight.Neutral,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.Neutral,
+                OutcomeModifierWeight.SlightPositive, // +4
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
         ],
@@ -457,9 +453,9 @@ export const libPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative,
-              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
+              outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral, // 0
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
           {
@@ -501,7 +497,7 @@ export const libPrimaryExchange: ExchangeData = {
             outcomeModifiers: {
               outcome_cheese_tariffs_eased: OutcomeModifierWeight.SlightPositive,
               outcome_cheese_tariffs_hurt_farmers: OutcomeModifierWeight.Neutral,
-              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightPositive,
+              outcome_cheese_public_rallies: OutcomeModifierWeight.SlightNegative,
             },
           },
         ],

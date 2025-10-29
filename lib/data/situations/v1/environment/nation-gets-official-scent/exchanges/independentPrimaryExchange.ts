@@ -66,7 +66,7 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "No one will be trapped in a perfume tunnel; pilots start small, with opt‑out zones and allergen caps. If a whiff bothers communities or crops, valves close first and budgets follow.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.ModeratePositive,
             o2: OutcomeModifierWeight.ModerateNegative,
             o3: OutcomeModifierWeight.ModerateNegative,
             o4: OutcomeModifierWeight.ModeratePositive
@@ -92,7 +92,7 @@ export const independentPrimaryExchange: ExchangeData = {
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -164,15 +164,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a7",
-            text: "Residences and medical facilities are hard‑exclusion areas. If the plume drifts where it shouldn’t, the system geofences the leak and notifies operators before anyone needs to say 'eau‑no'.",
-            type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a7",
+          text: "Residences and medical facilities are hard‑exclusion areas. If the plume drifts where it shouldn't, the system geofences the leak and notifies operators before anyone needs to say 'eau‑no'.",
+          type: AnswerType.Reassure,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -187,15 +187,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a8",
-            text: "There’s no plan to let the scent seep into private property uninvited. Hardware is directional and low‑drift; if it trespasses, it’s a violation, not a feature, and it gets shut down.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a8",
+          text: "There's no plan to let the scent seep into private property uninvited. Hardware is directional and low‑drift; if it trespasses, it's a violation, not a feature, and it gets shut down.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -263,15 +263,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a11",
-            text: "Early tests did show one floral note bugged vine beans, so it’s out. That’s the point of trials: fix the recipe before it meets a single rush hour.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a11",
+          text: "Early tests did show one floral note bugged vine beans, so it's out. That's the point of trials: fix the recipe before it meets a single rush hour.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -286,15 +286,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a12",
-            text: "Let’s not confuse a scent program with a crop dusting campaign. Farmers sit on the advisory board, and the goal is calmer commutes, not citrus tyranny over tomatoes.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a12",
+          text: "Let's not confuse a scent program with a crop dusting campaign. Farmers sit on the advisory board, and the goal is calmer commutes, not citrus tyranny over tomatoes.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -363,15 +363,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a15",
-            text: "There’s no tolerance for rogue spritzers. Unauthorized devices face fines and confiscation, and venues that ignore boundaries lose access to the program until they fix it.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a15",
+          text: "There's no tolerance for rogue spritzers. Unauthorized devices face fines and confiscation, and venues that ignore boundaries lose access to the program until they fix it.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -386,15 +386,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a16",
-            text: "If a venue insists the breeze makes consent impossible, we’ll bring wind maps and a fog machine. Show us where control fails, or make space for a no‑smell corridor like everyone else.",
-            type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a16",
+          text: "If a venue insists the breeze makes consent impossible, we'll bring wind maps and a fog machine. Show us where control fails, or make space for a no‑smell corridor like everyone else.",
+          type: AnswerType.Challenge,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -461,15 +461,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a19",
-            text: "Yes, de‑scenting costs real money—filters, labor, scent‑scrub. That’s why every contract includes a removal clause and escrow, so taxpayers aren’t left spray‑canning a fiscal crater.",
-            type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModeratePositive
-            },
+          id: "a19",
+          text: "Yes, de‑scenting costs real money—filters, labor, scent‑scrub. That's why every contract includes a removal clause and escrow, so taxpayers aren't left spray‑canning a fiscal crater.",
+          type: AnswerType.Admit,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.ModeratePositive,
+            o2: OutcomeModifierWeight.ModerateNegative,
+            o3: OutcomeModifierWeight.ModerateNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -484,15 +484,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a20",
-            text: "If a locality wants artisanal air, great; if not, their buses can keep smelling like last Tuesday’s fries. The budget debate shouldn’t pretend there’s one national nose.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.ModeratePositive,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a20",
+          text: "If a locality wants artisanal air, great; if not, their buses can keep smelling like last Tuesday's fries. The budget debate shouldn't pretend there's one national nose.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,

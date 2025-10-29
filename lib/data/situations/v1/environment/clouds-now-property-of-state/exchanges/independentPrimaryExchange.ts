@@ -17,13 +17,13 @@ export const independentPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_root_1",
-          text: "Bring me a notarized thunderhead deed and we’ll talk; until then, we steward shared fluff so rain clocks in on time. It’s governance, not a sky heist.",
+          text: "Bring me a notarized thunderhead deed and we'll talk; until then, we steward shared fluff so rain clocks in on time. It's governance, not a sky heist.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
-            o3: OutcomeModifierWeight.StrongPositive,
-            o4: OutcomeModifierWeight.StrongPositive
+            o1: OutcomeModifierWeight.MajorPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Permits convert surprise downpours into scheduled services, with fees scaled by cloud size. Revenue funds gutters, culverts, and resilience cushions-not a gold-plated umbrella stand.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.MajorPositive,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.StrongNegative
           },
           impacts: {
             president: {
@@ -80,12 +80,12 @@ export const independentPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_root_3",
-          text: "No, we’re not sending net squads into the sky. Compliance teams are ground-based, think clipboards and kites, and protests stay on sidewalks. We prefer calm breezes to sirens.",
+          text: "No, we're not sending net squads into the sky. Compliance teams are ground-based, think clipboards and kites, and protests stay on sidewalks. We prefer calm breezes to sirens.",
           type: AnswerType.Deny,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
-            o3: OutcomeModifierWeight.SlightPositive,
+            o1: OutcomeModifierWeight.StrongNegative,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.MajorPositive,
             o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
@@ -115,10 +115,10 @@ export const independentPrimaryExchange: ExchangeData = {
           text: "Hydration stays a public good. Backyard mists remain yours to enjoy, seniors get priority spritzing during heat waves, and medical exemptions waive any drizzle delays.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.ModerateNegative,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.ModerateNegative,
-            o4: OutcomeModifierWeight.ModerateNegative
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.MajorPositive
           },
           impacts: {
             president: {
@@ -154,9 +154,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -182,13 +182,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_2",
-            text: "Let’s not pretend the current system is free; flood cleanups are a stealth tax with mold. Permits are the receipt, not the shakedown, and they cut the mess in the first place.",
+            text: "Let's not pretend the current system is free; flood cleanups are a stealth tax with mold. Permits are the receipt, not the shakedown, and they cut the mess in the first place.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -213,13 +213,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_3",
-            text: "We built this fast and some lines will be wobbly on day one. We’ll publish a plain-language calculator this week and forgive honest mistakes while the kinks un-knot.",
+            text: "We built this fast and some lines will be wobbly on day one. We'll publish a plain-language calculator this week and forgive honest mistakes while the kinks un-knot.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -244,13 +244,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s1_4",
-            text: "If a permit ever costs more than a monthly water bill, we’ll adjust. Low-income households get automatic fee waivers, and community clouds for gardens register free.",
+            text: "If a permit ever costs more than a monthly water bill, we'll adjust. Low-income households get automatic fee waivers, and community clouds for gardens register free.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -284,10 +284,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No aerial snooping. Inspectors schedule visits like utility checks, use handheld barometers, and bring courtesy whistles instead of sirens. Protests stay public and peaceful.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.StrongNegative,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -313,13 +313,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_2",
-            text: "With respect, the chase scenes are in movies. Our goal is compliance through clarity, not citations, and we’d rather hand out laminated FAQs than tickets.",
+            text: "With respect, the chase scenes are in movies. Our goal is compliance through clarity, not citations, and we'd rather hand out laminated FAQs than tickets.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -344,13 +344,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_3",
-            text: "No one loses backyard access; mists, grills, and garden parties go on. We’ll publish a civil liberties guide so the rules read like tips, not a raid script.",
+            text: "No one loses backyard access; mists, grills, and garden parties go on. We'll publish a civil liberties guide so the rules read like tips, not a raid script.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -378,10 +378,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Pilot rollouts taught us loud gear spooks folks. We retired the buzzing gizmos and now rely on posted schedules and human beings who introduce themselves before testing.",
             type: AnswerType.Admit,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.SlightNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -418,9 +418,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
-              o4: OutcomeModifierWeight.StrongPositive
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -445,13 +445,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_2",
-            text: "If someone thinks ribbon umbrellas are the problem, they can hold one in the first storm. We’re investing in pipes, not props, because basements can’t clap.",
+            text: "If someone thinks ribbon umbrellas are the problem, they can hold one in the first storm. We're investing in pipes, not props, because basements can't clap.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {
@@ -480,9 +480,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.MajorPositive
             },
             impacts: {
               president: {
@@ -510,10 +510,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "The expensive thing is unplanned floods, not receipts with vowels. This program turns panic purchases into planned projects so towns stop passing the hat in hip waders.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongPositive,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -547,8 +547,8 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "No rationing of hydration. Heat alerts trigger automatic permit holidays, seniors and medically flagged households get priority spritz windows, and usage data never leaves the block.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.StrongPositive,
               o4: OutcomeModifierWeight.StrongPositive
             },
@@ -578,10 +578,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "We tie misting guidance to public health thresholds, not quotas. A privacy firewall keeps personal weather data hashed locally, with real penalties for any nosy clipboard.",
             type: AnswerType.Inform,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -610,9 +610,9 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Deny,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.SlightPositive,
-              o4: OutcomeModifierWeight.SlightPositive
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.MajorPositive,
+              o4: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -637,13 +637,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_4",
-            text: "If folks worry about privacy, that’s fair; we built opt-outs and dummy IDs so your geraniums don’t get doxxed. The mission is cooling people, not counting them.",
+            text: "If folks worry about privacy, that's fair; we built opt-outs and dummy IDs so your geraniums don't get doxxed. The mission is cooling people, not counting them.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.ModerateNegative,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.ModerateNegative,
-              o4: OutcomeModifierWeight.ModerateNegative
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.StrongNegative,
+              o4: OutcomeModifierWeight.StrongPositive
             },
             impacts: {
               president: {

@@ -17,12 +17,12 @@ export const independentPrimaryExchange: ExchangeData = {
       answers: [
         {
           id: "a_r1",
-          text: "Look, I admit it: I lost a thumb war to our Chief Zoologist and took the dare. It still beats my first plan—700 tiny jetpacks—and we’re stress-testing quill caps, costs, and common sense before any rollout.",
+          text: "Look, I admit it: I lost a thumb war to our Chief Zoologist and took the dare. It still beats my first plan—700 tiny jetpacks—and we're stress-testing quill caps, costs, and common sense before any rollout.",
           type: AnswerType.Admit,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.StrongPositive,
-            o2: OutcomeModifierWeight.ModerateNegative,
-            o3: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
             o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
@@ -80,13 +80,13 @@ export const independentPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r3",
-          text: "We are reviewing whether deputizing spiky mammals fits the Prickly Persons Clause, and we won’t prejudge the memo. No comment on helmet sizing, overtime, or biscuit allotments until that review lands.",
+          text: "We are reviewing whether deputizing spiky mammals fits the Prickly Persons Clause, and we won't prejudge the memo. No comment on helmet sizing, overtime, or biscuit allotments until that review lands.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.ModeratePositive,
             o3: OutcomeModifierWeight.StrongNegative,
-            o4: OutcomeModifierWeight.Neutral
+            o4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -111,13 +111,13 @@ export const independentPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r4",
-          text: "Quills are capped, GPS geofences are tight, handlers carry oat biscuits, and patrol routes avoid crowds. We’ll phase pilots at low-traffic spans first and publish the safety dashboard before scale-up.",
+          text: "Quills are capped, GPS geofences are tight, handlers carry oat biscuits, and patrol routes avoid crowds. We'll phase pilots at low-traffic spans first and publish the safety dashboard before scale-up.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
-            o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.SlightPositive
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -149,15 +149,15 @@ export const independentPrimaryExchange: ExchangeData = {
         text: "Safety specifics: How do quill caps, geofences, and biscuit-carrying handlers keep commuters safe, and what happens if a porcupine goes rogue?",
         answers: [
           {
-            id: "a_s1_1",
-            text: "Polymer nibs blunt each quill, vests buzz when a geofence edge is approached, and handlers recall with a biscuit cue. If one bolts, a soft-net drone and a calm crate meet it within seconds, per the playbook.",
-            type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightNegative
-            },
+          id: "a_s1_1",
+          text: "Polymer nibs blunt each quill, vests buzz when a geofence edge is approached, and handlers recall with a biscuit cue. If one bolts, a soft-net drone and a calm crate meet it within seconds, per the playbook.",
+          type: AnswerType.Inform,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.StrongNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -212,15 +212,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_s1_3",
-            text: "No, they are not scanning faces, enforcing lane discipline, or chewing brake lines. They patrol perimeters, not pockets, and they’re physically kept off commuter paths by barriers and beeps.",
-            type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.ModeratePositive,
-              o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
-            },
+          id: "a_s1_3",
+          text: "No, they are not scanning faces, enforcing lane discipline, or chewing brake lines. They patrol perimeters, not pockets, and they're physically kept off commuter paths by barriers and beeps.",
+          type: AnswerType.Deny,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative,
+            o2: OutcomeModifierWeight.ModeratePositive,
+            o3: OutcomeModifierWeight.StrongNegative,
+            o4: OutcomeModifierWeight.ModeratePositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Negative,
@@ -243,15 +243,15 @@ export const independentPrimaryExchange: ExchangeData = {
             }
           },
           {
-            id: "a_s1_4",
-            text: "For operational choreography, we’ll let the Handler Guild brief after their biscuit caucus. My lane is outcomes, not whether the recall whistle is in C-sharp or D-flat today.",
-            type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
-            },
+          id: "a_s1_4",
+          text: "For operational choreography, we'll let the Handler Guild brief after their biscuit caucus. My lane is outcomes, not whether the recall whistle is in C-sharp or D-flat today.",
+          type: AnswerType.Deflect,
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyNegative,
@@ -285,8 +285,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -344,13 +344,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_3",
-            text: "Questions on overtime classifications and the Prickly Persons Clause sit with our legal memo-in-progress. Until that lands, we won’t speculate about hazard biscuits, stipends, or quill-care deductions.",
+            text: "Questions on overtime classifications and the Prickly Persons Clause sit with our legal memo-in-progress. Until that lands, we won't speculate about hazard biscuits, stipends, or quill-care deductions.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -378,10 +378,10 @@ export const independentPrimaryExchange: ExchangeData = {
             text: "Handlers track stress cues and rotate teams, and every prickly professional gets enrichment tunnels and biscuit stipends. No creature pulls back-to-back nights; the schedule is kinder than my spin class.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -418,8 +418,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -476,13 +476,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_3",
-            text: "Random commuters can’t commandeer porcupines like rental scooters, and we’re not crowdsourcing commands. Personal snacks don’t unlock anything; that’s by design to prevent chaos and crumb-based hacking.",
+            text: "Random commuters can't commandeer porcupines like rental scooters, and we're not crowdsourcing commands. Personal snacks don't unlock anything; that's by design to prevent chaos and crumb-based hacking.",
             type: AnswerType.Deny,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -507,13 +507,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t1_4",
-            text: "We don’t publish the recall phrase, tone, or whisker-scratch sequence because rogues can read too. You’ll see the results on the dashboard, not the recipe.",
+            text: "We don't publish the recall phrase, tone, or whisker-scratch sequence because rogues can read too. You'll see the results on the dashboard, not the recipe.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -548,8 +548,8 @@ export const independentPrimaryExchange: ExchangeData = {
             type: AnswerType.Inform,
             outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.ModerateNegative,
-              o3: OutcomeModifierWeight.Neutral,
+              o2: OutcomeModifierWeight.StrongNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
               o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
@@ -606,13 +606,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_3",
-            text: "Any supplier planning boutique markups can try selling that to our bridge crews. Deliver rugged gear at scale and on time, or we’ll swap you for someone who knows a quill from a kebab skewer.",
+            text: "Any supplier planning boutique markups can try selling that to our bridge crews. Deliver rugged gear at scale and on time, or we'll swap you for someone who knows a quill from a kebab skewer.",
             type: AnswerType.Challenge,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.ModeratePositive,
               o3: OutcomeModifierWeight.StrongNegative,
-              o4: OutcomeModifierWeight.Neutral
+              o4: OutcomeModifierWeight.ModeratePositive
             },
             impacts: {
               president: {
@@ -637,13 +637,13 @@ export const independentPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_t2_4",
-            text: "We won’t name the tiny-helmet shop yet, because procurement is still in its unglamorous paperwork montage. When signatures dry, you’ll get the brand names without the romance.",
+            text: "We won't name the tiny-helmet shop yet, because procurement is still in its unglamorous paperwork montage. When signatures dry, you'll get the brand names without the romance.",
             type: AnswerType.Deflect,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.SlightPositive
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

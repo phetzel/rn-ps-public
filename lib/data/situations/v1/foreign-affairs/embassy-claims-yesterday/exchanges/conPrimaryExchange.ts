@@ -21,7 +21,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.MajorPositive,
-            o2: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.Neutral,
             o3: OutcomeModifierWeight.MajorNegative
           },
           impacts: {
@@ -88,9 +88,9 @@ export const conPrimaryExchange: ExchangeData = {
           text: "The Interagency Clock Council sets standards across agencies, not this podium. They certified the calendar guardrails, and they'll brief as soon as their sundials stop pouting.",
           type: AnswerType.Deflect,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.StrongNegative,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.Neutral,
-            o3: OutcomeModifierWeight.Neutral
+            o3: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -116,10 +116,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q2_a1",
             text: "Authority rests in the Time Reciprocity Act and standard consular practice. We can suspend recognition of backdated stamps and require time-stable manifests, minimizing costs with targeted waivers.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.MajorPositive,
-              o3: OutcomeModifierWeight.Neutral
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -139,10 +139,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q2_a2",
             text: "No, we didn't leave time unlocked. We ran temporal tabletop drills last year; the mission exploited a loophole no one else was unserious enough to pretend was real.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorNegative,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongNegative,
+              o2: OutcomeModifierWeight.StrongPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -161,10 +161,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q2_a3",
             text: "Cost splits belong with the Weekday Appropriations Board and the carriers. We'll propose a fair share, but I won't bargain Monday versus Tuesday from this podium.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorNegative
+              o3: OutcomeModifierWeight.StrongNegative
             },
             impacts: {
               president: {
@@ -183,11 +183,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q2_a4",
             text: "As the State Ministry lead, we've directed ports to accept only time-neutral documents and to escrow retroactive treaty notes. We will brief all missions today on compliance deadlines.",
             type: AnswerType.Authorized,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -212,10 +212,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q3_a1",
             text: "Tickets dated tomorrow remain valid. Carriers are instructed to honor itineraries within a 72-hour window and waive change fees triggered by yesterday-based mischief.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -234,10 +234,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q3_a2",
             text: "We assumed boarding groups wouldn't unionize against the arrow of time. That was optimistic, and we're tightening calendar controls so no gate agent has to adjudicate metaphysics.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.MajorNegative,
+              o2: OutcomeModifierWeight.MajorPositive,
+              o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
               president: {
@@ -257,9 +257,9 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q3_a3",
             text: "If a mission wants to live in yesterday, they can run baggage claim in a museum. Our ports run on real time, and we'll enforce that at the jet bridge.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
-              o2: OutcomeModifierWeight.MajorNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.StrongNegative,
               o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -279,11 +279,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q3_a4",
             text: "We're finalizing a standard refund-and-reaccommodation rule tied to document validity, not timestamps. Expect uniform passenger treatment, not terminal roulette.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.SlightPositive,
-              o3: OutcomeModifierWeight.Neutral
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightNegative, // -4
+            o2: OutcomeModifierWeight.Neutral, // 0
+            o3: OutcomeModifierWeight.SlightPositive // +4
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -309,11 +309,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q4_a1",
             text: "We can narrow diplomatic access to essentials, suspend acceptance of backdated notes, and require present-day seals on all traffic until audits verify compliance.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.StrongNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.Neutral,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.SlightPositive
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.StronglyNegative,
@@ -331,11 +331,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q4_a2",
             text: "Try to colonize yesterday and we'll meet you in today-twice. We'll escalate from warnings to port-of-entry denials for paperwork treating the clock like a suggestion.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongPositive,
-              o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.MajorNegative
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.StrongPositive,
+            o2: OutcomeModifierWeight.SlightPositive,
+            o3: OutcomeModifierWeight.MajorNegative
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.Positive,
@@ -375,11 +375,11 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q4_a4",
             text: "Sanctions menus run through the Calendar Sanctions Committee, which moves faster than yesterday and slower than a meme. They'll deliver options on schedule.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightPositive,
-              o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.ModeratePositive
-            },
+          outcomeModifiers: {
+            o1: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
+            o3: OutcomeModifierWeight.Neutral
+          },
             impacts: {
               president: {
                 weight: ExchangeImpactWeight.SlightlyPositive,
@@ -403,10 +403,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q5_a1",
             text: "A time-security audit is underway to patch calendar systems, add time-neutral validation, and train officers to spot retro-stamps. We'll publish results with implementation dates.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.StrongNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.Neutral,
-              o3: OutcomeModifierWeight.ModeratePositive
+              o3: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -425,9 +425,9 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q5_a2",
             text: "We'll keep travel predictable and budgets sane. No one should lose a vacation to a philosophical prank, and no city will fund delays that haven't technically happened.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
-              o2: OutcomeModifierWeight.MajorNegative,
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.SlightPositive,
+              o2: OutcomeModifierWeight.SlightNegative,
               o3: OutcomeModifierWeight.Neutral
             },
             impacts: {
@@ -469,10 +469,10 @@ export const conPrimaryExchange: ExchangeData = {
             id: "q5_a4",
             text: "We'll defend the calendar like a border. If treaties are filed from yesterday to win today, expect tariffs in the only currency that matters: on-time access.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              o1: OutcomeModifierWeight.MajorPositive,
-              o2: OutcomeModifierWeight.StrongPositive,
-              o3: OutcomeModifierWeight.ModerateNegative
+          outcomeModifiers: {
+              o1: OutcomeModifierWeight.StrongPositive,
+              o2: OutcomeModifierWeight.SlightPositive,
+              o3: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {

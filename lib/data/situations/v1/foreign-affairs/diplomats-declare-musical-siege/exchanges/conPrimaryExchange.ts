@@ -49,7 +49,7 @@ export const conPrimaryExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             o1: OutcomeModifierWeight.SlightPositive,
-            o2: OutcomeModifierWeight.SlightPositive,
+            o2: OutcomeModifierWeight.SlightNegative,
             o3: OutcomeModifierWeight.StrongNegative,
             o4: OutcomeModifierWeight.StrongPositive
           },
@@ -75,10 +75,10 @@ export const conPrimaryExchange: ExchangeData = {
           text: "Deterrence works at tempo. If they swap sentries for sonatas, we’ll encircle with the 3rd Marching Brigade’s polka until they rediscover silence, while patrols block contraband from waltzing in.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.Neutral,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.StrongNegative
+            o4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {

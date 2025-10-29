@@ -21,9 +21,9 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Challenge,
           outcomeModifiers: {
             outcome_1: OutcomeModifierWeight.StrongPositive,
-            outcome_2: OutcomeModifierWeight.StrongPositive,
-            outcome_3: OutcomeModifierWeight.StrongPositive,
-            outcome_4: OutcomeModifierWeight.StrongPositive
+            outcome_2: OutcomeModifierWeight.SlightPositive,
+            outcome_3: OutcomeModifierWeight.StrongNegative,
+            outcome_4: OutcomeModifierWeight.SlightNegative
           },
           impacts: {
             president: {
@@ -51,10 +51,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Clinicians helped shape the morning tracks to lower cortisol and cereal catastrophes. The program centers family well-being, with opt-outs and no judgment for off-key households.",
           type: AnswerType.Reassure,
           outcomeModifiers: {
-            outcome_1: OutcomeModifierWeight.SlightNegative,
+            outcome_1: OutcomeModifierWeight.SlightPositive,
             outcome_2: OutcomeModifierWeight.SlightNegative,
-            outcome_3: OutcomeModifierWeight.SlightNegative,
-            outcome_4: OutcomeModifierWeight.SlightNegative
+            outcome_3: OutcomeModifierWeight.ModerateNegative,
+            outcome_4: OutcomeModifierWeight.ModeratePositive
           },
           impacts: {
             president: {
@@ -83,9 +83,9 @@ export const investigativeExchange: ExchangeData = {
           type: AnswerType.Inform,
           outcomeModifiers: {
             outcome_1: OutcomeModifierWeight.SlightNegative,
-            outcome_2: OutcomeModifierWeight.SlightNegative,
-            outcome_3: OutcomeModifierWeight.SlightNegative,
-            outcome_4: OutcomeModifierWeight.SlightNegative
+            outcome_2: OutcomeModifierWeight.ModerateNegative,
+            outcome_3: OutcomeModifierWeight.ModeratePositive,
+            outcome_4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -114,10 +114,10 @@ export const investigativeExchange: ExchangeData = {
           text: "Yes, fines and micro-royalties exist and fund the National Kazoo Reserve plus a slippers credit. We’ll publish who gets paid, by what formula, and how bidding was scored.",
           type: AnswerType.Admit,
           outcomeModifiers: {
-            outcome_1: OutcomeModifierWeight.Neutral,
-            outcome_2: OutcomeModifierWeight.Neutral,
-            outcome_3: OutcomeModifierWeight.Neutral,
-            outcome_4: OutcomeModifierWeight.Neutral
+            outcome_1: OutcomeModifierWeight.SlightPositive,
+            outcome_2: OutcomeModifierWeight.SlightNegative,
+            outcome_3: OutcomeModifierWeight.ModeratePositive,
+            outcome_4: OutcomeModifierWeight.ModerateNegative
           },
           impacts: {
             president: {
@@ -152,11 +152,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_1",
             text: "On the record: the Homeland Harmony Bureau prioritizes education and de-escalation. Fines are for willful, patterned unplugging during marked choruses, not for honest chaos.",
             type: AnswerType.Authorized,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.StrongPositive,
-              outcome_3: OutcomeModifierWeight.StrongPositive,
-              outcome_4: OutcomeModifierWeight.StrongPositive
+              outcome_2: OutcomeModifierWeight.ModeratePositive,
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.ModerateNegative
             },
             impacts: {
               president: {
@@ -184,11 +184,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_2",
             text: "Scripts are drafted by trained facilitators and reviewed by a civil-liberties panel and an ethics chorus. A fine requires three documented hard mutes across separate sessions.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.SlightNegative,
-              outcome_2: OutcomeModifierWeight.SlightNegative,
-              outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_2: OutcomeModifierWeight.ModerateNegative,
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -216,11 +216,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_3",
             text: "We’ll release annotated flowcharts after we finish blacking out the parts that were coffee stains anyway. For now, the rule is sing first, sanction never.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.ModerateNegative,
               outcome_2: OutcomeModifierWeight.SlightNegative,
-              outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -247,11 +247,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec1_4",
             text: "There is no secret ‘pause squad’ in track suits staking out kitchens. We do not monitor private conversations, and we don’t ticket yawns or blender usage.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.Neutral,
-              outcome_2: OutcomeModifierWeight.Neutral,
-              outcome_3: OutcomeModifierWeight.Neutral,
-              outcome_4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.SlightPositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.SlightNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -284,11 +284,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_1",
             text: "Yes, fines support kazoo stockpiles and the slippers credit, and artists earn royalties. Vendors get paid for uptime, not surveillance, and we’ll show the ledgers.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.ModeratePositive,
-              outcome_2: OutcomeModifierWeight.ModeratePositive,
-              outcome_3: OutcomeModifierWeight.ModeratePositive,
-              outcome_4: OutcomeModifierWeight.ModeratePositive
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.ModerateNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -315,11 +315,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_2",
             text: "Active negotiations are like jazz: too many notes to narrate mid-solo. When the contracts land, you’ll see the receipts, minus legally required confetti.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.ModerateNegative,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.ModerateNegative,
-              outcome_4: OutcomeModifierWeight.ModerateNegative
+              outcome_2: OutcomeModifierWeight.SlightNegative,
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -346,11 +346,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_3",
             text: "If a vendor can out-hustle our auditors on camera, fine, they can keep the spread. Otherwise, let the sunlight in and let the numbers do the two-step.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.Neutral,
-              outcome_2: OutcomeModifierWeight.Neutral,
-              outcome_3: OutcomeModifierWeight.Neutral,
-              outcome_4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.StrongPositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -377,11 +377,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_sec2_4",
             text: "Payments flow via capped per-home fees and standard royalty splits; fines recycle into family credits. Procurement used open bids with scorecards posted for audit.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.Neutral,
-              outcome_2: OutcomeModifierWeight.Neutral,
-              outcome_3: OutcomeModifierWeight.Neutral,
-              outcome_4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.ModeratePositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.ModerateNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -417,11 +417,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_1",
             text: "Detectors look for sustained manual mutes across sessions, not crying or kettle hiss. An independent lab and a citizen chorus run bias tests and publish false-positive rates.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.SlightNegative,
-              outcome_2: OutcomeModifierWeight.SlightNegative,
-              outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_2: OutcomeModifierWeight.ModerateNegative,
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -448,11 +448,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_2",
             text: "If breakfast turns into percussion practice, breathe; that’s not a violation. Households get warnings, a help call, and an amnesty track before anything financial happens.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.StrongPositive,
-              outcome_2: OutcomeModifierWeight.StrongPositive,
-              outcome_3: OutcomeModifierWeight.StrongPositive,
-              outcome_4: OutcomeModifierWeight.StrongPositive
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -479,11 +479,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_3",
             text: "Our algorithmic sous-chef is still taste-testing. We’ll share the recipe once we replace the oregano that wandered in from the blender incident.",
             type: AnswerType.Deflect,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.SlightNegative,
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.ModerateNegative,
               outcome_2: OutcomeModifierWeight.SlightNegative,
-              outcome_3: OutcomeModifierWeight.SlightNegative,
-              outcome_4: OutcomeModifierWeight.SlightNegative
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -510,11 +510,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter1_4",
             text: "We’ll host open mute-athons: try to trick the system, win a trophy, and help us harden it. If it flubs, we fix it, not fine you.",
             type: AnswerType.Challenge,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.Neutral,
-              outcome_2: OutcomeModifierWeight.Neutral,
-              outcome_3: OutcomeModifierWeight.Neutral,
-              outcome_4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.StrongPositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -547,11 +547,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_1",
             text: "Devices send event pings: playlist started, chorus skipped, opt-out toggled. No audio payloads. A public trust stores 30 days of logs, then purges, with third-party audits.",
             type: AnswerType.Inform,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.ModerateNegative,
-              outcome_2: OutcomeModifierWeight.ModerateNegative,
-              outcome_3: OutcomeModifierWeight.ModerateNegative,
-              outcome_4: OutcomeModifierWeight.ModerateNegative
+              outcome_2: OutcomeModifierWeight.SlightNegative,
+              outcome_3: OutcomeModifierWeight.ModeratePositive,
+              outcome_4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
@@ -578,11 +578,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_2",
             text: "Vendors cannot sell, share, or deduce your nap schedule from hums. Monetizing compliance data is banned, and violations void contracts and trigger refunds.",
             type: AnswerType.Deny,
-            outcomeModifiers: {
+          outcomeModifiers: {
               outcome_1: OutcomeModifierWeight.ModeratePositive,
-              outcome_2: OutcomeModifierWeight.ModeratePositive,
-              outcome_3: OutcomeModifierWeight.ModeratePositive,
-              outcome_4: OutcomeModifierWeight.ModeratePositive
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.ModerateNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -609,11 +609,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_3",
             text: "Privacy toggles ship on by default, and opt-outs are one tap. Households can view and delete logs, and kids’ profiles are cloaked in extra silence.",
             type: AnswerType.Reassure,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.Neutral,
-              outcome_2: OutcomeModifierWeight.Neutral,
-              outcome_3: OutcomeModifierWeight.Neutral,
-              outcome_4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.StrongPositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.StrongNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {
@@ -640,11 +640,11 @@ export const investigativeExchange: ExchangeData = {
             id: "a_ter2_4",
             text: "We do collect aggregate metrics to measure whether bickering dips during breakfast. That’s reported in bulk, not tied to names, and it sunsets unless renewed.",
             type: AnswerType.Admit,
-            outcomeModifiers: {
-              outcome_1: OutcomeModifierWeight.Neutral,
-              outcome_2: OutcomeModifierWeight.Neutral,
-              outcome_3: OutcomeModifierWeight.Neutral,
-              outcome_4: OutcomeModifierWeight.Neutral
+          outcomeModifiers: {
+              outcome_1: OutcomeModifierWeight.ModeratePositive,
+              outcome_2: OutcomeModifierWeight.SlightPositive,
+              outcome_3: OutcomeModifierWeight.ModerateNegative,
+              outcome_4: OutcomeModifierWeight.SlightNegative
             },
             impacts: {
               president: {

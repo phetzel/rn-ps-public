@@ -33,11 +33,9 @@ export const independentPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_coffee_price_shock_buffer:
-              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
             outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-            outcome_coffee_market_meddling:
-              OutcomeModifierWeight.SlightPositive, // +4
+            outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
           },
         },
         {
@@ -56,11 +54,9 @@ export const independentPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_coffee_price_shock_buffer:
-              OutcomeModifierWeight.SlightPositive, // +4
-            outcome_coffee_spoilage_scandal:
-              OutcomeModifierWeight.SlightNegative, // -4
-            outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+            outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+            outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
           },
           followUpId: "q_coffee_health_dependency",
         },
@@ -83,11 +79,9 @@ export const independentPrimaryExchange: ExchangeData = {
             },
           },
           outcomeModifiers: {
-            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-            outcome_coffee_spoilage_scandal:
-              OutcomeModifierWeight.SlightPositive, // +4
-            outcome_coffee_market_meddling:
-              OutcomeModifierWeight.SlightNegative, // -4
+            outcome_coffee_price_shock_buffer: OutcomeModifierWeight.StrongPositive,
+            outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive,
+            outcome_coffee_market_meddling: OutcomeModifierWeight.MajorNegative,
           },
           followUpId: "q_coffee_storage_risks",
         },
@@ -158,11 +152,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal:
-                OutcomeModifierWeight.ModerateNegative, // -6
-              outcome_coffee_market_meddling:
-                OutcomeModifierWeight.ModeratePositive, // +6
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.StrongPositive,
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive,
+              outcome_coffee_market_meddling: OutcomeModifierWeight.MajorNegative,
             },
           },
           {
@@ -184,11 +176,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
             },
             followUpId: "q_coffee_quality_control",
           },
@@ -237,10 +227,8 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -260,9 +248,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
             },
             followUpId: "q_coffee_market_impact",
           },
@@ -282,9 +270,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive,
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative,
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral,
             },
           },
           {
@@ -303,9 +291,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive,
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral,
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative,
             },
           },
         ],
@@ -335,10 +323,8 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -361,8 +347,8 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -383,8 +369,8 @@ export const independentPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -403,7 +389,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
             },
           },
         ],
@@ -431,11 +419,9 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer:
-                OutcomeModifierWeight.SlightPositive, // +4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_market_meddling:
-                OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
           {
@@ -454,8 +440,8 @@ export const independentPrimaryExchange: ExchangeData = {
               },
             },
             outcomeModifiers: {
-              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
               outcome_coffee_market_meddling: OutcomeModifierWeight.Neutral, // 0
             },
           },
@@ -476,8 +462,8 @@ export const independentPrimaryExchange: ExchangeData = {
             },
             outcomeModifiers: {
               outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
-              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
-              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightPositive, // +4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightNegative, // -4
             },
           },
           {
@@ -495,7 +481,11 @@ export const independentPrimaryExchange: ExchangeData = {
                 },
               },
             },
-            outcomeModifiers: {},
+            outcomeModifiers: {
+              outcome_coffee_price_shock_buffer: OutcomeModifierWeight.Neutral, // 0
+              outcome_coffee_spoilage_scandal: OutcomeModifierWeight.SlightNegative, // -4
+              outcome_coffee_market_meddling: OutcomeModifierWeight.SlightPositive, // +4
+            },
           },
         ],
       },

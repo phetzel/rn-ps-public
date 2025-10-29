@@ -48,13 +48,13 @@ export const libPrimaryExchange: ExchangeData = {
         },
         {
           id: "a_r2",
-          text: "Deterrence worked on geese and it works on panic. Whistle-primed pitchforks and anti-goose capes signal backbone, not bureaucracy. Show me a better scare, and we’ll field it.",
+          text: "Deterrence worked on geese and it works on panic. Whistle-primed pitchforks and anti-goose capes signal backbone, not bureaucracy. Show me a better scare, and we'll field it.",
           type: AnswerType.Challenge,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.SlightNegative,
+            o1: OutcomeModifierWeight.StrongPositive,
             o2: OutcomeModifierWeight.StrongPositive,
             o3: OutcomeModifierWeight.SlightNegative,
-            o4: OutcomeModifierWeight.SlightNegative
+            o4: OutcomeModifierWeight.MajorNegative
           },
           impacts: {
             president: {
@@ -114,10 +114,10 @@ export const libPrimaryExchange: ExchangeData = {
           text: "We issued a 48-hour pause while engineers patch the wildlife-signal bug and audit deployments. Barn-by-barn alerts will explain scope, waivers, and how to opt out peacefully.",
           type: AnswerType.Inform,
           outcomeModifiers: {
-            o1: OutcomeModifierWeight.Neutral,
+            o1: OutcomeModifierWeight.SlightNegative,
             o2: OutcomeModifierWeight.SlightNegative,
-            o3: OutcomeModifierWeight.Neutral,
-            o4: OutcomeModifierWeight.StrongPositive
+            o3: OutcomeModifierWeight.SlightPositive,
+            o4: OutcomeModifierWeight.SlightPositive
           },
           impacts: {
             president: {
@@ -312,13 +312,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_2",
-            text: "Yes—yarn, needles, and banners come back intact, with apologies that don’t sound like legalese. We’re also training field leads so craft circles stop getting treated like conspiracies.",
+            text: "Yes—yarn, needles, and banners come back intact, with apologies that don't sound like legalese. We're also training field leads so craft circles stop getting treated like conspiracies.",
             type: AnswerType.Reassure,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.SlightNegative,
+              o1: OutcomeModifierWeight.StrongPositive,
               o2: OutcomeModifierWeight.StrongPositive,
               o3: OutcomeModifierWeight.SlightNegative,
-              o4: OutcomeModifierWeight.SlightNegative
+              o4: OutcomeModifierWeight.MajorNegative
             },
             impacts: {
               president: {
@@ -375,13 +375,13 @@ export const libPrimaryExchange: ExchangeData = {
           },
           {
             id: "a_s2_4",
-            text: "On behalf of Homeland Preparedness, we’re pausing deployments and sending clear barn-by-barn advisories. No roaming gourds, no curfews, and no confiscations tied to knit-ins.",
+            text: "On behalf of Homeland Preparedness, we're pausing deployments and sending clear barn-by-barn advisories. No roaming gourds, no curfews, and no confiscations tied to knit-ins.",
             type: AnswerType.Authorized,
             outcomeModifiers: {
-              o1: OutcomeModifierWeight.Neutral,
+              o1: OutcomeModifierWeight.SlightNegative,
               o2: OutcomeModifierWeight.SlightNegative,
-              o3: OutcomeModifierWeight.Neutral,
-              o4: OutcomeModifierWeight.StrongPositive
+              o3: OutcomeModifierWeight.SlightPositive,
+              o4: OutcomeModifierWeight.SlightPositive
             },
             impacts: {
               president: {
