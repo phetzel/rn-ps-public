@@ -12,6 +12,7 @@ import { StateProgress } from "~/components/screens/tab-state/StateProgress";
 import { SubgroupCategoryIcon } from "~/components/shared/entity/SubgroupCategoryIcon";
 // Types
 import { SubgroupCategory } from "~/types";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 interface SubgroupStateCardProps {
   subgroupApprovals: SubgroupApproval[];
@@ -41,6 +42,13 @@ export function SubgroupStateCard({
       accessible={true}
       accessibilityLabel={`Public opinion groups: ${subgroupApprovals.length} demographic groups across ${categories.length} categories`}
     >
+      <View className="flex-row items-center gap-2">
+        <Text className="text-2xl font-bold">Subgroups</Text>
+        <View className="ml-auto">
+          <InfoTooltip tooltipId="state.subgroups" />
+        </View>
+      </View>
+
       {categories.map((category, categoryIdx) => {
         const categoryGroups = groupedApprovals[category];
         const categoryAverage = Math.round(

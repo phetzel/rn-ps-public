@@ -9,6 +9,7 @@ import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBa
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
 import { Game } from "~/lib/db/models";
 import { Award } from "~/lib/icons/Award";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 interface PresidentStateCardProps {
   game: Game | null;
@@ -29,6 +30,9 @@ const PresidentStateCard = ({
       <CardHeader className="pb-4 flex-row items-center gap-2">
         <Award className="text-primary" />
         <CardTitle>President</CardTitle>
+        <View className="ml-auto">
+          <InfoTooltip tooltipId="state.president" />
+        </View>
       </CardHeader>
 
       <CardContent className="gap-2">

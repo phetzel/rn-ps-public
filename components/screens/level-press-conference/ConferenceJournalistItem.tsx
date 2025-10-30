@@ -4,7 +4,6 @@ import { View, Pressable } from "react-native";
 import type PressExchange from "~/lib/db/models/PressExchange";
 import { ChevronRight } from "~/lib/icons/ChevronRight";
 import { Card, CardContent } from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
 import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
 import InfoTooltip from "~/components/shared/InfoTooltip";
 import { FollowUpBadge } from "~/components/shared/entity/FollowUpBadge";
@@ -92,11 +91,10 @@ const ConferenceJournalistItem = ({
               </View>
               <View className="px-1">
                 {isDisabled ? (
-                  <InfoTooltip>
-                    <Text className="text-xs text-center">
-                      {disabledReason}
-                    </Text>
-                  </InfoTooltip>
+                  <InfoTooltip
+                    tooltipId="press.conference.disabled"
+                    tooltipParams={{ reason: disabledReason }}
+                  />
                 ) : (
                   <ChevronRight
                     className="text-muted-foreground"

@@ -9,6 +9,7 @@ import { Separator } from "~/components/ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { StateProgress } from "~/components/screens/tab-state/StateProgress";
 import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 interface CabinetStateCardProps {
   cabinetMembers: CabinetMember[];
@@ -23,6 +24,9 @@ const CabinetStateCard = ({ cabinetMembers }: CabinetStateCardProps) => {
       <CardHeader className="pb-4 flex-row items-center gap-2">
         <Briefcase className="text-primary" />
         <CardTitle>Cabinet</CardTitle>
+        <View className="ml-auto">
+          <InfoTooltip tooltipId="state.cabinet" />
+        </View>
       </CardHeader>
 
       <CardContent className="gap-4">
