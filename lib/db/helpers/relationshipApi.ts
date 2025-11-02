@@ -24,7 +24,8 @@ export async function applyRelationshipDeltas(
         : deltas.president;
 
       await game.update((g) => {
-        g.presPsRelationship = g.presPsRelationship + boostedDelta;
+        const next = (g.presPsRelationship || 0) + boostedDelta;
+        g.presPsRelationship = Math.max(0, Math.min(100, Math.round(next)));
       });
     }
 
@@ -42,7 +43,8 @@ export async function applyRelationshipDeltas(
             : deltaValue;
 
           await member.update((m) => {
-            m.psRelationship = (m.psRelationship || 0) + boostedDelta;
+            const next = (m.psRelationship || 0) + boostedDelta;
+            m.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
           });
         } else {
           console.warn(
@@ -63,7 +65,8 @@ export async function applyRelationshipDeltas(
             : deltaValue;
 
           await journalist.update((j) => {
-            j.psRelationship = (j.psRelationship || 0) + boostedDelta;
+            const next = (j.psRelationship || 0) + boostedDelta;
+            j.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
           });
         } else {
           console.warn(
@@ -113,7 +116,8 @@ export async function applySituationConsequences(
           const boostedDelta = useAdBoost ? delta.adBoostedDelta : delta.delta;
 
           await member.update((m) => {
-            m.approvalRating = (m.approvalRating || 0) + boostedDelta;
+            const next = (m.approvalRating || 0) + boostedDelta;
+            m.approvalRating = Math.max(0, Math.min(100, Math.round(next)));
           });
         } else {
           console.warn(
@@ -128,7 +132,8 @@ export async function applySituationConsequences(
           const boostedDelta = useAdBoost ? delta.adBoostedDelta : delta.delta;
 
           await subgroupApproval.update((s) => {
-            s.approvalRating = (s.approvalRating || 0) + boostedDelta;
+            const next = (s.approvalRating || 0) + boostedDelta;
+            s.approvalRating = Math.max(0, Math.min(100, Math.round(next)));
           });
         } else {
           console.warn(

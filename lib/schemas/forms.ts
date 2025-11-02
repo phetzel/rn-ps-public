@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PoliticalLeaning } from "~/types";
+import { PoliticalLeaning, PressOfficeBackground } from "~/types";
 
 // Create Game Schema (renamed from createGameSchema to be more specific)
 export const createLevelSchema = z.object({
@@ -12,6 +12,7 @@ export const createLevelSchema = z.object({
     .trim()
     .min(1, { message: "President name is required" }),
   presidentLeaning: z.nativeEnum(PoliticalLeaning),
+  pressOfficeBackground: z.nativeEnum(PressOfficeBackground),
 });
 
 export type CreateLevelFormData = z.infer<typeof createLevelSchema>;

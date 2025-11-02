@@ -27,6 +27,24 @@ export enum PoliticalLeaning {
   Neutral = "neutral",
 }
 
+export enum PressOfficeBackground {
+  Journalist = "journalist",
+  PolicyAide = "policy_aide",
+  CampaignSpokes = "campaign_spokes",
+  CrisisComms = "crisis_comms",
+  CorporatePR = "corporate_pr",
+  MilitaryPAO = "military_pao",
+}
+
+// Alignment magnitude enum used by static data (multiply by POLITICAL_ALIGNMENT_WEIGHT)
+export enum AlignmentWeight {
+  Zero = 0,
+  DoubleNegative = -20,
+  Negative = -10,
+  Positive = 10,
+  DoublePositive = 20,
+}
+
 export enum SubgroupCategory {
   Political = "political",
   Demographic = "demographic",
@@ -69,6 +87,8 @@ export interface StaticSubgroup {
   category: SubgroupCategory;
   name: string;
   defaultPoliticalLeaning?: PoliticalLeaning;
+  // Optional sensitivity magnitude; default is AlignmentWeight.Positive
+  weight?: AlignmentWeight | null;
 }
 
 export enum PublicationStaticId {
@@ -465,4 +485,5 @@ export interface NewGameDetails {
   pressSecretaryName: string;
   presidentName: string;
   presidentLeaning: PoliticalLeaning;
+  pressOfficeBackground: PressOfficeBackground;
 }

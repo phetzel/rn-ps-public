@@ -23,6 +23,7 @@ import { NameField } from "~/components/screens/game-create/NameField";
 import { PartySelect } from "~/components/screens/game-create/PartySelect";
 // Types
 import { NewGameDetails, PoliticalLeaning } from "~/types";
+import { BackgroundSelect } from "~/components/screens/game-create/BackgroundSelect";
 
 export default function GameCreateScreen() {
   const { createGame } = useGameNavigation();
@@ -43,6 +44,7 @@ export default function GameCreateScreen() {
       pressSecretaryName: "",
       presidentName: "",
       presidentLeaning: PoliticalLeaning.Conservative,
+      pressOfficeBackground: undefined, // explicitly undefined to force user selection
     },
   });
 
@@ -52,6 +54,7 @@ export default function GameCreateScreen() {
       pressSecretaryName: data.pressSecretaryName,
       presidentName: data.presidentName,
       presidentLeaning: data.presidentLeaning,
+      pressOfficeBackground: data.pressOfficeBackground,
     };
 
     const success = await createGame(details);
@@ -87,15 +90,6 @@ export default function GameCreateScreen() {
             <ErrorDisplay message={storeError} />
           )}
 
-          {/* Press Secretary Name Input */}
-          <NameField
-            control={control}
-            name="pressSecretaryName"
-            label="Your Press Secretary Name"
-            placeholder="George Akerson..."
-            error={errors.pressSecretaryName}
-            disabled={isLoading}
-          />
 
           {/* President Name Input */}
           <NameField
@@ -111,6 +105,23 @@ export default function GameCreateScreen() {
           <PartySelect
             control={control}
             error={errors.presidentLeaning}
+            disabled={isLoading}
+          />
+
+          {/* Press Secretary Name Input */}
+          <NameField
+            control={control}
+            name="pressSecretaryName"
+            label="Your Press Secretary Name"
+            placeholder="George Akerson..."
+            error={errors.pressSecretaryName}
+            disabled={isLoading}
+          />
+
+          {/* Press Office Background */}
+          <BackgroundSelect
+            control={control}
+            error={errors.pressOfficeBackground}
             disabled={isLoading}
           />
         </CardContent>

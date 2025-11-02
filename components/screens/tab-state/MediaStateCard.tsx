@@ -7,6 +7,7 @@ import type Publication from "~/lib/db/models/Publication";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
 import { Newspaper } from "~/lib/icons/Newspaper";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 import PublicationStateItem from "~/components/screens/tab-state/PublicationStateItem";
 
@@ -29,6 +30,9 @@ export function MediaStateCard({ publications }: MediaStateCardProps) {
       <CardHeader className="pb-4 flex-row items-center gap-2">
         <Newspaper className="text-primary" />
         <CardTitle>Media Outlets</CardTitle>
+        <View className="ml-auto">
+          <InfoTooltip tooltipId="state.media" />
+        </View>
       </CardHeader>
 
       <CardContent>

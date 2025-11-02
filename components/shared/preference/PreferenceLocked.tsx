@@ -34,31 +34,14 @@ const PreferenceLocked: React.FC<PreferenceLockedProps> = ({
           Preference Locked
         </Text>
 
-        <InfoTooltip>
-          <View
-            className="gap-2"
-            accessibilityLabel={`Details about ${cabinetMemberName}'s preference lock`}
-            accessibilityHint="Shows relationship requirements and current status"
-          >
-            <Text className="text-xs text-center" accessible={false}>
-              <Text className="font-bold" accessible={false}>
-                {cabinetMemberName}
-              </Text>{" "}
-              needs a relationship of at least{" "}
-              <Text className="font-bold" accessible={false}>
-                {CABINET_PREFERENCE_THRESHOLD}
-              </Text>{" "}
-              to share their preference with you.
-            </Text>
-
-            <Text className="text-xs text-center" accessible={false}>
-              Current relationship:{" "}
-              <Text className="font-bold" accessible={false}>
-                {relationship}
-              </Text>
-            </Text>
-          </View>
-        </InfoTooltip>
+        <InfoTooltip
+          tooltipId="state.preferenceLocked"
+          tooltipParams={{
+            cabinetMemberName,
+            relationship,
+            threshold: CABINET_PREFERENCE_THRESHOLD,
+          }}
+        />
       </View>
     </View>
   );

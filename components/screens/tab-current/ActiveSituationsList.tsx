@@ -7,6 +7,7 @@ import { Situation } from "~/lib/db/models";
 import { Text } from "~/components/ui/text";
 import { SituationCard } from "~/components/screens/tab-current/SituationCard";
 import { EmptyState } from "~/components/shared/EmptyState";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 interface ActiveSituationsListProps {
   situations: Situation[];
@@ -19,7 +20,12 @@ const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
       accessible={true}
       accessibilityLabel={`Active situations: ${situations?.length || 0} total`}
     >
+      <View className="flex-row items-center gap-2">
       <Text className="text-2xl font-semibold">Active Situations</Text>
+        <View className="ml-auto">
+          <InfoTooltip tooltipId="current.activeSituations" />
+        </View>
+      </View>
 
       {!situations?.length ? (
         <EmptyState message="No active situations" />
