@@ -6,6 +6,7 @@ import Publication from "./Publication";
 import Situation from "./Situation";
 import SubgroupApproval from "./SubgroupApproval";
 import PressExchange from "./PressExchange";
+import AppSetting from "./AppSetting";
 
 export {
   CabinetMember,
@@ -16,4 +17,5 @@ export {
   Situation,
   SubgroupApproval,
   PressExchange,
+  AppSetting,
 };

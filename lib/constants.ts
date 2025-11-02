@@ -114,3 +114,7 @@ export const CROSS_REFERENCE_THRESHOLDS = {
   // Question depth constraints
   ROOT_QUESTION_DEPTH: 0,
 } as const;
+
+// Legal / disclaimers
+export const FICTION_DISCLAIMER_TEXT =
+  "This is a work of fiction. Names, characters, businesses, places, events and incidents are either the products of the author's imagination or used in a fictitious manner. Any resemblance to actual persons, living or dead, or actual events is purely coincidental.";

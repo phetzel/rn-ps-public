@@ -113,5 +113,16 @@ export const myAppSchema = appSchema({
         { name: "updated_at", type: "number" },
       ],
     }),
+
+    // App settings / flags
+    tableSchema({
+      name: "app_settings",
+      columns: [
+        { name: "has_fiction_disclaimer_ack", type: "boolean" },
+        { name: "fiction_disclaimer_acknowledged_at", type: "number", isOptional: true },
+        { name: "created_at", type: "number" },
+        { name: "updated_at", type: "number" },
+      ],
+    }),
   ],
 });
