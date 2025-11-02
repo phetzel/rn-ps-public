@@ -75,7 +75,13 @@ describe("InfoTooltip", () => {
   it("handles empty children gracefully", () => {
     renderWithChildren(null);
 
-    // Should still render the trigger button
+    // When no children and no tooltipId are provided, the component should not render
+    expect(screen.queryByRole("button", { name: "Information" })).toBeNull();
+  });
+
+  it("renders when tooltipId is provided without children", () => {
+    render(<InfoTooltip tooltipId="form.pressBackground" />);
+
     expect(screen.getByRole("button", { name: "Information" })).toBeTruthy();
   });
 
