@@ -6,6 +6,7 @@ import { Label } from "~/components/ui/label";
 import { Text } from "~/components/ui/text";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { CreateGameFormData } from "~/lib/schemas";
+import InfoTooltip from "~/components/shared/InfoTooltip";
 
 interface PartySelectProps {
   control: Control<CreateGameFormData>;
@@ -30,13 +31,24 @@ export function PartySelect({
   const errorId = "presidentLeaningError";
 
   return (
-    <View>
+    <View className="gap-2">
+      <View className="flex-row items-center gap-2">
       <Label
         nativeID="presidentLeaningLabel"
         className={error ? "text-destructive" : ""}
       >
         President's Political Leaning
       </Label>
+        <View className="ml-auto">
+          <Controller
+            control={control}
+            name="presidentLeaning"
+            render={({ field: { value } }) => (
+              <InfoTooltip tooltipId="form.presidentLeaning" tooltipParams={{ leaning: value }} />
+            )}
+          />
+        </View>
+      </View>
       <Controller
         control={control}
         name="presidentLeaning"

@@ -17,7 +17,7 @@ import type Publication from "./Publication";
 import type Journalist from "./Journalist";
 import type SubgroupApproval from "./SubgroupApproval";
 // Enums
-import { GameStatus, PoliticalLeaning } from "~/types";
+import { GameStatus, PoliticalLeaning, PressOfficeBackground } from "~/types";
 // Utils
 import { calculatePresidentApprovalRating } from "~/lib/utils";
 // Constants
@@ -49,6 +49,7 @@ export default class Game extends Model {
   @text("pres_name") presName!: string;
   @field("pres_ps_relationship") presPsRelationship!: number;
   @text("pres_leaning") presLeaning!: PoliticalLeaning;
+  @text("ps_background") psBackground!: PressOfficeBackground;
   @text("used_situations") usedSituations!: string; // JSON array of situation ids
   @field("start_timestamp") startTimestamp!: number;
   @field("end_timestamp") endTimestamp!: number | null; // Optional number

@@ -8,7 +8,7 @@ export default function MediaStateTooltip() {
       <Text className="text-primary font-bold">Media Outlets</Text>
       <Text className="text-muted-foreground leading-tight">Outlets covering the administration and shaping perception.</Text>
       <Text className="text-muted-foreground leading-tight">
-        <Text className="font-semibold">Approval Rating</Text>: Affects coverage of situations and amplifies both good and bad effects.
+        <Text className="font-semibold">Approval Rating</Text>: Shapes situation coverage, amplifying both good and bad effects.
       </Text>
     </View>
   );

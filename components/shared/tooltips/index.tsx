@@ -7,6 +7,8 @@ import AuthorizedTooltip from "~/components/shared/tooltips/AuthorizedTooltip";
 import ConferenceDisabledTooltip from "~/components/shared/tooltips/ConferenceDisabledTooltip";
 import SubgroupsTooltip from "~/components/shared/tooltips/SubgroupsTooltip";
 import ActiveSituationsTooltip from "~/components/shared/tooltips/ActiveSituationsTooltip";
+import PresidentialLeaningTooltip from "~/components/shared/tooltips/PresidentialLeaningTooltip";
+import PressOfficeBackgroundTooltip from "~/components/shared/tooltips/PressOfficeBackgroundTooltip";
 
 type TooltipComponent = React.ComponentType<any>;
 
@@ -19,6 +21,8 @@ export const tooltipRegistry = {
   "press.conference.disabled": ConferenceDisabledTooltip,
   "state.subgroups": SubgroupsTooltip,
   "current.activeSituations": ActiveSituationsTooltip,
+  "form.presidentLeaning": PresidentialLeaningTooltip,
+  "form.pressBackground": PressOfficeBackgroundTooltip,
 } as const;
 
 export type TooltipKey = keyof typeof tooltipRegistry;

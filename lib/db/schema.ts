@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from "@nozbe/watermelondb";
 
 export const myAppSchema = appSchema({
-  version: 1, // Start with version 1
+  version: 1,
   tables: [
     tableSchema({
       name: "games",
@@ -15,6 +15,7 @@ export const myAppSchema = appSchema({
         { name: "pres_name", type: "string" },
         { name: "pres_ps_relationship", type: "number" },
         { name: "pres_leaning", type: "string" },
+        { name: "ps_background", type: "string", isOptional: true },
         { name: "used_situations", type: "string" },
         { name: "created_at", type: "number" },
         { name: "updated_at", type: "number" },

@@ -21,7 +21,7 @@ const ActiveSituationsList = ({ situations }: ActiveSituationsListProps) => {
       accessibilityLabel={`Active situations: ${situations?.length || 0} total`}
     >
       <View className="flex-row items-center gap-2">
-        <Text className="text-2xl font-semibold">Active Situations</Text>
+      <Text className="text-2xl font-semibold">Active Situations</Text>
         <View className="ml-auto">
           <InfoTooltip tooltipId="current.activeSituations" />
         </View>

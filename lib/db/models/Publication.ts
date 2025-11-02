@@ -17,7 +17,7 @@ import type Journalist from "./Journalist";
 import { staticPublications } from "~/lib/data/staticMedia";
 // Types + Constants
 import type { PublicationStaticId, StaticPublication } from "~/types";
-import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
+import { AlignmentWeight } from "~/types";
 
 export default class Publication extends Model {
   static table = "publications";
@@ -68,17 +68,14 @@ export default class Publication extends Model {
     // Apply alignment bonus/penalty
     if (
       (politicalLeaning === "liberal" && presidentLeaning === "liberal") ||
-      (politicalLeaning === "conservative" &&
-        presidentLeaning === "conservative")
+      (politicalLeaning === "conservative" && presidentLeaning === "conservative")
     ) {
-      // Publication aligns with president's party
-      totalApproval += POLITICAL_ALIGNMENT_WEIGHT;
+      totalApproval += AlignmentWeight.DoublePositive;
     } else if (
       (politicalLeaning === "liberal" && presidentLeaning === "conservative") ||
       (politicalLeaning === "conservative" && presidentLeaning === "liberal")
     ) {
-      // Publication doesn't align with president's party
-      totalApproval -= POLITICAL_ALIGNMENT_WEIGHT;
+      totalApproval += AlignmentWeight.DoubleNegative;
     }
 
     // Ensure approval stays within valid range (0-100)

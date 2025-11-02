@@ -24,7 +24,7 @@ const InfoTooltip: React.FC<InfoTooltipProps> = ({ children, tooltipId, tooltipP
         accessibilityHint={"Additional information available"}
       >
         <View className="pl-1 pr-2 py-1">
-          <Info className="text-gray-500" size={20} />
+        <Info className="text-gray-500" size={20} />
         </View>
       </TooltipTrigger>
 

@@ -20,13 +20,17 @@ import {
   CabinetStaticId,
   SubgroupStaticId,
   PoliticalLeaning,
+  PressOfficeBackground,
 } from "~/types";
 import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
 import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
 import {
   staticCabinetMembers,
   staticSubgroups,
+  presidentialLeaningEffects,
+  pressBackgroundCabinetEffects,
 } from "~/lib/data/staticPolitics";
+import { AlignmentWeight } from "~/types";
 
 export async function createGameWithDetails(
   details: NewGameDetails
@@ -58,12 +62,16 @@ export async function createGameWithDetails(
       game.presName = details.presidentName;
       game.presPsRelationship = 80;
       game.presLeaning = details.presidentLeaning;
+      game.psBackground = details.pressOfficeBackground;
       game.usedSituations = JSON.stringify([]);
       game.startTimestamp = Math.floor(Date.now() / 1000);
     });
     const gameId = newGame.id;
 
     // Create Political entities
+    const baseRelationship = 50;
+    const background = details.pressOfficeBackground;
+
     for (const [role, cabinetData] of Object.entries(staticCabinetMembers)) {
       // // TEMP
       // const relationshipValues = [20, 50, 90];
@@ -77,8 +85,12 @@ export async function createGameWithDetails(
         member.staticId = role as CabinetStaticId;
         member.name = generateCabinetMemberName(role as CabinetStaticId);
         member.approvalRating = 50;
-        // member.psRelationship = randomRelationship;
-        member.psRelationship = 50;
+        // Base and background delta (from staticPolitics config)
+        const multiplier = background
+          ? pressBackgroundCabinetEffects[background]?.[role as CabinetStaticId]
+          : undefined;
+        const delta = multiplier ?? 0;
+        member.psRelationship = Math.max(0, Math.min(100, baseRelationship + delta));
         member.isActive = true;
       });
     }
@@ -88,23 +100,28 @@ export async function createGameWithDetails(
       if (subData.defaultPoliticalLeaning) {
         const presidentLeaning = details.presidentLeaning;
         const subgroupLeaning = subData.defaultPoliticalLeaning;
-
-        if (
+        const subgroupMagnitude = Math.abs(subData.weight ?? AlignmentWeight.Positive);
+        if (subgroupLeaning === presidentLeaning) {
+          const aligned = presidentialLeaningEffects[presidentLeaning].aligned; // numeric
+          const sign = Math.sign(aligned);
+          initialApproval += sign * subgroupMagnitude;
+        } else if (
           (presidentLeaning === PoliticalLeaning.Conservative &&
             subgroupLeaning === PoliticalLeaning.Liberal) ||
           (presidentLeaning === PoliticalLeaning.Liberal &&
             subgroupLeaning === PoliticalLeaning.Conservative)
         ) {
-          initialApproval -= POLITICAL_ALIGNMENT_WEIGHT;
-        } else if (presidentLeaning === subgroupLeaning) {
-          initialApproval += POLITICAL_ALIGNMENT_WEIGHT;
+          const opposite = presidentialLeaningEffects[presidentLeaning].opposite; // numeric
+          const sign = Math.sign(opposite);
+          initialApproval += sign * subgroupMagnitude;
         }
       }
 
       await subgroupCollection.create((subgroup) => {
         subgroup.game.id = gameId;
         subgroup.staticId = key as SubgroupStaticId;
-        subgroup.approvalRating = initialApproval;
+        const clampedApproval = Math.max(0, Math.min(100, Math.round(initialApproval)));
+        subgroup.approvalRating = clampedApproval;
       });
     }
 
