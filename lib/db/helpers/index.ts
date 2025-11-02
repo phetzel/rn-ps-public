@@ -15,3 +15,4 @@ export * from "./situationCreateApi";
 export * from "./situationOutcomeApi";
 export * from "./situationSelectionApi";
 export * from "./snapshotApi";
+export * from "./appSettings";

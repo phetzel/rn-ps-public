@@ -10,6 +10,7 @@ jest.mock("~/lib/stores/consentStore");
 // Mock the Settings icon - simplified
 jest.mock("~/lib/icons", () => ({
   Settings: () => null,
+  Info: () => null,
 }));
 
 const mockUseConsentStore = useConsentStore as jest.MockedFunction<
@@ -31,10 +32,9 @@ describe("HomePrivacySettings", () => {
       });
     });
 
-    it("renders the privacy settings button", () => {
+    it("renders the privacy button", () => {
       render(<HomePrivacySettings />);
-
-      expect(screen.getByText("Privacy Settings")).toBeTruthy();
+      expect(screen.getByText("Privacy")).toBeTruthy();
     });
 
     it("has correct accessibility properties", () => {
@@ -48,11 +48,10 @@ describe("HomePrivacySettings", () => {
       );
     });
 
-    it("calls showPrivacyOptions when button is pressed", () => {
+    it("calls showPrivacyOptions when Privacy is pressed", () => {
       render(<HomePrivacySettings />);
 
-      const button = screen.getByRole("button");
-      fireEvent.press(button);
+      fireEvent.press(screen.getByText("Privacy"));
 
       expect(mockShowPrivacyOptions).toHaveBeenCalledTimes(1);
     });
@@ -60,7 +59,7 @@ describe("HomePrivacySettings", () => {
     it("has ghost variant styling", () => {
       render(<HomePrivacySettings />);
 
-      const button = screen.getByRole("button");
+      const button = screen.getByLabelText("Privacy and consent settings");
       expect(button).toBeTruthy();
       // The specific styling props would depend on your Button component implementation
     });
@@ -74,11 +73,11 @@ describe("HomePrivacySettings", () => {
       });
     });
 
-    it("renders nothing when form is not available", () => {
+    it("renders only the Legal button when form is not available", () => {
       render(<HomePrivacySettings />);
 
-      expect(screen.queryByText("Privacy Settings")).toBeFalsy();
-      expect(screen.queryByRole("button")).toBeFalsy();
+      expect(screen.queryByText("Privacy")).toBeFalsy();
+      expect(screen.getByText("Legal")).toBeTruthy();
     });
 
     it("does not call showPrivacyOptions when form unavailable", () => {
@@ -108,7 +107,7 @@ describe("HomePrivacySettings", () => {
       });
 
       const { rerender } = render(<HomePrivacySettings />);
-      expect(screen.queryByText("Privacy Settings")).toBeFalsy();
+      expect(screen.queryByText("Privacy")).toBeFalsy();
 
       // Re-render with formAvailable true
       mockUseConsentStore.mockReturnValue({
@@ -118,7 +117,7 @@ describe("HomePrivacySettings", () => {
 
       rerender(<HomePrivacySettings />);
 
-      expect(screen.getByText("Privacy Settings")).toBeTruthy();
+      expect(screen.getByText("Privacy")).toBeTruthy();
     });
   });
 
@@ -131,7 +130,7 @@ describe("HomePrivacySettings", () => {
 
       render(<HomePrivacySettings />);
 
-      const button = screen.getByRole("button");
+      const button = screen.getByLabelText("Privacy and consent settings");
       expect(() => fireEvent.press(button)).not.toThrow();
     });
   });
@@ -147,8 +146,8 @@ describe("HomePrivacySettings", () => {
     it("maintains proper component structure", () => {
       render(<HomePrivacySettings />);
 
-      const button = screen.getByRole("button");
-      const text = screen.getByText("Privacy Settings");
+      const button = screen.getByLabelText("Privacy and consent settings");
+      const text = screen.getByText("Privacy");
 
       expect(button).toBeTruthy();
       expect(text).toBeTruthy();
@@ -157,11 +156,11 @@ describe("HomePrivacySettings", () => {
     it("does not re-render unnecessarily", () => {
       const { rerender } = render(<HomePrivacySettings />);
 
-      expect(screen.getByText("Privacy Settings")).toBeTruthy();
+      expect(screen.getByText("Privacy")).toBeTruthy();
 
       rerender(<HomePrivacySettings />);
 
-      expect(screen.getByText("Privacy Settings")).toBeTruthy();
+      expect(screen.getByText("Privacy")).toBeTruthy();
       expect(mockUseConsentStore).toHaveBeenCalledTimes(2);
     });
   });

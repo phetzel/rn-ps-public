@@ -14,6 +14,7 @@ import {
   Situation,
   SubgroupApproval,
   PressExchange,
+  AppSetting,
 } from "./models";
 
 const adapter = new SQLiteAdapter({
@@ -37,5 +38,6 @@ export const database = new Database({
     SubgroupApproval,
     Situation,
     PressExchange,
+    AppSetting,
   ],
 });

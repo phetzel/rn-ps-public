@@ -9,6 +9,7 @@ import {
   Situation,
   SubgroupApproval,
   PressExchange,
+  AppSetting,
 } from "~/lib/db/models";
 
 // Collections
@@ -22,3 +23,4 @@ export const subgroupCollection =
   database.get<SubgroupApproval>("subgroup_approvals");
 export const pressExchangeCollection =
   database.get<PressExchange>("press_exchanges");
+export const appSettingsCollection = database.get<AppSetting>("app_settings");

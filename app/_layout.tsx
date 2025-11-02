@@ -21,6 +21,9 @@ import { NAV_THEME } from "~/lib/constants";
 import { useColorScheme } from "~/lib/useColorScheme";
 import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
 import { Text } from "~/components/ui/text";
+import { DisclaimerModal } from "~/components/shared/DisclaimerModal";
+import { getOrCreateAppSettings } from "~/lib/db/helpers";
+import { useDisclaimerDialogStore } from "~/lib/stores/disclaimerDialogStore";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -39,6 +42,7 @@ export { ErrorBoundary } from "expo-router";
 export default function RootLayout() {
   const { colorScheme, isDarkColorScheme } = useColorScheme();
   const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const { open } = useDisclaimerDialogStore();
 
   // Zustand state for DB initialization
   const { isDbReady, initializeDb, dbError } = useGameManagerStore((state) => ({
@@ -81,6 +85,27 @@ export default function RootLayout() {
     }
   }, [isSdkInitialized, isDbReady, prepareConsentInfo]);
 
+  // Show disclaimer on first launch after DB and SDK are ready
+  React.useEffect(() => {
+    let cancelled = false;
+    const maybeShowDisclaimer = async () => {
+      try {
+        if (isDbReady && isSdkInitialized) {
+          const settings = await getOrCreateAppSettings();
+          if (!cancelled && !settings.hasFictionDisclaimerAck) {
+            open();
+          }
+        }
+      } catch (e) {
+        // Fail silently; we'll try again next session
+      }
+    };
+    void maybeShowDisclaimer();
+    return () => {
+      cancelled = true;
+    };
+  }, [isDbReady, isSdkInitialized, open]);
+
   if ((!isDbReady && !dbError) || !isColorSchemeLoaded || !isSdkInitialized) {
     return null;
   }
@@ -114,6 +139,7 @@ export default function RootLayout() {
       <DatabaseProvider database={database}>
         <BottomSheetModalProvider>
           <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <DisclaimerModal />
           <Stack>
             <Stack.Screen
               name="index"
