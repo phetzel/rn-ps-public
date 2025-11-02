@@ -22,7 +22,7 @@ import { Logo } from "~/components/shared/Logo";
 import { NameField } from "~/components/screens/game-create/NameField";
 import { PartySelect } from "~/components/screens/game-create/PartySelect";
 // Types
-import { NewGameDetails, PoliticalLeaning, PressOfficeBackground } from "~/types";
+import { NewGameDetails, PoliticalLeaning } from "~/types";
 import { BackgroundSelect } from "~/components/screens/game-create/BackgroundSelect";
 
 export default function GameCreateScreen() {
