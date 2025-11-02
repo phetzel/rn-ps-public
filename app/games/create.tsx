@@ -44,7 +44,7 @@ export default function GameCreateScreen() {
       pressSecretaryName: "",
       presidentName: "",
       presidentLeaning: PoliticalLeaning.Conservative,
-      // pressOfficeBackground omitted to force user selection
+      pressOfficeBackground: undefined, // explicitly undefined to force user selection
     },
   });
 
