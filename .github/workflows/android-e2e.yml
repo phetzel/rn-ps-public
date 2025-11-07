@@ -1,0 +1,52 @@
+name: Android E2E (Maestro)
+
+on:
+  pull_request:
+  push:
+    branches: [ main, prod-ready, release/** ]
+
+jobs:
+  android-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Start Android emulator and run tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          profile: pixel_5
+          script: |
+            # Build a debug APK via Expo prebuild + Gradle
+            npx expo prebuild -p android --no-install --clean
+            cd android
+            ./gradlew assembleDebug
+            cd ..
+
+            # Install APK into emulator
+            adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+
+            # Install Maestro CLI
+            curl -Ls "https://get.maestro.mobile.dev" | bash
+            export PATH="$HOME/.maestro/bin:$PATH"
+
+            # Run Maestro suite (uses per-flow appId)
+            maestro test e2e/maestro/suites/smoke.yaml
+

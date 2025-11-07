@@ -21,7 +21,10 @@
     "test": "jest --watchAll",
     "test:ci": "jest --watchAll=false --passWithNoTests",
     "typecheck": "tsc --noEmit",
-    "gen-situation": "tsx scripts/run-gen-situation.ts"
+    "gen-situation": "tsx scripts/run-gen-situation.ts",
+    "e2e": "maestro test e2e/maestro/suites/smoke.yaml",
+    "e2e:ios": "maestro test --platform=ios e2e/maestro/suites/smoke.yaml",
+    "e2e:android": "maestro test --platform=android e2e/maestro/suites/smoke.yaml"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",

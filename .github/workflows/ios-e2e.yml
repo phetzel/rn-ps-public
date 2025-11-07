@@ -1,0 +1,62 @@
+name: iOS E2E (Maestro)
+
+on:
+  pull_request:
+  push:
+    branches: [ main, prod-ready, release/** ]
+
+jobs:
+  ios-e2e:
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Prebuild iOS project (Expo)
+        run: npx expo prebuild -p ios --no-install --clean
+
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          pod install --repo-update
+
+      - name: Build iOS app for Simulator
+        run: |
+          xcodebuild \
+            -workspace ios/*.xcworkspace \
+            -scheme "Press Office" \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build \
+            build
+
+      - name: Boot iOS Simulator
+        run: |
+          xcrun simctl shutdown all || true
+          xcrun simctl boot "iPhone 15" || true
+          xcrun simctl bootstatus "iPhone 15" -b
+
+      - name: Install built .app to Simulator
+        run: |
+          APP_PATH=$(find build/Build/Products/Debug-iphonesimulator -maxdepth 1 -name "*.app" | head -n 1)
+          if [ -z "$APP_PATH" ]; then echo "No .app found" && ls -la build/Build/Products/Debug-iphonesimulator && exit 1; fi
+          xcrun simctl install booted "$APP_PATH"
+
+      - name: Install Maestro CLI
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Run Maestro tests (iOS)
+        run: maestro test e2e/maestro/suites/smoke.yaml
+

@@ -17,6 +17,7 @@
       }
     },
     "android": {
+      "package": "com.phetzel.rnps",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/splash-icon.png",
         "backgroundColor": "#ffffff"
