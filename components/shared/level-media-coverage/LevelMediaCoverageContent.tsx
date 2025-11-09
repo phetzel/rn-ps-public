@@ -1,19 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
+import React from 'react';
+import { View } from 'react-native';
 
-import { cn } from "~/lib/utils";
-import { PublicationBoost } from "~/types";
+import { Text } from '~/components/ui/text';
+import { cn } from '~/lib/utils';
+import { PublicationBoost } from '~/types';
 
 interface LevelMediaCoverageContentProps {
   mediaBoosts: PublicationBoost[];
   totalBoost: number;
 }
 
-function LevelMediaCoverageContent({
-  mediaBoosts,
-  totalBoost,
-}: LevelMediaCoverageContentProps) {
+function LevelMediaCoverageContent({ mediaBoosts, totalBoost }: LevelMediaCoverageContentProps) {
   return (
     <View
       className="gap-2"
@@ -55,12 +52,12 @@ function LevelMediaCoverageContent({
           <View className="flex-row gap-8" accessible={false}>
             <Text
               className={cn(
-                "text-right w-10",
+                'text-right w-10',
                 item.approvalRating > 50
-                  ? "text-green-500"
+                  ? 'text-green-500'
                   : item.approvalRating < 50
-                  ? "text-red-500"
-                  : "text-foreground"
+                    ? 'text-red-500'
+                    : 'text-foreground',
               )}
               accessible={false}
             >
@@ -68,12 +65,12 @@ function LevelMediaCoverageContent({
             </Text>
             <Text
               className={cn(
-                "text-right w-14 font-semibold",
+                'text-right w-14 font-semibold',
                 item.approvalRating > 50
-                  ? "text-green-500"
+                  ? 'text-green-500'
                   : item.approvalRating < 50
-                  ? "text-red-500"
-                  : "text-foreground"
+                    ? 'text-red-500'
+                    : 'text-foreground',
               )}
               accessible={false}
             >
@@ -87,9 +84,7 @@ function LevelMediaCoverageContent({
       <View
         className="flex-row justify-between items-center py-2 border-t"
         accessible={true}
-        accessibilityLabel={`Total media impact: boost multiplier of ${totalBoost.toFixed(
-          2
-        )}`}
+        accessibilityLabel={`Total media impact: boost multiplier of ${totalBoost.toFixed(2)}`}
       >
         <Text className="font-bold" accessible={false}>
           Total Media Impact

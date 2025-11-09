@@ -1,7 +1,8 @@
 import * as TablePrimitive from '@rn-primitives/table';
 import * as React from 'react';
-import { cn } from '~/lib/utils';
+
 import { TextClassContext } from '~/components/ui/text';
+import { cn } from '~/lib/utils';
 
 const Table = React.forwardRef<TablePrimitive.RootRef, TablePrimitive.RootProps>(
   ({ className, ...props }, ref) => (
@@ -10,7 +11,7 @@ const Table = React.forwardRef<TablePrimitive.RootRef, TablePrimitive.RootProps>
       className={cn('w-full caption-bottom text-sm', className)}
       {...props}
     />
-  )
+  ),
 );
 Table.displayName = 'Table';
 
@@ -21,7 +22,7 @@ const TableHeader = React.forwardRef<TablePrimitive.HeaderRef, TablePrimitive.He
       className={cn('border-border [&_tr]:border-b', className)}
       {...props}
     />
-  )
+  ),
 );
 TableHeader.displayName = 'TableHeader';
 
@@ -33,7 +34,7 @@ const TableBody = React.forwardRef<TablePrimitive.BodyRef, TablePrimitive.BodyPr
       style={[{ minHeight: 2 }, style]}
       {...props}
     />
-  )
+  ),
 );
 TableBody.displayName = 'TableBody';
 
@@ -44,7 +45,7 @@ const TableFooter = React.forwardRef<TablePrimitive.FooterRef, TablePrimitive.Fo
       className={cn('bg-muted/50 font-medium [&>tr]:last:border-b-0', className)}
       {...props}
     />
-  )
+  ),
 );
 TableFooter.displayName = 'TableFooter';
 
@@ -54,27 +55,27 @@ const TableRow = React.forwardRef<TablePrimitive.RowRef, TablePrimitive.RowProps
       ref={ref}
       className={cn(
         'flex-row border-border border-b web:transition-colors web:hover:bg-muted/50 web:data-[state=selected]:bg-muted',
-        className
+        className,
       )}
       {...props}
     />
-  )
+  ),
 );
 TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<TablePrimitive.HeadRef, TablePrimitive.HeadProps>(
   ({ className, ...props }, ref) => (
-    <TextClassContext.Provider value='text-muted-foreground'>
+    <TextClassContext.Provider value="text-muted-foreground">
       <TablePrimitive.Head
         ref={ref}
         className={cn(
           'h-12 px-4 text-left justify-center font-medium [&:has([role=checkbox])]:pr-0',
-          className
+          className,
         )}
         {...props}
       />
     </TextClassContext.Provider>
-  )
+  ),
 );
 TableHead.displayName = 'TableHead';
 
@@ -85,7 +86,7 @@ const TableCell = React.forwardRef<TablePrimitive.CellRef, TablePrimitive.CellPr
       className={cn('p-4 align-middle [&:has([role=checkbox])]:pr-0', className)}
       {...props}
     />
-  )
+  ),
 );
 TableCell.displayName = 'TableCell';
 

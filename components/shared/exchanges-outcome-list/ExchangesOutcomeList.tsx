@@ -1,24 +1,21 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observePressExchangesForLevel } from "~/lib/db/helpers/observations";
-import { PressExchange } from "~/lib/db/models";
-import { Accordion } from "~/components/ui/accordion";
-import { Separator } from "~/components/ui/separator";
-import { EmptyState } from "~/components/shared/EmptyState";
-import { Text } from "~/components/ui/text";
-import ExchangeOutcomeItem from "~/components/shared/exchanges-outcome-list/ExchangeOutcomeItem";
+import { EmptyState } from '~/components/shared/EmptyState';
+import ExchangeOutcomeItem from '~/components/shared/exchanges-outcome-list/ExchangeOutcomeItem';
+import { Accordion } from '~/components/ui/accordion';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
+import { PressExchange } from '~/lib/db/models';
 
 interface ExchangesOutcomeListProps {
   levelId: string;
   pressExchanges: PressExchange[];
 }
 
-const ExchangesOutcomeList = ({
-  levelId,
-  pressExchanges,
-}: ExchangesOutcomeListProps) => {
+const ExchangesOutcomeList = ({ levelId, pressExchanges }: ExchangesOutcomeListProps) => {
   if (!pressExchanges || pressExchanges.length === 0) {
     return <EmptyState message="No press exchanges found for this level." />;
   }
@@ -42,9 +39,7 @@ const ExchangesOutcomeList = ({
         {pressExchanges.map((exchange, index) => (
           <View key={exchange.id}>
             <ExchangeOutcomeItem key={exchange.id} exchange={exchange} />
-            {index !== pressExchanges.length - 1 && (
-              <Separator className="my-2" />
-            )}
+            {index !== pressExchanges.length - 1 && <Separator className="my-2" />}
           </View>
         ))}
       </Accordion>
@@ -52,7 +47,7 @@ const ExchangesOutcomeList = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   pressExchanges: observePressExchangesForLevel(levelId),
 }));
 

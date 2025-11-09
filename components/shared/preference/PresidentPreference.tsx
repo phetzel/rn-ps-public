@@ -1,12 +1,13 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeGame } from "~/lib/db/helpers/observations";
-import type { Game } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
-import PreferenceDisplay from "~/components/shared/preference/PreferenceDisplay";
-import { Preference } from "~/types";
+import PreferenceDisplay from '~/components/shared/preference/PreferenceDisplay';
+import { Text } from '~/components/ui/text';
+import { observeGame } from '~/lib/db/helpers/observations';
+import { Preference } from '~/types';
+
+import type { Game } from '~/lib/db/models';
 
 interface PresidentPreferenceProps {
   gameId: string;
@@ -14,10 +15,7 @@ interface PresidentPreferenceProps {
   game?: Game | null;
 }
 
-const PresidentPreference = ({
-  preference,
-  game,
-}: PresidentPreferenceProps) => {
+const PresidentPreference = ({ preference, game }: PresidentPreferenceProps) => {
   if (!preference) {
     return (
       <Text
@@ -30,20 +28,16 @@ const PresidentPreference = ({
     );
   }
 
-  const presName = game?.presName ?? "President";
+  const presName = game?.presName ?? 'President';
 
   return (
     <View
       className="gap-2"
       accessible={true}
-      accessibilityLabel={`${presName}'s position on this situation: ${preference.rationale}`}
+      accessibilityLabel={`${presName}${"'"}s position on this situation: ${preference.rationale}`}
     >
-      <Text
-        className="text-lg font-medium"
-        accessibilityRole="header"
-        accessible={false}
-      >
-        President's Position
+      <Text className="text-lg font-medium" accessibilityRole="header" accessible={false}>
+        President{"'"}s Position
       </Text>
       <Text className="text-2xl font-bold" accessible={false}>
         {presName}
@@ -54,7 +48,7 @@ const PresidentPreference = ({
 };
 
 // Enhance with observables to get the game
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
+const enhance = withObservables(['gameId'], ({ gameId }) => ({
   game: observeGame(gameId),
 }));
 

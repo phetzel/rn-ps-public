@@ -1,5 +1,6 @@
-import { writeFile, mkdir, readFile } from "fs/promises";
-import { join } from "path";
+import { writeFile, mkdir, readFile } from 'fs/promises';
+import { join } from 'path';
+
 import {
   SituationType,
   CabinetStaticId,
@@ -14,7 +15,7 @@ import {
   type SituationOutcome,
   type SituationPreferences,
   type ExchangeData,
-} from "~/types";
+} from '~/types';
 
 // Internal utility function (moved from situation-converter.ts)
 function extractSituationComponents(situation: SituationData): {
@@ -26,7 +27,7 @@ function extractSituationComponents(situation: SituationData): {
     outcomes: situation.content.outcomes,
     preferences: situation.content.preferences,
     // Preserve full ExchangeData objects so we keep publication for filenames
-    exchanges: situation.exchanges
+    exchanges: situation.exchanges,
   };
 }
 
@@ -60,7 +61,7 @@ function toPascalCase(str: string): string {
   return str
     .split(/[-_\s]+/)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join("");
+    .join('');
 }
 
 /**
@@ -69,21 +70,21 @@ function toPascalCase(str: string): string {
 function getTypeDirectory(type: SituationType): string {
   switch (type) {
     case SituationType.DomesticPolicy:
-      return "domestic-policy";
+      return 'domestic-policy';
     case SituationType.ForeignAffairs:
-      return "foreign-affairs";
+      return 'foreign-affairs';
     case SituationType.Economy:
-      return "economy";
+      return 'economy';
     case SituationType.Security:
-      return "security";
+      return 'security';
     case SituationType.Environment:
-      return "environment";
+      return 'environment';
     case SituationType.Ethics:
-      return "ethics";
+      return 'ethics';
     case SituationType.Governance:
-      return "governance";
+      return 'governance';
     default:
-      return "misc";
+      return 'misc';
   }
 }
 
@@ -93,21 +94,21 @@ function getTypeDirectory(type: SituationType): string {
 function getPublicationFileName(publication: PublicationStaticId): string {
   switch (publication) {
     case PublicationStaticId.LibPrimary:
-      return "libPrimaryExchange";
+      return 'libPrimaryExchange';
     case PublicationStaticId.ConPrimary:
-      return "conPrimaryExchange";
+      return 'conPrimaryExchange';
     case PublicationStaticId.IndependentPrimary:
-      return "independentPrimaryExchange";
+      return 'independentPrimaryExchange';
     case PublicationStaticId.Investigative:
-      return "investigativeExchange";
+      return 'investigativeExchange';
     default:
-      return "unknownExchange";
+      return 'unknownExchange';
   }
 }
 
-const ENUM_VALUE_PREFIX = "__ENUM__";
-const ENUM_KEY_PREFIX = "__ENUMKEY__";
-const ENUM_PLACEHOLDER_SUFFIX = "__";
+const ENUM_VALUE_PREFIX = '__ENUM__';
+const ENUM_KEY_PREFIX = '__ENUMKEY__';
+const ENUM_PLACEHOLDER_SUFFIX = '__';
 
 function isEnumForwardKey(key: string): boolean {
   return Number.isNaN(Number(key));
@@ -115,7 +116,7 @@ function isEnumForwardKey(key: string): boolean {
 
 function findEnumMemberName(
   enumObj: Record<string, string | number>,
-  rawValue: unknown
+  rawValue: unknown,
 ): string | undefined {
   return Object.entries(enumObj)
     .filter(([key]) => isEnumForwardKey(key))
@@ -125,7 +126,7 @@ function findEnumMemberName(
 function ensureEnumMember(
   enumObj: Record<string, string | number>,
   rawValue: unknown,
-  enumName: string
+  enumName: string,
 ): string {
   const member = findEnumMemberName(enumObj, rawValue);
   if (!member) {
@@ -137,7 +138,7 @@ function ensureEnumMember(
 function asEnumValue(
   enumObj: Record<string, string | number>,
   rawValue: unknown,
-  enumName: string
+  enumName: string,
 ): string {
   const member = ensureEnumMember(enumObj, rawValue, enumName);
   return `${ENUM_VALUE_PREFIX}${enumName}.${member}${ENUM_PLACEHOLDER_SUFFIX}`;
@@ -146,7 +147,7 @@ function asEnumValue(
 function asEnumKey(
   enumObj: Record<string, string | number>,
   rawValue: unknown,
-  enumName: string
+  enumName: string,
 ): string {
   const member = ensureEnumMember(enumObj, rawValue, enumName);
   return `${ENUM_KEY_PREFIX}${enumName}.${member}${ENUM_PLACEHOLDER_SUFFIX}`;
@@ -156,7 +157,7 @@ function mapEnumRecord(
   record: Record<string, any> | undefined,
   keyEnum: Record<string, string | number>,
   keyEnumName: string,
-  valueMapper: (value: any) => any
+  valueMapper: (value: any) => any,
 ): Record<string, any> | undefined {
   if (!record) return undefined;
 
@@ -173,17 +174,17 @@ function mapEnumRecord(
 function replaceEnumPlaceholders(serialized: string): string {
   return serialized
     .replace(
-      new RegExp(`"${ENUM_VALUE_PREFIX}([A-Za-z0-9_.]+)${ENUM_PLACEHOLDER_SUFFIX}"`, "g"),
-      "$1"
+      new RegExp(`"${ENUM_VALUE_PREFIX}([A-Za-z0-9_.]+)${ENUM_PLACEHOLDER_SUFFIX}"`, 'g'),
+      '$1',
     )
     .replace(
-      new RegExp(`"${ENUM_KEY_PREFIX}([A-Za-z0-9_.]+)${ENUM_PLACEHOLDER_SUFFIX}"`, "g"),
-      (_match, group) => `[${group}]`
+      new RegExp(`"${ENUM_KEY_PREFIX}([A-Za-z0-9_.]+)${ENUM_PLACEHOLDER_SUFFIX}"`, 'g'),
+      (_match, group) => `[${group}]`,
     );
 }
 
 function stripQuotesFromKeys(serialized: string): string {
-  return serialized.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, "$1:");
+  return serialized.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, '$1:');
 }
 
 function formatSerialized(value: unknown): string {
@@ -194,20 +195,14 @@ function formatSerialized(value: unknown): string {
 
 function mapOutcomeModifiers(
   modifiers: Record<string, OutcomeModifierWeight>,
-  context?: string
+  context?: string,
 ): Record<string, string> {
   const result: Record<string, string> = {};
   for (const [key, rawValue] of Object.entries(modifiers || {})) {
-    result[key] = asEnumValue(
-      OutcomeModifierWeight,
-      rawValue,
-      "OutcomeModifierWeight"
-    );
+    result[key] = asEnumValue(OutcomeModifierWeight, rawValue, 'OutcomeModifierWeight');
   }
   if (Object.keys(result).length === 0) {
-    throw new Error(
-      `No outcome modifiers found${context ? ` for ${context}` : ""}`
-    );
+    throw new Error(`No outcome modifiers found${context ? ` for ${context}` : ''}`);
   }
   return result;
 }
@@ -215,32 +210,19 @@ function mapOutcomeModifiers(
 /**
  * Generate outcomes file content
  */
-function generateOutcomesFile(
-  outcomes: SituationOutcome[],
-  variableName: string
-): string {
+function generateOutcomesFile(outcomes: SituationOutcome[], variableName: string): string {
   const transformed = outcomes.map((outcome) => {
     const cabinetImpacts = mapEnumRecord(
       outcome.consequences?.approvalChanges?.cabinet,
       CabinetStaticId,
-      "CabinetStaticId",
-      (value) =>
-        asEnumValue(
-          SituationConsequenceWeight,
-          value,
-          "SituationConsequenceWeight"
-        )
+      'CabinetStaticId',
+      (value) => asEnumValue(SituationConsequenceWeight, value, 'SituationConsequenceWeight'),
     );
     const subgroupImpacts = mapEnumRecord(
       outcome.consequences?.approvalChanges?.subgroups,
       SubgroupStaticId,
-      "SubgroupStaticId",
-      (value) =>
-        asEnumValue(
-          SituationConsequenceWeight,
-          value,
-          "SituationConsequenceWeight"
-        )
+      'SubgroupStaticId',
+      (value) => asEnumValue(SituationConsequenceWeight, value, 'SituationConsequenceWeight'),
     );
 
     const approvalChanges: Record<string, any> = {};
@@ -252,9 +234,7 @@ function generateOutcomesFile(
     }
 
     if (Object.keys(approvalChanges).length === 0) {
-      throw new Error(
-        `Outcome ${outcome.id} has no approval changes to serialize`
-      );
+      throw new Error(`Outcome ${outcome.id} has no approval changes to serialize`);
     }
 
     const transformedOutcome: Record<string, any> = {
@@ -289,18 +269,15 @@ export const ${variableName}: SituationOutcome[] = ${serialized};
 /**
  * Generate preferences file content
  */
-function generatePreferencesFile(
-  preferences: SituationPreferences,
-  variableName: string
-): string {
+function generatePreferencesFile(preferences: SituationPreferences, variableName: string): string {
   const presidentPreference = preferences.president;
   if (!presidentPreference) {
-    throw new Error("President preference is required for serialization");
+    throw new Error('President preference is required for serialization');
   }
 
   const transformed: Record<string, any> = {
     president: {
-      answerType: asEnumValue(AnswerType, presidentPreference.answerType, "AnswerType"),
+      answerType: asEnumValue(AnswerType, presidentPreference.answerType, 'AnswerType'),
       rationale: presidentPreference.rationale,
     },
   };
@@ -308,15 +285,11 @@ function generatePreferencesFile(
   const cabinetPreferences = mapEnumRecord(
     preferences.cabinet,
     CabinetStaticId,
-    "CabinetStaticId",
+    'CabinetStaticId',
     (value: any) => {
       const preferenceBlock: Record<string, any> = {
         preference: {
-          answerType: asEnumValue(
-            AnswerType,
-            value.preference.answerType,
-            "AnswerType"
-          ),
+          answerType: asEnumValue(AnswerType, value.preference.answerType, 'AnswerType'),
           rationale: value.preference.rationale,
         },
       };
@@ -326,7 +299,7 @@ function generatePreferencesFile(
       }
 
       return preferenceBlock;
-    }
+    },
   );
 
   if (cabinetPreferences) {
@@ -344,17 +317,10 @@ export const ${variableName}: SituationPreferences = ${serialized};
 /**
  * Generate individual exchange file content
  */
-function generateExchangeFile(
-  exchange: ExchangeData,
-  variableName: string
-): string {
+function generateExchangeFile(exchange: ExchangeData, variableName: string): string {
   const transformImpact = (impact: { weight: ExchangeImpactWeight; reaction?: string }) => {
     const transformedImpact: Record<string, any> = {
-      weight: asEnumValue(
-        ExchangeImpactWeight,
-        impact.weight,
-        "ExchangeImpactWeight"
-      ),
+      weight: asEnumValue(ExchangeImpactWeight, impact.weight, 'ExchangeImpactWeight'),
     };
 
     if (impact.reaction !== undefined) {
@@ -365,7 +331,7 @@ function generateExchangeFile(
   };
 
   const transformImpacts = (
-    impacts: ExchangeData["content"]["rootQuestion"]["answers"][number]["impacts"]
+    impacts: ExchangeData['content']['rootQuestion']['answers'][number]['impacts'],
   ) => {
     const result: Record<string, any> = {};
 
@@ -376,8 +342,8 @@ function generateExchangeFile(
     const cabinetImpacts = mapEnumRecord(
       impacts.cabinet,
       CabinetStaticId,
-      "CabinetStaticId",
-      (value) => transformImpact(value)
+      'CabinetStaticId',
+      (value) => transformImpact(value),
     );
     if (cabinetImpacts) {
       result.cabinet = cabinetImpacts;
@@ -386,8 +352,8 @@ function generateExchangeFile(
     const journalistImpacts = mapEnumRecord(
       impacts.journalists,
       JournalistStaticId,
-      "JournalistStaticId",
-      (value) => transformImpact(value)
+      'JournalistStaticId',
+      (value) => transformImpact(value),
     );
     if (journalistImpacts) {
       result.journalists = journalistImpacts;
@@ -396,13 +362,8 @@ function generateExchangeFile(
     return result;
   };
 
-  const transformAnswer = (
-    answer: ExchangeData["content"]["rootQuestion"]["answers"][number]
-  ) => {
-    const outcomeModifiers = mapOutcomeModifiers(
-      answer.outcomeModifiers,
-      `answer ${answer.id}`
-    );
+  const transformAnswer = (answer: ExchangeData['content']['rootQuestion']['answers'][number]) => {
+    const outcomeModifiers = mapOutcomeModifiers(answer.outcomeModifiers, `answer ${answer.id}`);
     const impacts = transformImpacts(answer.impacts);
 
     if (Object.keys(impacts).length === 0) {
@@ -412,7 +373,7 @@ function generateExchangeFile(
     const transformedAnswer: Record<string, any> = {
       id: answer.id,
       text: answer.text,
-      type: asEnumValue(AnswerType, answer.type, "AnswerType"),
+      type: asEnumValue(AnswerType, answer.type, 'AnswerType'),
       outcomeModifiers,
       impacts,
     };
@@ -421,7 +382,7 @@ function generateExchangeFile(
       transformedAnswer.authorizedCabinetMemberId = asEnumValue(
         CabinetStaticId,
         answer.authorizedCabinetMemberId,
-        "CabinetStaticId"
+        'CabinetStaticId',
       );
     }
 
@@ -432,20 +393,14 @@ function generateExchangeFile(
     return transformedAnswer;
   };
 
-  const transformQuestion = (
-    question: ExchangeData["content"]["rootQuestion"]
-  ) => ({
+  const transformQuestion = (question: ExchangeData['content']['rootQuestion']) => ({
     id: question.id,
     text: question.text,
     answers: question.answers.map(transformAnswer),
   });
 
   const transformed = {
-    publication: asEnumValue(
-      PublicationStaticId,
-      exchange.publication,
-      "PublicationStaticId"
-    ),
+    publication: asEnumValue(PublicationStaticId, exchange.publication, 'PublicationStaticId'),
     content: {
       rootQuestion: transformQuestion(exchange.content.rootQuestion),
       secondaryQuestions: exchange.content.secondaryQuestions.map(transformQuestion),
@@ -475,20 +430,20 @@ export const ${variableName}: ExchangeData = ${serialized};
 function generateExchangesIndexFile(
   exchanges: ExchangeData[],
   variableName: string,
-  exchangeVariables: string[]
+  exchangeVariables: string[],
 ): string {
   const imports = exchangeVariables
     .map((varName, index) => {
       const fileName = getPublicationFileName(exchanges[index].publication);
       return `import { ${varName} } from "./${fileName}";`;
     })
-    .join("\n");
+    .join('\n');
 
   return `import type { ExchangeData } from "~/lib/schemas/exchanges";
 ${imports}
 
 export const ${variableName}: ExchangeData[] = [
-  ${exchangeVariables.join(",\n  ")},
+  ${exchangeVariables.join(',\n  ')},
 ];
 `;
 }
@@ -499,21 +454,21 @@ export const ${variableName}: ExchangeData[] = [
 function getSituationTypeEnumName(type: SituationType): string {
   switch (type) {
     case SituationType.DomesticPolicy:
-      return "DomesticPolicy";
+      return 'DomesticPolicy';
     case SituationType.ForeignAffairs:
-      return "ForeignAffairs";
+      return 'ForeignAffairs';
     case SituationType.Economy:
-      return "Economy";
+      return 'Economy';
     case SituationType.Security:
-      return "Security";
+      return 'Security';
     case SituationType.Environment:
-      return "Environment";
+      return 'Environment';
     case SituationType.Ethics:
-      return "Ethics";
+      return 'Ethics';
     case SituationType.Governance:
-      return "Governance";
+      return 'Governance';
     default:
-      return "DomesticPolicy";
+      return 'DomesticPolicy';
   }
 }
 
@@ -525,7 +480,7 @@ function generateSituationIndexFile(
   variableName: string,
   outcomesVar: string,
   preferencesVar: string,
-  exchangesVar: string
+  exchangesVar: string,
 ): string {
   const typeEnumName = getSituationTypeEnumName(situation.type);
   const staticKey = situation.trigger.staticKey;
@@ -566,25 +521,20 @@ function kebabToCamelCase(str: string): string {
  */
 function parseIndexFile(content: string): {
   typeImport: string;
-  situationImports: Array<{ variable: string; path: string }>;
+  situationImports: { variable: string; path: string }[];
   exportArray: string[];
 } {
-  const lines = content.split("\n");
+  const lines = content.split('\n');
 
   // Find type import
   const typeImportLine =
-    lines.find(
-      (line) =>
-        line.includes("import type") && line.includes("SituationData")
-    ) || "";
+    lines.find((line) => line.includes('import type') && line.includes('SituationData')) || '';
 
   // Find situation imports
-  const situationImports: Array<{ variable: string; path: string }> = [];
+  const situationImports: { variable: string; path: string }[] = [];
   for (const line of lines) {
-    const importMatch = line.match(
-      /import\s*{\s*(\w+)\s*}\s*from\s*["']\.\/([^"']+)["']/
-    );
-    if (importMatch && !line.includes("type")) {
+    const importMatch = line.match(/import\s*{\s*(\w+)\s*}\s*from\s*["']\.\/([^"']+)["']/);
+    if (importMatch && !line.includes('type')) {
       situationImports.push({
         variable: importMatch[1],
         path: importMatch[2],
@@ -596,18 +546,18 @@ function parseIndexFile(content: string): {
   const exportArray: string[] = [];
   let inExportArray = false;
   for (const line of lines) {
-    if (line.includes("export const") && line.includes("SituationData[]")) {
+    if (line.includes('export const') && line.includes('SituationData[]')) {
       inExportArray = true;
       continue;
     }
     if (inExportArray) {
-      if (line.includes("];")) {
+      if (line.includes('];')) {
         break;
       }
       const trimmed = line.trim();
-      if (trimmed && !trimmed.startsWith("//") && trimmed !== "[") {
+      if (trimmed && !trimmed.startsWith('//') && trimmed !== '[') {
         // Extract variable name, removing comma
-        const variable = trimmed.replace(/,$/, "").trim();
+        const variable = trimmed.replace(/,$/, '').trim();
         if (variable) {
           exportArray.push(variable);
         }
@@ -627,29 +577,25 @@ function parseIndexFile(content: string): {
  */
 function generateUpdatedIndexContent(
   typeImport: string,
-  situationImports: Array<{ variable: string; path: string }>,
-  exportArrayName: string
+  situationImports: { variable: string; path: string }[],
+  exportArrayName: string,
 ): string {
   // Sort imports alphabetically by variable name
-  const sortedImports = [...situationImports].sort((a, b) =>
-    a.variable.localeCompare(b.variable)
-  );
+  const sortedImports = [...situationImports].sort((a, b) => a.variable.localeCompare(b.variable));
 
   // Build imports section
   const imports = [
     'import type { SituationDataType } from "~/lib/schemas/situations";',
-    ...sortedImports.map(
-      (imp) => `import { ${imp.variable} } from "./${imp.path}";`
-    ),
+    ...sortedImports.map((imp) => `import { ${imp.variable} } from "./${imp.path}";`),
   ];
 
   // Build export array
   const exportItems = sortedImports.map((imp) => `  ${imp.variable},`);
 
-  return `${imports.join("\n")}
+  return `${imports.join('\n')}
 
 export const ${exportArrayName}: SituationDataType[] = [
-${exportItems.join("\n")}
+${exportItems.join('\n')}
 ];
 `;
 }
@@ -660,16 +606,16 @@ ${exportItems.join("\n")}
 async function updateTypeIndex(
   situationType: SituationType,
   situationDirectory: string,
-  situationVariable: string
+  situationVariable: string,
 ): Promise<{
   success: boolean;
   indexPath: string;
   error?: string;
 }> {
   try {
-    const baseDir = join(process.cwd(), "lib", "data", "situations", "v1");
+    const baseDir = join(process.cwd(), 'lib', 'data', 'situations', 'v1');
     const typeDir = getTypeDirectory(situationType);
-    const indexPath = join(baseDir, typeDir, "index.ts");
+    const indexPath = join(baseDir, typeDir, 'index.ts');
 
     // Get export array name
     const exportArrayName = `${kebabToCamelCase(typeDir)}SituationsData`;
@@ -677,19 +623,18 @@ async function updateTypeIndex(
     let content: string;
     let parsed: {
       typeImport: string;
-      situationImports: Array<{ variable: string; path: string }>;
+      situationImports: { variable: string; path: string }[];
       exportArray: string[];
     };
 
     try {
       // Try to read existing index file
-      content = await readFile(indexPath, "utf-8");
+      content = await readFile(indexPath, 'utf-8');
       parsed = parseIndexFile(content);
-    } catch (error) {
+    } catch {
       // Create new index file if it doesn't exist
       parsed = {
-        typeImport:
-          'import type { SituationDataType } from "~/lib/schemas/situations";',
+        typeImport: 'import type { SituationDataType } from "~/lib/schemas/situations";',
         situationImports: [],
         exportArray: [],
       };
@@ -697,8 +642,7 @@ async function updateTypeIndex(
 
     // Check if situation already exists
     const existingImport = parsed.situationImports.find(
-      (imp) =>
-        imp.variable === situationVariable || imp.path === situationDirectory
+      (imp) => imp.variable === situationVariable || imp.path === situationDirectory,
     );
 
     if (existingImport) {
@@ -719,7 +663,7 @@ async function updateTypeIndex(
     const updatedContent = generateUpdatedIndexContent(
       parsed.typeImport,
       parsed.situationImports,
-      exportArrayName
+      exportArrayName,
     );
 
     // Write updated index file
@@ -732,8 +676,8 @@ async function updateTypeIndex(
   } catch (error) {
     return {
       success: false,
-      indexPath: "",
-      error: error instanceof Error ? error.message : "Unknown error",
+      indexPath: '',
+      error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 }
@@ -741,9 +685,7 @@ async function updateTypeIndex(
 /**
  * Write complete situation files to disk using v1 structure
  */
-export async function writeSituationFiles(
-  situation: SituationData
-): Promise<{
+export async function writeSituationFiles(situation: SituationData): Promise<{
   success: boolean;
   directoryPath: string;
   files: string[];
@@ -753,14 +695,14 @@ export async function writeSituationFiles(
     // Extract components from complete situation
     const { outcomes, preferences, exchanges } = extractSituationComponents(situation);
 
-    const baseDir = join(process.cwd(), "lib", "data", "situations", "v1");
+    const baseDir = join(process.cwd(), 'lib', 'data', 'situations', 'v1');
     const typeDir = getTypeDirectory(situation.type);
     const situationDir = toKebabCase(situation.title);
     const fullPath = join(baseDir, typeDir, situationDir);
 
     // Create directory structure
     await mkdir(fullPath, { recursive: true });
-    await mkdir(join(fullPath, "exchanges"), { recursive: true });
+    await mkdir(join(fullPath, 'exchanges'), { recursive: true });
 
     // Generate variable names
     const baseName = toPascalCase(situation.trigger.staticKey);
@@ -792,7 +734,7 @@ export async function writeSituationFiles(
       exchangeVariables.push(varName);
 
       const exchangeContent = generateExchangeFile(exchange, varName);
-      const exchangeFile = join(fullPath, "exchanges", `${fileName}.ts`);
+      const exchangeFile = join(fullPath, 'exchanges', `${fileName}.ts`);
       await writeFile(exchangeFile, exchangeContent);
       files.push(`exchanges/${fileName}.ts`);
     }
@@ -801,11 +743,11 @@ export async function writeSituationFiles(
     const exchangesIndexContent = generateExchangesIndexFile(
       exchanges,
       exchangesVar,
-      exchangeVariables
+      exchangeVariables,
     );
-    const exchangesIndexFile = join(fullPath, "exchanges", "index.ts");
+    const exchangesIndexFile = join(fullPath, 'exchanges', 'index.ts');
     await writeFile(exchangesIndexFile, exchangesIndexContent);
-    files.push("exchanges/index.ts");
+    files.push('exchanges/index.ts');
 
     // Write main situation index file
     const situationIndexContent = generateSituationIndexFile(
@@ -813,20 +755,16 @@ export async function writeSituationFiles(
       situationVar,
       outcomesVar,
       preferencesVar,
-      exchangesVar
+      exchangesVar,
     );
-    const situationIndexFile = join(fullPath, "index.ts");
+    const situationIndexFile = join(fullPath, 'index.ts');
     await writeFile(situationIndexFile, situationIndexContent);
-    files.push("index.ts");
+    files.push('index.ts');
 
     // Update type index file
-    const indexResult = await updateTypeIndex(
-      situation.type,
-      situationDir,
-      situationVar
-    );
+    const indexResult = await updateTypeIndex(situation.type, situationDir, situationVar);
 
-    if (!indexResult.success && !indexResult.error?.includes("already exists")) {
+    if (!indexResult.success && !indexResult.error?.includes('already exists')) {
       console.warn(`⚠️ Failed to update type index: ${indexResult.error}`);
     } else if (indexResult.success) {
       console.log(`✅ Updated type index: ${indexResult.indexPath}`);
@@ -840,9 +778,9 @@ export async function writeSituationFiles(
   } catch (error) {
     return {
       success: false,
-      directoryPath: "",
+      directoryPath: '',
       files: [],
-      error: error instanceof Error ? error.message : "Unknown error",
+      error: error instanceof Error ? error.message : 'Unknown error',
     };
   }
 }

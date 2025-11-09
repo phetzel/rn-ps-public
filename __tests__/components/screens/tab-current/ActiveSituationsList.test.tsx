@@ -1,9 +1,7 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
-import { jest } from "@jest/globals";
-import { View, FlatList } from "react-native";
+import { render, screen } from '@testing-library/react-native';
+import { View, FlatList } from 'react-native';
 
-import { SituationType } from "~/types";
+import { SituationType } from '~/types';
 
 // Simple test component that mimics the core behavior without withObservables
 const TestActiveSituationsList = ({ situations }: { situations: any[] }) => {
@@ -32,39 +30,37 @@ const TestActiveSituationsList = ({ situations }: { situations: any[] }) => {
 // Helper to create mock situation
 const createMockSituation = (overrides = {}) => ({
   id: `situation-${Math.random()}`,
-  title: "Test Economic Crisis",
-  description: "A significant economic downturn affecting multiple sectors",
+  title: 'Test Economic Crisis',
+  description: 'A significant economic downturn affecting multiple sectors',
   type: SituationType.Economy,
-  gameId: "game-id",
-  levelId: "level-id",
+  gameId: 'game-id',
+  levelId: 'level-id',
   ...overrides,
 });
 
-describe("ActiveSituationsList", () => {
-  it("renders the title", () => {
+describe('ActiveSituationsList', () => {
+  it('renders the title', () => {
     render(<TestActiveSituationsList situations={[]} />);
-    expect(screen.getByTestId("title")).toBeTruthy();
+    expect(screen.getByTestId('title')).toBeTruthy();
   });
 
-  it("shows empty state when no situations", () => {
+  it('shows empty state when no situations', () => {
     render(<TestActiveSituationsList situations={[]} />);
-    expect(screen.getByTestId("empty-state")).toBeTruthy();
+    expect(screen.getByTestId('empty-state')).toBeTruthy();
   });
 
-  it("shows situations when they exist", () => {
-    const situations = [
-      createMockSituation({ id: "test-1", title: "Test Crisis" }),
-    ];
+  it('shows situations when they exist', () => {
+    const situations = [createMockSituation({ id: 'test-1', title: 'Test Crisis' })];
     render(<TestActiveSituationsList situations={situations} />);
 
-    expect(screen.getByTestId("situations-list")).toBeTruthy();
-    expect(screen.getByTestId("situation-test-1")).toBeTruthy();
+    expect(screen.getByTestId('situations-list')).toBeTruthy();
+    expect(screen.getByTestId('situation-test-1')).toBeTruthy();
   });
 
-  it("has proper accessibility labeling", () => {
+  it('has proper accessibility labeling', () => {
     const situations = [createMockSituation(), createMockSituation()];
     render(<TestActiveSituationsList situations={situations} />);
 
-    expect(screen.getByLabelText("Active situations: 2 total")).toBeTruthy();
+    expect(screen.getByLabelText('Active situations: 2 total')).toBeTruthy();
   });
 });

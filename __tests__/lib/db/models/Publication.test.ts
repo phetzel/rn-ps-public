@@ -13,17 +13,18 @@
  * - Game relationship integrity
  */
 
-import { Database } from "@nozbe/watermelondb";
-import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
-import { createGame } from "~/__tests__/support/factories/gameFactory";
-import { createPublication } from "~/__tests__/support/factories/publicationFactory";
-import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
-import { Publication } from "~/lib/db/models";
-import { PublicationStaticId, PoliticalLeaning } from "~/types";
-import { staticPublications } from "~/lib/data/staticMedia";
-import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
+import { Database } from '@nozbe/watermelondb';
 
-describe("Publication Model", () => {
+import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
+import { createGame } from '~/__tests__/support/factories/gameFactory';
+import { createJournalist } from '~/__tests__/support/factories/journalistFactory';
+import { createPublication } from '~/__tests__/support/factories/publicationFactory';
+import { POLITICAL_ALIGNMENT_WEIGHT } from '~/lib/constants';
+import { staticPublications } from '~/lib/data/staticMedia';
+import { Publication } from '~/lib/db/models';
+import { PublicationStaticId, PoliticalLeaning } from '~/types';
+
+describe('Publication Model', () => {
   let database: Database;
 
   beforeAll(() => {
@@ -38,20 +39,20 @@ describe("Publication Model", () => {
   // MODEL STRUCTURE & PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Model Structure", () => {
-    it("should have correct table name and associations", () => {
-      expect(Publication.table).toBe("publications");
+  describe('Model Structure', () => {
+    it('should have correct table name and associations', () => {
+      expect(Publication.table).toBe('publications');
       expect(Publication.associations.games).toEqual({
-        type: "belongs_to",
-        key: "game_id",
+        type: 'belongs_to',
+        key: 'game_id',
       });
       expect(Publication.associations.journalists).toEqual({
-        type: "has_many",
-        foreignKey: "publication_id",
+        type: 'has_many',
+        foreignKey: 'publication_id',
       });
     });
 
-    it("should create publication with required properties", async () => {
+    it('should create publication with required properties', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -64,7 +65,7 @@ describe("Publication Model", () => {
       expect(publication.updatedAt).toBeInstanceOf(Date);
     });
 
-    it("should belong to a game", async () => {
+    it('should belong to a game', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -75,9 +76,7 @@ describe("Publication Model", () => {
 
       // Test accessibility from game
       const gamePublications = await game.publications.fetch();
-      expect(
-        gamePublications.find((p) => p.id === publication.id)
-      ).toBeDefined();
+      expect(gamePublications.find((p) => p.id === publication.id)).toBeDefined();
     });
   });
 
@@ -85,8 +84,8 @@ describe("Publication Model", () => {
   // STATIC DATA ACCESS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Static Data Integration", () => {
-    it("should return correct static data for different publications", async () => {
+  describe('Static Data Integration', () => {
+    it('should return correct static data for different publications', async () => {
       const game = await createGame(database);
       const publicationIds = [
         PublicationStaticId.LibPrimary,
@@ -110,7 +109,7 @@ describe("Publication Model", () => {
       }
     });
 
-    it("should work with all available PublicationStaticId values", async () => {
+    it('should work with all available PublicationStaticId values', async () => {
       const game = await createGame(database);
       const allPublicationIds = Object.values(PublicationStaticId);
 
@@ -127,24 +126,24 @@ describe("Publication Model", () => {
       }
     });
 
-    it("should return specific publication data correctly", async () => {
+    it('should return specific publication data correctly', async () => {
       const game = await createGame(database);
       const testCases = [
         {
           staticId: PublicationStaticId.ConPrimary,
-          expectedName: "Freedom Fries Herald",
+          expectedName: 'Freedom Fries Herald',
         },
         {
           staticId: PublicationStaticId.LibPrimary,
-          expectedName: "The Daily Soy",
+          expectedName: 'The Daily Soy',
         },
         {
           staticId: PublicationStaticId.IndependentPrimary,
-          expectedName: "The Moderate Times",
+          expectedName: 'The Moderate Times',
         },
         {
           staticId: PublicationStaticId.Investigative,
-          expectedName: "Integrity Watch",
+          expectedName: 'Integrity Watch',
         },
       ];
 
@@ -162,8 +161,8 @@ describe("Publication Model", () => {
   // APPROVAL RATING CALCULATIONS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Approval Rating Calculations", () => {
-    it("should return 50 as default when no journalists", async () => {
+  describe('Approval Rating Calculations', () => {
+    it('should return 50 as default when no journalists', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -179,7 +178,7 @@ describe("Publication Model", () => {
       expect(approvalRating).toBe(Math.round(expectedRating));
     });
 
-    it("should calculate average of journalist relationships", async () => {
+    it('should calculate average of journalist relationships', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
@@ -206,7 +205,7 @@ describe("Publication Model", () => {
       expect(approvalRating).toBe(70);
     });
 
-    it("should apply political alignment bonus for aligned publications", async () => {
+    it('should apply political alignment bonus for aligned publications', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -228,7 +227,7 @@ describe("Publication Model", () => {
       expect(approvalRating).toBe(Math.round(expectedRating));
     });
 
-    it("should apply political alignment penalty for opposing publications", async () => {
+    it('should apply political alignment penalty for opposing publications', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -250,7 +249,7 @@ describe("Publication Model", () => {
       expect(approvalRating).toBe(Math.round(expectedRating));
     });
 
-    it("should not apply alignment adjustment for neutral publications", async () => {
+    it('should not apply alignment adjustment for neutral publications', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -271,7 +270,7 @@ describe("Publication Model", () => {
       expect(approvalRating).toBe(60);
     });
 
-    it("should clamp approval rating to 0-100 range", async () => {
+    it('should clamp approval rating to 0-100 range', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -314,8 +313,8 @@ describe("Publication Model", () => {
   // MEDIA BOOST CALCULATIONS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Media Boost Calculations", () => {
-    it("should return 1.0 boost for 50 approval rating", async () => {
+  describe('Media Boost Calculations', () => {
+    it('should return 1.0 boost for 50 approval rating', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
@@ -334,7 +333,7 @@ describe("Publication Model", () => {
       expect(mediaBoost).toBe(1.0);
     });
 
-    it("should return boost > 1.0 for approval > 50", async () => {
+    it('should return boost > 1.0 for approval > 50', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
@@ -354,7 +353,7 @@ describe("Publication Model", () => {
       expect(mediaBoost).toBeLessThanOrEqual(1.5);
     });
 
-    it("should return boost < 1.0 for approval < 50", async () => {
+    it('should return boost < 1.0 for approval < 50', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
@@ -374,7 +373,7 @@ describe("Publication Model", () => {
       expect(mediaBoost).toBeGreaterThanOrEqual(0.5);
     });
 
-    it("should return max boost of 1.5 for 100 approval", async () => {
+    it('should return max boost of 1.5 for 100 approval', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -393,7 +392,7 @@ describe("Publication Model", () => {
       expect(mediaBoost).toBe(1.5);
     });
 
-    it("should return min boost of 0.5 for 0 approval", async () => {
+    it('should return min boost of 0.5 for 0 approval', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Liberal,
       });
@@ -412,7 +411,7 @@ describe("Publication Model", () => {
       expect(mediaBoost).toBe(0.5);
     });
 
-    it("should round to 2 decimal places", async () => {
+    it('should round to 2 decimal places', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });
@@ -428,9 +427,7 @@ describe("Publication Model", () => {
       });
 
       const mediaBoost = await publication.getMediaBoost();
-      expect(
-        mediaBoost.toString().split(".")[1]?.length || 0
-      ).toBeLessThanOrEqual(2);
+      expect(mediaBoost.toString().split('.')[1]?.length || 0).toBeLessThanOrEqual(2);
     });
   });
 
@@ -438,8 +435,8 @@ describe("Publication Model", () => {
   // REALISTIC GAME SCENARIOS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Game Integration Scenarios", () => {
-    it("should handle publications with multiple journalists correctly", async () => {
+  describe('Game Integration Scenarios', () => {
+    it('should handle publications with multiple journalists correctly', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Conservative,
       });
@@ -463,45 +460,40 @@ describe("Publication Model", () => {
 
       const approvalRating = await publication.getApprovalRating();
       const expectedAverage = (40 + 60 + 80) / 3; // = 60
-      const expectedWithAlignment =
-        expectedAverage + POLITICAL_ALIGNMENT_WEIGHT;
+      const expectedWithAlignment = expectedAverage + POLITICAL_ALIGNMENT_WEIGHT;
       expect(approvalRating).toBe(Math.round(expectedWithAlignment));
     });
 
-    it("should work with all publication types in different political contexts", async () => {
+    it('should work with all publication types in different political contexts', async () => {
       const testCases = [
         {
           presLeaning: PoliticalLeaning.Liberal,
           publicationId: PublicationStaticId.LibPrimary,
-          expectedAlignment: "bonus",
+          expectedAlignment: 'bonus',
         },
         {
           presLeaning: PoliticalLeaning.Liberal,
           publicationId: PublicationStaticId.ConPrimary,
-          expectedAlignment: "penalty",
+          expectedAlignment: 'penalty',
         },
         {
           presLeaning: PoliticalLeaning.Conservative,
           publicationId: PublicationStaticId.ConPrimary,
-          expectedAlignment: "bonus",
+          expectedAlignment: 'bonus',
         },
         {
           presLeaning: PoliticalLeaning.Conservative,
           publicationId: PublicationStaticId.LibPrimary,
-          expectedAlignment: "penalty",
+          expectedAlignment: 'penalty',
         },
         {
           presLeaning: PoliticalLeaning.Liberal,
           publicationId: PublicationStaticId.IndependentPrimary,
-          expectedAlignment: "none",
+          expectedAlignment: 'none',
         },
       ];
 
-      for (const {
-        presLeaning,
-        publicationId,
-        expectedAlignment,
-      } of testCases) {
+      for (const { presLeaning, publicationId, expectedAlignment } of testCases) {
         const game = await createGame(database, { presLeaning });
         const publication = await createPublication(database, {
           gameId: game.id,
@@ -516,9 +508,9 @@ describe("Publication Model", () => {
 
         const approvalRating = await publication.getApprovalRating();
 
-        if (expectedAlignment === "bonus") {
+        if (expectedAlignment === 'bonus') {
           expect(approvalRating).toBe(50 + POLITICAL_ALIGNMENT_WEIGHT);
-        } else if (expectedAlignment === "penalty") {
+        } else if (expectedAlignment === 'penalty') {
           expect(approvalRating).toBe(50 - POLITICAL_ALIGNMENT_WEIGHT);
         } else {
           expect(approvalRating).toBe(50);
@@ -526,7 +518,7 @@ describe("Publication Model", () => {
       }
     });
 
-    it("should maintain consistency between approval rating and media boost", async () => {
+    it('should maintain consistency between approval rating and media boost', async () => {
       const game = await createGame(database, {
         presLeaning: PoliticalLeaning.Neutral,
       });

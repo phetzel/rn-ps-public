@@ -1,13 +1,14 @@
-import { Q } from "@nozbe/watermelondb";
-import { Game } from "~/lib/db/models";
-import { situationsData } from "~/lib/data/situations";
-import { SituationData, SituationType } from "~/types";
+import { Q } from '@nozbe/watermelondb';
+
+import { situationsData } from '~/lib/data/situations';
+import { Game } from '~/lib/db/models';
+import { SituationData, SituationType } from '~/types';
 
 // Helper to get follow-up situations from the previous level
 async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
   // Get the most recent level
   const previousLevels = await game.levels
-    .extend(Q.sortBy("created_at", Q.desc), Q.take(1))
+    .extend(Q.sortBy('created_at', Q.desc), Q.take(1))
     .fetch();
 
   if (previousLevels.length === 0) {
@@ -28,7 +29,7 @@ async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
       if (followUpId) {
         // Find the situation data with this static key
         const followUpData = situationsData.find(
-          (s) => s.trigger && s.trigger.staticKey === followUpId
+          (s) => s.trigger && s.trigger.staticKey === followUpId,
         );
 
         if (followUpData) {
@@ -44,7 +45,7 @@ async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
 async function filterSituationsByRequirements(
   situations: SituationData[],
   game: Game,
-  currentLevel: number
+  currentLevel: number,
 ): Promise<SituationData[]> {
   const currentPresApproval = await game.getPresApprovalRating();
 
@@ -77,10 +78,8 @@ async function filterSituationsByRequirements(
     // President approval requirement
     if (trigger.requirements?.president) {
       const { minApproval, maxApproval } = trigger.requirements.president;
-      if (minApproval !== undefined && currentPresApproval < minApproval)
-        return false;
-      if (maxApproval !== undefined && currentPresApproval > maxApproval)
-        return false;
+      if (minApproval !== undefined && currentPresApproval < minApproval) return false;
+      if (maxApproval !== undefined && currentPresApproval > maxApproval) return false;
     }
 
     // More complex filters for cabinet/subgroup approvals could be added here
@@ -92,7 +91,7 @@ async function filterSituationsByRequirements(
 // Main function to select situations for a new level
 export async function selectSituationsForLevel(
   game: Game,
-  count: number = 2
+  count: number = 2,
 ): Promise<SituationData[]> {
   const currentLevel = (game.currentYear - 1) * 12 + game.currentMonth;
 
@@ -106,10 +105,7 @@ export async function selectSituationsForLevel(
   });
 
   // 3. Calculate how many regular situations we need
-  const neededRegularSituations = Math.max(
-    0,
-    count - followUpSituations.length
-  );
+  const neededRegularSituations = Math.max(0, count - followUpSituations.length);
 
   // 4. If we have enough follow-ups, return them
   if (neededRegularSituations <= 0) {
@@ -129,14 +125,14 @@ export async function selectSituationsForLevel(
       // Not a follow-up situation (those are handled separately)
       !situation.trigger.isFollowUp &&
       // Must not be of a type we've already selected
-      !seenTypes.has(situation.type)
+      !seenTypes.has(situation.type),
   );
 
   // 7. Filter by game requirements
   availableSituations = await filterSituationsByRequirements(
     availableSituations,
     game,
-    currentLevel
+    currentLevel,
   );
 
   // 8. Select situations one by one, updating the filter each time
@@ -158,25 +154,20 @@ export async function selectSituationsForLevel(
 
     // Remove this situation and any others of the same type
     availableSituations = availableSituations.filter(
-      (s) => s !== selectedSituation && s.type !== selectedSituation.type
+      (s) => s !== selectedSituation && s.type !== selectedSituation.type,
     );
   }
 
   // 9. Handle the case where we still don't have enough situations after trying to select one of each type
   if (selectedRegularSituations.length < neededRegularSituations) {
     console.warn(
-      `Not enough available situations with unique types (needed ${neededRegularSituations}, found ${selectedRegularSituations.length}). Using random ones.`
+      `Not enough available situations with unique types (needed ${neededRegularSituations}, found ${selectedRegularSituations.length}). Using random ones.`,
     );
 
     // Fall back to random situations that don't match already used keys
-    const remainingNeeded =
-      neededRegularSituations - selectedRegularSituations.length;
+    const remainingNeeded = neededRegularSituations - selectedRegularSituations.length;
     const randomSituations = situationsData
-      .filter(
-        (s) =>
-          !s.trigger?.isFollowUp &&
-          !usedKeys.includes(s.trigger?.staticKey || "")
-      )
+      .filter((s) => !s.trigger?.isFollowUp && !usedKeys.includes(s.trigger?.staticKey || ''))
       .sort(() => 0.5 - Math.random())
       .slice(0, remainingNeeded);
 

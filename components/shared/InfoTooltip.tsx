@@ -1,9 +1,9 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { Info } from "~/lib/icons/Info";
-import { Tooltip, TooltipTrigger, TooltipContent } from "~/components/ui/tooltip";
-import { getTooltip, TooltipKey } from "~/components/shared/tooltips";
+import { getTooltip, TooltipKey } from '~/components/shared/tooltips';
+import { Tooltip, TooltipTrigger, TooltipContent } from '~/components/ui/tooltip';
+import { Info } from '~/lib/icons/Info';
 
 interface InfoTooltipProps {
   children?: React.ReactNode;
@@ -14,17 +14,17 @@ interface InfoTooltipProps {
 const InfoTooltip: React.FC<InfoTooltipProps> = ({ children, tooltipId, tooltipParams }) => {
   const content = tooltipId ? getTooltip(tooltipId as TooltipKey, tooltipParams) : children;
   if (!content) return null;
-  
+
   return (
     <Tooltip>
       <TooltipTrigger
         accessible={true}
         accessibilityRole="button"
-        accessibilityLabel={"Information"}
-        accessibilityHint={"Additional information available"}
+        accessibilityLabel={'Information'}
+        accessibilityHint={'Additional information available'}
       >
         <View className="pl-1 pr-2 py-1">
-        <Info className="text-gray-500" size={20} />
+          <Info className="text-gray-500" size={20} />
         </View>
       </TooltipTrigger>
 

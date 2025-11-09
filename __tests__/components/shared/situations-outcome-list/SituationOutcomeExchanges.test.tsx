@@ -9,17 +9,20 @@
  * - Comprehensive accessibility labels for the exchanges list
  */
 
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
-import { of } from "rxjs";
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
+import { Text } from 'react-native';
+import { of } from 'rxjs';
 
-import SituationOutcomeExchanges from "~/components/shared/situations-outcome-list/SituationOutcomeExchanges";
-import type { PressExchange } from "~/lib/db/models";
-import type { SituationOutcome } from "~/types";
-import { OutcomeModifierWeight, AnswerType } from "~/types";
+import SituationOutcomeExchanges from '~/components/shared/situations-outcome-list/SituationOutcomeExchanges';
+import { observePressExchangesForSituation } from '~/lib/db/helpers/observations';
+import { AnswerType, OutcomeModifierWeight } from '~/types';
+
+import type { PressExchange } from '~/lib/db/models';
+import type { SituationOutcome } from '~/types';
 
 // Mock withObservables HOC
-jest.mock("@nozbe/watermelondb/react", () => ({
+jest.mock('@nozbe/watermelondb/react', () => ({
   withObservables: jest.fn(() => (Component: React.ComponentType<any>) => {
     return function MockedComponent(props: any) {
       return <Component {...props} />;
@@ -28,35 +31,26 @@ jest.mock("@nozbe/watermelondb/react", () => ({
 }));
 
 // Mock the observations helper
-jest.mock("~/lib/db/helpers/observations", () => ({
+jest.mock('~/lib/db/helpers/observations', () => ({
   observePressExchangesForSituation: jest.fn(),
 }));
 
 // Mock SituationOutcomeExchangeItem component
-jest.mock(
-  "~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem",
-  () => {
-    return function MockSituationOutcomeExchangeItem({
-      exchange,
-      selectedOutcomeId,
-    }: any) {
-      const { Text } = require("react-native");
-      return (
-        <Text>
-          Exchange Item: {exchange.id} - Selected: {selectedOutcomeId}
-        </Text>
-      );
-    };
-  }
-);
+jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem', () => {
+  return function MockSituationOutcomeExchangeItem({ exchange, selectedOutcomeId }: any) {
+    return (
+      <Text>
+        Exchange Item: {exchange.id} - Selected: {selectedOutcomeId}
+      </Text>
+    );
+  };
+});
 
-import { observePressExchangesForSituation } from "~/lib/db/helpers/observations";
-
-describe("SituationOutcomeExchanges", () => {
+describe('SituationOutcomeExchanges', () => {
   const mockSelectedOutcome: SituationOutcome = {
-    id: "outcome-1",
-    title: "Crisis Escalation",
-    description: "The situation worsens",
+    id: 'outcome-1',
+    title: 'Crisis Escalation',
+    description: 'The situation worsens',
     weight: 30,
     consequences: {
       approvalChanges: {
@@ -69,9 +63,9 @@ describe("SituationOutcomeExchanges", () => {
   const mockAllOutcomes: SituationOutcome[] = [
     mockSelectedOutcome,
     {
-      id: "outcome-2",
-      title: "Diplomatic Resolution",
-      description: "A peaceful solution is found",
+      id: 'outcome-2',
+      title: 'Diplomatic Resolution',
+      description: 'A peaceful solution is found',
       weight: 60,
       consequences: {
         approvalChanges: {
@@ -83,19 +77,19 @@ describe("SituationOutcomeExchanges", () => {
   ];
 
   const mockRelevantExchange = {
-    id: "exchange-1",
+    id: 'exchange-1',
     parseContent: {
       rootQuestion: {
-        id: "q1",
+        id: 'q1',
         text: "What's the response?",
         answers: [
           {
-            id: "a1",
+            id: 'a1',
             text: "We're handling it",
             type: AnswerType.Inform,
             impacts: {},
             outcomeModifiers: {
-              "outcome-1": OutcomeModifierWeight.SlightPositive,
+              'outcome-1': OutcomeModifierWeight.SlightPositive,
             }, // Has impact
           },
         ],
@@ -106,8 +100,8 @@ describe("SituationOutcomeExchanges", () => {
     parseProgress: {
       history: [
         {
-          questionId: "q1",
-          answerId: "a1",
+          questionId: 'q1',
+          answerId: 'a1',
           skipped: false,
         },
       ],
@@ -116,15 +110,15 @@ describe("SituationOutcomeExchanges", () => {
   } as unknown as PressExchange;
 
   const mockIrrelevantExchange = {
-    id: "exchange-2",
+    id: 'exchange-2',
     parseContent: {
       rootQuestion: {
-        id: "q1",
-        text: "Irrelevant question?",
+        id: 'q1',
+        text: 'Irrelevant question?',
         answers: [
           {
-            id: "a1",
-            text: "Some answer",
+            id: 'a1',
+            text: 'Some answer',
             type: AnswerType.Inform,
             impacts: {},
             outcomeModifiers: {}, // No impact
@@ -137,8 +131,8 @@ describe("SituationOutcomeExchanges", () => {
     parseProgress: {
       history: [
         {
-          questionId: "q1",
-          answerId: "a1",
+          questionId: 'q1',
+          answerId: 'a1',
           skipped: false,
         },
       ],
@@ -148,7 +142,7 @@ describe("SituationOutcomeExchanges", () => {
 
   beforeEach(() => {
     (observePressExchangesForSituation as jest.Mock).mockReturnValue(
-      of([mockRelevantExchange, mockIrrelevantExchange])
+      of([mockRelevantExchange, mockIrrelevantExchange]),
     );
   });
 
@@ -156,79 +150,69 @@ describe("SituationOutcomeExchanges", () => {
     jest.clearAllMocks();
   });
 
-  it("renders relevant exchanges that affected outcomes", () => {
+  it('renders relevant exchanges that affected outcomes', () => {
     render(
       <SituationOutcomeExchanges
         pressExchanges={[mockRelevantExchange, mockIrrelevantExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
     // Should show the relevant exchange
-    expect(
-      screen.getByText("Exchange Item: exchange-1 - Selected: outcome-1")
-    ).toBeTruthy();
+    expect(screen.getByText('Exchange Item: exchange-1 - Selected: outcome-1')).toBeTruthy();
     // Should not show the irrelevant exchange
-    expect(
-      screen.queryByText("Exchange Item: exchange-2 - Selected: outcome-1")
-    ).toBeNull();
+    expect(screen.queryByText('Exchange Item: exchange-2 - Selected: outcome-1')).toBeNull();
   });
 
-  it("has correct accessibility properties for container", () => {
+  it('has correct accessibility properties for container', () => {
     render(
       <SituationOutcomeExchanges
         pressExchanges={[mockRelevantExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
     const container = screen.getByLabelText(
-      "1 press exchanges that influenced outcome probabilities"
+      '1 press exchanges that influenced outcome probabilities',
     );
     expect(container).toBeTruthy();
   });
 
-  it("shows empty state when no relevant exchanges", () => {
+  it('shows empty state when no relevant exchanges', () => {
     render(
       <SituationOutcomeExchanges
         pressExchanges={[mockIrrelevantExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
+    expect(screen.getByText('No press conference responses affected this outcome.')).toBeTruthy();
     expect(
-      screen.getByText("No press conference responses affected this outcome.")
-    ).toBeTruthy();
-    expect(
-      screen.getByLabelText(
-        "No press conference responses affected this outcome"
-      )
+      screen.getByLabelText('No press conference responses affected this outcome'),
     ).toBeTruthy();
   });
 
-  it("shows empty state when no exchanges at all", () => {
+  it('shows empty state when no exchanges at all', () => {
     render(
       <SituationOutcomeExchanges
         pressExchanges={[]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
-    expect(
-      screen.getByText("No press conference responses affected this outcome.")
-    ).toBeTruthy();
+    expect(screen.getByText('No press conference responses affected this outcome.')).toBeTruthy();
   });
 
-  it("filters exchanges correctly using useMemo", () => {
+  it('filters exchanges correctly using useMemo', () => {
     const multipleRelevantExchanges = [
       mockRelevantExchange,
       {
         ...mockRelevantExchange,
-        id: "exchange-3",
+        id: 'exchange-3',
       } as PressExchange,
       mockIrrelevantExchange,
     ];
@@ -238,28 +222,22 @@ describe("SituationOutcomeExchanges", () => {
         pressExchanges={multipleRelevantExchanges}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
-    expect(
-      screen.getByText("Exchange Item: exchange-1 - Selected: outcome-1")
-    ).toBeTruthy();
-    expect(
-      screen.getByText("Exchange Item: exchange-3 - Selected: outcome-1")
-    ).toBeTruthy();
-    expect(
-      screen.queryByText("Exchange Item: exchange-2 - Selected: outcome-1")
-    ).toBeNull();
+    expect(screen.getByText('Exchange Item: exchange-1 - Selected: outcome-1')).toBeTruthy();
+    expect(screen.getByText('Exchange Item: exchange-3 - Selected: outcome-1')).toBeTruthy();
+    expect(screen.queryByText('Exchange Item: exchange-2 - Selected: outcome-1')).toBeNull();
 
     const container = screen.getByLabelText(
-      "2 press exchanges that influenced outcome probabilities"
+      '2 press exchanges that influenced outcome probabilities',
     );
     expect(container).toBeTruthy();
   });
 
-  it("handles exchanges with missing content", () => {
+  it('handles exchanges with missing content', () => {
     const noContentExchange = {
-      id: "exchange-no-content",
+      id: 'exchange-no-content',
       parseContent: null,
       parseProgress: { history: [] },
     } as unknown as PressExchange;
@@ -269,21 +247,19 @@ describe("SituationOutcomeExchanges", () => {
         pressExchanges={[noContentExchange, mockRelevantExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
     // Should only show the valid exchange
-    expect(
-      screen.getByText("Exchange Item: exchange-1 - Selected: outcome-1")
-    ).toBeTruthy();
-    expect(screen.queryByText("Exchange Item: exchange-no-content")).toBeNull();
+    expect(screen.getByText('Exchange Item: exchange-1 - Selected: outcome-1')).toBeTruthy();
+    expect(screen.queryByText('Exchange Item: exchange-no-content')).toBeNull();
   });
 
-  it("handles exchanges with missing progress", () => {
+  it('handles exchanges with missing progress', () => {
     const noProgressExchange = {
-      id: "exchange-no-progress",
+      id: 'exchange-no-progress',
       parseContent: {
-        rootQuestion: { id: "empty", text: "", answers: [] },
+        rootQuestion: { id: 'empty', text: '', answers: [] },
         secondaryQuestions: [],
         tertiaryQuestions: [],
       },
@@ -295,23 +271,21 @@ describe("SituationOutcomeExchanges", () => {
         pressExchanges={[noProgressExchange, mockRelevantExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
     // Should only show the valid exchange
-    expect(
-      screen.getByText("Exchange Item: exchange-1 - Selected: outcome-1")
-    ).toBeTruthy();
+    expect(screen.getByText('Exchange Item: exchange-1 - Selected: outcome-1')).toBeTruthy();
   });
 
-  it("handles exchanges with skipped questions", () => {
+  it('handles exchanges with skipped questions', () => {
     const skippedExchange = {
-      id: "exchange-skipped",
+      id: 'exchange-skipped',
       parseContent: mockRelevantExchange.parseContent,
       parseProgress: {
         history: [
           {
-            questionId: "q1",
+            questionId: 'q1',
             answerId: null,
             skipped: true, // Question was skipped
           },
@@ -324,30 +298,28 @@ describe("SituationOutcomeExchanges", () => {
         pressExchanges={[skippedExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
     // Skipped questions should not be considered as affecting outcomes
-    expect(
-      screen.getByText("No press conference responses affected this outcome.")
-    ).toBeTruthy();
+    expect(screen.getByText('No press conference responses affected this outcome.')).toBeTruthy();
   });
 
-  it("handles exchanges with zero impact modifiers", () => {
+  it('handles exchanges with zero impact modifiers', () => {
     const zeroImpactExchange = {
-      id: "exchange-zero",
+      id: 'exchange-zero',
       parseContent: {
         rootQuestion: {
-          id: "q1",
-          text: "Question?",
+          id: 'q1',
+          text: 'Question?',
           answers: [
             {
-              id: "a1",
-              text: "Answer",
+              id: 'a1',
+              text: 'Answer',
               type: AnswerType.Inform,
               impacts: {},
               outcomeModifiers: {
-                "outcome-1": OutcomeModifierWeight.Neutral,
+                'outcome-1': OutcomeModifierWeight.Neutral,
               }, // Zero impact
             },
           ],
@@ -358,8 +330,8 @@ describe("SituationOutcomeExchanges", () => {
       parseProgress: {
         history: [
           {
-            questionId: "q1",
-            answerId: "a1",
+            questionId: 'q1',
+            answerId: 'a1',
             skipped: false,
           },
         ],
@@ -372,11 +344,9 @@ describe("SituationOutcomeExchanges", () => {
         pressExchanges={[zeroImpactExchange]}
         selectedOutcome={mockSelectedOutcome}
         allOutcomes={mockAllOutcomes}
-      />
+      />,
     );
 
-    expect(
-      screen.getByText("No press conference responses affected this outcome.")
-    ).toBeTruthy();
+    expect(screen.getByText('No press conference responses affected this outcome.')).toBeTruthy();
   });
 });

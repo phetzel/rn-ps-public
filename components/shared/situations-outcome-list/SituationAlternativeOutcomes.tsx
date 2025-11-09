@@ -1,18 +1,16 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { Badge } from "~/components/ui/badge";
+import { Badge } from '~/components/ui/badge';
+import { Text } from '~/components/ui/text';
 
-import type { SituationOutcomeWeight } from "~/types";
+import type { SituationOutcomeWeight } from '~/types';
 
 interface SituationAlternativeOutcomesProps {
   outcomes: SituationOutcomeWeight[];
 }
 
-const SituationAlternativeOutcomes = ({
-  outcomes,
-}: SituationAlternativeOutcomesProps) => {
+const SituationAlternativeOutcomes = ({ outcomes }: SituationAlternativeOutcomesProps) => {
   if (outcomes.length === 0) return null;
 
   return (
@@ -28,20 +26,13 @@ const SituationAlternativeOutcomes = ({
           accessible={true}
           accessibilityLabel={`${outcome.title}: ${outcome.finalWeight}% probability. ${outcome.description}`}
         >
-          <View
-            className="flex-row justify-between items-start"
-            accessible={false}
-          >
+          <View className="flex-row justify-between items-start" accessible={false}>
             <View className="flex-1" accessible={false}>
               <Text className="font-medium" accessible={false}>
                 {outcome.title}
               </Text>
             </View>
-            <Badge
-              variant="outline"
-              className="flex-shrink-0"
-              accessible={false}
-            >
+            <Badge variant="outline" className="flex-shrink-0" accessible={false}>
               <Text accessible={false}>{outcome.finalWeight}% Chance</Text>
             </Badge>
           </View>

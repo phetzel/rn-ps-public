@@ -1,26 +1,27 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ResponsesJSONSchemaOptions } from "../../types";
-import { buildTechnicalPrompt } from "../prompt-constants";
-import { GPT_5 } from "../llm-constants";
-import { CabinetStaticId } from "~/types";
+import { zodToJsonSchema } from 'zod-to-json-schema';
+
 import {
   generateQuestionsOnlyContentSchema,
-  type GenerateQuestionsOnlyContent,
   type GenerateSituationPlan,
   type GeneratePreferences,
   type GenerateOutcomes,
   type ExchangesPlanArray,
-} from "~/lib/schemas/generate";
+} from '~/lib/schemas/generate';
+import { CabinetStaticId } from '~/types';
+
+import { GPT_5 } from '../llm-constants';
+import { buildTechnicalPrompt } from '../prompt-constants';
+
+import type { ResponsesJSONSchemaOptions } from '../../types';
 
 export function buildExchangeQuestionsRequest(
   plan: GenerateSituationPlan,
   preferences: GeneratePreferences,
   outcomes: GenerateOutcomes,
-  pubPlan: ExchangesPlanArray[number]
+  pubPlan: ExchangesPlanArray[number],
 ): ResponsesJSONSchemaOptions {
-
   const authorizedMember = pubPlan.willHaveAuthorizedAnswer
-    ? pubPlan.authorizedCabinetMemberId ?? null
+    ? (pubPlan.authorizedCabinetMemberId ?? null)
     : null;
 
   const promptLines: string[] = [
@@ -33,15 +34,21 @@ export function buildExchangeQuestionsRequest(
     ``,
     // Provide involved cabinet and their preferences (type + rationale) for root alignment
     (() => {
-      const involvedCabinet = Array.from(new Set(
-        outcomes.outcomes.flatMap(o => Object.keys(o.consequences.approvalChanges.cabinet || {}))
-      ));
+      const involvedCabinet = Array.from(
+        new Set(
+          outcomes.outcomes.flatMap((o) =>
+            Object.keys(o.consequences.approvalChanges.cabinet || {}),
+          ),
+        ),
+      );
       if (involvedCabinet.length === 0) return `Involved Cabinet (from outcomes): (none)`;
-      const prefMap = involvedCabinet.map(id => {
-        const p = preferences.cabinet?.[id as CabinetStaticId]?.preference;
-        return `${id}={type:${p?.answerType ?? "N/A"}, rationale:${JSON.stringify(p?.rationale ?? "N/A")}}`;
-      }).join("; ");
-      return `Involved Cabinet (from outcomes): ${involvedCabinet.join(", ")}\nPresident Preference: {type:${preferences.president.answerType}, rationale:${JSON.stringify(preferences.president.rationale)}}\nCabinet Preferences: ${prefMap}`;
+      const prefMap = involvedCabinet
+        .map((id) => {
+          const p = preferences.cabinet?.[id as CabinetStaticId]?.preference;
+          return `${id}={type:${p?.answerType ?? 'N/A'}, rationale:${JSON.stringify(p?.rationale ?? 'N/A')}}`;
+        })
+        .join('; ');
+      return `Involved Cabinet (from outcomes): ${involvedCabinet.join(', ')}\nPresident Preference: {type:${preferences.president.answerType}, rationale:${JSON.stringify(preferences.president.rationale)}}\nCabinet Preferences: ${prefMap}`;
     })(),
     ``,
     `Authorized Answer Policy for this outlet:`,
@@ -50,7 +57,7 @@ export function buildExchangeQuestionsRequest(
       : `- Authorized NOT allowed for this outlet.`,
   ];
 
-const QUESTIONS_SPECIFIC_INSTRUCTIONS = `
+  const QUESTIONS_SPECIFIC_INSTRUCTIONS = `
 Generate the QUESTIONS AND ANSWERS STRUCTURE for the publication above.
 
 TASK-SPECIFIC REQUIREMENTS
@@ -62,7 +69,7 @@ STRUCTURE (exact)
 - followUpId: root → exactly 2 to secondary; each secondary → exactly 1 to tertiary; tertiary → none
 
 ANSWER FIELDS (generate only these)
-- id, text (schema-bounded), type (Authorized only if allowed), authorizedCabinetMemberId (required when Authorized: ${authorizedMember ?? "N/A"}), followUpId
+- id, text (schema-bounded), type (Authorized only if allowed), authorizedCabinetMemberId (required when Authorized: ${authorizedMember ?? 'N/A'}), followUpId
 
 ROOT ALIGNMENT
 - Include at least one root answer of the President's preferred type that will be positive for the President in the impacts phase
@@ -86,19 +93,19 @@ Return ONLY a JSON object matching the JSON Schema (strict)
   const instructions = buildTechnicalPrompt(QUESTIONS_SPECIFIC_INSTRUCTIONS);
 
   const jsonSchema = zodToJsonSchema(generateQuestionsOnlyContentSchema, {
-    target: "jsonSchema7",
-    $refStrategy: "none",
+    target: 'jsonSchema7',
+    $refStrategy: 'none',
   });
 
   return {
     model: GPT_5,
     instructions,
-    input: promptLines.join("\n"),
+    input: promptLines.join('\n'),
     max_output_tokens: 16000,
     text: {
       format: {
-        type: "json_schema",
-        name: "exchange_questions",
+        type: 'json_schema',
+        name: 'exchange_questions',
         schema: jsonSchema,
         strict: true,
       },

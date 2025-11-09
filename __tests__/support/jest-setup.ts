@@ -1,16 +1,11 @@
 // Mock the native SQLite dispatcher to use Node.js version
-jest.mock(
-  "@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js",
-  () => {
-    return jest.requireActual(
-      "@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.js"
-    );
-  }
-);
+jest.mock('@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js', () => {
+  return jest.requireActual('@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.js');
+});
 
 // Add global fail function for older Jest compatibility
 global.fail = (message?: string) => {
-  throw new Error(message || "Test failed");
+  throw new Error(message || 'Test failed');
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -18,7 +13,7 @@ global.fail = (message?: string) => {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Mock react-native-google-mobile-ads
-jest.mock("react-native-google-mobile-ads", () => ({
+jest.mock('react-native-google-mobile-ads', () => ({
   useRewardedAd: jest.fn(() => ({
     isLoaded: false,
     load: jest.fn(),
@@ -27,37 +22,37 @@ jest.mock("react-native-google-mobile-ads", () => ({
     isEarnedReward: false,
   })),
   TestIds: {
-    REWARDED: "ca-app-pub-3940256099942544/5224354917",
+    REWARDED: 'ca-app-pub-3940256099942544/5224354917',
   },
   AdsConsent: {
     requestInfoUpdate: jest.fn(() =>
       Promise.resolve({
-        status: "NOT_REQUIRED",
+        status: 'NOT_REQUIRED',
         isConsentFormAvailable: false,
-      })
+      }),
     ),
     getGdprApplies: jest.fn(() => Promise.resolve(false)),
     getConsentInfo: jest.fn(() =>
       Promise.resolve({
-        status: "NOT_REQUIRED",
+        status: 'NOT_REQUIRED',
         canRequestAds: true,
-      })
+      }),
     ),
     getUserChoices: jest.fn(() =>
       Promise.resolve({
         storeAndAccessInformationOnDevice: true,
         selectBasicAds: true,
-      })
+      }),
     ),
     gatherConsent: jest.fn(() => Promise.resolve()),
-    getPurposeConsents: jest.fn(() => Promise.resolve("1")),
+    getPurposeConsents: jest.fn(() => Promise.resolve('1')),
     showForm: jest.fn(() => Promise.resolve()),
   },
   AdsConsentStatus: {
-    NOT_REQUIRED: "NOT_REQUIRED",
-    OBTAINED: "OBTAINED",
-    REQUIRED: "REQUIRED",
-    UNKNOWN: "UNKNOWN",
+    NOT_REQUIRED: 'NOT_REQUIRED',
+    OBTAINED: 'OBTAINED',
+    REQUIRED: 'REQUIRED',
+    UNKNOWN: 'UNKNOWN',
   },
   default: jest.fn(() => ({
     initialize: jest.fn(() => Promise.resolve()),
@@ -65,24 +60,24 @@ jest.mock("react-native-google-mobile-ads", () => ({
 }));
 
 // Mock expo-tracking-transparency
-jest.mock("expo-tracking-transparency", () => ({
+jest.mock('expo-tracking-transparency', () => ({
   requestTrackingPermissionsAsync: jest.fn(() =>
     Promise.resolve({
-      status: "granted",
+      status: 'granted',
       canAskAgain: true,
-    })
+    }),
   ),
   getTrackingPermissionsAsync: jest.fn(() =>
     Promise.resolve({
-      status: "granted",
+      status: 'granted',
       canAskAgain: true,
-    })
+    }),
   ),
 }));
 
 // Mock Platform for AdMob environment checks
-jest.mock("react-native/Libraries/Utilities/Platform", () => ({
-  OS: "ios",
+jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+  OS: 'ios',
   select: jest.fn((obj) => obj.ios),
 }));
 
@@ -97,10 +92,10 @@ const originalConsoleError = console.error;
 
 // Suppress only WatermelonDB setup logs
 console.log = (...args: any[]) => {
-  const message = args.join(" ");
+  const message = args.join(' ');
 
   // Filter out WatermelonDB logs (they start with 🍉)
-  if (message.includes("[🍉]")) {
+  if (message.includes('[🍉]')) {
     return;
   }
 
@@ -109,10 +104,10 @@ console.log = (...args: any[]) => {
 
 // Suppress expected validation warnings during tests
 console.warn = (...args: any[]) => {
-  const message = args.join(" ");
+  const message = args.join(' ');
   if (
-    message.includes("Invalid data structure found in DB") ||
-    message.includes("Situation.content getter:")
+    message.includes('Invalid data structure found in DB') ||
+    message.includes('Situation.content getter:')
   ) {
     return;
   }
@@ -121,11 +116,11 @@ console.warn = (...args: any[]) => {
 
 // Suppress expected parsing errors during tests
 console.error = (...args: any[]) => {
-  const message = args.join(" ");
+  const message = args.join(' ');
   if (
-    message.includes("Error parsing") ||
-    message.includes("Invalid JSON string:") ||
-    message.includes("Invalid OutcomeSnapshot data:")
+    message.includes('Error parsing') ||
+    message.includes('Invalid JSON string:') ||
+    message.includes('Invalid OutcomeSnapshot data:')
   ) {
     return;
   }

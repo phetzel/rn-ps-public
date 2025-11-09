@@ -1,5 +1,5 @@
-import React from "react";
-import { Stack } from "expo-router";
+import { Stack } from 'expo-router';
+import React from 'react';
 
 export default function ArchiveLayout() {
   return (
@@ -7,13 +7,13 @@ export default function ArchiveLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "Archive",
+          title: 'Archive',
         }}
       />
       <Stack.Screen
         name="[levelId]"
         options={{
-          title: "Level Details",
+          title: 'Level Details',
         }}
       />
     </Stack>

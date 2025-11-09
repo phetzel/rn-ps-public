@@ -1,28 +1,38 @@
-import { LLMClient } from "./llm/client";
+import {
+  PublicationStaticId,
+  AnswerType,
+  SituationType,
+  CabinetStaticId,
+  SubgroupStaticId,
+} from '~/types';
+
+import { LLMClient } from './llm/client';
+
 import type {
   ResponseCreateParamsNonStreaming,
   ResponseUsage,
   ResponseFormatTextJSONSchemaConfig,
-} from "openai/resources/responses/responses";
-import { PublicationStaticId, AnswerType, SituationType, CabinetStaticId, SubgroupStaticId } from "~/types";
-import type { GenerateSituationPlan } from "~/lib/schemas/generate";
-import type { SituationPreferences } from "~/lib/schemas/situations/preferences";
-import type { SituationOutcome } from "~/lib/schemas/situations/outcomes";
-import type { ExchangeData } from "~/lib/schemas/exchanges";
-
-
+} from 'openai/resources/responses/responses';
+import type { GenerateSituationPlan } from '~/lib/schemas/generate';
+import type { SituationOutcome } from '~/lib/schemas/situations/outcomes';
+import type { SituationPreferences } from '~/lib/schemas/situations/preferences';
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES IMPORT
 // ═══════════════════════════════════════════════════════════════════════════════
-
-
-import type { SituationData } from "~/types";
+import type { SituationData } from '~/types';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // GENERATOR TYPES
 // ═══════════════════════════════════════════════════════════════════════════════
 
-export type GenerationStage = 'analysis' | 'planning' | 'preferences' | 'outcomes' | 'exchanges' | 'conversion' | 'files';
+export type GenerationStage =
+  | 'analysis'
+  | 'planning'
+  | 'preferences'
+  | 'outcomes'
+  | 'exchanges'
+  | 'conversion'
+  | 'files';
 
 export interface GenerationResult {
   success: boolean;
@@ -56,12 +66,13 @@ export interface LLMResponse<T = any> {
 }
 
 // Unified OpenAI-shaped options for Structured Outputs (json_schema)
-export type ResponsesJSONSchemaOptions =
-  Omit<ResponseCreateParamsNonStreaming, 'text' | 'input'> & {
-    input: string;
-    text: { format: ResponseFormatTextJSONSchemaConfig };
-  };
-
+export type ResponsesJSONSchemaOptions = Omit<
+  ResponseCreateParamsNonStreaming,
+  'text' | 'input'
+> & {
+  input: string;
+  text: { format: ResponseFormatTextJSONSchemaConfig };
+};
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // LOGGING TYPES
@@ -109,7 +120,8 @@ export class ConsoleGenerationLogger implements GenerationLogger {
     if (result.title) return `Generated: "${result.title}"`;
     if (result.outcomes?.length) return `Generated ${result.outcomes.length} outcomes`;
     if (result.exchanges?.length) return `Generated ${result.exchanges.length} exchanges`;
-    if (result.cabinetPreferences?.length) return `Generated preferences for ${result.cabinetPreferences.length} cabinet members`;
+    if (result.cabinetPreferences?.length)
+      return `Generated preferences for ${result.cabinetPreferences.length} cabinet members`;
     return null;
   }
 }
@@ -166,11 +178,11 @@ export interface GenerationAnalysis {
 
 export interface StrategicRequirements {
   targetSituationType: SituationType;
-  existingSituationsOfType: Array<{
+  existingSituationsOfType: {
     id: string;
     title: string;
     description: string;
-  }>;
+  }[];
   entityBalance: {
     cabinet: {
       underRepresented: CabinetStaticId[];
@@ -216,7 +228,6 @@ export interface OutcomesStepInput {
   preferences: PreferencesStepOutput;
 }
 export type OutcomesStepOutput = SituationOutcome[];
-
 
 // Exchanges Step Types
 export interface ExchangesStepInput {

@@ -1,9 +1,10 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { cn, calculateTableColumnWidths } from "~/lib/utils";
-import type { EntityWithDelta, EntityWithMediaDelta } from "~/types";
+import { Text } from '~/components/ui/text';
+import { cn, calculateTableColumnWidths } from '~/lib/utils';
+
+import type { EntityWithDelta, EntityWithMediaDelta } from '~/types';
 
 interface ResultsEntityRowProps {
   entity: EntityWithDelta | EntityWithMediaDelta;
@@ -17,13 +18,12 @@ export function ResultsEntityRow({
   showAdColumn = true,
 }: ResultsEntityRowProps) {
   // Check if entity has media data and should show base column
-  const hasMediaData = "preMediaDelta" in entity;
+  const hasMediaData = 'preMediaDelta' in entity;
   const showBaseColumn = hasMediaData && !showAdColumn;
 
   // Calculate column count and get widths
   const columnCount = 2 + (showBaseColumn ? 1 : 0) + 1 + (showAdColumn ? 1 : 0); // Name + Start + Base? + Change + Boosted?
-  const { name: nameWidth, data: dataWidth } =
-    calculateTableColumnWidths(columnCount);
+  const { name: nameWidth, data: dataWidth } = calculateTableColumnWidths(columnCount);
 
   return (
     <View className="flex-row border-b border-border pb-2">
@@ -31,19 +31,14 @@ export function ResultsEntityRow({
       <View
         style={{ width: nameWidth }}
         accessible={true}
-        accessibilityLabel={`${entity.name}${
-          entity.title ? `, ${entity.title}` : ""
-        }`}
+        accessibilityLabel={`${entity.name}${entity.title ? `, ${entity.title}` : ''}`}
         className="gap-1"
       >
         <Text className="text-base font-bold leading-none" accessible={false}>
           {entity.name}
         </Text>
         {entity.title && (
-          <Text
-            className="text-sm text-muted-foreground leading-none"
-            accessible={false}
-          >
+          <Text className="text-sm text-muted-foreground leading-none" accessible={false}>
             {entity.title}
           </Text>
         )}
@@ -68,13 +63,11 @@ export function ResultsEntityRow({
           className="justify-center items-center"
           accessible={true}
           accessibilityLabel={`Base change: ${
-            (entity as EntityWithMediaDelta).preMediaDelta >= 0
-              ? "plus"
-              : "minus"
+            (entity as EntityWithMediaDelta).preMediaDelta >= 0 ? 'plus' : 'minus'
           } ${Math.abs((entity as EntityWithMediaDelta).preMediaDelta)}`}
         >
-          <Text className={"text-lg text-muted-foreground"} accessible={false}>
-            {(entity as EntityWithMediaDelta).preMediaDelta >= 0 ? "+" : "-"}
+          <Text className={'text-lg text-muted-foreground'} accessible={false}>
+            {(entity as EntityWithMediaDelta).preMediaDelta >= 0 ? '+' : '-'}
             {Math.abs((entity as EntityWithMediaDelta).preMediaDelta)}
           </Text>
         </View>
@@ -86,21 +79,21 @@ export function ResultsEntityRow({
         className="justify-center items-center"
         accessible={true}
         accessibilityLabel={`Change: ${
-          entity.delta >= 0 ? "plus" : "minus"
+          entity.delta >= 0 ? 'plus' : 'minus'
         } ${Math.abs(entity.delta)}`}
       >
         <Text
           className={cn(
-            "text-lg",
+            'text-lg',
             !showAdColumn || !isAdWatched
               ? entity.delta >= 0
-                ? "text-green-600 font-bold"
-                : "text-red-600 font-bold"
-              : "text-muted-foreground"
+                ? 'text-green-600 font-bold'
+                : 'text-red-600 font-bold'
+              : 'text-muted-foreground',
           )}
           accessible={false}
         >
-          {entity.delta >= 0 ? "+" : "-"}
+          {entity.delta >= 0 ? '+' : '-'}
           {Math.abs(entity.delta)}
         </Text>
       </View>
@@ -112,23 +105,21 @@ export function ResultsEntityRow({
           className="justify-center items-center"
           accessible={true}
           accessibilityLabel={`${
-            isAdWatched ? "Ad boosted" : "Potential boost"
-          }: ${entity.adBoostedDelta >= 0 ? "plus" : "minus"} ${Math.abs(
-            entity.adBoostedDelta
-          )}`}
+            isAdWatched ? 'Ad boosted' : 'Potential boost'
+          }: ${entity.adBoostedDelta >= 0 ? 'plus' : 'minus'} ${Math.abs(entity.adBoostedDelta)}`}
         >
           <Text
             className={cn(
-              "text-lg",
+              'text-lg',
               isAdWatched
                 ? entity.adBoostedDelta >= 0
-                  ? "text-green-600 font-bold"
-                  : "text-red-600 font-bold"
-                : "text-muted-foreground"
+                  ? 'text-green-600 font-bold'
+                  : 'text-red-600 font-bold'
+                : 'text-muted-foreground',
             )}
             accessible={false}
           >
-            {entity.adBoostedDelta >= 0 ? "+" : "-"}
+            {entity.adBoostedDelta >= 0 ? '+' : '-'}
             {Math.abs(entity.adBoostedDelta)}
           </Text>
         </View>

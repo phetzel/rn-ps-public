@@ -1,21 +1,18 @@
-import React, { useState } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React, { useState } from 'react';
+import { View } from 'react-native';
 
-import {
-  observeSituationsByLevelId,
-  observeLevel,
-} from "~/lib/db/helpers/observations";
-import { Situation, Level } from "~/lib/db/models";
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
+import BriefingSituationItemHeader from '~/components/screens/level-briefing/BriefingSituationItemHeader';
+import { EmptyState } from '~/components/shared/EmptyState';
+import SituationPreferences from '~/components/shared/preference/SituationPreferences';
+import { ProgressNavigator } from '~/components/shared/ProgressNavigator';
+import { Button } from '~/components/ui/button';
+import { Text } from '~/components/ui/text';
+import { observeSituationsByLevelId, observeLevel } from '~/lib/db/helpers/observations';
+import { Situation, Level } from '~/lib/db/models';
+import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 // Components
-import { Text } from "~/components/ui/text";
-import { Button } from "~/components/ui/button";
-import { LevelStatus } from "~/types";
-import SituationPreferences from "~/components/shared/preference/SituationPreferences";
-import BriefingSituationItemHeader from "~/components/screens/level-briefing/BriefingSituationItemHeader";
-import { EmptyState } from "~/components/shared/EmptyState";
-import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
+import { LevelStatus } from '~/types';
 
 interface BriefingSituationsListProps {
   levelId: string;
@@ -23,14 +20,9 @@ interface BriefingSituationsListProps {
   level: Level;
 }
 
-const BriefingSituationsList = ({
-  levelId,
-  situations,
-  level,
-}: BriefingSituationsListProps) => {
+const BriefingSituationsList = ({ levelId, situations, level }: BriefingSituationsListProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { progressAndNavigate, navigateToCurrentLevelScreen } =
-    useLevelNavigation();
+  const { progressAndNavigate, navigateToCurrentLevelScreen } = useLevelNavigation();
 
   const handleNext = () => {
     if (currentIndex < situations.length - 1) {
@@ -46,13 +38,13 @@ const BriefingSituationsList = ({
 
   const handleComplete = async () => {
     try {
-      if (level.status == LevelStatus.Briefing) {
+      if (level.status === LevelStatus.Briefing) {
         await progressAndNavigate();
       } else {
         await navigateToCurrentLevelScreen();
       }
     } catch (error) {
-      console.error("Failed to start press conference:", error);
+      console.error('Failed to start press conference:', error);
     }
   };
 
@@ -89,9 +81,7 @@ const BriefingSituationsList = ({
         onComplete={handleComplete}
         progressLabel={`Situation ${currentIndex + 1} of ${situations.length}`}
         cardClassName="border-l-4 border-l-primary"
-        headerContent={
-          <BriefingSituationItemHeader situation={currentSituation} />
-        }
+        headerContent={<BriefingSituationItemHeader situation={currentSituation} />}
       >
         <SituationPreferences situation={currentSituation} />
       </ProgressNavigator>
@@ -99,7 +89,7 @@ const BriefingSituationsList = ({
   );
 };
 
-const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
+const enhance = withObservables(['gameId', 'levelId'], ({ levelId }) => ({
   situations: observeSituationsByLevelId(levelId),
   level: observeLevel(levelId),
 }));

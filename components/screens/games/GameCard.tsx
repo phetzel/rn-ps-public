@@ -1,15 +1,16 @@
-import * as React from "react";
-import { useRouter } from "expo-router";
+import * as React from 'react';
 
-import type Game from "~/lib/db/models/Game";
-import { formatDate } from "~/lib/utils";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { useGameNavigation } from "~/lib/hooks/useGameNavigation";
-import { Card, CardContent, CardFooter } from "~/components/ui/card";
-import { GameCardHeader } from "./GameCardHeader";
-import GameMetadata from "./GameMetadata";
-import { GameTimeInfo } from "./GameTimeInfo";
-import { GameActions } from "./GameActions";
+import { Card, CardContent, CardFooter } from '~/components/ui/card';
+import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+import { formatDate } from '~/lib/utils';
+
+import { GameActions } from './GameActions';
+import { GameCardHeader } from './GameCardHeader';
+import GameMetadata from './GameMetadata';
+import { GameTimeInfo } from './GameTimeInfo';
+
+import type Game from '~/lib/db/models/Game';
 
 interface GameCardProps {
   game: Game;
@@ -25,7 +26,7 @@ function GameCard({ game }: GameCardProps) {
 
   const handleDelete = () => {
     deleteGame(game.id).catch((err) => {
-      console.error("Failed to delete game from card:", err);
+      console.error('Failed to delete game from card:', err);
     });
   };
 
@@ -36,7 +37,7 @@ function GameCard({ game }: GameCardProps) {
       accessibilityRole="button"
       accessibilityLabel={`${game.presName} Press Secretary game. ${formatDate(
         game.currentMonth,
-        game.currentYear
+        game.currentYear,
       )}. Status: ${game.status}`}
       accessibilityHint="Double tap to view game details and actions"
     >

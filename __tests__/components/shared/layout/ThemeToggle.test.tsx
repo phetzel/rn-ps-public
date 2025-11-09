@@ -1,73 +1,72 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
+import { render, screen, fireEvent } from '@testing-library/react-native';
+import React from 'react';
 
-import { ThemeToggle } from "~/components/shared/layout/ThemeToggle";
+import { ThemeToggle } from '~/components/shared/layout/ThemeToggle';
 
 // Mock the useColorScheme hook - matches the actual implementation (light mode only)
-jest.mock("~/lib/useColorScheme", () => ({
+jest.mock('~/lib/useColorScheme', () => ({
   useColorScheme: () => ({
     isDarkColorScheme: false,
-    colorScheme: "light",
+    colorScheme: 'light',
     setColorScheme: jest.fn(),
     toggleColorScheme: jest.fn(),
   }),
 }));
 
 // Mock the android navigation bar
-jest.mock("~/lib/android-navigation-bar", () => ({
+jest.mock('~/lib/android-navigation-bar', () => ({
   setAndroidNavigationBar: jest.fn(),
 }));
 
 // Mock utils
-jest.mock("~/lib/utils", () => ({
-  cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
+jest.mock('~/lib/utils', () => ({
+  cn: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
 }));
 
-describe("ThemeToggle", () => {
+describe('ThemeToggle', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders with correct accessibility properties", () => {
+  it('renders with correct accessibility properties', () => {
     render(<ThemeToggle />);
 
-    const button = screen.getByRole("button");
+    const button = screen.getByRole('button');
     expect(button).toBeTruthy();
-    expect(screen.getByLabelText("Switch")).toBeTruthy();
+    expect(screen.getByLabelText('Switch')).toBeTruthy();
   });
 
-  it("has correct accessibility hint for light theme", () => {
+  it('has correct accessibility hint for light theme', () => {
     render(<ThemeToggle />);
 
-    const button = screen.getByRole("button");
-    expect(button.props.accessibilityHint).toBe(
-      "Currently using light theme. Tap to switch."
-    );
+    const button = screen.getByRole('button');
+    expect(button.props.accessibilityHint).toBe('Currently using light theme. Tap to switch.');
   });
 
-  it("has correct accessibility state for light mode", () => {
+  it('has correct accessibility state for light mode', () => {
     render(<ThemeToggle />);
 
-    const button = screen.getByRole("button");
+    const button = screen.getByRole('button');
     expect(button.props.accessibilityState).toEqual({ selected: false });
   });
 
-  it("calls toggle function when pressed", () => {
-    const { setAndroidNavigationBar } = require("~/lib/android-navigation-bar");
+  it('calls toggle function when pressed', () => {
+    // get the mocked function from the jest.mock above
+    const { setAndroidNavigationBar } = jest.requireMock('~/lib/android-navigation-bar');
 
     render(<ThemeToggle />);
 
-    const button = screen.getByRole("button");
+    const button = screen.getByRole('button');
     fireEvent.press(button);
 
     // Since light mode is active, it should attempt to switch to dark
-    expect(setAndroidNavigationBar).toHaveBeenCalledWith("dark");
+    expect(setAndroidNavigationBar).toHaveBeenCalledWith('dark');
   });
 
-  it("renders pressable component", () => {
+  it('renders pressable component', () => {
     render(<ThemeToggle />);
 
     // Check that the pressable renders (should find the button role)
-    expect(screen.getByRole("button")).toBeTruthy();
+    expect(screen.getByRole('button')).toBeTruthy();
   });
 });

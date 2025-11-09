@@ -1,13 +1,13 @@
 // Re-export all exchange schemas
-export * from "~/lib/schemas/exchanges/impacts";
-export * from "~/lib/schemas/exchanges/questions";
-export * from "~/lib/schemas/exchanges/progress";
-
 // Main exchange data schema
-import { z } from "zod";
+import { z } from 'zod';
 
-import { exchangeContentSchema } from "~/lib/schemas/exchanges/questions";
-import { PublicationStaticId } from "~/types";
+import { exchangeContentSchema } from '~/lib/schemas/exchanges/questions';
+import { PublicationStaticId } from '~/types';
+
+export * from '~/lib/schemas/exchanges/impacts';
+export * from '~/lib/schemas/exchanges/questions';
+export * from '~/lib/schemas/exchanges/progress';
 
 export const exchangeDataSchema = z.object({
   content: exchangeContentSchema,
@@ -27,7 +27,7 @@ export const validatedExchangeDataSchema = exchangeDataSchema
 
       return rootFollowUps.every((id) => secondaryIds.includes(id!));
     },
-    { message: "Root question followUpIds must reference secondary questions" }
+    { message: 'Root question followUpIds must reference secondary questions' },
   )
   .refine(
     (data) => {
@@ -42,9 +42,8 @@ export const validatedExchangeDataSchema = exchangeDataSchema
       return secondaryFollowUps.every((id) => tertiaryIds.includes(id!));
     },
     {
-      message:
-        "Secondary question followUpIds must reference tertiary questions",
-    }
+      message: 'Secondary question followUpIds must reference tertiary questions',
+    },
   );
 
 // Export TypeScript types derived from Zod schemas

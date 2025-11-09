@@ -1,15 +1,17 @@
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
 
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { observeGame } from "~/lib/db/helpers/observations";
-import type { Game } from "~/lib/db/models";
-import { isGameEnded } from "~/lib/db/helpers";
+import ActiveSituationsList from '~/components/screens/tab-current/ActiveSituationsList';
+import CurrentLevelCard from '~/components/screens/tab-current/CurrentLevelCard';
+import { ThemedView } from '~/components/shared/layout/ThemedView';
+import LevelConsequences from '~/components/shared/level-consequences/LevelConsequences';
+import { isGameEnded } from '~/lib/db/helpers';
+import { observeGame } from '~/lib/db/helpers/observations';
+import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
+import type { Game } from '~/lib/db/models';
+
 // Components
-import ActiveSituationsList from "~/components/screens/tab-current/ActiveSituationsList";
-import CurrentLevelCard from "~/components/screens/tab-current/CurrentLevelCard";
-import LevelConsequences from "~/components/shared/level-consequences/LevelConsequences";
-import { ThemedView } from "~/components/shared/layout/ThemedView";
 
 interface CurrentScreenProps {
   game: Game | null;

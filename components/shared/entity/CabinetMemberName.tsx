@@ -1,8 +1,8 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { CabinetMember } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
+import { Text } from '~/components/ui/text';
+import { CabinetMember } from '~/lib/db/models';
 
 interface CabinetMemberNameProps {
   cabinetMember: CabinetMember;
@@ -21,10 +21,7 @@ export function CabinetMemberName({ cabinetMember }: CabinetMemberNameProps) {
       <Text className="text-lg font-bold" accessible={false}>
         {name}
       </Text>
-      <Text
-        className="text-base text-muted-foreground leading-none"
-        accessible={false}
-      >
+      <Text className="text-base text-muted-foreground leading-none" accessible={false}>
         {cabinetName}
       </Text>
     </View>

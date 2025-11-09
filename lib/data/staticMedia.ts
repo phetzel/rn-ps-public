@@ -4,30 +4,27 @@ import {
   type StaticPublication,
   JournalistStaticId,
   type StaticJournalist,
-} from "~/types";
+} from '~/types';
 
-export const staticPublications: Record<
-  PublicationStaticId,
-  StaticPublication
-> = {
+export const staticPublications: Record<PublicationStaticId, StaticPublication> = {
   [PublicationStaticId.LibPrimary]: {
-    name: "The Daily Soy",
+    name: 'The Daily Soy',
     description: "News That's Organic, Gluten-Free, and Locally-Sourced",
     politicalLeaning: PoliticalLeaning.Liberal,
   },
   [PublicationStaticId.ConPrimary]: {
-    name: "Freedom Fries Herald",
-    description: "Patriotism Served Fresh Daily",
+    name: 'Freedom Fries Herald',
+    description: 'Patriotism Served Fresh Daily',
     politicalLeaning: PoliticalLeaning.Conservative,
   },
   [PublicationStaticId.IndependentPrimary]: {
-    name: "The Moderate Times",
-    description: "We Have No Strong Feelings One Way or Another",
+    name: 'The Moderate Times',
+    description: 'We Have No Strong Feelings One Way or Another',
     politicalLeaning: PoliticalLeaning.Neutral,
   },
   [PublicationStaticId.Investigative]: {
-    name: "Integrity Watch",
-    description: "Investigative Journalism at its Finest",
+    name: 'Integrity Watch',
+    description: 'Investigative Journalism at its Finest',
     politicalLeaning: PoliticalLeaning.Neutral,
   },
 };
@@ -36,45 +33,45 @@ export const staticJournalists: Record<JournalistStaticId, StaticJournalist> = {
   // Conservative
   [JournalistStaticId.ConPrimaryA]: {
     publicationStaticId: PublicationStaticId.ConPrimary,
-    name: "Ronald Rage",
+    name: 'Ronald Rage',
   },
   [JournalistStaticId.ConPrimaryB]: {
     publicationStaticId: PublicationStaticId.ConPrimary,
-    name: "Hawk Stormwell",
+    name: 'Hawk Stormwell',
   },
   [JournalistStaticId.ConPrimaryC]: {
     publicationStaticId: PublicationStaticId.ConPrimary,
-    name: "Greta Smokescreen",
+    name: 'Greta Smokescreen',
   },
   // Liberal
   [JournalistStaticId.LibPrimaryA]: {
     publicationStaticId: PublicationStaticId.LibPrimary,
-    name: "Aspen Trustfund",
+    name: 'Aspen Trustfund',
   },
   [JournalistStaticId.LibPrimaryB]: {
     publicationStaticId: PublicationStaticId.LibPrimary,
-    name: "Zoey Crusade",
+    name: 'Zoey Crusade',
   },
   [JournalistStaticId.LibPrimaryC]: {
     publicationStaticId: PublicationStaticId.LibPrimary,
-    name: "Harper Avocado",
+    name: 'Harper Avocado',
   },
   // Independent
   [JournalistStaticId.IndependentA]: {
     publicationStaticId: PublicationStaticId.IndependentPrimary,
-    name: "Norm Center",
+    name: 'Norm Center',
   },
   [JournalistStaticId.IndependentB]: {
     publicationStaticId: PublicationStaticId.IndependentPrimary,
-    name: "Sam Neutrality",
+    name: 'Sam Neutrality',
   },
   // Investigative
   [JournalistStaticId.InvestigativeA]: {
     publicationStaticId: PublicationStaticId.Investigative,
-    name: "Morgan Leakerton",
+    name: 'Morgan Leakerton',
   },
   [JournalistStaticId.InvestigativeB]: {
     publicationStaticId: PublicationStaticId.Investigative,
-    name: "Perry Paranoia",
+    name: 'Perry Paranoia',
   },
 };

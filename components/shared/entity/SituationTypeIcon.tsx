@@ -1,17 +1,9 @@
-import React from "react";
+import React from 'react';
 
 // Icons
-import {
-  AlertCircle,
-  Globe,
-  DollarSign,
-  Shield,
-  Users,
-  Leaf,
-  Library,
-} from "~/lib/icons";
+import { AlertCircle, Globe, DollarSign, Shield, Users, Leaf, Library } from '~/lib/icons';
 // Types
-import { SituationType } from "~/types";
+import { SituationType } from '~/types';
 
 interface SituationTypeIconProps {
   type: SituationType;
@@ -44,7 +36,7 @@ export function SituationTypeIcon({ type, size = 32 }: SituationTypeIconProps) {
   // Convert snake_case to Title Case for accessibility label
   const formatAccessibilityLabel = (type: string): string => {
     return type
-      .replace(/_/g, " ") // Replace underscores with spaces
+      .replace(/_/g, ' ') // Replace underscores with spaces
       .replace(/\b\w/g, (l) => l.toUpperCase()); // Capitalize first letter of each word
   };
 

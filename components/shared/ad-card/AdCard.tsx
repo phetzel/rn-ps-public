@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 
-import { Card, CardContent } from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
-import { ResultsTableList } from "~/components/shared/results/ResultsTableList";
-import AdCardHeader from "~/components/shared/ad-card/AdCardHeader";
-import { EntityWithDelta } from "~/types";
-import { cn } from "~/lib/utils";
-import { useAdCard } from "~/lib/hooks/useAdCard";
+import AdCardHeader from '~/components/shared/ad-card/AdCardHeader';
+import { ResultsTableList } from '~/components/shared/results/ResultsTableList';
+import { Card, CardContent } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { useAdCard } from '~/lib/hooks/useAdCard';
+import { cn } from '~/lib/utils';
+import { EntityWithDelta } from '~/types';
 
-type RewardAdType = "relationship" | "approval";
+type RewardAdType = 'relationship' | 'approval';
 
 interface AdCardProps {
   adType: RewardAdType;
@@ -40,21 +40,21 @@ export function AdCard({
 
   const entityCount = enhancedDeltas?.length || 0;
   const adStatus = isAdWatched
-    ? "Ad boost applied"
+    ? 'Ad boost applied'
     : canRequestAds
-    ? "Ad boost available"
-    : "Ad boost unavailable";
+      ? 'Ad boost available'
+      : 'Ad boost unavailable';
 
   return (
     <Card
       className={cn(
-        "border-l-4",
+        'border-l-4',
         isAdWatched
-          ? "border-l-green-500"
+          ? 'border-l-green-500'
           : canRequestAds
-          ? "border-l-blue-500"
-          : "border-l-gray-400",
-        className
+            ? 'border-l-blue-500'
+            : 'border-l-gray-400',
+        className,
       )}
       accessible={true}
       accessibilityLabel={`Results summary with ${entityCount} entities. ${adStatus}.`}
@@ -66,9 +66,7 @@ export function AdCard({
         canRequestAds={canRequestAds}
       />
       <CardContent className="gap-4">
-        {hasError && errorMessage && (
-          <Text className="text-red-500 text-sm">{errorMessage}</Text>
-        )}
+        {hasError && errorMessage && <Text className="text-red-500 text-sm">{errorMessage}</Text>}
         {/* {!canRequestAds && !hasError && consentStatus && (
           <Text className="text-gray-600 text-xs">
             Consent status: {consentStatus}

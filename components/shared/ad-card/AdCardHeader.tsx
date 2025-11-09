@@ -1,16 +1,16 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
 // Icons
-import { Play } from "~/lib/icons/Play";
-import { CheckCircle2 } from "~/lib/icons/CheckCircle2";
-import { Film } from "~/lib/icons/Film";
 // Components
-import { Button } from "~/components/ui/button";
-import { CardHeader, CardTitle } from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
+import { Button } from '~/components/ui/button';
+import { CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { CheckCircle2 } from '~/lib/icons/CheckCircle2';
+import { Film } from '~/lib/icons/Film';
+import { Play } from '~/lib/icons/Play';
 // Utils
-import { cn } from "~/lib/utils";
+import { cn } from '~/lib/utils';
 
 interface AdCardHeaderProps {
   onWatchAd?: () => void;
@@ -28,16 +28,16 @@ export default function AdCardHeader({
   return (
     <CardHeader
       className={cn(
-        "flex-row justify-between items-center gap-2",
-        isAdWatched ? "bg-green-50" : "bg-blue-50"
+        'flex-row justify-between items-center gap-2',
+        isAdWatched ? 'bg-green-50' : 'bg-blue-50',
       )}
       accessible={true}
       accessibilityLabel={`Ad boost section. ${
         isAdWatched
-          ? "Boost has been applied"
+          ? 'Boost has been applied'
           : canRequestAds
-          ? "Boost available by watching ad"
-          : "Boost not available due to consent settings"
+            ? 'Boost available by watching ad'
+            : 'Boost not available due to consent settings'
       }`}
     >
       {isAdWatched ? (
@@ -51,13 +51,9 @@ export default function AdCardHeader({
         </View>
       ) : (
         <View className="flex-row items-center gap-2 flex-1" accessible={false}>
-          <Film
-            className="text-blue-500"
-            size={32}
-            accessibilityLabel="Video ad icon"
-          />
+          <Film className="text-blue-500" size={32} accessibilityLabel="Video ad icon" />
           <CardTitle accessible={false}>
-            {canRequestAds ? "Boost Your Results" : "Boost Unavailable"}
+            {canRequestAds ? 'Boost Your Results' : 'Boost Unavailable'}
           </CardTitle>
         </View>
       )}
@@ -75,13 +71,8 @@ export default function AdCardHeader({
               accessibilityLabel="Watch advertisement to boost results"
               accessibilityHint="Plays a short ad that will increase your approval rating changes"
             >
-              <Play
-                className="h-4 w-4 text-foreground"
-                accessibilityLabel="Play button"
-              />
-              <Text accessible={false}>
-                {isButtonDisabled ? "Loading..." : "Watch Ad"}
-              </Text>
+              <Play className="h-4 w-4 text-foreground" accessibilityLabel="Play button" />
+              <Text accessible={false}>{isButtonDisabled ? 'Loading...' : 'Watch Ad'}</Text>
             </Button>
           ) : (
             <Text className="text-sm text-muted-foreground text-right">

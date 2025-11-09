@@ -1,7 +1,7 @@
-import { database } from "~/lib/db";
-import { cabinetCollection } from "~/lib/db/helpers/collections";
-import { generateCabinetMemberName } from "~/lib/utils";
-import { CabinetStaticId } from "~/types";
+import { database } from '~/lib/db';
+import { cabinetCollection } from '~/lib/db/helpers/collections';
+import { generateCabinetMemberName } from '~/lib/utils';
+import { CabinetStaticId } from '~/types';
 
 /**
  * Hire new cabinet members to replace fired ones
@@ -9,7 +9,7 @@ import { CabinetStaticId } from "~/types";
  */
 export async function hireReplacementCabinetMembers(
   gameId: string,
-  firedPositions: CabinetStaticId[]
+  firedPositions: CabinetStaticId[],
 ): Promise<void> {
   if (firedPositions.length === 0) return;
 

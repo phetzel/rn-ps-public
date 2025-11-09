@@ -1,31 +1,29 @@
 // lib/hooks/useGameNavigation.ts
-import { useRouter } from "expo-router";
+import { useRouter } from 'expo-router';
 
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import type { NewGameDetails } from "~/types";
-import type Game from "~/lib/db/models/Game";
+import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
+import type Game from '~/lib/db/models/Game';
+import type { NewGameDetails } from '~/types';
 
 export function useGameNavigation() {
   const router = useRouter();
-  const { currentGameId, setCurrentGameId, createAndStartGame } =
-    useGameManagerStore((state) => ({
-      currentGameId: state.currentGameId,
-      setCurrentGameId: state.setCurrentGameId,
-      createAndStartGame: state.createAndStartGame,
-    }));
-  const { setGameCurrentLevel, createNewLevel } = useCurrentLevelStore(
-    (state) => ({
-      setGameCurrentLevel: state.setGameCurrentLevel,
-      createNewLevel: state.createNewLevel,
-    })
-  );
+  const { currentGameId, setCurrentGameId, createAndStartGame } = useGameManagerStore((state) => ({
+    currentGameId: state.currentGameId,
+    setCurrentGameId: state.setCurrentGameId,
+    createAndStartGame: state.createAndStartGame,
+  }));
+  const { setGameCurrentLevel, createNewLevel } = useCurrentLevelStore((state) => ({
+    setGameCurrentLevel: state.setGameCurrentLevel,
+    createNewLevel: state.createNewLevel,
+  }));
 
   const goToHome = () => {
     if (router.canDismiss()) {
       router.dismissAll(); // Clear all but one route from stack
     }
-    router.replace("/"); // Replace the last route with home
+    router.replace('/'); // Replace the last route with home
   };
 
   /**
@@ -40,7 +38,7 @@ export function useGameNavigation() {
         (activeGames && activeGames.length === 1 ? activeGames[0].id : null);
 
       if (!targetGameId) {
-        console.warn("No game ID available to continue");
+        console.warn('No game ID available to continue');
         return false;
       }
 
@@ -56,11 +54,11 @@ export function useGameNavigation() {
         router.push(`/games/${targetGameId}/current`);
         return true;
       } else {
-        console.warn("No level found for game", targetGameId);
+        console.warn('No level found for game', targetGameId);
         return false;
       }
     } catch (error) {
-      console.error("Failed to continue game:", error);
+      console.error('Failed to continue game:', error);
       return false;
     }
   };
@@ -85,7 +83,7 @@ export function useGameNavigation() {
 
       return false;
     } catch (error) {
-      console.error("Failed to create and navigate to game:", error);
+      console.error('Failed to create and navigate to game:', error);
       return false;
     }
   };
@@ -93,8 +91,8 @@ export function useGameNavigation() {
   return {
     // Navigation functions
     goToHome,
-    goToGamesList: () => router.push("/games"),
-    goToCreateGame: () => router.push("/games/create"),
+    goToGamesList: () => router.push('/games'),
+    goToCreateGame: () => router.push('/games/create'),
     continueGame,
     createGame,
   };

@@ -1,9 +1,6 @@
 //#region Gorhom Bottom Sheet
 
-import {
-  BottomSheetProps as BSProps,
-  BottomSheetHandleProps,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetProps as BSProps, BottomSheetHandleProps } from '@gorhom/bottom-sheet';
 
 export interface BSHandleProps extends BottomSheetHandleProps {
   className?: string;
@@ -12,9 +9,8 @@ export interface BSHandleProps extends BottomSheetHandleProps {
 
 //#region Vaul
 
-/* eslint-disable no-unused-vars */
-interface WithFadeFromProps {}
-interface WithoutFadeFromProps {}
+type WithFadeFromProps = Record<string, never>;
+type WithoutFadeFromProps = Record<string, never>;
 
 interface DialogProps extends WithFadeFromProps, WithoutFadeFromProps {
   activeSnapPoint?: number | string | null;
@@ -30,19 +26,13 @@ interface DialogProps extends WithFadeFromProps, WithoutFadeFromProps {
   fixed?: boolean;
   dismissible?: boolean;
   handleOnly?: boolean;
-  onDrag?: (
-    event: React.PointerEvent<HTMLDivElement>,
-    percentageDragged: number
-  ) => void;
-  onRelease?: (
-    event: React.PointerEvent<HTMLDivElement>,
-    open: boolean
-  ) => void;
+  onDrag?: (event: React.PointerEvent<HTMLDivElement>, percentageDragged: number) => void;
+  onRelease?: (event: React.PointerEvent<HTMLDivElement>, open: boolean) => void;
   modal?: boolean;
   nested?: boolean;
   onClose?: () => void;
   // vaul property for Drawer direction
-  direction?: "top" | "bottom" | "left" | "right";
+  direction?: 'top' | 'bottom' | 'left' | 'right';
   preventScrollRestoration?: boolean;
   disablePreventScroll?: boolean;
 }
@@ -52,6 +42,6 @@ interface DialogProps extends WithFadeFromProps, WithoutFadeFromProps {
 export interface BottomSheetProps extends DialogProps, BSProps {
   children: React.ReactNode;
   isOpen?: boolean;
-  snapPoints?: Pick<BSProps, "snapPoints">["snapPoints"];
+  snapPoints?: Pick<BSProps, 'snapPoints'>['snapPoints'];
 }
 //#endregion

@@ -1,5 +1,5 @@
-import { situationsData } from "~/lib/data/situations";
-import { AnswerType } from "~/types";
+import { situationsData } from '~/lib/data/situations';
+import { AnswerType } from '~/types';
 
 export interface ExchangeStructureAnalysis {
   situationTitle: string;
@@ -38,10 +38,8 @@ export interface AnswerEntityImpactAnalysis {
 /**
  * Helper function to get all questions from an exchange in the new structure
  */
-function getAllQuestionsFromExchange(
-  exchange: any
-): Array<{ question: any; depth: number }> {
-  const questions: Array<{ question: any; depth: number }> = [];
+function getAllQuestionsFromExchange(exchange: any): { question: any; depth: number }[] {
+  const questions: { question: any; depth: number }[] = [];
 
   // Add root question (depth 0)
   questions.push({ question: exchange.content.rootQuestion, depth: 0 });
@@ -107,9 +105,7 @@ export function analyzeQuestionDepth(): QuestionDepthAnalysis {
     questionsByDepth,
     questionsWithDepthGreaterThanZero,
     percentageWithDepthGreaterThanZero:
-      totalQuestions > 0
-        ? (questionsWithDepthGreaterThanZero / totalQuestions) * 100
-        : 0,
+      totalQuestions > 0 ? (questionsWithDepthGreaterThanZero / totalQuestions) * 100 : 0,
   };
 }
 
@@ -125,23 +121,16 @@ export function analyzeQuestionAnswers(): QuestionAnswerAnalysis[] {
 
       allQuestions.forEach(({ question, depth }) => {
         const answerTypes = question.answers.map((answer: any) => answer.type);
-        const answerTypeDistribution: Record<AnswerType, number> = {} as Record<
-          AnswerType,
-          number
-        >;
+        const answerTypeDistribution: Record<AnswerType, number> = {} as Record<AnswerType, number>;
 
         // Count answer types
         answerTypes.forEach((type: AnswerType) => {
-          answerTypeDistribution[type] =
-            (answerTypeDistribution[type] || 0) + 1;
+          answerTypeDistribution[type] = (answerTypeDistribution[type] || 0) + 1;
         });
 
         const distinctAnswerTypes = Object.keys(answerTypeDistribution).length;
-        const maxAnswerTypeCount = Math.max(
-          ...Object.values(answerTypeDistribution)
-        );
-        const maxAnswerTypePercentage =
-          (maxAnswerTypeCount / question.answers.length) * 100;
+        const maxAnswerTypeCount = Math.max(...Object.values(answerTypeDistribution));
+        const maxAnswerTypePercentage = (maxAnswerTypeCount / question.answers.length) * 100;
 
         // Analyze entities affected and net impacts per answer
         const entitiesAffectedByAnswers: number[] = [];

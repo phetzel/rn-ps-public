@@ -1,8 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
-import { Situation } from "~/lib/db/models";
-import { SituationType, AnswerType } from "~/types";
-import { SituationContent } from "~/types";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
+
+import { Situation } from '~/lib/db/models';
+import { SituationType, AnswerType, SituationContent } from '~/types';
 
 type SituationOverrides = {
   gameId: string; // Required association
@@ -17,7 +17,7 @@ type SituationOverrides = {
 
 export async function createSituation(
   database: Database,
-  overrides: SituationOverrides
+  overrides: SituationOverrides,
 ): Promise<Situation> {
   const defaultContent: SituationContent = {
     preferences: {
@@ -28,15 +28,15 @@ export async function createSituation(
     },
     outcomes: [
       {
-        id: "outcome-1",
-        title: "A Positive Outcome",
+        id: 'outcome-1',
+        title: 'A Positive Outcome',
         description: faker.lorem.paragraph(),
         weight: 60,
         consequences: { approvalChanges: {} },
       },
       {
-        id: "outcome-2",
-        title: "A Negative Outcome",
+        id: 'outcome-2',
+        title: 'A Negative Outcome',
         description: faker.lorem.paragraph(),
         weight: 40,
         consequences: { approvalChanges: {} },
@@ -57,7 +57,7 @@ export async function createSituation(
   const finalContent = JSON.stringify(situationData.content);
 
   return await database.write(async () => {
-    return await database.get<Situation>("situations").create((situation) => {
+    return await database.get<Situation>('situations').create((situation) => {
       situation.game_id = situationData.gameId;
       situation.level_id = situationData.levelId;
       situation.type = situationData.type;

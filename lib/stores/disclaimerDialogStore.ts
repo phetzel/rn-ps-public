@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 interface DisclaimerDialogStoreState {
   isOpen: boolean;
@@ -11,5 +11,3 @@ export const useDisclaimerDialogStore = create<DisclaimerDialogStoreState>((set)
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
 }));
-
-

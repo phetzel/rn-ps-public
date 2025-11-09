@@ -1,26 +1,21 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
 
+import ConferenceAnswer from '~/components/screens/level-press-conference/ConferenceAnswer';
+import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
+import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
+import { Button } from '~/components/ui/button';
+import { Card, CardHeader, CardContent, CardFooter } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
 import {
   observeJournalist,
   observePublicationForJournalistId,
   observeCabinetMembersByLevel,
-} from "~/lib/db/helpers/observations";
-import { PressExchange, Journalist, CabinetMember } from "~/lib/db/models";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
-import { Button } from "~/components/ui/button";
-import { Separator } from "~/components/ui/separator";
-import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
-import ConferenceAnswer from "~/components/screens/level-press-conference/ConferenceAnswer";
-import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
-import { CabinetStaticId, AnswerType } from "~/types";
+} from '~/lib/db/helpers/observations';
+import { PressExchange, Journalist, CabinetMember } from '~/lib/db/models';
+import { CabinetStaticId, AnswerType } from '~/types';
 
 interface ConferenceQuestionProps {
   pressExchange: PressExchange;
@@ -35,10 +30,7 @@ const ConferenceQuestion = ({
   cabinetMembers,
   handleClear,
 }: ConferenceQuestionProps) => {
-  const currentQuestion = pressExchange.currentQuestion;
-  if (!currentQuestion || !journalist) return null;
-
-  // Create cabinet member map for quick lookups
+  // Create cabinet member map for quick lookups (must be unconditionally called)
   const cabinetMemberMap = useMemo(() => {
     const map = new Map<CabinetStaticId, CabinetMember>();
     for (const member of cabinetMembers) {
@@ -47,6 +39,9 @@ const ConferenceQuestion = ({
     return map;
   }, [cabinetMembers]);
 
+  const currentQuestion = pressExchange.currentQuestion;
+  if (!currentQuestion || !journalist) return null;
+
   const { text, answers } = currentQuestion;
 
   const handleAnswerQuestion = async (answerId: string) => {
@@ -54,7 +49,7 @@ const ConferenceQuestion = ({
       await pressExchange.answerQuestion(answerId);
       handleClear();
     } catch (error) {
-      console.error("Error answering question:", error);
+      console.error('Error answering question:', error);
     }
   };
 
@@ -63,7 +58,7 @@ const ConferenceQuestion = ({
       await pressExchange.skipQuestion();
       handleClear();
     } catch (error) {
-      console.error("Error skipping question:", error);
+      console.error('Error skipping question:', error);
     }
   };
 
@@ -85,11 +80,7 @@ const ConferenceQuestion = ({
       <CardContent className="gap-4" accessible={false}>
         <Separator className="mt-4" />
 
-        <View
-          accessible={true}
-          accessibilityLabel={`Question: ${text}`}
-          accessibilityRole="text"
-        >
+        <View accessible={true} accessibilityLabel={`Question: ${text}`} accessibilityRole="text">
           <QuestionDisplay question={text} />
         </View>
 
@@ -102,13 +93,8 @@ const ConferenceQuestion = ({
           {answers.map((answer, index) => {
             let cabinetMember;
 
-            if (
-              answer.type === AnswerType.Authorized &&
-              answer.authorizedCabinetMemberId
-            ) {
-              cabinetMember = cabinetMemberMap.get(
-                answer.authorizedCabinetMemberId
-              );
+            if (answer.type === AnswerType.Authorized && answer.authorizedCabinetMemberId) {
+              cabinetMember = cabinetMemberMap.get(answer.authorizedCabinetMemberId);
             }
 
             return (
@@ -138,7 +124,7 @@ const ConferenceQuestion = ({
 };
 
 // Enhance with observables
-const enhance = withObservables(["pressExchange"], ({ pressExchange }) => ({
+const enhance = withObservables(['pressExchange'], ({ pressExchange }) => ({
   journalist: observeJournalist(pressExchange.journalist_id),
   publication: observePublicationForJournalistId(pressExchange.journalist_id),
   cabinetMembers: observeCabinetMembersByLevel(pressExchange.level_id),

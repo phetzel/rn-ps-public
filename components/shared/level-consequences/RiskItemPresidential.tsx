@@ -1,9 +1,9 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { CONSEQUENCE_THRESHOLD } from "~/lib/constants";
-import { useRiskDisplay } from "~/lib/hooks/useRiskDisplay";
-import ThresholdProgressBar from "~/components/shared/level-consequences/ThresholdProgressBar";
+import ThresholdProgressBar from '~/components/shared/level-consequences/ThresholdProgressBar';
+import { Text } from '~/components/ui/text';
+import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
+import { useRiskDisplay } from '~/lib/hooks/useRiskDisplay';
 
 interface RiskItemPresidentialProps {
   title: string;

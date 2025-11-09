@@ -1,11 +1,6 @@
-import { situationsData } from "~/lib/data/situations";
-import {
-  CabinetStaticId,
-  SubgroupStaticId,
-  AnswerType,
-  SubgroupCategory,
-} from "~/types";
-import { staticSubgroups } from "~/lib/data/staticPolitics";
+import { situationsData } from '~/lib/data/situations';
+import { staticSubgroups } from '~/lib/data/staticPolitics';
+import { CabinetStaticId, SubgroupStaticId, AnswerType, SubgroupCategory } from '~/types';
 
 // Helper interfaces for analysis
 export interface EntityImpactAnalysis {
@@ -37,10 +32,8 @@ export interface PreferenceAnalysis {
 /**
  * Helper function to get all questions from an exchange in the new structure
  */
-function getAllQuestionsFromExchange(
-  exchange: any
-): Array<{ question: any; depth: number }> {
-  const questions: Array<{ question: any; depth: number }> = [];
+function getAllQuestionsFromExchange(exchange: any): { question: any; depth: number }[] {
+  const questions: { question: any; depth: number }[] = [];
 
   // Add root question (depth 0)
   questions.push({ question: exchange.content.rootQuestion, depth: 0 });
@@ -65,7 +58,7 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
   const entityImpacts = new Map<string, EntityImpactAnalysis>();
 
   // Initialize for president and all cabinet members
-  const allEntities = ["president", ...Object.values(CabinetStaticId)];
+  const allEntities = ['president', ...Object.values(CabinetStaticId)];
   allEntities.forEach((entityId) => {
     entityImpacts.set(entityId, {
       entityId,
@@ -88,7 +81,7 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
           // Analyze president impact
           if (answer.impacts.president) {
             const weight = answer.impacts.president.weight;
-            const analysis = entityImpacts.get("president")!;
+            const analysis = entityImpacts.get('president')!;
             analysis.totalValue += weight;
             analysis.totalCount++;
 
@@ -99,20 +92,18 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
 
           // Analyze cabinet member impacts
           if (answer.impacts.cabinet) {
-            Object.entries(answer.impacts.cabinet).forEach(
-              ([cabinetId, impact]: [string, any]) => {
-                if (impact) {
-                  const weight = impact.weight;
-                  const analysis = entityImpacts.get(cabinetId)!;
-                  analysis.totalValue += weight;
-                  analysis.totalCount++;
+            Object.entries(answer.impacts.cabinet).forEach(([cabinetId, impact]: [string, any]) => {
+              if (impact) {
+                const weight = impact.weight;
+                const analysis = entityImpacts.get(cabinetId)!;
+                analysis.totalValue += weight;
+                analysis.totalCount++;
 
-                  if (weight > 0) analysis.positiveCount++;
-                  else if (weight < 0) analysis.negativeCount++;
-                  else analysis.neutralCount++;
-                }
+                if (weight > 0) analysis.positiveCount++;
+                else if (weight < 0) analysis.negativeCount++;
+                else analysis.neutralCount++;
               }
-            );
+            });
           }
         });
       });
@@ -127,8 +118,8 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
         analysis.negativeCount > 0
           ? analysis.positiveCount / analysis.negativeCount
           : analysis.positiveCount > 0
-          ? Infinity
-          : 0;
+            ? Infinity
+            : 0;
     }
   });
 
@@ -138,17 +129,11 @@ export function analyzeExchangeImpacts(): Map<string, EntityImpactAnalysis> {
 /**
  * Analyzes approval rating impacts from situation outcomes for cabinet members and subgroups
  */
-export function analyzeSituationConsequences(): Map<
-  string,
-  EntityImpactAnalysis
-> {
+export function analyzeSituationConsequences(): Map<string, EntityImpactAnalysis> {
   const entityImpacts = new Map<string, EntityImpactAnalysis>();
 
   // Initialize for all cabinet members and subgroups
-  const allEntities = [
-    ...Object.values(CabinetStaticId),
-    ...Object.values(SubgroupStaticId),
-  ];
+  const allEntities = [...Object.values(CabinetStaticId), ...Object.values(SubgroupStaticId)];
   allEntities.forEach((entityId) => {
     entityImpacts.set(entityId, {
       entityId,
@@ -177,7 +162,7 @@ export function analyzeSituationConsequences(): Map<
               else if (weight < 0) analysis.negativeCount++;
               else analysis.neutralCount++;
             }
-          }
+          },
         );
       }
 
@@ -194,7 +179,7 @@ export function analyzeSituationConsequences(): Map<
               else if (weight < 0) analysis.negativeCount++;
               else analysis.neutralCount++;
             }
-          }
+          },
         );
       }
     });
@@ -208,8 +193,8 @@ export function analyzeSituationConsequences(): Map<
         analysis.negativeCount > 0
           ? analysis.positiveCount / analysis.negativeCount
           : analysis.positiveCount > 0
-          ? Infinity
-          : 0;
+            ? Infinity
+            : 0;
     }
   });
 
@@ -267,18 +252,14 @@ export function analyzeEntityDistribution(): {
     // Check outcomes for cabinet and subgroups
     situation.content.outcomes.forEach((outcome) => {
       if (outcome.consequences.approvalChanges.cabinet) {
-        Object.keys(outcome.consequences.approvalChanges.cabinet).forEach(
-          (cabinetId) => {
-            cabinetInSituation.add(cabinetId);
-          }
-        );
+        Object.keys(outcome.consequences.approvalChanges.cabinet).forEach((cabinetId) => {
+          cabinetInSituation.add(cabinetId);
+        });
       }
       if (outcome.consequences.approvalChanges.subgroups) {
-        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(
-          (subgroupId) => {
-            subgroupsInSituation.add(subgroupId);
-          }
-        );
+        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach((subgroupId) => {
+          subgroupsInSituation.add(subgroupId);
+        });
       }
     });
 
@@ -296,13 +277,11 @@ export function analyzeEntityDistribution(): {
 
   // Calculate percentages
   cabinetDistribution.forEach((analysis) => {
-    analysis.coveragePercentage =
-      (analysis.appearanceCount / analysis.totalSituations) * 100;
+    analysis.coveragePercentage = (analysis.appearanceCount / analysis.totalSituations) * 100;
   });
 
   subgroupDistribution.forEach((analysis) => {
-    analysis.coveragePercentage =
-      (analysis.appearanceCount / analysis.totalSituations) * 100;
+    analysis.coveragePercentage = (analysis.appearanceCount / analysis.totalSituations) * 100;
   });
 
   return { cabinet: cabinetDistribution, subgroups: subgroupDistribution };
@@ -315,17 +294,11 @@ export function analyzeSubgroupDistributionByCategory(): Map<
   SubgroupCategory,
   Map<string, EntityDistributionAnalysis>
 > {
-  const categoryDistribution = new Map<
-    SubgroupCategory,
-    Map<string, EntityDistributionAnalysis>
-  >();
+  const categoryDistribution = new Map<SubgroupCategory, Map<string, EntityDistributionAnalysis>>();
 
   // Initialize maps for each category
   Object.values(SubgroupCategory).forEach((category) => {
-    categoryDistribution.set(
-      category,
-      new Map<string, EntityDistributionAnalysis>()
-    );
+    categoryDistribution.set(category, new Map<string, EntityDistributionAnalysis>());
   });
 
   // Initialize each subgroup in its respective category
@@ -346,11 +319,9 @@ export function analyzeSubgroupDistributionByCategory(): Map<
     // Check outcomes for subgroups
     situation.content.outcomes.forEach((outcome) => {
       if (outcome.consequences.approvalChanges.subgroups) {
-        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(
-          (subgroupId) => {
-            subgroupsInSituation.add(subgroupId);
-          }
-        );
+        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach((subgroupId) => {
+          subgroupsInSituation.add(subgroupId);
+        });
       }
     });
 
@@ -368,8 +339,7 @@ export function analyzeSubgroupDistributionByCategory(): Map<
   // Calculate percentages for each category
   categoryDistribution.forEach((categoryMap) => {
     categoryMap.forEach((analysis) => {
-      analysis.coveragePercentage =
-        (analysis.appearanceCount / analysis.totalSituations) * 100;
+      analysis.coveragePercentage = (analysis.appearanceCount / analysis.totalSituations) * 100;
     });
   });
 
@@ -383,12 +353,9 @@ export function analyzePreferences(): Map<string, PreferenceAnalysis> {
   const preferenceAnalysis = new Map<string, PreferenceAnalysis>();
 
   // Initialize for president and all cabinet members
-  const allEntities = ["president", ...Object.values(CabinetStaticId)];
+  const allEntities = ['president', ...Object.values(CabinetStaticId)];
   allEntities.forEach((entityId) => {
-    const answerTypeDistribution: Record<AnswerType, number> = {} as Record<
-      AnswerType,
-      number
-    >;
+    const answerTypeDistribution: Record<AnswerType, number> = {} as Record<AnswerType, number>;
     Object.values(AnswerType).forEach((type) => {
       answerTypeDistribution[type] = 0;
     });
@@ -405,7 +372,7 @@ export function analyzePreferences(): Map<string, PreferenceAnalysis> {
   situationsData.forEach((situation) => {
     // Analyze president preferences
     if (situation.content.preferences.president) {
-      const analysis = preferenceAnalysis.get("president")!;
+      const analysis = preferenceAnalysis.get('president')!;
       const answerType = situation.content.preferences.president.answerType;
       analysis.answerTypeDistribution[answerType]++;
       analysis.totalPreferences++;
@@ -413,27 +380,24 @@ export function analyzePreferences(): Map<string, PreferenceAnalysis> {
 
     // Analyze cabinet preferences
     if (situation.content.preferences.cabinet) {
-      Object.entries(situation.content.preferences.cabinet).forEach(
-        ([cabinetId, preference]) => {
-          const analysis = preferenceAnalysis.get(cabinetId)!;
-          const answerType = preference.preference.answerType;
-          analysis.answerTypeDistribution[answerType]++;
-          analysis.totalPreferences++;
-        }
-      );
+      Object.entries(situation.content.preferences.cabinet).forEach(([cabinetId, preference]) => {
+        const analysis = preferenceAnalysis.get(cabinetId)!;
+        const answerType = preference.preference.answerType;
+        analysis.answerTypeDistribution[answerType]++;
+        analysis.totalPreferences++;
+      });
     }
   });
 
   // Calculate metrics
   preferenceAnalysis.forEach((analysis) => {
     if (analysis.totalPreferences > 0) {
-      const nonZeroTypes = Object.values(
-        analysis.answerTypeDistribution
-      ).filter((count) => count > 0);
+      const nonZeroTypes = Object.values(analysis.answerTypeDistribution).filter(
+        (count) => count > 0,
+      );
       analysis.distinctAnswerTypes = nonZeroTypes.length;
       analysis.maxSharePerType =
-        (Math.max(...Object.values(analysis.answerTypeDistribution)) /
-          analysis.totalPreferences) *
+        (Math.max(...Object.values(analysis.answerTypeDistribution)) / analysis.totalPreferences) *
         100;
     }
   });

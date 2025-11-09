@@ -1,7 +1,9 @@
-import { ResponsesGenerationStep } from "../../base";
-import type { ResponsesJSONSchemaOptions, StepDependencies } from "../../../types";
-import { buildExchangeImpactsRequest } from "../../../llm/configs/exchange-impacts-config";
+import { generateAllQuestionImpactsSchema } from '~/lib/schemas/generate';
 
+import { buildExchangeImpactsRequest } from '../../../llm/configs/exchange-impacts-config';
+import { ResponsesGenerationStep } from '../../base';
+
+import type { ResponsesJSONSchemaOptions, StepDependencies } from '../../../types';
 import type {
   GenerateSituationPlan,
   GeneratePreferences,
@@ -9,8 +11,7 @@ import type {
   GenerateQuestionsOnlyContent,
   GenerateAllQuestionImpacts,
   ExchangesPlanArray,
-} from "~/lib/schemas/generate";
-import { generateAllQuestionImpactsSchema } from "~/lib/schemas/generate";
+} from '~/lib/schemas/generate';
 
 type ExchangeImpactsInput = {
   plan: GenerateSituationPlan;
@@ -26,9 +27,10 @@ type ExchangeImpactsInput = {
  * the generation schema here and letting the full exchange assembly validate
  * against the core schema in the next step.
  */
-export class ExchangeImpactsSubstep
-  extends ResponsesGenerationStep<ExchangeImpactsInput, GenerateAllQuestionImpacts>
-{
+export class ExchangeImpactsSubstep extends ResponsesGenerationStep<
+  ExchangeImpactsInput,
+  GenerateAllQuestionImpacts
+> {
   constructor(dependencies: StepDependencies) {
     super({ llmClient: dependencies.llmClient });
   }
@@ -39,27 +41,27 @@ export class ExchangeImpactsSubstep
       input.preferences,
       input.outcomes,
       input.publicationPlan,
-      input.questionsContent
+      input.questionsContent,
     );
   }
 
   protected validateInput(input: ExchangeImpactsInput): void {
     super.validateInput(input);
-    if (!input.plan?.title) throw new Error("Missing situation plan");
+    if (!input.plan?.title) throw new Error('Missing situation plan');
     if (!input.outcomes?.outcomes?.length) {
-      throw new Error("Missing outcomes for outcomeModifiers keys");
+      throw new Error('Missing outcomes for outcomeModifiers keys');
     }
     if (!input.publicationPlan?.publication) {
-      throw new Error("Missing publication plan entry");
+      throw new Error('Missing publication plan entry');
     }
     if (!input.questionsContent) {
-      throw new Error("Missing questions content from previous phase");
+      throw new Error('Missing questions content from previous phase');
     }
   }
 
   protected async transform(
     result: GenerateAllQuestionImpacts,
-    _input: ExchangeImpactsInput
+    _input: ExchangeImpactsInput,
   ): Promise<GenerateAllQuestionImpacts> {
     return generateAllQuestionImpactsSchema.parse(result);
   }

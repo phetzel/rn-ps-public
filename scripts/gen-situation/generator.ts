@@ -1,14 +1,11 @@
-import { LLMClient } from "./llm/client";
-import { generationAnalysis } from "./generation-analysis";
-import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from "./steps";
-import { validateFinalSituation } from "./utils/final-validator";
-import { writeSituationFiles } from "./utils/situation-file-writer";
-import { logDeep } from "./utils/logging";
-import type {
-  GenerationStage,
-  GenerationResult,
-} from "./types";
+import { generationAnalysis } from './generation-analysis';
+import { LLMClient } from './llm/client';
+import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from './steps';
+import { validateFinalSituation } from './utils/final-validator';
+import { logDeep } from './utils/logging';
+import { writeSituationFiles } from './utils/situation-file-writer';
 
+import type { GenerationStage, GenerationResult } from './types';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION GENERATOR - LINEAR LLM PIPELINE WITH ENHANCED VALIDATION
@@ -24,17 +21,18 @@ export class SituationGenerator {
 
   constructor(llmClient: LLMClient) {
     this.llmClient = llmClient;
-    this.debugMode = typeof (llmClient as any).isDebugEnabled === "function"
-      ? (llmClient as any).isDebugEnabled()
-      : false;
+    this.debugMode =
+      typeof (llmClient as any).isDebugEnabled === 'function'
+        ? (llmClient as any).isDebugEnabled()
+        : false;
 
     (globalThis as { __LLM_GEN_DEBUG__?: boolean }).__LLM_GEN_DEBUG__ = this.debugMode;
 
     this.planningStep = new PlanningStep({ llmClient });
     this.preferencesStep = new PreferencesStep({ llmClient });
-    
+
     this.outcomesStep = new OutcomesStep({ llmClient });
-      
+
     this.exchangesStep = new ExchangesStep({ llmClient });
   }
 
@@ -44,7 +42,7 @@ export class SituationGenerator {
   async generateComplete(generationId?: string): Promise<GenerationResult> {
     const startTime = new Date();
     const id = generationId || `gen-${Date.now()}`;
-    
+
     try {
       console.log(`📊 [${id}] Analyzing existing situations...`);
       const startingContext = generationAnalysis();
@@ -53,7 +51,7 @@ export class SituationGenerator {
       console.log(`🎯 [${id}] Step 1: Planning...`);
       const plan = await this.planningStep.execute(startingContext);
 
-      if (this.debugMode) logDeep("PLAN CREATED", plan);
+      if (this.debugMode) logDeep('PLAN CREATED', plan);
 
       // Step 2: Generate entity preferences
       console.log(`⚙️ [${id}] Step 2: Preferences...`);
@@ -62,7 +60,7 @@ export class SituationGenerator {
         analysis: startingContext,
       });
 
-      if (this.debugMode) logDeep("PREFERENCES CREATED", preferences);
+      if (this.debugMode) logDeep('PREFERENCES CREATED', preferences);
 
       // Step 3: Generate situation outcomes (enhanced)
       console.log(`🎲 [${id}] Step 3: Outcomes...`);
@@ -71,8 +69,7 @@ export class SituationGenerator {
         preferences,
       });
 
-      if (this.debugMode) logDeep("OUTCOMES CREATED", outcomes);
-
+      if (this.debugMode) logDeep('OUTCOMES CREATED', outcomes);
 
       // Step 4: Generate press exchanges
       console.log(`🎤 [${id}] Step 4: Exchanges...`);
@@ -82,7 +79,7 @@ export class SituationGenerator {
         outcomes,
       });
 
-      if (this.debugMode) logDeep("EXCHANGES CREATED", exchanges);
+      if (this.debugMode) logDeep('EXCHANGES CREATED', exchanges);
 
       // Step 5: Final validation
       console.log(`✅ [${id}] Step 5: Final validation...`);
@@ -125,29 +122,38 @@ export class SituationGenerator {
     } catch (error) {
       const endTime = new Date();
       const duration = endTime.getTime() - startTime.getTime();
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
       // IMPORTANT: Always capture usage stats even on failure
       const usage = this.llmClient.getUsageStats();
-      
+
       // Try to determine which stage failed based on the error message or stack
       let failedStage: GenerationStage = 'analysis';
       if (errorMessage.includes('planning') || errorMessage.includes('PlanningStep')) {
         failedStage = 'planning';
       } else if (errorMessage.includes('preferences') || errorMessage.includes('PreferencesStep')) {
         failedStage = 'preferences';
-      } else if (errorMessage.includes('outcomes') || errorMessage.includes('OutcomesStep') || errorMessage.includes('Enhanced Outcomes')) {
+      } else if (
+        errorMessage.includes('outcomes') ||
+        errorMessage.includes('OutcomesStep') ||
+        errorMessage.includes('Enhanced Outcomes')
+      ) {
         failedStage = 'outcomes';
       } else if (errorMessage.includes('exchanges') || errorMessage.includes('ExchangesStep')) {
         failedStage = 'exchanges';
-      } else if (errorMessage.includes('conversion') || errorMessage.includes('Schema conversion')) {
+      } else if (
+        errorMessage.includes('conversion') ||
+        errorMessage.includes('Schema conversion')
+      ) {
         failedStage = 'conversion';
       } else if (errorMessage.includes('File writing') || errorMessage.includes('files')) {
         failedStage = 'files';
       }
 
-      console.error(`❌ [${id}] Generation pipeline failed at stage '${failedStage}': ${errorMessage}`);
-      
+      console.error(
+        `❌ [${id}] Generation pipeline failed at stage '${failedStage}': ${errorMessage}`,
+      );
+
       return {
         success: false,
         error: errorMessage,

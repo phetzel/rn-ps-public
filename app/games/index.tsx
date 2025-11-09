@@ -1,15 +1,16 @@
-import * as React from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import * as React from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
 
-import type Game from "~/lib/db/models/Game";
-import { observeAllGames } from "~/lib/db/helpers";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import GameCard from '~/components/screens/games/GameCard';
+import { EmptyState } from '~/components/shared/EmptyState';
+import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
+import { ThemedView } from '~/components/shared/layout/ThemedView';
+import { observeAllGames } from '~/lib/db/helpers';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
+import type Game from '~/lib/db/models/Game';
 // Components
-import GameCard from "~/components/screens/games/GameCard";
-import { ThemedView } from "~/components/shared/layout/ThemedView";
-import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
-import { EmptyState } from "~/components/shared/EmptyState";
 
 interface GamesScreenProps {
   allGames: Game[] | undefined; // Receive all games (or undefined if loading)

@@ -1,17 +1,19 @@
 // Re-export all situation schemas
-export * from "~/lib/schemas/situations/triggers";
-export * from "~/lib/schemas/situations/preferences";
-export * from "~/lib/schemas/situations/content";
-export * from "~/lib/schemas/situations/outcomes";
-
 // Main situation data schema with cross-validation
-import { z } from "zod";
-import { AnswerType, CabinetStaticId } from "~/types";
-import { situationTypeSchema, textLengthSchema, publicationSchema } from "../common";
-import { exchangeContentSchema } from "../exchanges";
-import { situationContentSchema } from "./content";
-import { situationTriggerSchema } from "./triggers";
-import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
+import { z } from 'zod';
+
+import { getAllQuestionsFromExchange } from '~/lib/db/helpers/exchangeApi';
+import { AnswerType, CabinetStaticId } from '~/types';
+
+import { situationTypeSchema, textLengthSchema, publicationSchema } from '../common';
+import { exchangeContentSchema } from '../exchanges';
+import { situationContentSchema } from './content';
+import { situationTriggerSchema } from './triggers';
+
+export * from '~/lib/schemas/situations/triggers';
+export * from '~/lib/schemas/situations/preferences';
+export * from '~/lib/schemas/situations/content';
+export * from '~/lib/schemas/situations/outcomes';
 
 export const baseSituationDataSchema = z.object({
   type: situationTypeSchema,
@@ -19,17 +21,18 @@ export const baseSituationDataSchema = z.object({
   description: textLengthSchema.situationDescription,
 });
 
-const situationDataSchema = baseSituationDataSchema.extend({
+const situationDataSchema = baseSituationDataSchema
+  .extend({
     trigger: situationTriggerSchema,
     content: situationContentSchema,
     exchanges: z.array(
       z.object({
         publication: publicationSchema,
         content: exchangeContentSchema,
-      })
+      }),
     ),
   })
-  
+
   .refine(
     (data) => {
       // Authorized answers must reference cabinet members with authorizedContent
@@ -39,17 +42,12 @@ const situationDataSchema = baseSituationDataSchema.extend({
         const allQuestions = getAllQuestionsFromExchange(exchange.content);
         allQuestions.forEach((question) => {
           question.answers.forEach((answer, answerIndex) => {
-            if (
-              answer.type === AnswerType.Authorized &&
-              answer.authorizedCabinetMemberId
-            ) {
+            if (answer.type === AnswerType.Authorized && answer.authorizedCabinetMemberId) {
               const cabinetMember =
-                data.content.preferences.cabinet?.[
-                  answer.authorizedCabinetMemberId
-                ];
+                data.content.preferences.cabinet?.[answer.authorizedCabinetMemberId];
               if (!cabinetMember?.authorizedContent) {
                 errors.push(
-                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: Authorized answer references cabinet member ${answer.authorizedCabinetMemberId} but they have no authorizedContent`
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: Authorized answer references cabinet member ${answer.authorizedCabinetMemberId} but they have no authorizedContent`,
                 );
               }
             }
@@ -60,11 +58,10 @@ const situationDataSchema = baseSituationDataSchema.extend({
       return errors.length === 0;
     },
     {
-      message:
-        "Authorized answers must reference cabinet members with authorizedContent",
-    }
+      message: 'Authorized answers must reference cabinet members with authorizedContent',
+    },
   )
-  
+
   .refine(
     (data) => {
       // Limit Authorized answers across entire situation to at most 1
@@ -81,7 +78,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
       });
       return authorizedCount <= 1;
     },
-    { message: "At most one Authorized answer is allowed per situation (across all exchanges)" }
+    { message: 'At most one Authorized answer is allowed per situation (across all exchanges)' },
   )
   .refine(
     (data) => {
@@ -94,9 +91,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
       const involvedCabinet = new Set<CabinetStaticId>();
       data.content.outcomes.forEach((outcome) => {
         const cab = outcome.consequences.approvalChanges.cabinet || {};
-        Object.keys(cab).forEach((id) =>
-          involvedCabinet.add(id as CabinetStaticId)
-        );
+        Object.keys(cab).forEach((id) => involvedCabinet.add(id as CabinetStaticId));
       });
 
       // Ensure every involved cabinet member has a preference
@@ -110,13 +105,16 @@ const situationDataSchema = baseSituationDataSchema.extend({
         const rootAnswers = exchange.content.rootQuestion.answers;
 
         if (prefPresident) {
-          const ok = rootAnswers.some((a) =>
-            a.type === prefPresident.answerType &&
-            a.impacts.president?.weight !== undefined &&
-            a.impacts.president.weight > 0
+          const ok = rootAnswers.some(
+            (a) =>
+              a.type === prefPresident.answerType &&
+              a.impacts.president?.weight !== undefined &&
+              a.impacts.president.weight > 0,
           );
           if (!ok) {
-            errors.push(`Exchange ${exchangeIndex}: Root must include a president-positive answer of type ${prefPresident.answerType}`);
+            errors.push(
+              `Exchange ${exchangeIndex}: Root must include a president-positive answer of type ${prefPresident.answerType}`,
+            );
           }
         }
 
@@ -127,14 +125,12 @@ const situationDataSchema = baseSituationDataSchema.extend({
           const ok = rootAnswers.some((a) => {
             const impact = a.impacts.cabinet?.[cabId];
             return (
-              a.type === cabPref.preference.answerType &&
-              impact !== undefined &&
-              impact.weight > 0
+              a.type === cabPref.preference.answerType && impact !== undefined && impact.weight > 0
             );
           });
           if (!ok) {
             errors.push(
-              `Exchange ${exchangeIndex}: Root must include a positive answer of type ${cabPref.preference.answerType} for involved cabinet ${cabId}`
+              `Exchange ${exchangeIndex}: Root must include a positive answer of type ${cabPref.preference.answerType} for involved cabinet ${cabId}`,
             );
           }
         });
@@ -142,9 +138,12 @@ const situationDataSchema = baseSituationDataSchema.extend({
 
       return errors.length === 0;
     },
-    { message: "Root questions must include preference-aligned positive answers for president and all involved cabinet (per exchange); and all involved cabinet must have preferences" }
+    {
+      message:
+        'Root questions must include preference-aligned positive answers for president and all involved cabinet (per exchange); and all involved cabinet must have preferences',
+    },
   )
-  
+
   .refine(
     (data) => {
       // Each question must have answers that positively and negatively modify every outcome
@@ -159,14 +158,14 @@ const situationDataSchema = baseSituationDataSchema.extend({
             let hasNeg = false;
             question.answers.forEach((answer) => {
               const w = answer.outcomeModifiers?.[outcomeId];
-              if (typeof w === "number") {
+              if (typeof w === 'number') {
                 if (w > 0) hasPos = true;
                 if (w < 0) hasNeg = true;
               }
             });
             if (!hasPos || !hasNeg) {
               errors.push(
-                `Exchange ${exchangeIndex}, Question ${question.id}: must include answers with positive and negative modifiers for outcome ${outcomeId}`
+                `Exchange ${exchangeIndex}, Question ${question.id}: must include answers with positive and negative modifiers for outcome ${outcomeId}`,
               );
             }
           });
@@ -175,7 +174,10 @@ const situationDataSchema = baseSituationDataSchema.extend({
 
       return errors.length === 0;
     },
-    { message: "Each question must include answers that positively and negatively modify every outcome" }
+    {
+      message:
+        'Each question must include answers that positively and negatively modify every outcome',
+    },
   )
   .refine(
     (data) => {
@@ -191,7 +193,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
             keys.forEach((k) => {
               if (!outcomeIdSet.has(k)) {
                 errors.push(
-                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: outcomeModifiers contains unknown outcome ID ${k}`
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: outcomeModifiers contains unknown outcome ID ${k}`,
                 );
               }
             });
@@ -201,7 +203,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
 
       return errors.length === 0;
     },
-    { message: "Outcome modifiers must reference known outcome IDs" }
+    { message: 'Outcome modifiers must reference known outcome IDs' },
   )
   .refine(
     (data) => {
@@ -210,9 +212,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
       const involvedCabinet = new Set<CabinetStaticId>();
       data.content.outcomes.forEach((outcome) => {
         const cab = outcome.consequences.approvalChanges.cabinet || {};
-        Object.keys(cab).forEach((id) =>
-          involvedCabinet.add(id as CabinetStaticId)
-        );
+        Object.keys(cab).forEach((id) => involvedCabinet.add(id as CabinetStaticId));
       });
 
       data.exchanges.forEach((exchange, exchangeIndex) => {
@@ -224,7 +224,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
               const typedId = cabId as CabinetStaticId;
               if (!involvedCabinet.has(typedId)) {
                 errors.push(
-                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: cabinet ${typedId} is impacted but not involved in outcomes`
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: cabinet ${typedId} is impacted but not involved in outcomes`,
                 );
               }
             });
@@ -234,7 +234,7 @@ const situationDataSchema = baseSituationDataSchema.extend({
 
       return errors.length === 0;
     },
-    { message: "Answers may only impact president and involved cabinet" }
+    { message: 'Answers may only impact president and involved cabinet' },
   )
   .refine(
     (data) => {
@@ -243,22 +243,22 @@ const situationDataSchema = baseSituationDataSchema.extend({
       const involvedCabinet = new Set<CabinetStaticId>();
       data.content.outcomes.forEach((outcome) => {
         const cab = outcome.consequences.approvalChanges.cabinet || {};
-        Object.keys(cab).forEach((id) =>
-          involvedCabinet.add(id as CabinetStaticId)
-        );
+        Object.keys(cab).forEach((id) => involvedCabinet.add(id as CabinetStaticId));
       });
 
       const prefCabinet = data.content.preferences.cabinet || {};
       Object.keys(prefCabinet).forEach((cabId) => {
         const typedId = cabId as CabinetStaticId;
         if (!involvedCabinet.has(typedId)) {
-          errors.push(`Preference provided for cabinet ${typedId} which is not involved in outcomes`);
+          errors.push(
+            `Preference provided for cabinet ${typedId} which is not involved in outcomes`,
+          );
         }
       });
 
       return errors.length === 0;
     },
-    { message: "Only involved cabinet may have preferences" }
+    { message: 'Only involved cabinet may have preferences' },
   );
 
 export { situationDataSchema };

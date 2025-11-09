@@ -1,36 +1,32 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeLevel } from "~/lib/db/helpers/observations";
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
-import { Level } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
-import { Button } from "~/components/ui/button";
-import { LevelStatus } from "~/types";
+import { Button } from '~/components/ui/button';
+import { Text } from '~/components/ui/text';
+import { observeLevel } from '~/lib/db/helpers/observations';
+import { Level } from '~/lib/db/models';
+import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
+import { LevelStatus } from '~/types';
 
 interface ConferenceCompletionProps {
   levelId: string;
   level: Level | null;
 }
 
-const ConferenceCompletion = ({
-  levelId,
-  level,
-}: ConferenceCompletionProps) => {
-  const { progressAndNavigate, navigateToCurrentLevelScreen } =
-    useLevelNavigation();
+const ConferenceCompletion = ({ levelId, level }: ConferenceCompletionProps) => {
+  const { progressAndNavigate, navigateToCurrentLevelScreen } = useLevelNavigation();
 
   const handleComplete = async () => {
     if (!level) return;
     try {
-      if (level.status == LevelStatus.PressConference) {
+      if (level.status === LevelStatus.PressConference) {
         await progressAndNavigate();
       } else {
         await navigateToCurrentLevelScreen();
       }
     } catch (error) {
-      console.error("Failed to start press conference:", error);
+      console.error('Failed to start press conference:', error);
     }
   };
 
@@ -46,11 +42,9 @@ const ConferenceCompletion = ({
         accessibilityRole="header"
         accessibilityLabel="Press conference completion message"
       >
-        <Text className="text-2xl font-bold text-center mb-2">
-          Press Conference Complete
-        </Text>
+        <Text className="text-2xl font-bold text-center mb-2">Press Conference Complete</Text>
         <Text className="text-center text-muted-foreground">
-          You've taken all the questions from the press.
+          You{"'"}ve taken all the questions from the press.
         </Text>
       </View>
 
@@ -66,7 +60,7 @@ const ConferenceCompletion = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
 }));
 

@@ -1,61 +1,54 @@
-import { Model } from "@nozbe/watermelondb";
-import {
-  field,
-  text,
-  date,
-  children,
-  readonly,
-  writer,
-} from "@nozbe/watermelondb/decorators";
-import { Query } from "@nozbe/watermelondb";
-import type { Associations } from "@nozbe/watermelondb/Model";
+import { Model, Query } from '@nozbe/watermelondb';
+import { field, text, date, children, readonly, writer } from '@nozbe/watermelondb/decorators';
 
-// Models
-import type Level from "./Level";
-import type CabinetMember from "./CabinetMember";
-import type Publication from "./Publication";
-import type Journalist from "./Journalist";
-import type SubgroupApproval from "./SubgroupApproval";
+import { PRESIDENTIAL_TERM_YEARS } from '~/lib/constants';
+import { calculatePresidentApprovalRating } from '~/lib/utils';
+import { GameStatus, PoliticalLeaning, PressOfficeBackground } from '~/types';
+
+import type CabinetMember from './CabinetMember';
+import type Journalist from './Journalist';
+import type Level from './Level';
+import type Publication from './Publication';
+import type SubgroupApproval from './SubgroupApproval';
+import type { Associations } from '@nozbe/watermelondb/Model';
+
 // Enums
-import { GameStatus, PoliticalLeaning, PressOfficeBackground } from "~/types";
 // Utils
-import { calculatePresidentApprovalRating } from "~/lib/utils";
 // Constants
-import { PRESIDENTIAL_TERM_YEARS } from "~/lib/constants";
 
 export default class Game extends Model {
-  static table = "games";
+  static table = 'games';
 
   static associations: Associations = {
-    levels: { type: "has_many", foreignKey: "game_id" },
-    situations: { type: "has_many", foreignKey: "game_id" },
-    cabinet_members: { type: "has_many", foreignKey: "game_id" },
-    publications: { type: "has_many", foreignKey: "game_id" },
-    journalists: { type: "has_many", foreignKey: "game_id" },
-    subgroup_approvals: { type: "has_many", foreignKey: "game_id" },
+    levels: { type: 'has_many', foreignKey: 'game_id' },
+    situations: { type: 'has_many', foreignKey: 'game_id' },
+    cabinet_members: { type: 'has_many', foreignKey: 'game_id' },
+    publications: { type: 'has_many', foreignKey: 'game_id' },
+    journalists: { type: 'has_many', foreignKey: 'game_id' },
+    subgroup_approvals: { type: 'has_many', foreignKey: 'game_id' },
   };
 
-  @children("levels") levels!: Query<Level>;
-  @children("cabinet_members") cabinetMembers!: Query<CabinetMember>;
-  @children("publications") publications!: Query<Publication>;
-  @children("journalists") journalists!: Query<Journalist>; // Direct journalists link if needed, though often accessed via publication
-  @children("subgroup_approvals") subgroupApprovals!: Query<SubgroupApproval>;
+  @children('levels') levels!: Query<Level>;
+  @children('cabinet_members') cabinetMembers!: Query<CabinetMember>;
+  @children('publications') publications!: Query<Publication>;
+  @children('journalists') journalists!: Query<Journalist>; // Direct journalists link if needed, though often accessed via publication
+  @children('subgroup_approvals') subgroupApprovals!: Query<SubgroupApproval>;
 
   // Define fields corresponding to columns in the schema
-  @text("status") status!: GameStatus;
-  @field("current_year") currentYear!: number;
-  @field("current_month") currentMonth!: number;
-  @text("ps_name") psName!: string;
-  @text("pres_name") presName!: string;
-  @field("pres_ps_relationship") presPsRelationship!: number;
-  @text("pres_leaning") presLeaning!: PoliticalLeaning;
-  @text("ps_background") psBackground!: PressOfficeBackground;
-  @text("used_situations") usedSituations!: string; // JSON array of situation ids
-  @field("start_timestamp") startTimestamp!: number;
-  @field("end_timestamp") endTimestamp!: number | null; // Optional number
+  @text('status') status!: GameStatus;
+  @field('current_year') currentYear!: number;
+  @field('current_month') currentMonth!: number;
+  @text('ps_name') psName!: string;
+  @text('pres_name') presName!: string;
+  @field('pres_ps_relationship') presPsRelationship!: number;
+  @text('pres_leaning') presLeaning!: PoliticalLeaning;
+  @text('ps_background') psBackground!: PressOfficeBackground;
+  @text('used_situations') usedSituations!: string; // JSON array of situation ids
+  @field('start_timestamp') startTimestamp!: number;
+  @field('end_timestamp') endTimestamp!: number | null; // Optional number
 
-  @readonly @date("created_at") createdAt!: Date; // WDB manages this
-  @readonly @date("updated_at") updatedAt!: Date; // WDB manages this
+  @readonly @date('created_at') createdAt!: Date; // WDB manages this
+  @readonly @date('updated_at') updatedAt!: Date; // WDB manages this
 
   // Action to advance time
   @writer async advanceMonth() {
@@ -70,7 +63,7 @@ export default class Game extends Model {
 
     // Prevent advancement beyond term limit
     if (this.isAtTermLimit()) {
-      throw new Error("Cannot advance month: Game has reached term limit");
+      throw new Error('Cannot advance month: Game has reached term limit');
     }
 
     await this.update((game) => {
@@ -91,9 +84,7 @@ export default class Game extends Model {
 
   // Game completion methods
   isAtTermLimit(): boolean {
-    return (
-      this.currentYear === PRESIDENTIAL_TERM_YEARS && this.currentMonth === 12
-    );
+    return this.currentYear === PRESIDENTIAL_TERM_YEARS && this.currentMonth === 12;
   }
 
   @writer async markAsCompleted() {

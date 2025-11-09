@@ -1,10 +1,10 @@
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
-import { Text } from "react-native";
+import { render, screen, fireEvent } from '@testing-library/react-native';
+import React from 'react';
+import { Text } from 'react-native';
 
-import { ProgressNavigator } from "~/components/shared/ProgressNavigator";
+import { ProgressNavigator } from '~/components/shared/ProgressNavigator';
 
-describe("ProgressNavigator", () => {
+describe('ProgressNavigator', () => {
   const mockHandlers = {
     onPrevious: jest.fn(),
     onNext: jest.fn(),
@@ -25,36 +25,36 @@ describe("ProgressNavigator", () => {
     jest.clearAllMocks();
   });
 
-  it("renders progress information and content", () => {
+  it('renders progress information and content', () => {
     renderWithProps();
-    expect(screen.getByText("Item 2 of 3")).toBeTruthy();
-    expect(screen.getByText("67% Complete")).toBeTruthy();
-    expect(screen.getByText("Test content")).toBeTruthy();
+    expect(screen.getByText('Item 2 of 3')).toBeTruthy();
+    expect(screen.getByText('67% Complete')).toBeTruthy();
+    expect(screen.getByText('Test content')).toBeTruthy();
   });
 
-  it("calls navigation handlers when buttons are pressed", () => {
+  it('calls navigation handlers when buttons are pressed', () => {
     renderWithProps();
 
-    fireEvent.press(screen.getByRole("button", { name: /Previous/ }));
+    fireEvent.press(screen.getByRole('button', { name: /Previous/ }));
     expect(mockHandlers.onPrevious).toHaveBeenCalled();
 
-    fireEvent.press(screen.getByRole("button", { name: /Next/ }));
+    fireEvent.press(screen.getByRole('button', { name: /Next/ }));
     expect(mockHandlers.onNext).toHaveBeenCalled();
   });
 
-  it("handles first item state", () => {
+  it('handles first item state', () => {
     renderWithProps({ currentIndex: 0 });
-    const previousButton = screen.getByRole("button", {
+    const previousButton = screen.getByRole('button', {
       name: /Previous.*disabled/,
     });
-    expect(previousButton).toHaveProp("accessibilityState", { disabled: true });
+    expect(previousButton).toHaveProp('accessibilityState', { disabled: true });
   });
 
-  it("handles last item state with onComplete provided", () => {
+  it('handles last item state with onComplete provided', () => {
     renderWithProps({ currentIndex: 2 });
-    const completeButton = screen.getByRole("button", { name: /Complete/ });
+    const completeButton = screen.getByRole('button', { name: /Complete/ });
     expect(completeButton).toBeTruthy();
-    expect(completeButton).toHaveProp("accessibilityState", {
+    expect(completeButton).toHaveProp('accessibilityState', {
       disabled: false,
     });
 
@@ -62,7 +62,7 @@ describe("ProgressNavigator", () => {
     expect(mockHandlers.onComplete).toHaveBeenCalled();
   });
 
-  it("handles last item state without onComplete - button should be disabled", () => {
+  it('handles last item state without onComplete - button should be disabled', () => {
     const propsWithoutComplete = {
       currentIndex: 2,
       onPrevious: mockHandlers.onPrevious,
@@ -71,16 +71,16 @@ describe("ProgressNavigator", () => {
     };
     renderWithProps(propsWithoutComplete);
 
-    const completeButton = screen.getByRole("button", { name: /Complete/ });
+    const completeButton = screen.getByRole('button', { name: /Complete/ });
     expect(completeButton).toBeTruthy();
-    expect(completeButton).toHaveProp("accessibilityState", { disabled: true });
+    expect(completeButton).toHaveProp('accessibilityState', { disabled: true });
 
     // Should not call onComplete when pressed (since it's disabled)
     fireEvent.press(completeButton);
     expect(mockHandlers.onComplete).not.toHaveBeenCalled();
   });
 
-  it("has correct accessibility properties", () => {
+  it('has correct accessibility properties', () => {
     renderWithProps();
     const container = screen.getByLabelText(/Progress navigator.*67% complete/);
     expect(container).toBeTruthy();

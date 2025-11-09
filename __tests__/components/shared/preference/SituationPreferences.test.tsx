@@ -10,14 +10,15 @@
  * - Cabinet member count display in accordion trigger
  */
 
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
+import { fireEvent, render, screen } from '@testing-library/react-native';
+import { BehaviorSubject } from 'rxjs';
 
-import SituationPreferences from "~/components/shared/preference/SituationPreferences";
-import { AnswerType, CabinetStaticId } from "~/types";
+import SituationPreferences from '~/components/shared/preference/SituationPreferences';
+import { observeCabinetMembersByLevel, observeGame } from '~/lib/db/helpers/observations';
+import { AnswerType, CabinetStaticId } from '~/types';
 
 // Mock observeCabinetMembersByLevel to return test data
-jest.mock("~/lib/db/helpers/observations", () => ({
+jest.mock('~/lib/db/helpers/observations', () => ({
   observeCabinetMembersByLevel: jest.fn(),
   observeGame: jest.fn(),
 }));
@@ -26,19 +27,15 @@ jest.mock("~/lib/db/helpers/observations", () => ({
 
 const createMockSituation = (preferences: any) =>
   ({
-    id: "situation1",
-    game_id: "game1",
-    level_id: "level1",
+    id: 'situation1',
+    game_id: 'game1',
+    level_id: 'level1',
     parseContent: {
       preferences,
     },
-  } as any);
+  }) as any;
 
-const createMockCabinetMember = (
-  staticId: CabinetStaticId,
-  name: string,
-  psRelationship: number
-) =>
+const createMockCabinetMember = (staticId: CabinetStaticId, name: string, psRelationship: number) =>
   ({
     id: `cabinet_${staticId}`,
     staticId,
@@ -47,56 +44,48 @@ const createMockCabinetMember = (
     staticData: {
       cabinetName: `Secretary of ${name}`,
     },
-  } as any);
+  }) as any;
 
-describe("SituationPreferences", () => {
+describe('SituationPreferences', () => {
   const mockCabinetMembers = [
-    createMockCabinetMember(CabinetStaticId.Defense, "Defense", 60),
-    createMockCabinetMember(CabinetStaticId.State, "State", 45),
+    createMockCabinetMember(CabinetStaticId.Defense, 'Defense', 60),
+    createMockCabinetMember(CabinetStaticId.State, 'State', 45),
   ];
 
   beforeEach(() => {
-    const {
-      observeCabinetMembersByLevel,
-      observeGame,
-    } = require("~/lib/db/helpers/observations");
-    const { BehaviorSubject } = require("rxjs");
-
     // Reset to default mock cabinet members for each test
-    observeCabinetMembersByLevel.mockReturnValue(
-      new BehaviorSubject(mockCabinetMembers)
-    );
+    observeCabinetMembersByLevel.mockReturnValue(new BehaviorSubject(mockCabinetMembers));
 
     // Mock game data for PresidentPreference component
     const mockGame = {
-      id: "game1",
-      presName: "President Johnson",
+      id: 'game1',
+      presName: 'President Johnson',
     };
     observeGame.mockReturnValue(new BehaviorSubject(mockGame));
   });
 
-  it("does not render when no preferences content", () => {
+  it('does not render when no preferences content', () => {
     const situation = createMockSituation(null);
 
-    const result = render(<SituationPreferences situation={situation} />);
+    render(<SituationPreferences situation={situation} />);
 
     // Component should return null and not render anything
     // Test that no specific content is rendered
     expect(screen.queryByText("President's Position")).toBeNull();
-    expect(screen.queryByText("Cabinet Positions")).toBeNull();
+    expect(screen.queryByText('Cabinet Positions')).toBeNull();
   });
 
-  it("does not render when preferences object is empty", () => {
+  it('does not render when preferences object is empty', () => {
     const situation = createMockSituation({});
 
     render(<SituationPreferences situation={situation} />);
 
     // Component should return null and not render anything
     expect(screen.queryByText("President's Position")).toBeNull();
-    expect(screen.queryByText("Cabinet Positions")).toBeNull();
+    expect(screen.queryByText('Cabinet Positions')).toBeNull();
   });
 
-  it("renders president preference when available", () => {
+  it('renders president preference when available', () => {
     const preferences = {
       president: {
         answerType: AnswerType.Inform,
@@ -108,25 +97,23 @@ describe("SituationPreferences", () => {
     render(<SituationPreferences situation={situation} />);
 
     expect(screen.getByText("President's Position")).toBeTruthy();
-    expect(screen.getByText("Inform")).toBeTruthy();
-    expect(
-      screen.getByText("The administration's position is clear on this matter")
-    ).toBeTruthy();
+    expect(screen.getByText('Inform')).toBeTruthy();
+    expect(screen.getByText("The administration's position is clear on this matter")).toBeTruthy();
   });
 
-  it("renders cabinet preferences accordion when available", () => {
+  it('renders cabinet preferences accordion when available', () => {
     const preferences = {
       cabinet: {
         [CabinetStaticId.Defense]: {
           preference: {
             answerType: AnswerType.Challenge,
-            rationale: "We need a strong security response",
+            rationale: 'We need a strong security response',
           },
         },
         [CabinetStaticId.State]: {
           preference: {
             answerType: AnswerType.Reassure,
-            rationale: "Diplomacy should be our first approach",
+            rationale: 'Diplomacy should be our first approach',
           },
         },
       },
@@ -135,16 +122,16 @@ describe("SituationPreferences", () => {
 
     render(<SituationPreferences situation={situation} />);
 
-    expect(screen.getByText("Cabinet Positions (2)")).toBeTruthy();
+    expect(screen.getByText('Cabinet Positions (2)')).toBeTruthy();
   });
 
-  it("has proper accessibility labels for cabinet accordion", () => {
+  it('has proper accessibility labels for cabinet accordion', () => {
     const preferences = {
       cabinet: {
         [CabinetStaticId.Defense]: {
           preference: {
             answerType: AnswerType.Inform,
-            rationale: "Intelligence suggests this approach",
+            rationale: 'Intelligence suggests this approach',
           },
         },
       },
@@ -153,30 +140,26 @@ describe("SituationPreferences", () => {
 
     render(<SituationPreferences situation={situation} />);
 
-    expect(screen.getByLabelText("Cabinet positions section")).toBeTruthy();
-    expect(
-      screen.getByLabelText("Cabinet positions: 1 members have preferences")
-    ).toBeTruthy();
+    expect(screen.getByLabelText('Cabinet positions section')).toBeTruthy();
+    expect(screen.getByLabelText('Cabinet positions: 1 members have preferences')).toBeTruthy();
     // Look for the accessibility hint that's actually rendered
-    expect(
-      screen.getByLabelText("Cabinet positions: 1 members have preferences")
-    ).toHaveProp(
-      "accessibilityHint",
-      "Expand to view individual cabinet member preferences and classified intel"
+    expect(screen.getByLabelText('Cabinet positions: 1 members have preferences')).toHaveProp(
+      'accessibilityHint',
+      'Expand to view individual cabinet member preferences and classified intel',
     );
   });
 
-  it("renders both president and cabinet preferences", () => {
+  it('renders both president and cabinet preferences', () => {
     const preferences = {
       president: {
         answerType: AnswerType.Deflect,
-        rationale: "Now is not the time for this discussion",
+        rationale: 'Now is not the time for this discussion',
       },
       cabinet: {
         [CabinetStaticId.Defense]: {
           preference: {
             answerType: AnswerType.Challenge,
-            rationale: "We must take action",
+            rationale: 'We must take action',
           },
         },
       },
@@ -187,20 +170,19 @@ describe("SituationPreferences", () => {
 
     // Should have both sections
     expect(screen.getByText("President's Position")).toBeTruthy();
-    expect(screen.getByText("Cabinet Positions (1)")).toBeTruthy();
-    expect(screen.getByText("Deflect")).toBeTruthy();
+    expect(screen.getByText('Cabinet Positions (1)')).toBeTruthy();
+    expect(screen.getByText('Deflect')).toBeTruthy();
   });
 
-  it("handles cabinet preferences with authorized content", () => {
+  it('handles cabinet preferences with authorized content', () => {
     const preferences = {
       cabinet: {
         [CabinetStaticId.Defense]: {
           preference: {
             answerType: AnswerType.Inform,
-            rationale: "Use classified intelligence",
+            rationale: 'Use classified intelligence',
           },
-          authorizedContent:
-            "Secret intelligence suggests this is the best approach",
+          authorizedContent: 'Secret intelligence suggests this is the best approach',
         },
       },
     };
@@ -208,25 +190,23 @@ describe("SituationPreferences", () => {
 
     render(<SituationPreferences situation={situation} />);
 
-    expect(screen.getByText("Cabinet Positions (1)")).toBeTruthy();
+    expect(screen.getByText('Cabinet Positions (1)')).toBeTruthy();
 
     // Expand the accordion to see the content
-    const accordionTrigger = screen.getByLabelText(
-      "Cabinet positions: 1 members have preferences"
-    );
+    const accordionTrigger = screen.getByLabelText('Cabinet positions: 1 members have preferences');
     fireEvent.press(accordionTrigger);
 
-    expect(screen.getByText("Inform")).toBeTruthy();
-    expect(screen.getByText("Classified Info Withheld")).toBeTruthy();
+    expect(screen.getByText('Inform')).toBeTruthy();
+    expect(screen.getByText('Classified Info Withheld')).toBeTruthy();
   });
 
-  it("filters out cabinet members not in preferences", () => {
+  it('filters out cabinet members not in preferences', () => {
     const preferences = {
       cabinet: {
         [CabinetStaticId.Defense]: {
           preference: {
             answerType: AnswerType.Inform,
-            rationale: "Defense perspective",
+            rationale: 'Defense perspective',
           },
         },
         // Note: State is not included in preferences
@@ -237,19 +217,13 @@ describe("SituationPreferences", () => {
     render(<SituationPreferences situation={situation} />);
 
     // Should only show 1 member (Defense) even though we have 2 cabinet members
-    expect(screen.getByText("Cabinet Positions (1)")).toBeTruthy();
+    expect(screen.getByText('Cabinet Positions (1)')).toBeTruthy();
   });
 
-  it("handles limited cabinet members", () => {
+  it('handles limited cabinet members', () => {
     // Mock the observable to return only Defense member before rendering
-    const {
-      observeCabinetMembersByLevel,
-    } = require("~/lib/db/helpers/observations");
-    const { BehaviorSubject } = require("rxjs");
     const limitedMembers = [mockCabinetMembers[0]]; // Only Defense
-    observeCabinetMembersByLevel.mockReturnValue(
-      new BehaviorSubject(limitedMembers)
-    );
+    observeCabinetMembersByLevel.mockReturnValue(new BehaviorSubject(limitedMembers));
 
     // Only include preferences for available cabinet members
     const preferences = {
@@ -257,7 +231,7 @@ describe("SituationPreferences", () => {
         [CabinetStaticId.Defense]: {
           preference: {
             answerType: AnswerType.Inform,
-            rationale: "Defense perspective",
+            rationale: 'Defense perspective',
           },
         },
       },
@@ -267,33 +241,31 @@ describe("SituationPreferences", () => {
     render(<SituationPreferences situation={situation} />);
 
     // Should show 1 member since only Defense has preferences and is available
-    expect(screen.getByText("Cabinet Positions (1)")).toBeTruthy();
+    expect(screen.getByText('Cabinet Positions (1)')).toBeTruthy();
   });
 
-  it("has overall accessibility label", () => {
+  it('has overall accessibility label', () => {
     const preferences = {
       president: {
         answerType: AnswerType.Inform,
-        rationale: "Presidential view",
+        rationale: 'Presidential view',
       },
     };
     const situation = createMockSituation(preferences);
 
     render(<SituationPreferences situation={situation} />);
 
-    expect(screen.getByLabelText("Situation preferences section")).toBeTruthy();
+    expect(screen.getByLabelText('Situation preferences section')).toBeTruthy();
   });
 
-  it("renders component without errors", () => {
+  it('renders component without errors', () => {
     const situation = createMockSituation({
       president: {
         answerType: AnswerType.Inform,
-        rationale: "Test",
+        rationale: 'Test',
       },
     });
 
-    expect(() =>
-      render(<SituationPreferences situation={situation} />)
-    ).not.toThrow();
+    expect(() => render(<SituationPreferences situation={situation} />)).not.toThrow();
   });
 });

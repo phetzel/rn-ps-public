@@ -1,13 +1,13 @@
-import * as React from "react";
-import { View } from "react-native";
+import * as React from 'react';
+import { View } from 'react-native';
 
-import { useConsentStore } from "~/lib/stores/consentStore";
-import { useDisclaimerDialogStore } from "~/lib/stores/disclaimerDialogStore";
+import { Button } from '~/components/ui/button';
+import { Text } from '~/components/ui/text';
+import { Info, Settings } from '~/lib/icons';
+import { useConsentStore } from '~/lib/stores/consentStore';
+import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 // Icons
-import { Info, Settings } from "~/lib/icons";
 // Components
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
 
 export function HomePrivacySettings() {
   const { showPrivacyOptions, formAvailable } = useConsentStore();

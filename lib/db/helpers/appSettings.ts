@@ -1,6 +1,7 @@
-import { database } from "~/lib/db";
-import { appSettingsCollection } from "~/lib/db/helpers/collections";
-import type AppSetting from "~/lib/db/models/AppSetting";
+import { database } from '~/lib/db';
+import { appSettingsCollection } from '~/lib/db/helpers/collections';
+
+import type AppSetting from '~/lib/db/models/AppSetting';
 
 export async function getOrCreateAppSettings(): Promise<AppSetting> {
   const all = await appSettingsCollection.query().fetch();
@@ -24,5 +25,3 @@ export async function acknowledgeFictionDisclaimer(): Promise<void> {
     });
   });
 }
-
-

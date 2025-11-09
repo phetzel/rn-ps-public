@@ -1,6 +1,7 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
+import React from 'react';
+import { View } from 'react-native';
+
+import { Text } from '~/components/ui/text';
 
 interface PreferenceLockedTooltipProps {
   cabinetMemberName: string;
@@ -22,16 +23,16 @@ export default function PreferenceLockedTooltip({
       <Text className="text-xs text-center leading-tight" accessible={false}>
         <Text className="font-bold" accessible={false}>
           {cabinetMemberName}
-        </Text>{" "}
-        needs a relationship of at least{" "}
+        </Text>{' '}
+        needs a relationship of at least{' '}
         <Text className="font-bold" accessible={false}>
           {threshold}
-        </Text>{" "}
+        </Text>{' '}
         to share their preference with you.
       </Text>
 
       <Text className="text-xs text-center leading-tight" accessible={false}>
-        Current relationship:{" "}
+        Current relationship:{' '}
         <Text className="font-bold" accessible={false}>
           {relationship}
         </Text>
@@ -39,5 +40,3 @@ export default function PreferenceLockedTooltip({
     </View>
   );
 }
-
-

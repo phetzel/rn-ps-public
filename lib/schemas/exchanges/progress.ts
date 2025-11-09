@@ -1,8 +1,9 @@
-import { z } from "zod";
-import { JournalistEngagementWeight } from "~/types";
+import { z } from 'zod';
+
+import { JournalistEngagementWeight } from '~/types';
 
 export const historyItemSchema = z.object({
-  questionId: z.string().min(1, "Question ID is required"),
+  questionId: z.string().min(1, 'Question ID is required'),
   answerId: z.string().optional(),
   skipped: z.boolean(),
 });

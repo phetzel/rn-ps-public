@@ -3,7 +3,7 @@ name: Android E2E (Maestro)
 on:
   pull_request:
   push:
-    branches: [ main, prod-ready, release/** ]
+    branches: [main, prod-ready, release/**]
 
 jobs:
   android-e2e:
@@ -49,4 +49,3 @@ jobs:
 
             # Run Maestro suite (uses per-flow appId)
             maestro test e2e/maestro/suites/smoke.yaml
-

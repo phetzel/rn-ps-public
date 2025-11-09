@@ -1,6 +1,7 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
+import React from 'react';
+import { View } from 'react-native';
+
+import { Text } from '~/components/ui/text';
 
 interface AuthorizedTooltipProps {
   isAuthorized: boolean;
@@ -23,24 +24,21 @@ export default function AuthorizedTooltip({
         <Text className="text-xs text-center leading-tight" accessible={false}>
           <Text className="font-bold" accessible={false}>
             {cabinetMemberName}
-          </Text>{" "}
-          has authorized you to view their classified intel due to positive
-          relationship.
+          </Text>{' '}
+          has authorized you to view their classified intel due to positive relationship.
         </Text>
       ) : (
         <Text className="text-xs text-center leading-tight" accessible={false}>
           <Text className="font-bold" accessible={false}>
             {cabinetMemberName}
-          </Text>{" "}
-          needs a relationship of at least{" "}
+          </Text>{' '}
+          needs a relationship of at least{' '}
           <Text className="font-bold" accessible={false}>
             {threshold}
-          </Text>{" "}
+          </Text>{' '}
           to share their classified intel with you.
         </Text>
       )}
     </View>
   );
 }
-
-

@@ -1,17 +1,15 @@
-import { database } from "~/lib/db";
-import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
-import { CABINET_PENALTY_PER_FIRED_MEMBER } from "~/lib/constants";
-import { calculateRiskProbability } from "~/lib/utils";
-import { ConsequenceResult, CabinetStaticId, GameStatus } from "~/types";
-import type { Game, CabinetMember, SubgroupApproval } from "~/lib/db/models";
+import { CABINET_PENALTY_PER_FIRED_MEMBER } from '~/lib/constants';
+import { database } from '~/lib/db';
+import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
+import { calculateRiskProbability } from '~/lib/utils';
+import { ConsequenceResult, CabinetStaticId, GameStatus } from '~/types';
+
+import type { Game, CabinetMember, SubgroupApproval } from '~/lib/db/models';
 
 /**
  * Roll dice to determine if an event occurs
  */
-function rollForEvent(
-  probability: number,
-  randomProvider: () => number = Math.random
-): boolean {
+function rollForEvent(probability: number, randomProvider: () => number = Math.random): boolean {
   return randomProvider() < probability;
 }
 
@@ -20,10 +18,10 @@ function rollForEvent(
  */
 async function calculateGameEndingConsequences(
   game: Game,
-  randomProvider: () => number
+  randomProvider: () => number,
 ): Promise<{
   gameEnded: boolean;
-  gameEndReason?: "impeached" | "fired";
+  gameEndReason?: 'impeached' | 'fired';
 } | null> {
   // 1. Check for impeachment (most severe) - based on president approval
   const currentPresApproval = await game.getPresApprovalRating();
@@ -32,7 +30,7 @@ async function calculateGameEndingConsequences(
   if (rollForEvent(impeachmentProbability, randomProvider)) {
     return {
       gameEnded: true,
-      gameEndReason: "impeached",
+      gameEndReason: 'impeached',
     };
   }
 
@@ -42,7 +40,7 @@ async function calculateGameEndingConsequences(
   if (rollForEvent(firingProbability, randomProvider)) {
     return {
       gameEnded: true,
-      gameEndReason: "fired",
+      gameEndReason: 'fired',
     };
   }
 
@@ -54,7 +52,7 @@ async function calculateGameEndingConsequences(
  */
 function calculateCabinetFirings(
   cabinetMembers: CabinetMember[],
-  randomProvider: () => number
+  randomProvider: () => number,
 ): CabinetStaticId[] {
   const cabinetMembersToFire: CabinetStaticId[] = [];
 
@@ -74,7 +72,7 @@ function calculateCabinetFirings(
  */
 async function applyGameEndingConsequence(
   game: Game,
-  gameEndReason: "impeached" | "fired" | "completed"
+  gameEndReason: 'impeached' | 'fired' | 'completed',
 ): Promise<void> {
   const statusMap = {
     impeached: GameStatus.Impeached,
@@ -96,7 +94,7 @@ async function applyGameEndingConsequence(
 async function applyCabinetFirings(
   cabinetMembers: CabinetMember[],
   subgroups: SubgroupApproval[],
-  cabinetMembersToFire: CabinetStaticId[]
+  cabinetMembersToFire: CabinetStaticId[],
 ): Promise<void> {
   if (cabinetMembersToFire.length === 0) return;
 
@@ -112,8 +110,7 @@ async function applyCabinetFirings(
     }
 
     // Apply president approval penalty to subgroups
-    const totalPenalty =
-      cabinetMembersToFire.length * CABINET_PENALTY_PER_FIRED_MEMBER;
+    const totalPenalty = cabinetMembersToFire.length * CABINET_PENALTY_PER_FIRED_MEMBER;
 
     for (const subgroup of subgroups) {
       await subgroup.update((s) => {
@@ -128,7 +125,7 @@ async function applyCabinetFirings(
  */
 export async function calculateAndApplyConsequences(
   gameId: string,
-  randomProvider: () => number = Math.random
+  randomProvider: () => number = Math.random,
 ): Promise<ConsequenceResult> {
   const { game, cabinetMembers, subgroups } = await fetchGameEntities(gameId);
 
@@ -142,10 +139,7 @@ export async function calculateAndApplyConsequences(
   };
 
   // Check for game ending consequences first
-  const gameEndingResult = await calculateGameEndingConsequences(
-    game,
-    randomProvider
-  );
+  const gameEndingResult = await calculateGameEndingConsequences(game, randomProvider);
 
   if (gameEndingResult && gameEndingResult.gameEndReason) {
     result.gameEnded = true;
@@ -157,10 +151,7 @@ export async function calculateAndApplyConsequences(
   }
 
   // Calculate cabinet member firings
-  const cabinetMembersToFire = calculateCabinetFirings(
-    cabinetMembers,
-    randomProvider
-  );
+  const cabinetMembersToFire = calculateCabinetFirings(cabinetMembers, randomProvider);
 
   // Apply cabinet firings if any
   if (cabinetMembersToFire.length > 0) {
@@ -172,9 +163,9 @@ export async function calculateAndApplyConsequences(
   // Only complete if at term limit AND no other game-ending event occurred
   if (game.isAtTermLimit()) {
     result.gameEnded = true;
-    result.gameEndReason = "completed";
+    result.gameEndReason = 'completed';
 
-    await applyGameEndingConsequence(game, "completed");
+    await applyGameEndingConsequence(game, 'completed');
   }
 
   return result;

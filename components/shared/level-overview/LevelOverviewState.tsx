@@ -1,22 +1,23 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeLevel } from "~/lib/db/helpers/observations";
-import type { Level } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
+import { EmptyState } from '~/components/shared/EmptyState';
+import CabinetLevelState from '~/components/shared/level-state/CabinetLevelState';
+import MediaLevelState from '~/components/shared/level-state/MediaLevelState';
+import PresidentLevelState from '~/components/shared/level-state/PresidentLevelState';
+import SubgroupLevelState from '~/components/shared/level-state/SubgroupLevelState';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/components/ui/accordion";
-import PresidentLevelState from "~/components/shared/level-state/PresidentLevelState";
-import CabinetLevelState from "~/components/shared/level-state/CabinetLevelState";
-import MediaLevelState from "~/components/shared/level-state/MediaLevelState";
-import SubgroupLevelState from "~/components/shared/level-state/SubgroupLevelState";
-import { Award, Briefcase, Newspaper, Users } from "~/lib/icons";
-import { EmptyState } from "~/components/shared/EmptyState";
+} from '~/components/ui/accordion';
+import { Text } from '~/components/ui/text';
+import { observeLevel } from '~/lib/db/helpers/observations';
+import { Award, Briefcase, Newspaper, Users } from '~/lib/icons';
+
+import type { Level } from '~/lib/db/models';
 
 interface LevelOverviewStateProps {
   levelId: string;
@@ -33,9 +34,7 @@ const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
   if (!outcomeSnapshot) {
     return (
       <View className="p-4">
-        <Text className="text-muted-foreground text-center">
-          Level outcome data not available
-        </Text>
+        <Text className="text-muted-foreground text-center">Level outcome data not available</Text>
       </View>
     );
   }
@@ -45,11 +44,7 @@ const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
 
   return (
     <View className="gap-4">
-      <Accordion
-        type="multiple"
-        defaultValue={["president"]}
-        key={`state-accordion-${levelId}`}
-      >
+      <Accordion type="multiple" defaultValue={['president']} key={`state-accordion-${levelId}`}>
         <AccordionItem value="president">
           <AccordionTrigger>
             <View className="flex-row items-center gap-2">
@@ -58,10 +53,7 @@ const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
             </View>
           </AccordionTrigger>
           <AccordionContent>
-            <PresidentLevelState
-              gameId={gameId}
-              outcomeSnapshot={outcomeSnapshot}
-            />
+            <PresidentLevelState gameId={gameId} outcomeSnapshot={outcomeSnapshot} />
           </AccordionContent>
         </AccordionItem>
 
@@ -73,10 +65,7 @@ const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
             </View>
           </AccordionTrigger>
           <AccordionContent>
-            <CabinetLevelState
-              levelId={levelId}
-              outcomeSnapshot={outcomeSnapshot}
-            />
+            <CabinetLevelState levelId={levelId} outcomeSnapshot={outcomeSnapshot} />
           </AccordionContent>
         </AccordionItem>
 
@@ -112,7 +101,7 @@ const LevelOverviewState = ({ levelId, level }: LevelOverviewStateProps) => {
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
 }));
 

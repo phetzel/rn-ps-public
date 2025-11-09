@@ -1,15 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeGame } from "~/lib/db/helpers";
-import { Text } from "~/components/ui/text";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Award } from "~/lib/icons";
-import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
-import LevelProgress from "~/components/shared/level-state/LevelProgress";
-import { Game } from "~/lib/db/models";
-import type { OutcomeSnapshotType } from "~/types";
+import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
+import LevelProgress from '~/components/shared/level-state/LevelProgress';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { observeGame } from '~/lib/db/helpers';
+import { Game } from '~/lib/db/models';
+import { Award } from '~/lib/icons';
+
+import type { OutcomeSnapshotType } from '~/types';
 
 interface PresidentLevelStateProps {
   gameId: string;
@@ -17,11 +18,7 @@ interface PresidentLevelStateProps {
   game: Game | null;
 }
 
-const PresidentLevelState = ({
-  gameId,
-  outcomeSnapshot,
-  game,
-}: PresidentLevelStateProps) => {
+const PresidentLevelState = ({ gameId, outcomeSnapshot, game }: PresidentLevelStateProps) => {
   const { initial, final } = outcomeSnapshot;
 
   if (!game || !initial || !final) return null;
@@ -69,7 +66,7 @@ const PresidentLevelState = ({
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
+const enhance = withObservables(['gameId'], ({ gameId }) => ({
   game: observeGame(gameId),
 }));
 

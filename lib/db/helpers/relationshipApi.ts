@@ -1,13 +1,13 @@
-import { database } from "~/lib/db";
-import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
-import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers/entityEnhancementApi";
-import { PsRelationshipDeltas, EntityWithMediaDelta } from "~/types";
-import { calculateAdBoost } from "~/lib/utils";
+import { database } from '~/lib/db';
+import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers/entityEnhancementApi';
+import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
+import { calculateAdBoost } from '~/lib/utils';
+import { PsRelationshipDeltas, EntityWithMediaDelta } from '~/types';
 
 export async function applyRelationshipDeltas(
   gameId: string,
   deltas: PsRelationshipDeltas,
-  useAdBoost: boolean = false
+  useAdBoost: boolean = false,
 ) {
   // Fetch all needed entities
   const { game, cabinetMembers, journalists } = await fetchGameEntities(gameId);
@@ -19,9 +19,7 @@ export async function applyRelationshipDeltas(
   return await database.write(async () => {
     // --- Apply President PS Relationship Delta ---
     if (deltas.president !== 0) {
-      const boostedDelta = useAdBoost
-        ? calculateAdBoost(deltas.president)
-        : deltas.president;
+      const boostedDelta = useAdBoost ? calculateAdBoost(deltas.president) : deltas.president;
 
       await game.update((g) => {
         const next = (g.presPsRelationship || 0) + boostedDelta;
@@ -31,25 +29,19 @@ export async function applyRelationshipDeltas(
 
     // --- Apply Cabinet Member PS Relationship Deltas ---
     if (deltas.cabinetMembers) {
-      for (const [staticId, deltaValue] of Object.entries(
-        deltas.cabinetMembers
-      )) {
+      for (const [staticId, deltaValue] of Object.entries(deltas.cabinetMembers)) {
         if (deltaValue === 0) continue;
 
         const member = cabinetMembers.find((m) => m.staticId === staticId);
         if (member) {
-          const boostedDelta = useAdBoost
-            ? calculateAdBoost(deltaValue)
-            : deltaValue;
+          const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
 
           await member.update((m) => {
             const next = (m.psRelationship || 0) + boostedDelta;
             m.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
           });
         } else {
-          console.warn(
-            `Cabinet member with staticId ${staticId} not found for game ${gameId}.`
-          );
+          console.warn(`Cabinet member with staticId ${staticId} not found for game ${gameId}.`);
         }
       }
     }
@@ -60,18 +52,14 @@ export async function applyRelationshipDeltas(
 
         const journalist = journalists.find((j) => j.staticId === staticId);
         if (journalist) {
-          const boostedDelta = useAdBoost
-            ? calculateAdBoost(deltaValue)
-            : deltaValue;
+          const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
 
           await journalist.update((j) => {
             const next = (j.psRelationship || 0) + boostedDelta;
             j.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
           });
         } else {
-          console.warn(
-            `Journalist with staticId ${staticId} not found for game ${gameId}.`
-          );
+          console.warn(`Journalist with staticId ${staticId} not found for game ${gameId}.`);
         }
       }
     }
@@ -82,13 +70,11 @@ export async function applyRelationshipDeltas(
 export async function applySituationConsequences(
   gameId: string,
   levelId: string,
-  useAdBoost: boolean = false
+  useAdBoost: boolean = false,
 ): Promise<void> {
   try {
     // Get media-adjusted deltas directly from getEnhancedSituationOutcomeDeltas
-    const { deltas: enhancedDeltas } = await getEnhancedSituationOutcomeDeltas(
-      levelId
-    );
+    const { deltas: enhancedDeltas } = await getEnhancedSituationOutcomeDeltas(levelId);
 
     // Fetch the game entities that will be updated
     const { game, cabinetMembers, subgroups } = await fetchGameEntities(gameId);
@@ -98,14 +84,9 @@ export async function applySituationConsequences(
     }
 
     // Group entities by role for easier processing
-    const presidentDeltas = enhancedDeltas.filter(
-      (e: EntityWithMediaDelta) => e.role === "president"
-    );
-    const cabinetDeltas = enhancedDeltas.filter(
-      (e: EntityWithMediaDelta) => e.role === "cabinet"
-    );
+    const cabinetDeltas = enhancedDeltas.filter((e: EntityWithMediaDelta) => e.role === 'cabinet');
     const subgroupDeltas = enhancedDeltas.filter(
-      (e: EntityWithMediaDelta) => e.role === "subgroup"
+      (e: EntityWithMediaDelta) => e.role === 'subgroup',
     );
 
     return await database.write(async () => {
@@ -121,7 +102,7 @@ export async function applySituationConsequences(
           });
         } else {
           console.warn(
-            `Cabinet member with staticId ${delta.id} not found for game ${gameId} while applying situation consequences.`
+            `Cabinet member with staticId ${delta.id} not found for game ${gameId} while applying situation consequences.`,
           );
         }
       }
@@ -137,13 +118,13 @@ export async function applySituationConsequences(
           });
         } else {
           console.warn(
-            `Subgroup with staticId ${delta.id} not found for game ${gameId} while applying situation consequences.`
+            `Subgroup with staticId ${delta.id} not found for game ${gameId} while applying situation consequences.`,
           );
         }
       }
     });
   } catch (error) {
-    console.error("Failed to apply situation consequences:", error);
+    console.error('Failed to apply situation consequences:', error);
     throw error;
   }
 }

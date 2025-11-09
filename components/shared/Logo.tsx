@@ -1,11 +1,11 @@
-import * as React from "react";
-import { Image, View } from "react-native";
+import * as React from 'react';
+import { Image, View } from 'react-native';
 
 interface LogoProps {
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
 }
 
-export function Logo({ size = "medium" }: LogoProps) {
+export function Logo({ size = 'medium' }: LogoProps) {
   const dimensions = {
     small: 80,
     medium: 120,
@@ -22,7 +22,7 @@ export function Logo({ size = "medium" }: LogoProps) {
       accessibilityLabel={`Press Secretary app logo, ${size} size`}
     >
       <Image
-        source={require("../../assets/images/splash-icon.png")}
+        source={require('../../assets/images/splash-icon.png')}
         style={{ width, height }}
         resizeMode="contain"
         accessible={false}

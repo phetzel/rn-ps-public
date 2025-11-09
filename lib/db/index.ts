@@ -1,9 +1,8 @@
-import { Platform } from "react-native";
-import { Database } from "@nozbe/watermelondb";
-import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
+import { Database } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
+import { Platform } from 'react-native';
 
-import { myAppSchema } from "./schema";
-import { migrations } from "./migrations";
+import { migrations } from './migrations';
 // Models
 import {
   CabinetMember,
@@ -15,12 +14,13 @@ import {
   SubgroupApproval,
   PressExchange,
   AppSetting,
-} from "./models";
+} from './models';
+import { myAppSchema } from './schema';
 
 const adapter = new SQLiteAdapter({
   schema: myAppSchema,
   migrations: migrations,
-  jsi: Platform.OS === "ios" || Platform.OS === "android",
+  jsi: Platform.OS === 'ios' || Platform.OS === 'android',
   onSetUpError: (error) => {
     console.error(`Database setup failed:`, error);
   },

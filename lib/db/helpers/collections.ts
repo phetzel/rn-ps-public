@@ -1,4 +1,4 @@
-import { database } from "~/lib/db";
+import { database } from '~/lib/db';
 // Import models using the new index file
 import {
   CabinetMember,
@@ -10,17 +10,15 @@ import {
   SubgroupApproval,
   PressExchange,
   AppSetting,
-} from "~/lib/db/models";
+} from '~/lib/db/models';
 
 // Collections
-export const cabinetCollection = database.get<CabinetMember>("cabinet_members");
-export const gamesCollection = database.get<Game>("games");
-export const journalistCollection = database.get<Journalist>("journalists");
-export const levelsCollection = database.get<Level>("levels");
-export const publicationCollection = database.get<Publication>("publications");
-export const situationCollection = database.get<Situation>("situations");
-export const subgroupCollection =
-  database.get<SubgroupApproval>("subgroup_approvals");
-export const pressExchangeCollection =
-  database.get<PressExchange>("press_exchanges");
-export const appSettingsCollection = database.get<AppSetting>("app_settings");
+export const cabinetCollection = database.get<CabinetMember>('cabinet_members');
+export const gamesCollection = database.get<Game>('games');
+export const journalistCollection = database.get<Journalist>('journalists');
+export const levelsCollection = database.get<Level>('levels');
+export const publicationCollection = database.get<Publication>('publications');
+export const situationCollection = database.get<Situation>('situations');
+export const subgroupCollection = database.get<SubgroupApproval>('subgroup_approvals');
+export const pressExchangeCollection = database.get<PressExchange>('press_exchanges');
+export const appSettingsCollection = database.get<AppSetting>('app_settings');

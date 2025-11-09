@@ -9,60 +9,60 @@
  * - Accessibility labels for subgroup updates
  */
 
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
+import { Text } from 'react-native';
 
-import SubgroupLevelState from "~/components/shared/level-state/SubgroupLevelState";
+import SubgroupLevelState from '~/components/shared/level-state/SubgroupLevelState';
 
 // Mock child components
-jest.mock("~/components/shared/level-state/LevelProgress", () => () => null);
+jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);
 
-jest.mock("~/components/shared/entity/SubgroupCategoryIcon", () => ({
+jest.mock('~/components/shared/entity/SubgroupCategoryIcon', () => ({
   SubgroupCategoryIcon: ({ category }: any) => {
-    const { Text } = require("react-native");
     return <Text>{category} Icon</Text>;
   },
 }));
 
 // Mock database helpers
-jest.mock("~/lib/db/helpers", () => ({
+jest.mock('~/lib/db/helpers', () => ({
   observeSubgroupApprovals: jest.fn(),
 }));
 
 // Mock withObservables
-jest.mock("@nozbe/watermelondb/react", () => ({
+jest.mock('@nozbe/watermelondb/react', () => ({
   withObservables: () => (component: any) => component,
 }));
 
 // Mock utils
-jest.mock("~/lib/utils", () => ({
-  cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
+jest.mock('~/lib/utils', () => ({
+  cn: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
 }));
 
-describe("SubgroupLevelState", () => {
+describe('SubgroupLevelState', () => {
   const mockSubgroupApprovals = [
     {
-      id: "subgroup1",
-      staticId: "young_voters",
+      id: 'subgroup1',
+      staticId: 'young_voters',
       staticData: {
-        name: "Young Voters",
-        category: "demographic",
+        name: 'Young Voters',
+        category: 'demographic',
       },
     },
     {
-      id: "subgroup2",
-      staticId: "union_workers",
+      id: 'subgroup2',
+      staticId: 'union_workers',
       staticData: {
-        name: "Union Workers",
-        category: "economic",
+        name: 'Union Workers',
+        category: 'economic',
       },
     },
     {
-      id: "subgroup3",
-      staticId: "seniors",
+      id: 'subgroup3',
+      staticId: 'seniors',
       staticData: {
-        name: "Senior Citizens",
-        category: "demographic",
+        name: 'Senior Citizens',
+        category: 'demographic',
       },
     },
   ];
@@ -97,73 +97,63 @@ describe("SubgroupLevelState", () => {
   };
 
   const defaultProps = {
-    gameId: "game1",
-    levelId: "level1",
+    gameId: 'game1',
+    levelId: 'level1',
     outcomeSnapshot: mockOutcomeSnapshot,
     subgroupApprovals: mockSubgroupApprovals,
   };
 
-  it("renders subgroup monthly update card", () => {
+  it('renders subgroup monthly update card', () => {
     render(<SubgroupLevelState {...defaultProps} />);
-    expect(screen.getByText("Subgroup Monthly Update")).toBeTruthy();
+    expect(screen.getByText('Subgroup Monthly Update')).toBeTruthy();
   });
 
-  it("renders subgroup names", () => {
+  it('renders subgroup names', () => {
     render(<SubgroupLevelState {...defaultProps} />);
-    expect(screen.getByText("Young Voters")).toBeTruthy();
-    expect(screen.getByText("Union Workers")).toBeTruthy();
-    expect(screen.getByText("Senior Citizens")).toBeTruthy();
+    expect(screen.getByText('Young Voters')).toBeTruthy();
+    expect(screen.getByText('Union Workers')).toBeTruthy();
+    expect(screen.getByText('Senior Citizens')).toBeTruthy();
   });
 
-  it("groups subgroups by category", () => {
+  it('groups subgroups by category', () => {
     render(<SubgroupLevelState {...defaultProps} />);
-    expect(screen.getByText("Demographic Groups")).toBeTruthy();
-    expect(screen.getByText("Economic Groups")).toBeTruthy();
+    expect(screen.getByText('Demographic Groups')).toBeTruthy();
+    expect(screen.getByText('Economic Groups')).toBeTruthy();
   });
 
-  it("renders category icons", () => {
+  it('renders category icons', () => {
     render(<SubgroupLevelState {...defaultProps} />);
-    expect(screen.getByText("demographic Icon")).toBeTruthy();
-    expect(screen.getByText("economic Icon")).toBeTruthy();
+    expect(screen.getByText('demographic Icon')).toBeTruthy();
+    expect(screen.getByText('economic Icon')).toBeTruthy();
   });
 
-  it("has accessibility label with subgroup and category counts", () => {
+  it('has accessibility label with subgroup and category counts', () => {
     render(<SubgroupLevelState {...defaultProps} />);
     expect(
-      screen.getByLabelText(
-        "Voter groups monthly update: 3 groups across 2 categories"
-      )
+      screen.getByLabelText('Voter groups monthly update: 3 groups across 2 categories'),
     ).toBeTruthy();
   });
 
-  it("has accessibility labels for categories", () => {
+  it('has accessibility labels for categories', () => {
     render(<SubgroupLevelState {...defaultProps} />);
-    expect(
-      screen.getByLabelText("Demographic groups: 2 subgroups")
-    ).toBeTruthy();
-    expect(screen.getByLabelText("Economic groups: 1 subgroups")).toBeTruthy();
+    expect(screen.getByLabelText('Demographic groups: 2 subgroups')).toBeTruthy();
+    expect(screen.getByLabelText('Economic groups: 1 subgroups')).toBeTruthy();
   });
 
-  it("has accessibility labels for individual subgroups", () => {
+  it('has accessibility labels for individual subgroups', () => {
     render(<SubgroupLevelState {...defaultProps} />);
 
     // Young Voters: 45 → 50 (+5)
-    expect(
-      screen.getByLabelText("Young Voters. Approval changed by +5%.")
-    ).toBeTruthy();
+    expect(screen.getByLabelText('Young Voters. Approval changed by +5%.')).toBeTruthy();
 
     // Union Workers: 70 → 65 (-5)
-    expect(
-      screen.getByLabelText("Union Workers. Approval changed by -5%.")
-    ).toBeTruthy();
+    expect(screen.getByLabelText('Union Workers. Approval changed by -5%.')).toBeTruthy();
 
     // Seniors: 55 → 60 (+5)
-    expect(
-      screen.getByLabelText("Senior Citizens. Approval changed by +5%.")
-    ).toBeTruthy();
+    expect(screen.getByLabelText('Senior Citizens. Approval changed by +5%.')).toBeTruthy();
   });
 
-  it("returns null when initial data is missing", () => {
+  it('returns null when initial data is missing', () => {
     const propsWithoutInitial = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -176,7 +166,7 @@ describe("SubgroupLevelState", () => {
     expect(toJSON()).toBeNull();
   });
 
-  it("returns null when final data is missing", () => {
+  it('returns null when final data is missing', () => {
     const propsWithoutFinal = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -189,7 +179,7 @@ describe("SubgroupLevelState", () => {
     expect(toJSON()).toBeNull();
   });
 
-  it("handles missing subgroup data gracefully", () => {
+  it('handles missing subgroup data gracefully', () => {
     const propsWithMissingData = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -206,12 +196,12 @@ describe("SubgroupLevelState", () => {
     render(<SubgroupLevelState {...propsWithMissingData} />);
 
     // Should only render Young Voters
-    expect(screen.getByText("Young Voters")).toBeTruthy();
-    expect(screen.queryByText("Union Workers")).toBeFalsy();
-    expect(screen.queryByText("Senior Citizens")).toBeFalsy();
+    expect(screen.getByText('Young Voters')).toBeTruthy();
+    expect(screen.queryByText('Union Workers')).toBeFalsy();
+    expect(screen.queryByText('Senior Citizens')).toBeFalsy();
   });
 
-  it("handles empty subgroup approvals array", () => {
+  it('handles empty subgroup approvals array', () => {
     const propsWithNoSubgroups = {
       ...defaultProps,
       subgroupApprovals: [],
@@ -219,15 +209,13 @@ describe("SubgroupLevelState", () => {
 
     render(<SubgroupLevelState {...propsWithNoSubgroups} />);
 
-    expect(screen.getByText("Subgroup Monthly Update")).toBeTruthy();
+    expect(screen.getByText('Subgroup Monthly Update')).toBeTruthy();
     expect(
-      screen.getByLabelText(
-        "Voter groups monthly update: 0 groups across 0 categories"
-      )
+      screen.getByLabelText('Voter groups monthly update: 0 groups across 0 categories'),
     ).toBeTruthy();
   });
 
-  it("calculates negative approval changes correctly", () => {
+  it('calculates negative approval changes correctly', () => {
     const propsWithNegativeChanges = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -251,8 +239,6 @@ describe("SubgroupLevelState", () => {
 
     render(<SubgroupLevelState {...propsWithNegativeChanges} />);
 
-    expect(
-      screen.getByLabelText("Young Voters. Approval changed by -15%.")
-    ).toBeTruthy();
+    expect(screen.getByLabelText('Young Voters. Approval changed by -15%.')).toBeTruthy();
   });
 });

@@ -1,19 +1,15 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { Progress } from "~/components/ui/progress";
+import { Progress } from '~/components/ui/progress';
+import { Text } from '~/components/ui/text';
 
 interface ProgressBarProps {
   answeredCount: number;
   maxQuestions: number;
 }
 
-export default function ProgressBar({
-  answeredCount,
-  maxQuestions,
-}: ProgressBarProps) {
-  const progressPercentage =
-    maxQuestions > 0 ? (answeredCount / maxQuestions) * 100 : 0;
+export default function ProgressBar({ answeredCount, maxQuestions }: ProgressBarProps) {
+  const progressPercentage = maxQuestions > 0 ? (answeredCount / maxQuestions) * 100 : 0;
   const remainingQuestions = maxQuestions - answeredCount;
 
   return (
@@ -40,7 +36,7 @@ export default function ProgressBar({
         value={progressPercentage}
         className="h-2"
         accessibilityLabel={`Press conference progress: ${Math.round(
-          progressPercentage
+          progressPercentage,
         )}% complete`}
         accessibilityValue={{
           min: 0,

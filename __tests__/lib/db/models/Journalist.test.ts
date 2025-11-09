@@ -13,16 +13,17 @@
  * - Game relationship integrity
  */
 
-import { Database } from "@nozbe/watermelondb";
-import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
-import { createGame } from "~/__tests__/support/factories/gameFactory";
-import { createPublication } from "~/__tests__/support/factories/publicationFactory";
-import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
-import { Journalist } from "~/lib/db/models";
-import { JournalistStaticId } from "~/types";
-import { staticJournalists } from "~/lib/data/staticMedia";
+import { Database } from '@nozbe/watermelondb';
 
-describe("Journalist Model", () => {
+import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
+import { createGame } from '~/__tests__/support/factories/gameFactory';
+import { createJournalist } from '~/__tests__/support/factories/journalistFactory';
+import { createPublication } from '~/__tests__/support/factories/publicationFactory';
+import { staticJournalists } from '~/lib/data/staticMedia';
+import { Journalist } from '~/lib/db/models';
+import { JournalistStaticId } from '~/types';
+
+describe('Journalist Model', () => {
   let database: Database;
 
   beforeAll(() => {
@@ -37,24 +38,24 @@ describe("Journalist Model", () => {
   // MODEL STRUCTURE & PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Model Structure", () => {
-    it("should have correct table name and associations", () => {
-      expect(Journalist.table).toBe("journalists");
+  describe('Model Structure', () => {
+    it('should have correct table name and associations', () => {
+      expect(Journalist.table).toBe('journalists');
       expect(Journalist.associations.games).toEqual({
-        type: "belongs_to",
-        key: "game_id",
+        type: 'belongs_to',
+        key: 'game_id',
       });
       expect(Journalist.associations.publications).toEqual({
-        type: "belongs_to",
-        key: "publication_id",
+        type: 'belongs_to',
+        key: 'publication_id',
       });
       expect(Journalist.associations.press_exchanges).toEqual({
-        type: "has_many",
-        foreignKey: "journalist_id",
+        type: 'has_many',
+        foreignKey: 'journalist_id',
       });
     });
 
-    it("should create journalist with required properties", async () => {
+    it('should create journalist with required properties', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -74,7 +75,7 @@ describe("Journalist Model", () => {
       expect(journalist.updatedAt).toBeInstanceOf(Date);
     });
 
-    it("should belong to a game and publication", async () => {
+    it('should belong to a game and publication', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -104,8 +105,8 @@ describe("Journalist Model", () => {
   // STATIC DATA ACCESS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Static Data Integration", () => {
-    it("should return correct static data for different journalists", async () => {
+  describe('Static Data Integration', () => {
+    it('should return correct static data for different journalists', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -130,12 +131,12 @@ describe("Journalist Model", () => {
         expect(staticData).toEqual(expectedData);
         expect(staticData.name).toBeDefined();
         expect(staticData.publicationStaticId).toBeDefined();
-        expect(typeof staticData.name).toBe("string");
+        expect(typeof staticData.name).toBe('string');
         expect(staticData.name.length).toBeGreaterThan(0);
       }
     });
 
-    it("should work with all available JournalistStaticId values", async () => {
+    it('should work with all available JournalistStaticId values', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -153,12 +154,12 @@ describe("Journalist Model", () => {
         expect(staticData).toBeDefined();
         expect(staticData.name).toBeDefined();
         expect(staticData.publicationStaticId).toBeDefined();
-        expect(typeof staticData.name).toBe("string");
+        expect(typeof staticData.name).toBe('string');
         expect(staticData.name.length).toBeGreaterThan(0);
       }
     });
 
-    it("should return specific journalist data correctly", async () => {
+    it('should return specific journalist data correctly', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -167,19 +168,19 @@ describe("Journalist Model", () => {
       const testCases = [
         {
           staticId: JournalistStaticId.ConPrimaryA,
-          expectedName: "Ronald Rage",
+          expectedName: 'Ronald Rage',
         },
         {
           staticId: JournalistStaticId.LibPrimaryA,
-          expectedName: "Aspen Trustfund",
+          expectedName: 'Aspen Trustfund',
         },
         {
           staticId: JournalistStaticId.IndependentA,
-          expectedName: "Norm Center",
+          expectedName: 'Norm Center',
         },
         {
           staticId: JournalistStaticId.InvestigativeA,
-          expectedName: "Morgan Leakerton",
+          expectedName: 'Morgan Leakerton',
         },
       ];
 
@@ -198,8 +199,8 @@ describe("Journalist Model", () => {
   // REALISTIC GAME SCENARIOS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Game Integration", () => {
-    it("should maintain data consistency during updates", async () => {
+  describe('Game Integration', () => {
+    it('should maintain data consistency during updates', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -227,7 +228,7 @@ describe("Journalist Model", () => {
       expect(journalist.staticId).toBe(JournalistStaticId.ConPrimaryC);
     });
 
-    it("should efficiently query multiple journalists", async () => {
+    it('should efficiently query multiple journalists', async () => {
       const game = await createGame(database);
       const publication = await createPublication(database, {
         gameId: game.id,
@@ -246,17 +247,15 @@ describe("Journalist Model", () => {
             publicationId: publication.id,
             staticId,
             psRelationship: relationship,
-          })
-        )
+          }),
+        ),
       );
 
       const startTime = Date.now();
       const journalists = await game.journalists.fetch();
       const endTime = Date.now();
 
-      expect(journalists.length).toBeGreaterThanOrEqual(
-        journalistConfigs.length
-      );
+      expect(journalists.length).toBeGreaterThanOrEqual(journalistConfigs.length);
       expect(endTime - startTime).toBeLessThan(100);
 
       // Verify all have proper static data access
@@ -266,7 +265,7 @@ describe("Journalist Model", () => {
       });
     });
 
-    it("should work with journalists from different publications", async () => {
+    it('should work with journalists from different publications', async () => {
       const game = await createGame(database);
       const pub1 = await createPublication(database, { gameId: game.id });
       const pub2 = await createPublication(database, { gameId: game.id });
@@ -298,10 +297,10 @@ describe("Journalist Model", () => {
       ]);
 
       // Verify each has correct static data
-      expect(journalists[0].staticData.name).toBe("Zoey Crusade");
-      expect(journalists[1].staticData.name).toBe("Hawk Stormwell");
-      expect(journalists[2].staticData.name).toBe("Sam Neutrality");
-      expect(journalists[3].staticData.name).toBe("Morgan Leakerton");
+      expect(journalists[0].staticData.name).toBe('Zoey Crusade');
+      expect(journalists[1].staticData.name).toBe('Hawk Stormwell');
+      expect(journalists[2].staticData.name).toBe('Sam Neutrality');
+      expect(journalists[3].staticData.name).toBe('Morgan Leakerton');
 
       // Verify they all belong to the game
       const gameJournalists = await game.journalists.fetch();

@@ -7,33 +7,33 @@ export interface TabItem {
 
 // Modal Column Enums
 export enum GameStatus {
-  Active = "active",
-  Completed = "completed",
-  Impeached = "impeached",
-  Fired = "fired",
+  Active = 'active',
+  Completed = 'completed',
+  Impeached = 'impeached',
+  Fired = 'fired',
 }
 
 export enum LevelStatus {
-  Briefing = "briefing",
-  PressConference = "press_conference",
-  PressResults = "press_results",
-  SituationOutcomes = "situation_outcomes",
-  Completed = "completed",
+  Briefing = 'briefing',
+  PressConference = 'press_conference',
+  PressResults = 'press_results',
+  SituationOutcomes = 'situation_outcomes',
+  Completed = 'completed',
 }
 
 export enum PoliticalLeaning {
-  Conservative = "conservative",
-  Liberal = "liberal",
-  Neutral = "neutral",
+  Conservative = 'conservative',
+  Liberal = 'liberal',
+  Neutral = 'neutral',
 }
 
 export enum PressOfficeBackground {
-  Journalist = "journalist",
-  PolicyAide = "policy_aide",
-  CampaignSpokes = "campaign_spokes",
-  CrisisComms = "crisis_comms",
-  CorporatePR = "corporate_pr",
-  MilitaryPAO = "military_pao",
+  Journalist = 'journalist',
+  PolicyAide = 'policy_aide',
+  CampaignSpokes = 'campaign_spokes',
+  CrisisComms = 'crisis_comms',
+  CorporatePR = 'corporate_pr',
+  MilitaryPAO = 'military_pao',
 }
 
 // Alignment magnitude enum used by static data (multiply by POLITICAL_ALIGNMENT_WEIGHT)
@@ -46,21 +46,21 @@ export enum AlignmentWeight {
 }
 
 export enum SubgroupCategory {
-  Political = "political",
-  Demographic = "demographic",
-  Economic = "economic",
+  Political = 'political',
+  Demographic = 'demographic',
+  Economic = 'economic',
 }
 
 export type CabinetSnapshot = Record<CabinetStaticId, string>;
 
 // Static Data Types
 export enum CabinetStaticId {
-  State = "state",
-  Treasury = "treasury",
-  Defense = "defense",
-  Justice = "justice",
-  HHS = "hhs",
-  Homeland = "homeland",
+  State = 'state',
+  Treasury = 'treasury',
+  Defense = 'defense',
+  Justice = 'justice',
+  HHS = 'hhs',
+  Homeland = 'homeland',
 }
 
 export interface StaticCabinetMember {
@@ -69,18 +69,18 @@ export interface StaticCabinetMember {
 
 export enum SubgroupStaticId {
   // political
-  LeftWingBase = "left_wing_base",
-  RightWingBase = "right_wing_base",
-  IndependentBase = "independent_base",
+  LeftWingBase = 'left_wing_base',
+  RightWingBase = 'right_wing_base',
+  IndependentBase = 'independent_base',
   // demographic
-  YouthVoters = "youth_voters",
-  SeniorsCitizens = "seniors_citizens",
-  RuralResidents = "rural_residents",
-  UrbanResidents = "urban_residents",
+  YouthVoters = 'youth_voters',
+  SeniorsCitizens = 'seniors_citizens',
+  RuralResidents = 'rural_residents',
+  UrbanResidents = 'urban_residents',
   // economic
-  LaborUnions = "labor_unions",
-  BusinessLeaders = "business_leaders",
-  TechIndustry = "tech_industry",
+  LaborUnions = 'labor_unions',
+  BusinessLeaders = 'business_leaders',
+  TechIndustry = 'tech_industry',
 }
 
 export interface StaticSubgroup {
@@ -92,10 +92,10 @@ export interface StaticSubgroup {
 }
 
 export enum PublicationStaticId {
-  LibPrimary = "lib_primary",
-  ConPrimary = "con_primary",
-  IndependentPrimary = "independent_primary",
-  Investigative = "investigative",
+  LibPrimary = 'lib_primary',
+  ConPrimary = 'con_primary',
+  IndependentPrimary = 'independent_primary',
+  Investigative = 'investigative',
 }
 
 export interface StaticPublication {
@@ -105,16 +105,16 @@ export interface StaticPublication {
 }
 
 export enum JournalistStaticId {
-  LibPrimaryA = "lib_primary_a",
-  LibPrimaryB = "lib_primary_b",
-  LibPrimaryC = "lib_primary_c",
-  ConPrimaryA = "con_primary_a",
-  ConPrimaryB = "con_primary_b",
-  ConPrimaryC = "con_primary_c",
-  IndependentA = "independent_a",
-  IndependentB = "independent_b",
-  InvestigativeA = "investigative_a",
-  InvestigativeB = "investigative_b",
+  LibPrimaryA = 'lib_primary_a',
+  LibPrimaryB = 'lib_primary_b',
+  LibPrimaryC = 'lib_primary_c',
+  ConPrimaryA = 'con_primary_a',
+  ConPrimaryB = 'con_primary_b',
+  ConPrimaryC = 'con_primary_c',
+  IndependentA = 'independent_a',
+  IndependentB = 'independent_b',
+  InvestigativeA = 'investigative_a',
+  InvestigativeB = 'investigative_b',
 }
 
 export interface StaticJournalist {
@@ -147,13 +147,13 @@ export interface SituationImpacts {
 export type DisplayImpacts = ExchangeImpacts | SituationImpacts;
 
 export enum AnswerType {
-  Deflect = "deflect",
-  Reassure = "reassure",
-  Challenge = "challenge",
-  Admit = "admit",
-  Deny = "deny",
-  Inform = "inform",
-  Authorized = "authorized", // Cabinet Relationship based classified intel, not available for preferences
+  Deflect = 'deflect',
+  Reassure = 'reassure',
+  Challenge = 'challenge',
+  Admit = 'admit',
+  Deny = 'deny',
+  Inform = 'inform',
+  Authorized = 'authorized', // Cabinet Relationship based classified intel, not available for preferences
 }
 
 export type PreferenceAnswerType = Exclude<AnswerType, AnswerType.Authorized>;
@@ -216,13 +216,13 @@ export interface ExchangeData {
 
 // Situation Types
 export enum SituationType {
-  DomesticPolicy = "domestic_policy",
-  ForeignAffairs = "foreign_affairs",
-  Economy = "economy",
-  Security = "security",
-  Environment = "environment",
-  Ethics = "ethics",
-  Governance = "governance",
+  DomesticPolicy = 'domestic_policy',
+  ForeignAffairs = 'foreign_affairs',
+  Economy = 'economy',
+  Security = 'security',
+  Environment = 'environment',
+  Ethics = 'ethics',
+  Governance = 'governance',
 }
 
 export interface SituationTrigger {
@@ -351,7 +351,7 @@ export interface PressConferenceRawEffects {
 export interface EntityWithDelta {
   id: string;
   name: string;
-  role: "president" | "cabinet" | "journalist" | "publication" | "subgroup";
+  role: 'president' | 'cabinet' | 'journalist' | 'publication' | 'subgroup';
   title?: string; // Optional additional title/position info
   currentValue: number;
   delta: number;
@@ -406,7 +406,7 @@ export interface RelationshipSnapshot {
 
 export interface ConsequenceResult {
   gameEnded: boolean;
-  gameEndReason?: "impeached" | "fired" | "completed";
+  gameEndReason?: 'impeached' | 'fired' | 'completed';
   cabinetMembersFired: CabinetStaticId[];
 }
 
@@ -417,7 +417,7 @@ export interface OutcomeSnapshotType {
 }
 
 // Risk Types
-export type RiskLevel = "safe" | "low" | "medium" | "high";
+export type RiskLevel = 'safe' | 'low' | 'medium' | 'high';
 
 export interface RiskDisplayData {
   title: string;

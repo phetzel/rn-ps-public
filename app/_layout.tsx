@@ -1,29 +1,24 @@
-import "~/global.css";
+import '~/global.css';
 
-import {
-  DarkTheme,
-  DefaultTheme,
-  Theme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { Stack, SplashScreen } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import * as React from "react";
-import { Platform, View } from "react-native";
-import { PortalHost } from "@rn-primitives/portal";
-import { DatabaseProvider } from "@nozbe/watermelondb/DatabaseProvider";
+import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
+import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
+import { PortalHost } from '@rn-primitives/portal';
+import { Stack, SplashScreen } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import * as React from 'react';
+import { Platform, View } from 'react-native';
 
-import { BottomSheetModalProvider } from "~/components/ui/bottom-sheet";
-import { database } from "~/lib/db";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { useConsentStore } from "~/lib/stores/consentStore";
-import { NAV_THEME } from "~/lib/constants";
-import { useColorScheme } from "~/lib/useColorScheme";
-import { setAndroidNavigationBar } from "~/lib/android-navigation-bar";
-import { Text } from "~/components/ui/text";
-import { DisclaimerModal } from "~/components/shared/DisclaimerModal";
-import { getOrCreateAppSettings } from "~/lib/db/helpers";
-import { useDisclaimerDialogStore } from "~/lib/stores/disclaimerDialogStore";
+import { DisclaimerModal } from '~/components/shared/DisclaimerModal';
+import { BottomSheetModalProvider } from '~/components/ui/bottom-sheet';
+import { Text } from '~/components/ui/text';
+import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
+import { NAV_THEME } from '~/lib/constants';
+import { database } from '~/lib/db';
+import { getOrCreateAppSettings } from '~/lib/db/helpers';
+import { useConsentStore } from '~/lib/stores/consentStore';
+import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+import { useColorScheme } from '~/lib/useColorScheme';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -37,7 +32,7 @@ const DARK_THEME: Theme = {
   colors: NAV_THEME.dark,
 };
 
-export { ErrorBoundary } from "expo-router";
+export { ErrorBoundary } from 'expo-router';
 
 export default function RootLayout() {
   const { colorScheme, isDarkColorScheme } = useColorScheme();
@@ -61,11 +56,11 @@ export default function RootLayout() {
   }, [isDbReady, initializeDb]);
 
   React.useEffect(() => {
-    if (Platform.OS === "android") {
-      setAndroidNavigationBar("light");
+    if (Platform.OS === 'android') {
+      setAndroidNavigationBar('light');
     }
-    if (Platform.OS === "web") {
-      document.documentElement.classList.add("bg-background");
+    if (Platform.OS === 'web') {
+      document.documentElement.classList.add('bg-background');
     }
 
     setIsColorSchemeLoaded(true);
@@ -96,7 +91,7 @@ export default function RootLayout() {
             open();
           }
         }
-      } catch (e) {
+      } catch {
         // Fail silently; we'll try again next session
       }
     };
@@ -113,12 +108,12 @@ export default function RootLayout() {
   // If DB initialization failed critically, show an error message
   if (dbError && !isDbReady) {
     return (
-      <ThemeProvider value={LIGHT_THEME}>
+      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
         <View
           style={{
             flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
+            justifyContent: 'center',
+            alignItems: 'center',
             padding: 20,
           }}
         >
@@ -135,10 +130,10 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={LIGHT_THEME}>
+    <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <DatabaseProvider database={database}>
         <BottomSheetModalProvider>
-          <StatusBar style={isDarkColorScheme ? "light" : "dark"} />
+          <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
           <DisclaimerModal />
           <Stack>
             <Stack.Screen

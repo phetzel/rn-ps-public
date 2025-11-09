@@ -1,18 +1,16 @@
-import React, { Fragment, forwardRef } from "react";
 import BottomSheet, {
   BottomSheetView as BSView,
   BottomSheetModalProvider,
   BottomSheetModal as BSModal,
   BottomSheetScrollView as BSScrollView,
   BottomSheetHandle as BSHandle,
-} from "@gorhom/bottom-sheet";
-import type { BottomSheetModal as BSModalType } from "@gorhom/bottom-sheet";
-import { cssInterop } from "nativewind";
-import { BottomSheetProps, BSHandleProps } from "./types";
+} from '@gorhom/bottom-sheet';
+import { cssInterop } from 'nativewind';
+import React, { Fragment, forwardRef } from 'react';
+
+import { BottomSheetProps, BSHandleProps } from './types';
 
 const BottomSheetTrigger = Fragment;
-
-type BottomSheetModal = BSModalType;
 
 const BottomSheetModal = forwardRef<
   BSModal,
@@ -24,14 +22,15 @@ const BottomSheetModal = forwardRef<
     </BSModal>
   );
 });
+BottomSheetModal.displayName = 'BottomSheetModal';
 
 const BottomSheetView = cssInterop(BSView, {
-  className: "style",
+  className: 'style',
 });
 
 const BottomSheetScrollView = cssInterop(BSScrollView, {
-  className: "style",
-  contentContainerclassName: "contentContainerStyle",
+  className: 'style',
+  contentContainerclassName: 'contentContainerStyle',
 });
 
 const BottomSheetHandle: React.FC<BSHandleProps> = BSHandle;

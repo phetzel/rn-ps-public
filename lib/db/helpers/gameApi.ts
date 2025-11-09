@@ -1,48 +1,40 @@
-import { database } from "~/lib/db";
+import { staticPublications, staticJournalists } from '~/lib/data/staticMedia';
+import {
+  staticCabinetMembers,
+  staticSubgroups,
+  presidentialLeaningEffects,
+  pressBackgroundCabinetEffects,
+} from '~/lib/data/staticPolitics';
+import { database } from '~/lib/db';
 import {
   cabinetCollection,
   gamesCollection,
   journalistCollection,
   publicationCollection,
   subgroupCollection,
-} from "~/lib/db/helpers/collections";
+} from '~/lib/db/helpers/collections';
 // DB Models
-import { Game } from "~/lib/db/models";
+import { Game } from '~/lib/db/models';
 // Utils
-import { generateCabinetMemberName } from "~/lib/utils";
+import { generateCabinetMemberName } from '~/lib/utils';
 // Types, Data, and constants
 import {
-  NewGameDetails,
-  GameStatus,
-  PublicationStaticId,
-  JournalistStaticId,
-  StaticJournalist,
+  AlignmentWeight,
   CabinetStaticId,
-  SubgroupStaticId,
+  GameStatus,
+  JournalistStaticId,
+  NewGameDetails,
   PoliticalLeaning,
-  PressOfficeBackground,
-} from "~/types";
-import { POLITICAL_ALIGNMENT_WEIGHT } from "~/lib/constants";
-import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
-import {
-  staticCabinetMembers,
-  staticSubgroups,
-  presidentialLeaningEffects,
-  pressBackgroundCabinetEffects,
-} from "~/lib/data/staticPolitics";
-import { AlignmentWeight } from "~/types";
+  PublicationStaticId,
+  StaticJournalist,
+  SubgroupStaticId,
+} from '~/types';
 
-export async function createGameWithDetails(
-  details: NewGameDetails
-): Promise<Game> {
+export async function createGameWithDetails(details: NewGameDetails): Promise<Game> {
   // Pre-process journalists, grouping them by publicationStaticId
-  const journalistsByPublication = new Map<
-    PublicationStaticId,
-    StaticJournalist[]
-  >();
+  const journalistsByPublication = new Map<PublicationStaticId, StaticJournalist[]>();
   for (const journoData of Object.values(staticJournalists)) {
-    const list =
-      journalistsByPublication.get(journoData.publicationStaticId) || [];
+    const list = journalistsByPublication.get(journoData.publicationStaticId) || [];
     list.push(journoData);
     journalistsByPublication.set(journoData.publicationStaticId, list);
   }
@@ -72,7 +64,7 @@ export async function createGameWithDetails(
     const baseRelationship = 50;
     const background = details.pressOfficeBackground;
 
-    for (const [role, cabinetData] of Object.entries(staticCabinetMembers)) {
+    for (const [role] of Object.entries(staticCabinetMembers)) {
       // // TEMP
       // const relationshipValues = [20, 50, 90];
       // const randomRelationship =
@@ -126,7 +118,7 @@ export async function createGameWithDetails(
     }
 
     // Create media
-    for (const [pubStaticId, pubData] of Object.entries(staticPublications)) {
+    for (const [pubStaticId] of Object.entries(staticPublications)) {
       // Create Publication DB Record
       const createdPub = await publicationCollection.create((pub) => {
         pub.game.id = gameId;
@@ -135,15 +127,13 @@ export async function createGameWithDetails(
       const publicationDbId = createdPub.id;
 
       const associatedJournalists = journalistsByPublication.get(
-        pubStaticId as PublicationStaticId
+        pubStaticId as PublicationStaticId,
       );
       if (associatedJournalists && associatedJournalists.length > 0) {
         for (const journoData of associatedJournalists) {
           const journalistStaticId = journalistStaticIdMap.get(journoData);
           if (!journalistStaticId) {
-            console.warn(
-              `Could not find static ID for journalist ${journoData.name}. Skipping.`
-            );
+            console.warn(`Could not find static ID for journalist ${journoData.name}. Skipping.`);
             continue;
           }
 

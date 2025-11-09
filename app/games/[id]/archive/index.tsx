@@ -1,14 +1,13 @@
-import React from "react";
-import { Image, View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
-import { FlatList } from "react-native";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { Image, View, FlatList } from 'react-native';
 
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { observeCompletedLevels } from "~/lib/db/helpers";
-import { Level } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
-import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
-import ArchivedLevelCard from "~/components/screens/tab-archive/ArchivedLevelCard";
+import ArchivedLevelCard from '~/components/screens/tab-archive/ArchivedLevelCard';
+import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
+import { Text } from '~/components/ui/text';
+import { observeCompletedLevels } from '~/lib/db/helpers';
+import { Level } from '~/lib/db/models';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
 interface ArchiveIndexScreenProps {
   completedLevels: Level[];
@@ -21,21 +20,19 @@ function ArchiveIndexScreen({ completedLevels }: ArchiveIndexScreenProps) {
     return <Text>No game ID</Text>;
   }
 
-  const renderLevelCard = ({ item }: { item: Level }) => (
-    <ArchivedLevelCard levelId={item.id} />
-  );
+  const renderLevelCard = ({ item }: { item: Level }) => <ArchivedLevelCard levelId={item.id} />;
 
   return (
     <ParallaxScrollView
       headerImage={
         <Image
-          source={require("~/assets/images/header-archive.png")}
+          source={require('~/assets/images/header-archive.png')}
           style={{
-            width: "100%",
-            height: "100%",
+            width: '100%',
+            height: '100%',
             bottom: 0,
             left: 0,
-            position: "absolute",
+            position: 'absolute',
           }}
         />
       }
@@ -44,7 +41,7 @@ function ArchiveIndexScreen({ completedLevels }: ArchiveIndexScreenProps) {
         {completedLevels.length === 0 ? (
           <View className="items-center justify-center py-8">
             <Text className="text-muted-foreground text-center">
-              No completed levels yet.{"\n"}
+              No completed levels yet.{'\n'}
               Complete your first month to see it here!
             </Text>
           </View>

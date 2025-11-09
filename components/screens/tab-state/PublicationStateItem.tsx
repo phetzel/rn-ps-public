@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 
-import { observeJournalistsForPublication } from "~/lib/db/helpers";
-import type Publication from "~/lib/db/models/Publication";
-import type Journalist from "~/lib/db/models/Journalist";
-import { Text } from "~/components/ui/text";
+import { StateProgress } from '~/components/screens/tab-state/StateProgress';
+import { PublicationStateHeader } from '~/components/shared/entity/PublicationStateHeader';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/components/ui/accordion";
-import { Separator } from "~/components/ui/separator";
-import { StateProgress } from "~/components/screens/tab-state/StateProgress";
-import { PublicationStateHeader } from "~/components/shared/entity/PublicationStateHeader";
+} from '~/components/ui/accordion';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { observeJournalistsForPublication } from '~/lib/db/helpers';
+
+import type Journalist from '~/lib/db/models/Journalist';
+import type Publication from '~/lib/db/models/Publication';
 
 interface PublicationStateItemProps {
   publication: Publication;
   journalists: Journalist[];
 }
 
-export function PublicationStateItem({
-  publication,
-  journalists,
-}: PublicationStateItemProps) {
+export function PublicationStateItem({ publication, journalists }: PublicationStateItemProps) {
   const pubStaticData = publication.staticData;
   const [approvalRating, setApprovalRating] = useState<number | null>(null);
 
@@ -47,7 +45,7 @@ export function PublicationStateItem({
   const publicationAccessibilityLabel = `${pubStaticData.name}, ${
     pubStaticData.politicalLeaning
   } leaning publication. ${
-    approvalRating ? `Approval rating: ${approvalRating}%.` : ""
+    approvalRating ? `Approval rating: ${approvalRating}%.` : ''
   } ${journalists?.length || 0} journalists.`;
 
   return (
@@ -63,9 +61,7 @@ export function PublicationStateItem({
       />
 
       {/* Approval Rating */}
-      {approvalRating && (
-        <StateProgress label="Approval Rating" value={approvalRating} />
-      )}
+      {approvalRating && <StateProgress label="Approval Rating" value={approvalRating} />}
 
       {/* Journalists */}
       <Accordion type="single" className="w-full">
@@ -105,9 +101,7 @@ export function PublicationStateItem({
                           value={journalist.psRelationship}
                         />
 
-                        {idx !== journalists.length - 1 && (
-                          <Separator className="mt-2" />
-                        )}
+                        {idx !== journalists.length - 1 && <Separator className="mt-2" />}
                       </View>
                     );
                   })}
@@ -128,7 +122,7 @@ export function PublicationStateItem({
   );
 }
 
-const enhance = withObservables(["publication"], ({ publication }) => ({
+const enhance = withObservables(['publication'], ({ publication }) => ({
   publication,
   journalists: observeJournalistsForPublication(publication),
 }));

@@ -4,19 +4,18 @@ onStart:
   - clearState
   - launchApp
   - tapOn:
-      text: "I understand"
+      text: 'I understand'
       optional: true
-  - assertVisible: "Start New Game"
+  - assertVisible: 'Start New Game'
 steps:
-  - tapOn: "Start New Game"
-  - assertVisible: "New Press Secretary Career"
-  - tapOn: "George Washington..."
-  - inputText: "John Adams"
-  - tapOn: "Liberal"
-  - tapOn: "George Akerson..."
-  - inputText: "James Brady"
-  - tapOn: "Select background"
-  - tapOn: "Journalist"
-  - tapOn: "Create Game"
-  - assertVisible: "Active Situations"
-
+  - tapOn: 'Start New Game'
+  - assertVisible: 'New Press Secretary Career'
+  - tapOn: 'George Washington...'
+  - inputText: 'John Adams'
+  - tapOn: 'Liberal'
+  - tapOn: 'George Akerson...'
+  - inputText: 'James Brady'
+  - tapOn: 'Select background'
+  - tapOn: 'Journalist'
+  - tapOn: 'Create Game'
+  - assertVisible: 'Active Situations'

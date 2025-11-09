@@ -1,4 +1,4 @@
-import { Model, Relation } from "@nozbe/watermelondb";
+import { Model, Relation, Query } from '@nozbe/watermelondb';
 import {
   field,
   text,
@@ -7,42 +7,38 @@ import {
   readonly,
   writer,
   children,
-} from "@nozbe/watermelondb/decorators";
-import { Query } from "@nozbe/watermelondb";
-import type { Associations } from "@nozbe/watermelondb/Model";
+} from '@nozbe/watermelondb/decorators';
 
-import type { Game, Level, PressExchange } from "~/lib/db/models";
-import { situationContentSchema } from "~/lib/schemas";
-import type {
-  SituationType,
-  SituationContent,
-  SituationOutcome,
-} from "~/types";
+import { situationContentSchema } from '~/lib/schemas';
+
+import type { Associations } from '@nozbe/watermelondb/Model';
+import type { Game, Level, PressExchange } from '~/lib/db/models';
+import type { SituationType, SituationContent, SituationOutcome } from '~/types';
 
 export default class Situation extends Model {
-  static table = "situations";
+  static table = 'situations';
 
   static associations: Associations = {
-    game: { type: "belongs_to", key: "game_id" },
-    level: { type: "belongs_to", key: "level_id" },
-    press_exchanges: { type: "has_many", foreignKey: "situation_id" },
+    game: { type: 'belongs_to', key: 'game_id' },
+    level: { type: 'belongs_to', key: 'level_id' },
+    press_exchanges: { type: 'has_many', foreignKey: 'situation_id' },
   };
 
-  @relation("games", "game_id") game!: Relation<Game>;
-  @relation("levels", "level_id") level!: Relation<Level>;
-  @children("press_exchanges") pressExchanges!: Query<PressExchange>;
+  @relation('games', 'game_id') game!: Relation<Game>;
+  @relation('levels', 'level_id') level!: Relation<Level>;
+  @children('press_exchanges') pressExchanges!: Query<PressExchange>;
 
-  @text("type") type!: SituationType;
-  @text("title") title!: string;
-  @text("description") description!: string;
-  @text("content") content!: string; // JSON string for static situation data
-  @text("outcome_id") outcomeId!: string | null;
+  @text('type') type!: SituationType;
+  @text('title') title!: string;
+  @text('description') description!: string;
+  @text('content') content!: string; // JSON string for static situation data
+  @text('outcome_id') outcomeId!: string | null;
 
-  @field("game_id") game_id!: string;
-  @field("level_id") level_id!: string;
+  @field('game_id') game_id!: string;
+  @field('level_id') level_id!: string;
 
-  @readonly @date("created_at") createdAt!: Date;
-  @readonly @date("updated_at") updatedAt!: Date;
+  @readonly @date('created_at') createdAt!: Date;
+  @readonly @date('updated_at') updatedAt!: Date;
 
   // Actions
   // --- Situation Progress ---
@@ -61,8 +57,8 @@ export default class Situation extends Model {
       if (!validationResult.success) {
         console.warn(
           // Update warning message
-          "Situation.content getter: Invalid data structure found in DB:",
-          validationResult.error.format()
+          'Situation.content getter: Invalid data structure found in DB:',
+          validationResult.error.format(),
         );
         return null;
       }
@@ -71,7 +67,7 @@ export default class Situation extends Model {
       // Update error message
       console.error(`Error parsing Situation ${this.id} content:`, e);
       // Log this.content
-      console.error("Invalid JSON string:", this.content);
+      console.error('Invalid JSON string:', this.content);
       return null;
     }
   }
@@ -100,9 +96,7 @@ export default class Situation extends Model {
 
     try {
       const parsedContent = JSON.parse(this.content) as SituationContent;
-      const outcome = parsedContent.outcomes.find(
-        (o) => o.id === this.outcomeId
-      );
+      const outcome = parsedContent.outcomes.find((o) => o.id === this.outcomeId);
       return !!outcome?.followUpId;
     } catch (e) {
       console.error(`Error checking for follow-up in situation ${this.id}:`, e);
@@ -117,9 +111,7 @@ export default class Situation extends Model {
 
     try {
       const parsedContent = JSON.parse(this.content) as SituationContent;
-      const outcome = parsedContent.outcomes.find(
-        (o) => o.id === this.outcomeId
-      );
+      const outcome = parsedContent.outcomes.find((o) => o.id === this.outcomeId);
       return outcome?.followUpId || null;
     } catch (e) {
       console.error(`Error getting follow-up ID for situation ${this.id}:`, e);

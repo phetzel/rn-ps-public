@@ -8,17 +8,17 @@
  * - Error handling for invalid static IDs
  */
 
-import { Database } from "@nozbe/watermelondb";
-import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
-import { createGame } from "~/__tests__/support/factories/gameFactory";
-import { createSubgroupApproval } from "~/__tests__/support/factories/subgroupApprovalFactory";
+import { Database } from '@nozbe/watermelondb';
 
+import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
+import { createGame } from '~/__tests__/support/factories/gameFactory';
+import { createSubgroupApproval } from '~/__tests__/support/factories/subgroupApprovalFactory';
 // Models & Types
-import { SubgroupApproval } from "~/lib/db/models";
-import { SubgroupStaticId } from "~/types";
-import { staticSubgroups } from "~/lib/data/staticPolitics";
+import { staticSubgroups } from '~/lib/data/staticPolitics';
+import { SubgroupApproval } from '~/lib/db/models';
+import { SubgroupStaticId } from '~/types';
 
-describe("SubgroupApproval Model", () => {
+describe('SubgroupApproval Model', () => {
   let database: Database;
 
   beforeAll(() => {
@@ -33,16 +33,16 @@ describe("SubgroupApproval Model", () => {
   // MODEL STRUCTURE & PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Model Structure", () => {
-    it("should have correct table name and associations", () => {
-      expect(SubgroupApproval.table).toBe("subgroup_approvals");
+  describe('Model Structure', () => {
+    it('should have correct table name and associations', () => {
+      expect(SubgroupApproval.table).toBe('subgroup_approvals');
       expect(SubgroupApproval.associations.games).toEqual({
-        type: "belongs_to",
-        key: "game_id",
+        type: 'belongs_to',
+        key: 'game_id',
       });
     });
 
-    it("should create a subgroup approval with required properties", async () => {
+    it('should create a subgroup approval with required properties', async () => {
       const game = await createGame(database);
       const subgroup = await createSubgroupApproval(database, {
         gameId: game.id,
@@ -55,7 +55,7 @@ describe("SubgroupApproval Model", () => {
       expect(subgroup.approvalRating).toBe(65);
     });
 
-    it("should belong to a game", async () => {
+    it('should belong to a game', async () => {
       const game = await createGame(database);
       const subgroup = await createSubgroupApproval(database, {
         gameId: game.id,
@@ -74,8 +74,8 @@ describe("SubgroupApproval Model", () => {
   // STATIC DATA ACCESS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Static Data Integration", () => {
-    it("should return correct static data for different subgroups", async () => {
+  describe('Static Data Integration', () => {
+    it('should return correct static data for different subgroups', async () => {
       const game = await createGame(database);
       const subgroupIds = Object.values(SubgroupStaticId);
 
@@ -95,11 +95,11 @@ describe("SubgroupApproval Model", () => {
       }
     });
 
-    it("should handle invalid staticId gracefully", async () => {
+    it('should handle invalid staticId gracefully', async () => {
       const game = await createGame(database);
       const subgroup = await createSubgroupApproval(database, {
         gameId: game.id,
-        staticId: "invalid-id" as any,
+        staticId: 'invalid-id' as any,
       });
 
       expect(subgroup.staticData).toBeUndefined();
@@ -111,8 +111,8 @@ describe("SubgroupApproval Model", () => {
   // RATING VALIDATION
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Rating Validation", () => {
-    it("should enforce approval rating bounds (0-100)", async () => {
+  describe('Rating Validation', () => {
+    it('should enforce approval rating bounds (0-100)', async () => {
       const game = await createGame(database);
       const subgroup = await createSubgroupApproval(database, {
         gameId: game.id,
@@ -136,7 +136,7 @@ describe("SubgroupApproval Model", () => {
       expect(subgroup.approvalRating).toBe(100);
     });
 
-    it("should round decimal values to whole numbers", async () => {
+    it('should round decimal values to whole numbers', async () => {
       const game = await createGame(database);
       const subgroup = await createSubgroupApproval(database, {
         gameId: game.id,
@@ -162,7 +162,7 @@ describe("SubgroupApproval Model", () => {
       expect(subgroup.approvalRating).toBe(64);
     });
 
-    it("should handle edge cases with rounding and bounds", async () => {
+    it('should handle edge cases with rounding and bounds', async () => {
       const game = await createGame(database);
       const subgroup = await createSubgroupApproval(database, {
         gameId: game.id,

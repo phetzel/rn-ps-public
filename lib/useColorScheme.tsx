@@ -1,17 +1,16 @@
-import * as React from "react";
-import { useColorScheme as useNativewindColorScheme } from "nativewind";
+import { useColorScheme as useNativewindColorScheme } from 'nativewind';
+import * as React from 'react';
 
 // Disabled dark color scheme for now
 export function useColorScheme() {
-  const { colorScheme, setColorScheme, toggleColorScheme } =
-    useNativewindColorScheme();
+  const { setColorScheme } = useNativewindColorScheme();
 
   React.useEffect(() => {
-    setColorScheme("light");
+    setColorScheme('light');
   }, [setColorScheme]);
 
   return {
-    colorScheme: "light",
+    colorScheme: 'light',
     isDarkColorScheme: false,
     setColorScheme: () => {},
     toggleColorScheme: () => {},

@@ -1,16 +1,16 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { staticPublications, staticJournalists } from "~/lib/data/staticMedia";
-import { Text } from "~/components/ui/text";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Newspaper } from "~/lib/icons";
+import { PublicationStateHeader } from '~/components/shared/entity/PublicationStateHeader';
+import LevelProgress from '~/components/shared/level-state/LevelProgress';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { staticPublications, staticJournalists } from '~/lib/data/staticMedia';
+import { Newspaper } from '~/lib/icons';
+import { PublicationStaticId, JournalistStaticId } from '~/types';
 
-import { Separator } from "~/components/ui/separator";
-import LevelProgress from "~/components/shared/level-state/LevelProgress";
-import { PublicationStateHeader } from "~/components/shared/entity/PublicationStateHeader";
-import { PublicationStaticId, JournalistStaticId } from "~/types";
-import type { OutcomeSnapshotType } from "~/types";
+import type { OutcomeSnapshotType } from '~/types';
 
 interface MediaLevelStateProps {
   outcomeSnapshot: OutcomeSnapshotType;
@@ -36,10 +36,7 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
       });
       return acc;
     },
-    {} as Record<
-      PublicationStaticId,
-      Array<{ id: JournalistStaticId; name: string }>
-    >
+    {} as Record<PublicationStaticId, { id: JournalistStaticId; name: string }[]>,
   );
 
   // Get publications with data (either approval ratings or journalist data)
@@ -53,20 +50,16 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
       if (hasApprovalData) return true;
 
       // Fallback to journalist data check
-      const pubJournalists =
-        journalistsByPublication[pubId as PublicationStaticId] || [];
+      const pubJournalists = journalistsByPublication[pubId as PublicationStaticId] || [];
       return pubJournalists.some(
-        (journalist) =>
-          initial.journalists[journalist.id] && final.journalists[journalist.id]
+        (journalist) => initial.journalists[journalist.id] && final.journalists[journalist.id],
       );
     })
     .map(([id, pub]) => ({
       id: id as PublicationStaticId,
       ...pub,
-      initialApproval:
-        initial.publications?.[id as PublicationStaticId]?.approvalRating ?? 0,
-      finalApproval:
-        final.publications?.[id as PublicationStaticId]?.approvalRating ?? 0,
+      initialApproval: initial.publications?.[id as PublicationStaticId]?.approvalRating ?? 0,
+      finalApproval: final.publications?.[id as PublicationStaticId]?.approvalRating ?? 0,
       hasApprovalData: !!(
         initial.publications?.[id as PublicationStaticId] ||
         final.publications?.[id as PublicationStaticId]
@@ -86,11 +79,9 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
           accessibilityLabel={`Media monthly update: ${publicationsWithData.length} publications`}
         >
           {publicationsWithData.map((publication, pubIndex) => {
-            const publicationJournalists =
-              journalistsByPublication[publication.id] || [];
+            const publicationJournalists = journalistsByPublication[publication.id] || [];
 
-            const approvalChange =
-              publication.finalApproval - publication.initialApproval;
+            const approvalChange = publication.finalApproval - publication.initialApproval;
 
             return (
               <View
@@ -99,10 +90,8 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                 accessible={true}
                 accessibilityLabel={`${publication.name}. ${
                   publication.hasApprovalData
-                    ? `Approval changed by ${
-                        approvalChange > 0 ? "+" : ""
-                      }${approvalChange}%.`
-                    : ""
+                    ? `Approval changed by ${approvalChange > 0 ? '+' : ''}${approvalChange}%.`
+                    : ''
                 } ${publicationJournalists.length} journalists.`}
               >
                 <View className="gap-2" accessible={false}>
@@ -124,34 +113,27 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                   {/* Journalists Section - Always Visible */}
                   {publicationJournalists.length > 0 && (
                     <View className="gap-4">
-                      <Text
-                        className="text-lg font-medium"
-                        accessibilityRole="header"
-                      >
+                      <Text className="text-lg font-medium" accessibilityRole="header">
                         Journalists ({publicationJournalists.length})
                       </Text>
 
                       <View className="gap-2">
                         {publicationJournalists.map((journalist, journoIdx) => {
-                          const initialValues =
-                            initial.journalists[journalist.id];
+                          const initialValues = initial.journalists[journalist.id];
                           const finalValues = final.journalists[journalist.id];
 
                           if (!initialValues || !finalValues) return null;
 
                           const relationshipChange =
-                            finalValues.psRelationship -
-                            initialValues.psRelationship;
+                            finalValues.psRelationship - initialValues.psRelationship;
 
                           return (
                             <View
                               key={journalist.id}
                               className=""
                               accessible={true}
-                              accessibilityLabel={`${
-                                journalist.name
-                              }. Relationship changed by ${
-                                relationshipChange > 0 ? "+" : ""
+                              accessibilityLabel={`${journalist.name}. Relationship changed by ${
+                                relationshipChange > 0 ? '+' : ''
                               }${relationshipChange}%.`}
                             >
                               <Text className="text-lg font-bold leading-tight">
@@ -164,8 +146,7 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                                 finalValue={finalValues.psRelationship}
                               />
 
-                              {journoIdx !==
-                                publicationJournalists.length - 1 && (
+                              {journoIdx !== publicationJournalists.length - 1 && (
                                 <Separator className="mt-2" />
                               )}
                             </View>
@@ -176,8 +157,7 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                   )}
                 </View>
                 {/* Add separator between publications */}
-                {publication !==
-                  publicationsWithData[publicationsWithData.length - 1] && (
+                {publication !== publicationsWithData[publicationsWithData.length - 1] && (
                   <Separator className="my-4" />
                 )}
               </View>

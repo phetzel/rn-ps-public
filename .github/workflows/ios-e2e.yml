@@ -3,7 +3,7 @@ name: iOS E2E (Maestro)
 on:
   pull_request:
   push:
-    branches: [ main, prod-ready, release/** ]
+    branches: [main, prod-ready, release/**]
 
 jobs:
   ios-e2e:
@@ -59,4 +59,3 @@ jobs:
 
       - name: Run Maestro tests (iOS)
         run: maestro test e2e/maestro/suites/smoke.yaml
-

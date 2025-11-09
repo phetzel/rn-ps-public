@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
+
 import {
   Question,
   ExchangeHistoryItem,
@@ -6,7 +7,7 @@ import {
   ExchangeImpacts,
   JournalistInteractionImpact,
   AnswerType,
-} from "~/types";
+} from '~/types';
 
 export function useExchangeQuestion({
   question,
@@ -32,26 +33,26 @@ export function useExchangeQuestion({
   // Calculate journalist impact
   const journalistImpact = useMemo(() => {
     let weight = 0;
-    let reaction = "";
+    let reaction = '';
 
     if (!isAsked) {
       if (isFirstQuestion) {
         weight = JournalistInteractionImpact.Ignore;
-        reaction = "Journalist was ignored";
+        reaction = 'Journalist was ignored';
       } else {
         weight = JournalistInteractionImpact.HadFollowUp;
-        reaction = "Had follow up questions";
+        reaction = 'Had follow up questions';
       }
     } else if (isSkipped) {
       weight = JournalistInteractionImpact.Skipped;
-      reaction = "Question was skipped";
+      reaction = 'Question was skipped';
     } else {
       if (answer?.type === AnswerType.Authorized) {
         weight = JournalistInteractionImpact.AuthorizedAnswer;
-        reaction = "You provided classified information";
+        reaction = 'You provided classified information';
       } else {
         weight = JournalistInteractionImpact.Answered;
-        reaction = "You answered the question";
+        reaction = 'You answered the question';
       }
     }
 

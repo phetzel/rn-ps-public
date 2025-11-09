@@ -1,8 +1,9 @@
-import { Database } from "@nozbe/watermelondb";
-import { createGameScenario } from "~/__tests__/support/scenarios/game";
-import { createCabinetMember } from "~/__tests__/support/factories/cabinetMemberFactory";
-import { createSubgroupApproval } from "~/__tests__/support/factories/subgroupApprovalFactory";
-import { CabinetStaticId, SubgroupStaticId } from "~/types";
+import { Database } from '@nozbe/watermelondb';
+
+import { createCabinetMember } from '~/__tests__/support/factories/cabinetMemberFactory';
+import { createSubgroupApproval } from '~/__tests__/support/factories/subgroupApprovalFactory';
+import { createGameScenario } from '~/__tests__/support/scenarios/game';
+import { CabinetStaticId, SubgroupStaticId } from '~/types';
 
 export async function createConsequenceTestScenario(
   database: Database,
@@ -15,18 +16,15 @@ export async function createConsequenceTestScenario(
       approvalRating: number;
     }[];
   } = {},
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
-  const { game, cabinetMembers, subgroups } = await createGameScenario(
-    database,
-    {
-      gameOptions: {
-        presPsRelationship: options.presPsRelationship ?? 50,
-      },
-      cabinetMemberCount: 0, // We'll create specific ones
-      subgroupCount: 0, // We'll create specific ones
-    }
-  );
+  const { game } = await createGameScenario(database, {
+    gameOptions: {
+      presPsRelationship: options.presPsRelationship ?? 50,
+    },
+    cabinetMemberCount: 0, // We'll create specific ones
+    subgroupCount: 0, // We'll create specific ones
+  });
 
   // Create cabinet members with specific approval ratings
   const testCabinetMembers = [];
@@ -66,8 +64,7 @@ export async function createConsequenceTestScenario(
     },
   ];
 
-  const subgroupApprovals =
-    options.subgroupApprovals ?? defaultSubgroupApprovals;
+  const subgroupApprovals = options.subgroupApprovals ?? defaultSubgroupApprovals;
 
   for (const { staticId, approvalRating } of subgroupApprovals) {
     const subgroup = await createSubgroupApproval(database, {
@@ -105,7 +102,7 @@ export async function createConsequenceTestScenario(
 export async function createImpeachmentScenario(
   database: Database,
   presApprovalRating: number = 15,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -113,14 +110,14 @@ export async function createImpeachmentScenario(
       presApprovalRating,
       presPsRelationship: 60, // Safe from firing
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createFiringScenario(
   database: Database,
   presPsRelationship: number = 10,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -128,13 +125,13 @@ export async function createFiringScenario(
       presApprovalRating: 60, // Safe from impeachment
       presPsRelationship,
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createCabinetCrisisScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -147,13 +144,13 @@ export async function createCabinetCrisisScenario(
         { staticId: CabinetStaticId.Treasury, approvalRating: 15 }, // Will fire
       ],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createStableGameScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -166,13 +163,13 @@ export async function createStableGameScenario(
         { staticId: CabinetStaticId.Treasury, approvalRating: 70 },
       ],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createBoundaryTestScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -183,13 +180,13 @@ export async function createBoundaryTestScenario(
         { staticId: CabinetStaticId.State, approvalRating: 25 }, // Exactly at threshold
       ],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createSubgroupPenaltyScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -205,13 +202,13 @@ export async function createSubgroupPenaltyScenario(
         { staticId: SubgroupStaticId.RightWingBase, approvalRating: 80 },
       ],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createSubgroupFloorScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createConsequenceTestScenario(
     database,
@@ -227,7 +224,7 @@ export async function createSubgroupFloorScenario(
         { staticId: SubgroupStaticId.LeftWingBase, approvalRating: 15 }, // Will go below 0
       ],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
@@ -240,21 +237,20 @@ export async function createCompletionScenario(
     presPsRelationship?: number;
     cabinetApprovals?: { staticId: CabinetStaticId; approvalRating: number }[];
   } = {},
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
-  const { game, cabinetMembers, subgroups } =
-    await createConsequenceTestScenario(
-      database,
-      {
-        presApprovalRating: options.presApprovalRating ?? 60, // Safe from impeachment
-        presPsRelationship: options.presPsRelationship ?? 70, // Safe from firing
-        cabinetApprovals: options.cabinetApprovals ?? [
-          { staticId: CabinetStaticId.State, approvalRating: 50 }, // Safe
-          { staticId: CabinetStaticId.Defense, approvalRating: 45 }, // Safe
-        ],
-      },
-      mockFetchGameEntities
-    );
+  const { game, cabinetMembers, subgroups } = await createConsequenceTestScenario(
+    database,
+    {
+      presApprovalRating: options.presApprovalRating ?? 60, // Safe from impeachment
+      presPsRelationship: options.presPsRelationship ?? 70, // Safe from firing
+      cabinetApprovals: options.cabinetApprovals ?? [
+        { staticId: CabinetStaticId.State, approvalRating: 50 }, // Safe
+        { staticId: CabinetStaticId.Defense, approvalRating: 45 }, // Safe
+      ],
+    },
+    mockFetchGameEntities,
+  );
 
   // Set the game to the specified year/month (defaults to term limit)
   await database.write(async () => {
@@ -269,7 +265,7 @@ export async function createCompletionScenario(
 
 export async function createTermLimitCompletionScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createCompletionScenario(
     database,
@@ -283,13 +279,13 @@ export async function createTermLimitCompletionScenario(
         { staticId: CabinetStaticId.Defense, approvalRating: 45 }, // Safe
       ],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createTermLimitImpeachmentScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createCompletionScenario(
     database,
@@ -298,17 +294,15 @@ export async function createTermLimitImpeachmentScenario(
       currentMonth: 12,
       presApprovalRating: 10, // High impeachment risk
       presPsRelationship: 70, // Safe from firing
-      cabinetApprovals: [
-        { staticId: CabinetStaticId.State, approvalRating: 50 },
-      ],
+      cabinetApprovals: [{ staticId: CabinetStaticId.State, approvalRating: 50 }],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createTermLimitFiringScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createCompletionScenario(
     database,
@@ -317,17 +311,15 @@ export async function createTermLimitFiringScenario(
       currentMonth: 12,
       presApprovalRating: 60, // Safe from impeachment
       presPsRelationship: 10, // High firing risk
-      cabinetApprovals: [
-        { staticId: CabinetStaticId.State, approvalRating: 50 },
-      ],
+      cabinetApprovals: [{ staticId: CabinetStaticId.State, approvalRating: 50 }],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
 export async function createNonTermLimitScenario(
   database: Database,
-  mockFetchGameEntities?: jest.MockedFunction<any>
+  mockFetchGameEntities?: jest.MockedFunction<any>,
 ) {
   return createCompletionScenario(
     database,
@@ -336,11 +328,9 @@ export async function createNonTermLimitScenario(
       currentMonth: 11, // Not December - not at term limit
       presApprovalRating: 60, // Safe from impeachment
       presPsRelationship: 70, // Safe from firing
-      cabinetApprovals: [
-        { staticId: CabinetStaticId.State, approvalRating: 50 },
-      ],
+      cabinetApprovals: [{ staticId: CabinetStaticId.State, approvalRating: 50 }],
     },
-    mockFetchGameEntities
+    mockFetchGameEntities,
   );
 }
 
@@ -372,27 +362,27 @@ export interface ConsequenceTestCase {
   presPsRelationship: number;
   randomValue: number;
   expectedGameEnded: boolean;
-  expectedReason?: "impeached" | "fired";
+  expectedReason?: 'impeached' | 'fired';
 }
 
 export const IMPEACHMENT_TEST_CASES: ConsequenceTestCase[] = [
   {
-    name: "should impeach with low approval and successful roll",
+    name: 'should impeach with low approval and successful roll',
     presApprovalRating: 15, // Risk = 0.4
     presPsRelationship: 60,
     randomValue: 0.3, // < 0.4
     expectedGameEnded: true,
-    expectedReason: "impeached",
+    expectedReason: 'impeached',
   },
   {
-    name: "should not impeach with failed roll",
+    name: 'should not impeach with failed roll',
     presApprovalRating: 20, // Risk = 0.2
     presPsRelationship: 60,
     randomValue: 0.5, // > 0.2
     expectedGameEnded: false,
   },
   {
-    name: "should not impeach with safe approval",
+    name: 'should not impeach with safe approval',
     presApprovalRating: 30, // No risk
     presPsRelationship: 60,
     randomValue: 0.1,
@@ -402,15 +392,15 @@ export const IMPEACHMENT_TEST_CASES: ConsequenceTestCase[] = [
 
 export const FIRING_TEST_CASES: ConsequenceTestCase[] = [
   {
-    name: "should fire with low relationship and successful roll",
+    name: 'should fire with low relationship and successful roll',
     presApprovalRating: 60,
     presPsRelationship: 10, // Risk = 0.6
     randomValue: 0.4, // < 0.6
     expectedGameEnded: true,
-    expectedReason: "fired",
+    expectedReason: 'fired',
   },
   {
-    name: "should not fire with failed roll",
+    name: 'should not fire with failed roll',
     presApprovalRating: 60,
     presPsRelationship: 20, // Risk = 0.2
     randomValue: 0.5, // > 0.2

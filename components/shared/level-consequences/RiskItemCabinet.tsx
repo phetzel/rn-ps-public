@@ -1,25 +1,22 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import { Badge } from "~/components/ui/badge";
-import { Text } from "~/components/ui/text";
-import { CONSEQUENCE_THRESHOLD } from "~/lib/constants";
-import { useRiskDisplay } from "~/lib/hooks/useRiskDisplay";
-import ThresholdProgressBar from "~/components/shared/level-consequences/ThresholdProgressBar";
-import { CabinetRiskDisplayData } from "~/types";
+import ThresholdProgressBar from '~/components/shared/level-consequences/ThresholdProgressBar';
+import { Badge } from '~/components/ui/badge';
+import { Text } from '~/components/ui/text';
+import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
+import { useRiskDisplay } from '~/lib/hooks/useRiskDisplay';
+import { CabinetRiskDisplayData } from '~/types';
 
 interface RiskItemCabinetProps {
   cabinetMember: CabinetRiskDisplayData;
   wasFired: boolean;
 }
 
-export default function RiskItemCabinet({
-  cabinetMember,
-  wasFired,
-}: RiskItemCabinetProps) {
+export default function RiskItemCabinet({ cabinetMember, wasFired }: RiskItemCabinetProps) {
   const riskInfo = useRiskDisplay(
     cabinetMember.currentValue,
     cabinetMember.riskPercentage,
-    cabinetMember.threshold || CONSEQUENCE_THRESHOLD
+    cabinetMember.threshold || CONSEQUENCE_THRESHOLD,
   );
 
   const getAccessibilityLabel = () => {
@@ -32,15 +29,8 @@ export default function RiskItemCabinet({
   };
 
   return (
-    <View
-      className="gap-1"
-      accessible={true}
-      accessibilityLabel={getAccessibilityLabel()}
-    >
-      <View
-        className="flex-row justify-between items-center"
-        accessible={false}
-      >
+    <View className="gap-1" accessible={true} accessibilityLabel={getAccessibilityLabel()}>
+      <View className="flex-row justify-between items-center" accessible={false}>
         <View className="flex-1">
           <Text
             className="text-sm font-medium"

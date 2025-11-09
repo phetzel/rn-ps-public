@@ -1,15 +1,16 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
 
-import { observePressExchangesForSituation } from "~/lib/db/helpers/observations";
-import { findQuestionById } from "~/lib/db/helpers/exchangeApi";
+import SituationOutcomeExchangeItem from '~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem';
+import { Text } from '~/components/ui/text';
+import { findQuestionById } from '~/lib/db/helpers/exchangeApi';
+import { observePressExchangesForSituation } from '~/lib/db/helpers/observations';
 // Components
-import { Text } from "~/components/ui/text";
-import SituationOutcomeExchangeItem from "~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem";
+
 // Types
-import type { PressExchange } from "~/lib/db/models";
-import type { SituationOutcome } from "~/types";
+import type { PressExchange } from '~/lib/db/models';
+import type { SituationOutcome } from '~/types';
 
 interface SituationOutcomeExchangesProps {
   pressExchanges: PressExchange[];
@@ -82,7 +83,7 @@ const SituationOutcomeExchanges = ({
   );
 };
 
-const enhance = withObservables(["situationId"], ({ situationId }) => ({
+const enhance = withObservables(['situationId'], ({ situationId }) => ({
   pressExchanges: observePressExchangesForSituation(situationId),
 }));
 

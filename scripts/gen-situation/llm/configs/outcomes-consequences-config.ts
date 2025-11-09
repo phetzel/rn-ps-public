@@ -1,14 +1,16 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ResponsesJSONSchemaOptions } from "../../types";
+import { zodToJsonSchema } from 'zod-to-json-schema';
+
 import {
   generateOutcomesConsequencesSchema,
-  type GenerateOutcomesConsequences,
   type GenerateBaseOutcomes,
   type GenerateSituationPlan,
   type GeneratePreferences,
-} from "~/lib/schemas/generate";
-import { buildImplementationPrompt } from "../prompt-constants";
-import { GPT_5 } from "../llm-constants";
+} from '~/lib/schemas/generate';
+
+import { GPT_5 } from '../llm-constants';
+import { buildImplementationPrompt } from '../prompt-constants';
+
+import type { ResponsesJSONSchemaOptions } from '../../types';
 
 const CONSEQUENCES_SPECIFIC_INSTRUCTIONS = `
 ADD approval impacts (consequences) for each existing outcome in this fictional political situation.
@@ -67,11 +69,11 @@ const instructions = buildImplementationPrompt(CONSEQUENCES_SPECIFIC_INSTRUCTION
 export function buildOutcomesConsequencesRequest(
   plan: GenerateSituationPlan,
   preferences: GeneratePreferences,
-  baseOutcomes: GenerateBaseOutcomes
+  baseOutcomes: GenerateBaseOutcomes,
 ): ResponsesJSONSchemaOptions {
-  const cabinetList = plan.involvedEntities?.cabinetMembers?.join(", ") || "(none)";
-  const subgroupList = plan.involvedEntities?.subgroups?.join(", ") || "(none)";
-  const publicationList = plan.involvedEntities?.publications?.join(", ") || "(none)";
+  const cabinetList = plan.involvedEntities?.cabinetMembers?.join(', ') || '(none)';
+  const subgroupList = plan.involvedEntities?.subgroups?.join(', ') || '(none)';
+  const publicationList = plan.involvedEntities?.publications?.join(', ') || '(none)';
 
   const lines = [
     `SituationTitle: ${plan.title}`,
@@ -83,11 +85,11 @@ export function buildOutcomesConsequencesRequest(
       preferences.cabinet
         ? Object.entries(preferences.cabinet)
             .map(([k, v]) => `${k}: ${v.preference.answerType}`)
-            .join("; ")
-        : "(none)"
+            .join('; ')
+        : '(none)'
     }`,
     `Allowed cabinet (from preferences): ${
-      preferences.cabinet ? Object.keys(preferences.cabinet).join(", ") : "(none)"
+      preferences.cabinet ? Object.keys(preferences.cabinet).join(', ') : '(none)'
     }`,
     ``,
     `InvolvedEntities (for context; don't create new ones):`,
@@ -96,14 +98,14 @@ export function buildOutcomesConsequencesRequest(
     `- Publications: ${publicationList}`,
     ``,
     `Base outcomes (DO NOT MODIFY; provide consequences only for these outcome IDs):`,
-    ...baseOutcomes.outcomes.map(o => `- ${o.id} • ${o.title} • ${o.weight}`),
+    ...baseOutcomes.outcomes.map((o) => `- ${o.id} • ${o.title} • ${o.weight}`),
   ];
 
-  const input = lines.join("\n");
+  const input = lines.join('\n');
 
   const jsonSchema = zodToJsonSchema(generateOutcomesConsequencesSchema, {
-    target: "jsonSchema7",
-    $refStrategy: "none",
+    target: 'jsonSchema7',
+    $refStrategy: 'none',
   });
 
   return {
@@ -112,12 +114,12 @@ export function buildOutcomesConsequencesRequest(
     input,
     max_output_tokens: 16000,
     reasoning: {
-      effort: "high",
+      effort: 'high',
     },
     text: {
       format: {
-        type: "json_schema",
-        name: "situation_outcomes_consequences",
+        type: 'json_schema',
+        name: 'situation_outcomes_consequences',
         schema: jsonSchema,
         strict: true,
       },

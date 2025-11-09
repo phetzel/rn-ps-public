@@ -1,8 +1,8 @@
-import React from "react";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useRouter } from 'expo-router';
+import React from 'react';
 
-import { useGameNavigation } from "~/lib/hooks/useGameNavigation";
-import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
+import { HeaderBackIcon } from '~/components/shared/layout/HeaderBackIcon';
+import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
 
 export default function GameSessionLayout() {
   const router = useRouter();
@@ -27,36 +27,33 @@ export default function GameSessionLayout() {
       <Stack.Screen
         name="index"
         options={{
-          title: "Current Month",
+          title: 'Current Month',
           headerLeft: () => <HeaderBackIcon onPress={handleBackToHome} />,
         }}
       />
       <Stack.Screen
         name="level-briefing"
         options={{
-          title: "Briefing",
+          title: 'Briefing',
         }}
       />
-      <Stack.Screen
-        name="level-press-conference"
-        options={{ headerShown: false }}
-      />
+      <Stack.Screen name="level-press-conference" options={{ headerShown: false }} />
       <Stack.Screen
         name="level-press-outcomes"
         options={{
-          title: "Press Results",
+          title: 'Press Results',
         }}
       />
       <Stack.Screen
         name="level-situation-outcomes"
         options={{
-          title: "Situation Results",
+          title: 'Situation Results',
         }}
       />
       <Stack.Screen
         name="level-complete"
         options={{
-          title: "End of Month",
+          title: 'End of Month',
         }}
       />
     </Stack>

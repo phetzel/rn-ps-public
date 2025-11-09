@@ -1,8 +1,9 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
-import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
-import { PoliticalLeaning } from "~/types";
+import React from 'react';
+import { View } from 'react-native';
+
+import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
+import { Text } from '~/components/ui/text';
+import { PoliticalLeaning } from '~/types';
 
 interface PublicationStateHeaderProps {
   name: string;
@@ -20,13 +21,10 @@ export function PublicationStateHeader({
       className="gap-2"
       accessible={true}
       accessibilityLabel={`Publication: ${name}, ${politicalLeaning} leaning${
-        description ? `. ${description}` : ""
+        description ? `. ${description}` : ''
       }`}
     >
-      <View
-        className="flex-row items-center justify-between"
-        accessible={false}
-      >
+      <View className="flex-row items-center justify-between" accessible={false}>
         <Text className="text-xl font-bold" accessibilityRole="header">
           {name}
         </Text>

@@ -9,44 +9,44 @@
  * - Accessibility labels for cabinet updates
  */
 
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
+import { Text } from 'react-native';
 
-import CabinetLevelState from "~/components/shared/level-state/CabinetLevelState";
+import CabinetLevelState from '~/components/shared/level-state/CabinetLevelState';
 
 // Mock child components
-jest.mock("~/components/shared/level-state/LevelProgress", () => () => null);
+jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);
 
-jest.mock("~/components/shared/entity/CabinetMemberName", () => ({
+jest.mock('~/components/shared/entity/CabinetMemberName', () => ({
   CabinetMemberName: ({ cabinetMember }: any) => {
-    const { Text } = require("react-native");
     return <Text>{cabinetMember.staticData.cabinetName}</Text>;
   },
 }));
 
 // Mock database helpers
-jest.mock("~/lib/db/helpers", () => ({
+jest.mock('~/lib/db/helpers', () => ({
   observeCabinetMembersByLevel: jest.fn(),
 }));
 
 // Mock withObservables
-jest.mock("@nozbe/watermelondb/react", () => ({
+jest.mock('@nozbe/watermelondb/react', () => ({
   withObservables: () => (component: any) => component,
 }));
 
 // Mock utils
-jest.mock("~/lib/utils", () => ({
-  cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
+jest.mock('~/lib/utils', () => ({
+  cn: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
 }));
 
-describe("CabinetLevelState", () => {
+describe('CabinetLevelState', () => {
   const mockCabinetMembers = [
     {
-      id: "cabinet1",
-      staticId: "def_sec",
+      id: 'cabinet1',
+      staticId: 'def_sec',
       staticData: {
-        cabinetName: "Defense Secretary",
-        department: "Defense",
+        cabinetName: 'Defense Secretary',
+        department: 'Defense',
       },
     },
   ];
@@ -71,22 +71,22 @@ describe("CabinetLevelState", () => {
   };
 
   const defaultProps = {
-    levelId: "level-1",
+    levelId: 'level-1',
     outcomeSnapshot: mockOutcomeSnapshot,
     cabinetMembers: mockCabinetMembers,
   };
 
-  it("renders cabinet monthly update card", () => {
+  it('renders cabinet monthly update card', () => {
     render(<CabinetLevelState {...defaultProps} />);
-    expect(screen.getByText("Cabinet Monthly Update")).toBeTruthy();
+    expect(screen.getByText('Cabinet Monthly Update')).toBeTruthy();
   });
 
-  it("renders cabinet member name", () => {
+  it('renders cabinet member name', () => {
     render(<CabinetLevelState {...defaultProps} />);
-    expect(screen.getByText("Defense Secretary")).toBeTruthy();
+    expect(screen.getByText('Defense Secretary')).toBeTruthy();
   });
 
-  it("returns null when final outcome data is missing", () => {
+  it('returns null when final outcome data is missing', () => {
     const propsWithoutFinal = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -99,25 +99,23 @@ describe("CabinetLevelState", () => {
     expect(toJSON()).toBeNull();
   });
 
-  it("has accessibility label with cabinet member count", () => {
+  it('has accessibility label with cabinet member count', () => {
     render(<CabinetLevelState {...defaultProps} />);
 
-    expect(
-      screen.getByLabelText("Cabinet members monthly update: 1 members")
-    ).toBeTruthy();
+    expect(screen.getByLabelText('Cabinet members monthly update: 1 members')).toBeTruthy();
   });
 
-  it("has accessibility labels for individual cabinet members", () => {
+  it('has accessibility labels for individual cabinet members', () => {
     render(<CabinetLevelState {...defaultProps} />);
 
     expect(
       screen.getByLabelText(
-        "Defense Secretary. Approval changed by +5%. Relationship changed by +5%."
-      )
+        'Defense Secretary. Approval changed by +5%. Relationship changed by +5%.',
+      ),
     ).toBeTruthy();
   });
 
-  it("handles missing cabinet member data gracefully", () => {
+  it('handles missing cabinet member data gracefully', () => {
     const propsWithMissingData = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -148,11 +146,11 @@ describe("CabinetLevelState", () => {
     render(<CabinetLevelState {...propsWithMissingData} />);
 
     // Should only render Defense Secretary
-    expect(screen.getByText("Defense Secretary")).toBeTruthy();
-    expect(screen.queryByText("Health Secretary")).toBeFalsy();
+    expect(screen.getByText('Defense Secretary')).toBeTruthy();
+    expect(screen.queryByText('Health Secretary')).toBeFalsy();
   });
 
-  it("handles empty cabinet members array", () => {
+  it('handles empty cabinet members array', () => {
     const propsWithNoMembers = {
       ...defaultProps,
       cabinetMembers: [],
@@ -160,13 +158,11 @@ describe("CabinetLevelState", () => {
 
     render(<CabinetLevelState {...propsWithNoMembers} />);
 
-    expect(screen.getByText("Cabinet Monthly Update")).toBeTruthy();
-    expect(
-      screen.getByLabelText("Cabinet members monthly update: 0 members")
-    ).toBeTruthy();
+    expect(screen.getByText('Cabinet Monthly Update')).toBeTruthy();
+    expect(screen.getByLabelText('Cabinet members monthly update: 0 members')).toBeTruthy();
   });
 
-  it("calculates negative changes correctly", () => {
+  it('calculates negative changes correctly', () => {
     const propsWithNegativeChanges = {
       ...defaultProps,
       outcomeSnapshot: {
@@ -194,8 +190,8 @@ describe("CabinetLevelState", () => {
 
     expect(
       screen.getByLabelText(
-        "Defense Secretary. Approval changed by -10%. Relationship changed by -10%."
-      )
+        'Defense Secretary. Approval changed by -10%. Relationship changed by -10%.',
+      ),
     ).toBeTruthy();
   });
 });

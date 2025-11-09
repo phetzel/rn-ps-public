@@ -1,11 +1,12 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import type Situation from "~/lib/db/models/Situation";
-import { Text } from "~/components/ui/text";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { SituationStatusBadge } from "~/components/shared/entity/SituationStatusBadge";
-import { SituationTypeIcon } from "~/components/shared/entity/SituationTypeIcon";
+import { SituationStatusBadge } from '~/components/shared/entity/SituationStatusBadge';
+import { SituationTypeIcon } from '~/components/shared/entity/SituationTypeIcon';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+
+import type Situation from '~/lib/db/models/Situation';
 
 interface SituationCardProps {
   situation: Situation;

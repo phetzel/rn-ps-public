@@ -1,4 +1,5 @@
-import { fetchPressExchangesForLevel } from "~/lib/db/helpers/fetchApi";
+import { findQuestionById, findAnswerById } from '~/lib/db/helpers/exchangeApi';
+import { fetchPressExchangesForLevel } from '~/lib/db/helpers/fetchApi';
 import {
   CabinetStaticId,
   JournalistStaticId,
@@ -7,12 +8,11 @@ import {
   SituationOutcomeWeightDeltas,
   JournalistInteractionImpact,
   AnswerType,
-} from "~/types";
-import { findQuestionById, findAnswerById } from "~/lib/db/helpers/exchangeApi";
+} from '~/types';
 
 // Calculate impacts from press exchanges
 export async function calculatePressConferenceRawEffects(
-  levelId: string
+  levelId: string,
 ): Promise<PressConferenceRawEffects> {
   // 1. Fetch all press exchanges for the level
   const pressExchanges = await fetchPressExchangesForLevel(levelId);
@@ -36,7 +36,7 @@ export async function calculatePressConferenceRawEffects(
 
     if (!content || !progress || !journalist) {
       console.warn(
-        `Exchange ${exchange.id} is missing content, progress, or journalist. Skipping.`
+        `Exchange ${exchange.id} is missing content, progress, or journalist. Skipping.`,
       );
       continue;
     }
@@ -64,20 +64,16 @@ export async function calculatePressConferenceRawEffects(
           const question = findQuestionById(historyItem.questionId, content);
           if (!question) {
             console.warn(
-              `Question ${historyItem.questionId} not found in exchange ${exchange.id}. Skipping.`
+              `Question ${historyItem.questionId} not found in exchange ${exchange.id}. Skipping.`,
             );
             continue;
           }
 
           // Use utility function to find answer
           const selectedAnswer = findAnswerById(historyItem.answerId, content);
-          if (
-            !selectedAnswer ||
-            !selectedAnswer.impacts ||
-            !selectedAnswer.outcomeModifiers
-          ) {
+          if (!selectedAnswer || !selectedAnswer.impacts || !selectedAnswer.outcomeModifiers) {
             console.warn(
-              `Answer ${historyItem.answerId} (for question ${historyItem.questionId}) not found or is missing impacts/outcomeModifiers in exchange ${exchange.id}. Skipping.`
+              `Answer ${historyItem.answerId} (for question ${historyItem.questionId}) not found or is missing impacts/outcomeModifiers in exchange ${exchange.id}. Skipping.`,
             );
             continue;
           }
@@ -88,8 +84,7 @@ export async function calculatePressConferenceRawEffects(
               ? JournalistInteractionImpact.AuthorizedAnswer
               : JournalistInteractionImpact.Answered;
           psRelationshipDeltas.journalists[journalistStaticId] =
-            (psRelationshipDeltas.journalists[journalistStaticId] || 0) +
-            answerImpact;
+            (psRelationshipDeltas.journalists[journalistStaticId] || 0) + answerImpact;
 
           // Apply PS RELATIONSHIP impacts from the answer, using selectedAnswer.impacts
           const answerImpacts = selectedAnswer.impacts;
@@ -102,35 +97,29 @@ export async function calculatePressConferenceRawEffects(
 
           // Apply cabinet impacts
           if (answerImpacts.cabinet) {
-            Object.entries(answerImpacts.cabinet).forEach(
-              ([id, impactData]) => {
-                if (impactData?.weight) {
-                  // Check if impactData and weight exist
-                  const cabinetId = id as CabinetStaticId;
-                  psRelationshipDeltas.cabinetMembers![cabinetId] =
-                    (psRelationshipDeltas.cabinetMembers![cabinetId] || 0) +
-                    impactData.weight;
-                }
+            Object.entries(answerImpacts.cabinet).forEach(([id, impactData]) => {
+              if (impactData?.weight) {
+                // Check if impactData and weight exist
+                const cabinetId = id as CabinetStaticId;
+                psRelationshipDeltas.cabinetMembers![cabinetId] =
+                  (psRelationshipDeltas.cabinetMembers![cabinetId] || 0) + impactData.weight;
               }
-            );
+            });
           }
 
           // Apply subgroup impacts
           // Journalists (additional direct impacts beyond the +1 for answering)
           if (answerImpacts.journalists) {
-            Object.entries(answerImpacts.journalists).forEach(
-              ([id, impactData]) => {
-                if (impactData?.weight) {
-                  // Check if impactData and weight exist
-                  const jStaticId = id as JournalistStaticId;
-                  // Ensure not to double-dip with the journalist who asked the question if they are self-referenced here
-                  // However, current logic sums all specified impacts.
-                  psRelationshipDeltas.journalists![jStaticId] =
-                    (psRelationshipDeltas.journalists![jStaticId] || 0) +
-                    impactData.weight;
-                }
+            Object.entries(answerImpacts.journalists).forEach(([id, impactData]) => {
+              if (impactData?.weight) {
+                // Check if impactData and weight exist
+                const jStaticId = id as JournalistStaticId;
+                // Ensure not to double-dip with the journalist who asked the question if they are self-referenced here
+                // However, current logic sums all specified impacts.
+                psRelationshipDeltas.journalists![jStaticId] =
+                  (psRelationshipDeltas.journalists![jStaticId] || 0) + impactData.weight;
               }
-            );
+            });
           }
 
           // Apply SITUATION OUTCOME weight adjustments from outcomeModifiers
@@ -142,9 +131,8 @@ export async function calculatePressConferenceRawEffects(
               ([outcomeId, modifierValue]) => {
                 // modifierValue is an AnswerOutcomeModifier enum value (number)
                 situationOutcomeWeightDeltas[situationId][outcomeId] =
-                  (situationOutcomeWeightDeltas[situationId][outcomeId] || 0) +
-                  modifierValue;
-              }
+                  (situationOutcomeWeightDeltas[situationId][outcomeId] || 0) + modifierValue;
+              },
             );
           }
         }

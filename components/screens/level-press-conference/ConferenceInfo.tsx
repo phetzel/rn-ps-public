@@ -1,10 +1,10 @@
-import { View, ScrollView } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { View, ScrollView } from 'react-native';
 
-import { observeSituationsByLevelId } from "~/lib/db/helpers/observations";
-import { Situation } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
-import ConferenceInfoSituationItem from "~/components/screens/level-press-conference/ConferenceInfoSituationItem";
+import ConferenceInfoSituationItem from '~/components/screens/level-press-conference/ConferenceInfoSituationItem';
+import { Text } from '~/components/ui/text';
+import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
+import { Situation } from '~/lib/db/models';
 
 interface ConferenceInfoProps {
   levelId: string;
@@ -34,17 +34,14 @@ const ConferenceInfo = ({ levelId, situations }: ConferenceInfoProps) => {
         accessibilityHint="Scroll to review all active situations and their details"
       >
         {situations.map((situation) => (
-          <ConferenceInfoSituationItem
-            key={situation.id}
-            situation={situation}
-          />
+          <ConferenceInfoSituationItem key={situation.id} situation={situation} />
         ))}
       </ScrollView>
     </View>
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   situations: observeSituationsByLevelId(levelId),
 }));
 

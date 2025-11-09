@@ -1,21 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observePublications } from "~/lib/db/helpers";
-import type Publication from "~/lib/db/models/Publication";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
-import { Newspaper } from "~/lib/icons/Newspaper";
-import InfoTooltip from "~/components/shared/InfoTooltip";
+// eslint-disable-next-line import/no-named-as-default
+import PublicationStateItem from '~/components/screens/tab-state/PublicationStateItem';
+import InfoTooltip from '~/components/shared/InfoTooltip';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { observePublications } from '~/lib/db/helpers';
+import { Newspaper } from '~/lib/icons/Newspaper';
 
-import PublicationStateItem from "~/components/screens/tab-state/PublicationStateItem";
-
-interface MediaStateCardProps {
-  publications: Publication[];
-  isLoading?: boolean;
-  error?: string | null;
-}
+import type Publication from '~/lib/db/models/Publication';
 
 interface MediaStateCardProps {
   publications: Publication[];
@@ -38,10 +33,7 @@ export function MediaStateCard({ publications }: MediaStateCardProps) {
       <CardContent>
         {publications.map((publication, idx) => (
           <View key={publication.id} className="gap-2">
-            <PublicationStateItem
-              key={publication.id}
-              publication={publication}
-            />
+            <PublicationStateItem key={publication.id} publication={publication} />
 
             {idx !== publications.length - 1 && <Separator className="my-4" />}
           </View>
@@ -51,7 +43,7 @@ export function MediaStateCard({ publications }: MediaStateCardProps) {
   );
 }
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
+const enhance = withObservables(['gameId'], ({ gameId }) => ({
   publications: observePublications(gameId),
 }));
 

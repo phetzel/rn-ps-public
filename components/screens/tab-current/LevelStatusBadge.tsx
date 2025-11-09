@@ -1,10 +1,10 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { Badge } from "~/components/ui/badge";
-import { Text } from "~/components/ui/text";
-import { LevelStatus } from "~/types";
-import { LEVEL_STATUS_DISPLAY_NAMES } from "~/lib/constants";
+import { Badge } from '~/components/ui/badge';
+import { Text } from '~/components/ui/text';
+import { LEVEL_STATUS_DISPLAY_NAMES } from '~/lib/constants';
+import { LevelStatus } from '~/types';
 
 interface LevelStatusBadgeProps {
   status: LevelStatus;
@@ -14,34 +14,34 @@ export function LevelStatusBadge({ status }: LevelStatusBadgeProps) {
   const getVariant = () => {
     switch (status) {
       case LevelStatus.Briefing:
-        return "outline";
+        return 'outline';
       case LevelStatus.PressConference:
-        return "secondary";
+        return 'secondary';
       case LevelStatus.PressResults:
-        return "default";
+        return 'default';
       case LevelStatus.SituationOutcomes:
-        return "default";
+        return 'default';
       case LevelStatus.Completed:
-        return "destructive";
+        return 'destructive';
       default:
-        return "outline";
+        return 'outline';
     }
   };
 
   const getStatusDescription = (status: LevelStatus) => {
     switch (status) {
       case LevelStatus.Briefing:
-        return "Ready to start briefing phase";
+        return 'Ready to start briefing phase';
       case LevelStatus.PressConference:
-        return "Ready to start press conference";
+        return 'Ready to start press conference';
       case LevelStatus.PressResults:
-        return "Press conference completed, ready to review results";
+        return 'Press conference completed, ready to review results';
       case LevelStatus.SituationOutcomes:
-        return "Ready to review situation outcomes";
+        return 'Ready to review situation outcomes';
       case LevelStatus.Completed:
-        return "Month completed, ready to advance";
+        return 'Month completed, ready to advance';
       default:
-        return "Unknown status";
+        return 'Unknown status';
     }
   };
 

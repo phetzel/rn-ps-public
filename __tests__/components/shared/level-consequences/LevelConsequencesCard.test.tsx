@@ -1,53 +1,55 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
 
-import LevelConsequencesCard from "~/components/shared/level-consequences/LevelConsequencesCard";
-import { CabinetMember } from "~/lib/db/models";
-import { ConsequenceResult, CabinetStaticId } from "~/types";
+import LevelConsequencesCard from '~/components/shared/level-consequences/LevelConsequencesCard';
+import { CabinetMember } from '~/lib/db/models';
+import { ConsequenceResult, CabinetStaticId } from '~/types';
 
 // Mock WatermelonDB withObservables for ConsequenceGameComplete
-jest.mock("@nozbe/watermelondb/react", () => ({
+jest.mock('@nozbe/watermelondb/react', () => ({
   withObservables: (deps: any, observablesFactory: any) => (Component: any) => {
-    return (props: any) => {
+    const WithObservablesMock = (props: any) => {
       // Mock the data that ConsequenceGameComplete would receive
       const mockObservables = {
         game: {
-          id: "game-1",
-          psName: "Test PS",
-          presName: "Test President",
+          id: 'game-1',
+          psName: 'Test PS',
+          presName: 'Test President',
           presPsRelationship: 75,
         },
         presApprovalRating: 65,
       };
       return <Component {...props} {...mockObservables} />;
     };
+    WithObservablesMock.displayName = 'WithObservablesMock';
+    return WithObservablesMock;
   },
 }));
 
 // Mock database helpers
-jest.mock("~/lib/db/helpers", () => ({
+jest.mock('~/lib/db/helpers', () => ({
   observeGame: jest.fn(),
   observePresidentApprovalRating: jest.fn(),
 }));
 
-describe("LevelConsequencesCard", () => {
+describe('LevelConsequencesCard', () => {
   const mockCabinetMembers: CabinetMember[] = [
     {
-      id: "1",
+      id: '1',
       staticId: CabinetStaticId.State,
-      name: "John Secretary",
-      staticData: { cabinetName: "Secretary of State" },
+      name: 'John Secretary',
+      staticData: { cabinetName: 'Secretary of State' },
     } as CabinetMember,
     {
-      id: "2",
+      id: '2',
       staticId: CabinetStaticId.Defense,
-      name: "Jane Defense",
-      staticData: { cabinetName: "Secretary of Defense" },
+      name: 'Jane Defense',
+      staticData: { cabinetName: 'Secretary of Defense' },
     } as CabinetMember,
   ];
 
-  describe("component rendering logic", () => {
-    it("should render ConsequenceNoNegative when no game ending and no cabinet fired", () => {
+  describe('component rendering logic', () => {
+    it('should render ConsequenceNoNegative when no game ending and no cabinet fired', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [],
@@ -58,17 +60,17 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("No Negative Consequences")).toBeTruthy();
-      expect(screen.getByText("Month Complete")).toBeTruthy();
+      expect(screen.getByText('No Negative Consequences')).toBeTruthy();
+      expect(screen.getByText('Month Complete')).toBeTruthy();
     });
 
-    it("should render ConsequenceGameOver when game ends due to firing", () => {
+    it('should render ConsequenceGameOver when game ends due to firing', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "fired",
+        gameEndReason: 'fired',
         cabinetMembersFired: [],
       };
 
@@ -77,17 +79,17 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
       expect(screen.getByText("You've Been Fired")).toBeTruthy();
-      expect(screen.getByText("Game Over")).toBeTruthy();
+      expect(screen.getByText('Game Over')).toBeTruthy();
     });
 
-    it("should render ConsequenceGameOver when game ends due to impeachment", () => {
+    it('should render ConsequenceGameOver when game ends due to impeachment', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "impeached",
+        gameEndReason: 'impeached',
         cabinetMembersFired: [],
       };
 
@@ -96,14 +98,14 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Presidential Impeachment")).toBeTruthy();
-      expect(screen.getByText("Game Over")).toBeTruthy();
+      expect(screen.getByText('Presidential Impeachment')).toBeTruthy();
+      expect(screen.getByText('Game Over')).toBeTruthy();
     });
 
-    it("should render ConsequenceCabinetMembersFired when cabinet members are fired", () => {
+    it('should render ConsequenceCabinetMembersFired when cabinet members are fired', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [CabinetStaticId.State],
@@ -114,17 +116,17 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Cabinet Members Fired")).toBeTruthy();
-      expect(screen.getByText("Month Complete")).toBeTruthy();
+      expect(screen.getByText('Cabinet Members Fired')).toBeTruthy();
+      expect(screen.getByText('Month Complete')).toBeTruthy();
     });
 
-    it("should render ConsequenceGameComplete when game ends due to completion", () => {
+    it('should render ConsequenceGameComplete when game ends due to completion', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "completed",
+        gameEndReason: 'completed',
         cabinetMembersFired: [],
       };
 
@@ -133,22 +135,22 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Term Completed!")).toBeTruthy();
-      expect(screen.getByText("Term Complete")).toBeTruthy();
-      expect(screen.getByText("4-Year Survivor")).toBeTruthy();
-      expect(screen.getByText("Presidential Approval:")).toBeTruthy();
-      expect(screen.getByText("65%")).toBeTruthy();
-      expect(screen.getByText("President-PS Relationship:")).toBeTruthy();
-      expect(screen.getByText("75%")).toBeTruthy();
+      expect(screen.getByText('Term Completed!')).toBeTruthy();
+      expect(screen.getByText('Term Complete')).toBeTruthy();
+      expect(screen.getByText('4-Year Survivor')).toBeTruthy();
+      expect(screen.getByText('Presidential Approval:')).toBeTruthy();
+      expect(screen.getByText('65%')).toBeTruthy();
+      expect(screen.getByText('President-PS Relationship:')).toBeTruthy();
+      expect(screen.getByText('75%')).toBeTruthy();
     });
 
-    it("should show mock data when game completion renders", () => {
+    it('should show mock data when game completion renders', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "completed",
+        gameEndReason: 'completed',
         cabinetMembersFired: [],
       };
 
@@ -157,50 +159,48 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Term Completed!")).toBeTruthy();
+      expect(screen.getByText('Term Completed!')).toBeTruthy();
       // Names are rendered within sentences, not standalone
       expect(screen.getByText(/Congratulations, Test PS!/)).toBeTruthy();
       expect(screen.getByText(/President Test President/)).toBeTruthy();
-      expect(screen.getByText("65%")).toBeTruthy(); // Mock presApprovalRating
-      expect(screen.getByText("75%")).toBeTruthy(); // Mock presPsRelationship
+      expect(screen.getByText('65%')).toBeTruthy(); // Mock presApprovalRating
+      expect(screen.getByText('75%')).toBeTruthy(); // Mock presPsRelationship
     });
   });
 
-  describe("unavailable consequences state", () => {
-    it("should render error message when consequences is undefined", () => {
+  describe('unavailable consequences state', () => {
+    it('should render error message when consequences is undefined', () => {
       render(
         <LevelConsequencesCard
           gameId="game-1"
           consequences={undefined}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Consequence data not available.")).toBeTruthy();
-      expect(
-        screen.getByLabelText("Consequence data not available")
-      ).toBeTruthy();
+      expect(screen.getByText('Consequence data not available.')).toBeTruthy();
+      expect(screen.getByLabelText('Consequence data not available')).toBeTruthy();
     });
 
-    it("should not render Card wrapper when consequences is undefined", () => {
+    it('should not render Card wrapper when consequences is undefined', () => {
       render(
         <LevelConsequencesCard
           gameId="game-1"
           consequences={undefined}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
       // Should not have Card header elements
-      expect(screen.queryByText("Month Complete")).toBeNull();
-      expect(screen.queryByText("Game Over")).toBeNull();
+      expect(screen.queryByText('Month Complete')).toBeNull();
+      expect(screen.queryByText('Game Over')).toBeNull();
     });
   });
 
-  describe("card header and titles", () => {
+  describe('card header and titles', () => {
     it("should display 'Month Complete' title for no consequences", () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
@@ -212,10 +212,10 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Month Complete")).toBeTruthy();
+      expect(screen.getByText('Month Complete')).toBeTruthy();
     });
 
     it("should display 'Month Complete' title for cabinet firings", () => {
@@ -229,16 +229,16 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Month Complete")).toBeTruthy();
+      expect(screen.getByText('Month Complete')).toBeTruthy();
     });
 
     it("should display 'Game Over' title for firing", () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "fired",
+        gameEndReason: 'fired',
         cabinetMembersFired: [],
       };
 
@@ -247,16 +247,16 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Game Over")).toBeTruthy();
+      expect(screen.getByText('Game Over')).toBeTruthy();
     });
 
     it("should display 'Game Over' title for impeachment", () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "impeached",
+        gameEndReason: 'impeached',
         cabinetMembersFired: [],
       };
 
@@ -265,16 +265,16 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Game Over")).toBeTruthy();
+      expect(screen.getByText('Game Over')).toBeTruthy();
     });
 
     it("should display 'Term Complete' title for completion", () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "completed",
+        gameEndReason: 'completed',
         cabinetMembersFired: [],
       };
 
@@ -283,15 +283,15 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByText("Term Complete")).toBeTruthy();
+      expect(screen.getByText('Term Complete')).toBeTruthy();
     });
   });
 
-  describe("accessibility labels", () => {
-    it("should have proper accessibility label for no consequences", () => {
+  describe('accessibility labels', () => {
+    it('should have proper accessibility label for no consequences', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [],
@@ -302,16 +302,14 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(
-        screen.getByLabelText("Month complete with no negative consequences")
-      ).toBeTruthy();
-      expect(screen.getByLabelText("Month completion results")).toBeTruthy();
+      expect(screen.getByLabelText('Month complete with no negative consequences')).toBeTruthy();
+      expect(screen.getByLabelText('Month completion results')).toBeTruthy();
     });
 
-    it("should have proper accessibility label for cabinet firings", () => {
+    it('should have proper accessibility label for cabinet firings', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [CabinetStaticId.State, CabinetStaticId.Defense],
@@ -322,21 +320,19 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
       expect(
-        screen.getByLabelText(
-          "Month complete with consequences: 2 cabinet members fired"
-        )
+        screen.getByLabelText('Month complete with consequences: 2 cabinet members fired'),
       ).toBeTruthy();
-      expect(screen.getByLabelText("Month completion results")).toBeTruthy();
+      expect(screen.getByLabelText('Month completion results')).toBeTruthy();
     });
 
-    it("should have proper accessibility label for firing", () => {
+    it('should have proper accessibility label for firing', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "fired",
+        gameEndReason: 'fired',
         cabinetMembersFired: [],
       };
 
@@ -345,17 +341,17 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByLabelText("Game Over due to firing")).toBeTruthy();
-      expect(screen.getByLabelText("Game Over results")).toBeTruthy();
+      expect(screen.getByLabelText('Game Over due to firing')).toBeTruthy();
+      expect(screen.getByLabelText('Game Over results')).toBeTruthy();
     });
 
-    it("should have proper accessibility label for impeachment", () => {
+    it('should have proper accessibility label for impeachment', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "impeached",
+        gameEndReason: 'impeached',
         cabinetMembersFired: [],
       };
 
@@ -364,21 +360,19 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(
-        screen.getByLabelText("Game Over due to impeachment")
-      ).toBeTruthy();
-      expect(screen.getByLabelText("Game Over results")).toBeTruthy();
+      expect(screen.getByLabelText('Game Over due to impeachment')).toBeTruthy();
+      expect(screen.getByLabelText('Game Over results')).toBeTruthy();
     });
   });
 
-  describe("icon rendering", () => {
-    it("should render correct header for game over states", () => {
+  describe('icon rendering', () => {
+    it('should render correct header for game over states', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "fired",
+        gameEndReason: 'fired',
         cabinetMembersFired: [],
       };
 
@@ -387,13 +381,13 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByLabelText("Game Over results")).toBeTruthy();
+      expect(screen.getByLabelText('Game Over results')).toBeTruthy();
     });
 
-    it("should render correct header for month completion with consequences", () => {
+    it('should render correct header for month completion with consequences', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [CabinetStaticId.State],
@@ -404,13 +398,13 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByLabelText("Month completion results")).toBeTruthy();
+      expect(screen.getByLabelText('Month completion results')).toBeTruthy();
     });
 
-    it("should render correct header for successful month completion", () => {
+    it('should render correct header for successful month completion', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [],
@@ -421,18 +415,18 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
-      expect(screen.getByLabelText("Month completion results")).toBeTruthy();
+      expect(screen.getByLabelText('Month completion results')).toBeTruthy();
     });
   });
 
-  describe("props passing", () => {
-    it("should pass consequences to child components", () => {
+  describe('props passing', () => {
+    it('should pass consequences to child components', () => {
       const consequences: ConsequenceResult = {
         gameEnded: true,
-        gameEndReason: "fired",
+        gameEndReason: 'fired',
         cabinetMembersFired: [],
       };
 
@@ -441,14 +435,14 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
       // Verify child component received consequences by checking its content
       expect(screen.getByText("You've Been Fired")).toBeTruthy();
     });
 
-    it("should pass cabinetMembers to ConsequenceCabinetMembersFired", () => {
+    it('should pass cabinetMembers to ConsequenceCabinetMembersFired', () => {
       const consequences: ConsequenceResult = {
         gameEnded: false,
         cabinetMembersFired: [CabinetStaticId.State],
@@ -459,11 +453,11 @@ describe("LevelConsequencesCard", () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
-        />
+        />,
       );
 
       // Verify child component received cabinetMembers by checking member name
-      expect(screen.getByText("John Secretary")).toBeTruthy();
+      expect(screen.getByText('John Secretary')).toBeTruthy();
     });
   });
 });
