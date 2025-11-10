@@ -13,22 +13,25 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import { ResultsTable } from '~/components/shared/results/ResultsTable';
 
 import type { EntityWithDelta, EntityWithMediaDelta } from '~/types';
 
 // Mock ResultsEntityRow
-jest.mock('~/components/shared/results/ResultsEntityRow', () => ({
-  ResultsEntityRow: ({ entity, isAdWatched, showAdColumn }: any) => {
-    return (
-      <Text testID={`mocked-entity-row-${entity.id}`}>
-        {`EntityRow: ${entity.name}, adWatched: ${isAdWatched}, showAdColumn: ${showAdColumn}`}
-      </Text>
-    );
-  },
-}));
+jest.mock('~/components/shared/results/ResultsEntityRow', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    ResultsEntityRow: ({ entity, isAdWatched, showAdColumn }: any) => {
+      return React.createElement(
+        Text,
+        { testID: `mocked-entity-row-${entity.id}` },
+        `EntityRow: ${entity.name}, adWatched: ${isAdWatched}, showAdColumn: ${showAdColumn}`,
+      );
+    },
+  };
+});
 
 // Mock calculateTableColumnWidths
 jest.mock('~/lib/utils', () => ({

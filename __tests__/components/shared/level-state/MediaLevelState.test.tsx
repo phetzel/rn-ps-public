@@ -1,16 +1,19 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import MediaLevelState from '~/components/shared/level-state/MediaLevelState';
 
 // Mock child components
 jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);
-jest.mock('~/components/shared/entity/PublicationStateHeader', () => ({
-  PublicationStateHeader: ({ name }: any) => {
-    return <Text>{name}</Text>;
-  },
-}));
+jest.mock('~/components/shared/entity/PublicationStateHeader', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    PublicationStateHeader: ({ name }: any) => {
+      return React.createElement(Text, {}, name);
+    },
+  };
+});
 
 // Mock static data
 jest.mock('~/lib/data/staticMedia', () => ({

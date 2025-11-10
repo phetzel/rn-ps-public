@@ -1,17 +1,20 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
 import { of } from 'rxjs';
 
 import ExchangesOutcomeList from '~/components/shared/exchanges-outcome-list/ExchangesOutcomeList';
 import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
 
 // Mock Accordion components to avoid asChild issues
-jest.mock('~/components/ui/accordion', () => ({
-  Accordion: function MockAccordion({ children, ...props }: any) {
-    return <View {...props}>{children}</View>;
-  },
-}));
+jest.mock('~/components/ui/accordion', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    Accordion: function MockAccordion({ children, ...props }: any) {
+      return React.createElement(View, props, children);
+    },
+  };
+});
 
 // Mock withObservables HOC
 jest.mock('@nozbe/watermelondb/react', () => ({
@@ -35,16 +38,22 @@ jest.mock('~/lib/db/helpers/observations', () => ({
 }));
 
 // Mock Separator component
-jest.mock('~/components/ui/separator', () => ({
-  Separator: function MockSeparator(props: any) {
-    return <View {...props} testID="separator" />;
-  },
-}));
+jest.mock('~/components/ui/separator', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    Separator: function MockSeparator(props: any) {
+      return React.createElement(View, { ...props, testID: 'separator' });
+    },
+  };
+});
 
 // Mock ExchangeOutcomeItem component
 jest.mock('~/components/shared/exchanges-outcome-list/ExchangeOutcomeItem', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockExchangeOutcomeItem({ exchange }: any) {
-    return <Text>Exchange Outcome Item: {exchange.id}</Text>;
+    return React.createElement(Text, {}, `Exchange Outcome Item: ${exchange.id}`);
   };
 });
 

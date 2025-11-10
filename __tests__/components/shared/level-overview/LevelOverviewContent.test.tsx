@@ -11,38 +11,45 @@
 
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import LevelOverviewContent from '~/components/shared/level-overview/LevelOverviewContent';
 
 // Mock child components
-jest.mock('~/components/shared/level-consequences/LevelConsequences', () => ({
-  __esModule: true,
-  default: () => {
-    return <Text>Level Consequences</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-consequences/LevelConsequences', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Consequences'),
+  };
+});
 
-jest.mock('~/components/shared/level-overview/LevelOverviewEvents', () => ({
-  __esModule: true,
-  default: () => {
-    return <Text>Level Overview Events</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-overview/LevelOverviewEvents', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Overview Events'),
+  };
+});
 
-jest.mock('~/components/shared/level-overview/LevelOverviewPress', () => ({
-  __esModule: true,
-  default: () => {
-    return <Text>Level Overview Press</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-overview/LevelOverviewPress', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Overview Press'),
+  };
+});
 
-jest.mock('~/components/shared/level-overview/LevelOverviewState', () => ({
-  __esModule: true,
-  default: () => {
-    return <Text>Level Overview State</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-overview/LevelOverviewState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Overview State'),
+  };
+});
 
 // Mock utils
 jest.mock('~/lib/utils', () => ({

@@ -1,7 +1,6 @@
 import { jest } from '@jest/globals';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import LevelCompleteContent from '~/components/screens/level-complete/LevelCompleteContent';
 import { LevelStatus } from '~/types';
@@ -31,8 +30,14 @@ jest.mock('~/lib/hooks/useLevelNavigation', () => ({
 
 // Mock LevelOverviewContent
 jest.mock('~/components/shared/level-overview/LevelOverviewContent', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockLevelOverviewContent({ levelId }: { levelId: string }) {
-    return <Text testID="level-overview-content">Overview for {levelId}</Text>;
+    return React.createElement(
+      Text,
+      { testID: 'level-overview-content' },
+      `Overview for ${levelId}`,
+    );
   };
 });
 

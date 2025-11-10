@@ -1,44 +1,53 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
 import { of } from 'rxjs';
 
 import ExchangeOutcomeItem from '~/components/shared/exchanges-outcome-list/ExchangeOutcomeItem';
 
 // Mock Accordion components to avoid asChild issues
-jest.mock('~/components/ui/accordion', () => ({
-  AccordionItem: function MockAccordionItem({ children, ...props }: any) {
-    return <View {...props}>{children}</View>;
-  },
-  AccordionTrigger: function MockAccordionTrigger({ children, ...props }: any) {
-    return <View {...props}>{children}</View>;
-  },
-  AccordionContent: function MockAccordionContent({ children, ...props }: any) {
-    return <View {...props}>{children}</View>;
-  },
-}));
+jest.mock('~/components/ui/accordion', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    AccordionItem: function MockAccordionItem({ children, ...props }: any) {
+      return React.createElement(View, props, children);
+    },
+    AccordionTrigger: function MockAccordionTrigger({ children, ...props }: any) {
+      return React.createElement(View, props, children);
+    },
+    AccordionContent: function MockAccordionContent({ children, ...props }: any) {
+      return React.createElement(View, props, children);
+    },
+  };
+});
 
 // Mock withObservables HOC
-jest.mock('@nozbe/watermelondb/react', () => ({
-  withObservables: jest.fn(() => (Component: React.ComponentType<any>) => {
-    return function MockedComponent(props: any) {
-      // For our tests, we'll pass the props directly without observables
-      return <Component {...props} />;
-    };
-  }),
-}));
+jest.mock('@nozbe/watermelondb/react', () => {
+  const React = require('react');
+  return {
+    withObservables: jest.fn(() => (Component: React.ComponentType<any>) => {
+      return function MockedComponent(props: any) {
+        return React.createElement(Component, props);
+      };
+    }),
+  };
+});
 
 // Mock JournalistDisplay component
 jest.mock('~/components/shared/entity/JournalistDisplay', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockJournalistDisplay({ journalistId }: { journalistId: string }) {
-    return <Text>Journalist Display: {journalistId}</Text>;
+    return React.createElement(Text, {}, `Journalist Display: ${journalistId}`);
   };
 });
 
 // Mock ExchangeQuestionItem component
 jest.mock('~/components/shared/exchanges-outcome-list/ExchangeQuestionItem', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockExchangeQuestionItem(props: any) {
-    return <Text>Exchange Question Item: {JSON.stringify(props)}</Text>;
+    return React.createElement(Text, {}, `Exchange Question Item: ${JSON.stringify(props)}`);
   };
 });
 

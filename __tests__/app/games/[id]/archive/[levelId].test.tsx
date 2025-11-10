@@ -1,7 +1,6 @@
 import { jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 import ArchiveLevelScreen from '~/app/games/[id]/archive/[levelId]';
 
@@ -13,24 +12,35 @@ jest.mock('expo-router', () => ({
 
 // Mock ParallaxScrollView
 jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
+  const React = require('react');
   return function MockParallaxScrollView({ children }: { children: React.ReactNode }) {
-    return <View testID="parallax-scroll-view">{children}</View>;
+    return React.createElement('mock-view', { testID: 'parallax-scroll-view' }, children);
   };
 });
 
 // Mock LevelOverviewContent
 jest.mock('~/components/shared/level-overview/LevelOverviewContent', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockLevelOverviewContent({ levelId }: { levelId: string }) {
-    return <Text testID="level-overview-content">Overview for {levelId}</Text>;
+    return React.createElement(
+      Text,
+      { testID: 'level-overview-content' },
+      `Overview for ${levelId}`,
+    );
   };
 });
 
 // Mock EmptyState
-jest.mock('~/components/shared/EmptyState', () => ({
-  EmptyState: function MockEmptyState({ message }: { message: string }) {
-    return <Text testID="empty-state">{message}</Text>;
-  },
-}));
+jest.mock('~/components/shared/EmptyState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    EmptyState: function MockEmptyState({ message }: { message: string }) {
+      return React.createElement(Text, { testID: 'empty-state' }, message);
+    },
+  };
+});
 
 describe('ArchiveLevelScreen', () => {
   beforeEach(() => {

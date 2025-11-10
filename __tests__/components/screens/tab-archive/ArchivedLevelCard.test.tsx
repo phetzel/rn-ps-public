@@ -1,7 +1,6 @@
 import { jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
 
 import ArchivedLevelCard from '~/components/screens/tab-archive/ArchivedLevelCard';
 import { LevelStatus } from '~/types';
@@ -32,86 +31,77 @@ jest.mock('~/lib/utils', () => ({
 }));
 
 // Mock UI components
-jest.mock('~/components/ui/card', () => ({
-  Card: ({ children, className, ...props }: any) => {
-    return (
-      <View {...props} testID="card">
-        {children}
-      </View>
-    );
-  },
-  CardContent: ({ children, className, ...props }: any) => {
-    return (
-      <View {...props} testID="card-content">
-        {children}
-      </View>
-    );
-  },
-  CardHeader: ({ children, className, ...props }: any) => {
-    return (
-      <View {...props} testID="card-header">
-        {children}
-      </View>
-    );
-  },
-  CardTitle: ({ children, className, ...props }: any) => {
-    return (
-      <Text {...props} testID="card-title">
-        {children}
-      </Text>
-    );
-  },
-  CardFooter: ({ children, className, ...props }: any) => {
-    return (
-      <View {...props} testID="card-footer">
-        {children}
-      </View>
-    );
-  },
-}));
+jest.mock('~/components/ui/card', () => {
+  const React = require('react');
+  const { View, Text } = require('react-native');
+  return {
+    Card: ({ children, className, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'card' }, children);
+    },
+    CardContent: ({ children, className, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'card-content' }, children);
+    },
+    CardHeader: ({ children, className, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'card-header' }, children);
+    },
+    CardTitle: ({ children, className, ...props }: any) => {
+      return React.createElement(Text, { ...props, testID: 'card-title' }, children);
+    },
+    CardFooter: ({ children, className, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'card-footer' }, children);
+    },
+  };
+});
 
-jest.mock('~/components/ui/button', () => ({
-  Button: ({ children, onPress, ...props }: any) => {
-    return (
-      <Pressable onPress={onPress} {...props} role="button">
-        {children}
-      </Pressable>
-    );
-  },
-}));
+jest.mock('~/components/ui/button', () => {
+  const React = require('react');
+  const { Pressable } = require('react-native');
+  return {
+    Button: ({ children, onPress, ...props }: any) => {
+      return React.createElement(Pressable, { onPress, ...props, role: 'button' }, children);
+    },
+  };
+});
 
-jest.mock('~/components/ui/badge', () => ({
-  Badge: ({ children, ...props }: any) => {
-    return (
-      <Text {...props} testID="badge">
-        {children}
-      </Text>
-    );
-  },
-}));
+jest.mock('~/components/ui/badge', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    Badge: ({ children, ...props }: any) => {
+      return React.createElement(Text, { ...props, testID: 'badge' }, children);
+    },
+  };
+});
 
-jest.mock('~/components/ui/text', () => ({
-  Text: ({ children, ...props }: any) => {
-    const RNText = Text;
-    return <RNText {...props}>{children}</RNText>;
-  },
-}));
+jest.mock('~/components/ui/text', () => {
+  const React = require('react');
+  const { Text: RNText } = require('react-native');
+  return {
+    Text: ({ children, ...props }: any) => {
+      return React.createElement(RNText, props, children);
+    },
+  };
+});
 
 // Mock icons
-jest.mock('~/lib/icons', () => ({
-  AlertCircle: ({ className, size, ...props }: any) => {
-    return <View {...props} testID="alert-circle-icon" />;
-  },
-  ArrowRight: ({ className, ...props }: any) => {
-    return <View {...props} testID="arrow-right-icon" />;
-  },
-  CalendarClock: ({ className, ...props }: any) => {
-    return <View {...props} testID="calendar-clock-icon" />;
-  },
-  CheckCircle2: ({ className, size, ...props }: any) => {
-    return <View {...props} testID="check-circle-icon" />;
-  },
-}));
+jest.mock('~/lib/icons', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    AlertCircle: ({ className, size, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'alert-circle-icon' });
+    },
+    ArrowRight: ({ className, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'arrow-right-icon' });
+    },
+    CalendarClock: ({ className, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'calendar-clock-icon' });
+    },
+    CheckCircle2: ({ className, size, ...props }: any) => {
+      return React.createElement(View, { ...props, testID: 'check-circle-icon' });
+    },
+  };
+});
 
 describe('ArchivedLevelCard', () => {
   const mockSituations = [

@@ -1,7 +1,6 @@
 import { jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 import ArchiveIndexScreen from '~/app/games/[id]/archive/index';
 import { LevelStatus } from '~/types';
@@ -29,15 +28,21 @@ jest.mock('~/lib/stores/gameManagerStore', () => ({
 
 // Mock ParallaxScrollView
 jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
+  const React = require('react');
   return function MockParallaxScrollView({ children }: { children: React.ReactNode }) {
-    return <View testID="parallax-scroll-view">{children}</View>;
+    return React.createElement('mock-view', { testID: 'parallax-scroll-view' }, children);
   };
 });
 
 // Mock ArchivedLevelCard
 jest.mock('~/components/screens/tab-archive/ArchivedLevelCard', () => {
+  const React = require('react');
   return function MockArchivedLevelCard({ levelId }: { levelId: string }) {
-    return <Text testID={`archived-level-card-${levelId}`}>Level {levelId}</Text>;
+    return React.createElement(
+      'mock-text',
+      { testID: `archived-level-card-${levelId}` },
+      `Level ${levelId}`,
+    );
   };
 });
 

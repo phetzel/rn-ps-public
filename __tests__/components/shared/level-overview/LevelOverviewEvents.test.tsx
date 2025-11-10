@@ -10,24 +10,29 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import LevelOverviewEvents from '~/components/shared/level-overview/LevelOverviewEvents';
 
 // Mock child components
-jest.mock('~/components/shared/situations-outcome-list/SituationsOutcomeList', () => ({
-  __esModule: true,
-  default: ({ levelId }: { levelId: string }) => {
-    return <Text>Situations Outcome List - {levelId}</Text>;
-  },
-}));
+jest.mock('~/components/shared/situations-outcome-list/SituationsOutcomeList', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ levelId }: { levelId: string }) =>
+      React.createElement(Text, {}, `Situations Outcome List - ${levelId}`),
+  };
+});
 
-jest.mock('~/components/shared/level-media-coverage/LevelMediaCoverage', () => ({
-  __esModule: true,
-  default: ({ levelId }: { levelId: string }) => {
-    return <Text>Level Media Coverage - {levelId}</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-media-coverage/LevelMediaCoverage', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ levelId }: { levelId: string }) =>
+      React.createElement(Text, {}, `Level Media Coverage - ${levelId}`),
+  };
+});
 
 // Mock utils
 jest.mock('~/lib/utils', () => ({

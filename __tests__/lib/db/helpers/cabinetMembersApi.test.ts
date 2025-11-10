@@ -6,14 +6,20 @@ import { hireReplacementCabinetMembers } from '~/lib/db/helpers/cabinetMembersAp
 import { CabinetStaticId } from '~/types';
 
 // Mock the production database to use test database
-jest.mock('~/lib/db', () => ({
-  database: testDatabase,
-}));
+jest.mock('~/lib/db', () => {
+  const { testDatabase: mockTestDatabase } = jest.requireActual('~/__tests__/support/db');
+  return {
+    database: mockTestDatabase,
+  };
+});
 
 // Mock the collections to use test database
-jest.mock('~/lib/db/helpers/collections', () => ({
-  cabinetCollection: testDatabase.get('cabinet_members'),
-}));
+jest.mock('~/lib/db/helpers/collections', () => {
+  const { testDatabase: mockTestDatabase } = jest.requireActual('~/__tests__/support/db');
+  return {
+    cabinetCollection: mockTestDatabase.get('cabinet_members'),
+  };
+});
 
 describe('Cabinet Members API', () => {
   let database: Database;

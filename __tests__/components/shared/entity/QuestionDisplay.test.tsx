@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
 
 // Mock FollowUpBadge component
 jest.mock('~/components/shared/entity/FollowUpBadge', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   const FollowUpBadge = function MockFollowUpBadge() {
     return React.createElement(Text, null, 'Follow-up Question');
   };

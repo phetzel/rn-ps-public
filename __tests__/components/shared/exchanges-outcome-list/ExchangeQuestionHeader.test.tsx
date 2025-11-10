@@ -1,35 +1,37 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import ExchangeQuestionHeader from '~/components/shared/exchanges-outcome-list/ExchangeQuestionHeader';
 
 import type { Question } from '~/types';
 
 // Mock the QuestionDisplay component
-jest.mock('~/components/shared/entity/QuestionDisplay', () => ({
-  QuestionDisplay: function MockQuestionDisplay({
-    question,
-    isFollowUpQuestion,
-  }: {
-    question: string;
-    isFollowUpQuestion?: boolean;
-  }) {
-    return (
-      <Text>
-        {isFollowUpQuestion ? 'Follow-up: ' : ''}
-        {question}
-      </Text>
-    );
-  },
-}));
+jest.mock('~/components/shared/entity/QuestionDisplay', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    QuestionDisplay: function MockQuestionDisplay({
+      question,
+      isFollowUpQuestion,
+    }: {
+      question: string;
+      isFollowUpQuestion?: boolean;
+    }) {
+      return React.createElement(Text, {}, `${isFollowUpQuestion ? 'Follow-up: ' : ''}${question}`);
+    },
+  };
+});
 
 // Mock icons
-jest.mock('~/lib/icons/AlertCircle', () => ({
-  AlertCircle: function MockAlertCircle(props: any) {
-    return <Text {...props}>Alert Icon</Text>;
-  },
-}));
+jest.mock('~/lib/icons/AlertCircle', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    AlertCircle: function MockAlertCircle(props: any) {
+      return React.createElement(Text, props, 'Alert Icon');
+    },
+  };
+});
 
 describe('ExchangeQuestionHeader', () => {
   const mockQuestion: Question = {

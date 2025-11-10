@@ -1,7 +1,6 @@
 import { jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
 
 import LevelCompleteScreen from '~/app/games/[id]/current/level-complete';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
@@ -31,6 +30,8 @@ jest.mock('~/lib/stores/currentLevelStore', () => ({
 
 // Mock LevelCompleteContent
 jest.mock('~/components/screens/level-complete/LevelCompleteContent', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockLevelCompleteContent({
     gameId,
     levelId,
@@ -38,16 +39,17 @@ jest.mock('~/components/screens/level-complete/LevelCompleteContent', () => {
     gameId: string;
     levelId: string;
   }) {
-    return (
-      <Text testID="level-complete-content">
-        LevelCompleteContent: {gameId} - {levelId}
-      </Text>
+    return React.createElement(
+      Text,
+      { testID: 'level-complete-content' },
+      `LevelCompleteContent: ${gameId} - ${levelId}`,
     );
   };
 });
 
 // Mock ParallaxScrollView
 jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
+  const React = require('react');
   return function MockParallaxScrollView({
     children,
     headerImage,
@@ -55,11 +57,11 @@ jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
     children: React.ReactNode;
     headerImage: React.ReactNode;
   }) {
-    return (
-      <View testID="parallax-scroll-view">
-        <View testID="header-image">{headerImage}</View>
-        {children}
-      </View>
+    return React.createElement(
+      'mock-view',
+      { testID: 'parallax-scroll-view' },
+      React.createElement('mock-view', { testID: 'header-image' }, headerImage),
+      children,
     );
   };
 });

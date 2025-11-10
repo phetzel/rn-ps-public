@@ -1,7 +1,10 @@
 module.exports = function (api) {
-  api.cache(true);
-  return {
-    presets: [['babel-preset-expo', { jsxImportSource: 'nativewind' }], 'nativewind/babel'],
-    plugins: [['@babel/plugin-proposal-decorators', { legacy: true }]],
-  };
+  const isTest = api.env('test');
+  api.cache(() => (isTest ? 'test' : 'prod'));
+  const presets = [['babel-preset-expo', isTest ? {} : { jsxImportSource: 'nativewind' }]];
+  const plugins = [['@babel/plugin-proposal-decorators', { legacy: true }]];
+  if (!isTest) {
+    plugins.push('nativewind/babel');
+  }
+  return { presets, plugins };
 };

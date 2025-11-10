@@ -11,7 +11,6 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 import { of } from 'rxjs';
 
 import SituationOutcomeExchanges from '~/components/shared/situations-outcome-list/SituationOutcomeExchanges';
@@ -37,11 +36,13 @@ jest.mock('~/lib/db/helpers/observations', () => ({
 
 // Mock SituationOutcomeExchangeItem component
 jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockSituationOutcomeExchangeItem({ exchange, selectedOutcomeId }: any) {
-    return (
-      <Text>
-        Exchange Item: {exchange.id} - Selected: {selectedOutcomeId}
-      </Text>
+    return React.createElement(
+      Text,
+      {},
+      `Exchange Item: ${exchange.id} - Selected: ${selectedOutcomeId}`,
     );
   };
 });

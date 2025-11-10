@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react-native';
-import { Text, View } from 'react-native';
 
 import { AdCard } from '~/components/shared/ad-card/AdCard';
 import { useAdCard } from '~/lib/hooks/useAdCard';
@@ -7,31 +6,37 @@ import { EntityWithDelta } from '~/types';
 
 // Mock dependencies
 jest.mock('~/lib/hooks/useAdCard');
-jest.mock('~/components/shared/ad-card/AdCardHeader', () => ({
-  __esModule: true,
-  default: jest.fn(({ isAdWatched, onWatchAd, isButtonDisabled, canRequestAds }) => {
-    return (
-      <View testID="ad-card-header">
-        <Text>{isAdWatched ? 'Ad Watched' : 'Watch Ad Available'}</Text>
-        {!isAdWatched && onWatchAd && (
-          <Text testID="watch-ad-button" onPress={onWatchAd}>
-            Watch Ad
-          </Text>
-        )}
-      </View>
-    );
-  }),
-}));
+jest.mock('~/components/shared/ad-card/AdCardHeader', () => {
+  const React = require('react');
+  const { View, Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: jest.fn(({ isAdWatched, onWatchAd, isButtonDisabled, canRequestAds }) => {
+      return React.createElement(
+        View,
+        { testID: 'ad-card-header' },
+        React.createElement(Text, {}, isAdWatched ? 'Ad Watched' : 'Watch Ad Available'),
+        !isAdWatched &&
+          onWatchAd &&
+          React.createElement(Text, { testID: 'watch-ad-button', onPress: onWatchAd }, 'Watch Ad'),
+      );
+    }),
+  };
+});
 
-jest.mock('~/components/shared/results/ResultsTableList', () => ({
-  ResultsTableList: jest.fn(({ enhancedDeltas, isAdWatched, showAdColumn }) => {
-    return (
-      <Text testID="results-table-list">
-        Results: {enhancedDeltas?.length || 0} items, Ad Watched: {isAdWatched.toString()}
-      </Text>
-    );
-  }),
-}));
+jest.mock('~/components/shared/results/ResultsTableList', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    ResultsTableList: jest.fn(({ enhancedDeltas, isAdWatched, showAdColumn }) => {
+      return React.createElement(
+        Text,
+        { testID: 'results-table-list' },
+        `Results: ${(enhancedDeltas?.length || 0).toString()} items, Ad Watched: ${isAdWatched.toString()}`,
+      );
+    }),
+  };
+});
 
 const mockUseAdCard = useAdCard as jest.MockedFunction<typeof useAdCard>;
 

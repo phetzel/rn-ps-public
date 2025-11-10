@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Pressable, Text, View } from 'react-native';
 
 import { OutcomesContent } from '~/components/shared/outcomes/OutcomesContent';
 import { LevelStatus } from '~/types';
@@ -19,32 +18,28 @@ jest.mock('~/lib/hooks/useLevelNavigation', () => ({
 }));
 
 // Mock Tabs components
-jest.mock('~/components/ui/tabs', () => ({
-  Tabs: function MockTabs({ children, value, onValueChange, ...props }: any) {
-    return (
-      <View {...props} testID={`tabs-${value}`}>
-        {children}
-      </View>
-    );
-  },
-  TabsList: function MockTabsList({ children, ...props }: any) {
-    return <View {...props}>{children}</View>;
-  },
-  TabsTrigger: function MockTabsTrigger({ children, value, onPress, ...props }: any) {
-    return (
-      <Pressable {...props} testID={`tab-${value}`} onPress={onPress}>
-        <Text>{children}</Text>
-      </Pressable>
-    );
-  },
-  TabsContent: function MockTabsContent({ children, value, ...props }: any) {
-    return (
-      <View {...props} testID={`tab-content-${value}`}>
-        {children}
-      </View>
-    );
-  },
-}));
+jest.mock('~/components/ui/tabs', () => {
+  const React = require('react');
+  const { View, Text, Pressable } = require('react-native');
+  return {
+    Tabs: function MockTabs({ children, value, onValueChange, ...props }: any) {
+      return React.createElement(View, { ...props, testID: `tabs-${value}` }, children);
+    },
+    TabsList: function MockTabsList({ children, ...props }: any) {
+      return React.createElement(View, props, children);
+    },
+    TabsTrigger: function MockTabsTrigger({ children, value, onPress, ...props }: any) {
+      return React.createElement(
+        Pressable,
+        { ...props, testID: `tab-${value}`, onPress },
+        React.createElement(Text, {}, children),
+      );
+    },
+    TabsContent: function MockTabsContent({ children, value, ...props }: any) {
+      return React.createElement(View, { ...props, testID: `tab-content-${value}` }, children);
+    },
+  };
+});
 
 describe('OutcomesContent', () => {
   const mockLevel = {

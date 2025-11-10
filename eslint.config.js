@@ -42,4 +42,12 @@ module.exports = defineConfig([
       'e2e/maestro/**',
     ],
   },
+  {
+    files: ['__tests__/**/*'],
+    rules: {
+      'import/order': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+    },
+  },
 ]);

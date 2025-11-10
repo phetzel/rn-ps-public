@@ -64,7 +64,7 @@ export default function ConsequenceCabinetMembersFired({
       <View
         className="p-3 bg-red-50 rounded-lg border border-red-100 flex-row items-center"
         accessible={true}
-        accessibilityLabel={`Cabinet instability penalty: All voter groups lost ${totalPenalty}% approval, affecting President{"'"}s overall rating`}
+        accessibilityLabel={`Cabinet instability penalty: All voter groups lost ${totalPenalty}% approval, affecting President's overall rating`}
       >
         <AlertCircle className="text-red-500 mr-2 flex-shrink-0" size={16} />
         <View className="flex-1">

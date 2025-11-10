@@ -11,7 +11,6 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text, View } from 'react-native';
 import { of } from 'rxjs';
 
 import SituationsOutcomeList from '~/components/shared/situations-outcome-list/SituationsOutcomeList';
@@ -19,13 +18,16 @@ import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
 import { Situation } from '~/lib/db/models';
 
 // Mock withObservables HOC
-jest.mock('@nozbe/watermelondb/react', () => ({
-  withObservables: jest.fn(() => (Component: React.ComponentType<any>) => {
-    return function MockedComponent(props: any) {
-      return <Component {...props} />;
-    };
-  }),
-}));
+jest.mock('@nozbe/watermelondb/react', () => {
+  const React = require('react');
+  return {
+    withObservables: jest.fn(() => (Component: React.ComponentType<any>) => {
+      return function MockedComponent(props: any) {
+        return React.createElement(Component, props);
+      };
+    }),
+  };
+});
 
 // Mock the observations helper
 jest.mock('~/lib/db/helpers/observations', () => ({
@@ -33,26 +35,36 @@ jest.mock('~/lib/db/helpers/observations', () => ({
 }));
 
 // Mock Accordion components
-jest.mock('~/components/ui/accordion', () => ({
-  Accordion: function MockAccordion({ children, ...props }: any) {
-    return <View {...props}>{children}</View>;
-  },
-}));
+jest.mock('~/components/ui/accordion', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    Accordion: function MockAccordion({ children, ...props }: any) {
+      return React.createElement(View, props, children);
+    },
+  };
+});
 
 // Mock EmptyState component
-jest.mock('~/components/shared/EmptyState', () => ({
-  EmptyState: function MockEmptyState({ message }: any) {
-    return <Text>{message}</Text>;
-  },
-}));
+jest.mock('~/components/shared/EmptyState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    EmptyState: function MockEmptyState({ message }: any) {
+      return React.createElement(Text, {}, message);
+    },
+  };
+});
 
 // Mock SituationOutcomeItem component
 jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeItem', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockSituationOutcomeItem({ situation }: any) {
-    return (
-      <Text>
-        Situation Outcome Item: {situation.id} - {situation.title}
-      </Text>
+    return React.createElement(
+      Text,
+      {},
+      `Situation Outcome Item: ${situation.id} - ${situation.title}`,
     );
   };
 });

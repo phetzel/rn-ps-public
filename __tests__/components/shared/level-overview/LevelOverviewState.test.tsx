@@ -11,42 +11,48 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import LevelOverviewState from '~/components/shared/level-overview/LevelOverviewState';
 
 // Mock child components
-jest.mock('~/components/shared/level-state/PresidentLevelState', () => ({
-  __esModule: true,
-  default: ({ gameId, outcomeSnapshot }: any) => {
-    return <Text>President Level State - {gameId}</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-state/PresidentLevelState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ gameId, outcomeSnapshot }: any) =>
+      React.createElement(Text, {}, `President Level State - ${gameId}`),
+  };
+});
 
-jest.mock('~/components/shared/level-state/CabinetLevelState', () => ({
-  __esModule: true,
-  default: ({ levelId, outcomeSnapshot }: any) => {
-    return <Text>Cabinet Level State - {levelId}</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-state/CabinetLevelState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ levelId, outcomeSnapshot }: any) =>
+      React.createElement(Text, {}, `Cabinet Level State - ${levelId}`),
+  };
+});
 
-jest.mock('~/components/shared/level-state/MediaLevelState', () => ({
-  __esModule: true,
-  default: ({ outcomeSnapshot }: any) => {
-    return <Text>Media Level State</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-state/MediaLevelState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ outcomeSnapshot }: any) => React.createElement(Text, {}, 'Media Level State'),
+  };
+});
 
-jest.mock('~/components/shared/level-state/SubgroupLevelState', () => ({
-  __esModule: true,
-  default: ({ gameId, levelId, outcomeSnapshot }: any) => {
-    return (
-      <Text>
-        Subgroup Level State - {gameId} - {levelId}
-      </Text>
-    );
-  },
-}));
+jest.mock('~/components/shared/level-state/SubgroupLevelState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: ({ gameId, levelId, outcomeSnapshot }: any) =>
+      React.createElement(Text, {}, `Subgroup Level State - ${gameId} - ${levelId}`),
+  };
+});
 
 // Mock database helpers
 jest.mock('~/lib/db/helpers/observations', () => ({

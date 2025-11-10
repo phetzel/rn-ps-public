@@ -11,18 +11,21 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import SubgroupLevelState from '~/components/shared/level-state/SubgroupLevelState';
 
 // Mock child components
 jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);
 
-jest.mock('~/components/shared/entity/SubgroupCategoryIcon', () => ({
-  SubgroupCategoryIcon: ({ category }: any) => {
-    return <Text>{category} Icon</Text>;
-  },
-}));
+jest.mock('~/components/shared/entity/SubgroupCategoryIcon', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    SubgroupCategoryIcon: ({ category }: any) => {
+      return React.createElement(Text, {}, `${category} Icon`);
+    },
+  };
+});
 
 // Mock database helpers
 jest.mock('~/lib/db/helpers', () => ({

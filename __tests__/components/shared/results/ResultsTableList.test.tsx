@@ -13,22 +13,25 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import { ResultsTableList } from '~/components/shared/results/ResultsTableList';
 
 import type { EntityWithDelta, EntityWithMediaDelta } from '~/types';
 
 // Mock ResultsTable component
-jest.mock('~/components/shared/results/ResultsTable', () => ({
-  ResultsTable: ({ entities, title, isAdWatched, showAdColumn }: any) => {
-    return (
-      <Text testID={`mocked-results-table-${title.toLowerCase().replace(/\s+/g, '-')}`}>
-        {`MockedResultsTable: ${title} - ${entities.length} entities, adWatched: ${isAdWatched}, showAdColumn: ${showAdColumn}`}
-      </Text>
-    );
-  },
-}));
+jest.mock('~/components/shared/results/ResultsTable', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    ResultsTable: ({ entities, title, isAdWatched, showAdColumn }: any) => {
+      return React.createElement(
+        Text,
+        { testID: `mocked-results-table-${title.toLowerCase().replace(/\s+/g, '-')}` },
+        `MockedResultsTable: ${title} - ${entities.length} entities, adWatched: ${isAdWatched}, showAdColumn: ${showAdColumn}`,
+      );
+    },
+  };
+});
 
 const createMockEntity = (
   id: string,

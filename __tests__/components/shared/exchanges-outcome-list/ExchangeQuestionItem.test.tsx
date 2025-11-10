@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react-native';
-import { Text } from 'react-native';
 
 import ExchangeQuestionItem from '~/components/shared/exchanges-outcome-list/ExchangeQuestionItem';
 import { useExchangeQuestion } from '~/lib/hooks/useExchangeQuestion';
@@ -33,22 +32,28 @@ jest.mock('~/lib/hooks/useExchangeQuestion', () => ({
 
 // Mock the ImpactList component
 jest.mock('~/components/shared/impact/ImpactList', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockImpactList({ impacts }: any) {
-    return <Text>Impact List: {JSON.stringify(impacts)}</Text>;
+    return React.createElement(Text, {}, `Impact List: ${JSON.stringify(impacts)}`);
   };
 });
 
 // Mock the ExchangeQuestionHeader component
 jest.mock('~/components/shared/exchanges-outcome-list/ExchangeQuestionHeader', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockExchangeQuestionHeader(props: any) {
-    return <Text>Question Header: {JSON.stringify(props)}</Text>;
+    return React.createElement(Text, {}, `Question Header: ${JSON.stringify(props)}`);
   };
 });
 
 // Mock the ExchangeQuestionAnswer component
 jest.mock('~/components/shared/exchanges-outcome-list/ExchangeQuestionAnswer', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockExchangeQuestionAnswer(props: any) {
-    return <Text>Question Answer: {JSON.stringify(props)}</Text>;
+    return React.createElement(Text, {}, `Question Answer: ${JSON.stringify(props)}`);
   };
 });
 

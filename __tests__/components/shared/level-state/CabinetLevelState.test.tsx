@@ -11,18 +11,21 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import CabinetLevelState from '~/components/shared/level-state/CabinetLevelState';
 
 // Mock child components
 jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);
 
-jest.mock('~/components/shared/entity/CabinetMemberName', () => ({
-  CabinetMemberName: ({ cabinetMember }: any) => {
-    return <Text>{cabinetMember.staticData.cabinetName}</Text>;
-  },
-}));
+jest.mock('~/components/shared/entity/CabinetMemberName', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    CabinetMemberName: ({ cabinetMember }: any) => {
+      return React.createElement(Text, {}, cabinetMember.staticData.cabinetName);
+    },
+  };
+});
 
 // Mock database helpers
 jest.mock('~/lib/db/helpers', () => ({

@@ -11,7 +11,6 @@
 
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { Text } from 'react-native';
 
 import PresidentLevelState from '~/components/shared/level-state/PresidentLevelState';
 
@@ -19,9 +18,10 @@ import PresidentLevelState from '~/components/shared/level-state/PresidentLevelS
 jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);
 
 jest.mock('~/components/shared/entity/PoliticalLeaningBadge', () => {
-  const PoliticalLeaningBadgeMock = ({ politicalLeaning }: any) => (
-    <Text>{politicalLeaning} Badge</Text>
-  );
+  const React = require('react');
+  const { Text } = require('react-native');
+  const PoliticalLeaningBadgeMock = ({ politicalLeaning }: any) =>
+    React.createElement(Text, {}, `${politicalLeaning} Badge`);
   PoliticalLeaningBadgeMock.displayName = 'PoliticalLeaningBadgeMock';
   return PoliticalLeaningBadgeMock;
 });

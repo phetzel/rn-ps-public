@@ -1,17 +1,13 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
 
 // Mock react-native-reanimated with complete component structure
 jest.mock('react-native-reanimated', () => {
-  const RN = { View, ScrollView };
-
-  const mockAnimated = {
-    View: RN.View,
-    ScrollView: RN.ScrollView,
-  };
+  const { View, ScrollView } = require('react-native');
+  const mockAnimated = { View, ScrollView };
 
   // Add all necessary properties that CSS interop might expect
   mockAnimated.View.displayName = 'Animated.View';

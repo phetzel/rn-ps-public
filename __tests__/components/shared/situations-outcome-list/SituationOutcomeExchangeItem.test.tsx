@@ -11,7 +11,6 @@
  */
 
 import { render, screen } from '@testing-library/react-native';
-import { Text } from 'react-native';
 
 import SituationOutcomeExchangeItem from '~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem';
 
@@ -19,31 +18,45 @@ import type { SituationOutcome } from '~/types';
 
 // Mock JournalistDisplay component
 jest.mock('~/components/shared/entity/JournalistDisplay', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockJournalistDisplay({ journalistId }: { journalistId: string }) {
-    return <Text>Journalist Display: {journalistId}</Text>;
+    return React.createElement(Text, {}, `Journalist Display: ${journalistId}`);
   };
 });
 
 // Mock QuestionDisplay component
-jest.mock('~/components/shared/entity/QuestionDisplay', () => ({
-  QuestionDisplay: function MockQuestionDisplay({ question }: { question: string }) {
-    return <Text>Question: {question}</Text>;
-  },
-}));
+jest.mock('~/components/shared/entity/QuestionDisplay', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    QuestionDisplay: function MockQuestionDisplay({ question }: { question: string }) {
+      return React.createElement(Text, {}, `Question: ${question}`);
+    },
+  };
+});
 
 // Mock AnswerDisplay component
-jest.mock('~/components/shared/entity/AnswerDisplay', () => ({
-  AnswerDisplay: function MockAnswerDisplay({ answer }: { answer: string }) {
-    return <Text>Answer: {answer}</Text>;
-  },
-}));
+jest.mock('~/components/shared/entity/AnswerDisplay', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    AnswerDisplay: function MockAnswerDisplay({ answer }: { answer: string }) {
+      return React.createElement(Text, {}, `Answer: ${answer}`);
+    },
+  };
+});
 
 // Mock SituationOutcomeExchangeImpactList component
-jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchangeImpactList', () => ({
-  SituationOutcomeExchangeImpactList: function MockImpactList(props: any) {
-    return <Text>Impact List: {JSON.stringify(props)}</Text>;
-  },
-}));
+jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchangeImpactList', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    SituationOutcomeExchangeImpactList: function MockImpactList(props: any) {
+      return React.createElement(Text, {}, `Impact List: ${JSON.stringify(props)}`);
+    },
+  };
+});
 
 describe('SituationOutcomeExchangeItem', () => {
   const mockAllOutcomes: SituationOutcome[] = [
