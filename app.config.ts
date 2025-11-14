@@ -140,6 +140,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     env: process.env.APP_ENV ?? 'development',
     sentryDsn: process.env.SENTRY_DSN,
     analyticsKey: process.env.ANALYTICS_API_KEY,
+    analyticsHost: process.env.ANALYTICS_HOST,
     privacyPolicyUrl: process.env.PRIVACY_POLICY_URL,
     termsUrl: process.env.TERMS_URL,
   },

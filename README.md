@@ -171,6 +171,19 @@ npm run build:prod:ios     # iOS App Store build
 npm run build:prod:android # Google Play build
 ```
 
+## ✅ Owner Tasks Checklist (Privacy & Compliance)
+
+- Configure AdMob UMP messages for EEA/UK (TCF v2.2) and US states (GPP) in the AdMob console
+- Set EAS environment variables:
+  - `SENTRY_DSN`, `ANALYTICS_API_KEY`, `ANALYTICS_HOST`, `ADMOB_ANDROID_APP_ID`, `ADMOB_IOS_APP_ID`, `PRIVACY_POLICY_URL`, `TERMS_URL`
+- Install PostHog RN SDK peer deps (Expo):  
+  `npx expo install posthog-react-native expo-file-system expo-application expo-device expo-localization`
+- Update Privacy Policy and Terms with Sentry/AdMob/PostHog details and publish URLs
+- Complete App Store “App Privacy” and Play “Data Safety” forms to reflect diagnostics/ads/analytics
+- Verify ATT copy and timing on iOS; ensure core features are not gated
+- Confirm not child-directed (COPPA) and review ad content rating
+- See `TEARDOWN.md` and `docs/PRIVACY-DISCLOSURES.md` for detailed guidance
+
 ## 🤝 Contributing
 
 1. Follow the cursor rules in `.cursor/rules/`
