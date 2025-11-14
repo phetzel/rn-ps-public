@@ -3,6 +3,9 @@ export function initSentry(): void {
     const Sentry = require('sentry-expo');
 
     const Constants = require('expo-constants').default;
+    const { isDiagnosticsEnabled } = require('./diagnosticsGate') as {
+      isDiagnosticsEnabled: () => boolean;
+    };
 
     const Application = require('expo-application');
     const extra = (Constants?.expoConfig?.extra ?? Constants?.manifest?.extra ?? {}) as {
@@ -30,7 +33,39 @@ export function initSentry(): void {
       environment,
       release,
       dist: nativeBuildVersion,
+      beforeBreadcrumb(breadcrumb: any) {
+        try {
+          if (!breadcrumb) return breadcrumb;
+          const emailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+          const phoneRe = /\+?\d[\d\s().-]{7,}\d/g;
+          const redactString = (val: unknown) =>
+            typeof val === 'string'
+              ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
+              : val;
+          const redactObject = (obj: any) => {
+            if (!obj || typeof obj !== 'object') return;
+            for (const key of Object.keys(obj)) {
+              const v = obj[key];
+              if (typeof v === 'string') obj[key] = redactString(v);
+              else if (typeof v === 'object') redactObject(v);
+            }
+          };
+          if (breadcrumb.message) breadcrumb.message = redactString(breadcrumb.message) as any;
+          if ((breadcrumb as any).data) redactObject((breadcrumb as any).data);
+          return breadcrumb;
+        } catch {
+          return breadcrumb;
+        }
+      },
       beforeSend(event: unknown): unknown {
+        // Drop events entirely if user disabled diagnostics
+        try {
+          if (!isDiagnosticsEnabled()) {
+            return null;
+          }
+        } catch {
+          // ignore and continue to scrub
+        }
         // Basic PII scrubbing for user-entered text and identifiers
         try {
           const e = event as any;

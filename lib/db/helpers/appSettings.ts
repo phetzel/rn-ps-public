@@ -11,6 +11,11 @@ export async function getOrCreateAppSettings(): Promise<AppSetting> {
     const created = await appSettingsCollection.create((s) => {
       s.hasFictionDisclaimerAck = false;
       s.fictionDisclaimerAcknowledgedAt = null;
+      // Defaults for new installs:
+      // Diagnostics enabled (crash reports) on; Analytics off until provider chosen
+      // These may be overridden by UI toggles later.
+      (s as any).diagnosticsEnabled = true;
+      (s as any).analyticsEnabled = false;
     });
     return created;
   });
@@ -22,6 +27,40 @@ export async function acknowledgeFictionDisclaimer(): Promise<void> {
     await settings.update((s) => {
       s.hasFictionDisclaimerAck = true;
       s.fictionDisclaimerAcknowledgedAt = Math.floor(Date.now() / 1000);
+    });
+  });
+}
+
+export async function getPrivacyFlags(): Promise<{
+  diagnosticsEnabled: boolean;
+  analyticsEnabled: boolean;
+}> {
+  const settings = await getOrCreateAppSettings();
+  const diagnosticsEnabled =
+    settings.diagnosticsEnabled === null || settings.diagnosticsEnabled === undefined
+      ? true
+      : !!settings.diagnosticsEnabled;
+  const analyticsEnabled =
+    settings.analyticsEnabled === null || settings.analyticsEnabled === undefined
+      ? false
+      : !!settings.analyticsEnabled;
+  return { diagnosticsEnabled, analyticsEnabled };
+}
+
+export async function setDiagnosticsEnabled(value: boolean): Promise<void> {
+  await database.write(async () => {
+    const settings = await getOrCreateAppSettings();
+    await settings.update((s: any) => {
+      s.diagnosticsEnabled = value;
+    });
+  });
+}
+
+export async function setAnalyticsEnabled(value: boolean): Promise<void> {
+  await database.write(async () => {
+    const settings = await getOrCreateAppSettings();
+    await settings.update((s: any) => {
+      s.analyticsEnabled = value;
     });
   });
 }

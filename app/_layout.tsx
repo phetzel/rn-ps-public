@@ -15,6 +15,12 @@ import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { NAV_THEME } from '~/lib/constants';
 import { database } from '~/lib/db';
 import { getOrCreateAppSettings } from '~/lib/db/helpers';
+import { getPrivacyFlags } from '~/lib/db/helpers/appSettings';
+import {
+  setEnabled as analyticsSetEnabled,
+  initIfEnabled as analyticsInitIfEnabled,
+} from '~/lib/infra/analytics';
+import { setDiagnosticsEnabled as gateSetDiagnosticsEnabled } from '~/lib/infra/diagnosticsGate';
 import { useConsentStore } from '~/lib/stores/consentStore';
 import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
@@ -101,6 +107,29 @@ export default function RootLayout() {
     };
   }, [isDbReady, isSdkInitialized, open]);
 
+  // Initialize diagnostics gate from persisted flags when ready
+  React.useEffect(() => {
+    let cancelled = false;
+    const initDiagnostics = async () => {
+      try {
+        if (isDbReady) {
+          const { diagnosticsEnabled, analyticsEnabled } = await getPrivacyFlags();
+          if (!cancelled) {
+            gateSetDiagnosticsEnabled(diagnosticsEnabled);
+            analyticsSetEnabled(analyticsEnabled);
+            analyticsInitIfEnabled();
+          }
+        }
+      } catch {
+        // no-op
+      }
+    };
+    void initDiagnostics();
+    return () => {
+      cancelled = true;
+    };
+  }, [isDbReady]);
+
   if ((!isDbReady && !dbError) || !isColorSchemeLoaded || !isSdkInitialized) {
     return null;
   }
@@ -140,6 +169,12 @@ export default function RootLayout() {
               name="index"
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="privacy"
+              options={{
+                title: 'Privacy',
               }}
             />
             <Stack.Screen

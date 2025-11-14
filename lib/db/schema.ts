@@ -1,7 +1,7 @@
 import { appSchema, tableSchema } from '@nozbe/watermelondb';
 
 export const myAppSchema = appSchema({
-  version: 1,
+  version: 2,
   tables: [
     tableSchema({
       name: 'games',
@@ -120,6 +120,8 @@ export const myAppSchema = appSchema({
       columns: [
         { name: 'has_fiction_disclaimer_ack', type: 'boolean' },
         { name: 'fiction_disclaimer_acknowledged_at', type: 'number', isOptional: true },
+        { name: 'diagnostics_enabled', type: 'boolean', isOptional: true },
+        { name: 'analytics_enabled', type: 'boolean', isOptional: true },
         { name: 'created_at', type: 'number' },
         { name: 'updated_at', type: 'number' },
       ],

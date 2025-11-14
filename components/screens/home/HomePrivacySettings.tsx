@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -12,9 +13,21 @@ import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 export function HomePrivacySettings() {
   const { showPrivacyOptions, formAvailable } = useConsentStore();
   const { open } = useDisclaimerDialogStore();
+  const router = useRouter();
 
   return (
     <View className="flex-row justify-around gap-2">
+      <Button
+        variant="outline"
+        onPress={() => router.push('/privacy')}
+        className="flex-row"
+        accessibilityLabel="Privacy controls"
+        accessibilityHint="Open privacy controls to manage analytics, diagnostics and data"
+      >
+        <Settings className="mr-1 text-foreground" size={18} />
+        <Text>Privacy</Text>
+      </Button>
+
       {formAvailable && (
         <Button
           variant="ghost"
@@ -24,7 +37,7 @@ export function HomePrivacySettings() {
           accessibilityHint="Update your advertising and data tracking preferences"
         >
           <Settings className="mr-1 text-foreground" size={18} />
-          <Text>Privacy</Text>
+          <Text>Consent</Text>
         </Button>
       )}
 

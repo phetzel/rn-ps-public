@@ -121,7 +121,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-tracking-transparency',
       {
-        userTrackingPermission: 'This identifier will be used to deliver personalized ads to you.',
+        userTrackingPermission:
+          'We use your device identifier to show relevant ads and measure performance. You can change this anytime in iOS Settings.',
       },
     ],
     ['sentry-expo', { bundleNative: true }],
@@ -139,5 +140,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     env: process.env.APP_ENV ?? 'development',
     sentryDsn: process.env.SENTRY_DSN,
     analyticsKey: process.env.ANALYTICS_API_KEY,
+    privacyPolicyUrl: process.env.PRIVACY_POLICY_URL,
+    termsUrl: process.env.TERMS_URL,
   },
 });
