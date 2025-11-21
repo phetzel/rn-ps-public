@@ -1,3 +1,56 @@
+## Production Teardown — Remaining Work Only
+
+## P0 — Blockers
+
+### Consent, Privacy, and Store Compliance
+- [ ] Implement GDPR CMP (IAB TCF v2) or region-based consent prompt
+- [ ] Validate ATT copy and flow
+- [ ] In-app Consent & Privacy screen with toggles and links
+- [ ] App Store “App Privacy” and Play “Data Safety” forms
+- [ ] “Delete my data” and “Reset game data” affordances
+
+### CI/CD and Release Strategy
+- [ ] Ensure GitHub Actions jobs cover: typecheck, lint, unit, E2E smoke, bundle analyze
+- [ ] Publish EAS builds for `preview` channel on release branches
+- [ ] Define runtime version policy and rollback plan
+
+### E2E Smoke Tests
+- [ ] First run + consent
+- [ ] Start level → answer press conference → outcomes
+- [ ] Rewarded ad flow (earn reward, confirm attribution)
+- [ ] Resume after app restart
+
+## P1 — Must-haves
+
+### Analytics & Event Taxonomy
+- [ ] Finalize Amplitude event taxonomy and ensure thin client coverage
+- [ ] Instrument key screens and actions
+
+### Deep Linking
+- [ ] Finalize `scheme` and domains; iOS UL + Android intent filters
+- [ ] Test cold/warm starts and route params
+
+### Performance & Bundle Size
+- [ ] Lazy-load situation data; cache/version content; measure startup
+- [ ] Run `expo bundle:analyze` and track changes in CI
+
+### Accessibility
+- [ ] Labels/roles, focus order, dynamic type, contrast
+
+## Suggested Next Actions
+- Build a dedicated Privacy screen: analytics/diagnostics toggles, open CMP, “Reset data”
+- Expand Maestro E2E: first-run consent; level flow; rewarded ad; resume after restart
+- Verify Sentry env tags on `preview`/`production` builds (APP_ENV added in eas.json)
+- Wire Amplitude API key + the correct ingestion host (US `https://api2.amplitude.com` or EU `https://api.eu.amplitude.com`) and verify the thin analytics client
+
+## Done (reference)
+- Sentry integrated (plugin + JS init), environment/release/dist set, PII scrubbing added
+- Global error UI (`app/+error.tsx`) with reporting via `errorReporter`
+- Migrated to `app.config.ts`; removed `app.json`
+- EAS Variable `SENTRY_DSN` created for preview/production; `APP_ENV` set per profile
+
+---
+
 ## Production Teardown & Launch Plan
 
 ### Priority Legend
@@ -100,7 +153,8 @@ Notes:
   ```bash
   npx expo install @sentry/react-native sentry-expo
   ```
-- When analytics provider is chosen, wire `extra.analyticsKey` usage and add a thin client.
+- Wire `extra.analyticsKey` usage for Amplitude and keep the thin client in sync with the event taxonomy.
+- Keep production AdMob IDs in EAS Secrets scoped to the `production` profile; dev/preview rely on Google’s sample IDs defined in `app.config.ts`.
 
 ---
 
@@ -108,7 +162,7 @@ Notes:
 
 ### Analytics & Event Taxonomy
 
-- [ ] Pick a provider (PostHog, Amplitude, or Segment)
+- [ ] Confirm Amplitude remains the provider of record (or document any change)
 - [ ] Define core events (name, props, when)
   - `app_open`, `game_created`, `level_started`, `press_answer_selected`, `level_completed`, `ad_impression`, `ad_reward_granted`, `consent_updated`, `error_shown`
 - [ ] Implement a thin analytics client with typed methods
@@ -382,3 +436,91 @@ export const log = (level: LogLevel, message: string, meta?: unknown) => {
 - Current codebase signals: Expo Router, EAS, AdMob, WatermelonDB, Zustand, NativeWind.
 - Large situation data suggests lazy-loading is a material win for startup and bundle size.
 - Found `console.log` in `lib/stores/currentLevelStore.ts` indicating the need for a centralized logger.
+
+---
+
+## Owner External Tasks (Privacy/Compliance after code changes)
+
+The following must be completed outside this repo before review/submission:
+
+1) Privacy Policy and Terms (update and publish)
+- Update your Termly Privacy Policy to reflect:
+  - Crash diagnostics via Sentry (types, purpose, retention, not used for ads)
+  - Advertising via Google Mobile Ads/UMP (device identifiers; consent; ATT on iOS)
+  - Analytics (Amplitude): event tracking purposes, data residency (US/EU), retention, user choices
+  - Data deletion: app stores only local data; “Reset game data” removes on-device data
+- Publish final URLs; set in EAS env:
+  - `PRIVACY_POLICY_URL`, `TERMS_URL`
+- Ensure links are present on your website/app listing.
+
+2) Google AdMob and UMP configuration
+- In AdMob privacy & messaging:
+  - Enable EU/UK GDPR messages (IAB TCF v2.2)
+  - Enable US state privacy messages as applicable (GPP)
+  - Configure a privacy options link so users can revisit consent (we expose this in-app)
+- Confirm test mode settings and switch to production before release.
+- If the app is not child-directed, ensure COPPA settings reflect that.
+
+3) Apple App Store Connect — App Privacy
+- Complete “App Privacy” questionnaire consistent with docs/PRIVACY-DISCLOSURES.md:
+  - Diagnostics (crash) collected (Sentry), not linked, not used for tracking
+  - Identifiers (IDFA) collected only when ATT is granted; used for advertising/measurement
+  - Analytics (usage data) collected when enabled; update with Amplitude details
+- Provide Privacy Policy URL in App Information.
+
+4) Google Play Console — Data Safety
+- Complete Data Safety form consistent with docs/PRIVACY-DISCLOSURES.md:
+  - Device identifiers (AAID) for ads; diagnostics (crash) for functionality; analytics (usage data)
+  - Describe collection purposes; declare sharing as required by AdMob/Sentry policies
+- Provide Privacy Policy URL in store listing.
+
+5) ATT prompt and iOS settings
+- Review final ATT copy for clarity; avoid gatekeeping app functionality
+- Verify prompt appears only when required and after contextual education
+
+6) Age targeting and ad content
+- Confirm the app is not child-directed; set AdMob COPPA/age flags appropriately
+- Review ad content rating configurations if needed
+
+7) Incident response and DSAR
+- Establish a process to handle user requests (access, deletion) if ever applicable
+- Define crash/incident handling, contact email, and data retention timelines
+
+8) Monitoring and audits
+- Set up Sentry alerting for crash-free sessions, error spikes
+- Periodically review store disclosures when SDKs or data practices change
+
+---
+
+## Owner Tasks — Amplitude Setup
+
+1) Create an Amplitude project and decide data residency
+- Choose the Amplitude data center that matches your policy (US: `https://api2.amplitude.com`, EU: `https://api.eu.amplitude.com`).
+- Copy the project API key.
+
+2) Install SDK (Expo managed)
+```bash
+npx expo install @amplitude/analytics-react-native @amplitude/plugin-session-replay-react-native @react-native-async-storage/async-storage
+```
+
+3) Configure EAS env
+```bash
+eas env:create --name ANALYTICS_API_KEY --value <amplitude_api_key> --type string --scope project --visibility secret
+eas env:create --name ANALYTICS_HOST --value https://api2.amplitude.com --type string --scope project --visibility secret
+```
+(Use `https://api.eu.amplitude.com` if you need EU data residency, or supply a custom ingestion endpoint if required.)
+
+4) Build the native app to include the SDK
+```bash
+# After committing changes:
+eas build --profile preview --platform ios
+eas build --profile preview --platform android
+```
+
+5) Amplitude project settings
+- Leave session replay plugin disabled until you finish a privacy/performance review.
+- Review default data retention and privacy settings (e.g., IP anonymization).
+
+6) Store disclosures and Privacy Policy
+- Update App Store Privacy and Play Data Safety to include analytics usage data.
+- Update Privacy Policy with Amplitude details, opt-out controls, and retention policies.

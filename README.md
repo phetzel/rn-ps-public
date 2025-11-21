@@ -176,9 +176,11 @@ npm run build:prod:android # Google Play build
 - Configure AdMob UMP messages for EEA/UK (TCF v2.2) and US states (GPP) in the AdMob console
 - Set EAS environment variables:
   - `SENTRY_DSN`, `ANALYTICS_API_KEY`, `ANALYTICS_HOST`, `ADMOB_ANDROID_APP_ID`, `ADMOB_IOS_APP_ID`, `PRIVACY_POLICY_URL`, `TERMS_URL`
-- Install PostHog RN SDK peer deps (Expo):  
-  `npx expo install posthog-react-native expo-file-system expo-application expo-device expo-localization`
-- Update Privacy Policy and Terms with Sentry/AdMob/PostHog details and publish URLs
+- Keep AdMob IDs scoped to production builds; dev/preview fall back to Google’s sample IDs automatically (see `app.config.ts`)
+- Choose the right Amplitude ingest host for your region (`https://api2.amplitude.com` for US, `https://api.eu.amplitude.com` for EU) when setting `ANALYTICS_HOST`
+- Install Amplitude Expo SDK packages:  
+  `npx expo install @amplitude/analytics-react-native @amplitude/plugin-session-replay-react-native @react-native-async-storage/async-storage`
+- Update Privacy Policy and Terms with Sentry/AdMob/Amplitude details and publish URLs
 - Complete App Store “App Privacy” and Play “Data Safety” forms to reflect diagnostics/ads/analytics
 - Verify ATT copy and timing on iOS; ensure core features are not gated
 - Confirm not child-directed (COPPA) and review ad content rating

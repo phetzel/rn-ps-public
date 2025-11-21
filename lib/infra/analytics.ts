@@ -1,26 +1,47 @@
 import Constants from 'expo-constants';
 
+type AmplitudeModule = typeof import('@amplitude/analytics-react-native');
+type AmplitudeClient = ReturnType<AmplitudeModule['createInstance']>;
+type IdentifyConstructor = AmplitudeModule['Identify'];
+type IdentifyInstance = IdentifyConstructor extends new (...args: any) => infer R ? R : never;
+type IdentifyValue = IdentifyInstance extends {
+  set: (key: string, value: infer V) => unknown;
+}
+  ? V
+  : unknown;
+
 let analyticsEnabledInMemory = false;
 let isInitialized = false;
-let posthogRef: any | null = null;
+let amplitudeRef: AmplitudeClient | null = null;
+let amplitudeModule: AmplitudeModule | null = null;
+
+function loadAmplitudeModule(): AmplitudeModule | null {
+  if (amplitudeModule) return amplitudeModule;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    amplitudeModule = require('@amplitude/analytics-react-native') as AmplitudeModule;
+  } catch {
+    amplitudeModule = null;
+  }
+  return amplitudeModule;
+}
+
+function getExtra(key: string): string | undefined {
+  return (Constants as any)?.expoConfig?.extra?.[key] ?? (Constants as any)?.manifest?.extra?.[key];
+}
 
 export function setEnabled(enabled: boolean): void {
   analyticsEnabledInMemory = enabled;
-  // If disabling after init, attempt to shutdown/reset the SDK
-  if (!enabled && isInitialized && posthogRef) {
+  if (!enabled && isInitialized && amplitudeRef) {
     try {
-      if (typeof posthogRef.shutdown === 'function') {
-        posthogRef.shutdown();
-      } else if (typeof posthogRef.reset === 'function') {
-        posthogRef.reset();
-      } else if (typeof posthogRef.optOut === 'function') {
-        posthogRef.optOut();
-      }
+      amplitudeRef.setOptOut?.(true);
+      amplitudeRef.flush?.();
+      amplitudeRef.shutdown?.();
     } catch {
       // ignore
     } finally {
       isInitialized = false;
-      posthogRef = null;
+      amplitudeRef = null;
     }
   }
 }
@@ -28,55 +49,54 @@ export function setEnabled(enabled: boolean): void {
 export function initIfEnabled(): void {
   if (isInitialized) return;
   if (!analyticsEnabledInMemory) return;
-  const analyticsKey =
-    (Constants as any)?.expoConfig?.extra?.analyticsKey ??
-    (Constants as any)?.manifest?.extra?.analyticsKey;
-  const analyticsHost =
-    (Constants as any)?.expoConfig?.extra?.analyticsHost ??
-    (Constants as any)?.manifest?.extra?.analyticsHost;
+
+  const analyticsKey = getExtra('analyticsKey');
+  const analyticsHost = getExtra('analyticsHost');
+
   if (!analyticsKey) return;
 
-  // Load PostHog RN SDK safely to avoid crashes if not installed locally
-  let lib: any;
-  try {
-    lib = require('posthog-react-native');
-  } catch {
-    return; // SDK not installed in this environment; skip
-  }
-  const PH: any = lib?.default ?? lib?.PostHog ?? lib;
-  if (!PH || typeof PH.init !== 'function') return;
+  const module = loadAmplitudeModule();
+  if (!module?.createInstance) return;
 
   try {
-    PH.init(analyticsKey, {
-      host: analyticsHost || 'https://us.i.posthog.com',
-      // Keep autocapture/session replay off by default for privacy and performance
-      autocapture: false,
-      enableSessionReplay: false,
-      captureApplicationLifecycleEvents: true,
-      enable: true,
+    const instance = module.createInstance();
+    instance.init(analyticsKey, undefined, {
+      serverUrl: analyticsHost,
     });
-    posthogRef = PH;
+    amplitudeRef = instance;
     isInitialized = true;
   } catch {
-    posthogRef = null;
+    amplitudeRef = null;
     isInitialized = false;
   }
 }
 
-export function track(_event: string, _props?: Record<string, unknown>): void {
-  if (!analyticsEnabledInMemory || !isInitialized) return;
+export function track(event: string, props?: Record<string, unknown>): void {
+  if (!analyticsEnabledInMemory || !isInitialized || !amplitudeRef) return;
   try {
-    posthogRef?.capture?.(_event, _props ?? {});
+    amplitudeRef.logEvent?.(event, props ?? {});
   } catch {
     // ignore
   }
 }
 
-export function setUser(_id?: string, _props?: Record<string, unknown>): void {
-  if (!analyticsEnabledInMemory || !isInitialized) return;
+export function setUser(id?: string, props?: Record<string, unknown>): void {
+  if (!analyticsEnabledInMemory || !isInitialized || !amplitudeRef) return;
   try {
-    if (_id) {
-      posthogRef?.identify?.(_id, _props ?? {});
+    amplitudeRef.setUserId?.(id);
+
+    if (props && Object.keys(props).length > 0) {
+      const module = loadAmplitudeModule();
+      const IdentifyCtor = module?.Identify as IdentifyConstructor | undefined;
+      if (!IdentifyCtor) return;
+
+      const identify = new IdentifyCtor() as IdentifyInstance;
+      Object.entries(props).forEach(([key, value]) => {
+        if (value !== undefined) {
+          identify.set?.(key, value as IdentifyValue);
+        }
+      });
+      amplitudeRef.identify?.(identify);
     }
   } catch {
     // ignore
@@ -84,9 +104,9 @@ export function setUser(_id?: string, _props?: Record<string, unknown>): void {
 }
 
 export function flush(): void {
-  if (!analyticsEnabledInMemory || !isInitialized) return;
+  if (!analyticsEnabledInMemory || !isInitialized || !amplitudeRef) return;
   try {
-    posthogRef?.flush?.();
+    amplitudeRef.flush?.();
   } catch {
     // ignore
   }

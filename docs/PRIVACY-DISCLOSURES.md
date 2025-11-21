@@ -2,7 +2,7 @@
 
 This draft summarizes current data collection and usage in the app for completing App Store “App Privacy” and Google Play “Data Safety” disclosures. Update if SDKs or behavior change.
 
-Scope: current SDKs include Google Mobile Ads (AdMob/UMP) and Sentry. No analytics provider is integrated yet.
+Scope: current SDKs include Google Mobile Ads (AdMob/UMP), Sentry, and Amplitude analytics (gated by an in-app toggle).
 
 ## Apple App Store – App Privacy
 
@@ -16,13 +16,18 @@ Data collected:
   - Purpose: App functionality (improve stability/quality)
   - Tracking: No
   - Linked to the user: No
+- Usage Data (Analytics events)
+  - Source: Amplitude
+  - Purpose: Product analytics (feature usage, funnels, retention)
+  - Tracking: No
+  - Linked to the user: No (we do not identify users; events are anonymous)
 
 Data not collected:
 - Contact Info, Health, Financial, Location (precise), Sensitive Info, Contacts, Photos/Videos, Audio, Files/Docs, Fitness, or any other categories not listed above.
 
 User control:
 - “Share diagnostics” toggle in app to disable crash reporting.
-- “Share analytics” toggle present but no analytics provider is enabled yet (no data collected).
+- “Share analytics” toggle to enable/disable analytics; off by default until owner configures keys.
 - Consent controls (Google UMP) for ads/tracking and iOS ATT prompt (with app-specific purpose string).
 
 ## Google Play – Data Safety
@@ -32,10 +37,13 @@ Data collected:
   - Purposes: Ads (ad serving/measurement), App functionality
 - Diagnostics (Crash logs)
   - Purposes: App functionality (stability/quality)
+- Usage Data (Analytics events)
+  - Purposes: Analytics (product improvement)
 
 Data sharing:
 - Ads SDK may process data with third parties for ad serving/measurement; disclose per AdMob policies.
 - Crash diagnostics sent to Sentry; not used for advertising and not sold.
+- Analytics events sent to Amplitude; not used for advertising and not sold.
 
 Security practices:
 - Data in transit is protected.
@@ -44,7 +52,8 @@ Security practices:
 Data handling notes:
 - Ads/consent: Google UMP is used to request EU/UK GDPR consent and US states notices. Ad measurement initialization is delayed until consent. iOS tracking requires ATT permission.
 - Diagnostics: Sentry events are scrubbed (user identifiers, headers, common PII patterns) and can be disabled via the in-app toggle.
-- Analytics: Not enabled; when added, update this document and store disclosures with data types and purposes.
+- Analytics (Amplitude): Only initialized when enabled via the in-app toggle; events limited to usage analytics. Update store disclosures accordingly.
+  - Session replay plugin remains disabled; enable only after separate privacy review.
 
 Links in-app and store listing:
 - Privacy Policy: Provide final URL.
@@ -55,6 +64,7 @@ Owner checklist:
 - Confirm ATT prompt copy and timing.
 - Complete App Store privacy questionnaire consistent with the above.
 - Complete Play Console Data Safety form consistent with the above.
-- Review after enabling an analytics provider and update disclosures accordingly.
+- Ensure EAS env variables are set for `ANALYTICS_API_KEY` and `ANALYTICS_HOST`.
+- Review disclosures whenever analytics schema or providers change.
 
 
