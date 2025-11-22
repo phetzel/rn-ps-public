@@ -3,11 +3,11 @@
 ## P0 — Blockers
 
 ### Consent, Privacy, and Store Compliance
-- [ ] Implement GDPR CMP (IAB TCF v2) or region-based consent prompt
-- [ ] Validate ATT copy and flow
-- [ ] In-app Consent & Privacy screen with toggles and links
-- [ ] App Store “App Privacy” and Play “Data Safety” forms
-- [ ] “Delete my data” and “Reset game data” affordances
+- [x] Implement GDPR CMP (IAB TCF v2) or region-based consent prompt
+- [x] Validate ATT copy and flow
+- [x] In-app Consent & Privacy screen with toggles and links
+- [x] App Store “App Privacy” and Play “Data Safety” forms
+- [x] “Delete my data” and “Reset game data” affordances
 
 ### CI/CD and Release Strategy
 - [ ] Ensure GitHub Actions jobs cover: typecheck, lint, unit, E2E smoke, bundle analyze
@@ -48,6 +48,11 @@
 - Global error UI (`app/+error.tsx`) with reporting via `errorReporter`
 - Migrated to `app.config.ts`; removed `app.json`
 - EAS Variable `SENTRY_DSN` created for preview/production; `APP_ENV` set per profile
+- Implement GDPR CMP / UMP SDK
+- Validate ATT flow
+- In-app Consent & Privacy screen
+- "Delete my data" affordance
+- App Store/Play Store privacy info preparation
 
 ---
 
@@ -97,11 +102,11 @@
 
 ### Consent, Privacy, and Store Compliance
 
-- [ ] Implement a GDPR CMP (IAB TCF v2) or region-based consent prompt
-- [ ] Validate ATT copy and flow (already using `expo-tracking-transparency`)
-- [ ] Add an in-app Consent & Privacy screen with toggles and links
-- [ ] Prepare App Store “App Privacy” and Play “Data Safety” forms
-- [ ] Add “Delete my data” and “Reset game data” affordances
+- [x] Implement a GDPR CMP (IAB TCF v2) or region-based consent prompt
+- [x] Validate ATT copy and flow (already using `expo-tracking-transparency`)
+- [x] Add an in-app Consent & Privacy screen with toggles and links
+- [x] Prepare App Store “App Privacy” and Play “Data Safety” forms
+- [x] Add “Delete my data” and “Reset game data” affordances
 
 ### CI/CD and Release Strategy
 
@@ -313,11 +318,11 @@ Notes:
 
 ### Sprint 1 (P0 focus)
 
-- [ ] Sentry + ErrorBoundary + DSN secrets
-- [ ] CMP/consent screen and legal links
-- [ ] CI: typecheck, lint, tests, bundle analyze; EAS preview builds
+- [x] Sentry + ErrorBoundary + DSN secrets
+- [x] CMP/consent screen and legal links
+- [x] CI: typecheck, lint, tests, bundle analyze; EAS preview builds
 - [ ] E2E smoke via Maestro/Detox: first run, create game, level flow
-- [ ] Runtime config to `app.config.ts` and secrets wiring
+- [x] Runtime config to `app.config.ts` and secrets wiring
 
 ### Sprint 2 (P1 focus)
 
@@ -335,9 +340,9 @@ Defer to P2/P3 if scope threatens dates.
 
 ### Launch Readiness
 
-- [ ] Crash reporting captures JS and native errors
-- [ ] Error boundary prevents white screens and collects reports
-- [ ] Consent & privacy compliant in target regions
+- [x] Crash reporting captures JS and native errors
+- [x] Error boundary prevents white screens and collects reports
+- [x] Consent & privacy compliant in target regions
 - [ ] CI green: typecheck, lint, unit, E2E smoke
 - [ ] Deep linking works from cold/warm states
 - [ ] Bundle size and startup within targets
@@ -462,14 +467,14 @@ The following must be completed outside this repo before review/submission:
 - If the app is not child-directed, ensure COPPA settings reflect that.
 
 3) Apple App Store Connect — App Privacy
-- Complete “App Privacy” questionnaire consistent with docs/PRIVACY-DISCLOSURES.md:
+- Complete “App Privacy” questionnaire consistent with `docs-site/docs/technical/privacy-disclosures.md`:
   - Diagnostics (crash) collected (Sentry), not linked, not used for tracking
   - Identifiers (IDFA) collected only when ATT is granted; used for advertising/measurement
   - Analytics (usage data) collected when enabled; update with Amplitude details
 - Provide Privacy Policy URL in App Information.
 
 4) Google Play Console — Data Safety
-- Complete Data Safety form consistent with docs/PRIVACY-DISCLOSURES.md:
+- Complete Data Safety form consistent with `docs-site/docs/technical/privacy-disclosures.md`:
   - Device identifiers (AAID) for ads; diagnostics (crash) for functionality; analytics (usage data)
   - Describe collection purposes; declare sharing as required by AdMob/Sentry policies
 - Provide Privacy Policy URL in store listing.
