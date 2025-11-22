@@ -81,6 +81,15 @@ jest.mock('react-native/Libraries/Utilities/Platform', () => ({
   select: jest.fn((obj) => obj.ios),
 }));
 
+// Mock nativewind for tests to avoid _ReactNativeCSSInterop access errors
+jest.mock('nativewind', () => ({
+  styled: (Component: any) => Component,
+  useColorScheme: jest.fn().mockReturnValue({ colorScheme: 'light', toggleColorScheme: jest.fn() }),
+  verifyInstallation: jest.fn(),
+  cssInterop: jest.fn(),
+  createElement: require('react').createElement,
+}));
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // Suppress WatermelonDB setup + Model Invalid JSON logs
 // ═══════════════════════════════════════════════════════════════════════════════

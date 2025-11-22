@@ -8,6 +8,7 @@ type ReportOptions = {
 
 export function reportError(error: unknown, options?: ReportOptions): void {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Sentry = require('sentry-expo');
     if (options?.tags || options?.extras || options?.level) {
       Sentry.Native.withScope(

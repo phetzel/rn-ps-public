@@ -37,18 +37,20 @@ jest.mock('@nozbe/watermelondb/react', () => {
 jest.mock('~/components/shared/entity/JournalistDisplay', () => {
   const React = require('react');
   const { Text } = require('react-native');
-  return function MockJournalistDisplay({ journalistId }: { journalistId: string }) {
+  const MockJournalistDisplay = ({ journalistId }: { journalistId: string }) => {
     return React.createElement(Text, {}, `Journalist Display: ${journalistId}`);
   };
+  return MockJournalistDisplay;
 });
 
 // Mock ExchangeQuestionItem component
 jest.mock('~/components/shared/exchanges-outcome-list/ExchangeQuestionItem', () => {
   const React = require('react');
   const { Text } = require('react-native');
-  return function MockExchangeQuestionItem(props: any) {
+  const MockExchangeQuestionItem = (props: any) => {
     return React.createElement(Text, {}, `Exchange Question Item: ${JSON.stringify(props)}`);
   };
+  return MockExchangeQuestionItem;
 });
 
 describe('ExchangeOutcomeItem', () => {

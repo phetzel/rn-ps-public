@@ -1,12 +1,16 @@
 export function initSentry(): void {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Sentry = require('sentry-expo');
 
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Constants = require('expo-constants').default;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { isDiagnosticsEnabled } = require('./diagnosticsGate') as {
       isDiagnosticsEnabled: () => boolean;
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Application = require('expo-application');
     const extra = (Constants?.expoConfig?.extra ?? Constants?.manifest?.extra ?? {}) as {
       sentryDsn?: string;
