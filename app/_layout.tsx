@@ -9,6 +9,7 @@ import * as React from 'react';
 import { Platform, View } from 'react-native';
 
 import { DisclaimerModal } from '~/components/shared/DisclaimerModal';
+import { GlobalErrorBoundary } from '~/components/shared/GlobalErrorBoundary';
 import { BottomSheetModalProvider } from '~/components/ui/bottom-sheet';
 import { Text } from '~/components/ui/text';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
@@ -38,7 +39,7 @@ const DARK_THEME: Theme = {
   colors: NAV_THEME.dark,
 };
 
-export { ErrorBoundary } from 'expo-router';
+export { GlobalErrorBoundary as ErrorBoundary };
 
 export default function RootLayout() {
   const { colorScheme, isDarkColorScheme } = useColorScheme();

@@ -1,7 +1,11 @@
 import Constants from 'expo-constants';
 
 type AmplitudeModule = typeof import('@amplitude/analytics-react-native');
-type AmplitudeClient = ReturnType<AmplitudeModule['createInstance']>;
+type AmplitudeClient = ReturnType<AmplitudeModule['createInstance']> & {
+  shutdown?: () => void;
+  setOptOut?: (optOut: boolean) => void;
+  flush?: () => void;
+};
 type IdentifyConstructor = AmplitudeModule['Identify'];
 type IdentifyInstance = IdentifyConstructor extends new (...args: any) => infer R ? R : never;
 type IdentifyValue = IdentifyInstance extends {
