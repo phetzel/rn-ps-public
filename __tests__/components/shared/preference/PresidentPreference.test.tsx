@@ -32,7 +32,7 @@ const mockGame = {
 
 describe('PresidentPreference', () => {
   beforeEach(() => {
-    observeGame.mockReturnValue(new BehaviorSubject(mockGame));
+    (observeGame as jest.Mock).mockReturnValue(new BehaviorSubject(mockGame));
   });
 
   it('shows no preferences message when preference is undefined', () => {
@@ -101,7 +101,7 @@ describe('PresidentPreference', () => {
   });
 
   it('handles when game data is not available', () => {
-    observeGame.mockReturnValue(new BehaviorSubject(null));
+    (observeGame as jest.Mock).mockReturnValue(new BehaviorSubject(null));
 
     const preference: Preference = {
       answerType: AnswerType.Admit,
@@ -120,7 +120,7 @@ describe('PresidentPreference', () => {
       id: 'game1',
       presName: 'President Martinez',
     };
-    observeGame.mockReturnValue(new BehaviorSubject(customGame));
+    (observeGame as jest.Mock).mockReturnValue(new BehaviorSubject(customGame));
 
     const preference: Preference = {
       answerType: AnswerType.Inform,

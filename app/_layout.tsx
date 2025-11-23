@@ -9,12 +9,19 @@ import * as React from 'react';
 import { Platform, View } from 'react-native';
 
 import { DisclaimerModal } from '~/components/shared/DisclaimerModal';
+import { GlobalErrorBoundary } from '~/components/shared/GlobalErrorBoundary';
 import { BottomSheetModalProvider } from '~/components/ui/bottom-sheet';
 import { Text } from '~/components/ui/text';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { NAV_THEME } from '~/lib/constants';
 import { database } from '~/lib/db';
 import { getOrCreateAppSettings } from '~/lib/db/helpers';
+import { getPrivacyFlags } from '~/lib/db/helpers/appSettings';
+import {
+  setEnabled as analyticsSetEnabled,
+  initIfEnabled as analyticsInitIfEnabled,
+} from '~/lib/infra/analytics';
+import { setDiagnosticsEnabled as gateSetDiagnosticsEnabled } from '~/lib/infra/diagnosticsGate';
 import { useConsentStore } from '~/lib/stores/consentStore';
 import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
@@ -32,7 +39,7 @@ const DARK_THEME: Theme = {
   colors: NAV_THEME.dark,
 };
 
-export { ErrorBoundary } from 'expo-router';
+export { GlobalErrorBoundary as ErrorBoundary };
 
 export default function RootLayout() {
   const { colorScheme, isDarkColorScheme } = useColorScheme();
@@ -101,6 +108,29 @@ export default function RootLayout() {
     };
   }, [isDbReady, isSdkInitialized, open]);
 
+  // Initialize diagnostics gate from persisted flags when ready
+  React.useEffect(() => {
+    let cancelled = false;
+    const initDiagnostics = async () => {
+      try {
+        if (isDbReady) {
+          const { diagnosticsEnabled, analyticsEnabled } = await getPrivacyFlags();
+          if (!cancelled) {
+            gateSetDiagnosticsEnabled(diagnosticsEnabled);
+            analyticsSetEnabled(analyticsEnabled);
+            analyticsInitIfEnabled();
+          }
+        }
+      } catch {
+        // no-op
+      }
+    };
+    void initDiagnostics();
+    return () => {
+      cancelled = true;
+    };
+  }, [isDbReady]);
+
   if ((!isDbReady && !dbError) || !isColorSchemeLoaded || !isSdkInitialized) {
     return null;
   }
@@ -140,6 +170,13 @@ export default function RootLayout() {
               name="index"
               options={{
                 headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="privacy"
+              options={{
+                title: 'Privacy',
+                headerBackTitle: '',
               }}
             />
             <Stack.Screen

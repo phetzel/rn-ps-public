@@ -38,13 +38,14 @@ jest.mock('~/lib/db/helpers/observations', () => ({
 jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem', () => {
   const React = require('react');
   const { Text } = require('react-native');
-  return function MockSituationOutcomeExchangeItem({ exchange, selectedOutcomeId }: any) {
+  const MockSituationOutcomeExchangeItem = ({ exchange, selectedOutcomeId }: any) => {
     return React.createElement(
       Text,
       {},
       `Exchange Item: ${exchange.id} - Selected: ${selectedOutcomeId}`,
     );
   };
+  return MockSituationOutcomeExchangeItem;
 });
 
 describe('SituationOutcomeExchanges', () => {

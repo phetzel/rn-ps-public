@@ -6,6 +6,7 @@ import { GPT_5 } from '../llm-constants';
 import { buildCreativePrompt } from '../prompt-constants';
 
 import type { ResponsesJSONSchemaOptions, GenerationAnalysis } from '../../types';
+import type { GenerateSituationPlan } from '~/lib/schemas/generate';
 
 const PREFERENCES_SPECIFIC_INSTRUCTIONS = `
 Generate OUTLANDISH preferences for cabinet members in this fictional scenario.

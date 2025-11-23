@@ -54,14 +54,16 @@ describe('SituationPreferences', () => {
 
   beforeEach(() => {
     // Reset to default mock cabinet members for each test
-    observeCabinetMembersByLevel.mockReturnValue(new BehaviorSubject(mockCabinetMembers));
+    (observeCabinetMembersByLevel as jest.Mock).mockReturnValue(
+      new BehaviorSubject(mockCabinetMembers),
+    );
 
     // Mock game data for PresidentPreference component
     const mockGame = {
       id: 'game1',
       presName: 'President Johnson',
     };
-    observeGame.mockReturnValue(new BehaviorSubject(mockGame));
+    (observeGame as jest.Mock).mockReturnValue(new BehaviorSubject(mockGame));
   });
 
   it('does not render when no preferences content', () => {
@@ -223,7 +225,9 @@ describe('SituationPreferences', () => {
   it('handles limited cabinet members', () => {
     // Mock the observable to return only Defense member before rendering
     const limitedMembers = [mockCabinetMembers[0]]; // Only Defense
-    observeCabinetMembersByLevel.mockReturnValue(new BehaviorSubject(limitedMembers));
+    (observeCabinetMembersByLevel as jest.Mock).mockReturnValue(
+      new BehaviorSubject(limitedMembers),
+    );
 
     // Only include preferences for available cabinet members
     const preferences = {

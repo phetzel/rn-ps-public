@@ -83,23 +83,27 @@ jest.mock('~/lib/hooks/useSituationOutcomeData', () => ({
 jest.mock('~/components/ui/accordion', () => {
   const React = require('react');
   const { View } = require('react-native');
+  const MockAccordion = ({ children, defaultValue, ...props }: any) => {
+    return React.createElement(
+      View,
+      { ...props, testID: `accordion-default-${defaultValue}` },
+      children,
+    );
+  };
+  const MockAccordionItem = ({ children, value, ...props }: any) => {
+    return React.createElement(View, { ...props, testID: `accordion-${value}` }, children);
+  };
+  const MockAccordionTrigger = ({ children, ...props }: any) => {
+    return React.createElement(View, props, children);
+  };
+  const MockAccordionContent = ({ children, ...props }: any) => {
+    return React.createElement(View, props, children);
+  };
   return {
-    Accordion: function MockAccordion({ children, defaultValue, ...props }: any) {
-      return React.createElement(
-        View,
-        { ...props, testID: `accordion-default-${defaultValue}` },
-        children,
-      );
-    },
-    AccordionItem: function MockAccordionItem({ children, value, ...props }: any) {
-      return React.createElement(View, { ...props, testID: `accordion-${value}` }, children);
-    },
-    AccordionTrigger: function MockAccordionTrigger({ children, ...props }: any) {
-      return React.createElement(View, props, children);
-    },
-    AccordionContent: function MockAccordionContent({ children, ...props }: any) {
-      return React.createElement(View, props, children);
-    },
+    Accordion: MockAccordion,
+    AccordionItem: MockAccordionItem,
+    AccordionTrigger: MockAccordionTrigger,
+    AccordionContent: MockAccordionContent,
   };
 });
 
@@ -107,59 +111,65 @@ jest.mock('~/components/ui/accordion', () => {
 jest.mock('~/components/shared/entity/SituationTypeIcon', () => {
   const React = require('react');
   const { Text } = require('react-native');
+  const MockSituationTypeIcon = ({ type }: any) => {
+    return React.createElement(Text, {}, `Type Icon: ${type}`);
+  };
   return {
-    SituationTypeIcon: function MockSituationTypeIcon({ type }: any) {
-      return React.createElement(Text, {}, `Type Icon: ${type}`);
-    },
+    SituationTypeIcon: MockSituationTypeIcon,
   };
 });
 
 jest.mock('~/components/shared/entity/SituationStatusBadge', () => {
   const React = require('react');
   const { Text } = require('react-native');
+  const MockSituationStatusBadge = ({ status }: any) => {
+    return React.createElement(Text, {}, `Status Badge: ${status}`);
+  };
   return {
-    SituationStatusBadge: function MockSituationStatusBadge({ status }: any) {
-      return React.createElement(Text, {}, `Status Badge: ${status}`);
-    },
+    SituationStatusBadge: MockSituationStatusBadge,
   };
 });
 
 jest.mock('~/components/shared/situations-outcome-list/SituationSelectedOutcome', () => {
   const React = require('react');
   const { Text } = require('react-native');
+  const MockSituationSelectedOutcome = ({ outcome }: any) => {
+    return React.createElement(Text, {}, `Selected Outcome: ${outcome.title}`);
+  };
   return {
-    SituationSelectedOutcome: function MockSituationSelectedOutcome({ outcome }: any) {
-      return React.createElement(Text, {}, `Selected Outcome: ${outcome.title}`);
-    },
+    SituationSelectedOutcome: MockSituationSelectedOutcome,
   };
 });
 
 jest.mock('~/components/shared/impact/ImpactList', () => {
   const React = require('react');
   const { Text } = require('react-native');
-  return function MockImpactList({ impacts }: any) {
+  const MockImpactList = ({ impacts }: any) => {
     return React.createElement(Text, {}, `Impact List: ${impacts.length} impacts`);
   };
+  return MockImpactList;
 });
 
 jest.mock('~/components/shared/situations-outcome-list/SituationAlternativeOutcomes', () => {
   const React = require('react');
   const { Text } = require('react-native');
-  return function MockSituationAlternativeOutcomes({ outcomes }: any) {
+  const MockSituationAlternativeOutcomes = ({ outcomes }: any) => {
     return React.createElement(Text, {}, `Alternative Outcomes: ${outcomes.length} outcomes`);
   };
+  return MockSituationAlternativeOutcomes;
 });
 
 jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchanges', () => {
   const React = require('react');
   const { Text } = require('react-native');
-  return function MockSituationOutcomeExchanges({ situationId, selectedOutcome }: any) {
+  const MockSituationOutcomeExchanges = ({ situationId, selectedOutcome }: any) => {
     return React.createElement(
       Text,
       {},
       `Outcome Exchanges: ${situationId} - ${selectedOutcome.title}`,
     );
   };
+  return MockSituationOutcomeExchanges;
 });
 
 describe('SituationOutcomeItem', () => {

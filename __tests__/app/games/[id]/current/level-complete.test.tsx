@@ -100,7 +100,7 @@ describe('LevelCompleteScreen', () => {
   describe('without game ID', () => {
     it('should return null when gameId is missing', () => {
       // Mock store to return null gameId
-      (useGameManagerStore as jest.Mock).mockImplementation((selector: any) => {
+      (useGameManagerStore as unknown as jest.Mock).mockImplementation((selector: any) => {
         if (selector) {
           return selector({ currentGameId: null });
         }
@@ -118,7 +118,7 @@ describe('LevelCompleteScreen', () => {
   describe('without level ID', () => {
     it('should return null when currentLevelId is missing', () => {
       // Mock store to return null levelId
-      (useCurrentLevelStore as jest.Mock).mockImplementation((selector: any) => {
+      (useCurrentLevelStore as unknown as jest.Mock).mockImplementation((selector: any) => {
         if (selector) {
           return selector({ currentLevelId: null });
         }

@@ -1,9 +1,16 @@
 export function initSentry(): void {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Sentry = require('sentry-expo');
 
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Constants = require('expo-constants').default;
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { isDiagnosticsEnabled } = require('./diagnosticsGate') as {
+      isDiagnosticsEnabled: () => boolean;
+    };
 
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Application = require('expo-application');
     const extra = (Constants?.expoConfig?.extra ?? Constants?.manifest?.extra ?? {}) as {
       sentryDsn?: string;
@@ -30,7 +37,40 @@ export function initSentry(): void {
       environment,
       release,
       dist: nativeBuildVersion,
+      beforeBreadcrumb(breadcrumb: any) {
+        try {
+          if (!breadcrumb) return breadcrumb;
+          const emailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+          const phoneRe = /\+?\d[\d\s().-]{7,}\d/g;
+          const redactString = (val: unknown) =>
+            typeof val === 'string'
+              ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
+              : val;
+          const redactObject = (obj: any, visited = new WeakSet()) => {
+            if (!obj || typeof obj !== 'object' || visited.has(obj)) return;
+            visited.add(obj);
+            for (const key of Object.keys(obj)) {
+              const v = obj[key];
+              if (typeof v === 'string') obj[key] = redactString(v);
+              else if (typeof v === 'object') redactObject(v, visited);
+            }
+          };
+          if (breadcrumb.message) breadcrumb.message = redactString(breadcrumb.message) as any;
+          if ((breadcrumb as any).data) redactObject((breadcrumb as any).data);
+          return breadcrumb;
+        } catch {
+          return breadcrumb;
+        }
+      },
       beforeSend(event: unknown): unknown {
+        // Drop events entirely if user disabled diagnostics
+        try {
+          if (!isDiagnosticsEnabled()) {
+            return null;
+          }
+        } catch {
+          // ignore and continue to scrub
+        }
         // Basic PII scrubbing for user-entered text and identifiers
         try {
           const e = event as any;
@@ -55,12 +95,13 @@ export function initSentry(): void {
             typeof val === 'string'
               ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
               : val;
-          const redactObject = (obj: any) => {
-            if (!obj || typeof obj !== 'object') return;
+          const redactObject = (obj: any, visited = new WeakSet()) => {
+            if (!obj || typeof obj !== 'object' || visited.has(obj)) return;
+            visited.add(obj);
             for (const key of Object.keys(obj)) {
               const v = obj[key];
               if (typeof v === 'string') obj[key] = redactString(v);
-              else if (typeof v === 'object') redactObject(v);
+              else if (typeof v === 'object') redactObject(v, visited);
             }
           };
           if (Array.isArray(e.breadcrumbs)) {

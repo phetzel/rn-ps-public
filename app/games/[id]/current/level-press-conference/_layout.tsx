@@ -1,3 +1,4 @@
+import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { Stack, useRouter } from 'expo-router';
 import React, { useState, useRef } from 'react';
 import { Pressable, Platform, View } from 'react-native';
@@ -16,7 +17,7 @@ export default function LevelPressConferenceLayout() {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModalType>(null);
 
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
   if (!currentLevelId) {
