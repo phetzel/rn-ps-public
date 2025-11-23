@@ -14,8 +14,8 @@ export async function getOrCreateAppSettings(): Promise<AppSetting> {
       // Defaults for new installs:
       // Diagnostics enabled (crash reports) on; Analytics off until provider chosen
       // These may be overridden by UI toggles later.
-      (s as any).diagnosticsEnabled = true;
-      (s as any).analyticsEnabled = false;
+      s.diagnosticsEnabled = true;
+      s.analyticsEnabled = false;
     });
     return created;
   });
@@ -50,7 +50,7 @@ export async function getPrivacyFlags(): Promise<{
 export async function setDiagnosticsEnabled(value: boolean): Promise<void> {
   await database.write(async () => {
     const settings = await getOrCreateAppSettings();
-    await settings.update((s: any) => {
+    await settings.update((s) => {
       s.diagnosticsEnabled = value;
     });
   });
@@ -59,7 +59,7 @@ export async function setDiagnosticsEnabled(value: boolean): Promise<void> {
 export async function setAnalyticsEnabled(value: boolean): Promise<void> {
   await database.write(async () => {
     const settings = await getOrCreateAppSettings();
-    await settings.update((s: any) => {
+    await settings.update((s) => {
       s.analyticsEnabled = value;
     });
   });

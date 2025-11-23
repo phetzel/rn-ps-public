@@ -35,7 +35,6 @@ function getExtra(key: string): string | undefined {
 }
 
 export function setEnabled(enabled: boolean): void {
-  analyticsEnabledInMemory = enabled;
   if (!enabled && isInitialized && amplitudeRef) {
     try {
       amplitudeRef.setOptOut?.(true);
@@ -44,9 +43,12 @@ export function setEnabled(enabled: boolean): void {
     } catch {
       // ignore
     } finally {
+      analyticsEnabledInMemory = false;
       isInitialized = false;
       amplitudeRef = null;
     }
+  } else {
+    analyticsEnabledInMemory = enabled;
   }
 }
 

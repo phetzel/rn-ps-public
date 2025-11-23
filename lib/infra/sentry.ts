@@ -46,12 +46,13 @@ export function initSentry(): void {
             typeof val === 'string'
               ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
               : val;
-          const redactObject = (obj: any) => {
-            if (!obj || typeof obj !== 'object') return;
+          const redactObject = (obj: any, visited = new WeakSet()) => {
+            if (!obj || typeof obj !== 'object' || visited.has(obj)) return;
+            visited.add(obj);
             for (const key of Object.keys(obj)) {
               const v = obj[key];
               if (typeof v === 'string') obj[key] = redactString(v);
-              else if (typeof v === 'object') redactObject(v);
+              else if (typeof v === 'object') redactObject(v, visited);
             }
           };
           if (breadcrumb.message) breadcrumb.message = redactString(breadcrumb.message) as any;
@@ -94,12 +95,13 @@ export function initSentry(): void {
             typeof val === 'string'
               ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
               : val;
-          const redactObject = (obj: any) => {
-            if (!obj || typeof obj !== 'object') return;
+          const redactObject = (obj: any, visited = new WeakSet()) => {
+            if (!obj || typeof obj !== 'object' || visited.has(obj)) return;
+            visited.add(obj);
             for (const key of Object.keys(obj)) {
               const v = obj[key];
               if (typeof v === 'string') obj[key] = redactString(v);
-              else if (typeof v === 'object') redactObject(v);
+              else if (typeof v === 'object') redactObject(v, visited);
             }
           };
           if (Array.isArray(e.breadcrumbs)) {
