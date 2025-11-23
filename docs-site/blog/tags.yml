@@ -1,0 +1,15 @@
+devlog:
+  label: Dev Log
+  permalink: /devlog
+  description: Engineering updates and implementation notes.
+
+learnings:
+  label: Learnings
+  permalink: /learnings
+  description: Postmortems, regrets, and lessons from building and shipping the game.
+
+release:
+  label: Release
+  permalink: /release
+  description: Build/deployment milestones and compliance reminders.
+

@@ -40,6 +40,7 @@ module.exports = defineConfig([
       'assets/**',
       'lib/data/situations/**',
       'e2e/maestro/**',
+      'docs-site/**',
     ],
   },
   {
