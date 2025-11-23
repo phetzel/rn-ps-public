@@ -9,10 +9,10 @@ export interface BSHandleProps extends BottomSheetHandleProps {
 
 //#region Vaul
 
-type WithFadeFromProps = Record<string, never>;
-type WithoutFadeFromProps = Record<string, never>;
+// type WithFadeFromProps = Record<string, never>;
+// type WithoutFadeFromProps = Record<string, never>;
 
-interface DialogProps extends WithFadeFromProps, WithoutFadeFromProps {
+interface DialogProps {
   activeSnapPoint?: number | string | null;
   setActiveSnapPoint?: (snapPoint: number | string | null) => void;
   children?: React.ReactNode;

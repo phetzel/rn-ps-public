@@ -176,7 +176,6 @@ export default function RootLayout() {
               name="privacy"
               options={{
                 title: 'Privacy',
-                headerBackTitleVisible: false,
                 headerBackTitle: '',
               }}
             />
