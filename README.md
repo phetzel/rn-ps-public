@@ -3,6 +3,7 @@
 A React Native + Expo game where you play as the US Press Secretary, juggling cabinet intel, journalist relationships, and political subgroups to keep the administration alive for a full term.
 
 ## Contents
+
 - [Game Overview](#-game-overview)
 - [Tech Stack](#%EF%B8%8F-tech-stack)
 - [Getting Started](#-getting-started)
@@ -42,13 +43,14 @@ Survive a presidential term as Press Secretary by managing relationships with th
 ## 🏛️ Game Entities
 
 ### Cabinet Members
+
 - Secretary of State
 - Secretary of Defense
 - Secretary of the Treasury
 - Attorney General
 - Secretary of Health and Human Services
 - Secretary of Homeland Security  
-_High trust unlocks classified intel; firing a cabinet member tanks subgroup approval._
+  _High trust unlocks classified intel; firing a cabinet member tanks subgroup approval._
 
 ### Political Subgroups
 
@@ -58,6 +60,7 @@ _High trust unlocks classified intel; firing a cabinet member tanks subgroup app
 _Overall presidential approval = average of all subgroup ratings._
 
 ### Situation Types
+
 1. Domestic Policy
 2. Foreign Affairs
 3. Economy
@@ -80,6 +83,7 @@ _Overall presidential approval = average of all subgroup ratings._
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - npm (or yarn/pnpm) + Expo CLI
 - Xcode Command Line Tools + iOS Simulator (macOS) or Android Studio/Emulator
@@ -102,24 +106,25 @@ npm run web      # Expo web preview
 ```
 
 ### First-time setup tips
+
 - Ensure the `postinstall` Tailwind build succeeds; rerun `npm run postinstall` if Nativewind styles are missing.
 - If WatermelonDB native modules fail to build, clean caches with `npm run clean` and reinstall.
 
 ## 🔧 Key Scripts
 
-| Category | Script | Description |
-| --- | --- | --- |
-| Dev servers | `npm run dev` | Expo start with cache clear (default) |
-|  | `npm run dev:android`, `npm run dev:web`, `npm run dev:client` | Platform-specific/dev-client boot |
-| Quality | `npm run lint`, `npm run lint:fix` | ESLint (Expo config) |
-|  | `npm run format`, `npm run format:check` | Prettier formatting |
-|  | `npm run typecheck` | `tsc --noEmit` |
-| Testing | `npm run test`, `npm run test -- --watch` | Jest + Testing Library |
-|  | `npm run e2e`, `npm run e2e:ios`, `npm run e2e:android` | Maestro smoke suites |
-| Content tooling | `npm run gen-situation` | Run `scripts/run-gen-situation.ts` CLI |
-| Housekeeping | `npm run clean` | Remove `.expo` + `node_modules` for a fresh install |
-| Docs | `npm --prefix docs-site start` | Launch local Docusaurus docs |
-| Builds | See [Building & Deployment](#-building--deployment) | Dev/preview/prod via EAS |
+| Category        | Script                                                         | Description                                         |
+| --------------- | -------------------------------------------------------------- | --------------------------------------------------- |
+| Dev servers     | `npm run dev`                                                  | Expo start with cache clear (default)               |
+|                 | `npm run dev:android`, `npm run dev:web`, `npm run dev:client` | Platform-specific/dev-client boot                   |
+| Quality         | `npm run lint`, `npm run lint:fix`                             | ESLint (Expo config)                                |
+|                 | `npm run format`, `npm run format:check`                       | Prettier formatting                                 |
+|                 | `npm run typecheck`                                            | `tsc --noEmit`                                      |
+| Testing         | `npm run test`, `npm run test -- --watch`                      | Jest + Testing Library                              |
+|                 | `npm run e2e`, `npm run e2e:ios`, `npm run e2e:android`        | Maestro smoke suites                                |
+| Content tooling | `npm run gen-situation`                                        | Run `scripts/run-gen-situation.ts` CLI              |
+| Housekeeping    | `npm run clean`                                                | Remove `.expo` + `node_modules` for a fresh install |
+| Docs            | `npm --prefix docs-site start`                                 | Launch local Docusaurus docs                        |
+| Builds          | See [Building & Deployment](#-building--deployment)            | Dev/preview/prod via EAS                            |
 
 ## 📁 Project Structure
 
@@ -148,12 +153,12 @@ npm run web      # Expo web preview
 
 Create `.env`, `.env.development`, or EAS secrets for:
 
-| Variable | Purpose |
-| --- | --- |
-| `SENTRY_DSN` | Native crash/error reporting |
-| `ANALYTICS_API_KEY`, `ANALYTICS_HOST` | Amplitude ingest + region (US/EU) |
+| Variable                                   | Purpose                                           |
+| ------------------------------------------ | ------------------------------------------------- |
+| `SENTRY_DSN`                               | Native crash/error reporting                      |
+| `ANALYTICS_API_KEY`, `ANALYTICS_HOST`      | Amplitude ingest + region (US/EU)                 |
 | `ADMOB_ANDROID_APP_ID`, `ADMOB_IOS_APP_ID` | Production AdMob IDs (dev uses Google sample IDs) |
-| `PRIVACY_POLICY_URL`, `TERMS_URL` | Surfaces in settings + ATT prompts |
+| `PRIVACY_POLICY_URL`, `TERMS_URL`          | Surfaces in settings + ATT prompts                |
 
 Reference `app.config.ts`, `docs-site/docs/technical/privacy-disclosures.md`, and `TEARDOWN.md` for the full list, platform overrides, and store-submission language.
 
@@ -183,6 +188,7 @@ Reference `app.config.ts`, `docs-site/docs/technical/privacy-disclosures.md`, an
 ## 🎯 Game Mechanics
 
 ### Answer Types
+
 - **Deflect** – Dodge specifics.
 - **Reassure** – Calm the room.
 - **Challenge** – Push back.
@@ -192,11 +198,13 @@ Reference `app.config.ts`, `docs-site/docs/technical/privacy-disclosures.md`, an
 - **Authorized** – Leverage classified intel (relationship-gated, high risk/high reward).
 
 ### Relationship System
+
 - **President** – Determines job security and impeachment risk multipliers.
 - **Cabinet** – Unlocks intel, shapes situation context, can be fired if trust collapses.
 - **Journalists** – Modify magnitude of situation outcomes and unlock question paths.
 
 ### Approval System
+
 - **Cabinet Approval** – Tanks to zero? That position is vacated, subgroups react, intel dries up.
 - **Subgroup Approval** – Aggregate determines presidential approval.
 - **Outcome Magnification** – Journalist favor amplifies or dampens subgroup swings.
@@ -204,6 +212,7 @@ Reference `app.config.ts`, `docs-site/docs/technical/privacy-disclosures.md`, an
 ## 🎨 Tone & Style
 
 Late-night newsroom satire with absurdist political energy:
+
 - Think _Veep_ × _The Daily Show_.
 - Roast incompetence, not ideology.
 - No real politicians, parties, or conspiracy theories.
@@ -213,12 +222,14 @@ Late-night newsroom satire with absurdist political energy:
 ## 🧪 Testing & QA
 
 ### Unit/Integration
+
 ```bash
 npm run test              # Full Jest pass
 npm run test -- --watch  # Watch mode
 ```
 
 ### End-to-End (Maestro)
+
 ```bash
 npm run e2e          # Default smoke suite
 npm run e2e:ios      # Force iOS
