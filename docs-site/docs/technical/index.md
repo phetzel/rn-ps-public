@@ -70,6 +70,5 @@ flowchart LR
   - Content pipeline
   - Testing & QA
   - Infra & services
-  - Compliance & privacy
-  - Privacy disclosures matrix
+- Compliance docs now live under `docs-site/docs/compliance/*` (checklists + disclosure matrix).
 

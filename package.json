@@ -29,7 +29,9 @@
     "gen-situation": "tsx scripts/run-gen-situation.ts",
     "e2e": "maestro test e2e/maestro/suites/smoke.yaml",
     "e2e:ios": "maestro test --platform=ios e2e/maestro/suites/smoke.yaml",
-    "e2e:android": "maestro test --platform=android e2e/maestro/suites/smoke.yaml"
+    "e2e:android": "maestro test --platform=android e2e/maestro/suites/smoke.yaml",
+    "docs:start": "npm --prefix docs-site start",
+    "docs:build": "npm --prefix docs-site run build"
   },
   "dependencies": {
     "@amplitude/analytics-react-native": "^1.5.16",

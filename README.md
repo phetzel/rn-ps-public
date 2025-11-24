@@ -160,7 +160,7 @@ Create `.env`, `.env.development`, or EAS secrets for:
 | `ADMOB_ANDROID_APP_ID`, `ADMOB_IOS_APP_ID` | Production AdMob IDs (dev uses Google sample IDs) |
 | `PRIVACY_POLICY_URL`, `TERMS_URL`          | Surfaces in settings + ATT prompts                |
 
-Reference `app.config.ts`, `docs-site/docs/technical/privacy-disclosures.md`, and `TEARDOWN.md` for the full list, platform overrides, and store-submission language.
+Reference `app.config.ts`, `docs-site/docs/compliance/privacy-disclosures.md`, and `TEARDOWN.md` for the full list, platform overrides, and store-submission language.
 
 ## 📚 Documentation
 
@@ -175,7 +175,7 @@ Reference `app.config.ts`, `docs-site/docs/technical/privacy-disclosures.md`, an
 - Add a gameplay screenshot/GIF near the top of this README for quick visual context.
 - When the docs site is hosted publicly, link it here in addition to the local preview command.
 - Summarize the Overview / Gameplay / Technical doc sections with one-liners once structure stabilizes.
-- Reconfirm references to `docs-site/docs/technical/privacy-disclosures.md` whenever the docs move.
+- Reconfirm references to `docs-site/docs/compliance/privacy-disclosures.md` whenever the docs move.
 - Nice-to-haves: include a stage-flow graphic, share demo/TestFlight links when ready, and highlight privacy toggles in the tech stack section.
 
 ## 🧾 Data & Content Pipeline
@@ -269,7 +269,7 @@ Development builds target Expo Dev Client. Preview builds enable App/Play intern
 - Complete App Store “App Privacy” + Play “Data Safety” surveys with correct data categories.
 - Verify ATT copy/timing on iOS; ensure core game loop isn’t blocked.
 - Confirm COPPA status (not child-directed) and review AdMob content rating.
-- Cross-check `TEARDOWN.md` + `docs-site/docs/technical/privacy-disclosures.md` for detailed steps and copy.
+- Cross-check `TEARDOWN.md` + `docs-site/docs/compliance/privacy-disclosures.md` for detailed steps and copy.
 
 ## 🤝 Contributing
 
@@ -277,4 +277,4 @@ Development builds target Expo Dev Client. Preview builds enable App/Play intern
 2. Run `npm run lint`, `npm run typecheck`, and relevant tests before opening a PR.
 3. Add/extend Jest or Maestro coverage when introducing new mechanics or flows.
 4. Keep satire guidelines in mind when editing/adding content.
-5. Reference `docs-site/docs/technical/privacy-disclosures.md` when touching analytics, ads, or data collection.
+5. Reference `docs-site/docs/compliance/privacy-disclosures.md` when touching analytics, ads, or data collection.

@@ -35,9 +35,13 @@ const sidebars: SidebarsConfig = {
         'technical/content-pipeline',
         'technical/testing',
         'technical/infra',
-        'technical/compliance',
-        'technical/privacy-disclosures',
       ],
+    },
+    {
+      type: 'category',
+      label: 'Compliance',
+      collapsible: false,
+      items: ['compliance/index', 'compliance/privacy-disclosures'],
     },
   ],
 };

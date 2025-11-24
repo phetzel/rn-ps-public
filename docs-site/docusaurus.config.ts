@@ -10,7 +10,7 @@ const docsEditUrl = docsGithubUrl
 const config: Config = {
   title: 'Press Office Docs',
   tagline: 'Handbook for the Press Secretary simulation project',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
 
   markdown: {
     mermaid: true,
@@ -62,15 +62,15 @@ const config: Config = {
   ],
 
   themeConfig: {
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/social-card.png',
     colorMode: {
       respectPrefersColorScheme: true,
     },
     navbar: {
       title: 'Press Office Docs',
       logo: {
-        alt: 'Press Office logo',
-        src: 'img/logo.svg',
+        alt: 'Press Office icon',
+        src: 'img/icon.png',
       },
       items: [
         {

@@ -6,25 +6,50 @@
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: hsl(215, 45%, 30%);
+  --ifm-color-primary-dark: hsl(215, 45%, 26%);
+  --ifm-color-primary-darker: hsl(215, 45%, 22%);
+  --ifm-color-primary-darkest: hsl(215, 45%, 18%);
+  --ifm-color-primary-light: hsl(215, 45%, 34%);
+  --ifm-color-primary-lighter: hsl(215, 45%, 38%);
+  --ifm-color-primary-lightest: hsl(215, 45%, 42%);
+  --ifm-background-color: hsl(40, 20%, 98%);
+  --ifm-font-color-base: hsl(210, 30%, 15%);
+  --ifm-footer-background-color: hsl(215, 45%, 26%);
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.05);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: hsl(215, 45%, 40%);
+  --ifm-color-primary-dark: hsl(215, 45%, 36%);
+  --ifm-color-primary-darker: hsl(215, 45%, 32%);
+  --ifm-color-primary-darkest: hsl(215, 45%, 28%);
+  --ifm-color-primary-light: hsl(215, 45%, 44%);
+  --ifm-color-primary-lighter: hsl(215, 45%, 48%);
+  --ifm-color-primary-lightest: hsl(215, 45%, 52%);
+  --ifm-background-color: hsl(210, 30%, 12%);
+  --ifm-font-color-base: hsl(35, 20%, 90%);
+  --ifm-footer-background-color: hsl(210, 30%, 12%);
+  --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.05);
+}
+
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top right,
+    hsla(45, 45%, 55%, 0.3),
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.heroLogo {
+  width: 96px;
+  height: 96px;
+  border-radius: 20%;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }

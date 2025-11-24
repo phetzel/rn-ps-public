@@ -12,6 +12,13 @@ function HomepageHeader() {
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
       <div className="container">
+        <img
+          src="/img/icon.png"
+          alt="Press Office icon"
+          className={styles.heroLogo}
+          width={96}
+          height={96}
+        />
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
@@ -19,9 +26,6 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link className="button button--secondary button--lg" to="/docs/overview">
             Read the Docs
-          </Link>
-          <Link className="button button--link button--lg" to="/docs/gameplay/guide">
-            Gameplay Guide
           </Link>
         </div>
       </div>
@@ -45,6 +49,11 @@ const quickLinks = [
     description: 'Setup, scripts, content tooling, and compliance notes.',
     to: '/docs/technical',
   },
+  {
+    title: 'Compliance',
+    description: 'Privacy disclosures, ATT/UMP flow, and store prep.',
+    to: '/docs/compliance',
+  },
 ];
 
 export default function Home(): ReactNode {
@@ -62,9 +71,11 @@ export default function Home(): ReactNode {
               <article key={link.to} className={styles.card}>
                 <Heading as="h3">{link.title}</Heading>
                 <p>{link.description}</p>
-                <Link className="button button--primary button--sm" to={link.to}>
-                  Open
-                </Link>
+                <div className={styles.cardFooter}>
+                  <Link className="button button--primary button--sm" to={link.to}>
+                    Open
+                  </Link>
+                </div>
               </article>
             ))}
           </div>

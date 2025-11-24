@@ -1,6 +1,6 @@
 ---
 title: Compliance & Privacy
-sidebar_position: 5
+sidebar_position: 1
 ---
 
 # Compliance & Privacy
@@ -9,7 +9,7 @@ Use this checklist when preparing builds for review or updating SDKs.
 
 ## Reference Docs
 
-- [`technical/privacy-disclosures.md`](./privacy-disclosures.md): App Store “App Privacy” + Play Data Safety declarations.
+- [`privacy-disclosures`](./privacy-disclosures.md): App Store “App Privacy” + Play Data Safety declarations.
 - `TEARDOWN.md` (repo root): release checklist with store submission steps, ATT/UMP messaging, and owner-only tasks.
 
 ## Environment Variables

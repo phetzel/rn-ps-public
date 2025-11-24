@@ -1,6 +1,6 @@
 ---
 title: Privacy & Data Disclosures
-sidebar_position: 6
+sidebar_position: 2
 ---
 
 This draft summarizes current data collection and usage in the app for completing App Store “App Privacy” and Google Play “Data Safety” disclosures. Update whenever SDKs or behavior change.
