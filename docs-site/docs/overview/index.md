@@ -1,5 +1,7 @@
 # Welcome to Press Office
 
+import Link from '@docusaurus/Link';
+
 **Press Office** is a React Native simulation game where you play as the White House Press Secretary.
 
 Manage relationships with the press corps, spin difficult situations, and keep the administration's approval ratings afloat.
@@ -7,12 +9,12 @@ Manage relationships with the press corps, spin difficult situations, and keep t
 ## Getting Started
 
 <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-  <a className="button button--primary button--lg" href="/docs/gameplay/guide">
+  <Link className="button button--primary button--lg" to="/docs/gameplay/guide">
     Read Player Guide
-  </a>
-  <a className="button button--secondary button--lg" href="/docs/technical">
+  </Link>
+  <Link className="button button--secondary button--lg" to="/docs/technical">
     View Tech Stack
-  </a>
+  </Link>
 </div>
 
 ## Project Vision
