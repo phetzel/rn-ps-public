@@ -169,6 +169,13 @@ Reference `app.config.ts`, `docs-site/docs/compliance/privacy-disclosures.md`, a
 - `docs-site/docs/technical/` – Technical handbook, content pipeline, compliance + privacy disclosures.
 - Run `npm --prefix docs-site start` to preview the site locally (default at http://localhost:3000).
 
+### Docs deployment
+
+- `PUBLIC_DOCS_OWNER`, `PUBLIC_DOCS_REPO`, and `PUBLIC_DOCS_PAT` determine the GitHub Pages target. Define them in `.env.local` for local previews and as Actions **Secrets** for CI (`PUBLIC_DOCS_PAT` should never be committed).
+- `.github/workflows/docs-pages.yml` builds `docs-site` on every push to `main` and force-pushes the static artifact to the public repo’s `gh-pages` branch using the PAT.
+- GitHub Pages must be set to “GitHub Actions” for the public repo so the content at `https://<owner>.github.io/<repo>/` updates automatically.
+- Optional overrides: `DOCS_GITHUB_URL`, `DOCS_SITE_URL`, `DOCS_BASE_URL` if the docs eventually move to a custom domain or different repo path.
+
 ### README / Docs Roadmap
 
 - Replace `<repository-url>` above with the public Git URL once the showcase repo is live.

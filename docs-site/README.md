@@ -24,18 +24,31 @@ yarn build
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
+## Environment configuration
+
+Copy `.env.example` to `.env.local` in the repo root and set:
+
+- `PUBLIC_DOCS_OWNER` – GitHub user/organization that owns the public docs repo.
+- `PUBLIC_DOCS_REPO` – Name of that repo.
+- `PUBLIC_DOCS_PAT` – Personal Access Token with access to push to the public repo (leave blank locally; only set in GitHub Secrets).
+- Optional overrides: `DOCS_GITHUB_URL`, `DOCS_SITE_URL`, `DOCS_BASE_URL`.
+
+These values are read by `docusaurus.config.ts` so local previews match production URLs.
+
 ## Deployment
 
-Using SSH:
+Deployments are handled by `.github/workflows/docs-pages.yml`:
+
+1. On every push to `main`, the workflow installs dependencies in `docs-site/`, runs `npm run build`, and uploads the static `build/` output.
+2. A deploy job fetches that artifact and force-pushes it to the public docs repo’s `gh-pages` branch using `PUBLIC_DOCS_PAT`.
+3. GitHub Pages (configured to “GitHub Actions”) serves `https://<PUBLIC_DOCS_OWNER>.github.io/<PUBLIC_DOCS_REPO>/`.
+
+To run the same pipeline manually:
 
 ```bash
-USE_SSH=true yarn deploy
+cd docs-site
+npm ci
+npm run build
 ```
 
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+Then inspect `docs-site/build` locally or trigger `Docs Pages` via the Actions tab.

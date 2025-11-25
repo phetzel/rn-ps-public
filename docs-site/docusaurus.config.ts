@@ -1,15 +1,39 @@
+import 'dotenv/config';
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-const docsGithubUrl = process.env.DOCS_GITHUB_URL;
+const publicDocsOwner = process.env.PUBLIC_DOCS_OWNER?.trim();
+const publicDocsRepo = process.env.PUBLIC_DOCS_REPO?.trim();
+const docsGithubUrlFromEnv = process.env.DOCS_GITHUB_URL?.trim();
+const docsSiteUrlOverride = process.env.DOCS_SITE_URL?.trim();
+const docsBaseUrlOverride = process.env.DOCS_BASE_URL?.trim();
+
+const githubPagesUrl = publicDocsOwner ? `https://${publicDocsOwner}.github.io` : undefined;
+
+if (!publicDocsOwner || !publicDocsRepo) {
+  console.warn(
+    'PUBLIC_DOCS_OWNER or PUBLIC_DOCS_REPO is missing. Default URLs will be used; production deploys may fail.',
+  );
+}
+
+const docsGithubUrl =
+  docsGithubUrlFromEnv ??
+  (publicDocsOwner && publicDocsRepo
+    ? `https://github.com/${publicDocsOwner}/${publicDocsRepo}`
+    : undefined);
+
 const docsEditUrl = docsGithubUrl
   ? `${docsGithubUrl.replace(/\/$/, '')}/tree/main/docs-site/`
   : undefined;
 
+const siteUrl = docsSiteUrlOverride ?? githubPagesUrl ?? 'https://press-office.example.com';
+
+const baseUrl = docsBaseUrlOverride ?? (publicDocsRepo ? `/${publicDocsRepo}/` : '/');
+
 const config: Config = {
   title: 'Press Office Docs',
-  tagline: 'Handbook for the Press Secretary simulation project',
+  tagline: 'Handbook for the Press Secretary Simulation Game',
   favicon: 'img/favicon.png',
 
   markdown: {
@@ -22,11 +46,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://press-office.example.com',
-  baseUrl: '/',
+  url: siteUrl,
+  baseUrl,
 
-  organizationName: 'press-office',
-  projectName: 'rn-ps',
+  organizationName: publicDocsOwner ?? 'press-office',
+  projectName: publicDocsRepo ?? 'rn-ps',
 
   onBrokenLinks: 'throw',
 
