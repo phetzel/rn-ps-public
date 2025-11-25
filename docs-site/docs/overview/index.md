@@ -1,8 +1,4 @@
-import Link from '@docusaurus/Link';
-
 # Welcome to Press Office
-
-import Link from '@docusaurus/Link';
 
 **Press Office** is a React Native simulation game where you play as the White House Press Secretary.
 
@@ -16,7 +12,7 @@ Manage relationships with the press corps, spin difficult situations, and keep t
   </a>
   <a className="button button--secondary button--lg" href="../technical">
     View Tech Stack
-  </Link>
+  </a>
 </div>
 
 ## Project Vision
