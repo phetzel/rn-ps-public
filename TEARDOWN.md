@@ -133,12 +133,12 @@
 
 - [x] Choose framework: Maestro (simpler cross-platform)
 - [ ] Cover flows:
-  - [ ] First run + consent
-  - [x] Create game
+  - [x] First run + consent (covered in create_game)
+  - [x] Create game (e2e/maestro/flows/games/create_game.yaml)
   - [ ] Start level → answer press conference → outcomes
   - [ ] Rewarded ad flow (earn reward, confirm attribution)
   - [ ] Resume after app restart
-  - [x] CI: Add Android + iOS Maestro smoke workflows
+  - [ ] CI: Add Android + iOS Maestro smoke workflows (GitHub Actions or Maestro Cloud)
 
 ### Runtime Configuration & Secrets
 
@@ -483,7 +483,7 @@ The following must be completed outside this repo before review/submission:
 
 3. Apple App Store Connect — App Privacy
 
-- Complete “App Privacy” questionnaire consistent with `docs-site/docs/technical/privacy-disclosures.md`:
+- Complete “App Privacy” questionnaire consistent with `docs-site/docs/compliance/privacy-disclosures.md`:
   - Diagnostics (crash) collected (Sentry), not linked, not used for tracking
   - Identifiers (IDFA) collected only when ATT is granted; used for advertising/measurement
   - Analytics (usage data) collected when enabled; update with Amplitude details
@@ -491,7 +491,7 @@ The following must be completed outside this repo before review/submission:
 
 4. Google Play Console — Data Safety
 
-- Complete Data Safety form consistent with `docs-site/docs/technical/privacy-disclosures.md`:
+- Complete Data Safety form consistent with `docs-site/docs/compliance/privacy-disclosures.md`:
   - Device identifiers (AAID) for ads; diagnostics (crash) for functionality; analytics (usage data)
   - Describe collection purposes; declare sharing as required by AdMob/Sentry policies
 - Provide Privacy Policy URL in store listing.
