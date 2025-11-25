@@ -35,6 +35,12 @@ jobs:
         run: npm ci
         working-directory: ${{ env.DOCS_DIR }}
       - name: Build site
+        env:
+          PUBLIC_DOCS_OWNER: ${{ secrets.PUBLIC_DOCS_OWNER }}
+          PUBLIC_DOCS_REPO: ${{ secrets.PUBLIC_DOCS_REPO }}
+          DOCS_GITHUB_URL: ${{ secrets.DOCS_GITHUB_URL }}
+          DOCS_SITE_URL: ${{ secrets.DOCS_SITE_URL }}
+          DOCS_BASE_URL: ${{ secrets.DOCS_BASE_URL }}
         run: npm run build
         working-directory: ${{ env.DOCS_DIR }}
       - name: Upload artifact
