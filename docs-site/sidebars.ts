@@ -24,7 +24,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Gameplay',
       collapsible: false,
-      items: ['gameplay/guide'],
+      items: ['gameplay/guide', 'gameplay/glossary'],
     },
     {
       type: 'category',
@@ -33,6 +33,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'technical/index',
         'technical/content-pipeline',
+        'technical/database',
         'technical/testing',
         'technical/infra',
       ],
@@ -41,7 +42,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Compliance',
       collapsible: false,
-      items: ['compliance/index', 'compliance/privacy-disclosures'],
+      items: ['compliance/index', 'compliance/privacy'],
     },
   ],
 };

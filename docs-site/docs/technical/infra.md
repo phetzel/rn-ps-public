@@ -1,36 +1,25 @@
----
-title: Infra & Services
-sidebar_position: 4
----
+# Infrastructure & CI/CD
 
-# Infra & Services
+Our infrastructure is minimal, relying on GitHub Actions for automation and Expo for build services.
 
-## `lib/infra`
+## GitHub Actions
+Defined in `.github/workflows/`.
 
-- `analytics.ts` – wraps Amplitude init/toggles, sends events with defensive guards.
-- `diagnosticsGate.ts` – central opt-in for error reporting/analytics.
-- `errorReporter.ts` – thin layer over Sentry for caught exceptions.
-- `sentry.ts` – platform-specific Sentry configuration.
+| Workflow | Triggers | Purpose |
+| :--- | :--- | :--- |
+| `ci.yml` | PRs, Main | Runs linting (`eslint`), type checking (`tsc`), and unit tests (`jest`). |
+| `android-e2e.yml` | Main | Runs Maestro E2E tests on Android emulator. |
+| `ios-e2e.yml` | Main | Runs Maestro E2E tests on iOS simulator. |
+| `docs-pages.yml` | Push to Main | Builds and deploys this documentation site to GitHub Pages. |
 
-## Other Integrations
+## Monitoring
 
-- `lib/infra/analytics.ts` respects the in-app privacy toggles in Settings → Privacy.
-- `lib/infra/diagnosticsGate.ts` ensures no network call fires before consent.
-- `lib/hooks/useAdCard.ts` + `components/shared/ad-card` integrate Google Mobile Ads (fallback IDs for dev).
+*   **Sentry**: Error tracking and performance monitoring.
+*   **Amplitude**: User analytics (session retention, level completion rates).
 
-## Environment Variables
+## Build System
+We use **EAS Build** (Expo Application Services) for generating native binaries.
 
-See the **Compliance & Privacy** page for the full list, but the infra code expects:
-
-- `SENTRY_DSN`
-- `ANALYTICS_API_KEY`
-- `ANALYTICS_HOST`
-- `ADMOB_ANDROID_APP_ID`
-- `ADMOB_IOS_APP_ID`
-
-## Deployment Helpers
-
-- `eas.json` defines development/preview/production profiles.
-- `app.config.ts` scopes AdMob IDs and attaches ATT/UMP copy.
-- `scripts/` folder contains generators + utilities; wire CI to run `npm run test` and `npm run e2e` before `eas build`.
-
+```bash
+eas build --profile preview --platform ios
+```

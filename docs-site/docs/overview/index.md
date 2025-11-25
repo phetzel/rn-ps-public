@@ -1,37 +1,30 @@
----
-title: Overview
-sidebar_label: Overview
----
+# Welcome to Press Office
 
-# Press Secretary Simulation Game
+**Press Office** is a React Native simulation game where you play as the White House Press Secretary.
 
-Press Office is a React Native + Expo satire game where you attempt to survive a full presidential term as the White House Press Secretary. Every press conference, leak, and moral compromise nudges cabinet trust, journalist relationships, and subgroup approval ratings.
+Manage relationships with the press corps, spin difficult situations, and keep the administration's approval ratings afloat.
 
-## Why It Exists
+## Getting Started
 
-- **Gameplay experiment:** blend relationship management, roguelite pressure, and newsroom snark into short mobile sessions.
-- **Portfolio piece:** showcase offline-first data modeling, content tooling at scale, and privacy-aware monetization.
-- **Content playground:** write absurdist headlines without dragging real-world parties or tragedies.
+<div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+  <a className="button button--primary button--lg" href="/docs/gameplay/guide">
+    Read Player Guide
+  </a>
+  <a className="button button--secondary button--lg" href="/docs/technical">
+    View Tech Stack
+  </a>
+</div>
 
-## Quick Facts
+## Project Vision
 
-- **Scope:** 48 in-game months, ~600 handcrafted situations, branching cabinet intel + journalist paths.
-- **Platforms:** iOS, Android, web preview via Expo Router.
-- **Stack:** React Native + Expo Router, WatermelonDB, Zustand, Nativewind, Sentry, Amplitude, AdMob.
-- **Status:** Playable builds available via EAS dev/preview profiles (see repo README).
+We built Press Office to explore the intersection of simulation gameplay and modern React Native development. It demonstrates a "local-first" architecture using WatermelonDB and offline generation capabilities.
 
-## Links
+### Key Features
 
-- **Source:** `rn/press-office/rn-ps`
-- **README:** setup instructions plus compliance checklist.
-- **TEARDOWN.md:** release process + store submission steps.
-- **Docs sections:** Gameplay guide + Technical handbook detailed below.
+-   **Dynamic Content**: Situations are generated via an LLM pipeline, creating infinite replayability.
+-   **Relationship System**: Balance favor with individual journalists, cabinet members, and voter subgroups.
+-   **Offline First**: All game state is persisted locally.
 
-## Tone & Guardrails
+## Join the Community
 
-- Late-night newsroom satire (_Veep_ × _The Daily Show_); roast incompetence, not ideology.
-- Fictional places/agencies, euphemisms for real tragedies.
-- No real-world politicians, parties, or conspiracy theories.
-
-Use this page as the jumping-off point to explore gameplay specifics or the technical stack.*** End Patch
-
+Check out our [GitHub Repository](https://github.com/press-office/rn-ps) to contribute or report issues.

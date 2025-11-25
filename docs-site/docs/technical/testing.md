@@ -1,34 +1,34 @@
----
-title: Testing & QA
-sidebar_position: 3
----
+# Testing Strategy
 
-# Testing & QA
+We use a mix of unit testing for logic and end-to-end (E2E) testing for critical user flows.
 
-## Directory Layout
+## Unit Tests
+**Framework**: Jest + React Native Testing Library.
+**Location**: `__tests__/`
 
-- `__tests__/components/...` – React component tests using Testing Library.
-- `__tests__/app/...` – Screen-level tests and state-machine assertions.
-- `__tests__/support/jest-setup.ts` – global mocks (WatermelonDB, Nativewind, timers).
-- `e2e/maestro/flows/*.yaml` – scripted Maestro flows for smoke/regression.
-- `e2e/maestro/suites/*.yaml` – test suites grouping flows per platform.
+*   **Logic**: Tests for `lib/utils.ts` and helper functions.
+*   **Components**: Snapshot and interaction tests for shared components.
+*   **Database**: We mock WatermelonDB for testing model logic.
 
-## Jest
+Run unit tests:
+```bash
+npm test
+```
 
-- Config lives in `package.json` (preset: `jest-expo`).
-- Run all tests: `npm run test`.
-- Watch mode: `npm run test -- --watch`.
-- Use `__tests__/support/factories` for seeded models and scenario fixtures.
+## End-to-End (E2E) Tests
+**Framework**: [Maestro](https://maestro.mobile.dev/)
+**Location**: `e2e/maestro/`
 
-## Maestro
+Maestro provides a simple YAML-based syntax for defining flows. It interacts with the running emulator/simulator.
 
-- Run smoke suite on any platform: `npm run e2e`.
-- Platform-specific commands: `npm run e2e:ios`, `npm run e2e:android`.
-- Flows cover onboarding, creating a game, playing a month, and verifying toggles.
+### Key Suites
+*   `suites/smoke.yaml`: Basic sanity check (App opens, can start new game).
 
-## Recommendations
+Run E2E tests (requires running emulator):
+```bash
+# Android
+npm run e2e:android
 
-- Add component tests whenever you touch interactive UI in `components/screens`.
-- For content drops, run at least one Maestro pass to ensure dynamic data still renders.
-- Capture regressions by keeping fixtures in sync with `lib/data/situations/`.
-
+# iOS
+npm run e2e:ios
+```

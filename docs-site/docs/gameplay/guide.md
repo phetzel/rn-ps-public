@@ -1,117 +1,31 @@
----
-title: Gameplay Guide
-sidebar_label: Gameplay
-sidebar_position: 1
-slug: /gameplay/guide
----
-
 # Gameplay Guide
 
-## Core Loop
+Welcome to the Briefing Room. Your job is simple: **Survive the news cycle.**
 
-1. **Briefing** – Review situation brief, scan cabinet intel, set expectations.
-2. **Press Conference** – Field journalist questions under time pressure. Answers draw from seven tones: Deflect, Reassure, Challenge, Admit, Deny, Inform, and Authorized.
-3. **Press Outcomes** – Relationships shift instantly (journalists amplify future swings, cabinet trust gates intel).
-4. **Situation Outcomes** – Political, demographic, and economic subgroups react. Approval is the average of all subgroups.
-5. **Level Complete** – Monthly wrap-up, rewards, escalation to the next crisis.
+## The Core Loop
 
-## Flow Diagram
+Each level in Press Office represents one month of the administration.
 
-```mermaid
-flowchart LR
-    A[Briefing] --> B[Press Conference]
-    B --> C[Press Outcomes]
-    C --> D[Situation Outcomes]
-    D --> E[Level Complete]
-    E --> A
-    B -->|Authorized unlocked?| C
-    C -->|Journalists amplify?| D
-```
+1.  **The Briefing**: You receive a dossier of current situations (crises, policy updates, scandals).
+2.  **The Press Conference**: You step onto the podium. Journalists will ask targeted questions about these situations.
+3.  **The Response**: You choose how to answer.
+    *   **Answer**: Give it to them straight. Good for transparency, risky for approval.
+    *   **Spin**: Twist the narrative. High reward if it works, disaster if you're caught.
+    *   **Defer**: Dodge the question. Safe, but costs political capital.
+4.  **The Outcome**: See how your answers affected the administration's approval ratings and your relationships.
 
-## Win / Lose
+## Scoring & Stats
 
-- **Win:** Survive all 48 months without getting fired or impeached.
-- **Lose:** President relationship hits zero (you’re fired) **or** overall approval collapses (impeachment).
+### Approval Ratings
+The lifeblood of the administration. If this drops too low, you're out of a job.
 
-## Systems At A Glance
+### Political Capital
+Your currency. Use it to:
+*   Defer difficult questions.
+*   Leak stories to friendly press.
+*   Bail out failing cabinet members.
 
-| System | Inputs | Outputs |
-| --- | --- | --- |
-| **Relationships** | Answer tone, intel usage, journalist personalities | President/cabinet trust, journalist favor |
-| **Approval** | Situation modifiers, subgroup predispositions, journalist magnifiers | Aggregate presidential rating |
-| **Intel** | Cabinet loyalty, background bonuses | Authorized answer unlocks, risk/reward plays |
-| **Content** | Authored situation scripts, random seeds | Unique question sets per month |
-
-## Tone & Narrative Rules
-
-- Satirical newsroom energy; equal-opportunity roasting.
-- Fictional governments/agencies, euphemisms for real tragedies.
-- Avoid real politicians, parties, or conspiracy theories.
-
-## Tips
-
-- **Bank goodwill early:** improve cabinet trust to unlock intel and safer Authorized answers later.
-- **Mind the magnifiers:** high journalist favor amplifies both good and bad subgroup swings.
-- **Rotate tones:** repeating the same tone triggers “press fatigue” penalties in later months.
-- **Use toggles:** analytics/ads can be disabled in Settings → Privacy for players who prefer a privacy-first run.
-
-Refer to the Technical section for the underlying math, state machines, and data schemas.
----
-id: gameplay-guide
-title: Gameplay Guide
-sidebar_label: Gameplay
-sidebar_position: 1
-slug: /gameplay/guide
----
-
-# Gameplay Guide
-
-## Core Loop
-
-1. **Briefing** – Review situation brief, scan cabinet intel, set expectations.
-2. **Press Conference** – Field journalist questions under time pressure. Answers draw from seven tones: Deflect, Reassure, Challenge, Admit, Deny, Inform, and Authorized.
-3. **Press Outcomes** – Relationships shift instantly (journalists amplify future swings, cabinet trust gates intel).
-4. **Situation Outcomes** – Political, demographic, and economic subgroups react. Approval is the average of all subgroups.
-5. **Level Complete** – Monthly wrap-up, rewards, escalation to the next crisis.
-
-## Flow Diagram
-
-```mermaid
-flowchart LR
-    A[Briefing] --> B[Press Conference]
-    B --> C[Press Outcomes]
-    C --> D[Situation Outcomes]
-    D --> E[Level Complete]
-    E --> A
-    B -->|Authorized answer unlocked?| C
-    C -->|Journalists amplify?| D
-```
-
-## Win / Lose
-
-- **Win:** Survive all 48 months without getting fired or impeached.
-- **Lose:** President relationship hits zero (you’re fired) **or** overall approval collapses (impeachment).
-
-## Systems At A Glance
-
-| System            | Inputs                                                               | Outputs                                      |
-| ----------------- | -------------------------------------------------------------------- | -------------------------------------------- |
-| **Relationships** | Answer tone, intel usage, journalist personalities                   | President/cabinet trust, journalist favor    |
-| **Approval**      | Situation modifiers, subgroup predispositions, journalist magnifiers | Aggregate presidential rating                |
-| **Intel**         | Cabinet loyalty, background bonuses                                  | Authorized answer unlocks, risk/reward plays |
-| **Content**       | Authored situation scripts, random seeds                             | Unique question sets per month               |
-
-## Tone & Narrative Rules
-
-- Satirical newsroom energy; equal-opportunity roasting.
-- Fictional governments/agencies, euphemisms for real tragedies.
-- Avoid real politicians, parties, or conspiracy theories.
-
-## Tips
-
-- **Bank goodwill early:** improve cabinet trust to unlock intel and safer Authorized answers later.
-- **Mind the magnifiers:** high journalist favor amplifies both good and bad subgroup swings.
-- **Rotate tones:** repeating the same tone triggers “press fatigue” penalties in later months.
-- **Use toggles:** analytics/ads can be disabled in settings for players who prefer a privacy-first run.
-
-Refer to the Technical section for the underlying math, state machines, and data schemas.\*\*\* End Patch
+### Relationships
+*   **Journalists**: Friendly journalists give you softballs. Hostile ones dig for dirt.
+*   **Cabinet Members**: Keep them happy to get better intel on situations.
+*   **Voter Subgroups**: Different demographics react differently to your spin.

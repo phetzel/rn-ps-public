@@ -1,74 +1,32 @@
----
-title: Technical Handbook
-sidebar_label: Technical
-sidebar_position: 1
----
+# Architecture Overview
 
-# Technical Handbook
+Press Office is a React Native application built with Expo. It uses a "Local-First" architecture to ensure high performance and offline capability.
 
-This section collects the engineering notes you’ll want even as a solo dev: setup steps, architecture, scripts, and release hygiene.
+## Tech Stack
 
-## Environment
+| Category | Technology | Usage |
+| :--- | :--- | :--- |
+| **Framework** | [Expo](https://expo.dev) | React Native build system & router |
+| **Navigation** | [Expo Router](https://docs.expo.dev/router/introduction/) | File-based routing |
+| **UI / Styling** | [NativeWind](https://www.nativewind.dev/) | Tailwind CSS for React Native |
+| **State Management** | [Zustand](https://github.com/pmndrs/zustand) | Global ephemeral state |
+| **Database** | [WatermelonDB](https://watermelondb.dev/) | Offline-first SQLite database |
+| **Components** | [rn-primitives](https://rn-primitives.vercel.app/) | Radix-style accessible primitives |
 
-- Node 18+ (prefer 20 for docs build). Use `nvm` to swap if needed.
-- Install Xcode CLT + iOS Simulator or Android Studio for native builds.
-- `npm install` at repo root; Tailwind assets build during `postinstall`.
-- Docs: `npm --prefix docs-site install` (first run) then `npm --prefix docs-site start`.
+## Directory Structure
 
-## Scripts Cheat Sheet
+*   **`app/`**: Expo Router screens. Matches the navigation hierarchy.
+*   **`components/`**: Reusable UI components.
+    *   `components/ui/`: Primitive atoms (buttons, inputs).
+    *   `components/screens/`: Complex screen-specific compositions.
+*   **`lib/`**: Core business logic.
+    *   `lib/db/`: Database schema, models, and helpers.
+    *   `lib/stores/`: Zustand stores.
+    *   `lib/hooks/`: Custom React hooks.
+*   **`scripts/`**: Automation tools (Situation Generator).
 
-| Area | Command | Notes |
-| --- | --- | --- |
-| Dev servers | `npm run dev`, `npm run ios`, `npm run android`, `npm run web` | Expo Router with cache clear |
-| Quality | `npm run lint`, `npm run typecheck`, `npm run format` | ESLint + TS + Prettier |
-| Tests | `npm run test`, `npm run e2e` | Jest & Maestro smoke suites |
-| Content | [`npm run gen-situation`](https://github.com/press-office/rn-ps/blob/main/scripts/run-gen-situation.ts) | CLI for authored scenarios |
-| Builds | [`npm run build:dev:ios`](https://github.com/press-office/rn-ps/blob/main/eas.json), etc. | EAS profiles (dev/preview/prod) |
-| Docs | `npm --prefix docs-site start` / `npm --prefix docs-site run build` | Local Docusaurus server & prod bundle |
+## Data Flow
 
-## Architecture Snapshot
-
-- **Expo Router** drives navigation under `app/`.
-- **UI layer** uses React Native Reusables (shadcn-style) under `components/ui` + shared atoms.
-- **State & data**
-  - WatermelonDB models, schema, and migrations under `lib/db`.
-  - Zustand stores + selectors under `lib/stores` and `lib/hooks`.
-  - Static authored data in `lib/data/situations` validated with Zod schemas.
-- **Infra** lives in `lib/infra` (Sentry, Amplitude, ads, diagnostics).
-- **Scripts** under `scripts/` handle situation generation + utilities.
-
-### Architecture Diagram
-
-```mermaid
-flowchart LR
-    Screens[Expo Router Screens] --> Stores[Zustand Stores]
-    Stores --> DB[WatermelonDB Models]
-    DB --> Stores
-    Stores --> Infra[Infra Services]
-    Stores --> UI[React Native UI Layer]
-    StaticData[lib/data/situations] --> Stores
-```
-
-## Testing & Release
-
-- Jest config: `jest-expo`, setup file `__tests__/support/jest-setup.ts`.
-- Maestro smoke paths: `e2e/maestro/flows/*` with suites under `suites/`.
-- Release sequencing: follow `TEARDOWN.md` for EAS builds, store metadata, privacy forms, and ATT/UMP verification.
-
-## Docs Build & Deploy
-
-- Preview locally: `npm --prefix docs-site start`.
-- Production bundle: `npm --prefix docs-site run build`.
-- Static preview: `npm --prefix docs-site run serve`.
-- Deployment targets: GitHub Pages (via `npm --prefix docs-site run deploy`) or Vercel/Netlify by serving the `build/` output.
-
-## Docs & Knowledge Base
-
-- Overview + Showcase: `docs-site/docs/overview/*`.
-- Gameplay: `docs-site/docs/gameplay/guide.md`.
-- Technical sub-pages:
-  - Content pipeline
-  - Testing & QA
-  - Infra & services
-- Compliance docs now live under `docs-site/docs/compliance/*` (checklists + disclosure matrix).
-
+1.  **Persisted Data**: Game state (current level, stats) is stored in **WatermelonDB**.
+2.  **Ephemeral Data**: UI state (current dialog open, animation flags) is stored in **Zustand**.
+3.  **Reactivity**: Components observe WatermelonDB objects using `withObservables` or interact with Zustand hooks.

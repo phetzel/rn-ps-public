@@ -1,48 +1,31 @@
----
-title: Content Pipeline
-sidebar_position: 2
----
-
 # Content Pipeline
 
-The game lives or dies by handcrafted situations. This page captures how scenarios move from idea to shipped content.
+Press Office uses a unique LLM-based pipeline to generate infinite gameplay scenarios. This system lives in `scripts/gen-situation`.
 
-## Authoring Workflow
+## The Generator Flow
 
-1. **Ideate** – Choose a situation type (Domestic, Foreign, Economy, etc.) and define stakes + affected subgroups.
-2. **Scaffold** – Run `npm run gen-situation` to spawn a template in `scripts/gen-situation/output`.
-3. **Write & Tag** – Fill in prompts, journalist personas, cabinet intel, and answer options. Use the tone guardrails listed in the Overview.
-4. **Validate** – CLI runs Zod validation, placeholder checks, and diff summaries before copying into `lib/data/situations`.
-5. **Review** – Spot-check for satire tone, subgroup balance, and cabinet relationship impact.
-6. **Commit** – Move generated files into `lib/data/situations/<category>/` and commit with a concise description.
+The command `npm run gen-situation` triggers the following process:
 
-## CLI Flags
+1.  **Analysis (`generation-analysis.ts`)**:
+    *   The system analyzes the current "Situation Balance" (e.g., have we had too many foreign policy crises lately?).
+    *   It selects a target topic and difficulty.
 
-| Flag | Purpose |
-| --- | --- |
-| `--type=<situation>` | Prefills templates per category. |
-| `--journalists=<n>` | Generate multiple question arcs. |
-| `--dry-run` | Skip copying into `/lib` for quick validation. |
-| `--open` | Auto-open the scaffolded file in your editor. |
+2.  **Generation (`generator.ts` & `steps/`)**:
+    *   **Base Step**: Generates the core event title and description.
+    *   **Exchanges Step**: Generates journalist questions and potential player responses (Answer, Spin, Defer) based on the event.
+    *   **Outcomes Step**: Calculates the statistical impact of each response on different voter subgroups.
 
-See `scripts/gen-situation/README.md` for the full option list.
+3.  **Validation (`utils/final-validator.ts`)**:
+    *   Ensures the generated JSON adheres to the strictly typed schema.
+    *   Checks for logical consistency (e.g., outcome scores aren't impossible values).
 
-## Data Layout
+4.  **Output**:
+    *   Files are written to `lib/data/situations/{category}/{id}.ts`.
+    *   These files are bundled with the app or can be fetched remotely (future feature).
 
-- `lib/data/situations/<category>/<slug>.ts` – canonical source files.
-- `lib/schemas/situations/*` – Zod schemas for situations, answers, outcomes.
-- `lib/data/staticPolitics.ts` – cabinet + subgroup definitions referenced during validation.
+## LLM Integration
 
-## Quality Gates
+We use OpenAI's API with structured outputs. Configuration for prompts and parameters is located in `scripts/gen-situation/llm/configs`.
 
-- **Schema validation:** CLI ensures every authored field matches the latest schema (approval deltas, relationship weights, etc.).
-- **Tone checks:** regex blocklists catch real politicians, slurs, and other off-tone phrases.
-- **Playtest focus:** Run Maestro smoke tests or manual playthroughs after large content drops to confirm branching logic still works.
-
-## Localization & Future Proofing
-
-- Keep narrative strings consolidated; prefer referencing cabinet/subgroup IDs over hardcoded names.
-- Plan to expose a translation map once EN content stabilizes.
-
-Pair this page with the Gameplay Guide when onboarding new writers or reviewing submissions.
-
+*   **Model**: GPT-4o (or configured equivalent).
+*   **Safety**: All outputs are sanitized to prevent generation of prohibited content.
