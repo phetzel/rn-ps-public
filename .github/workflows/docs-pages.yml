@@ -79,7 +79,6 @@ jobs:
           git checkout -b gh-pages
           cp -R build/. .
           rm -rf build
-          touch .nojekyll
           git add .
           git commit -m "Deploy docs ${GITHUB_SHA}"
           git push --force https://x-access-token:${PUBLIC_DOCS_PAT}@github.com/${PUBLIC_DOCS_OWNER}/${PUBLIC_DOCS_REPO}.git gh-pages
