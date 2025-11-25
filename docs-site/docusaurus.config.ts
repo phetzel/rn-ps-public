@@ -3,11 +3,16 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-const publicDocsOwner = process.env.PUBLIC_DOCS_OWNER?.trim();
-const publicDocsRepo = process.env.PUBLIC_DOCS_REPO?.trim();
-const docsGithubUrlFromEnv = process.env.DOCS_GITHUB_URL?.trim();
-const docsSiteUrlOverride = process.env.DOCS_SITE_URL?.trim();
-const docsBaseUrlOverride = process.env.DOCS_BASE_URL?.trim();
+const env = (value?: string | null) => {
+  const trimmed = value?.trim();
+  return trimmed && trimmed.length > 0 ? trimmed : undefined;
+};
+
+const publicDocsOwner = env(process.env.PUBLIC_DOCS_OWNER);
+const publicDocsRepo = env(process.env.PUBLIC_DOCS_REPO);
+const docsGithubUrlFromEnv = env(process.env.DOCS_GITHUB_URL);
+const docsSiteUrlOverride = env(process.env.DOCS_SITE_URL);
+const docsBaseUrlOverride = env(process.env.DOCS_BASE_URL);
 
 const githubPagesUrl = publicDocsOwner ? `https://${publicDocsOwner}.github.io` : undefined;
 
