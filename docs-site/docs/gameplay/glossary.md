@@ -44,6 +44,6 @@ Journalists are grouped by publication. Each publication has a distinct politica
 ## Voter Subgroups
 
 *   **Political**: Left Wing Base, Right Wing Base, Independent Base
-*   **Demographic**: Youth Voters, Seniors Citizens, Rural Residents, Urban Residents
+*   **Demographic**: Youth Voters, Senior Citizens, Rural Residents, Urban Residents
 *   **Economic**: Labor Unions, Business Leaders, Tech Industry
 
