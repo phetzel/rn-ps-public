@@ -26,15 +26,16 @@ This command generates static content into the `build` directory and can be serv
 
 ## Environment configuration
 
-Copy `.env.example` to `.env.local` in the repo root and set:
+Copy `.env.example` to `.env.local` **in both the repo root and the `docs-site/` directory** and set:
 
 - `PUBLIC_DOCS_OWNER` – GitHub user/organization that owns the public docs repo.
 - `PUBLIC_DOCS_REPO` – Name of that repo.
 - `PUBLIC_DOCS_PAT` – Personal Access Token with access to push to the public repo (leave blank locally; only set in GitHub Secrets).
 - Optional overrides: `DOCS_GITHUB_URL`, `DOCS_SITE_URL`, `DOCS_BASE_URL`.
 
-These values are read by `docusaurus.config.ts` so local previews match production URLs.
+> **Note:** If you run Docusaurus commands from within `docs-site/`, you must have a `.env.local` file in the `docs-site/` directory. Environment variables in the root `.env.local` are not automatically loaded by Docusaurus when running from `docs-site/`.
 
+These values are read by `docs-site/docusaurus.config.ts` so local previews match production URLs.
 ## Deployment
 
 Deployments are handled by `.github/workflows/docs-pages.yml`:
