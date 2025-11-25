@@ -42,6 +42,10 @@ const config: Config = {
 
   themes: ['@docusaurus/theme-mermaid'],
 
+  // [NOTE] The `future.v4` flag enables Docusaurus v4 features while running on v3 (3.9.2).
+  // This is intended for gradual migration and may introduce breaking changes or unexpected behavior.
+  // See: https://docusaurus.io/docs/next/migration/v4#futurev4-flag
+  // Ensure the team is aware of any behavioral differences this may cause.
   future: {
     v4: true,
   },
