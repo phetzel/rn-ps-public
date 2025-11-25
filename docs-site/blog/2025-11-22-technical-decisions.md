@@ -22,4 +22,3 @@ Documenting a few of the calls that shaped Press Office and the trade-offs I’d
 - **Scenario diff workflow** still feels clunky—need better tooling to preview approval swings before merging.
 
 Sharing these to keep myself honest and give future collaborators context for the tech stack. More deep dives coming soon.
-

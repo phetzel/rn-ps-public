@@ -36,6 +36,7 @@ Copy `.env.example` to `.env.local` **in both the repo root and the `docs-site/`
 > **Note:** If you run Docusaurus commands from within `docs-site/`, you must have a `.env.local` file in the `docs-site/` directory. Environment variables in the root `.env.local` are not automatically loaded by Docusaurus when running from `docs-site/`.
 
 These values are read by `docs-site/docusaurus.config.ts` so local previews match production URLs.
+
 ## Deployment
 
 Deployments are handled by `.github/workflows/docs-pages.yml`:

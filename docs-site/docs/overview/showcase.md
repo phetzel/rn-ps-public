@@ -41,4 +41,3 @@ Use this page when sharing the project with recruiters, collaborators, or portfo
 - Experiment with adaptive difficulty based on approval volatility.
 
 Pair this page with gameplay clips and the README’s install instructions when showcasing the project externally.
-

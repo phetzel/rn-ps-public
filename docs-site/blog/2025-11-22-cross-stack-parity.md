@@ -25,4 +25,3 @@ I wanted Press Office’s mobile codebase to mirror my web stack (Next.js App Ro
 I experimented with Vercel’s v0 designer to mock mobile screens, but it’s still rooted in web assumptions (pixel-perfect divs, no SafeArea, etc.). For now, I’m sticking to Figma + Storybook and manually porting patterns.
 
 If you have tips for bridging the web/mobile component gap, I’d love to hear them—reach out via the README links.
-

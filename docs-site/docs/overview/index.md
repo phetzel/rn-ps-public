@@ -25,9 +25,9 @@ We built Press Office to explore the intersection of simulation gameplay and mod
 
 ### Key Features
 
--   **Dynamic Content**: Situations are generated via an LLM pipeline, creating infinite replayability.
--   **Relationship System**: Balance favor with individual journalists, cabinet members, and voter subgroups.
--   **Offline First**: All game state is persisted locally.
+- **Dynamic Content**: Situations are generated via an LLM pipeline, creating infinite replayability.
+- **Relationship System**: Balance favor with individual journalists, cabinet members, and voter subgroups.
+- **Offline First**: All game state is persisted locally.
 
 ## Join the Community
 

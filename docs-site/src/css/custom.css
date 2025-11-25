@@ -38,11 +38,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at top right,
-    hsla(45, 45%, 55%, 0.3),
-    transparent 55%
-  );
+  background: radial-gradient(circle at top right, hsla(45, 45%, 55%, 0.3), transparent 55%);
   pointer-events: none;
 }
 

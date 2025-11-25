@@ -22,4 +22,3 @@ Kicking off the public docs with a short update on where the project stands.
 - Start prepping localized strings for EN→ES once tooling stabilizes.
 
 Thanks for checking out the project—more detailed dev notes coming soon.
-
