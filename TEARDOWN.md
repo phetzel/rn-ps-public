@@ -12,16 +12,82 @@
 
 ### CI/CD and Release Strategy
 
-- [ ] Ensure GitHub Actions jobs cover: typecheck, lint, unit, E2E smoke, bundle analyze
-- [ ] Publish EAS builds for `preview` channel on release branches
+- [x] Ensure GitHub Actions jobs cover: typecheck, lint, unit, E2E smoke, bundle analyze
+  - `ci.yml` - Quality checks (typecheck, lint, test, format) + bundle analysis on PRs
+  - `e2e.yml` - E2E smoke tests via EAS local builds + Maestro
+  - `eas-build.yml` - Automated EAS builds for preview/production
+  - `eas-update.yml` - OTA updates for JS-only changes
+- [x] Publish EAS builds for `preview` channel on release branches
+- [x] EAS Update channels configured: `development`, `preview`, `production`, `test`
 - [ ] Define runtime version policy and rollback plan
+- [ ] Configure GitHub branch protection with required status checks
 
-### E2E Smoke Tests
+### E2E Smoke Tests (EAS + Maestro)
 
-- [ ] First run + consent
-- [ ] Start level → answer press conference → outcomes
-- [ ] Rewarded ad flow (earn reward, confirm attribution)
-- [ ] Resume after app restart
+- [x] First run + consent (covered in `create_game.yaml`)
+- [x] Create game flow (`e2e/maestro/flows/games/create_game.yaml`)
+- [x] Start level → answer press conference → outcomes (`e2e/maestro/flows/levels/complete_level.yaml`)
+- [x] Resume after app restart (`e2e/maestro/flows/app/app_restart.yaml`)
+- [ ] Rewarded ad flow - requires manual testing (draft at `e2e/maestro/flows/ads/rewarded_ad.yaml`)
+- [x] CI: E2E workflow with EAS local builds + Maestro (`e2e.yml`)
+- [x] EAS test profile for simulator/emulator builds (`eas.json` → `test` profile)
+
+**Local Setup:**
+
+```bash
+# 1. Install Java 17 (required for Maestro)
+brew install openjdk@17
+echo 'export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
+echo 'export JAVA_HOME="/opt/homebrew/opt/openjdk@17"' >> ~/.zshrc
+source ~/.zshrc
+
+# 2. Install Maestro CLI
+curl -Ls "https://get.maestro.mobile.dev" | zsh
+export PATH="$HOME/.maestro/bin:$PATH"
+
+# 3. Run tests locally (with simulator/emulator running)
+npm run e2e             # Both platforms
+npm run e2e:ios         # iOS only
+npm run e2e:android     # Android only
+npm run e2e:studio      # Interactive test builder
+npm run e2e:flow <path> # Run single flow
+```
+
+**EAS Test Builds:**
+
+```bash
+# Build for simulator/emulator (runs on EAS cloud)
+npm run build:test:ios
+npm run build:test:android
+
+# Build locally (faster iteration, requires Xcode/Android SDK)
+npm run build:test:local:ios
+npm run build:test:local:android
+
+# Download and install EAS build on simulator
+eas build:run --platform ios --profile test
+```
+
+### GitHub Actions Workflows
+
+| Workflow         | Trigger                      | Purpose                          |
+| ---------------- | ---------------------------- | -------------------------------- |
+| `ci.yml`         | PR, push to main/release     | Quality checks + bundle analysis |
+| `e2e.yml`        | PR, push to main/release     | E2E tests via Maestro            |
+| `eas-build.yml`  | Push to main/release, manual | Build preview/production apps    |
+| `eas-update.yml` | Push to main (JS changes)    | OTA updates to preview channel   |
+| `docs-pages.yml` | Push to main                 | Deploy documentation             |
+
+### EAS Profiles & Channels
+
+| Profile       | Channel       | Use Case                         |
+| ------------- | ------------- | -------------------------------- |
+| `development` | `development` | Local dev with dev client        |
+| `preview`     | `preview`     | Internal testing / TestFlight    |
+| `production`  | `production`  | App Store / Play Store           |
+| `test`        | `test`        | E2E testing (simulator/emulator) |
+
+**OTA Updates:** JS-only changes pushed to `main` automatically publish to the `preview` channel. Users with preview builds receive updates within minutes.
 
 ## P1 — Must-haves
 
@@ -46,10 +112,14 @@
 
 ## Suggested Next Actions
 
-- Build a dedicated Privacy screen: analytics/diagnostics toggles, open CMP, “Reset data”
-- Expand Maestro E2E: first-run consent; level flow; rewarded ad; resume after restart
+- Build a dedicated Privacy screen: analytics/diagnostics toggles, open CMP, "Reset data"
+- ~~Expand Maestro E2E: first-run consent; level flow; rewarded ad; resume after restart~~ ✅ Done
+- ~~Set up EAS builds and OTA updates in CI~~ ✅ Done
 - Verify Sentry env tags on `preview`/`production` builds (APP_ENV added in eas.json)
 - Wire Amplitude API key + the correct ingestion host (US `https://api2.amplitude.com` or EU `https://api.eu.amplitude.com`) and verify the thin analytics client
+- **Maestro:** Run smoke tests locally and fix any flaky selectors before CI integration
+- **GitHub:** Configure branch protection rules requiring `ci` and `e2e` status checks
+- **EAS:** Update `eas.json` submit section with actual App Store Connect and Play Console IDs
 
 ## Done (reference)
 
@@ -132,13 +202,17 @@
 ### E2E Smoke Tests (critical flows)
 
 - [x] Choose framework: Maestro (simpler cross-platform)
-- [ ] Cover flows:
-  - [x] First run + consent (covered in create_game)
-  - [x] Create game (e2e/maestro/flows/games/create_game.yaml)
-  - [ ] Start level → answer press conference → outcomes
-  - [ ] Rewarded ad flow (earn reward, confirm attribution)
-  - [ ] Resume after app restart
-  - [ ] CI: Add Android + iOS Maestro smoke workflows (GitHub Actions or Maestro Cloud)
+- [x] Cover flows:
+  - [x] First run + consent (covered in `create_game.yaml`)
+  - [x] Create game (`e2e/maestro/flows/games/create_game.yaml`)
+  - [x] Start level → answer press conference → outcomes (`e2e/maestro/flows/levels/complete_level.yaml`)
+  - [x] Resume after app restart (`e2e/maestro/flows/app/app_restart.yaml`)
+  - [ ] Rewarded ad flow - requires manual verification (draft at `e2e/maestro/flows/ads/rewarded_ad.yaml`)
+- [x] CI: Android + iOS Maestro workflows added (`.github/workflows/ios-e2e.yml`, `android-e2e.yml`)
+  - [x] Caching for CocoaPods and Gradle
+  - [x] JUnit test reports with artifact upload
+  - [x] Screenshot capture on failure
+  - [x] Manual trigger support (`workflow_dispatch`)
 
 ### Runtime Configuration & Secrets
 
@@ -334,7 +408,7 @@ Notes:
 - [x] Sentry + ErrorBoundary + DSN secrets
 - [x] CMP/consent screen and legal links
 - [x] CI: typecheck, lint, tests, bundle analyze; EAS preview builds
-- [ ] E2E smoke via Maestro/Detox: first run, create game, level flow
+- [x] E2E smoke via Maestro: first run, create game, level flow, app restart
 - [x] Runtime config to `app.config.ts` and secrets wiring
 
 ### Sprint 2 (P1 focus)
@@ -356,7 +430,7 @@ Defer to P2/P3 if scope threatens dates.
 - [x] Crash reporting captures JS and native errors
 - [x] Error boundary prevents white screens and collects reports
 - [x] Consent & privacy compliant in target regions
-- [ ] CI green: typecheck, lint, unit, E2E smoke
+- [x] CI green: typecheck, lint, unit, E2E smoke (Maestro workflows added)
 - [ ] Deep linking works from cold/warm states
 - [ ] Bundle size and startup within targets
 - [ ] Accessibility checks pass

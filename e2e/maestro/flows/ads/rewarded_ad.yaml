@@ -1,0 +1,52 @@
+appId: com.phetzel.rnps
+name: Rewarded Ad Flow
+tags:
+  - smoke
+  - monetization
+  - flaky
+onFlowStart:
+  - clearState
+  - launchApp
+---
+# Note: Rewarded ads may not be available in test/debug builds
+# This flow tests the UI interaction, actual ad delivery depends on AdMob config
+
+# Dismiss disclaimer if present
+- tapOn:
+    text: 'I understand'
+    optional: true
+
+# Wait for home screen
+- assertVisible:
+    text: 'Start New Game'
+    timeout: 10000
+
+# Navigate to a screen where rewarded ads are offered
+- tapOn: 'Start New Game'
+- assertVisible: 'New Press Secretary Career'
+- tapOn: 'George Washington...'
+- inputText: 'Ad Test President'
+- tapOn: 'Liberal'
+- tapOn: 'George Akerson...'
+- inputText: 'Ad Test Secretary'
+- tapOn: 'Select background'
+- tapOn: 'Journalist'
+- tapOn: 'Create Game'
+
+- assertVisible:
+    text: 'Active Situations'
+    timeout: 10000
+
+# Look for rewarded ad trigger (e.g., "Watch Ad" button)
+- tapOn:
+    text: 'Watch Ad'
+    optional: true
+- tapOn:
+    text: 'Earn Reward'
+    optional: true
+
+# If using Google's test ad units, wait for ad to complete
+- tapOn:
+    text: 'Close'
+    optional: true
+    timeout: 35000

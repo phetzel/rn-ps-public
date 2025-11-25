@@ -1,8 +1,8 @@
 appId: com.phetzel.rnps
-name: Create Game
+name: App Restart and Resume
 tags:
   - smoke
-  - critical
+  - persistence
 onFlowStart:
   - clearState
   - launchApp
@@ -17,29 +17,28 @@ onFlowStart:
     text: 'Start New Game'
     timeout: 10000
 
-# Start game creation
+# Create a game
 - tapOn: 'Start New Game'
 - assertVisible: 'New Press Secretary Career'
-
-# Enter president name
 - tapOn: 'George Washington...'
-- inputText: 'John Adams'
-
-# Select ideology
+- inputText: 'Persistence Test'
 - tapOn: 'Liberal'
-
-# Enter press secretary name
 - tapOn: 'George Akerson...'
-- inputText: 'James Brady'
-
-# Select background
+- inputText: 'Resume Test'
 - tapOn: 'Select background'
 - tapOn: 'Journalist'
-
-# Create the game
 - tapOn: 'Create Game'
 
-# Verify game was created successfully
+# Wait for game to be created
+- assertVisible:
+    text: 'Active Situations'
+    timeout: 10000
+
+# Kill and relaunch the app (without clearing state)
+- stopApp
+- launchApp
+
+# Verify app resumes with game state intact
 - assertVisible:
     text: 'Active Situations'
     timeout: 10000

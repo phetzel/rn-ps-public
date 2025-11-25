@@ -32,10 +32,11 @@ const sidebars: SidebarsConfig = {
       collapsible: false,
       items: [
         'technical/index',
-        'technical/content-pipeline',
         'technical/database',
         'technical/testing',
+        'technical/ci-cd',
         'technical/infra',
+        'technical/content-pipeline',
       ],
     },
     {
