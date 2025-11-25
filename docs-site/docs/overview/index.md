@@ -1,3 +1,5 @@
+import Link from '@docusaurus/Link';
+
 # Welcome to Press Office
 
 import Link from '@docusaurus/Link';
