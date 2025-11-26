@@ -8,9 +8,9 @@ onFlowStart:
   - launchApp
 ---
 # Dismiss disclaimer if present
-- tapOn:
-    text: 'I understand'
-    optional: true
+  - tapOn:
+      text: 'I understand'
+      optional: true
 
 # Wait for home screen
 - assertVisible:
@@ -18,26 +18,26 @@ onFlowStart:
     timeout: 10000
 
 # Start game creation
-- tapOn: 'Start New Game'
-- assertVisible: 'New Press Secretary Career'
+  - tapOn: 'Start New Game'
+  - assertVisible: 'New Press Secretary Career'
 
 # Enter president name
-- tapOn: 'George Washington...'
-- inputText: 'John Adams'
+  - tapOn: 'George Washington...'
+  - inputText: 'John Adams'
 
 # Select ideology
-- tapOn: 'Liberal'
+  - tapOn: 'Liberal'
 
 # Enter press secretary name
-- tapOn: 'George Akerson...'
-- inputText: 'James Brady'
+  - tapOn: 'George Akerson...'
+  - inputText: 'James Brady'
 
 # Select background
-- tapOn: 'Select background'
-- tapOn: 'Journalist'
+  - tapOn: 'Select background'
+  - tapOn: 'Journalist'
 
 # Create the game
-- tapOn: 'Create Game'
+  - tapOn: 'Create Game'
 
 # Verify game was created successfully
 - assertVisible:
