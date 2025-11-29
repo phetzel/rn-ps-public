@@ -1,7 +1,7 @@
 export function initSentry(): void {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const Sentry = require('sentry-expo');
+    const Sentry = require('@sentry/react-native');
 
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const Constants = require('expo-constants').default;
@@ -31,7 +31,6 @@ export function initSentry(): void {
 
     Sentry.init({
       dsn: extra?.sentryDsn,
-      enableInExpoDevelopment: true,
       debug: __DEV__,
       tracesSampleRate: 1.0,
       environment,

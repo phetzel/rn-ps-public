@@ -125,7 +125,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
           'We use your device identifier to show relevant ads and measure performance. You can change this anytime in iOS Settings.',
       },
     ],
-    ['sentry-expo', { bundleNative: true }],
+    '@sentry/react-native/expo',
   ],
   experiments: {
     typedRoutes: true,
