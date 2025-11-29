@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 
 import { HomePrivacySettings } from '~/components/screens/home/HomePrivacySettings';
 import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
@@ -23,11 +24,13 @@ interface HomeMenuCardProps {
 }
 
 export function HomeMenuCard({ games }: HomeMenuCardProps) {
-  const { isLoading, error, currentGameId } = useGameManagerStore((state) => ({
-    isLoading: state.isLoading,
-    error: state.error,
-    currentGameId: state.currentGameId,
-  }));
+  const { isLoading, error, currentGameId } = useGameManagerStore(
+    useShallow((state) => ({
+      isLoading: state.isLoading,
+      error: state.error,
+      currentGameId: state.currentGameId,
+    })),
+  );
   const { goToCreateGame, goToGamesList, continueGame } = useGameNavigation();
 
   const canStartNewGame = games.length < MAX_ACTIVE_GAMES;

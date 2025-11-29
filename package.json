@@ -23,7 +23,7 @@
     "build:dev:android": "eas build --profile development --platform android",
     "build:preview:android": "eas build --profile preview --platform android",
     "build:prod:android": "eas build --profile production --platform android",
-    "test": "jest --watchAll",
+    "test": "jest",
     "test:ci": "jest --watchAll=false --passWithNoTests",
     "typecheck": "tsc --noEmit",
     "gen-situation": "tsx scripts/run-gen-situation.ts",
@@ -130,6 +130,9 @@
   },
   "jest": {
     "preset": "jest-expo",
+    "setupFiles": [
+      "<rootDir>/__tests__/support/jest-platform-setup.js"
+    ],
     "setupFilesAfterEnv": [
       "<rootDir>/__tests__/support/jest-setup.ts"
     ],
@@ -138,7 +141,12 @@
     ],
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@sentry/react-native|native-base|react-native-svg|@rn-primitives/.*|@nozbe/watermelondb|better-sqlite3|nativewind|react-native-css-interop)"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^react-native/Libraries/Utilities/Platform$": "<rootDir>/__mocks__/react-native/Libraries/Utilities/Platform.js",
+      "^@react-navigation/native/src/theming/fonts$": "<rootDir>/__mocks__/@react-navigation/native/src/theming/fonts.tsx",
+      "^expo-router/testing-library$": "<rootDir>/__mocks__/expo-router/testing-library.ts"
+    }
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

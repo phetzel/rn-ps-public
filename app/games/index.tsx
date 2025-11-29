@@ -17,9 +17,7 @@ interface GamesScreenProps {
 }
 
 function GamesScreen({ allGames }: GamesScreenProps) {
-  const { error: actionError } = useGameManagerStore((state) => ({
-    error: state.error,
-  }));
+  const actionError = useGameManagerStore((state) => state.error);
 
   const isLoading = allGames === undefined;
 

@@ -54,11 +54,14 @@ graph TB
 ### Running Unit Tests
 
 ```bash
-# Watch mode (development)
+# Run tests (single run)
 npm test
 
-# Single run (CI)
+# CI mode (exits with status code)
 npm run test:ci
+
+# Watch mode (re-runs on file changes)
+npm test -- --watch
 
 # With coverage
 npm test -- --coverage

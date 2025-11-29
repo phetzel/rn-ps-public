@@ -1,5 +1,6 @@
 // lib/hooks/useGameNavigation.ts
 import { useRouter } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
@@ -9,15 +10,19 @@ import type { NewGameDetails } from '~/types';
 
 export function useGameNavigation() {
   const router = useRouter();
-  const { currentGameId, setCurrentGameId, createAndStartGame } = useGameManagerStore((state) => ({
-    currentGameId: state.currentGameId,
-    setCurrentGameId: state.setCurrentGameId,
-    createAndStartGame: state.createAndStartGame,
-  }));
-  const { setGameCurrentLevel, createNewLevel } = useCurrentLevelStore((state) => ({
-    setGameCurrentLevel: state.setGameCurrentLevel,
-    createNewLevel: state.createNewLevel,
-  }));
+  const { currentGameId, setCurrentGameId, createAndStartGame } = useGameManagerStore(
+    useShallow((state) => ({
+      currentGameId: state.currentGameId,
+      setCurrentGameId: state.setCurrentGameId,
+      createAndStartGame: state.createAndStartGame,
+    })),
+  );
+  const { setGameCurrentLevel, createNewLevel } = useCurrentLevelStore(
+    useShallow((state) => ({
+      setGameCurrentLevel: state.setGameCurrentLevel,
+      createNewLevel: state.createNewLevel,
+    })),
+  );
 
   const goToHome = () => {
     if (router.canDismiss()) {

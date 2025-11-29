@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useShallow } from 'zustand/shallow';
 
 import { Card, CardContent, CardFooter } from '~/components/ui/card';
 import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
@@ -17,11 +18,12 @@ interface GameCardProps {
 }
 
 function GameCard({ game }: GameCardProps) {
-  const { deleteGame, isLoading } = useGameManagerStore((state) => ({
-    setCurrentGameId: state.setCurrentGameId,
-    deleteGame: state.deleteGame,
-    isLoading: state.isLoading,
-  }));
+  const { deleteGame, isLoading } = useGameManagerStore(
+    useShallow((state) => ({
+      deleteGame: state.deleteGame,
+      isLoading: state.isLoading,
+    })),
+  );
   const { continueGame } = useGameNavigation();
 
   const handleDelete = () => {

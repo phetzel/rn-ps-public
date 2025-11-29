@@ -2,6 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 
 import { BackgroundSelect } from '~/components/screens/game-create/BackgroundSelect';
 import { NameField } from '~/components/screens/game-create/NameField';
@@ -21,11 +22,12 @@ import { NewGameDetails, PoliticalLeaning } from '~/types';
 
 export default function GameCreateScreen() {
   const { createGame } = useGameNavigation();
-  const { isLoading, error: storeError } = useGameManagerStore((state) => ({
-    createAndStartGame: state.createAndStartGame,
-    isLoading: state.isLoading,
-    error: state.error,
-  }));
+  const { isLoading, error: storeError } = useGameManagerStore(
+    useShallow((state) => ({
+      isLoading: state.isLoading,
+      error: state.error,
+    })),
+  );
 
   const {
     control,

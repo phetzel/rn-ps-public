@@ -1,3 +1,5 @@
+// Platform is mocked in jest-platform-setup.js (runs via setupFiles before modules load)
+
 // Mock the native SQLite dispatcher to use Node.js version
 jest.mock('@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js', () => {
   return jest.requireActual('@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.js');
@@ -7,6 +9,29 @@ jest.mock('@nozbe/watermelondb/adapters/sqlite/makeDispatcher/index.native.js', 
 global.fail = (message?: string) => {
   throw new Error(message || 'Test failed');
 };
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Safe Area Context Mock
+// ═══════════════════════════════════════════════════════════════════════════════
+
+jest.mock('react-native-safe-area-context', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+
+  const insets = { top: 0, right: 0, bottom: 0, left: 0 };
+  const frame = { x: 0, y: 0, width: 390, height: 844 };
+
+  return {
+    SafeAreaProvider: ({ children }: { children: React.ReactNode }) =>
+      React.createElement(View, { style: { flex: 1 } }, children),
+    SafeAreaView: ({ children, ...props }: any) => React.createElement(View, props, children),
+    useSafeAreaInsets: () => insets,
+    useSafeAreaFrame: () => frame,
+    initialWindowMetrics: { insets, frame },
+    SafeAreaInsetsContext: React.createContext(insets),
+    SafeAreaFrameContext: React.createContext(frame),
+  };
+});
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // AdMob and Tracking Mocks
@@ -73,12 +98,6 @@ jest.mock('expo-tracking-transparency', () => ({
       canAskAgain: true,
     }),
   ),
-}));
-
-// Mock Platform for AdMob environment checks
-jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-  OS: 'ios',
-  select: jest.fn((obj) => obj.ios),
 }));
 
 // Mock nativewind for tests to avoid _ReactNativeCSSInterop access errors

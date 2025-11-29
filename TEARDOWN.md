@@ -8,24 +8,24 @@
 
 ### In This Repo
 
-| Task | Status | Notes |
-|------|--------|-------|
+| Task                                      | Status  | Notes                                     |
+| ----------------------------------------- | ------- | ----------------------------------------- |
 | Run Maestro E2E locally and fix selectors | 🔲 TODO | Test `create_game.yaml` works on real app |
-| Validate rewarded ad flow | 🔲 TODO | Manual test with dev build |
-| Define runtime version policy | 🔲 TODO | Document in this file |
+| Validate rewarded ad flow                 | 🔲 TODO | Manual test with dev build                |
+| Define runtime version policy             | 🔲 TODO | Document in this file                     |
 
 ### External (Outside This Repo)
 
-| Task | Where | Status |
-|------|-------|--------|
-| **Add `EXPO_TOKEN` to GitHub Secrets** | GitHub → Settings → Secrets | ✅ Done |
-| **Configure branch protection** | GitHub → Settings → Branches | 🔲 TODO |
-| **Update EAS submit IDs** | `eas.json` → submit section | 🔲 TODO |
-| **Verify Sentry alerts** | Sentry Dashboard | 🔲 TODO |
-| **Complete App Store Privacy** | App Store Connect | 🔲 TODO |
-| **Complete Play Data Safety** | Google Play Console | 🔲 TODO |
-| **Publish Privacy Policy** | Your website / Termly | 🔲 TODO |
-| **Configure AdMob UMP messages** | AdMob Console | 🔲 TODO |
+| Task                                   | Where                        | Status  |
+| -------------------------------------- | ---------------------------- | ------- |
+| **Add `EXPO_TOKEN` to GitHub Secrets** | GitHub → Settings → Secrets  | ✅ Done |
+| **Configure branch protection**        | GitHub → Settings → Branches | 🔲 TODO |
+| **Update EAS submit IDs**              | `eas.json` → submit section  | 🔲 TODO |
+| **Verify Sentry alerts**               | Sentry Dashboard             | 🔲 TODO |
+| **Complete App Store Privacy**         | App Store Connect            | 🔲 TODO |
+| **Complete Play Data Safety**          | Google Play Console          | 🔲 TODO |
+| **Publish Privacy Policy**             | Your website / Termly        | 🔲 TODO |
+| **Configure AdMob UMP messages**       | AdMob Console                | 🔲 TODO |
 
 ---
 
@@ -75,22 +75,22 @@
 
 ## GitHub Actions Workflows
 
-| Workflow | Trigger | Purpose |
-|----------|---------|---------|
-| `ci.yml` | PR, push to main/release | Quality checks + bundle analysis |
-| `e2e.yml` | PR, push to main/release | E2E tests via Maestro |
-| `eas-build.yml` | Push to main/release, manual | Build preview/production apps |
-| `eas-update.yml` | Push to main (JS changes) | OTA updates to preview channel |
-| `docs-pages.yml` | Push to main | Deploy documentation |
+| Workflow         | Trigger                      | Purpose                          |
+| ---------------- | ---------------------------- | -------------------------------- |
+| `ci.yml`         | PR, push to main/release     | Quality checks + bundle analysis |
+| `e2e.yml`        | PR, push to main/release     | E2E tests via Maestro            |
+| `eas-build.yml`  | Push to main/release, manual | Build preview/production apps    |
+| `eas-update.yml` | Push to main (JS changes)    | OTA updates to preview channel   |
+| `docs-pages.yml` | Push to main                 | Deploy documentation             |
 
 ## EAS Profiles & Channels
 
-| Profile | Channel | Use Case |
-|---------|---------|----------|
-| `development` | `development` | Local dev with dev client |
-| `preview` | `preview` | Internal testing / TestFlight |
-| `production` | `production` | App Store / Play Store |
-| `test` | `test` | E2E testing (simulator/emulator) |
+| Profile       | Channel       | Use Case                         |
+| ------------- | ------------- | -------------------------------- |
+| `development` | `development` | Local dev with dev client        |
+| `preview`     | `preview`     | Internal testing / TestFlight    |
+| `production`  | `production`  | App Store / Play Store           |
+| `test`        | `test`        | E2E testing (simulator/emulator) |
 
 ---
 
@@ -100,8 +100,8 @@
 
 #### Add Secrets (Settings → Secrets → Actions)
 
-| Secret | Required For | How to Get |
-|--------|--------------|------------|
+| Secret       | Required For      | How to Get                                                                 |
+| ------------ | ----------------- | -------------------------------------------------------------------------- |
 | `EXPO_TOKEN` | All EAS workflows | [expo.dev/settings/access-tokens](https://expo.dev/settings/access-tokens) |
 
 #### Configure Branch Protection (Settings → Branches)
@@ -137,6 +137,7 @@ Replace placeholders in the `submit` section:
 ```
 
 **Where to find these:**
+
 - `ascAppId`: App Store Connect → Your App → App Information → Apple ID
 - `appleTeamId`: [developer.apple.com](https://developer.apple.com/account) → Membership → Team ID
 
@@ -169,7 +170,7 @@ eas env:list
 
 2. **Privacy Policy URL**: Add to App Information
 
-3. **TestFlight**: 
+3. **TestFlight**:
    - [ ] Add internal testers
    - [ ] Configure build notifications
 
@@ -218,6 +219,7 @@ Update your Privacy Policy to include:
 - [ ] **Contact**: Email for privacy inquiries
 
 **Publish URLs:**
+
 ```bash
 eas env:create --name PRIVACY_POLICY_URL --value "https://yoursite.com/privacy"
 eas env:create --name TERMS_URL --value "https://yoursite.com/terms"
@@ -341,6 +343,7 @@ eas build:run --platform ios --profile test
 ```
 
 **Rollback plan:**
+
 1. If OTA update causes issues → publish revert update to same channel
 2. If native code issue → submit new store build
 3. Channel promotion: `preview` → `production` only after QA sign-off
@@ -351,24 +354,24 @@ eas build:run --platform ios --profile test
 
 ### npm Scripts
 
-| Script | Purpose |
-|--------|---------|
-| `npm run e2e` | Run Maestro smoke tests |
-| `npm run e2e:studio` | Interactive Maestro builder |
-| `npm run build:test:ios` | Build iOS for simulator (EAS) |
+| Script                      | Purpose                        |
+| --------------------------- | ------------------------------ |
+| `npm run e2e`               | Run Maestro smoke tests        |
+| `npm run e2e:studio`        | Interactive Maestro builder    |
+| `npm run build:test:ios`    | Build iOS for simulator (EAS)  |
 | `npm run build:preview:ios` | Build iOS for TestFlight (EAS) |
-| `npm run typecheck` | TypeScript check |
-| `npm run lint` | ESLint |
-| `npm run test:ci` | Jest unit tests |
+| `npm run typecheck`         | TypeScript check               |
+| `npm run lint`              | ESLint                         |
+| `npm run test:ci`           | Jest unit tests                |
 
 ### Key Files
 
-| File | Purpose |
-|------|---------|
-| `eas.json` | EAS build/submit configuration |
-| `app.config.ts` | Expo configuration with secrets |
-| `.github/workflows/` | CI/CD workflows |
-| `e2e/maestro/` | E2E test flows |
+| File                 | Purpose                         |
+| -------------------- | ------------------------------- |
+| `eas.json`           | EAS build/submit configuration  |
+| `app.config.ts`      | Expo configuration with secrets |
+| `.github/workflows/` | CI/CD workflows                 |
+| `e2e/maestro/`       | E2E test flows                  |
 
 ### Documentation
 
