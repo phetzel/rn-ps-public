@@ -7,6 +7,7 @@ import { Stack, SplashScreen } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { Platform, View } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 
 import { DisclaimerModal } from '~/components/shared/DisclaimerModal';
 import { GlobalErrorBoundary } from '~/components/shared/GlobalErrorBoundary';
@@ -47,14 +48,21 @@ export default function RootLayout() {
   const { open } = useDisclaimerDialogStore();
 
   // Zustand state for DB initialization
-  const { isDbReady, initializeDb, dbError } = useGameManagerStore((state) => ({
-    isDbReady: state.isDbReady,
-    initializeDb: state.initialize,
-    dbError: state.error,
-  }));
+  const { isDbReady, initializeDb, dbError } = useGameManagerStore(
+    useShallow((state) => ({
+      isDbReady: state.isDbReady,
+      initializeDb: state.initialize,
+      dbError: state.error,
+    })),
+  );
 
   // Consent management
-  const { isSdkInitialized, prepareConsentInfo } = useConsentStore();
+  const { isSdkInitialized, prepareConsentInfo } = useConsentStore(
+    useShallow((state) => ({
+      isSdkInitialized: state.isSdkInitialized,
+      prepareConsentInfo: state.prepareConsentInfo,
+    })),
+  );
 
   React.useEffect(() => {
     if (!isDbReady) {

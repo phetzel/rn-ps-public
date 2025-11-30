@@ -65,6 +65,7 @@ export function BackgroundSelect({ control, error, disabled = false }: Props) {
                 className="h-12 w-full"
                 aria-labelledby="poBackgroundLabel"
                 aria-describedby={error ? errorId : undefined}
+                testID="background-select-trigger"
               >
                 {value ? (
                   <Text className="text-base">{getLabel(value as string)}</Text>
@@ -80,7 +81,12 @@ export function BackgroundSelect({ control, error, disabled = false }: Props) {
             >
               <SelectGroup>
                 {options.map((opt) => (
-                  <SelectItem key={opt.value} label={opt.label} value={opt.value}>
+                  <SelectItem
+                    key={opt.value}
+                    label={opt.label}
+                    value={opt.value}
+                    testID={`background-option-${opt.value}`}
+                  >
                     {opt.label}
                   </SelectItem>
                 ))}

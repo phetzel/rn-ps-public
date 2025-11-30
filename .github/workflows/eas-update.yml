@@ -1,0 +1,81 @@
+name: EAS Update (OTA)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # Only trigger for JS/TS changes (OTA-compatible)
+      - 'app/**'
+      - 'components/**'
+      - 'lib/**'
+      - 'assets/**'
+      - '!**/*.native.*' # Exclude native-only files
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Update channel'
+        required: true
+        default: 'preview'
+        type: choice
+        options:
+          - preview
+          - production
+      message:
+        description: 'Update message'
+        required: false
+        default: ''
+
+env:
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+jobs:
+  update:
+    name: Publish OTA Update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Determine channel
+        id: channel
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "channel=${{ github.event.inputs.channel }}" >> $GITHUB_OUTPUT
+            echo "message=${{ github.event.inputs.message }}" >> $GITHUB_OUTPUT
+          else
+            echo "channel=preview" >> $GITHUB_OUTPUT
+            echo "message=Auto-update from main branch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish update
+        run: |
+          eas update \
+            --channel ${{ steps.channel.outputs.channel }} \
+            --message "${{ steps.channel.outputs.message || format('Update from {0}', github.sha) }}" \
+            --non-interactive
+
+      - name: Update Summary
+        run: |
+          echo "## 🚀 OTA Update Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Channel:** ${{ steps.channel.outputs.channel }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Users on the **${{ steps.channel.outputs.channel }}** channel will receive this update automatically." >> $GITHUB_STEP_SUMMARY

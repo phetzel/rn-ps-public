@@ -1,4 +1,5 @@
 import { useRouter } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
@@ -6,14 +7,14 @@ import { LevelStatus } from '~/types';
 
 export function useLevelNavigation() {
   const router = useRouter();
-  const { currentGameId } = useGameManagerStore((state) => ({
-    currentGameId: state.currentGameId,
-  }));
+  const currentGameId = useGameManagerStore((state) => state.currentGameId);
 
-  const { getCurrentLevel, progressCurrentLevel } = useCurrentLevelStore((state) => ({
-    getCurrentLevel: state.getCurrentLevel,
-    progressCurrentLevel: state.progressCurrentLevel,
-  }));
+  const { getCurrentLevel, progressCurrentLevel } = useCurrentLevelStore(
+    useShallow((state) => ({
+      getCurrentLevel: state.getCurrentLevel,
+      progressCurrentLevel: state.progressCurrentLevel,
+    })),
+  );
 
   /**
    * Navigate to specific level screen based on status

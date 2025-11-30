@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 16.1.0",
+    "version": ">= 16.18.0",
     "appVersionSource": "remote"
   },
   "build": {
@@ -8,19 +8,45 @@
       "developmentClient": true,
       "distribution": "internal",
       "env": {
-        "APP_ENV": "development"
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+      }
+    },
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+      }
+    },
+    "test": {
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
       }
     },
     "preview": {
       "distribution": "internal",
       "env": {
-        "APP_ENV": "preview"
+        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
       }
     },
     "production": {
       "autoIncrement": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      },
       "env": {
         "APP_ENV": "production",
+        "SENTRY_DISABLE_AUTO_UPLOAD": "false",
         "ADMOB_ANDROID_APP_ID": "$ADMOB_ANDROID_APP_ID",
         "ADMOB_IOS_APP_ID": "$ADMOB_IOS_APP_ID",
         "ADMOB_IOS_REWARD_RELATIONSHIP_ID": "$ADMOB_IOS_REWARD_RELATIONSHIP_ID",

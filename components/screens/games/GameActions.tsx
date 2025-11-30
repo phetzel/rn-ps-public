@@ -37,6 +37,7 @@ export function GameActions({ game, isLoading, onDelete, onLoad }: GameActionsPr
             disabled={isLoading}
             accessibilityLabel={`Delete ${game.presName} game`}
             accessibilityHint="Opens confirmation dialog to permanently delete this game"
+            testID="delete-game-button"
           >
             <Trash2 className="text-white" size={18} />
           </Button>
@@ -60,6 +61,7 @@ export function GameActions({ game, isLoading, onDelete, onLoad }: GameActionsPr
               className="bg-destructive"
               accessibilityLabel={`Confirm delete ${game.presName} game`}
               accessibilityHint="Permanently deletes this game save"
+              testID="confirm-delete-button"
             >
               <Text>Delete</Text>
             </AlertDialogAction>
@@ -83,6 +85,7 @@ export function GameActions({ game, isLoading, onDelete, onLoad }: GameActionsPr
             : 'Continue playing this Press Secretary game'
         }
         accessibilityState={{ disabled: game.status !== 'active' || isLoading }}
+        testID="load-game-button"
       >
         <Play className="text-background" size={18} />
       </Button>

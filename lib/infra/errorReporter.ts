@@ -9,9 +9,9 @@ type ReportOptions = {
 export function reportError(error: unknown, options?: ReportOptions): void {
   try {
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const Sentry = require('sentry-expo');
+    const Sentry = require('@sentry/react-native');
     if (options?.tags || options?.extras || options?.level) {
-      Sentry.Native.withScope(
+      Sentry.withScope(
         (scope: {
           setLevel: (level: SeverityLevel) => void;
           setTags: (tags: Record<string, string>) => void;
@@ -20,11 +20,11 @@ export function reportError(error: unknown, options?: ReportOptions): void {
           if (options?.level) scope.setLevel(options.level);
           if (options?.tags) scope.setTags(options.tags);
           if (options?.extras) scope.setExtras(options.extras);
-          Sentry.Native.captureException(error);
+          Sentry.captureException(error);
         },
       );
     } else {
-      Sentry.Native.captureException(error);
+      Sentry.captureException(error);
     }
   } catch {
     // Sentry not available; noop

@@ -108,6 +108,7 @@ export function ProgressNavigator({
                 : `${previousButtonText} to previous item`
             }
             accessibilityState={{ disabled: isFirst }}
+            testID="progress-previous-button"
           >
             <ArrowLeft className="text-foreground" />
             <Text accessible={false}>{previousButtonText}</Text>
@@ -123,6 +124,7 @@ export function ProgressNavigator({
             }
             disabled={isLast && !onComplete}
             accessibilityState={{ disabled: isLast && !onComplete }}
+            testID="progress-next-button"
           >
             <Text accessible={false}>{isLast ? completeButtonText : nextButtonText}</Text>
             {isLast ? (

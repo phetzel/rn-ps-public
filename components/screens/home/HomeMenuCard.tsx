@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ActivityIndicator } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 
 import { HomePrivacySettings } from '~/components/screens/home/HomePrivacySettings';
 import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
@@ -23,11 +24,13 @@ interface HomeMenuCardProps {
 }
 
 export function HomeMenuCard({ games }: HomeMenuCardProps) {
-  const { isLoading, error, currentGameId } = useGameManagerStore((state) => ({
-    isLoading: state.isLoading,
-    error: state.error,
-    currentGameId: state.currentGameId,
-  }));
+  const { isLoading, error, currentGameId } = useGameManagerStore(
+    useShallow((state) => ({
+      isLoading: state.isLoading,
+      error: state.error,
+      currentGameId: state.currentGameId,
+    })),
+  );
   const { goToCreateGame, goToGamesList, continueGame } = useGameNavigation();
 
   const canStartNewGame = games.length < MAX_ACTIVE_GAMES;
@@ -88,6 +91,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             onPress={handleNavigateToCreate}
             disabled={!canStartNewGame || isLoading}
             className="flex-row"
+            testID="start-new-game-button"
             accessibilityLabel={
               canStartNewGame
                 ? `Start new Press Secretary game. ${games.length} of ${MAX_ACTIVE_GAMES} game slots used.`
@@ -110,6 +114,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             variant="secondary"
             onPress={goToGamesList}
             className="flex-row"
+            testID="manage-games-button"
             accessibilityLabel={`Load or manage games. You have ${games.length} total games.`}
             accessibilityHint="View all your saved games, load a different game, or delete games to free up space"
           >

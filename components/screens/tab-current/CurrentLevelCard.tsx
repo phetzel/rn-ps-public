@@ -94,6 +94,7 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
           accessible={true}
           accessibilityLabel={getActionLabel(level.status)}
           accessibilityHint="Navigate to the current step in this month's activities"
+          testID="current-level-action-button"
         >
           <Text>
             {level.status === LevelStatus.Briefing

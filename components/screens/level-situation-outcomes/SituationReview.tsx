@@ -17,10 +17,7 @@ interface SituationReviewProps {
 export default function SituationReview({ isAdWatched, onAdComplete }: SituationReviewProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<EntityWithMediaDelta[] | null>(null);
 
-  const { currentLevelId } = useCurrentLevelStore((state) => ({
-    currentLevelId: state.currentLevelId,
-    progressCurrentLevel: state.progressCurrentLevel,
-  }));
+  const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 
   useEffect(() => {
     async function loadDeltas() {

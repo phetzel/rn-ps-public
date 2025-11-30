@@ -17,9 +17,7 @@ interface PressReviewProps {
 export default function PressReview({ isAdWatched, onAdComplete }: PressReviewProps) {
   const [enhancedDeltas, setEnhancedDeltas] = useState<EntityWithDelta[] | null>(null);
 
-  const { currentLevelId } = useCurrentLevelStore((state) => ({
-    currentLevelId: state.currentLevelId,
-  }));
+  const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
 
   useEffect(() => {
     async function loadDeltas() {
