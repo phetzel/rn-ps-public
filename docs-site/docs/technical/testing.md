@@ -153,17 +153,17 @@ flowchart LR
 
 ```
 e2e/maestro/
-├── flows/
-│   ├── games/
-│   │   └── create_game.yaml     # Create new game flow
-│   ├── levels/
-│   │   └── complete_level.yaml  # Full level playthrough
-│   ├── app/
-│   │   └── app_restart.yaml     # Persistence test
-│   └── ads/
-│       └── rewarded_ad.yaml     # Ad flow (draft)
+├── flows/                        # Main test flows (flat structure)
+│   ├── create_game.yaml          # Create new game flow
+│   ├── complete_level.yaml       # Level playthrough
+│   ├── app_restart.yaml          # Persistence test
+│   └── rewarded_ad.yaml          # Ad flow (flaky)
+├── shared/                       # Reusable subflows
+│   ├── connect_dev_server.yaml   # Dev client connection
+│   ├── setup_game.yaml           # Create game (reusable)
+│   └── cleanup_games.yaml        # Delete all games
 └── suites/
-    └── smoke.yaml               # Main test suite
+    └── smoke.yaml                # Main test suite
 
                     ▼
     ┌───────────────────────────────┐
@@ -179,64 +179,101 @@ e2e/maestro/
     └───────────────┴───────────────┘
 ```
 
-### Test Suites
-
-| Suite        | Purpose            | Flows Included |
-| ------------ | ------------------ | -------------- |
-| `smoke.yaml` | Quick sanity check | create_game    |
-
 ### Test Flows
 
-| Flow                  | Description                                        | Critical Path |
-| --------------------- | -------------------------------------------------- | ------------- |
-| `create_game.yaml`    | Create new game with custom president/secretary    | ✅            |
-| `complete_level.yaml` | Full level: briefing → press conference → outcomes | ✅            |
-| `app_restart.yaml`    | Verify data persists after app restart             | ✅            |
-| `rewarded_ad.yaml`    | Watch ad and receive reward                        | ⚠️ (draft)    |
+| Flow                  | Description                                     | Status |
+| --------------------- | ----------------------------------------------- | ------ |
+| `create_game.yaml`    | Clean up + create new game                      | ✅     |
+| `complete_level.yaml` | Create game + navigate through briefing         | ✅     |
+| `app_restart.yaml`    | Create game + verify persistence after restart  | ✅     |
+| `rewarded_ad.yaml`    | Create game + test ad flow                      | ⚠️     |
+
+### Shared Flows
+
+| Flow                      | Purpose                              |
+| ------------------------- | ------------------------------------ |
+| `connect_dev_server.yaml` | Handle Expo dev client connection    |
+| `setup_game.yaml`         | Reusable game creation steps         |
+| `cleanup_games.yaml`      | Delete all existing games            |
 
 ### Flow Anatomy
 
 ```yaml
-# e2e/maestro/flows/games/create_game.yaml
+# e2e/maestro/flows/create_game.yaml
 appId: com.phetzel.rnps
 name: Create Game
 tags:
   - smoke
   - critical
 onFlowStart:
-  - clearState
-  - launchApp
+  - launchApp  # Don't use clearState with dev client
 ---
+# Connect to dev server (for Expo dev client builds)
+- runFlow: ../shared/connect_dev_server.yaml
+
+# Wait for app to load
+- extendedWaitUntil:
+    visible: '.*'
+    timeout: 30000
+
 # Dismiss disclaimer if present
 - tapOn:
-    text: 'I understand'
+    id: 'disclaimer-acknowledge-button'
     optional: true
 
-# Wait for home screen
-- assertVisible:
-    text: 'Start New Game'
+# Clean up existing games (ensures clean state)
+- runFlow: ../shared/cleanup_games.yaml
+
+# Create a new game using shared flow
+- runFlow: ../shared/setup_game.yaml
+
+# Test passes if we reach the game screen
+```
+
+### Shared Flow Example
+
+```yaml
+# e2e/maestro/shared/setup_game.yaml
+appId: com.phetzel.rnps
+---
+# Wait for Start New Game button
+- extendedWaitUntil:
+    visible:
+        id: 'start-new-game-button'
     timeout: 10000
 
 # Start game creation
-- tapOn: 'Start New Game'
-- assertVisible: 'New Press Secretary Career'
+- tapOn:
+    id: 'start-new-game-button'
 
-# Fill form
-- tapOn: 'George Washington...'
-- inputText: 'John Adams'
-- tapOn: 'Liberal'
-- tapOn: 'George Akerson...'
-- inputText: 'James Brady'
-- tapOn: 'Select background'
-- tapOn: 'Journalist'
+# Fill form using testIDs (more reliable than text)
+- tapOn:
+    id: 'president-name-input'
+- inputText: 'Test President'
+- hideKeyboard
 
-# Submit
-- tapOn: 'Create Game'
+- tapOn: 'Conservative'
+
+- tapOn:
+    id: 'press-secretary-name-input'
+- inputText: 'Test Secretary'
+- hideKeyboard
+
+# Select background (use point for Portal elements)
+- tapOn:
+    id: 'background-select-trigger'
+- tapOn:
+    point: '50%,58%'  # Journalist option
+
+# Create the game
+- tapOn:
+    id: 'create-game-button'
 
 # Verify success
-- assertVisible:
-    text: 'Active Situations'
-    timeout: 10000
+- extendedWaitUntil:
+    visible:
+        id: 'active-situations-header'
+    timeout: 15000
 ```
 
 ### Running E2E Tests
@@ -323,13 +360,17 @@ sequenceDiagram
 
 ### Best Practices
 
-| Practice                                     | Why                         |
-| -------------------------------------------- | --------------------------- |
-| Use `optional: true` for dismissible dialogs | Prevents flaky failures     |
-| Add `timeout` to `assertVisible`             | Handles loading states      |
-| Use `onFlowStart: clearState`                | Ensures clean test state    |
-| Tag flows with `smoke`, `critical`           | Enable selective runs       |
-| Keep flows focused                           | One flow = one user journey |
+| Practice                                     | Why                                        |
+| -------------------------------------------- | ------------------------------------------ |
+| Use `testID` selectors over text             | More reliable, survives text changes       |
+| Use shared flows for reusable operations     | DRY, easier maintenance                    |
+| Clean up at START of tests, not end          | Ensures clean state regardless of failures |
+| Use `optional: true` for dismissible dialogs | Prevents flaky failures                    |
+| Add `timeout` to `extendedWaitUntil`         | Handles loading states                     |
+| Use `point` for Portal elements              | Maestro can't access iOS Portals by ID     |
+| Don't use `clearState` with dev client       | Causes issues with Expo dev builds         |
+| Tag flows with `smoke`, `critical`           | Enable selective runs                      |
+| Keep flows focused                           | One flow = one user journey                |
 
 ---
 

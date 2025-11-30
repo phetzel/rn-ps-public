@@ -8,11 +8,11 @@
 
 ### In This Repo
 
-| Task                                      | Status  | Notes                                     |
-| ----------------------------------------- | ------- | ----------------------------------------- |
-| Run Maestro E2E locally and fix selectors | 🔲 TODO | Test `create_game.yaml` works on real app |
-| Validate rewarded ad flow                 | 🔲 TODO | Manual test with dev build                |
-| Define runtime version policy             | 🔲 TODO | Document in this file                     |
+| Task                                      | Status  | Notes                                       |
+| ----------------------------------------- | ------- | ------------------------------------------- |
+| Run Maestro E2E locally and fix selectors | ✅ Done | All 4 flows passing with testIDs            |
+| Validate rewarded ad flow                 | 🔲 TODO | Manual test with dev build + real AdMob     |
+| Define runtime version policy             | 🔲 TODO | Document in this file                       |
 
 ### External (Outside This Repo)
 
