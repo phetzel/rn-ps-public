@@ -11,7 +11,6 @@
 | Task                                      | Status  | Notes                                       |
 | ----------------------------------------- | ------- | ------------------------------------------- |
 | Run Maestro E2E locally and fix selectors | ✅ Done | All 4 flows passing with testIDs            |
-| Validate rewarded ad flow                 | 🔲 TODO | Manual test with dev build + real AdMob     |
 | Define runtime version policy             | 🔲 TODO | Document in this file                       |
 
 ### External (Outside This Repo)
@@ -276,6 +275,11 @@ eas build:run --platform ios --profile test
 ---
 
 ## P1 — Must-haves (Pre-Release)
+
+### Ads Validation
+
+- [ ] Validate rewarded ad flow with production AdMob (requires live app)
+- [ ] Test ad frequency and user experience
 
 ### Analytics & Event Taxonomy
 
