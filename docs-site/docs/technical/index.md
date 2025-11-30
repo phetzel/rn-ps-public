@@ -140,13 +140,15 @@ flowchart LR
 
 ## Documentation Sections
 
-| Section                                   | Description                             |
-| ----------------------------------------- | --------------------------------------- |
-| [Database](./database.md)                 | WatermelonDB schema and models          |
-| [Testing](./testing.md)                   | Unit tests and E2E testing with Maestro |
-| [CI/CD Pipeline](./ci-cd.md)              | GitHub Actions and EAS workflows        |
-| [Infrastructure](./infra.md)              | Deployment, monitoring, and services    |
-| [Content Pipeline](./content-pipeline.md) | Situation generation system             |
+| Section                                   | Description                                  |
+| ----------------------------------------- | -------------------------------------------- |
+| [Database](./database.md)                 | WatermelonDB schema and models               |
+| [Testing](./testing.md)                   | Unit tests and E2E testing with Maestro      |
+| [CI/CD Pipeline](./ci-cd.md)              | GitHub Actions and EAS workflows             |
+| [Infrastructure](./infra.md)              | Deployment, monitoring, and services         |
+| [Content Pipeline](./content-pipeline.md) | Situation generation system                  |
+| [Setup Guide](./setup-guide.md)           | External configuration (GitHub, EAS, stores) |
+| [Roadmap](./roadmap.md)                   | Planned improvements and future work         |
 
 ## Key Design Decisions
 

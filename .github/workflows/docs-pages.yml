@@ -52,29 +52,43 @@ jobs:
 
   deploy:
     name: Deploy docs
-    if: github.event_name != 'pull_request'
+    # Only deploy on push to main when docs secrets are configured
+    # To enable: add PUBLIC_DOCS_PAT, PUBLIC_DOCS_OWNER, PUBLIC_DOCS_REPO secrets
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: docs-build
-          path: build
-      - name: Configure git
-        run: |
-          git config --global user.name "Docs Bot"
-          git config --global user.email "docs-bot@users.noreply.github.com"
-      - name: Push to public repo
+      - name: Check if deployment is configured
+        id: check
         env:
           PUBLIC_DOCS_PAT: ${{ secrets.PUBLIC_DOCS_PAT }}
           PUBLIC_DOCS_OWNER: ${{ secrets.PUBLIC_DOCS_OWNER }}
           PUBLIC_DOCS_REPO: ${{ secrets.PUBLIC_DOCS_REPO }}
         run: |
-          if [ -z "$PUBLIC_DOCS_OWNER" ] || [ -z "$PUBLIC_DOCS_REPO" ]; then
-            echo "Public docs repo env vars must be set" >&2
-            exit 1
+          if [ -z "$PUBLIC_DOCS_PAT" ] || [ -z "$PUBLIC_DOCS_OWNER" ] || [ -z "$PUBLIC_DOCS_REPO" ]; then
+            echo "::notice::Docs deployment skipped - PUBLIC_DOCS_* secrets not configured"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
           fi
+      - name: Download artifact
+        if: steps.check.outputs.skip != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-build
+          path: build
+      - name: Configure git
+        if: steps.check.outputs.skip != 'true'
+        run: |
+          git config --global user.name "Docs Bot"
+          git config --global user.email "docs-bot@users.noreply.github.com"
+      - name: Push to public repo
+        if: steps.check.outputs.skip != 'true'
+        env:
+          PUBLIC_DOCS_PAT: ${{ secrets.PUBLIC_DOCS_PAT }}
+          PUBLIC_DOCS_OWNER: ${{ secrets.PUBLIC_DOCS_OWNER }}
+          PUBLIC_DOCS_REPO: ${{ secrets.PUBLIC_DOCS_REPO }}
+        run: |
           git init
           git checkout -b gh-pages
           cp -R build/. .

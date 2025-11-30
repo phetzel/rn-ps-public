@@ -6,10 +6,11 @@ A React Native + Expo game where you play as the US Press Secretary, juggling ca
 
 > **Full documentation is available in the [`docs-site/`](docs-site/) directory.**
 
-- **[Gameplay Guide](docs-site/docs/gameplay/guide.md)**: Mechanics, scoring, and how to play.
-- **[Game Glossary](docs-site/docs/gameplay/glossary.md)**: Reference for cabinet members, journalists, and situations.
-- **[Technical Handbook](docs-site/docs/technical/index.md)**: Architecture, database schema, and content pipeline.
-- **[Infrastructure & Publishing](docs-site/docs/technical/infra.md)**: CI/CD, monitoring, and store submission checklists.
+- **[Gameplay Guide](docs-site/docs/gameplay/guide.md)**: Mechanics, scoring, and how to play
+- **[Technical Handbook](docs-site/docs/technical/index.md)**: Architecture, database schema, and content pipeline
+- **[CI/CD & Infrastructure](docs-site/docs/technical/infra.md)**: Builds, monitoring, and deployment
+- **[Setup Guide](docs-site/docs/technical/setup-guide.md)**: External configuration (GitHub, EAS, stores)
+- **[Roadmap](docs-site/docs/technical/roadmap.md)**: Planned improvements and future work
 
 ## 🚀 Getting Started
 

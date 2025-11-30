@@ -37,6 +37,8 @@ const sidebars: SidebarsConfig = {
         'technical/ci-cd',
         'technical/infra',
         'technical/content-pipeline',
+        'technical/setup-guide',
+        'technical/roadmap',
       ],
     },
     {
