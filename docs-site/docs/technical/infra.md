@@ -134,6 +134,51 @@ eas update --channel preview --message "Bug fix for issue #123"
 eas update --channel production --message "Hotfix v1.0.1"
 ```
 
+### Runtime Version Policy
+
+The `runtimeVersion` tells EAS Update which OTA updates are compatible with which native builds. We use the **`appVersion`** policy.
+
+```json
+// eas.json
+{
+  "build": {
+    "production": {
+      "runtimeVersion": {
+        "policy": "appVersion"
+      }
+    }
+  }
+}
+```
+
+**Policy Options:**
+
+| Policy | How it Works | Trade-offs |
+|--------|--------------|------------|
+| `appVersion` | Uses `version` from app.json (e.g., "1.0.0") | Simple, human-readable. Manual version bump on native changes. |
+| `nativeVersion` | Uses version + build number (e.g., "1.0.0(42)") | Auto-increments. Harder to reason about. |
+| `fingerprint` | Auto-generates hash from native code | Fully automatic, safest. Less predictable version strings. |
+
+**Why `appVersion`:**
+- Simple and human-readable in crash reports
+- You control when versions change
+- Matches standard app versioning practices
+
+**Update Workflow:**
+
+| Change Type | Action | Version Bump? |
+|-------------|--------|---------------|
+| JS-only (bug fix, UI tweak) | `eas update --channel production` | ❌ No |
+| New native dependency | Build + submit to stores | ✅ Yes |
+| SDK/Expo upgrade | Build + submit to stores | ✅ Yes |
+| New native module | Build + submit to stores | ✅ Yes |
+
+**Rollback Plan:**
+
+1. **Bad OTA update** → Publish revert update to same channel
+2. **Bad native build** → Submit new store build
+3. **Channel promotion** → Test on `preview` before promoting to `production`
+
 ## Monitoring
 
 ### Sentry (Error Tracking)

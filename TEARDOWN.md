@@ -11,7 +11,7 @@
 | Task                                      | Status  | Notes                                       |
 | ----------------------------------------- | ------- | ------------------------------------------- |
 | Run Maestro E2E locally and fix selectors | ✅ Done | All 4 flows passing with testIDs            |
-| Define runtime version policy             | 🔲 TODO | Document in this file                       |
+| Define runtime version policy             | ✅ Done | Using `appVersion` policy                   |
 
 ### External (Outside This Repo)
 
@@ -329,9 +329,7 @@ eas build:run --platform ios --profile test
 
 ## Runtime Version Policy
 
-> TODO: Define before production release
-
-**Recommended approach:**
+**Policy:** `appVersion` — uses `version` from app.json (e.g., "1.0.0")
 
 ```json
 // eas.json
@@ -346,11 +344,22 @@ eas build:run --platform ios --profile test
 }
 ```
 
+**Why `appVersion`:**
+- Simple and human-readable
+- You control when versions change
+- Matches standard app versioning
+
+**Workflow:**
+- **JS-only changes** → Push OTA update via `eas update` (no version bump needed)
+- **Native changes** (new library, SDK update, etc.) → Bump `version` in app.json + new store build
+
 **Rollback plan:**
 
 1. If OTA update causes issues → publish revert update to same channel
 2. If native code issue → submit new store build
 3. Channel promotion: `preview` → `production` only after QA sign-off
+
+See [Infrastructure docs](./docs-site/docs/technical/infra.md) for full details.
 
 ---
 

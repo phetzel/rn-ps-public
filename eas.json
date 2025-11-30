@@ -41,6 +41,9 @@
     },
     "production": {
       "autoIncrement": true,
+      "runtimeVersion": {
+        "policy": "appVersion"
+      },
       "env": {
         "APP_ENV": "production",
         "SENTRY_DISABLE_AUTO_UPLOAD": "false",
