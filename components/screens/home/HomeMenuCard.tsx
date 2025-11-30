@@ -91,6 +91,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             onPress={handleNavigateToCreate}
             disabled={!canStartNewGame || isLoading}
             className="flex-row"
+            testID="start-new-game-button"
             accessibilityLabel={
               canStartNewGame
                 ? `Start new Press Secretary game. ${games.length} of ${MAX_ACTIVE_GAMES} game slots used.`
@@ -113,6 +114,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             variant="secondary"
             onPress={goToGamesList}
             className="flex-row"
+            testID="manage-games-button"
             accessibilityLabel={`Load or manage games. You have ${games.length} total games.`}
             accessibilityHint="View all your saved games, load a different game, or delete games to free up space"
           >

@@ -14,6 +14,7 @@ interface NameFieldProps {
   placeholder: string;
   error?: FieldError;
   disabled?: boolean;
+  testID?: string;
 }
 
 export function NameField({
@@ -23,6 +24,7 @@ export function NameField({
   placeholder,
   error,
   disabled = false,
+  testID,
 }: NameFieldProps) {
   const labelId = `${name}Label`;
   const errorId = `${name}Error`;
@@ -47,6 +49,7 @@ export function NameField({
             aria-invalid={fieldError ? 'true' : 'false'}
             editable={!disabled}
             className={fieldError ? 'border-destructive' : ''}
+            testID={testID}
           />
         )}
       />

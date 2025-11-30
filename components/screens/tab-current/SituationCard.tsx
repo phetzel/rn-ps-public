@@ -18,6 +18,7 @@ export function SituationCard({ situation }: SituationCardProps) {
       className="border-l-4 border-l-primary overflow-hidden"
       accessibilityLabel={`${situation.type} situation: ${situation.title}. ${situation.description}`}
       accessibilityHint="This situation will be addressed during the briefing and press conference"
+      testID={`situation-card-${situation.id}`}
     >
       <CardHeader>
         <View

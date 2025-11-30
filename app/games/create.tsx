@@ -89,6 +89,7 @@ export default function GameCreateScreen() {
             placeholder="George Washington..."
             error={errors.presidentName}
             disabled={isLoading}
+            testID="president-name-input"
           />
 
           {/* President Party Radio Group */}
@@ -102,6 +103,7 @@ export default function GameCreateScreen() {
             placeholder="George Akerson..."
             error={errors.pressSecretaryName}
             disabled={isLoading}
+            testID="press-secretary-name-input"
           />
 
           {/* Press Office Background */}
@@ -117,6 +119,7 @@ export default function GameCreateScreen() {
             onPress={handleSubmit(onSubmit)}
             disabled={isLoading}
             className="flex-1 gap-2 flex-row"
+            testID="create-game-button"
           >
             <Save className="w-4 h-4 text-background" />
             <Text>{isLoading ? 'Creating...' : 'Create Game'}</Text>

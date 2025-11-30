@@ -35,6 +35,7 @@ export function DisclaimerModal() {
         <AlertDialogAction
           onPress={handleAcknowledge}
           accessibilityLabel="Acknowledge legal disclaimer"
+          testID="disclaimer-acknowledge-button"
         >
           <Text>I understand</Text>
         </AlertDialogAction>

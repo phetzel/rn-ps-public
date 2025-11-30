@@ -1,0 +1,29 @@
+appId: com.phetzel.rnps
+name: Create Game
+tags:
+  - smoke
+  - critical
+onFlowStart:
+  - launchApp
+---
+# Connect to dev server
+- runFlow: ../shared/connect_dev_server.yaml
+
+# Wait for app to load
+- extendedWaitUntil:
+    visible: '.*'
+    timeout: 30000
+
+# Dismiss disclaimer if present
+- tapOn:
+    id: 'disclaimer-acknowledge-button'
+    optional: true
+
+# Clean up any existing games first
+- runFlow: ../shared/cleanup_games.yaml
+
+# Create a new game
+- runFlow: ../shared/setup_game.yaml
+
+# Test passes if we reach the game screen
+

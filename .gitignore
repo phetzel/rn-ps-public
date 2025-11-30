@@ -51,6 +51,10 @@ coverage/**/*
 .cursor/
 .notes/
 
+# Maestro E2E testing
+maestro-debug/
+.maestro/
+
 .npm-cache/
 .eslintcache
 

@@ -1,0 +1,86 @@
+appId: com.phetzel.rnps
+---
+# Shared flow: Delete all existing games
+# Called at the START of tests to ensure clean state
+
+# First, ensure we're on the home screen by pressing back chevron multiple times
+- tapOn:
+    point: '10%,9%'
+    optional: true
+- tapOn:
+    point: '10%,9%'
+    optional: true
+
+# Wait for home screen
+- extendedWaitUntil:
+    visible:
+        id: 'start-new-game-button'
+    timeout: 5000
+    optional: true
+
+# Check if manage games button exists (means there are games to delete)
+- tapOn:
+    id: 'manage-games-button'
+    optional: true
+
+# Wait a moment for navigation
+- extendedWaitUntil:
+    visible: '.*'
+    timeout: 2000
+
+# Delete up to 5 games (MAX_ACTIVE_GAMES = 5)
+# Each delete: tap trash button, confirm deletion
+
+# Game 1
+- tapOn:
+    id: 'delete-game-button'
+    optional: true
+- tapOn:
+    id: 'confirm-delete-button'
+    optional: true
+
+# Game 2
+- tapOn:
+    id: 'delete-game-button'
+    optional: true
+- tapOn:
+    id: 'confirm-delete-button'
+    optional: true
+
+# Game 3
+- tapOn:
+    id: 'delete-game-button'
+    optional: true
+- tapOn:
+    id: 'confirm-delete-button'
+    optional: true
+
+# Game 4
+- tapOn:
+    id: 'delete-game-button'
+    optional: true
+- tapOn:
+    id: 'confirm-delete-button'
+    optional: true
+
+# Game 5
+- tapOn:
+    id: 'delete-game-button'
+    optional: true
+- tapOn:
+    id: 'confirm-delete-button'
+    optional: true
+
+# Navigate back to home screen using back chevron
+- tapOn:
+    point: '10%,9%'
+    optional: true
+- tapOn:
+    point: '10%,9%'
+    optional: true
+
+# Wait for home screen to be ready
+- extendedWaitUntil:
+    visible:
+        id: 'start-new-game-button'
+    timeout: 10000
