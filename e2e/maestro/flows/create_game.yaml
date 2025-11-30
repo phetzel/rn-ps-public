@@ -24,6 +24,5 @@ onFlowStart:
 
 # Create a new game
 - runFlow: ../shared/setup_game.yaml
-
 # Test passes if we reach the game screen
 

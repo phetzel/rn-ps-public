@@ -8,10 +8,10 @@
 
 ### In This Repo
 
-| Task                                      | Status  | Notes                                       |
-| ----------------------------------------- | ------- | ------------------------------------------- |
-| Run Maestro E2E locally and fix selectors | ✅ Done | All 4 flows passing with testIDs            |
-| Define runtime version policy             | ✅ Done | Using `appVersion` policy                   |
+| Task                                      | Status  | Notes                            |
+| ----------------------------------------- | ------- | -------------------------------- |
+| Run Maestro E2E locally and fix selectors | ✅ Done | All 4 flows passing with testIDs |
+| Define runtime version policy             | ✅ Done | Using `appVersion` policy        |
 
 ### External (Outside This Repo)
 
@@ -345,11 +345,13 @@ eas build:run --platform ios --profile test
 ```
 
 **Why `appVersion`:**
+
 - Simple and human-readable
 - You control when versions change
 - Matches standard app versioning
 
 **Workflow:**
+
 - **JS-only changes** → Push OTA update via `eas update` (no version bump needed)
 - **Native changes** (new library, SDK update, etc.) → Bump `version` in app.json + new store build
 

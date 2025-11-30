@@ -6,7 +6,7 @@ appId: com.phetzel.rnps
 # Wait for Start New Game button
 - extendedWaitUntil:
     visible:
-        id: 'start-new-game-button'
+      id: 'start-new-game-button'
     timeout: 10000
 
 # Start game creation
@@ -16,7 +16,7 @@ appId: com.phetzel.rnps
 # Wait for game creation screen
 - extendedWaitUntil:
     visible:
-        id: 'president-name-input'
+      id: 'president-name-input'
     timeout: 10000
 
 # Enter president name
@@ -49,6 +49,5 @@ appId: com.phetzel.rnps
 # Wait for game to be created
 - extendedWaitUntil:
     visible:
-        id: 'active-situations-header'
+      id: 'active-situations-header'
     timeout: 15000
-

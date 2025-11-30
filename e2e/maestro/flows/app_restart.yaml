@@ -45,14 +45,13 @@ onFlowStart:
 # Wait for home screen
 - extendedWaitUntil:
     visible:
-        id: 'start-new-game-button'
+      id: 'start-new-game-button'
     timeout: 15000
 
 # Verify game persisted - manage games button should exist
 - extendedWaitUntil:
     visible:
-        id: 'manage-games-button'
+      id: 'manage-games-button'
     timeout: 10000
-
 # Test passes - game data persisted across restart
 

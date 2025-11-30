@@ -44,4 +44,3 @@ onFlowStart:
 - tapOn:
     text: 'Close'
     optional: true
-

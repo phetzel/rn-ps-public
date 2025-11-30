@@ -14,7 +14,7 @@ appId: com.phetzel.rnps
 # Wait for home screen
 - extendedWaitUntil:
     visible:
-        id: 'start-new-game-button'
+      id: 'start-new-game-button'
     timeout: 5000
     optional: true
 
@@ -82,5 +82,5 @@ appId: com.phetzel.rnps
 # Wait for home screen to be ready
 - extendedWaitUntil:
     visible:
-        id: 'start-new-game-button'
+      id: 'start-new-game-button'
     timeout: 10000

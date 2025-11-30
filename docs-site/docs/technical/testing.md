@@ -181,20 +181,20 @@ e2e/maestro/
 
 ### Test Flows
 
-| Flow                  | Description                                     | Status |
-| --------------------- | ----------------------------------------------- | ------ |
-| `create_game.yaml`    | Clean up + create new game                      | ✅     |
-| `complete_level.yaml` | Create game + navigate through briefing         | ✅     |
-| `app_restart.yaml`    | Create game + verify persistence after restart  | ✅     |
-| `rewarded_ad.yaml`    | Create game + test ad flow                      | ⚠️     |
+| Flow                  | Description                                    | Status |
+| --------------------- | ---------------------------------------------- | ------ |
+| `create_game.yaml`    | Clean up + create new game                     | ✅     |
+| `complete_level.yaml` | Create game + navigate through briefing        | ✅     |
+| `app_restart.yaml`    | Create game + verify persistence after restart | ✅     |
+| `rewarded_ad.yaml`    | Create game + test ad flow                     | ⚠️     |
 
 ### Shared Flows
 
-| Flow                      | Purpose                              |
-| ------------------------- | ------------------------------------ |
-| `connect_dev_server.yaml` | Handle Expo dev client connection    |
-| `setup_game.yaml`         | Reusable game creation steps         |
-| `cleanup_games.yaml`      | Delete all existing games            |
+| Flow                      | Purpose                           |
+| ------------------------- | --------------------------------- |
+| `connect_dev_server.yaml` | Handle Expo dev client connection |
+| `setup_game.yaml`         | Reusable game creation steps      |
+| `cleanup_games.yaml`      | Delete all existing games         |
 
 ### Flow Anatomy
 
@@ -206,7 +206,7 @@ tags:
   - smoke
   - critical
 onFlowStart:
-  - launchApp  # Don't use clearState with dev client
+  - launchApp # Don't use clearState with dev client
 ---
 # Connect to dev server (for Expo dev client builds)
 - runFlow: ../shared/connect_dev_server.yaml
@@ -226,7 +226,6 @@ onFlowStart:
 
 # Create a new game using shared flow
 - runFlow: ../shared/setup_game.yaml
-
 # Test passes if we reach the game screen
 ```
 
@@ -239,7 +238,7 @@ appId: com.phetzel.rnps
 # Wait for Start New Game button
 - extendedWaitUntil:
     visible:
-        id: 'start-new-game-button'
+      id: 'start-new-game-button'
     timeout: 10000
 
 # Start game creation
@@ -263,7 +262,7 @@ appId: com.phetzel.rnps
 - tapOn:
     id: 'background-select-trigger'
 - tapOn:
-    point: '50%,58%'  # Journalist option
+    point: '50%,58%' # Journalist option
 
 # Create the game
 - tapOn:
@@ -272,7 +271,7 @@ appId: com.phetzel.rnps
 # Verify success
 - extendedWaitUntil:
     visible:
-        id: 'active-situations-header'
+      id: 'active-situations-header'
     timeout: 15000
 ```
 

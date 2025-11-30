@@ -56,6 +56,5 @@ onFlowStart:
 - tapOn:
     point: '75%,85%'
     optional: true
-
 # Test passes - navigated through briefing
 
