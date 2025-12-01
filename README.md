@@ -21,16 +21,16 @@ This is a portfolio project exploring **local-first architecture**, **LLM-genera
 
 ## 🛠️ Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| **Framework** | React Native + Expo Router |
-| **Language** | TypeScript |
-| **Database** | WatermelonDB (offline-first SQLite) |
-| **State** | Zustand |
-| **Styling** | NativeWind (Tailwind CSS) |
+| Category       | Technology                               |
+| -------------- | ---------------------------------------- |
+| **Framework**  | React Native + Expo Router               |
+| **Language**   | TypeScript                               |
+| **Database**   | WatermelonDB (offline-first SQLite)      |
+| **State**      | Zustand                                  |
+| **Styling**    | NativeWind (Tailwind CSS)                |
 | **Components** | React Native Reusables (shadcn-inspired) |
-| **Testing** | Jest (unit) + Maestro (E2E) |
-| **CI/CD** | GitHub Actions |
+| **Testing**    | Jest (unit) + Maestro (E2E)              |
+| **CI/CD**      | GitHub Actions                           |
 
 ## 🚀 Getting Started
 
@@ -57,11 +57,11 @@ npm run android  # Android emulator
 
 ## 🔧 Key Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start Expo dev server |
-| `npm run test` | Run Jest unit tests |
-| `npm run e2e` | Run Maestro E2E tests |
+| Script                  | Description                    |
+| ----------------------- | ------------------------------ |
+| `npm run dev`           | Start Expo dev server          |
+| `npm run test`          | Run Jest unit tests            |
+| `npm run e2e`           | Run Maestro E2E tests          |
 | `npm run gen-situation` | Run LLM content generation CLI |
 
 ## 📚 Documentation

@@ -71,16 +71,16 @@ flowchart TB
 
 ## Tech Stack
 
-| Category             | Technology                                                                          | Usage                              |
-| -------------------- | ----------------------------------------------------------------------------------- | ---------------------------------- |
-| **Framework**        | [Expo](https://expo.dev)                                                            | React Native build system & router |
-| **Navigation**       | [Expo Router](https://docs.expo.dev/router/introduction/)                           | File-based routing                 |
-| **UI / Styling**     | [NativeWind](https://www.nativewind.dev/)                                           | Tailwind CSS for React Native      |
-| **State Management** | [Zustand](https://github.com/pmndrs/zustand)                                        | Global ephemeral state             |
-| **Database**         | [WatermelonDB](https://watermelondb.dev/)                                           | Offline-first SQLite database      |
-| **Components**       | [rn-primitives](https://rn-primitives.vercel.app/)                                  | Radix-style accessible primitives  |
-| **Testing**          | [Maestro](https://maestro.mobile.dev/)                                              | E2E testing framework              |
-| **CI/CD**            | [GitHub Actions](https://github.com/features/actions)                               | Automation & testing               |
+| Category             | Technology                                                | Usage                              |
+| -------------------- | --------------------------------------------------------- | ---------------------------------- |
+| **Framework**        | [Expo](https://expo.dev)                                  | React Native build system & router |
+| **Navigation**       | [Expo Router](https://docs.expo.dev/router/introduction/) | File-based routing                 |
+| **UI / Styling**     | [NativeWind](https://www.nativewind.dev/)                 | Tailwind CSS for React Native      |
+| **State Management** | [Zustand](https://github.com/pmndrs/zustand)              | Global ephemeral state             |
+| **Database**         | [WatermelonDB](https://watermelondb.dev/)                 | Offline-first SQLite database      |
+| **Components**       | [rn-primitives](https://rn-primitives.vercel.app/)        | Radix-style accessible primitives  |
+| **Testing**          | [Maestro](https://maestro.mobile.dev/)                    | E2E testing framework              |
+| **CI/CD**            | [GitHub Actions](https://github.com/features/actions)     | Automation & testing               |
 
 ## Directory Structure
 

@@ -33,13 +33,13 @@ Automated quality checks and testing using **GitHub Actions**.
 
 Runs on every PR and push to ensure code quality.
 
-| Check | Tool | Purpose |
-|-------|------|---------|
-| TypeScript | `tsc --noEmit` | Type safety |
-| Linting | ESLint | Code standards |
-| Unit Tests | Jest | Logic verification |
-| Formatting | Prettier | Consistent style |
-| Bundle Size | `expo export` | Track bundle bloat |
+| Check       | Tool           | Purpose            |
+| ----------- | -------------- | ------------------ |
+| TypeScript  | `tsc --noEmit` | Type safety        |
+| Linting     | ESLint         | Code standards     |
+| Unit Tests  | Jest           | Logic verification |
+| Formatting  | Prettier       | Consistent style   |
+| Bundle Size | `expo export`  | Track bundle bloat |
 
 **Bundle Analysis**: On PRs, a comment is posted showing iOS and Android bundle sizes to catch size regressions early.
 
@@ -74,10 +74,12 @@ End-to-end testing using Maestro on real simulators/emulators.
 ```
 
 **Platforms tested**:
+
 - iOS: iPhone 15 Simulator on macOS runner
 - Android: Pixel 5 (API 34) on Ubuntu runner with KVM
 
 **Artifacts on failure**:
+
 - JUnit XML reports
 - Screenshots for debugging
 
