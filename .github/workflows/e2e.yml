@@ -1,5 +1,10 @@
 name: E2E Tests
 
+# ============================================================================
+# 🎭 SHOWCASE MODE: This workflow is disabled to reduce GitHub Actions costs.
+# To re-enable for production: remove `if: false` from the `ios` job below.
+# ============================================================================
+
 on:
   pull_request:
     branches: [main] # Run on PRs to main (catch issues before merge)
@@ -17,6 +22,7 @@ jobs:
   ios:
     name: iOS E2E
     runs-on: macos-latest
+    if: false # SHOWCASE MODE: Disabled - macos runners are expensive (~10x ubuntu)
     timeout-minutes: 60
     steps:
       - name: Checkout

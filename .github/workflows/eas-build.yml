@@ -1,5 +1,10 @@
 name: EAS Build
 
+# ============================================================================
+# 🎭 SHOWCASE MODE: This workflow is disabled to preserve EAS build quota.
+# To re-enable for production: remove `if: false` from the `setup` and `build` jobs.
+# ============================================================================
+
 on:
   push:
     branches:
@@ -34,6 +39,7 @@ jobs:
   setup:
     name: Setup Build Matrix
     runs-on: ubuntu-latest
+    if: false # SHOWCASE MODE: Disabled to preserve EAS build quota
     outputs:
       platforms: ${{ steps.set-platforms.outputs.platforms }}
       profile: ${{ steps.set-profile.outputs.profile }}
@@ -70,6 +76,7 @@ jobs:
     name: Build ${{ matrix.platform }}
     needs: setup
     runs-on: ubuntu-latest
+    if: false # SHOWCASE MODE: Disabled to preserve EAS build quota
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -120,7 +127,7 @@ jobs:
     name: Notify Build Complete
     needs: [setup, build]
     runs-on: ubuntu-latest
-    if: always()
+    if: false # SHOWCASE MODE: Disabled (was: always())
     steps:
       - name: Build Summary
         run: |
@@ -130,4 +137,4 @@ jobs:
           echo "- **Profile:** ${{ needs.setup.outputs.profile }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "View builds at: https://expo.dev/accounts/[your-account]/projects/press-office/builds" >> $GITHUB_STEP_SUMMARY
+          echo "View builds at: https://expo.dev/" >> $GITHUB_STEP_SUMMARY

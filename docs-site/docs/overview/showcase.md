@@ -34,6 +34,10 @@ Use this page when sharing the project with recruiters, collaborators, or portfo
 - 7 situation families × 11 subgroups × 6 cabinet officials.
 - Maestro smoke suites + Jest component tests guard core flows.
 
+## Repository Status
+
+This project is configured for **public showcase**. The full CI/CD infrastructure is documented but expensive workflows (E2E tests, EAS builds) are disabled to conserve resources. Quality checks (linting, types, unit tests) run on every PR. See [CI/CD Pipeline](/docs/technical/ci-cd) for details.
+
 ## Roadmap Snapshot
 
 - Add localization hooks for authored content.

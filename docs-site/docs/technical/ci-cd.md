@@ -2,6 +2,22 @@
 
 Our CI/CD pipeline automates quality checks, testing, building, and deployment using **GitHub Actions** and **Expo Application Services (EAS)**.
 
+:::info Showcase Mode
+
+This project is currently configured for **public showcase**. Some workflows are disabled to conserve resources:
+
+| Workflow | Status | Reason |
+|----------|--------|--------|
+| `ci.yml` | ✅ Active | Quality checks are cheap (ubuntu runners) |
+| `e2e.yml` | 🚫 Disabled | macOS runners are ~10x cost |
+| `eas-build.yml` | 🚫 Disabled | Preserves EAS build quota |
+| `eas-update.yml` | 🚫 Disabled | Preserves EAS update quota |
+| `docs-pages.yml` | ⚠️ Partial | Build runs, deploy disabled |
+
+To re-enable any workflow, search for `if: false # SHOWCASE MODE` in the workflow files and remove those lines.
+
+:::
+
 ## Pipeline Overview
 
 ```mermaid
@@ -284,9 +300,13 @@ Configure in **GitHub → Settings → Branches → Add rule**:
 - **Branch**: `main`
 - **Required status checks**:
   - `quality` (from ci.yml)
-  - `ios` (from e2e.yml)
-  - `android` (from e2e.yml)
+  - `ios` (from e2e.yml) — *when E2E is enabled*
+  - `android` (from e2e.yml) — *when E2E is enabled*
 - **Require pull request reviews**: 1 approval
+
+:::tip Showcase Mode
+With E2E disabled, only require `quality` as a status check.
+:::
 
 ## Monitoring & Alerts
 

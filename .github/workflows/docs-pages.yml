@@ -1,5 +1,10 @@
 name: Docs Pages
 
+# ============================================================================
+# 🎭 SHOWCASE MODE: Deploy job is disabled. Build job still runs to validate PRs.
+# To re-enable deployment: remove `if: false` from the `deploy` job below.
+# ============================================================================
+
 on:
   push:
     branches:
@@ -54,7 +59,7 @@ jobs:
     name: Deploy docs
     # Only deploy on push to main when docs secrets are configured
     # To enable: add PUBLIC_DOCS_PAT, PUBLIC_DOCS_OWNER, PUBLIC_DOCS_REPO secrets
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: false # SHOWCASE MODE: Disabled (was: github.event_name != 'pull_request' && github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
     needs: build
     steps:
