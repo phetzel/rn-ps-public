@@ -2,19 +2,8 @@ name: E2E Tests
 
 on:
   push:
-    branches: [main, release/**]
-  pull_request:
-    branches: [main]
-  workflow_dispatch:
-    inputs:
-      platform:
-        description: 'Platform to test'
-        required: true
-        default: 'ios'
-        type: choice
-        options:
-          - ios
-          # - android  # Disabled until Android testing is set up
+    branches: [main]  # Only run on merge to main (saves CI costs)
+  workflow_dispatch:  # Manual trigger for testing
 
 concurrency:
   group: e2e-${{ github.ref }}
@@ -29,9 +18,6 @@ jobs:
     name: iOS E2E
     runs-on: macos-latest
     timeout-minutes: 60
-    if: |
-      github.event_name != 'workflow_dispatch' || 
-      github.event.inputs.platform == 'ios'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -58,19 +44,45 @@ jobs:
           tar -xzf build/app.tar.gz -C build/extracted
 
       - name: Boot iOS Simulator
+        timeout-minutes: 10
         run: |
-          xcrun simctl shutdown all || true
-          # Find an available iPhone simulator (prefer iPhone 16, fall back to others)
-          SIMULATOR=$(xcrun simctl list devices available -j | jq -r '.devices | to_entries[] | select(.key | contains("iOS")) | .value[] | select(.name | startswith("iPhone")) | .udid' | head -1)
+          xcrun simctl shutdown all 2>/dev/null || true
+          
+          # Find an available iPhone simulator
+          SIMULATOR=$(xcrun simctl list devices available -j | jq -r '
+            .devices | to_entries[] | select(.key | contains("iOS")) | .value[] 
+            | select(.name | startswith("iPhone")) | .udid' | head -1)
+          
           if [ -z "$SIMULATOR" ]; then
-            echo "No iPhone simulator found!"
+            echo "::error::No iPhone simulator found!"
             xcrun simctl list devices available
             exit 1
           fi
-          SIMULATOR_NAME=$(xcrun simctl list devices available -j | jq -r ".devices | to_entries[] | .value[] | select(.udid == \"$SIMULATOR\") | .name")
+          
+          SIMULATOR_NAME=$(xcrun simctl list devices available -j | jq -r \
+            ".devices | to_entries[] | .value[] | select(.udid == \"$SIMULATOR\") | .name")
           echo "Booting simulator: $SIMULATOR_NAME ($SIMULATOR)"
-          xcrun simctl boot "$SIMULATOR" || true
-          xcrun simctl bootstatus "$SIMULATOR" -b
+          
+          # Boot and wait with timeout
+          xcrun simctl boot "$SIMULATOR" 2>/dev/null || true
+          
+          # Wait for boot with timeout (max 5 min)
+          for i in {1..60}; do
+            STATE=$(xcrun simctl list devices -j | jq -r ".devices[][] | select(.udid == \"$SIMULATOR\") | .state")
+            if [ "$STATE" = "Booted" ]; then
+              echo "Simulator booted successfully!"
+              break
+            fi
+            echo "Waiting for simulator to boot... ($i/60)"
+            sleep 5
+          done
+          
+          # Verify it's booted
+          STATE=$(xcrun simctl list devices -j | jq -r ".devices[][] | select(.udid == \"$SIMULATOR\") | .state")
+          if [ "$STATE" != "Booted" ]; then
+            echo "::error::Simulator failed to boot (state: $STATE)"
+            exit 1
+          fi
 
       - name: Install app
         run: |
