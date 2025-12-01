@@ -1,10 +1,5 @@
-import { situationsData } from "~/lib/data/situations";
-import {
-  SituationType,
-  AnswerType,
-  CabinetStaticId,
-  SubgroupStaticId,
-} from "~/types";
+import { situationsData } from '~/lib/data/situations';
+import { SituationType, AnswerType, CabinetStaticId, SubgroupStaticId } from '~/types';
 
 export interface SituationTypeAnalysis {
   typeDistribution: Record<SituationType, number>;
@@ -23,23 +18,17 @@ export interface MixedOutcomeAnalysis {
   totalOutcomes: number;
   mixedOutcomes: number;
   mixedOutcomePercentage: number;
-  mixedOutcomeDetails: Array<{
+  mixedOutcomeDetails: {
     situationTitle: string;
     outcomeId: string;
     positiveEffects: number;
     negativeEffects: number;
-  }>;
+  }[];
 }
 
 export interface EntityCoverageAnalysis {
-  cabinetCoverage: Record<
-    CabinetStaticId,
-    { hasPositive: boolean; hasNegative: boolean }
-  >;
-  subgroupCoverage: Record<
-    SubgroupStaticId,
-    { hasPositive: boolean; hasNegative: boolean }
-  >;
+  cabinetCoverage: Record<CabinetStaticId, { hasPositive: boolean; hasNegative: boolean }>;
+  subgroupCoverage: Record<SubgroupStaticId, { hasPositive: boolean; hasNegative: boolean }>;
   entitiesWithoutPositive: string[];
   entitiesWithoutNegative: string[];
 }
@@ -47,10 +36,8 @@ export interface EntityCoverageAnalysis {
 /**
  * Helper function to get all questions from an exchange in the new structure
  */
-function getAllQuestionsFromExchange(
-  exchange: any
-): Array<{ question: any; depth: number }> {
-  const questions: Array<{ question: any; depth: number }> = [];
+function getAllQuestionsFromExchange(exchange: any): { question: any; depth: number }[] {
+  const questions: { question: any; depth: number }[] = [];
 
   // Add root question (depth 0)
   questions.push({ question: exchange.content.rootQuestion, depth: 0 });
@@ -131,21 +118,17 @@ export function analyzeGlobalAnswerTypes(): GlobalAnswerTypeAnalysis {
   // Calculate percentages
   Object.values(AnswerType).forEach((type) => {
     const count = answerTypeDistribution[type]!;
-    answerTypePercentages[type] =
-      totalAnswers > 0 ? (count / totalAnswers) * 100 : 0;
+    answerTypePercentages[type] = totalAnswers > 0 ? (count / totalAnswers) * 100 : 0;
   });
 
   // Count distinct types present
   const distinctTypesPresent = Object.values(answerTypeDistribution).filter(
-    (count) => count > 0
+    (count) => count > 0,
   ).length;
 
   return {
     totalAnswers,
-    answerTypeDistribution: answerTypeDistribution as Record<
-      AnswerType,
-      number
-    >,
+    answerTypeDistribution: answerTypeDistribution as Record<AnswerType, number>,
     answerTypePercentages: answerTypePercentages as Record<AnswerType, number>,
     distinctTypesPresent,
   };
@@ -157,12 +140,12 @@ export function analyzeGlobalAnswerTypes(): GlobalAnswerTypeAnalysis {
 export function analyzeMixedOutcomes(): MixedOutcomeAnalysis {
   let totalOutcomes = 0;
   let mixedOutcomes = 0;
-  const mixedOutcomeDetails: Array<{
+  const mixedOutcomeDetails: {
     situationTitle: string;
     outcomeId: string;
     positiveEffects: number;
     negativeEffects: number;
-  }> = [];
+  }[] = [];
 
   situationsData.forEach((situation) => {
     situation.content.outcomes.forEach((outcome) => {
@@ -173,22 +156,18 @@ export function analyzeMixedOutcomes(): MixedOutcomeAnalysis {
 
       // Check cabinet approval changes
       if (outcome.consequences.approvalChanges.cabinet) {
-        Object.values(outcome.consequences.approvalChanges.cabinet).forEach(
-          (weight) => {
-            if (weight > 0) positiveEffects++;
-            else if (weight < 0) negativeEffects++;
-          }
-        );
+        Object.values(outcome.consequences.approvalChanges.cabinet).forEach((weight) => {
+          if (weight > 0) positiveEffects++;
+          else if (weight < 0) negativeEffects++;
+        });
       }
 
       // Check subgroup approval changes
       if (outcome.consequences.approvalChanges.subgroups) {
-        Object.values(outcome.consequences.approvalChanges.subgroups).forEach(
-          (weight) => {
-            if (weight > 0) positiveEffects++;
-            else if (weight < 0) negativeEffects++;
-          }
-        );
+        Object.values(outcome.consequences.approvalChanges.subgroups).forEach((weight) => {
+          if (weight > 0) positiveEffects++;
+          else if (weight < 0) negativeEffects++;
+        });
       }
 
       if (positiveEffects > 0 && negativeEffects > 0) {
@@ -206,8 +185,7 @@ export function analyzeMixedOutcomes(): MixedOutcomeAnalysis {
   return {
     totalOutcomes,
     mixedOutcomes,
-    mixedOutcomePercentage:
-      totalOutcomes > 0 ? (mixedOutcomes / totalOutcomes) * 100 : 0,
+    mixedOutcomePercentage: totalOutcomes > 0 ? (mixedOutcomes / totalOutcomes) * 100 : 0,
     mixedOutcomeDetails,
   };
 }
@@ -244,7 +222,7 @@ export function analyzeEntityCoverage(): EntityCoverageAnalysis {
               if (weight > 0) coverage.hasPositive = true;
               else if (weight < 0) coverage.hasNegative = true;
             }
-          }
+          },
         );
       }
 
@@ -253,12 +231,11 @@ export function analyzeEntityCoverage(): EntityCoverageAnalysis {
         Object.entries(outcome.consequences.approvalChanges.subgroups).forEach(
           ([subgroupId, weight]) => {
             if (weight !== undefined) {
-              const coverage =
-                subgroupCoverage[subgroupId as SubgroupStaticId]!;
+              const coverage = subgroupCoverage[subgroupId as SubgroupStaticId]!;
               if (weight > 0) coverage.hasPositive = true;
               else if (weight < 0) coverage.hasNegative = true;
             }
-          }
+          },
         );
       }
     });

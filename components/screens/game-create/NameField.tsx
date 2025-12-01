@@ -1,10 +1,11 @@
-import React from "react";
-import { View } from "react-native";
-import { Control, Controller, FieldError } from "react-hook-form";
-import { Input } from "~/components/ui/input";
-import { Label } from "~/components/ui/label";
-import { Text } from "~/components/ui/text";
-import { CreateGameFormData } from "~/lib/schemas";
+import React from 'react';
+import { Control, Controller, FieldError } from 'react-hook-form';
+import { View } from 'react-native';
+
+import { Input } from '~/components/ui/input';
+import { Label } from '~/components/ui/label';
+import { Text } from '~/components/ui/text';
+import { CreateGameFormData } from '~/lib/schemas';
 
 interface NameFieldProps {
   control: Control<CreateGameFormData>;
@@ -13,6 +14,7 @@ interface NameFieldProps {
   placeholder: string;
   error?: FieldError;
   disabled?: boolean;
+  testID?: string;
 }
 
 export function NameField({
@@ -22,22 +24,20 @@ export function NameField({
   placeholder,
   error,
   disabled = false,
+  testID,
 }: NameFieldProps) {
   const labelId = `${name}Label`;
   const errorId = `${name}Error`;
 
   return (
     <View>
-      <Label nativeID={labelId} className={error ? "text-destructive" : ""}>
+      <Label nativeID={labelId} className={error ? 'text-destructive' : ''}>
         {label}
       </Label>
       <Controller
         control={control}
         name={name}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error: fieldError },
-        }) => (
+        render={({ field: { onChange, onBlur, value }, fieldState: { error: fieldError } }) => (
           <Input
             placeholder={placeholder}
             value={value}
@@ -46,9 +46,10 @@ export function NameField({
             autoCapitalize="words"
             accessibilityLabelledBy={labelId}
             aria-describedby={fieldError ? errorId : undefined}
-            aria-invalid={fieldError ? "true" : "false"}
+            aria-invalid={fieldError ? 'true' : 'false'}
             editable={!disabled}
-            className={fieldError ? "border-destructive" : ""}
+            className={fieldError ? 'border-destructive' : ''}
+            testID={testID}
           />
         )}
       />

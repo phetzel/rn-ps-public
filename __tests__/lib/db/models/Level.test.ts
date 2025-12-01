@@ -9,26 +9,26 @@
  * - Status management
  */
 
-import { Database } from "@nozbe/watermelondb";
-import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
-import { createGame } from "~/__tests__/support/factories/gameFactory";
-import { createLevel } from "~/__tests__/support/factories/levelFactory";
-import { createSituation } from "~/__tests__/support/factories/situationFactory";
-import { createPublication } from "~/__tests__/support/factories/publicationFactory";
-import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
-import { createPressExchange } from "~/__tests__/support/factories/pressExchangeFactory";
+import { Database } from '@nozbe/watermelondb';
 
+import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
+import { createGame } from '~/__tests__/support/factories/gameFactory';
+import { createJournalist } from '~/__tests__/support/factories/journalistFactory';
+import { createLevel } from '~/__tests__/support/factories/levelFactory';
+import { createPressExchange } from '~/__tests__/support/factories/pressExchangeFactory';
+import { createPublication } from '~/__tests__/support/factories/publicationFactory';
+import { createSituation } from '~/__tests__/support/factories/situationFactory';
 // Models & Types
-import { Level } from "~/lib/db/models";
+import { Level } from '~/lib/db/models';
 import {
   LevelStatus,
   CabinetStaticId,
   SubgroupStaticId,
   JournalistStaticId,
   PublicationStaticId,
-} from "~/types";
+} from '~/types';
 
-describe("Level Model", () => {
+describe('Level Model', () => {
   let database: Database;
 
   beforeAll(() => {
@@ -43,24 +43,24 @@ describe("Level Model", () => {
   // MODEL STRUCTURE & PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Model Structure", () => {
-    it("should have correct table name and associations", () => {
-      expect(Level.table).toBe("levels");
+  describe('Model Structure', () => {
+    it('should have correct table name and associations', () => {
+      expect(Level.table).toBe('levels');
       expect(Level.associations.games).toEqual({
-        type: "belongs_to",
-        key: "game_id",
+        type: 'belongs_to',
+        key: 'game_id',
       });
       expect(Level.associations.situations).toEqual({
-        type: "has_many",
-        foreignKey: "level_id",
+        type: 'has_many',
+        foreignKey: 'level_id',
       });
       expect(Level.associations.press_exchanges).toEqual({
-        type: "has_many",
-        foreignKey: "level_id",
+        type: 'has_many',
+        foreignKey: 'level_id',
       });
     });
 
-    it("should create level with required properties", async () => {
+    it('should create level with required properties', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -80,7 +80,7 @@ describe("Level Model", () => {
       expect(level.updatedAt).toBeInstanceOf(Date);
     });
 
-    it("should belong to a game", async () => {
+    it('should belong to a game', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -94,7 +94,7 @@ describe("Level Model", () => {
       expect(gameLevels.find((l) => l.id === level.id)).toBeDefined();
     });
 
-    it("should have situations and press exchanges collections", async () => {
+    it('should have situations and press exchanges collections', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -141,17 +141,17 @@ describe("Level Model", () => {
   // CABINET SNAPSHOT PARSING
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Cabinet Snapshot Parsing", () => {
-    it("should parse valid cabinet snapshot JSON", async () => {
+  describe('Cabinet Snapshot Parsing', () => {
+    it('should parse valid cabinet snapshot JSON', async () => {
       const game = await createGame(database);
       // Must include ALL cabinet members as required by schema
       const validSnapshot = {
-        [CabinetStaticId.State]: "member-id-1",
-        [CabinetStaticId.Treasury]: "member-id-2",
-        [CabinetStaticId.Defense]: "member-id-3",
-        [CabinetStaticId.Justice]: "member-id-4",
-        [CabinetStaticId.HHS]: "member-id-5",
-        [CabinetStaticId.Homeland]: "member-id-6",
+        [CabinetStaticId.State]: 'member-id-1',
+        [CabinetStaticId.Treasury]: 'member-id-2',
+        [CabinetStaticId.Defense]: 'member-id-3',
+        [CabinetStaticId.Justice]: 'member-id-4',
+        [CabinetStaticId.HHS]: 'member-id-5',
+        [CabinetStaticId.Homeland]: 'member-id-6',
       };
 
       const level = await createLevel(database, {
@@ -163,23 +163,23 @@ describe("Level Model", () => {
       expect(parsed).toEqual(validSnapshot);
     });
 
-    it("should return null for empty cabinet snapshot", async () => {
+    it('should return null for empty cabinet snapshot', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
-        cabinetSnapshot: "",
+        cabinetSnapshot: '',
       });
 
       const parsed = level.parseCabinetSnapshot;
       expect(parsed).toBeNull();
     });
 
-    it("should handle invalid JSON in cabinet snapshot", async () => {
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+    it('should handle invalid JSON in cabinet snapshot', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
-        cabinetSnapshot: "invalid json {",
+        cabinetSnapshot: 'invalid json {',
       });
 
       const parsed = level.parseCabinetSnapshot;
@@ -189,11 +189,11 @@ describe("Level Model", () => {
       consoleSpy.mockRestore();
     });
 
-    it("should handle JSON that fails schema validation", async () => {
-      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+    it('should handle JSON that fails schema validation', async () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
       const game = await createGame(database);
       const invalidSnapshot = {
-        invalidKey: "some-value",
+        invalidKey: 'some-value',
       };
 
       const level = await createLevel(database, {
@@ -208,12 +208,12 @@ describe("Level Model", () => {
       consoleWarnSpy.mockRestore();
     });
 
-    it("should handle incomplete cabinet snapshot", async () => {
-      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+    it('should handle incomplete cabinet snapshot', async () => {
+      const consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation();
       const game = await createGame(database);
       // Missing required cabinet members
       const incompleteSnapshot = {
-        [CabinetStaticId.State]: "member-id-1",
+        [CabinetStaticId.State]: 'member-id-1',
         // Missing treasury, defense, justice, hhs, homeland
       };
 
@@ -234,8 +234,8 @@ describe("Level Model", () => {
   // OUTCOME SNAPSHOT PARSING & UPDATES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Outcome Snapshot Management", () => {
-    it("should parse valid outcome snapshot JSON", async () => {
+  describe('Outcome Snapshot Management', () => {
+    it('should parse valid outcome snapshot JSON', async () => {
       const game = await createGame(database);
       const validOutcome = {
         initial: {
@@ -307,7 +307,7 @@ describe("Level Model", () => {
       expect(parsed).toEqual(validOutcome);
     });
 
-    it("should return null for null outcome snapshot", async () => {
+    it('should return null for null outcome snapshot', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -318,12 +318,12 @@ describe("Level Model", () => {
       expect(parsed).toBeNull();
     });
 
-    it("should handle invalid JSON in outcome snapshot", async () => {
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+    it('should handle invalid JSON in outcome snapshot', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
-        outcomeSnapshot: "invalid json {",
+        outcomeSnapshot: 'invalid json {',
       });
 
       const parsed = level.parseOutcomeSnapshot;
@@ -333,7 +333,7 @@ describe("Level Model", () => {
       consoleSpy.mockRestore();
     });
 
-    it("should update outcome snapshot with valid data", async () => {
+    it('should update outcome snapshot with valid data', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -373,7 +373,7 @@ describe("Level Model", () => {
       expect(parsed).toEqual(newOutcome);
     });
 
-    it("should set outcome snapshot to null", async () => {
+    it('should set outcome snapshot to null', async () => {
       const game = await createGame(database);
       const initialOutcome = {
         initial: {
@@ -403,31 +403,29 @@ describe("Level Model", () => {
       expect(level.parseOutcomeSnapshot).toBeNull();
     });
 
-    it("should reject invalid outcome snapshot data", async () => {
+    it('should reject invalid outcome snapshot data', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, { gameId: game.id });
 
       const invalidOutcome = {
-        invalidField: "some value",
+        invalidField: 'some value',
       } as any;
 
       await expect(level.updateOutcomeSnapshot(invalidOutcome)).rejects.toThrow(
-        /Invalid data structure for Level.outcomeSnapshot/
+        /Invalid data structure for Level.outcomeSnapshot/,
       );
     });
 
-    it("should handle schema validation errors in update", async () => {
-      const consoleSpy = jest.spyOn(console, "error").mockImplementation();
+    it('should handle schema validation errors in update', async () => {
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
       const game = await createGame(database);
       const level = await createLevel(database, { gameId: game.id });
 
       const invalidOutcome = {
-        initial: "not an object",
+        initial: 'not an object',
       } as any;
 
-      await expect(
-        level.updateOutcomeSnapshot(invalidOutcome)
-      ).rejects.toThrow();
+      await expect(level.updateOutcomeSnapshot(invalidOutcome)).rejects.toThrow();
       expect(consoleSpy).toHaveBeenCalled();
 
       consoleSpy.mockRestore();
@@ -438,8 +436,8 @@ describe("Level Model", () => {
   // AD WATCHING FUNCTIONALITY
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Ad Watching Functionality", () => {
-    it("should mark press ad as watched", async () => {
+  describe('Ad Watching Functionality', () => {
+    it('should mark press ad as watched', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -454,7 +452,7 @@ describe("Level Model", () => {
       expect(level.situationAdWatched).toBe(false); // Should not affect situation ad
     });
 
-    it("should mark situation ad as watched", async () => {
+    it('should mark situation ad as watched', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -469,7 +467,7 @@ describe("Level Model", () => {
       expect(level.pressAdWatched).toBe(false); // Should not affect press ad
     });
 
-    it("should handle multiple ad watches", async () => {
+    it('should handle multiple ad watches', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, {
         gameId: game.id,
@@ -492,7 +490,7 @@ describe("Level Model", () => {
       expect(level.situationAdWatched).toBe(true);
     });
 
-    it("should update timestamps when marking ads watched", async () => {
+    it('should update timestamps when marking ads watched', async () => {
       const game = await createGame(database);
       const level = await createLevel(database, { gameId: game.id });
       const originalUpdatedAt = level.updatedAt.getTime();
@@ -509,8 +507,8 @@ describe("Level Model", () => {
   // REALISTIC GAME SCENARIOS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Game Integration Scenarios", () => {
-    it("should support complete level lifecycle", async () => {
+  describe('Game Integration Scenarios', () => {
+    it('should support complete level lifecycle', async () => {
       const game = await createGame(database);
 
       // Create level in briefing status with complete cabinet snapshot
@@ -520,24 +518,24 @@ describe("Level Model", () => {
         month: 3,
         status: LevelStatus.Briefing,
         cabinetSnapshot: JSON.stringify({
-          [CabinetStaticId.State]: "sec-id-1",
-          [CabinetStaticId.Treasury]: "sec-id-2",
-          [CabinetStaticId.Defense]: "sec-id-3",
-          [CabinetStaticId.Justice]: "sec-id-4",
-          [CabinetStaticId.HHS]: "sec-id-5",
-          [CabinetStaticId.Homeland]: "sec-id-6",
+          [CabinetStaticId.State]: 'sec-id-1',
+          [CabinetStaticId.Treasury]: 'sec-id-2',
+          [CabinetStaticId.Defense]: 'sec-id-3',
+          [CabinetStaticId.Justice]: 'sec-id-4',
+          [CabinetStaticId.HHS]: 'sec-id-5',
+          [CabinetStaticId.Homeland]: 'sec-id-6',
         }),
       });
 
       // Verify initial state
       expect(level.status).toBe(LevelStatus.Briefing);
       expect(level.parseCabinetSnapshot).toEqual({
-        [CabinetStaticId.State]: "sec-id-1",
-        [CabinetStaticId.Treasury]: "sec-id-2",
-        [CabinetStaticId.Defense]: "sec-id-3",
-        [CabinetStaticId.Justice]: "sec-id-4",
-        [CabinetStaticId.HHS]: "sec-id-5",
-        [CabinetStaticId.Homeland]: "sec-id-6",
+        [CabinetStaticId.State]: 'sec-id-1',
+        [CabinetStaticId.Treasury]: 'sec-id-2',
+        [CabinetStaticId.Defense]: 'sec-id-3',
+        [CabinetStaticId.Justice]: 'sec-id-4',
+        [CabinetStaticId.HHS]: 'sec-id-5',
+        [CabinetStaticId.Homeland]: 'sec-id-6',
       });
       expect(level.parseOutcomeSnapshot).toBeNull();
 
@@ -591,7 +589,7 @@ describe("Level Model", () => {
       expect(level.situationAdWatched).toBe(true);
     });
 
-    it("should handle multiple levels in a game", async () => {
+    it('should handle multiple levels in a game', async () => {
       const game = await createGame(database);
 
       // Create multiple levels for different months
@@ -630,7 +628,7 @@ describe("Level Model", () => {
       expect(sortedLevels[2].status).toBe(LevelStatus.Briefing);
     });
 
-    it("should handle year transitions correctly", async () => {
+    it('should handle year transitions correctly', async () => {
       const game = await createGame(database);
 
       // Create levels spanning year transition

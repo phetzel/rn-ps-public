@@ -1,19 +1,19 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
 // Store
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
+import ExchangeQuestionAnswer from '~/components/shared/exchanges-outcome-list/ExchangeQuestionAnswer';
+import ExchangeQuestionHeader from '~/components/shared/exchanges-outcome-list/ExchangeQuestionHeader';
+import ImpactList from '~/components/shared/impact/ImpactList';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { useExchangeQuestion } from '~/lib/hooks/useExchangeQuestion';
+import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 // Hooks
-import { useExchangeQuestion } from "~/lib/hooks/useExchangeQuestion";
 // Components
-import { Text } from "~/components/ui/text";
-import { Separator } from "~/components/ui/separator";
-import ExchangeQuestionHeader from "~/components/shared/exchanges-outcome-list/ExchangeQuestionHeader";
-import ExchangeQuestionAnswer from "~/components/shared/exchanges-outcome-list/ExchangeQuestionAnswer";
-import ImpactList from "~/components/shared/impact/ImpactList";
 // Types
-import { Question, ExchangeHistoryItem, JournalistStaticId } from "~/types";
+import { Question, ExchangeHistoryItem, JournalistStaticId } from '~/types';
 
 interface ExchangeQuestionItemProps {
   question: Question;
@@ -46,10 +46,8 @@ export default function ExchangeQuestionItem({
     <View
       className="border border-border rounded-md p-2 gap-2"
       accessible={true}
-      accessibilityLabel={`${
-        isFirstQuestion ? "Initial" : "Follow-up"
-      } question. ${
-        isAsked ? (isSkipped ? "Skipped" : "Answered") : "Ignored"
+      accessibilityLabel={`${isFirstQuestion ? 'Initial' : 'Follow-up'} question. ${
+        isAsked ? (isSkipped ? 'Skipped' : 'Answered') : 'Ignored'
       }.`}
     >
       {/* Question Header */}
@@ -61,12 +59,7 @@ export default function ExchangeQuestionItem({
 
       {/* Answer */}
       {isAsked && <Separator />}
-      {isAsked && (
-        <ExchangeQuestionAnswer
-          answer={answer ?? null}
-          isSkipped={!!isSkipped}
-        />
-      )}
+      {isAsked && <ExchangeQuestionAnswer answer={answer ?? null} isSkipped={!!isSkipped} />}
 
       {/* Impacts */}
       <View
@@ -75,17 +68,10 @@ export default function ExchangeQuestionItem({
         accessibilityLabel={`Relationship change impacts from this interaction`}
       >
         <Separator />
-        <Text
-          className="text-center text-lg font-semibold"
-          accessibilityRole="header"
-        >
+        <Text className="text-center text-lg font-semibold" accessibilityRole="header">
           Relationship Changes
         </Text>
-        <ImpactList
-          gameId={currentGameId}
-          levelId={currentLevelId}
-          impacts={combinedImpacts}
-        />
+        <ImpactList gameId={currentGameId} levelId={currentLevelId} impacts={combinedImpacts} />
       </View>
     </View>
   );

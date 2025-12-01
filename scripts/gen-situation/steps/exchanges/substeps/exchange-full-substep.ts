@@ -1,6 +1,9 @@
-import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from "../../base";
-import { ExchangeQuestionsSubstep } from "./exchange-questions-substep";
-import { ExchangeImpactsSubstep } from "./exchange-impacts-substep";
+import { exchangeContentSchema } from '~/lib/schemas/exchanges';
+import { AnswerType } from '~/types';
+
+import { ExchangeImpactsSubstep } from './exchange-impacts-substep';
+import { ExchangeQuestionsSubstep } from './exchange-questions-substep';
+import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from '../../base';
 
 import type {
   GenerateSituationPlan,
@@ -10,9 +13,7 @@ import type {
   GenerateQuestionsOnlyContent,
   GenerateAllQuestionImpacts,
   ExchangesPlanArray,
-} from "~/lib/schemas/generate";
-import { exchangeContentSchema } from "~/lib/schemas/exchanges";
-import { AnswerType } from "~/types";
+} from '~/lib/schemas/generate';
 
 type ExchangeFullInput = {
   plan: GenerateSituationPlan;
@@ -42,29 +43,35 @@ export class ExchangeFullSubstep {
     try {
       this.validateInput(input);
 
-      console.log(`🎯 Step 4b.1: Generating questions structure for ${input.publicationPlan.publication}...`);
-      
+      console.log(
+        `🎯 Step 4b.1: Generating questions structure for ${input.publicationPlan.publication}...`,
+      );
+
       // Phase 1: Generate questions and answers structure (no impacts)
       const questionsContent = await this.questionsSubstep.execute({
         plan: input.plan,
         preferences: input.preferences,
         outcomes: input.outcomes,
-        publicationPlan: input.publicationPlan
+        publicationPlan: input.publicationPlan,
       });
 
-      console.log(`🎯 Step 4b.2: Generating impacts and outcome modifiers for ${input.publicationPlan.publication}...`);
-      
+      console.log(
+        `🎯 Step 4b.2: Generating impacts and outcome modifiers for ${input.publicationPlan.publication}...`,
+      );
+
       // Phase 2: Generate impacts and outcome modifiers for the questions
       const impactsContent = await this.impactsSubstep.execute({
         plan: input.plan,
         preferences: input.preferences,
         outcomes: input.outcomes,
         publicationPlan: input.publicationPlan,
-        questionsContent: questionsContent
+        questionsContent: questionsContent,
       });
 
-      console.log(`🎯 Step 4b.3: Assembling complete exchange for ${input.publicationPlan.publication}...`);
-      
+      console.log(
+        `🎯 Step 4b.3: Assembling complete exchange for ${input.publicationPlan.publication}...`,
+      );
+
       // Phase 3: Assemble the complete exchange content
       const completeExchange = this.assembleExchange(questionsContent, impactsContent);
 
@@ -73,19 +80,22 @@ export class ExchangeFullSubstep {
       const validated = this.validateCompleteExchange(normalized, input);
 
       console.log(`✅ Complete exchange generated for ${input.publicationPlan.publication}`);
-      
-      return validated as unknown as GenerateExchangeContent;
 
+      return validated as unknown as GenerateExchangeContent;
     } catch (error) {
-      this.logger.logStepError(`ExchangeFullSubstep:${input.publicationPlan.publication}`, error as Error);
+      this.logger.logStepError(
+        `ExchangeFullSubstep:${input.publicationPlan.publication}`,
+        error as Error,
+      );
       throw error;
     }
   }
 
   private validateInput(input: ExchangeFullInput): void {
-    if (!input.plan?.title) throw new Error("Missing situation plan");
-    if (!input.outcomes?.outcomes?.length) throw new Error("Missing outcomes for outcomeModifiers keys");
-    if (!input.publicationPlan?.publication) throw new Error("Missing publication plan entry");
+    if (!input.plan?.title) throw new Error('Missing situation plan');
+    if (!input.outcomes?.outcomes?.length)
+      throw new Error('Missing outcomes for outcomeModifiers keys');
+    if (!input.publicationPlan?.publication) throw new Error('Missing publication plan entry');
   }
 
   /**
@@ -93,7 +103,7 @@ export class ExchangeFullSubstep {
    */
   private assembleExchange(
     questions: GenerateQuestionsOnlyContent,
-    impacts: GenerateAllQuestionImpacts
+    impacts: GenerateAllQuestionImpacts,
   ): GenerateExchangeContent {
     // Create mapping of question ID to impacts
     const impactsMap = new Map();
@@ -102,7 +112,7 @@ export class ExchangeFullSubstep {
       for (const answerImpact of questionImpact.answerImpacts) {
         answerImpactsMap.set(answerImpact.answerId, {
           outcomeModifiers: answerImpact.outcomeModifiers,
-          impacts: answerImpact.impacts
+          impacts: answerImpact.impacts,
         });
       }
       impactsMap.set(questionImpact.questionId, answerImpactsMap);
@@ -115,7 +125,7 @@ export class ExchangeFullSubstep {
         throw new Error(`Missing impacts for question ${questionId}`);
       }
 
-      return answers.map(answer => {
+      return answers.map((answer) => {
         const answerImpacts = questionImpacts.get(answer.id);
         if (!answerImpacts) {
           throw new Error(`Missing impacts for answer ${answer.id} in question ${questionId}`);
@@ -124,7 +134,7 @@ export class ExchangeFullSubstep {
         return {
           ...answer,
           outcomeModifiers: answerImpacts.outcomeModifiers,
-          impacts: answerImpacts.impacts
+          impacts: answerImpacts.impacts,
         };
       });
     };
@@ -133,16 +143,16 @@ export class ExchangeFullSubstep {
     return {
       rootQuestion: {
         ...questions.rootQuestion,
-        answers: mergeAnswersWithImpacts(questions.rootQuestion.answers, questions.rootQuestion.id)
+        answers: mergeAnswersWithImpacts(questions.rootQuestion.answers, questions.rootQuestion.id),
       },
-      secondaryQuestions: questions.secondaryQuestions.map(q => ({
+      secondaryQuestions: questions.secondaryQuestions.map((q) => ({
         ...q,
-        answers: mergeAnswersWithImpacts(q.answers, q.id)
+        answers: mergeAnswersWithImpacts(q.answers, q.id),
       })),
-      tertiaryQuestions: questions.tertiaryQuestions.map(q => ({
+      tertiaryQuestions: questions.tertiaryQuestions.map((q) => ({
         ...q,
-        answers: mergeAnswersWithImpacts(q.answers, q.id)
-      }))
+        answers: mergeAnswersWithImpacts(q.answers, q.id),
+      })),
     };
   }
 
@@ -207,7 +217,7 @@ export class ExchangeFullSubstep {
    */
   private validateCompleteExchange(
     exchange: GenerateExchangeContent,
-    input: ExchangeFullInput
+    input: ExchangeFullInput,
   ): GenerateExchangeContent {
     // Validate against core exchange schema (strict, non-nullable optionals)
     const parsed = exchangeContentSchema.parse(exchange as any);

@@ -1,13 +1,13 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
 
-import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
+import { CabinetMemberName } from '~/components/shared/entity/CabinetMemberName';
 
-describe("CabinetMemberName", () => {
+describe('CabinetMemberName', () => {
   const mockCabinetMember = {
-    name: "John Smith",
+    name: 'John Smith',
     staticData: {
-      cabinetName: "Secretary of Defense",
+      cabinetName: 'Secretary of Defense',
     },
   } as any;
 
@@ -15,29 +15,26 @@ describe("CabinetMemberName", () => {
     render(<CabinetMemberName cabinetMember={member} />);
   };
 
-  it("renders member name and cabinet position", () => {
+  it('renders member name and cabinet position', () => {
     renderWithMember();
-    expect(screen.getByText("John Smith")).toBeTruthy();
-    expect(screen.getByText("Secretary of Defense")).toBeTruthy();
+    expect(screen.getByText('John Smith')).toBeTruthy();
+    expect(screen.getByText('Secretary of Defense')).toBeTruthy();
   });
 
-  it("has correct accessibility properties", () => {
+  it('has correct accessibility properties', () => {
     renderWithMember();
-    const container = screen.getByRole("header");
-    expect(container).toHaveProp(
-      "accessibilityLabel",
-      "John Smith, Secretary of Defense"
-    );
+    const container = screen.getByRole('header');
+    expect(container).toHaveProp('accessibilityLabel', 'John Smith, Secretary of Defense');
   });
 
-  it("handles different cabinet positions", () => {
+  it('handles different cabinet positions', () => {
     const member = {
-      name: "Jane Doe",
-      staticData: { cabinetName: "Attorney General" },
+      name: 'Jane Doe',
+      staticData: { cabinetName: 'Attorney General' },
     } as any;
 
     renderWithMember(member);
-    expect(screen.getByText("Jane Doe")).toBeTruthy();
-    expect(screen.getByText("Attorney General")).toBeTruthy();
+    expect(screen.getByText('Jane Doe')).toBeTruthy();
+    expect(screen.getByText('Attorney General')).toBeTruthy();
   });
 });

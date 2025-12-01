@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
-import { getEnhancedSituationOutcomeDeltas } from "~/lib/db/helpers";
-import { PublicationBoost, EntityWithMediaDelta } from "~/types";
+import { useState, useEffect } from 'react';
+
+import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers';
+import { PublicationBoost, EntityWithMediaDelta } from '~/types';
 
 export function useMediaCoverageData({ levelId }: { levelId: string }) {
   const [mediaBoosts, setMediaBoosts] = useState<PublicationBoost[]>([]);
   const [totalBoost, setTotalBoost] = useState<number>(1.0);
-  const [enhancedDeltas, setEnhancedDeltas] = useState<EntityWithMediaDelta[]>(
-    []
-  );
+  const [enhancedDeltas, setEnhancedDeltas] = useState<EntityWithMediaDelta[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -27,7 +26,7 @@ export function useMediaCoverageData({ levelId }: { levelId: string }) {
         setTotalBoost(totalPublicationBoost);
         setEnhancedDeltas(deltas);
       } catch (err) {
-        console.error("Error loading media boosts:", err);
+        console.error('Error loading media boosts:', err);
         if (isMounted) setError(err as Error);
       } finally {
         if (isMounted) setIsLoading(false);

@@ -1,31 +1,27 @@
-import { useRouter } from "expo-router";
+import { useRouter } from 'expo-router';
+import { useShallow } from 'zustand/shallow';
 
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import { LevelStatus } from "~/types";
+import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+import { LevelStatus } from '~/types';
 
 export function useLevelNavigation() {
   const router = useRouter();
-  const { currentGameId } = useGameManagerStore((state) => ({
-    currentGameId: state.currentGameId,
-  }));
+  const currentGameId = useGameManagerStore((state) => state.currentGameId);
 
-  const { currentLevelId, getCurrentLevel, progressCurrentLevel } =
-    useCurrentLevelStore((state) => ({
-      currentLevelId: state.currentLevelId,
+  const { getCurrentLevel, progressCurrentLevel } = useCurrentLevelStore(
+    useShallow((state) => ({
       getCurrentLevel: state.getCurrentLevel,
       progressCurrentLevel: state.progressCurrentLevel,
-    }));
+    })),
+  );
 
   /**
    * Navigate to specific level screen based on status
    */
-  const navigateToLevelScreen = async (
-    status: LevelStatus,
-    fromCurrentTab = false
-  ) => {
+  const navigateToLevelScreen = async (status: LevelStatus, fromCurrentTab = false) => {
     if (!currentGameId) {
-      console.warn("No game ID available");
+      console.warn('No game ID available');
       return false;
     }
     try {
@@ -40,13 +36,9 @@ export function useLevelNavigation() {
 
         case LevelStatus.PressConference:
           if (fromCurrentTab) {
-            router.push(
-              `/games/${currentGameId}/current/level-press-conference`
-            );
+            router.push(`/games/${currentGameId}/current/level-press-conference`);
           } else {
-            router.replace(
-              `/games/${currentGameId}/current/level-press-conference`
-            );
+            router.replace(`/games/${currentGameId}/current/level-press-conference`);
           }
           break;
 
@@ -54,21 +46,15 @@ export function useLevelNavigation() {
           if (fromCurrentTab) {
             router.push(`/games/${currentGameId}/current/level-press-outcomes`);
           } else {
-            router.replace(
-              `/games/${currentGameId}/current/level-press-outcomes`
-            );
+            router.replace(`/games/${currentGameId}/current/level-press-outcomes`);
           }
           break;
 
         case LevelStatus.SituationOutcomes:
           if (fromCurrentTab) {
-            router.push(
-              `/games/${currentGameId}/current/level-situation-outcomes`
-            );
+            router.push(`/games/${currentGameId}/current/level-situation-outcomes`);
           } else {
-            router.replace(
-              `/games/${currentGameId}/current/level-situation-outcomes`
-            );
+            router.replace(`/games/${currentGameId}/current/level-situation-outcomes`);
           }
           break;
 
@@ -87,7 +73,7 @@ export function useLevelNavigation() {
 
       return true;
     } catch (error) {
-      console.error("Failed to navigate to level screen:", error);
+      console.error('Failed to navigate to level screen:', error);
       return false;
     }
   };
@@ -99,13 +85,13 @@ export function useLevelNavigation() {
     try {
       const level = await getCurrentLevel();
       if (!level) {
-        console.warn("No current level found");
+        console.warn('No current level found');
         return false;
       }
 
       return navigateToLevelScreen(level.status, fromCurrentTab);
     } catch (error) {
-      console.error("Failed to navigate to current level screen:", error);
+      console.error('Failed to navigate to current level screen:', error);
       return false;
     }
   };
@@ -117,13 +103,13 @@ export function useLevelNavigation() {
     try {
       const updatedLevel = await progressCurrentLevel();
       if (!updatedLevel) {
-        console.warn("Failed to progress level");
+        console.warn('Failed to progress level');
         return false;
       }
 
       return navigateToLevelScreen(updatedLevel.status);
     } catch (error) {
-      console.error("Failed to progress and navigate:", error);
+      console.error('Failed to progress and navigate:', error);
       return false;
     }
   };
@@ -131,9 +117,9 @@ export function useLevelNavigation() {
   /**
    * Navigate to game tabs
    */
-  const navigateToTabs = (tab: "current" | "state" | "archive" = "current") => {
+  const navigateToTabs = (tab: 'current' | 'state' | 'archive' = 'current') => {
     if (!currentGameId) {
-      console.warn("No game ID available");
+      console.warn('No game ID available');
       return false;
     }
 
@@ -143,18 +129,15 @@ export function useLevelNavigation() {
 
   return {
     // Basic navigation
-    navigateToCurrentTab: () => navigateToTabs("current"),
-    navigateToStateTab: () => navigateToTabs("state"),
-    navigateToArchiveTab: () => navigateToTabs("archive"),
+    navigateToCurrentTab: () => navigateToTabs('current'),
+    navigateToStateTab: () => navigateToTabs('state'),
+    navigateToArchiveTab: () => navigateToTabs('archive'),
 
     // Level flow navigation
     navigateToBriefing: () => navigateToLevelScreen(LevelStatus.Briefing),
-    navigateToPressConference: () =>
-      navigateToLevelScreen(LevelStatus.PressConference),
-    navigateToPressOutcomes: () =>
-      navigateToLevelScreen(LevelStatus.PressResults),
-    navigateToSituationOutcomes: () =>
-      navigateToLevelScreen(LevelStatus.SituationOutcomes),
+    navigateToPressConference: () => navigateToLevelScreen(LevelStatus.PressConference),
+    navigateToPressOutcomes: () => navigateToLevelScreen(LevelStatus.PressResults),
+    navigateToSituationOutcomes: () => navigateToLevelScreen(LevelStatus.SituationOutcomes),
     navigateToLevelComplete: () => navigateToLevelScreen(LevelStatus.Completed),
 
     // Dynamic navigation based on current level

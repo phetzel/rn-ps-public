@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { useEffect, useState } from 'react';
 
-import { observeGame, observeLevel } from "~/lib/db/helpers/observations";
-import type { Game, Level } from "~/lib/db/models";
 // Components
-import { OutcomesContent } from "~/components/shared/OutcomesContent";
-import SituationReview from "~/components/screens/level-situation-outcomes/SituationReview";
-import LevelMediaCoverage from "~/components/shared/level-media-coverage/LevelMediaCoverage";
-import SituationsOutcomeList from "~/components/shared/situations-outcome-list/SituationsOutcomeList";
+import SituationReview from '~/components/screens/level-situation-outcomes/SituationReview';
+import LevelMediaCoverage from '~/components/shared/level-media-coverage/LevelMediaCoverage';
+import { OutcomesContent } from '~/components/shared/OutcomesContent';
+import SituationsOutcomeList from '~/components/shared/situations-outcome-list/SituationsOutcomeList';
+import { observeGame, observeLevel } from '~/lib/db/helpers/observations';
 // Types
-import { LevelStatus } from "~/types";
+import { LevelStatus } from '~/types';
+
+import type { Game, Level } from '~/lib/db/models';
 
 interface SituationOutcomesContentProps {
   gameId: string;
@@ -31,44 +32,38 @@ const SituationOutcomesContent = ({
     if (level) {
       setIsAdWatched(level.situationAdWatched);
     }
-  }, [level?.situationAdWatched]);
+  }, [level]);
 
   const handleAdComplete = async () => {
     try {
       await level.markSituationAdWatched();
       setIsAdWatched(true);
     } catch (error) {
-      console.error("Failed to mark situation ad as watched:", error);
+      console.error('Failed to mark situation ad as watched:', error);
     }
   };
 
   const tabs = [
     {
-      value: "situations",
-      label: "Situations",
-      accessibilityLabel: "Situation outcomes",
-      accessibilityHint: "View how situations were resolved and their impacts",
+      value: 'situations',
+      label: 'Situations',
+      accessibilityLabel: 'Situation outcomes',
+      accessibilityHint: 'View how situations were resolved and their impacts',
       content: <SituationsOutcomeList levelId={levelId} />,
     },
     {
-      value: "results",
-      label: "Results",
-      accessibilityLabel: "Situation results",
-      accessibilityHint: "See how media reported on the situations and events",
+      value: 'results',
+      label: 'Results',
+      accessibilityLabel: 'Situation results',
+      accessibilityHint: 'See how media reported on the situations and events',
       content: <LevelMediaCoverage levelId={levelId} />,
     },
     {
-      value: "review",
-      label: "Review",
-      accessibilityLabel: "Situation review",
-      accessibilityHint:
-        "Review how situation outcomes affected your situation approval changes",
-      content: (
-        <SituationReview
-          isAdWatched={isAdWatched}
-          onAdComplete={handleAdComplete}
-        />
-      ),
+      value: 'review',
+      label: 'Review',
+      accessibilityLabel: 'Situation review',
+      accessibilityHint: 'Review how situation outcomes affected your situation approval changes',
+      content: <SituationReview isAdWatched={isAdWatched} onAdComplete={handleAdComplete} />,
     },
   ];
 
@@ -85,12 +80,9 @@ const SituationOutcomesContent = ({
   );
 };
 
-const enhance = withObservables(
-  ["gameId", "levelId"],
-  ({ gameId, levelId }) => ({
-    game: observeGame(gameId),
-    level: observeLevel(levelId),
-  })
-);
+const enhance = withObservables(['gameId', 'levelId'], ({ gameId, levelId }) => ({
+  game: observeGame(gameId),
+  level: observeLevel(levelId),
+}));
 
 export default enhance(SituationOutcomesContent);

@@ -1,0 +1,53 @@
+appId: com.phetzel.rnps
+---
+# Shared flow: Create a new game
+# Called by tests that need a game to exist
+
+# Wait for Start New Game button
+- extendedWaitUntil:
+    visible:
+      id: 'start-new-game-button'
+    timeout: 10000
+
+# Start game creation
+- tapOn:
+    id: 'start-new-game-button'
+
+# Wait for game creation screen
+- extendedWaitUntil:
+    visible:
+      id: 'president-name-input'
+    timeout: 10000
+
+# Enter president name
+- tapOn:
+    id: 'president-name-input'
+- inputText: 'Test President'
+- hideKeyboard
+
+# Select ideology
+- tapOn: 'Conservative'
+
+# Enter press secretary name
+- tapOn:
+    id: 'press-secretary-name-input'
+- inputText: 'Test Secretary'
+- hideKeyboard
+
+# Select background - open dropdown
+- tapOn:
+    id: 'background-select-trigger'
+
+# Tap on Journalist option (using point for Portal elements)
+- tapOn:
+    point: '50%,58%'
+
+# Create the game
+- tapOn:
+    id: 'create-game-button'
+
+# Wait for game to be created
+- extendedWaitUntil:
+    visible:
+      id: 'active-situations-header'
+    timeout: 15000

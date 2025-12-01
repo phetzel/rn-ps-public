@@ -1,9 +1,9 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
 
-import { PressExchange } from "~/lib/db/models";
-import ConferenceJournalistItem from "~/components/screens/level-press-conference/ConferenceJournalistItem";
+import ConferenceJournalistItem from '~/components/screens/level-press-conference/ConferenceJournalistItem';
+import { Text } from '~/components/ui/text';
+import { PressExchange } from '~/lib/db/models';
 
 interface ConferenceJournalistSelectProps {
   pressExchanges: PressExchange[];
@@ -26,7 +26,7 @@ const ConferenceJournalistSelect = ({
   }, [pressExchanges]);
 
   const availableJournalists = sortedExchanges.filter(
-    (exchange) => exchange.parseProgress?.currentQuestionId !== null
+    (exchange) => exchange.parseProgress?.currentQuestionId !== null,
   );
 
   return (
@@ -36,9 +36,7 @@ const ConferenceJournalistSelect = ({
       accessibilityLabel={`Journalist selection screen. ${availableJournalists.length} journalists available out of ${sortedExchanges.length} total.`}
     >
       <View className="mb-4" accessible={true} accessibilityRole="header">
-        <Text className="text-xl font-bold text-center">
-          Select a Journalist
-        </Text>
+        <Text className="text-xl font-bold text-center">Select a Journalist</Text>
         <Text className="text-sm text-center text-muted-foreground mt-1">
           Choose who will ask the next question
         </Text>

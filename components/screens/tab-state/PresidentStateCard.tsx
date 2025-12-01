@@ -1,25 +1,22 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeGame, observePresidentApprovalRating } from "~/lib/db/helpers";
-import { Text } from "~/components/ui/text";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
-import { StateProgress } from "~/components/screens/tab-state/StateProgress";
-import { Game } from "~/lib/db/models";
-import { Award } from "~/lib/icons/Award";
-import InfoTooltip from "~/components/shared/InfoTooltip";
+import { StateProgress } from '~/components/screens/tab-state/StateProgress';
+import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
+import InfoTooltip from '~/components/shared/InfoTooltip';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { observeGame, observePresidentApprovalRating } from '~/lib/db/helpers';
+import { Game } from '~/lib/db/models';
+import { Award } from '~/lib/icons/Award';
 
 interface PresidentStateCardProps {
   game: Game | null;
   presApprovalRating: number;
 }
 
-const PresidentStateCard = ({
-  game,
-  presApprovalRating,
-}: PresidentStateCardProps) => {
+const PresidentStateCard = ({ game, presApprovalRating }: PresidentStateCardProps) => {
   if (!game) return null;
 
   return (
@@ -42,11 +39,7 @@ const PresidentStateCard = ({
         </View>
 
         <View className="gap-2">
-          <StateProgress
-            label="Approval Rating"
-            value={presApprovalRating}
-            size="medium"
-          />
+          <StateProgress label="Approval Rating" value={presApprovalRating} size="medium" />
 
           <StateProgress
             label="Relationship with You"
@@ -59,7 +52,7 @@ const PresidentStateCard = ({
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
+const enhance = withObservables(['gameId'], ({ gameId }) => ({
   game: observeGame(gameId),
   presApprovalRating: observePresidentApprovalRating(gameId),
 }));

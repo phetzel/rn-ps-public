@@ -1,11 +1,12 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ResponsesJSONSchemaOptions } from "../../types";
-import type { GenerationAnalysis } from "../../types";
-import { buildCreativePrompt } from "../prompt-constants";
-import { GPT_5_MINI, GPT_5 } from "../llm-constants";
-import { analyzeStrategicRequirements } from "../../utils/situation-balance-analyzer";
-import { generateSituationPlanSchema, type GenerateSituationPlan } from "~/lib/schemas/generate";
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
+import { generateSituationPlanSchema } from '~/lib/schemas/generate';
+
+import { analyzeStrategicRequirements } from '../../utils/situation-balance-analyzer';
+import { GPT_5_MINI } from '../llm-constants';
+import { buildCreativePrompt } from '../prompt-constants';
+
+import type { ResponsesJSONSchemaOptions, GenerationAnalysis } from '../../types';
 
 const PLANNER_SPECIFIC_INSTRUCTIONS = `
 You are creating an initial situation plan for a Press Secretary game.
@@ -58,44 +59,42 @@ REFERENCE — Situation Types & Entities
 
 export const instructions = buildCreativePrompt(PLANNER_SPECIFIC_INSTRUCTIONS);
 
-export function buildPlannerRequest(
-    analysis: GenerationAnalysis
-  ): ResponsesJSONSchemaOptions {
-    const s = analyzeStrategicRequirements(analysis);
-    console.log("Strategic requirements for planning:", s);
-  
-    const lines = [
-      `TargetSituationType: ${s.targetSituationType}`,
-      `AvoidOverlapWithExistingTitles:`,
-      ...s.existingSituationsOfType.map(v => `- ${v.title}`),
-      `BalanceHints:`,
-      `  CabinetOver: ${s.entityBalance.cabinet.overRepresented.join(", ")}`,
-      `  CabinetUnder: ${s.entityBalance.cabinet.underRepresented.join(", ")}`,
-      `  SubgroupsOver: ${s.entityBalance.subgroups.overRepresented.join(", ")}`,
-      `  SubgroupsUnder: ${s.entityBalance.subgroups.underRepresented.join(", ")}`,
-      `  PublicationsUnder: ${s.entityBalance.publications.underRepresented.join(", ")}`,
-      ``,
-    ];
-  
-    const input = lines.join("\n");
+export function buildPlannerRequest(analysis: GenerationAnalysis): ResponsesJSONSchemaOptions {
+  const s = analyzeStrategicRequirements(analysis);
+  console.log('Strategic requirements for planning:', s);
 
-    const jsonSchema = zodToJsonSchema(generateSituationPlanSchema, {
-        target: "jsonSchema7",
-        $refStrategy: "none",
-      });
+  const lines = [
+    `TargetSituationType: ${s.targetSituationType}`,
+    `AvoidOverlapWithExistingTitles:`,
+    ...s.existingSituationsOfType.map((v) => `- ${v.title}`),
+    `BalanceHints:`,
+    `  CabinetOver: ${s.entityBalance.cabinet.overRepresented.join(', ')}`,
+    `  CabinetUnder: ${s.entityBalance.cabinet.underRepresented.join(', ')}`,
+    `  SubgroupsOver: ${s.entityBalance.subgroups.overRepresented.join(', ')}`,
+    `  SubgroupsUnder: ${s.entityBalance.subgroups.underRepresented.join(', ')}`,
+    `  PublicationsUnder: ${s.entityBalance.publications.underRepresented.join(', ')}`,
+    ``,
+  ];
 
-      return {
-        model: GPT_5_MINI,
-        instructions,
-        input,
-        max_output_tokens: 16000,
-        text: {
-          format: {
-            type: "json_schema",
-            name: "situation_plan",
-            schema: jsonSchema,
-            strict: true,
-          },
-        },
-      };
-  }
+  const input = lines.join('\n');
+
+  const jsonSchema = zodToJsonSchema(generateSituationPlanSchema, {
+    target: 'jsonSchema7',
+    $refStrategy: 'none',
+  });
+
+  return {
+    model: GPT_5_MINI,
+    instructions,
+    input,
+    max_output_tokens: 16000,
+    text: {
+      format: {
+        type: 'json_schema',
+        name: 'situation_plan',
+        schema: jsonSchema,
+        strict: true,
+      },
+    },
+  };
+}

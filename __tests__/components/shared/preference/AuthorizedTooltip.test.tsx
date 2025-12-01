@@ -9,124 +9,96 @@
  * - Integration with InfoTooltip component
  */
 
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
+import { render, screen, fireEvent } from '@testing-library/react-native';
 
-import AuthorizedTooltip from "~/components/shared/preference/AuthorizedTooltip";
-import { CABINET_AUTHORIZED_THRESHOLD } from "~/lib/constants";
+import AuthorizedTooltip from '~/components/shared/preference/AuthorizedTooltip';
 
 // No mocks - testing actual component behavior
 
-describe("AuthorizedTooltip", () => {
+describe('AuthorizedTooltip', () => {
   const defaultProps = {
     isAuthorized: true,
-    cabinetMemberName: "Jane Smith",
+    cabinetMemberName: 'Jane Smith',
   };
 
-  it("shows authorized message when isAuthorized is true", () => {
+  it('shows authorized message when isAuthorized is true', () => {
     render(<AuthorizedTooltip {...defaultProps} />);
 
     // Check that the tooltip trigger is present with proper accessibility
-    expect(screen.getByRole("button", { name: "Information" })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Information' })).toBeTruthy();
 
-    const trigger = screen.getByRole("button");
-    expect(trigger).toHaveProp("accessibilityLabel", "Information");
-    expect(trigger).toHaveProp(
-      "accessibilityHint",
-      "Additional information available"
-    );
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveProp('accessibilityLabel', 'Information');
+    expect(trigger).toHaveProp('accessibilityHint', 'Additional information available');
   });
 
-  it("shows unauthorized message when isAuthorized is false", () => {
-    render(
-      <AuthorizedTooltip isAuthorized={false} cabinetMemberName="Bob Johnson" />
-    );
+  it('shows unauthorized message when isAuthorized is false', () => {
+    render(<AuthorizedTooltip isAuthorized={false} cabinetMemberName="Bob Johnson" />);
 
     // Check that the tooltip trigger is present with proper accessibility
-    expect(screen.getByRole("button", { name: "Information" })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Information' })).toBeTruthy();
 
-    const trigger = screen.getByRole("button");
-    expect(trigger).toHaveProp("accessibilityLabel", "Information");
-    expect(trigger).toHaveProp(
-      "accessibilityHint",
-      "Additional information available"
-    );
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveProp('accessibilityLabel', 'Information');
+    expect(trigger).toHaveProp('accessibilityHint', 'Additional information available');
   });
 
-  it("has proper accessibility labels", () => {
+  it('has proper accessibility labels', () => {
     render(<AuthorizedTooltip {...defaultProps} />);
 
     // Check that the trigger has the correct accessibility properties
-    const trigger = screen.getByRole("button", { name: "Information" });
-    expect(trigger).toHaveProp("accessibilityLabel", "Information");
-    expect(trigger).toHaveProp(
-      "accessibilityHint",
-      "Additional information available"
-    );
-    expect(trigger).toHaveProp("accessibilityRole", "button");
+    const trigger = screen.getByRole('button', { name: 'Information' });
+    expect(trigger).toHaveProp('accessibilityLabel', 'Information');
+    expect(trigger).toHaveProp('accessibilityHint', 'Additional information available');
+    expect(trigger).toHaveProp('accessibilityRole', 'button');
   });
 
-  it("handles different cabinet member names", () => {
-    render(
-      <AuthorizedTooltip
-        isAuthorized={false}
-        cabinetMemberName="Mary O'Connor"
-      />
-    );
+  it('handles different cabinet member names', () => {
+    render(<AuthorizedTooltip isAuthorized={false} cabinetMemberName="Mary O'Connor" />);
 
     // Check that the tooltip renders correctly regardless of cabinet member name
-    expect(screen.getByRole("button", { name: "Information" })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Information' })).toBeTruthy();
 
-    const trigger = screen.getByRole("button");
-    expect(trigger).toHaveProp("accessibilityLabel", "Information");
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveProp('accessibilityLabel', 'Information');
   });
 
-  it("renders correctly for unauthorized state", () => {
-    render(
-      <AuthorizedTooltip isAuthorized={false} cabinetMemberName="Test Person" />
-    );
+  it('renders correctly for unauthorized state', () => {
+    render(<AuthorizedTooltip isAuthorized={false} cabinetMemberName="Test Person" />);
 
     // Check that the tooltip trigger renders correctly
-    expect(screen.getByRole("button", { name: "Information" })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Information' })).toBeTruthy();
 
-    const trigger = screen.getByRole("button");
-    expect(trigger).toHaveProp("accessibilityLabel", "Information");
-    expect(trigger).toHaveProp(
-      "accessibilityHint",
-      "Additional information available"
-    );
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveProp('accessibilityLabel', 'Information');
+    expect(trigger).toHaveProp('accessibilityHint', 'Additional information available');
   });
 
-  it("renders component without errors for both states", () => {
+  it('renders component without errors for both states', () => {
     expect(() =>
-      render(<AuthorizedTooltip isAuthorized={true} cabinetMemberName="Test" />)
+      render(<AuthorizedTooltip isAuthorized={true} cabinetMemberName="Test" />),
     ).not.toThrow();
     expect(() =>
-      render(
-        <AuthorizedTooltip isAuthorized={false} cabinetMemberName="Test" />
-      )
+      render(<AuthorizedTooltip isAuthorized={false} cabinetMemberName="Test" />),
     ).not.toThrow();
   });
 
-  it("renders correctly for authorized state", () => {
+  it('renders correctly for authorized state', () => {
     render(<AuthorizedTooltip isAuthorized={true} cabinetMemberName="Alex" />);
 
     // Check that the tooltip trigger renders correctly
-    expect(screen.getByRole("button", { name: "Information" })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Information' })).toBeTruthy();
 
-    const trigger = screen.getByRole("button");
-    expect(trigger).toHaveProp("accessibilityLabel", "Information");
-    expect(trigger).toHaveProp(
-      "accessibilityHint",
-      "Additional information available"
-    );
+    const trigger = screen.getByRole('button');
+    expect(trigger).toHaveProp('accessibilityLabel', 'Information');
+    expect(trigger).toHaveProp('accessibilityHint', 'Additional information available');
   });
 
-  it("can be pressed without errors", () => {
+  it('can be pressed without errors', () => {
     render(<AuthorizedTooltip isAuthorized={false} cabinetMemberName="Sam" />);
 
     // Check that the trigger button can be pressed
-    const trigger = screen.getByRole("button", { name: "Information" });
+    const trigger = screen.getByRole('button', { name: 'Information' });
     expect(() => fireEvent.press(trigger)).not.toThrow();
   });
 });

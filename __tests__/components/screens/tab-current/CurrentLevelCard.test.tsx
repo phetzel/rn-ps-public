@@ -1,10 +1,8 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
-import { jest } from "@jest/globals";
-import { View, Text } from "react-native";
+import { render, screen } from '@testing-library/react-native';
+import { View, Text } from 'react-native';
 
-import { LevelStatus } from "~/types";
-import { formatDate } from "~/lib/utils";
+import { formatDate } from '~/lib/utils';
+import { LevelStatus } from '~/types';
 
 // Simple test component that mimics the core behavior without withObservables
 const TestCurrentLevelCard = ({ level }: { level: any }) => {
@@ -15,7 +13,7 @@ const TestCurrentLevelCard = ({ level }: { level: any }) => {
       testID="current-level-card"
       accessibilityLabel={`Current level: ${formatDate(
         level.month,
-        level.year
+        level.year,
       )}. Status: ${level.status}`}
     >
       <Text testID="level-title">{formatDate(level.month, level.year)}</Text>
@@ -30,12 +28,12 @@ const createMockLevel = (overrides = {}) => ({
   month: 1,
   year: 2024,
   status: LevelStatus.Briefing,
-  gameId: "game-id",
+  gameId: 'game-id',
   ...overrides,
 });
 
-describe("CurrentLevelCard", () => {
-  it("renders level information correctly", () => {
+describe('CurrentLevelCard', () => {
+  it('renders level information correctly', () => {
     const mockLevel = createMockLevel({
       month: 3,
       year: 2024,
@@ -48,12 +46,12 @@ describe("CurrentLevelCard", () => {
     expect(screen.getByText(LevelStatus.PressConference)).toBeTruthy();
   });
 
-  it("does not render when level is undefined", () => {
+  it('does not render when level is undefined', () => {
     render(<TestCurrentLevelCard level={undefined} />);
-    expect(screen.queryByTestId("current-level-card")).toBeNull();
+    expect(screen.queryByTestId('current-level-card')).toBeNull();
   });
 
-  it("displays different status types correctly", () => {
+  it('displays different status types correctly', () => {
     const statusTypes = [
       LevelStatus.Briefing,
       LevelStatus.PressConference,
@@ -71,7 +69,7 @@ describe("CurrentLevelCard", () => {
     });
   });
 
-  it("has proper accessibility", () => {
+  it('has proper accessibility', () => {
     const mockLevel = createMockLevel({
       month: 5,
       year: 2024,
@@ -81,9 +79,7 @@ describe("CurrentLevelCard", () => {
     render(<TestCurrentLevelCard level={mockLevel} />);
 
     expect(
-      screen.getByLabelText(
-        `Current level: ${formatDate(5, 2024)}. Status: briefing`
-      )
+      screen.getByLabelText(`Current level: ${formatDate(5, 2024)}. Status: briefing`),
     ).toBeTruthy();
   });
 });

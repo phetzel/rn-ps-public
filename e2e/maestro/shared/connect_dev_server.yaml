@@ -1,0 +1,18 @@
+appId: com.phetzel.rnps
+---
+# Connect to the dev server (for dev client builds)
+# This flow handles the Expo dev client launcher screen
+#
+# NOTE: When running with `npx expo run:ios`, the app opens directly
+# connected to metro (skips dev client launcher). This flow handles both cases.
+
+# Try to connect via dev client launcher if present (for EAS dev builds)
+# This is optional because `npx expo run:ios` opens the app directly
+- tapOn:
+    text: '.*localhost.*'
+    optional: true
+
+# Brief wait for app transition
+- extendedWaitUntil:
+    timeout: 5000
+    visible: '.*'

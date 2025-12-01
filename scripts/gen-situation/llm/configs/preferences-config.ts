@@ -1,10 +1,12 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ResponsesJSONSchemaOptions } from "../../types";
-import type { GenerationAnalysis } from "../../types";
-import type { GenerateSituationPlan } from "~/lib/schemas/generate";
-import { generatePreferencesSchema, type GeneratePreferences } from "~/lib/schemas/generate";
-import { buildCreativePrompt } from "../prompt-constants";
-import { GPT_5 } from "../llm-constants";
+import { zodToJsonSchema } from 'zod-to-json-schema';
+
+import { generatePreferencesSchema } from '~/lib/schemas/generate';
+
+import { GPT_5 } from '../llm-constants';
+import { buildCreativePrompt } from '../prompt-constants';
+
+import type { ResponsesJSONSchemaOptions, GenerationAnalysis } from '../../types';
+import type { GenerateSituationPlan } from '~/lib/schemas/generate';
 
 const PREFERENCES_SPECIFIC_INSTRUCTIONS = `
 Generate OUTLANDISH preferences for cabinet members in this fictional scenario.
@@ -47,42 +49,41 @@ STRICT ENTITY RULES (ids only)
 const instructions = buildCreativePrompt(PREFERENCES_SPECIFIC_INSTRUCTIONS);
 
 export function buildPreferencesRequest(
-    plan: GenerateSituationPlan,
-    analysis: GenerationAnalysis
-  ): ResponsesJSONSchemaOptions {
+  plan: GenerateSituationPlan,
+  analysis: GenerationAnalysis,
+): ResponsesJSONSchemaOptions {
   const input = [
-      `SituationTitle: ${plan.title}`,
-      `SituationType: ${plan.type}`,
-      `SituationSummary: ${plan.description}`,
-      `RelevantCabinet: ${plan.involvedEntities.cabinetMembers.join(", ")}`,
-      `Subgroups: ${plan.involvedEntities.subgroups.join(", ")}`,
-      `Publications: ${plan.involvedEntities.publications.join(", ")}`,
-      ``,
-      `Preference Guidance:`,
-      `- Aim for some conflicting approaches across departments (legal caution vs. political spin, econ prudence vs. comms urgency, etc.).`,
-      `- Only one cabinet member may include authorizedContent (as non-null) if they plausibly have confidential insight on THIS situation.`,
-      `- Authorized intel must be plain-language detail the Press Secretary can cite to sway journalists while accepting potential backlash elsewhere.`,
-    ].join("\n");
-  
+    `SituationTitle: ${plan.title}`,
+    `SituationType: ${plan.type}`,
+    `SituationSummary: ${plan.description}`,
+    `RelevantCabinet: ${plan.involvedEntities.cabinetMembers.join(', ')}`,
+    `Subgroups: ${plan.involvedEntities.subgroups.join(', ')}`,
+    `Publications: ${plan.involvedEntities.publications.join(', ')}`,
+    ``,
+    `Preference Guidance:`,
+    `- Aim for some conflicting approaches across departments (legal caution vs. political spin, econ prudence vs. comms urgency, etc.).`,
+    `- Only one cabinet member may include authorizedContent (as non-null) if they plausibly have confidential insight on THIS situation.`,
+    `- Authorized intel must be plain-language detail the Press Secretary can cite to sway journalists while accepting potential backlash elsewhere.`,
+  ].join('\n');
+
   // Use strict schema for Structured Outputs (OpenAI requires additionalProperties=false)
   const jsonSchema = zodToJsonSchema(generatePreferencesSchema, {
-    target: "jsonSchema7",
-    $refStrategy: "none",
+    target: 'jsonSchema7',
+    $refStrategy: 'none',
   });
 
-    return {
-      model: GPT_5,
-      instructions,
-      input,
-      max_output_tokens: 16000,
-      text: {
-        format: {
-          type: "json_schema",
-          name: "situation_preferences",
-          schema: jsonSchema,
-          strict: true,
-        },
+  return {
+    model: GPT_5,
+    instructions,
+    input,
+    max_output_tokens: 16000,
+    text: {
+      format: {
+        type: 'json_schema',
+        name: 'situation_preferences',
+        schema: jsonSchema,
+        strict: true,
       },
-    };
-  }
-    
+    },
+  };
+}

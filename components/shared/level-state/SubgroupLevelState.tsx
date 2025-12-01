@@ -1,17 +1,18 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeSubgroupApprovals } from "~/lib/db/helpers";
-import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Users } from "~/lib/icons";
-import { Separator } from "~/components/ui/separator";
-import { SubgroupCategoryIcon } from "~/components/shared/entity/SubgroupCategoryIcon";
-import { Text } from "~/components/ui/text";
-import LevelProgress from "~/components/shared/level-state/LevelProgress";
-import { SubgroupCategory } from "~/types";
-import type { OutcomeSnapshotType } from "~/types";
+import { SubgroupCategoryIcon } from '~/components/shared/entity/SubgroupCategoryIcon';
+import LevelProgress from '~/components/shared/level-state/LevelProgress';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { observeSubgroupApprovals } from '~/lib/db/helpers';
+import { Users } from '~/lib/icons';
+import { SubgroupCategory } from '~/types';
+
+import type SubgroupApproval from '~/lib/db/models/SubgroupApproval';
+import type { OutcomeSnapshotType } from '~/types';
 
 interface SubgroupLevelStateProps {
   gameId: string;
@@ -33,16 +34,17 @@ const SubgroupLevelState = ({
   }
 
   // Group subgroups by category
-  const groupedApprovals = subgroupApprovals.reduce<
-    Record<string, SubgroupApproval[]>
-  >((acc, approval) => {
-    const category = approval.staticData.category;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(approval);
-    return acc;
-  }, {});
+  const groupedApprovals = subgroupApprovals.reduce<Record<string, SubgroupApproval[]>>(
+    (acc, approval) => {
+      const category = approval.staticData.category;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(approval);
+      return acc;
+    },
+    {},
+  );
 
   // Create an ordered list of categories
   const categories = Object.keys(groupedApprovals) as SubgroupCategory[];
@@ -83,8 +85,7 @@ const SubgroupLevelState = ({
                 >
                   <SubgroupCategoryIcon category={category} />
                   <Text className="font-semibold">
-                    {category.charAt(0).toUpperCase() + category.slice(1)}{" "}
-                    Groups
+                    {category.charAt(0).toUpperCase() + category.slice(1)} Groups
                   </Text>
                 </View>
 
@@ -104,10 +105,8 @@ const SubgroupLevelState = ({
                         key={subgroup.id}
                         className="gap-2"
                         accessible={true}
-                        accessibilityLabel={`${
-                          subgroupStaticData.name
-                        }. Approval changed by ${
-                          approvalChange > 0 ? "+" : ""
+                        accessibilityLabel={`${subgroupStaticData.name}. Approval changed by ${
+                          approvalChange > 0 ? '+' : ''
                         }${approvalChange}%.`}
                       >
                         <Text className="font-bold" accessibilityRole="header">
@@ -120,8 +119,7 @@ const SubgroupLevelState = ({
                           finalValue={finalValues.approvalRating}
                         />
 
-                        {subgroupIdx !==
-                          groupedApprovals[category].length - 1 && (
+                        {subgroupIdx !== groupedApprovals[category].length - 1 && (
                           <Separator className="mt-2" />
                         )}
                       </View>
@@ -129,9 +127,7 @@ const SubgroupLevelState = ({
                   })}
                 </View>
 
-                {categoryIdx !== categories.length - 1 && (
-                  <Separator className="mt-4" />
-                )}
+                {categoryIdx !== categories.length - 1 && <Separator className="mt-4" />}
               </View>
             );
           })}
@@ -141,7 +137,7 @@ const SubgroupLevelState = ({
   );
 };
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
+const enhance = withObservables(['gameId'], ({ gameId }) => ({
   subgroupApprovals: observeSubgroupApprovals(gameId),
 }));
 

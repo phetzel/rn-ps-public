@@ -1,7 +1,9 @@
-import React from "react";
-import { View } from "react-native";
-import { ResultsTable } from "~/components/shared/results/ResultsTable";
-import type { EntityWithDelta, EntityWithMediaDelta } from "~/types";
+import React from 'react';
+import { View } from 'react-native';
+
+import { ResultsTable } from '~/components/shared/results/ResultsTable';
+
+import type { EntityWithDelta, EntityWithMediaDelta } from '~/types';
 
 export interface GroupedEntities {
   president?: (EntityWithDelta | EntityWithMediaDelta)[];
@@ -26,10 +28,10 @@ export function ResultsTableList({
     if (!enhancedDeltas) return null;
 
     return {
-      president: enhancedDeltas.filter((e) => e.role === "president"),
-      cabinet: enhancedDeltas.filter((e) => e.role === "cabinet"),
-      journalists: enhancedDeltas.filter((e) => e.role === "journalist"),
-      subgroups: enhancedDeltas.filter((e) => e.role === "subgroup"),
+      president: enhancedDeltas.filter((e) => e.role === 'president'),
+      cabinet: enhancedDeltas.filter((e) => e.role === 'cabinet'),
+      journalists: enhancedDeltas.filter((e) => e.role === 'journalist'),
+      subgroups: enhancedDeltas.filter((e) => e.role === 'subgroup'),
     };
   };
 
@@ -44,11 +46,9 @@ export function ResultsTableList({
     (groupedEntities.president && groupedEntities.president.length > 0) ||
     (groupedEntities.cabinet && groupedEntities.cabinet.length > 0);
 
-  const hasJournalists =
-    groupedEntities.journalists && groupedEntities.journalists.length > 0;
+  const hasJournalists = groupedEntities.journalists && groupedEntities.journalists.length > 0;
 
-  const hasSubgroups =
-    groupedEntities.subgroups && groupedEntities.subgroups.length > 0;
+  const hasSubgroups = groupedEntities.subgroups && groupedEntities.subgroups.length > 0;
 
   return (
     <View
@@ -59,10 +59,7 @@ export function ResultsTableList({
       {/* Admin section */}
       {hasAdminEntities && (
         <ResultsTable
-          entities={[
-            ...(groupedEntities.president || []),
-            ...(groupedEntities.cabinet || []),
-          ]}
+          entities={[...(groupedEntities.president || []), ...(groupedEntities.cabinet || [])]}
           title="Admin"
           isAdWatched={isAdWatched}
           showAdColumn={showAdColumn}

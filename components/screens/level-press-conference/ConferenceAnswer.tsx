@@ -1,15 +1,15 @@
-import React from "react";
-import { View, Pressable } from "react-native";
+import React from 'react';
+import { View, Pressable } from 'react-native';
 
-import { CabinetMember } from "~/lib/db/models";
-import { ChevronRight } from "~/lib/icons/ChevronRight";
-import { Lock } from "~/lib/icons/Lock";
-import { FileText } from "~/lib/icons/FileText";
-import { Text } from "~/components/ui/text";
-import AuthorizedTooltip from "~/components/shared/preference/AuthorizedTooltip";
-import { CABINET_AUTHORIZED_THRESHOLD } from "~/lib/constants";
-import { cn } from "~/lib/utils";
-import { Answer, AnswerType } from "~/types";
+import AuthorizedTooltip from '~/components/shared/preference/AuthorizedTooltip';
+import { Text } from '~/components/ui/text';
+import { CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
+import { CabinetMember } from '~/lib/db/models';
+import { ChevronRight } from '~/lib/icons/ChevronRight';
+import { FileText } from '~/lib/icons/FileText';
+import { Lock } from '~/lib/icons/Lock';
+import { cn } from '~/lib/utils';
+import { Answer, AnswerType } from '~/types';
 
 interface ConferenceAnswerProps {
   answer: Answer;
@@ -17,11 +17,7 @@ interface ConferenceAnswerProps {
   authorizedCabinetMember?: CabinetMember;
 }
 
-const ConferenceAnswer = ({
-  answer,
-  onPress,
-  authorizedCabinetMember,
-}: ConferenceAnswerProps) => {
+const ConferenceAnswer = ({ answer, onPress, authorizedCabinetMember }: ConferenceAnswerProps) => {
   const isClassified = answer.type === AnswerType.Authorized;
   const isAuthorized =
     !!authorizedCabinetMember &&
@@ -33,7 +29,7 @@ const ConferenceAnswer = ({
   const getAccessibilityLabel = () => {
     if (isClassified && isDisabled) {
       return `Classified answer option unavailable. Requires authorization from ${
-        authorizedCabinetMember?.name || "cabinet member"
+        authorizedCabinetMember?.name || 'cabinet member'
       }.`;
     }
     if (isClassified && isAuthorized) {
@@ -49,18 +45,16 @@ const ConferenceAnswer = ({
       disabled={isDisabled}
       accessibilityRole="button"
       accessibilityLabel={getAccessibilityLabel()}
-      accessibilityHint={
-        isDisabled ? undefined : "Double tap to select this answer"
-      }
+      accessibilityHint={isDisabled ? undefined : 'Double tap to select this answer'}
       accessibilityState={{ disabled: isDisabled }}
     >
       {({ pressed }) => (
         <View
           className={cn(
-            "w-full border border-input rounded-md p-4",
-            "bg-background",
-            pressed && !isDisabled && "bg-accent",
-            isDisabled && "opacity-50"
+            'w-full border border-input rounded-md p-4',
+            'bg-background',
+            pressed && !isDisabled && 'bg-accent',
+            isDisabled && 'opacity-50',
           )}
           accessible={false}
         >
@@ -74,10 +68,7 @@ const ConferenceAnswer = ({
             </View>
           )}
 
-          <View
-            className="flex-row justify-between items-center"
-            accessible={false}
-          >
+          <View className="flex-row justify-between items-center" accessible={false}>
             <View className="flex-1">
               {isClassified && isDisabled ? (
                 <View
@@ -91,10 +82,7 @@ const ConferenceAnswer = ({
                   </Text>
                 </View>
               ) : (
-                <Text
-                  className="text-foreground text-left flex-wrap"
-                  accessible={false}
-                >
+                <Text className="text-foreground text-left flex-wrap" accessible={false}>
                   {answer.text}
                 </Text>
               )}

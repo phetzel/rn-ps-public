@@ -1,8 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
 
-import { CabinetMember } from "~/lib/db/models";
-import { CabinetStaticId } from "~/types";
+import { CabinetMember } from '~/lib/db/models';
+import { CabinetStaticId } from '~/types';
 
 type CabinetMemberOverrides = {
   gameId: string; // Required association
@@ -16,7 +16,7 @@ type CabinetMemberOverrides = {
 
 export async function createCabinetMember(
   database: Database,
-  overrides: CabinetMemberOverrides
+  overrides: CabinetMemberOverrides,
 ): Promise<CabinetMember> {
   const defaultValues = {
     staticId: faker.helpers.enumValue(CabinetStaticId),
@@ -29,15 +29,13 @@ export async function createCabinetMember(
   const memberData = { ...defaultValues, ...overrides };
 
   return await database.write(async () => {
-    return await database
-      .get<CabinetMember>("cabinet_members")
-      .create((member) => {
-        member.game_id = memberData.gameId;
-        member.staticId = memberData.staticId;
-        member.name = memberData.name;
-        member.approvalRating = memberData.approvalRating;
-        member.psRelationship = memberData.psRelationship;
-        member.isActive = memberData.isActive;
-      });
+    return await database.get<CabinetMember>('cabinet_members').create((member) => {
+      member.game_id = memberData.gameId;
+      member.staticId = memberData.staticId;
+      member.name = memberData.name;
+      member.approvalRating = memberData.approvalRating;
+      member.psRelationship = memberData.psRelationship;
+      member.isActive = memberData.isActive;
+    });
   });
 }

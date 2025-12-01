@@ -7,30 +7,27 @@ import {
   PoliticalLeaning,
   PressOfficeBackground,
   AlignmentWeight,
-} from "~/types";
+} from '~/types';
 
-export const staticCabinetMembers: Record<
-  CabinetStaticId,
-  StaticCabinetMember
-> = {
+export const staticCabinetMembers: Record<CabinetStaticId, StaticCabinetMember> = {
   [CabinetStaticId.State]: {
-    cabinetName: "Secretary of State",
+    cabinetName: 'Secretary of State',
   },
   [CabinetStaticId.Defense]: {
-    cabinetName: "Secretary of Defense",
+    cabinetName: 'Secretary of Defense',
   },
   [CabinetStaticId.Treasury]: {
-    cabinetName: "Secretary of the Treasury",
+    cabinetName: 'Secretary of the Treasury',
   },
 
   [CabinetStaticId.Justice]: {
-    cabinetName: "Attorney General",
+    cabinetName: 'Attorney General',
   },
   [CabinetStaticId.HHS]: {
-    cabinetName: "Secretary of Health and Human Services",
+    cabinetName: 'Secretary of Health and Human Services',
   },
   [CabinetStaticId.Homeland]: {
-    cabinetName: "Secretary of Homeland Security",
+    cabinetName: 'Secretary of Homeland Security',
   },
 };
 
@@ -38,57 +35,57 @@ export const staticSubgroups: Record<SubgroupStaticId, StaticSubgroup> = {
   // ── Political ───────────────────────────────────────────────
   [SubgroupStaticId.LeftWingBase]: {
     category: SubgroupCategory.Political,
-    name: "Left Wing Base",
+    name: 'Left Wing Base',
     defaultPoliticalLeaning: PoliticalLeaning.Liberal,
     weight: AlignmentWeight.DoublePositive,
   },
   [SubgroupStaticId.RightWingBase]: {
     category: SubgroupCategory.Political,
-    name: "Right Wing Base",
+    name: 'Right Wing Base',
     defaultPoliticalLeaning: PoliticalLeaning.Conservative,
     weight: AlignmentWeight.DoublePositive,
   },
   [SubgroupStaticId.IndependentBase]: {
     category: SubgroupCategory.Political,
-    name: "Independent Base",
+    name: 'Independent Base',
   },
   // ── Demographic ───────────────────────────────────────────────
   [SubgroupStaticId.YouthVoters]: {
     category: SubgroupCategory.Demographic,
-    name: "Youth Voters",
+    name: 'Youth Voters',
     defaultPoliticalLeaning: PoliticalLeaning.Liberal,
   },
   [SubgroupStaticId.SeniorsCitizens]: {
     category: SubgroupCategory.Demographic,
-    name: "Seniors Citizens",
+    name: 'Seniors Citizens',
     defaultPoliticalLeaning: PoliticalLeaning.Conservative,
   },
   [SubgroupStaticId.RuralResidents]: {
     category: SubgroupCategory.Demographic,
-    name: "Rural Residents",
+    name: 'Rural Residents',
     defaultPoliticalLeaning: PoliticalLeaning.Conservative,
     weight: AlignmentWeight.DoublePositive,
   },
   [SubgroupStaticId.UrbanResidents]: {
     category: SubgroupCategory.Demographic,
-    name: "Urban Residents",
+    name: 'Urban Residents',
     defaultPoliticalLeaning: PoliticalLeaning.Liberal,
     weight: AlignmentWeight.DoublePositive,
   },
   // ── Economic ───────────────────────────────────────────────
   [SubgroupStaticId.LaborUnions]: {
     category: SubgroupCategory.Economic,
-    name: "Labor Unions",
+    name: 'Labor Unions',
     defaultPoliticalLeaning: PoliticalLeaning.Liberal,
   },
   [SubgroupStaticId.BusinessLeaders]: {
     category: SubgroupCategory.Economic,
-    name: "Business Leaders",
+    name: 'Business Leaders',
     defaultPoliticalLeaning: PoliticalLeaning.Conservative,
   },
   [SubgroupStaticId.TechIndustry]: {
     category: SubgroupCategory.Economic,
-    name: "Tech Industry",
+    name: 'Tech Industry',
   },
 };
 
@@ -119,39 +116,39 @@ export const pressBackgroundCabinetEffects: Record<
 > = {
   // Each background has one of each: ++, +, -, -- (others omitted)
   [PressOfficeBackground.Journalist]: {
-    [CabinetStaticId.State]: AlignmentWeight.DoublePositive,   // diplomacy/media savvy
-    [CabinetStaticId.Justice]: AlignmentWeight.Positive,       // transparency/process
-    [CabinetStaticId.Defense]: AlignmentWeight.Negative,       // messaging friction
-    [CabinetStaticId.Homeland]: AlignmentWeight.DoubleNegative // opsec tension
+    [CabinetStaticId.State]: AlignmentWeight.DoublePositive, // diplomacy/media savvy
+    [CabinetStaticId.Justice]: AlignmentWeight.Positive, // transparency/process
+    [CabinetStaticId.Defense]: AlignmentWeight.Negative, // messaging friction
+    [CabinetStaticId.Homeland]: AlignmentWeight.DoubleNegative, // opsec tension
   },
   [PressOfficeBackground.PolicyAide]: {
     [CabinetStaticId.Treasury]: AlignmentWeight.DoublePositive, // budgets/policy detail
-    [CabinetStaticId.State]: AlignmentWeight.Positive,          // process alignment
-    [CabinetStaticId.Justice]: AlignmentWeight.Negative,        // legal pacing friction
-    [CabinetStaticId.Homeland]: AlignmentWeight.DoubleNegative  // field pragmatics vs process
+    [CabinetStaticId.State]: AlignmentWeight.Positive, // process alignment
+    [CabinetStaticId.Justice]: AlignmentWeight.Negative, // legal pacing friction
+    [CabinetStaticId.Homeland]: AlignmentWeight.DoubleNegative, // field pragmatics vs process
   },
   [PressOfficeBackground.CampaignSpokes]: {
-    [CabinetStaticId.Defense]: AlignmentWeight.DoublePositive,  // strong posture messaging
-    [CabinetStaticId.Homeland]: AlignmentWeight.Positive,       // public safety framing
-    [CabinetStaticId.Justice]: AlignmentWeight.Negative,        // rhetoric vs due process
-    [CabinetStaticId.Treasury]: AlignmentWeight.DoubleNegative  // budget realism friction
+    [CabinetStaticId.Defense]: AlignmentWeight.DoublePositive, // strong posture messaging
+    [CabinetStaticId.Homeland]: AlignmentWeight.Positive, // public safety framing
+    [CabinetStaticId.Justice]: AlignmentWeight.Negative, // rhetoric vs due process
+    [CabinetStaticId.Treasury]: AlignmentWeight.DoubleNegative, // budget realism friction
   },
   [PressOfficeBackground.CrisisComms]: {
     [CabinetStaticId.Homeland]: AlignmentWeight.DoublePositive, // incident comms
-    [CabinetStaticId.HHS]: AlignmentWeight.Positive,            // public health comms
-    [CabinetStaticId.State]: AlignmentWeight.Negative,          // measured diplomacy tensions
-    [CabinetStaticId.Treasury]: AlignmentWeight.DoubleNegative  // cost sensitivities
+    [CabinetStaticId.HHS]: AlignmentWeight.Positive, // public health comms
+    [CabinetStaticId.State]: AlignmentWeight.Negative, // measured diplomacy tensions
+    [CabinetStaticId.Treasury]: AlignmentWeight.DoubleNegative, // cost sensitivities
   },
   [PressOfficeBackground.CorporatePR]: {
     [CabinetStaticId.Treasury]: AlignmentWeight.DoublePositive, // business/finance
-    [CabinetStaticId.State]: AlignmentWeight.Positive,          // stakeholder management
-    [CabinetStaticId.HHS]: AlignmentWeight.Negative,            // equity/cost optics
-    [CabinetStaticId.Justice]: AlignmentWeight.DoubleNegative   // legal scrutiny
+    [CabinetStaticId.State]: AlignmentWeight.Positive, // stakeholder management
+    [CabinetStaticId.HHS]: AlignmentWeight.Negative, // equity/cost optics
+    [CabinetStaticId.Justice]: AlignmentWeight.DoubleNegative, // legal scrutiny
   },
   [PressOfficeBackground.MilitaryPAO]: {
-    [CabinetStaticId.Defense]: AlignmentWeight.DoublePositive,  // chain of command
-    [CabinetStaticId.Homeland]: AlignmentWeight.Positive,       // coordination
-    [CabinetStaticId.State]: AlignmentWeight.Negative,          // diplomatic nuance
-    [CabinetStaticId.Treasury]: AlignmentWeight.DoubleNegative  // cost discipline
+    [CabinetStaticId.Defense]: AlignmentWeight.DoublePositive, // chain of command
+    [CabinetStaticId.Homeland]: AlignmentWeight.Positive, // coordination
+    [CabinetStaticId.State]: AlignmentWeight.Negative, // diplomatic nuance
+    [CabinetStaticId.Treasury]: AlignmentWeight.DoubleNegative, // cost discipline
   },
 } as const;

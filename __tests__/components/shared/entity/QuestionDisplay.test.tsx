@@ -1,48 +1,46 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
 
-import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
+import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
 
 // Mock FollowUpBadge component
-jest.mock("~/components/shared/entity/FollowUpBadge", () => ({
-  FollowUpBadge: function MockFollowUpBadge() {
-    const { Text } = require("react-native");
-    return <Text>Follow-up Question</Text>;
-  },
-}));
+jest.mock('~/components/shared/entity/FollowUpBadge', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  const FollowUpBadge = function MockFollowUpBadge() {
+    return React.createElement(Text, null, 'Follow-up Question');
+  };
+  return { FollowUpBadge };
+});
 
-describe("QuestionDisplay", () => {
+describe('QuestionDisplay', () => {
   const renderWithProps = (props = {}) => {
     const defaultProps = {
-      question: "What is your response to this situation?",
+      question: 'What is your response to this situation?',
     };
     render(<QuestionDisplay {...defaultProps} {...props} />);
   };
 
-  it("renders the provided question", () => {
+  it('renders the provided question', () => {
     renderWithProps();
-    expect(
-      screen.getByText("What is your response to this situation?")
-    ).toBeTruthy();
+    expect(screen.getByText('What is your response to this situation?')).toBeTruthy();
   });
 
-  it("renders follow-up question badge when specified", () => {
+  it('renders follow-up question badge when specified', () => {
     renderWithProps({ isFollowUpQuestion: true });
-    expect(screen.getByText("Follow-up Question")).toBeTruthy();
+    expect(screen.getByText('Follow-up Question')).toBeTruthy();
   });
 
-  it("has correct accessibility properties for regular question", () => {
+  it('has correct accessibility properties for regular question', () => {
     renderWithProps();
-    const container = screen.getByLabelText(
-      "Question: What is your response to this situation?"
-    );
+    const container = screen.getByLabelText('Question: What is your response to this situation?');
     expect(container).toBeTruthy();
   });
 
-  it("has correct accessibility properties for follow-up question", () => {
+  it('has correct accessibility properties for follow-up question', () => {
     renderWithProps({ isFollowUpQuestion: true });
     const container = screen.getByLabelText(
-      "Follow-up question: What is your response to this situation?"
+      'Follow-up question: What is your response to this situation?',
     );
     expect(container).toBeTruthy();
   });

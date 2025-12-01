@@ -1,17 +1,17 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 // Constants
 import {
   AD_BOOST_MULTIPLIER,
   CONSEQUENCE_THRESHOLD,
   CONSEQUENCE_RISK_PER_LEVEL,
-} from "~/lib/constants";
+} from '~/lib/constants';
 // DB Models
-import { CabinetMember } from "~/lib/db/models";
+import { CabinetMember } from '~/lib/db/models';
 // Types
-import { CabinetStaticId, RiskLevel } from "~/types";
+import { CabinetStaticId, RiskLevel } from '~/types';
 
 // Tailwind Merge
 export function cn(...inputs: ClassValue[]) {
@@ -22,14 +22,14 @@ export function cn(...inputs: ClassValue[]) {
 export function generateCabinetMemberName(staticId: CabinetStaticId): string {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
-  let prefix = "";
+  let prefix = '';
 
   switch (staticId) {
     case CabinetStaticId.Defense:
-      prefix = "General ";
+      prefix = 'General ';
       break;
     case CabinetStaticId.Justice:
-      prefix = "Judge ";
+      prefix = 'Judge ';
       break;
     // Add other cases if needed for other titles
     // default:
@@ -40,7 +40,7 @@ export function generateCabinetMemberName(staticId: CabinetStaticId): string {
 }
 
 export function createCabinetMemberMap(
-  members: CabinetMember[] = [] // Add default empty array for safety
+  members: CabinetMember[] = [], // Add default empty array for safety
 ): Map<CabinetStaticId, CabinetMember> {
   const map = new Map<CabinetStaticId, CabinetMember>();
   if (!members) return map; // Handle null/undefined input gracefully
@@ -49,7 +49,7 @@ export function createCabinetMemberMap(
     if (member && member.staticId) {
       map.set(member.staticId, member);
     } else {
-      console.warn("Attempted to map an invalid CabinetMember:", member);
+      console.warn('Attempted to map an invalid CabinetMember:', member);
     }
   }
   return map;
@@ -59,13 +59,13 @@ export function createCabinetMemberMap(
 export function calculateTableColumnWidths(columnCount: number) {
   switch (columnCount) {
     case 4:
-      return { name: "40%" as const, data: "20%" as const };
+      return { name: '40%' as const, data: '20%' as const };
     case 3:
-      return { name: "50%" as const, data: "25%" as const };
+      return { name: '50%' as const, data: '25%' as const };
     case 2:
-      return { name: "60%" as const, data: "40%" as const };
+      return { name: '60%' as const, data: '40%' as const };
     default:
-      return { name: "50%" as const, data: "25%" as const };
+      return { name: '50%' as const, data: '25%' as const };
   }
 }
 
@@ -80,10 +80,7 @@ export const calculateAdBoost = (delta: number) => {
   }
 };
 
-export const calculateMediaCoverage = (
-  impactValue: number,
-  totalMediaBoost: number
-): number => {
+export const calculateMediaCoverage = (impactValue: number, totalMediaBoost: number): number => {
   let modifiedImpact = impactValue;
 
   if (impactValue > 0) {
@@ -99,16 +96,13 @@ export const calculateMediaCoverage = (
 
 // President Approval Rating Helpers
 export function calculatePresidentApprovalRating(
-  subgroupApprovals: { approvalRating: number }[]
+  subgroupApprovals: { approvalRating: number }[],
 ): number {
   if (!subgroupApprovals || subgroupApprovals.length === 0) {
     return 50; // Default neutral approval rating if no data
   }
 
-  const total = subgroupApprovals.reduce(
-    (sum, subgroup) => sum + subgroup.approvalRating,
-    0
-  );
+  const total = subgroupApprovals.reduce((sum, subgroup) => sum + subgroup.approvalRating, 0);
   const average = total / subgroupApprovals.length;
 
   // Round to nearest integer and ensure it's within 0-100 range
@@ -126,34 +120,34 @@ export function calculateRiskProbability(currentValue: number): number {
 }
 
 export function getRiskLevel(probability: number): RiskLevel {
-  if (probability === 0) return "safe";
-  if (probability < 0.25) return "low";
-  if (probability < 0.5) return "medium";
-  return "high";
+  if (probability === 0) return 'safe';
+  if (probability < 0.25) return 'low';
+  if (probability < 0.5) return 'medium';
+  return 'high';
 }
 
 export function getRiskTextColor(risk: RiskLevel): string {
   const colors = {
-    safe: "text-green-700",
-    low: "text-yellow-700",
-    medium: "text-orange-700",
-    high: "text-red-700",
+    safe: 'text-green-700',
+    low: 'text-yellow-700',
+    medium: 'text-orange-700',
+    high: 'text-red-700',
   };
   return colors[risk];
 }
 
 export const getRiskDescription = (riskLevel: RiskLevel): string => {
   switch (riskLevel) {
-    case "safe":
-      return "No risk";
-    case "low":
-      return "Low risk";
-    case "medium":
-      return "Medium risk";
-    case "high":
-      return "High risk";
+    case 'safe':
+      return 'No risk';
+    case 'low':
+      return 'Low risk';
+    case 'medium':
+      return 'Medium risk';
+    case 'high':
+      return 'High risk';
     default:
-      return "Unknown risk";
+      return 'Unknown risk';
   }
 };
 

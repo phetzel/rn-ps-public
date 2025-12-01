@@ -1,30 +1,31 @@
-import { z } from "zod";
+import { z } from 'zod';
 
-import { idSchema, textLengthSchema } from "~/lib/schemas/common";
-import { exchangeImpactsSchema } from "~/lib/schemas/exchanges/impacts";
-import { AnswerType, CabinetStaticId, ExchangeImpactWeight } from "~/types";
+import { idSchema, textLengthSchema } from '~/lib/schemas/common';
+import { exchangeImpactsSchema } from '~/lib/schemas/exchanges/impacts';
+import { AnswerType, CabinetStaticId, ExchangeImpactWeight } from '~/types';
 
-export const answerSchema = z.object({
-  id: idSchema,
-  text: textLengthSchema.answerText,
-  type: z.nativeEnum(AnswerType),
-  authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
-  followUpId: z.string().optional(),
-  outcomeModifiers: z.record(z.string(), z.number()),
-  impacts: exchangeImpactsSchema,
-})
+export const answerSchema = z
+  .object({
+    id: idSchema,
+    text: textLengthSchema.answerText,
+    type: z.nativeEnum(AnswerType),
+    authorizedCabinetMemberId: z.nativeEnum(CabinetStaticId).optional(),
+    followUpId: z.string().optional(),
+    outcomeModifiers: z.record(z.string(), z.number()),
+    impacts: exchangeImpactsSchema,
+  })
   .refine(
     (data) => {
       const total = Object.values(data.outcomeModifiers || {}).reduce(
         (sum, value) => sum + value,
-        0
+        0,
       );
       return total === 0;
     },
     {
-      message: "Outcome modifiers must sum to 0 per answer",
-      path: ["outcomeModifiers"],
-    }
+      message: 'Outcome modifiers must sum to 0 per answer',
+      path: ['outcomeModifiers'],
+    },
   )
   .refine(
     (data) => {
@@ -35,9 +36,9 @@ export const answerSchema = z.object({
       return true;
     },
     {
-      message: "Authorized answers must specify a cabinet member",
-      path: ["authorizedCabinetMemberId"],
-    }
+      message: 'Authorized answers must specify a cabinet member',
+      path: ['authorizedCabinetMemberId'],
+    },
   )
   .refine(
     (data) => {
@@ -45,7 +46,7 @@ export const answerSchema = z.object({
       const journalists = data.impacts.journalists;
       return !journalists || Object.keys(journalists).length === 0;
     },
-    { message: "Answers cannot impact journalists", path: ["impacts", "journalists"] }
+    { message: 'Answers cannot impact journalists', path: ['impacts', 'journalists'] },
   )
   .refine(
     (data) => {
@@ -79,7 +80,10 @@ export const answerSchema = z.object({
 
       return hasPos && hasNeg;
     },
-    { message: "Each answer must include both positive and negative impacts (president/cabinet)", path: ["impacts"] }
+    {
+      message: 'Each answer must include both positive and negative impacts (president/cabinet)',
+      path: ['impacts'],
+    },
   );
 
 // Question schema
@@ -101,7 +105,7 @@ export const questionSchema = z
       }
       return true;
     },
-    { message: "No single answer type may appear more than twice per question" }
+    { message: 'No single answer type may appear more than twice per question' },
   )
   .refine(
     (data) => {
@@ -109,7 +113,7 @@ export const questionSchema = z
       const types = new Set(data.answers.map((a) => a.type));
       return types.size >= 2;
     },
-    { message: "Questions must have at least 2 distinct answer types" }
+    { message: 'Questions must have at least 2 distinct answer types' },
   )
   .refine(
     (data) => {
@@ -128,11 +132,10 @@ export const questionSchema = z
       const hasPositiveImpact = data.answers.some((answer) => {
         const impacts = answer.impacts;
         return (
-          (impacts.president?.weight &&
-            positiveWeights.includes(impacts.president.weight)) ||
+          (impacts.president?.weight && positiveWeights.includes(impacts.president.weight)) ||
           (impacts.cabinet &&
             Object.values(impacts.cabinet).some((impact) =>
-              positiveWeights.includes(impact.weight)
+              positiveWeights.includes(impact.weight),
             ))
         );
       });
@@ -140,11 +143,10 @@ export const questionSchema = z
       const hasNegativeImpact = data.answers.some((answer) => {
         const impacts = answer.impacts;
         return (
-          (impacts.president?.weight &&
-            negativeWeights.includes(impacts.president.weight)) ||
+          (impacts.president?.weight && negativeWeights.includes(impacts.president.weight)) ||
           (impacts.cabinet &&
             Object.values(impacts.cabinet).some((impact) =>
-              negativeWeights.includes(impact.weight)
+              negativeWeights.includes(impact.weight),
             ))
         );
       });
@@ -153,9 +155,9 @@ export const questionSchema = z
     },
     {
       message:
-        "Questions must have answers with both positive and negative relationship impacts for president/cabinet",
-      path: ["answers"],
-    }
+        'Questions must have answers with both positive and negative relationship impacts for president/cabinet',
+      path: ['answers'],
+    },
   )
   .refine(
     (data) => {
@@ -174,13 +176,13 @@ export const questionSchema = z
       const presidentPositive = data.answers.filter(
         (answer) =>
           answer.impacts.president?.weight &&
-          positiveWeights.includes(answer.impacts.president.weight)
+          positiveWeights.includes(answer.impacts.president.weight),
       ).length;
 
       const presidentNegative = data.answers.filter(
         (answer) =>
           answer.impacts.president?.weight &&
-          negativeWeights.includes(answer.impacts.president.weight)
+          negativeWeights.includes(answer.impacts.president.weight),
       ).length;
 
       // Allow equal or fewer positive than negative (≤ ratio)
@@ -188,9 +190,9 @@ export const questionSchema = z
     },
     {
       message:
-        "President cannot have more positive than negative relationship impacts across question answers",
-      path: ["answers"],
-    }
+        'President cannot have more positive than negative relationship impacts across question answers',
+      path: ['answers'],
+    },
   )
   .refine(
     (data) => {
@@ -206,28 +208,23 @@ export const questionSchema = z
         ExchangeImpactWeight.SlightlyNegative,
       ];
 
-      const cabinetStats = new Map<
-        CabinetStaticId,
-        { positive: number; negative: number }
-      >();
+      const cabinetStats = new Map<CabinetStaticId, { positive: number; negative: number }>();
 
       data.answers.forEach((answer) => {
         if (answer.impacts.cabinet) {
-          Object.entries(answer.impacts.cabinet).forEach(
-            ([cabinetId, impact]) => {
-              const id = cabinetId as CabinetStaticId;
-              if (!cabinetStats.has(id)) {
-                cabinetStats.set(id, { positive: 0, negative: 0 });
-              }
-
-              const stats = cabinetStats.get(id)!;
-              if (positiveWeights.includes(impact.weight)) {
-                stats.positive++;
-              } else if (negativeWeights.includes(impact.weight)) {
-                stats.negative++;
-              }
+          Object.entries(answer.impacts.cabinet).forEach(([cabinetId, impact]) => {
+            const id = cabinetId as CabinetStaticId;
+            if (!cabinetStats.has(id)) {
+              cabinetStats.set(id, { positive: 0, negative: 0 });
             }
-          );
+
+            const stats = cabinetStats.get(id)!;
+            if (positiveWeights.includes(impact.weight)) {
+              stats.positive++;
+            } else if (negativeWeights.includes(impact.weight)) {
+              stats.negative++;
+            }
+          });
         }
       });
 
@@ -242,9 +239,9 @@ export const questionSchema = z
     },
     {
       message:
-        "No cabinet member can have more positive than negative relationship impacts across question answers",
-      path: ["answers"],
-    }
+        'No cabinet member can have more positive than negative relationship impacts across question answers',
+      path: ['answers'],
+    },
   )
   .refine(
     (data) => {
@@ -269,7 +266,7 @@ export const questionSchema = z
       }
       return false;
     },
-    { message: "Each question must include at least one net-positive and one net-negative answer" }
+    { message: 'Each question must include at least one net-positive and one net-negative answer' },
   )
   .refine(
     (data) => {
@@ -289,7 +286,7 @@ export const questionSchema = z
       }
       return netNegativeCount >= 3;
     },
-    { message: "At least 3 of 4 answers must be net-negative" }
+    { message: 'At least 3 of 4 answers must be net-negative' },
   );
 
 // Root question schema - must have exactly 2 followUp answers
@@ -298,7 +295,7 @@ export const rootQuestionSchema = questionSchema.refine(
     const followUpCount = data.answers.filter((a) => a.followUpId).length;
     return followUpCount === 2;
   },
-  { message: "Root question must have exactly 2 answers with followUpId" }
+  { message: 'Root question must have exactly 2 answers with followUpId' },
 );
 
 // Secondary question schema - must have exactly 1 followUp answer
@@ -307,7 +304,7 @@ export const secondaryQuestionSchema = questionSchema.refine(
     const followUpCount = data.answers.filter((a) => a.followUpId).length;
     return followUpCount === 1;
   },
-  { message: "Secondary question must have exactly 1 answer with followUpId" }
+  { message: 'Secondary question must have exactly 1 answer with followUpId' },
 );
 
 // Tertiary question schema - must have no followUp answers
@@ -316,15 +313,12 @@ export const tertiaryQuestionSchema = questionSchema.refine(
     const followUpCount = data.answers.filter((a) => a.followUpId).length;
     return followUpCount === 0;
   },
-  { message: "Tertiary questions cannot have followUpId (terminal questions)" }
+  { message: 'Tertiary questions cannot have followUpId (terminal questions)' },
 );
 
 // Exchange content schema
 export const exchangeContentSchema = z.object({
   rootQuestion: rootQuestionSchema,
-  secondaryQuestions: z.tuple([
-    secondaryQuestionSchema,
-    secondaryQuestionSchema,
-  ]),
+  secondaryQuestions: z.tuple([secondaryQuestionSchema, secondaryQuestionSchema]),
   tertiaryQuestions: z.tuple([tertiaryQuestionSchema, tertiaryQuestionSchema]),
 });

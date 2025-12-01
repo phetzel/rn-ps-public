@@ -1,41 +1,31 @@
-import { database } from "~/lib/db";
-import {
-  situationCollection,
-  pressExchangeCollection,
-} from "~/lib/db/helpers/collections";
+import { staticJournalists } from '~/lib/data/staticMedia';
+import { database } from '~/lib/db';
+import { situationCollection, pressExchangeCollection } from '~/lib/db/helpers/collections';
+import { initializeExchangeProgressForContent } from '~/lib/db/helpers/exchangeApi';
 import {
   fetchActiveJournalistsForGame,
   fetchPressExchangeForJournalistLevel,
-} from "~/lib/db/helpers/fetchApi";
-import { Situation, Game, Level } from "~/lib/db/models";
-import { staticJournalists } from "~/lib/data/staticMedia";
-import {
-  SituationData,
-  PublicationStaticId,
-  JournalistStaticId,
-} from "~/types";
-import { initializeExchangeProgressForContent } from "~/lib/db/helpers/exchangeApi";
+} from '~/lib/db/helpers/fetchApi';
+import { Situation, Game, Level } from '~/lib/db/models';
+import { SituationData, PublicationStaticId, JournalistStaticId } from '~/types';
 
 export async function createSituationsForLevel(
   game: Game,
   level: Level,
-  newSituations: SituationData[]
+  newSituations: SituationData[],
 ): Promise<Situation[]> {
   // First get all journalists for the game
   const journalists = await fetchActiveJournalistsForGame(game.id);
   if (!journalists || journalists.length === 0) {
-    throw new Error("No active journalists found for this game");
+    throw new Error('No active journalists found for this game');
   }
 
   // Create maps for easier lookup
-  const journalistsByPublication: Partial<
-    Record<PublicationStaticId, typeof journalists>
-  > = {};
+  const journalistsByPublication: Partial<Record<PublicationStaticId, typeof journalists>> = {};
 
   // Group journalists by publication
   journalists.forEach((journalist) => {
-    const staticJournalist =
-      staticJournalists[journalist.staticId as JournalistStaticId];
+    const staticJournalist = staticJournalists[journalist.staticId as JournalistStaticId];
     if (staticJournalist) {
       const publicationId = staticJournalist.publicationStaticId;
       if (!journalistsByPublication[publicationId]) {
@@ -58,8 +48,8 @@ export async function createSituationsForLevel(
           situation.title = situationData.title;
           situation.description = situationData.description;
           situation.content = JSON.stringify(situationData.content);
-        })
-      )
+        }),
+      ),
     );
 
     // Now create exchanges for each situation in the same transaction
@@ -78,39 +68,35 @@ export async function createSituationsForLevel(
 
         if (!availableJournalists || availableJournalists.length === 0) {
           console.warn(
-            `No available journalists for publication ${publicationId}, skipping exchange`
+            `No available journalists for publication ${publicationId}, skipping exchange`,
           );
           continue;
         }
 
         // Filter out already assigned journalists
         const unassignedJournalists = availableJournalists.filter(
-          (j) => !assignedJournalists.has(j.id)
+          (j) => !assignedJournalists.has(j.id),
         );
 
         // If no unassigned journalists, try to use any journalist from this publication as fallback
         const journalist =
-          unassignedJournalists.length > 0
-            ? unassignedJournalists[0]
-            : availableJournalists[0];
+          unassignedJournalists.length > 0 ? unassignedJournalists[0] : availableJournalists[0];
 
         // Mark this journalist as assigned
         assignedJournalists.add(journalist.id);
 
         // Use the new utility function to create initial progress with proper currentQuestionId
-        const initialProgress = initializeExchangeProgressForContent(
-          exchange.content
-        );
+        const initialProgress = initializeExchangeProgressForContent(exchange.content);
 
         // Check if journalist already has an exchange for this level
         const existingExchange = await fetchPressExchangeForJournalistLevel(
           level.id,
-          journalist.id
+          journalist.id,
         );
 
         if (existingExchange) {
           throw new Error(
-            `Journalist ${journalist.id} already has a press exchange for level ${level.id}`
+            `Journalist ${journalist.id} already has a press exchange for level ${level.id}`,
           );
         }
 

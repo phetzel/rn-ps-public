@@ -19,8 +19,9 @@
  * - Game ending consequences prevent other consequences from applying
  */
 
-import { Database } from "@nozbe/watermelondb";
-import { testDatabase, resetTestDatabase } from "~/__tests__/support/db";
+import { Database } from '@nozbe/watermelondb';
+
+import { testDatabase, resetTestDatabase } from '~/__tests__/support/db';
 import {
   createImpeachmentScenario,
   createFiringScenario,
@@ -37,34 +38,36 @@ import {
   createPredictableRandom,
   IMPEACHMENT_TEST_CASES,
   FIRING_TEST_CASES,
-} from "~/__tests__/support/scenarios/consequences";
-import { calculateAndApplyConsequences } from "~/lib/db/helpers/consequenceApi";
-import { GameStatus, CabinetStaticId } from "~/types";
-import type { Game } from "~/lib/db/models";
+} from '~/__tests__/support/scenarios/consequences';
+import { calculateAndApplyConsequences } from '~/lib/db/helpers/consequenceApi';
+import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
+import { CabinetStaticId, GameStatus } from '~/types';
+
+import type { Game } from '~/lib/db/models';
 
 // Mock the production database to use test database
-jest.mock("~/lib/db", () => ({
-  database: require("~/__tests__/support/db").testDatabase,
-}));
+jest.mock('~/lib/db', () => {
+  const { testDatabase: mockTestDatabase } = jest.requireActual('~/__tests__/support/db');
+  return {
+    database: mockTestDatabase,
+  };
+});
 
 // Mock the collections to use test database
-jest.mock("~/lib/db/helpers/collections", () => ({
-  cabinetCollection: require("~/__tests__/support/db").testDatabase.get(
-    "cabinet_members"
-  ),
-}));
+jest.mock('~/lib/db/helpers/collections', () => {
+  const { testDatabase: mockTestDatabase } = jest.requireActual('~/__tests__/support/db');
+  return {
+    cabinetCollection: mockTestDatabase.get('cabinet_members'),
+  };
+});
 
 // Mock the fetchApi to use test database
-jest.mock("~/lib/db/helpers/fetchApi", () => ({
+jest.mock('~/lib/db/helpers/fetchApi', () => ({
   fetchGameEntities: jest.fn(),
 }));
+const mockFetchGameEntities = fetchGameEntities as jest.MockedFunction<typeof fetchGameEntities>;
 
-import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
-const mockFetchGameEntities = fetchGameEntities as jest.MockedFunction<
-  typeof fetchGameEntities
->;
-
-describe("Consequence API", () => {
+describe('Consequence API', () => {
   let database: Database;
 
   beforeEach(async () => {
@@ -77,7 +80,7 @@ describe("Consequence API", () => {
   // BASIC ERROR HANDLING
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Error Handling", () => {
+  describe('Error Handling', () => {
     it("should throw error when game doesn't exist", async () => {
       mockFetchGameEntities.mockResolvedValueOnce({
         game: null,
@@ -87,9 +90,9 @@ describe("Consequence API", () => {
         subgroups: [],
       });
 
-      await expect(
-        calculateAndApplyConsequences("nonexistent-game")
-      ).rejects.toThrow("No game found with ID: nonexistent-game");
+      await expect(calculateAndApplyConsequences('nonexistent-game')).rejects.toThrow(
+        'No game found with ID: nonexistent-game',
+      );
     });
   });
 
@@ -97,24 +100,19 @@ describe("Consequence API", () => {
   // IMPEACHMENT CONSEQUENCES (PARAMETERIZED TESTS)
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Impeachment Consequences", () => {
+  describe('Impeachment Consequences', () => {
     it.each(IMPEACHMENT_TEST_CASES)(
-      "$name",
-      async ({
-        presApprovalRating,
-        randomValue,
-        expectedGameEnded,
-        expectedReason,
-      }) => {
+      '$name',
+      async ({ presApprovalRating, randomValue, expectedGameEnded, expectedReason }) => {
         const { game } = await createImpeachmentScenario(
           database,
           presApprovalRating,
-          mockFetchGameEntities
+          mockFetchGameEntities,
         );
 
         const result = await calculateAndApplyConsequences(
           game.id,
-          createPredictableRandom(randomValue)
+          createPredictableRandom(randomValue),
         );
 
         expect(result.gameEnded).toBe(expectedGameEnded);
@@ -122,31 +120,29 @@ describe("Consequence API", () => {
           expect(result.gameEndReason).toBe(expectedReason);
 
           // Verify game status was updated
-          const reloadedGame = await database.get<Game>("games").find(game.id);
+          const reloadedGame = await database.get<Game>('games').find(game.id);
           const expectedStatus =
-            expectedReason === "impeached"
-              ? GameStatus.Impeached
-              : GameStatus.Fired;
+            expectedReason === 'impeached' ? GameStatus.Impeached : GameStatus.Fired;
           expect(reloadedGame.status).toBe(expectedStatus);
           expect(reloadedGame.endTimestamp).toBeTruthy();
         }
-      }
+      },
     );
 
-    it("should prioritize impeachment over firing", async () => {
+    it('should prioritize impeachment over firing', async () => {
       const { game } = await createImpeachmentScenario(
         database,
         10, // High impeachment risk
-        mockFetchGameEntities
+        mockFetchGameEntities,
       );
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.1) // Both should trigger, but impeachment takes priority
+        createPredictableRandom(0.1), // Both should trigger, but impeachment takes priority
       );
 
       expect(result.gameEnded).toBe(true);
-      expect(result.gameEndReason).toBe("impeached"); // Not fired
+      expect(result.gameEndReason).toBe('impeached'); // Not fired
     });
   });
 
@@ -154,24 +150,19 @@ describe("Consequence API", () => {
   // FIRING CONSEQUENCES (PARAMETERIZED TESTS)
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Firing Consequences", () => {
+  describe('Firing Consequences', () => {
     it.each(FIRING_TEST_CASES)(
-      "$name",
-      async ({
-        presPsRelationship,
-        randomValue,
-        expectedGameEnded,
-        expectedReason,
-      }) => {
+      '$name',
+      async ({ presPsRelationship, randomValue, expectedGameEnded, expectedReason }) => {
         const { game } = await createFiringScenario(
           database,
           presPsRelationship,
-          mockFetchGameEntities
+          mockFetchGameEntities,
         );
 
         const result = await calculateAndApplyConsequences(
           game.id,
-          createPredictableRandom(randomValue)
+          createPredictableRandom(randomValue),
         );
 
         expect(result.gameEnded).toBe(expectedGameEnded);
@@ -179,11 +170,11 @@ describe("Consequence API", () => {
           expect(result.gameEndReason).toBe(expectedReason);
 
           // Verify game status was updated
-          const reloadedGame = await database.get<Game>("games").find(game.id);
+          const reloadedGame = await database.get<Game>('games').find(game.id);
           expect(reloadedGame.status).toBe(GameStatus.Fired);
           expect(reloadedGame.endTimestamp).toBeTruthy();
         }
-      }
+      },
     );
   });
 
@@ -191,18 +182,15 @@ describe("Consequence API", () => {
   // CABINET FIRING CONSEQUENCES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Cabinet Firing Consequences", () => {
-    it("should fire cabinet members with low approval ratings", async () => {
-      const { game } = await createCabinetCrisisScenario(
-        database,
-        mockFetchGameEntities
-      );
+  describe('Cabinet Firing Consequences', () => {
+    it('should fire cabinet members with low approval ratings', async () => {
+      const { game } = await createCabinetCrisisScenario(database, mockFetchGameEntities);
 
       // Random values: impeachment, firing, State (20→0.2), Defense (30→0), Treasury (15→0.4)
       const randomValues = [0.9, 0.9, 0.1, 0.5, 0.3];
       const result = await calculateAndApplyConsequences(
         game.id,
-        createDeterministicRandom(randomValues)
+        createDeterministicRandom(randomValues),
       );
 
       expect(result.gameEnded).toBe(false);
@@ -213,17 +201,14 @@ describe("Consequence API", () => {
       // Defense doesn't fire: 0.5 > 0 (no risk)
     });
 
-    it("should apply penalties to subgroups when cabinet members are fired", async () => {
-      const { game, subgroups } = await createSubgroupPenaltyScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should apply penalties to subgroups when cabinet members are fired', async () => {
+      const { game } = await createSubgroupPenaltyScenario(database, mockFetchGameEntities);
 
       // Fire both cabinet members
       const randomValues = [0.9, 0.9, 0.01, 0.01]; // Safe from impeachment/firing, fire both cabinet
       const result = await calculateAndApplyConsequences(
         game.id,
-        createDeterministicRandom(randomValues)
+        createDeterministicRandom(randomValues),
       );
 
       expect(result.cabinetMembersFired).toHaveLength(2);
@@ -234,15 +219,12 @@ describe("Consequence API", () => {
       expect(reloadedSubgroups[1].approvalRating).toBe(60); // 80 - 20
     });
 
-    it("should not fire cabinet members when approvals are above threshold", async () => {
-      const { game } = await createStableGameScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should not fire cabinet members when approvals are above threshold', async () => {
+      const { game } = await createStableGameScenario(database, mockFetchGameEntities);
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.1) // Low random, but no risk
+        createPredictableRandom(0.1), // Low random, but no risk
       );
 
       expect(result.gameEnded).toBe(false);
@@ -250,17 +232,11 @@ describe("Consequence API", () => {
     });
 
     it("should ensure subgroup approval ratings don't go below 0", async () => {
-      const { game } = await createSubgroupFloorScenario(
-        database,
-        mockFetchGameEntities
-      );
+      const { game } = await createSubgroupFloorScenario(database, mockFetchGameEntities);
 
       // Fire all cabinet members
       const randomValues = [0.9, 0.9, 0.01, 0.01, 0.01]; // Safe from game ending, fire all cabinet
-      await calculateAndApplyConsequences(
-        game.id,
-        createDeterministicRandom(randomValues)
-      );
+      await calculateAndApplyConsequences(game.id, createDeterministicRandom(randomValues));
 
       // Verify approval rating clamped at 0: 15 - (3 * 10) = -15 → 0
       const reloadedSubgroups = await game.subgroupApprovals.fetch();
@@ -272,48 +248,45 @@ describe("Consequence API", () => {
   // RISK CALCULATION EDGE CASES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Risk Calculation Edge Cases", () => {
-    it("should handle maximum risk probability (capped at 1.0)", async () => {
+  describe('Risk Calculation Edge Cases', () => {
+    it('should handle maximum risk probability (capped at 1.0)', async () => {
       const { game } = await createImpeachmentScenario(
         database,
         0, // Risk = (25-0) * 0.04 = 1.0
-        mockFetchGameEntities
+        mockFetchGameEntities,
       );
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.99) // Even high random should still trigger at 100% risk
+        createPredictableRandom(0.99), // Even high random should still trigger at 100% risk
       );
 
       expect(result.gameEnded).toBe(true);
-      expect(result.gameEndReason).toBe("impeached");
+      expect(result.gameEndReason).toBe('impeached');
     });
 
-    it("should handle boundary conditions at threshold", async () => {
-      const { game } = await createStableGameScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should handle boundary conditions at threshold', async () => {
+      const { game } = await createStableGameScenario(database, mockFetchGameEntities);
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.01) // Very low random should not trigger anything
+        createPredictableRandom(0.01), // Very low random should not trigger anything
       );
 
       expect(result.gameEnded).toBe(false);
       expect(result.cabinetMembersFired).toEqual([]);
     });
 
-    it("should handle very low ratings with appropriate high risk", async () => {
+    it('should handle very low ratings with appropriate high risk', async () => {
       const { game } = await createImpeachmentScenario(
         database,
         5, // Risk = (25-5) * 0.04 = 0.8
-        mockFetchGameEntities
+        mockFetchGameEntities,
       );
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.85) // Random value just above risk threshold
+        createPredictableRandom(0.85), // Random value just above risk threshold
       );
 
       expect(result.gameEnded).toBe(false); // 0.85 > 0.8, should not trigger
@@ -324,8 +297,8 @@ describe("Consequence API", () => {
   // INTEGRATION & REALISTIC SCENARIOS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Realistic Game Scenarios", () => {
-    it("should handle a typical mid-game consequence check", async () => {
+  describe('Realistic Game Scenarios', () => {
+    it('should handle a typical mid-game consequence check', async () => {
       const { game } = await createConsequenceTestScenario(
         database,
         {
@@ -338,48 +311,45 @@ describe("Consequence API", () => {
             { staticId: CabinetStaticId.Justice, approvalRating: 45 }, // Good
           ],
         },
-        mockFetchGameEntities
+        mockFetchGameEntities,
       );
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.15) // Will fire Treasury (0.15 < 0.28) and Defense (0.15 < 0.12)
+        createPredictableRandom(0.15), // Will fire Treasury (0.15 < 0.28) and Defense (0.15 < 0.12)
       );
 
       expect(result.gameEnded).toBe(false);
       expect(result.cabinetMembersFired).toContain(CabinetStaticId.Treasury);
 
       // Verify game remains active
-      const reloadedGame = await database.get<Game>("games").find(game.id);
+      const reloadedGame = await database.get<Game>('games').find(game.id);
       expect(reloadedGame.status).toBe(GameStatus.Active);
     });
 
-    it("should handle crisis scenario with multiple low ratings", async () => {
+    it('should handle crisis scenario with multiple low ratings', async () => {
       const { game } = await createImpeachmentScenario(
         database,
         18, // Crisis level approval rating
-        mockFetchGameEntities
+        mockFetchGameEntities,
       );
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.25) // In crisis, impeachment risk is (25-18)*0.04 = 0.28
+        createPredictableRandom(0.25), // In crisis, impeachment risk is (25-18)*0.04 = 0.28
       );
 
       // With random 0.25 < 0.28, should get impeached
       expect(result.gameEnded).toBe(true);
-      expect(result.gameEndReason).toBe("impeached");
+      expect(result.gameEndReason).toBe('impeached');
     });
 
-    it("should handle successful administration with no consequences", async () => {
-      const { game } = await createStableGameScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should handle successful administration with no consequences', async () => {
+      const { game } = await createStableGameScenario(database, mockFetchGameEntities);
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.01) // Even with low random, no risks exist
+        createPredictableRandom(0.01), // Even with low random, no risks exist
       );
 
       expect(result.gameEnded).toBe(false);
@@ -391,68 +361,53 @@ describe("Consequence API", () => {
   // GAME COMPLETION LOGIC
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Game Completion", () => {
-    it("should complete game when at term limit with no other consequences", async () => {
-      const { game } = await createTermLimitCompletionScenario(
-        database,
-        mockFetchGameEntities
-      );
+  describe('Game Completion', () => {
+    it('should complete game when at term limit with no other consequences', async () => {
+      const { game } = await createTermLimitCompletionScenario(database, mockFetchGameEntities);
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.1) // Low random values - no other consequences
+        createPredictableRandom(0.1), // Low random values - no other consequences
       );
 
       expect(result.gameEnded).toBe(true);
-      expect(result.gameEndReason).toBe("completed");
+      expect(result.gameEndReason).toBe('completed');
       expect(result.cabinetMembersFired).toEqual([]);
 
       // Verify game status was updated
-      const reloadedGame = await database.get<Game>("games").find(game.id);
+      const reloadedGame = await database.get<Game>('games').find(game.id);
       expect(reloadedGame.status).toBe(GameStatus.Completed);
       expect(reloadedGame.endTimestamp).toBeTruthy();
     });
 
-    it("should not complete game if impeachment occurs at term limit", async () => {
-      const { game } = await createTermLimitImpeachmentScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should not complete game if impeachment occurs at term limit', async () => {
+      const { game } = await createTermLimitImpeachmentScenario(database, mockFetchGameEntities);
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.1) // Low enough to trigger impeachment
+        createPredictableRandom(0.1), // Low enough to trigger impeachment
       );
 
       expect(result.gameEnded).toBe(true);
-      expect(result.gameEndReason).toBe("impeached"); // Not completed
+      expect(result.gameEndReason).toBe('impeached'); // Not completed
     });
 
-    it("should not complete game if firing occurs at term limit", async () => {
-      const { game } = await createTermLimitFiringScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should not complete game if firing occurs at term limit', async () => {
+      const { game } = await createTermLimitFiringScenario(database, mockFetchGameEntities);
 
       const result = await calculateAndApplyConsequences(
         game.id,
-        createPredictableRandom(0.1) // Low enough to trigger firing
+        createPredictableRandom(0.1), // Low enough to trigger firing
       );
 
       expect(result.gameEnded).toBe(true);
-      expect(result.gameEndReason).toBe("fired"); // Not completed
+      expect(result.gameEndReason).toBe('fired'); // Not completed
     });
 
-    it("should not complete game when not at term limit", async () => {
-      const { game } = await createNonTermLimitScenario(
-        database,
-        mockFetchGameEntities
-      );
+    it('should not complete game when not at term limit', async () => {
+      const { game } = await createNonTermLimitScenario(database, mockFetchGameEntities);
 
-      const result = await calculateAndApplyConsequences(
-        game.id,
-        createPredictableRandom(0.1)
-      );
+      const result = await calculateAndApplyConsequences(game.id, createPredictableRandom(0.1));
 
       expect(result.gameEnded).toBe(false);
       expect(result.gameEndReason).toBeUndefined();

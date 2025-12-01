@@ -1,17 +1,15 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { Separator } from "~/components/ui/separator";
-import SituationsOutcomeList from "~/components/shared/situations-outcome-list/SituationsOutcomeList";
-import LevelMediaCoverage from "~/components/shared/level-media-coverage/LevelMediaCoverage";
+import LevelMediaCoverage from '~/components/shared/level-media-coverage/LevelMediaCoverage';
+import SituationsOutcomeList from '~/components/shared/situations-outcome-list/SituationsOutcomeList';
+import { Separator } from '~/components/ui/separator';
 
 interface LevelOverviewEventsProps {
   levelId: string;
 }
 
-export default function LevelOverviewEvents({
-  levelId,
-}: LevelOverviewEventsProps) {
+export default function LevelOverviewEvents({ levelId }: LevelOverviewEventsProps) {
   return (
     <View className="gap-4">
       <SituationsOutcomeList levelId={levelId} />

@@ -1,11 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { PressExchange } from "~/lib/db/models";
-import {
-  ExchangeContent,
-  ExchangeProgress,
-  JournalistEngagementWeight,
-} from "~/types";
-import { teachersStrikeBackExchanges } from "~/lib/data/situations/v1/domestic-policy/teachers-strike-back/exchanges";
+import { Database } from '@nozbe/watermelondb';
+
+import { teachersStrikeBackExchanges } from '~/lib/data/situations/v1/domestic-policy/teachers-strike-back/exchanges';
+import { PressExchange } from '~/lib/db/models';
+import { ExchangeContent, ExchangeProgress } from '~/types';
 
 type ExchangeOverrides = {
   levelId: string;
@@ -18,7 +15,7 @@ type ExchangeOverrides = {
 
 export async function createPressExchange(
   database: Database,
-  overrides: ExchangeOverrides
+  overrides: ExchangeOverrides,
 ): Promise<PressExchange> {
   // Use real static data as the default
   const defaultContent = teachersStrikeBackExchanges[0].content;
@@ -39,14 +36,12 @@ export async function createPressExchange(
   const finalProgress = JSON.stringify(overrides.progress || defaultProgress);
 
   return await database.write(async () => {
-    return await database
-      .get<PressExchange>("press_exchanges")
-      .create((exchange) => {
-        exchange.level_id = overrides.levelId;
-        exchange.situation_id = overrides.situationId;
-        exchange.journalist_id = overrides.journalistId;
-        exchange.content = finalContent;
-        exchange.progress = finalProgress;
-      });
+    return await database.get<PressExchange>('press_exchanges').create((exchange) => {
+      exchange.level_id = overrides.levelId;
+      exchange.situation_id = overrides.situationId;
+      exchange.journalist_id = overrides.journalistId;
+      exchange.content = finalContent;
+      exchange.progress = finalProgress;
+    });
   });
 }

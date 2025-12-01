@@ -1,12 +1,18 @@
-import { schemaMigrations } from "@nozbe/watermelondb/Schema/migrations";
+import { schemaMigrations, addColumns } from '@nozbe/watermelondb/Schema/migrations';
 
 export const migrations = schemaMigrations({
   migrations: [
-    // No migrations defined yet for version 1 -> 2, etc.
-    // The first actual migration you add will look like:
-    // {
-    //   toVersion: 2,
-    //   steps: [ /* ... migration steps ... */ ]
-    // }
+    {
+      toVersion: 2,
+      steps: [
+        addColumns({
+          table: 'app_settings',
+          columns: [
+            { name: 'diagnostics_enabled', type: 'boolean', isOptional: true },
+            { name: 'analytics_enabled', type: 'boolean', isOptional: true },
+          ],
+        }),
+      ],
+    },
   ],
 });

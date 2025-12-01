@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { Lock } from "~/lib/icons/Lock";
-import { FileText } from "~/lib/icons/FileText";
+import { FileText } from '~/lib/icons/FileText';
+import { Lock } from '~/lib/icons/Lock';
 
 interface AuthorizedIconProps {
   isAuthorized: boolean;
@@ -14,10 +14,7 @@ const AuthorizedIcon: React.FC<AuthorizedIconProps> = ({ isAuthorized }) => {
       accessibilityLabel="Authorized: classified information available"
     />
   ) : (
-    <Lock
-      className="text-gray-500"
-      accessibilityLabel="Locked: classified information withheld"
-    />
+    <Lock className="text-gray-500" accessibilityLabel="Locked: classified information withheld" />
   );
 };
 

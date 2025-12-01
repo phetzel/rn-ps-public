@@ -1,8 +1,8 @@
-import * as React from "react";
-import { View } from "react-native";
+import * as React from 'react';
+import { View } from 'react-native';
 
-import { Logo } from "~/components/shared/Logo";
-import { Text } from "~/components/ui/text";
+import { Logo } from '~/components/shared/Logo';
+import { Text } from '~/components/ui/text';
 
 export function HomeHeader() {
   return (

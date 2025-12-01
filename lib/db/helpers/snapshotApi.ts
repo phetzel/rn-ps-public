@@ -1,22 +1,20 @@
-import { fetchGameEntities } from "~/lib/db/helpers/fetchApi";
+import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
 import {
   RelationshipSnapshot,
   CabinetStaticId,
   JournalistStaticId,
   SubgroupStaticId,
   PublicationStaticId,
-} from "~/types";
+} from '~/types';
 
 // Take a snapshot of the game entities
-export async function takeSnapshot(
-  gameId: string
-): Promise<RelationshipSnapshot> {
+export async function takeSnapshot(gameId: string): Promise<RelationshipSnapshot> {
   // Fetch all game entities
   const { game, cabinetMembers, journalists, subgroups, publications } =
     await fetchGameEntities(gameId);
 
   if (!game) {
-    throw new Error("No game found with ID: " + gameId);
+    throw new Error('No game found with ID: ' + gameId);
   }
 
   // Calculate approval ratings
@@ -25,7 +23,7 @@ export async function takeSnapshot(
     publications.map(async (publication) => [
       publication.staticId as PublicationStaticId,
       { approvalRating: await publication.getApprovalRating() },
-    ])
+    ]),
   );
 
   // Create the snapshot
@@ -41,24 +39,21 @@ export async function takeSnapshot(
           approvalRating: member.approvalRating,
           psRelationship: member.psRelationship,
         },
-      ])
-    ) as Record<
-      CabinetStaticId,
-      { approvalRating: number; psRelationship: number }
-    >,
+      ]),
+    ) as Record<CabinetStaticId, { approvalRating: number; psRelationship: number }>,
     journalists: Object.fromEntries(
       journalists.map((journalist) => [
         journalist.staticId as JournalistStaticId,
         {
           psRelationship: journalist.psRelationship,
         },
-      ])
+      ]),
     ) as Record<JournalistStaticId, { psRelationship: number }>,
     subgroups: Object.fromEntries(
       subgroups.map((subgroup) => [
         subgroup.staticId as SubgroupStaticId,
         { approvalRating: subgroup.approvalRating },
-      ])
+      ]),
     ) as Record<SubgroupStaticId, { approvalRating: number }>,
     publications: Object.fromEntries(publicationApprovals) as Record<
       PublicationStaticId,

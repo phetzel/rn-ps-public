@@ -1,16 +1,12 @@
-import * as React from "react";
-import { withObservables } from "@nozbe/watermelondb/react";
-import Animated, {
-  FadeInUp,
-  FadeOutDown,
-  LayoutAnimationConfig,
-} from "react-native-reanimated";
+import { withObservables } from '@nozbe/watermelondb/react';
+import * as React from 'react';
 
-import type Game from "~/lib/db/models/Game";
-import { observeAllGames } from "~/lib/db/helpers";
-import { HomeHeader } from "~/components/screens/home/HomeHeader";
-import { HomeMenuCard } from "~/components/screens/home/HomeMenuCard";
-import { ThemedView } from "~/components/shared/layout/ThemedView";
+import { HomeHeader } from '~/components/screens/home/HomeHeader';
+import { HomeMenuCard } from '~/components/screens/home/HomeMenuCard';
+import { ThemedView } from '~/components/shared/layout/ThemedView';
+import { observeAllGames } from '~/lib/db/helpers';
+
+import type Game from '~/lib/db/models/Game';
 
 interface ScreenProps {
   games: Game[];

@@ -1,43 +1,39 @@
-import { z } from "zod";
-import type { CabinetStaticId } from "~/types";
-import type { SituationConsequenceWeight } from "~/types";
+import { z } from 'zod';
 
-import { situationPreferencesSchema } from "~/lib/schemas/situations/preferences";
-import { situationOutcomeArraySchema } from "~/lib/schemas/situations/outcomes";
+import { situationOutcomeArraySchema } from '~/lib/schemas/situations/outcomes';
+import { situationPreferencesSchema } from '~/lib/schemas/situations/preferences';
 
+import type { CabinetStaticId, SituationConsequenceWeight } from '~/types';
 
 export const situationContentSchema = z
   .object({
     preferences: situationPreferencesSchema,
-    outcomes: situationOutcomeArraySchema
+    outcomes: situationOutcomeArraySchema,
   })
   .refine(
     (data) => {
       // Cabinet-preferences → consequences rules
       const prefCabinet = data.preferences.cabinet || {};
-      const prefIds = new Set<CabinetStaticId>(
-        Object.keys(prefCabinet) as CabinetStaticId[]
-      );
+      const prefIds = new Set<CabinetStaticId>(Object.keys(prefCabinet) as CabinetStaticId[]);
 
       const appearances = new Map<string, { totalSum: number; hasPos: boolean; hasNeg: boolean }>();
       const nonPreferredUsed: string[] = [];
 
       data.outcomes.forEach((outcome) => {
         const cab = outcome.consequences.approvalChanges.cabinet || {};
-        (Object.entries(cab) as Array<[
-          CabinetStaticId,
-          SituationConsequenceWeight
-        ]>).forEach(([id, weight]) => {
-          if (!prefIds.has(id)) {
-            nonPreferredUsed.push(id);
-          }
-          if (!appearances.has(id))
-            appearances.set(id, { totalSum: 0, hasPos: false, hasNeg: false });
-          const s = appearances.get(id)!;
-          s.totalSum += weight;
-          if (weight > 0) s.hasPos = true;
-          if (weight < 0) s.hasNeg = true;
-        });
+        (Object.entries(cab) as [CabinetStaticId, SituationConsequenceWeight][]).forEach(
+          ([id, weight]) => {
+            if (!prefIds.has(id)) {
+              nonPreferredUsed.push(id);
+            }
+            if (!appearances.has(id))
+              appearances.set(id, { totalSum: 0, hasPos: false, hasNeg: false });
+            const s = appearances.get(id)!;
+            s.totalSum += weight;
+            if (weight > 0) s.hasPos = true;
+            if (weight < 0) s.hasNeg = true;
+          },
+        );
       });
 
       // Rule 1: Only cabinet members with a preference may appear in outcomes
@@ -59,9 +55,9 @@ export const situationContentSchema = z
     },
     {
       message:
-        "Cabinet outcomes must include only preference-bearing members; each must appear with both positive and negative impacts and net neutral/negative total",
-      path: ["outcomes"],
-    }
+        'Cabinet outcomes must include only preference-bearing members; each must appear with both positive and negative impacts and net neutral/negative total',
+      path: ['outcomes'],
+    },
   )
   .refine(
     (data) => {
@@ -74,7 +70,7 @@ export const situationContentSchema = z
       return count <= 1;
     },
     {
-      message: "Allow at most one cabinet member with authorizedContent",
-      path: ["preferences", "cabinet"],
-    }
+      message: 'Allow at most one cabinet member with authorizedContent',
+      path: ['preferences', 'cabinet'],
+    },
   );

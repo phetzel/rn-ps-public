@@ -1,17 +1,13 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import { CabinetMember } from "~/lib/db/models";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
-import RiskItemPresidential from "~/components/shared/level-consequences/RiskItemPresidential";
-import RiskItemCabinet from "~/components/shared/level-consequences/RiskItemCabinet";
-import { calculateRiskProbability } from "~/lib/utils";
-import { CONSEQUENCE_THRESHOLD } from "~/lib/constants";
-import {
-  CabinetStaticId,
-  RelationshipSnapshot,
-  CabinetRiskDisplayData,
-} from "~/types";
+import RiskItemCabinet from '~/components/shared/level-consequences/RiskItemCabinet';
+import RiskItemPresidential from '~/components/shared/level-consequences/RiskItemPresidential';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
+import { CabinetMember } from '~/lib/db/models';
+import { calculateRiskProbability } from '~/lib/utils';
+import { CabinetStaticId, RelationshipSnapshot, CabinetRiskDisplayData } from '~/types';
 
 interface LevelConsequencesRiskCardProps {
   finalSnapshot: RelationshipSnapshot;
@@ -24,40 +20,32 @@ export default function LevelConsequencesRiskCard({
   cabinetMembers,
   firedMembers,
 }: LevelConsequencesRiskCardProps) {
-  const impeachmentRisk = calculateRiskProbability(
-    finalSnapshot.president.approvalRating
-  );
-  const firingRisk = calculateRiskProbability(
-    finalSnapshot.president.psRelationship
-  );
+  const impeachmentRisk = calculateRiskProbability(finalSnapshot.president.approvalRating);
+  const firingRisk = calculateRiskProbability(finalSnapshot.president.psRelationship);
 
   // Get cabinet member risks with actual member data
   const cabinetRisks: CabinetRiskDisplayData[] = [];
 
-  Object.entries(finalSnapshot.cabinetMembers || {}).forEach(
-    ([staticId, memberData]) => {
-      const cabinetStaticId = staticId as CabinetStaticId;
-      const finalMemberData = finalSnapshot.cabinetMembers?.[cabinetStaticId];
-      const actualMember = cabinetMembers.find(
-        (m) => m.staticId === cabinetStaticId
-      );
+  Object.entries(finalSnapshot.cabinetMembers || {}).forEach(([staticId, memberData]) => {
+    const cabinetStaticId = staticId as CabinetStaticId;
+    const finalMemberData = finalSnapshot.cabinetMembers?.[cabinetStaticId];
+    const actualMember = cabinetMembers.find((m) => m.staticId === cabinetStaticId);
 
-      if (finalMemberData && actualMember) {
-        const currentValue = finalMemberData.approvalRating;
-        const riskPercentage = calculateRiskProbability(currentValue);
+    if (finalMemberData && actualMember) {
+      const currentValue = finalMemberData.approvalRating;
+      const riskPercentage = calculateRiskProbability(currentValue);
 
-        cabinetRisks.push({
-          title: `${actualMember.name} Firing Risk`,
-          staticId: cabinetStaticId,
-          name: actualMember.name,
-          position: actualMember.staticData.cabinetName,
-          currentValue,
-          threshold: CONSEQUENCE_THRESHOLD,
-          riskPercentage,
-        });
-      }
+      cabinetRisks.push({
+        title: `${actualMember.name} Firing Risk`,
+        staticId: cabinetStaticId,
+        name: actualMember.name,
+        position: actualMember.staticData.cabinetName,
+        currentValue,
+        threshold: CONSEQUENCE_THRESHOLD,
+        riskPercentage,
+      });
     }
-  );
+  });
 
   return (
     <Card

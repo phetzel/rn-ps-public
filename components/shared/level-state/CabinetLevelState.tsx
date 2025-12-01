@@ -1,15 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeCabinetMembersByLevel } from "~/lib/db/helpers";
-import type CabinetMember from "~/lib/db/models/CabinetMember";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Briefcase } from "~/lib/icons";
-import { Separator } from "~/components/ui/separator";
-import LevelProgress from "~/components/shared/level-state/LevelProgress";
-import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
-import type { OutcomeSnapshotType } from "~/types";
+import { CabinetMemberName } from '~/components/shared/entity/CabinetMemberName';
+import LevelProgress from '~/components/shared/level-state/LevelProgress';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { observeCabinetMembersByLevel } from '~/lib/db/helpers';
+import { Briefcase } from '~/lib/icons';
+
+import type CabinetMember from '~/lib/db/models/CabinetMember';
+import type { OutcomeSnapshotType } from '~/types';
 
 interface CabinetLevelStateProps {
   levelId: string;
@@ -46,22 +47,18 @@ const CabinetLevelState = ({
 
             if (!initialValues || !finalValues) return null;
 
-            const approvalChange =
-              finalValues.approvalRating - initialValues.approvalRating;
-            const relationshipChange =
-              finalValues.psRelationship - initialValues.psRelationship;
+            const approvalChange = finalValues.approvalRating - initialValues.approvalRating;
+            const relationshipChange = finalValues.psRelationship - initialValues.psRelationship;
 
             return (
               <View
                 key={member.id}
                 className="gap-2"
                 accessible={true}
-                accessibilityLabel={`${
-                  member.staticData.cabinetName
-                }. Approval changed by ${
-                  approvalChange > 0 ? "+" : ""
+                accessibilityLabel={`${member.staticData.cabinetName}. Approval changed by ${
+                  approvalChange > 0 ? '+' : ''
                 }${approvalChange}%. Relationship changed by ${
-                  relationshipChange > 0 ? "+" : ""
+                  relationshipChange > 0 ? '+' : ''
                 }${relationshipChange}%.`}
               >
                 <CabinetMemberName cabinetMember={member} />
@@ -80,9 +77,7 @@ const CabinetLevelState = ({
                   />
                 </View>
 
-                {idx !== cabinetMembers.length - 1 && (
-                  <Separator className="mt-4" />
-                )}
+                {idx !== cabinetMembers.length - 1 && <Separator className="mt-4" />}
               </View>
             );
           })}
@@ -92,7 +87,7 @@ const CabinetLevelState = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   cabinetMembers: observeCabinetMembersByLevel(levelId),
 }));
 

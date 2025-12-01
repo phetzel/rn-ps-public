@@ -1,36 +1,27 @@
 // Models
-import { CabinetMember, SubgroupApproval, Journalist } from "~/lib/db/models";
-// Helpers
+import { staticPublications } from '~/lib/data/staticMedia';
 import {
   fetchGameEntities,
   fetchCabinetMembersByLevelId,
   fetchLevel,
   fetchSituationsByLevelId,
-} from "~/lib/db/helpers/fetchApi";
-import { calculatePressConferenceRawEffects } from "~/lib/db/helpers/pressConferenceApi";
+} from '~/lib/db/helpers/fetchApi';
+// Helpers
+import { calculatePressConferenceRawEffects } from '~/lib/db/helpers/pressConferenceApi';
 import {
   computePublicationBoosts,
   getArchivedPublicationBoosts,
-} from "~/lib/db/helpers/publicationBoostApi";
+} from '~/lib/db/helpers/publicationBoostApi';
+import { CabinetMember, SubgroupApproval, Journalist } from '~/lib/db/models';
 // Data + Types
-import { staticPublications } from "~/lib/data/staticMedia";
-import { calculateAdBoost, calculateMediaCoverage } from "~/lib/utils";
-import {
-  EntityWithDelta,
-  EntityWithMediaDelta,
-  PublicationBoost,
-  LevelStatus,
-} from "~/types";
+import { calculateAdBoost, calculateMediaCoverage } from '~/lib/utils';
+import { EntityWithDelta, EntityWithMediaDelta, PublicationBoost, LevelStatus } from '~/types';
 
 // Enhance relationship deltas with entity data
-export async function getEnhancedRelationshipDeltas(
-  levelId: string
-): Promise<EntityWithDelta[]> {
+export async function getEnhancedRelationshipDeltas(levelId: string): Promise<EntityWithDelta[]> {
   try {
     // Get the raw deltas
-    const { psRelationshipDeltas } = await calculatePressConferenceRawEffects(
-      levelId
-    );
+    const { psRelationshipDeltas } = await calculatePressConferenceRawEffects(levelId);
 
     // Get the current game for current values
     const level = await fetchLevel(levelId);
@@ -58,10 +49,10 @@ export async function getEnhancedRelationshipDeltas(
     // Process president delta
     if (psRelationshipDeltas.president) {
       result.push({
-        id: "president",
-        name: game.presName || "President",
-        role: "president",
-        title: "President",
+        id: 'president',
+        name: game.presName || 'President',
+        role: 'president',
+        title: 'President',
         currentValue: game.presPsRelationship,
         delta: psRelationshipDeltas.president,
         adBoostedDelta: calculateAdBoost(psRelationshipDeltas.president),
@@ -70,73 +61,66 @@ export async function getEnhancedRelationshipDeltas(
 
     // Process cabinet member deltas
     if (psRelationshipDeltas.cabinetMembers) {
-      Object.entries(psRelationshipDeltas.cabinetMembers).forEach(
-        ([cabinetId, delta]) => {
-          // Find the active cabinet member
-          const cabinetMember = cabinetMemberMap.get(cabinetId);
+      Object.entries(psRelationshipDeltas.cabinetMembers).forEach(([cabinetId, delta]) => {
+        // Find the active cabinet member
+        const cabinetMember = cabinetMemberMap.get(cabinetId);
 
-          // Only include if the cabinet member is still active
-          if (cabinetMember) {
-            const staticCabinetInfo = cabinetMember.staticData;
+        // Only include if the cabinet member is still active
+        if (cabinetMember) {
+          const staticCabinetInfo = cabinetMember.staticData;
 
-            result.push({
-              id: cabinetId,
-              name: cabinetMember.name || cabinetId,
-              role: "cabinet",
-              title: staticCabinetInfo?.cabinetName || "Cabinet Member",
-              currentValue: cabinetMember.psRelationship || 0,
-              delta,
-              adBoostedDelta: calculateAdBoost(delta),
-            });
-          }
+          result.push({
+            id: cabinetId,
+            name: cabinetMember.name || cabinetId,
+            role: 'cabinet',
+            title: staticCabinetInfo?.cabinetName || 'Cabinet Member',
+            currentValue: cabinetMember.psRelationship || 0,
+            delta,
+            adBoostedDelta: calculateAdBoost(delta),
+          });
         }
-      );
+      });
     }
 
     // Process journalist deltas
     if (psRelationshipDeltas.journalists) {
-      Object.entries(psRelationshipDeltas.journalists).forEach(
-        ([journalistId, delta]) => {
-          // Find the active journalist
-          const journalist = journalistMap.get(journalistId);
+      Object.entries(psRelationshipDeltas.journalists).forEach(([journalistId, delta]) => {
+        // Find the active journalist
+        const journalist = journalistMap.get(journalistId);
 
-          // Only include if the journalist is still active
-          if (journalist) {
-            const staticJournalistInfo = journalist.staticData;
+        // Only include if the journalist is still active
+        if (journalist) {
+          const staticJournalistInfo = journalist.staticData;
 
-            // Get publication info for the journalist
-            let publicationName = "";
-            if (staticJournalistInfo) {
-              const publication =
-                staticPublications[staticJournalistInfo.publicationStaticId];
-              publicationName = publication?.name || "";
-            }
-
-            result.push({
-              id: journalistId,
-              name: staticJournalistInfo?.name || journalistId,
-              role: "journalist",
-              title: publicationName,
-              currentValue: journalist.psRelationship || 0,
-              delta,
-              adBoostedDelta: calculateAdBoost(delta),
-            });
+          // Get publication info for the journalist
+          let publicationName = '';
+          if (staticJournalistInfo) {
+            const publication = staticPublications[staticJournalistInfo.publicationStaticId];
+            publicationName = publication?.name || '';
           }
+
+          result.push({
+            id: journalistId,
+            name: staticJournalistInfo?.name || journalistId,
+            role: 'journalist',
+            title: publicationName,
+            currentValue: journalist.psRelationship || 0,
+            delta,
+            adBoostedDelta: calculateAdBoost(delta),
+          });
         }
-      );
+      });
     }
 
     return result;
   } catch (error) {
-    console.error("Failed to get enhanced relationship deltas:", error);
+    console.error('Failed to get enhanced relationship deltas:', error);
     throw error;
   }
 }
 
 // Enhance situation outcome deltas with entity data
-export async function getEnhancedSituationOutcomeDeltas(
-  levelId: string
-): Promise<{
+export async function getEnhancedSituationOutcomeDeltas(levelId: string): Promise<{
   deltas: EntityWithMediaDelta[];
   publicationBoosts: PublicationBoost[];
   totalPublicationBoost: number;
@@ -180,11 +164,7 @@ export async function getEnhancedSituationOutcomeDeltas(
     // Process each situation's outcome consequences
     for (const situation of situations) {
       const outcome = situation.outcome;
-      if (
-        !outcome ||
-        !outcome.consequences ||
-        !outcome.consequences.approvalChanges
-      ) {
+      if (!outcome || !outcome.consequences || !outcome.consequences.approvalChanges) {
         continue;
       }
 
@@ -192,21 +172,16 @@ export async function getEnhancedSituationOutcomeDeltas(
 
       // Add cabinet member deltas
       if (approvalChanges.cabinet) {
-        Object.entries(approvalChanges.cabinet).forEach(
-          ([cabinetId, delta]) => {
-            cabinetDeltas[cabinetId] = (cabinetDeltas[cabinetId] || 0) + delta;
-          }
-        );
+        Object.entries(approvalChanges.cabinet).forEach(([cabinetId, delta]) => {
+          cabinetDeltas[cabinetId] = (cabinetDeltas[cabinetId] || 0) + delta;
+        });
       }
 
       // Add subgroup deltas
       if (approvalChanges.subgroups) {
-        Object.entries(approvalChanges.subgroups).forEach(
-          ([subgroupId, delta]) => {
-            subgroupDeltas[subgroupId] =
-              (subgroupDeltas[subgroupId] || 0) + delta;
-          }
-        );
+        Object.entries(approvalChanges.subgroups).forEach(([subgroupId, delta]) => {
+          subgroupDeltas[subgroupId] = (subgroupDeltas[subgroupId] || 0) + delta;
+        });
       }
     }
 
@@ -221,8 +196,8 @@ export async function getEnhancedSituationOutcomeDeltas(
         result.push({
           id: cabinetId,
           name: cabinetMember.name || cabinetId,
-          role: "cabinet",
-          title: staticCabinetInfo?.cabinetName || "Cabinet Member",
+          role: 'cabinet',
+          title: staticCabinetInfo?.cabinetName || 'Cabinet Member',
           currentValue: cabinetMember.approvalRating || 0,
           preMediaDelta: delta,
           delta: mediaDelta,
@@ -239,8 +214,8 @@ export async function getEnhancedSituationOutcomeDeltas(
         result.push({
           id: subgroupId,
           name: subgroup.staticData?.name || subgroupId,
-          role: "subgroup",
-          title: "Voter Group",
+          role: 'subgroup',
+          title: 'Voter Group',
           currentValue: subgroup.approvalRating || 0,
           preMediaDelta: delta,
           delta: mediaDelta,
@@ -255,7 +230,7 @@ export async function getEnhancedSituationOutcomeDeltas(
       totalPublicationBoost: totalBoost,
     };
   } catch (error) {
-    console.error("Failed to get enhanced situation outcome deltas:", error);
+    console.error('Failed to get enhanced situation outcome deltas:', error);
     throw error;
   }
 }

@@ -1,12 +1,12 @@
-import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs } from 'expo-router';
+import React from 'react';
 
-import { LayoutDashboard } from "~/lib/icons/LayoutDashboard";
-import { FileText } from "~/lib/icons/FileText";
-import { History } from "~/lib/icons/History";
+import { FileText } from '~/lib/icons/FileText';
+import { History } from '~/lib/icons/History';
+import { LayoutDashboard } from '~/lib/icons/LayoutDashboard';
 
 export const unstable_settings = {
-  initialRouteName: "current",
+  initialRouteName: 'current',
 };
 
 export default function GameTabLayout() {
@@ -15,30 +15,24 @@ export default function GameTabLayout() {
       <Tabs.Screen
         name="state"
         options={{
-          title: "Status",
-          tabBarIcon: ({ color, size }) => (
-            <LayoutDashboard color={color} size={size} />
-          ),
+          title: 'Status',
+          tabBarIcon: ({ color, size }) => <LayoutDashboard color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="current"
         options={{
-          title: "Current Month",
+          title: 'Current Month',
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <FileText color={color} size={size} />
-          ),
+          tabBarIcon: ({ color, size }) => <FileText color={color} size={size} />,
         }}
       />
       <Tabs.Screen
         name="archive"
         options={{
-          title: "Archive",
+          title: 'Archive',
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <History color={color} size={size} />
-          ),
+          tabBarIcon: ({ color, size }) => <History color={color} size={size} />,
         }}
       />
     </Tabs>

@@ -1,41 +1,39 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
-import { jest } from "@jest/globals";
+import { render, screen } from '@testing-library/react-native';
 
-import { SituationCard } from "~/components/screens/tab-current/SituationCard";
-import { SituationType } from "~/types";
+import { SituationCard } from '~/components/screens/tab-current/SituationCard';
+import { SituationType } from '~/types';
 
 // Helper to create mock situation
 const createMockSituation = (overrides = {}) =>
   ({
     id: `situation-${Math.random()}`,
-    title: "Test Economic Crisis",
-    description: "A significant economic downturn affecting multiple sectors",
+    title: 'Test Economic Crisis',
+    description: 'A significant economic downturn affecting multiple sectors',
     type: SituationType.Economy,
-    gameId: "game-id",
-    levelId: "level-id",
+    gameId: 'game-id',
+    levelId: 'level-id',
     ...overrides,
-  } as any);
+  }) as any;
 
-describe("SituationCard", () => {
-  it("renders situation information correctly", () => {
+describe('SituationCard', () => {
+  it('renders situation information correctly', () => {
     const mockSituation = createMockSituation({
-      title: "Healthcare Crisis",
-      description: "Major healthcare system breakdown",
+      title: 'Healthcare Crisis',
+      description: 'Major healthcare system breakdown',
     });
 
     render(<SituationCard situation={mockSituation} />);
 
-    expect(screen.getByText("Healthcare Crisis")).toBeTruthy();
-    expect(screen.getByText("Major healthcare system breakdown")).toBeTruthy();
+    expect(screen.getByText('Healthcare Crisis')).toBeTruthy();
+    expect(screen.getByText('Major healthcare system breakdown')).toBeTruthy();
   });
 
-  it("displays different situation types correctly", () => {
+  it('displays different situation types correctly', () => {
     const situationTypes = [
-      { type: SituationType.Economy, title: "Economy Crisis" },
-      { type: SituationType.DomesticPolicy, title: "Domestic Policy Crisis" },
-      { type: SituationType.ForeignAffairs, title: "Foreign Affairs Crisis" },
-      { type: SituationType.Security, title: "Security Crisis" },
+      { type: SituationType.Economy, title: 'Economy Crisis' },
+      { type: SituationType.DomesticPolicy, title: 'Domestic Policy Crisis' },
+      { type: SituationType.ForeignAffairs, title: 'Foreign Affairs Crisis' },
+      { type: SituationType.Security, title: 'Security Crisis' },
     ];
 
     situationTypes.forEach(({ type, title }) => {
@@ -47,17 +45,15 @@ describe("SituationCard", () => {
     });
   });
 
-  it("has proper accessibility", () => {
+  it('has proper accessibility', () => {
     const mockSituation = createMockSituation({
-      title: "Immigration Policy Crisis",
-      description: "Significant challenges in immigration processing",
+      title: 'Immigration Policy Crisis',
+      description: 'Significant challenges in immigration processing',
     });
 
     render(<SituationCard situation={mockSituation} />);
 
-    expect(screen.getByText("Immigration Policy Crisis")).toBeTruthy();
-    expect(
-      screen.getByText("Significant challenges in immigration processing")
-    ).toBeTruthy();
+    expect(screen.getByText('Immigration Policy Crisis')).toBeTruthy();
+    expect(screen.getByText('Significant challenges in immigration processing')).toBeTruthy();
   });
 });

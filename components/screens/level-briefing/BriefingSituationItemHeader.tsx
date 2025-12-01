@@ -1,19 +1,17 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { CardHeader, CardTitle, CardDescription } from "~/components/ui/card";
-import { SituationTypeIcon } from "~/components/shared/entity/SituationTypeIcon";
-import { SituationStatusBadge } from "~/components/shared/entity/SituationStatusBadge";
-import type { Situation } from "~/lib/db/models";
-import { SituationType } from "~/types";
+import { SituationStatusBadge } from '~/components/shared/entity/SituationStatusBadge';
+import { SituationTypeIcon } from '~/components/shared/entity/SituationTypeIcon';
+import { CardHeader, CardTitle, CardDescription } from '~/components/ui/card';
+
+import type { Situation } from '~/lib/db/models';
 
 interface BriefingSituationItemHeaderProps {
   situation: Situation;
 }
 
-const BriefingSituationItemHeader = ({
-  situation,
-}: BriefingSituationItemHeaderProps) => {
+const BriefingSituationItemHeader = ({ situation }: BriefingSituationItemHeaderProps) => {
   const { title, description, type } = situation;
 
   return (
@@ -33,9 +31,7 @@ const BriefingSituationItemHeader = ({
         </View>
         <SituationStatusBadge status={type} />
       </View>
-      <CardDescription
-        accessibilityLabel={`Situation description: ${description}`}
-      >
+      <CardDescription accessibilityLabel={`Situation description: ${description}`}>
         {description}
       </CardDescription>
     </CardHeader>

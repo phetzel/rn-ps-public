@@ -1,10 +1,10 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { CabinetMember } from "~/lib/db/models";
-import { AlertCircle, UserX } from "~/lib/icons";
-import { CABINET_PENALTY_PER_FIRED_MEMBER } from "~/lib/constants";
-import { ConsequenceResult } from "~/types";
+import { Text } from '~/components/ui/text';
+import { CABINET_PENALTY_PER_FIRED_MEMBER } from '~/lib/constants';
+import { CabinetMember } from '~/lib/db/models';
+import { AlertCircle, UserX } from '~/lib/icons';
+import { ConsequenceResult } from '~/types';
 
 interface ConsequenceCabinetMembersFiredProps {
   consequences: ConsequenceResult;
@@ -15,8 +15,7 @@ export default function ConsequenceCabinetMembersFired({
   consequences,
   cabinetMembers,
 }: ConsequenceCabinetMembersFiredProps) {
-  const totalPenalty =
-    consequences.cabinetMembersFired.length * CABINET_PENALTY_PER_FIRED_MEMBER;
+  const totalPenalty = consequences.cabinetMembersFired.length * CABINET_PENALTY_PER_FIRED_MEMBER;
 
   return (
     <View
@@ -24,10 +23,7 @@ export default function ConsequenceCabinetMembersFired({
       accessible={true}
       accessibilityLabel={`${consequences.cabinetMembersFired.length} cabinet members fired. All voter approval decreased by ${totalPenalty}%.`}
     >
-      <View
-        className="p-4 rounded-lg bg-amber-50 border border-amber-200"
-        accessible={false}
-      >
+      <View className="p-4 rounded-lg bg-amber-50 border border-amber-200" accessible={false}>
         <View className="flex-row items-center mb-2" accessible={false}>
           <UserX className="text-amber-500 mr-2" size={16} />
           <Text className="text-base font-semibold">Cabinet Members Fired</Text>
@@ -41,22 +37,20 @@ export default function ConsequenceCabinetMembersFired({
           accessibilityLabel={`Fired cabinet members: ${consequences.cabinetMembersFired.length}`}
         >
           {consequences.cabinetMembersFired.map((staticId) => {
-            const firedMember = cabinetMembers?.find(
-              (m) => m.staticId === staticId
-            );
+            const firedMember = cabinetMembers?.find((m) => m.staticId === staticId);
             return (
               <View
                 key={staticId}
                 className="flex-row items-center gap-2"
                 accessible={true}
-                accessibilityLabel={`${firedMember?.name || "Unknown"}, ${
+                accessibilityLabel={`${firedMember?.name || 'Unknown'}, ${
                   firedMember?.staticData.cabinetName || staticId
                 }`}
               >
                 <Text className="text-sm text-amber-700">•</Text>
                 <View className="flex-1">
                   <Text className="text-sm text-amber-700 font-medium">
-                    {firedMember?.name || "Unknown"}
+                    {firedMember?.name || 'Unknown'}
                   </Text>
                   <Text className="text-xs text-amber-600">
                     {firedMember?.staticData.cabinetName || staticId}
@@ -75,12 +69,11 @@ export default function ConsequenceCabinetMembersFired({
         <AlertCircle className="text-red-500 mr-2 flex-shrink-0" size={16} />
         <View className="flex-1">
           <Text className="text-sm text-red-700">
-            All voter groups' approval decreased by{" "}
-            <Text className="font-bold">{totalPenalty}%</Text> due to cabinet
-            instability
+            All voter groups{"'"} approval decreased by{' '}
+            <Text className="font-bold">{totalPenalty}%</Text> due to cabinet instability
           </Text>
           <Text className="text-xs text-red-600 mt-1">
-            This affects the President's overall approval rating
+            This affects the President{"'"}s overall approval rating
           </Text>
         </View>
       </View>

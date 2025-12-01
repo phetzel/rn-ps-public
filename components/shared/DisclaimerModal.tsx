@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 
 import {
   AlertDialog,
@@ -7,11 +7,11 @@ import {
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "~/components/ui/alert-dialog";
-import { Text } from "~/components/ui/text";
-import { useDisclaimerDialogStore } from "~/lib/stores/disclaimerDialogStore";
-import { acknowledgeFictionDisclaimer } from "~/lib/db/helpers";
-import { FICTION_DISCLAIMER_TEXT } from "~/lib/constants";
+} from '~/components/ui/alert-dialog';
+import { Text } from '~/components/ui/text';
+import { FICTION_DISCLAIMER_TEXT } from '~/lib/constants';
+import { acknowledgeFictionDisclaimer } from '~/lib/db/helpers';
+import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 
 export function DisclaimerModal() {
   const { isOpen, close } = useDisclaimerDialogStore();
@@ -28,20 +28,18 @@ export function DisclaimerModal() {
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle accessibilityRole="header">
-            Legal disclaimer
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            {FICTION_DISCLAIMER_TEXT}
-          </AlertDialogDescription>
+          <AlertDialogTitle accessibilityRole="header">Legal disclaimer</AlertDialogTitle>
+          <AlertDialogDescription>{FICTION_DISCLAIMER_TEXT}</AlertDialogDescription>
         </AlertDialogHeader>
 
-        <AlertDialogAction onPress={handleAcknowledge} accessibilityLabel="Acknowledge legal disclaimer">
+        <AlertDialogAction
+          onPress={handleAcknowledge}
+          accessibilityLabel="Acknowledge legal disclaimer"
+          testID="disclaimer-acknowledge-button"
+        >
           <Text>I understand</Text>
         </AlertDialogAction>
       </AlertDialogContent>
     </AlertDialog>
   );
 }
-
-

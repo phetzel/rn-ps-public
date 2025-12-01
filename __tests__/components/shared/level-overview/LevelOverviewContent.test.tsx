@@ -9,136 +9,140 @@
  * - Proper content rendering for each tab
  */
 
-import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react-native";
+import { fireEvent, render, screen } from '@testing-library/react-native';
+import React from 'react';
 
-import LevelOverviewContent from "~/components/shared/level-overview/LevelOverviewContent";
+import LevelOverviewContent from '~/components/shared/level-overview/LevelOverviewContent';
 
 // Mock child components
-jest.mock("~/components/shared/level-consequences/LevelConsequences", () => ({
-  __esModule: true,
-  default: () => {
-    const { Text } = require("react-native");
-    return <Text>Level Consequences</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-consequences/LevelConsequences', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Consequences'),
+  };
+});
 
-jest.mock("~/components/shared/level-overview/LevelOverviewEvents", () => ({
-  __esModule: true,
-  default: () => {
-    const { Text } = require("react-native");
-    return <Text>Level Overview Events</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-overview/LevelOverviewEvents', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Overview Events'),
+  };
+});
 
-jest.mock("~/components/shared/level-overview/LevelOverviewPress", () => ({
-  __esModule: true,
-  default: () => {
-    const { Text } = require("react-native");
-    return <Text>Level Overview Press</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-overview/LevelOverviewPress', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Overview Press'),
+  };
+});
 
-jest.mock("~/components/shared/level-overview/LevelOverviewState", () => ({
-  __esModule: true,
-  default: () => {
-    const { Text } = require("react-native");
-    return <Text>Level Overview State</Text>;
-  },
-}));
+jest.mock('~/components/shared/level-overview/LevelOverviewState', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
+  return {
+    __esModule: true,
+    default: () => React.createElement(Text, {}, 'Level Overview State'),
+  };
+});
 
 // Mock utils
-jest.mock("~/lib/utils", () => ({
-  cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
+jest.mock('~/lib/utils', () => ({
+  cn: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
 }));
 
-describe("LevelOverviewContent", () => {
+describe('LevelOverviewContent', () => {
   const defaultProps = {
-    levelId: "level-1",
+    levelId: 'level-1',
   };
 
-  it("renders all tab triggers", () => {
+  it('renders all tab triggers', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    expect(screen.getByText("Results")).toBeTruthy();
-    expect(screen.getByText("Changes")).toBeTruthy();
-    expect(screen.getByText("Press")).toBeTruthy();
-    expect(screen.getByText("Events")).toBeTruthy();
+    expect(screen.getByText('Results')).toBeTruthy();
+    expect(screen.getByText('Changes')).toBeTruthy();
+    expect(screen.getByText('Press')).toBeTruthy();
+    expect(screen.getByText('Events')).toBeTruthy();
   });
 
-  it("has accessibility labels for tabs", () => {
+  it('has accessibility labels for tabs', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    expect(screen.getByLabelText("Level results")).toBeTruthy();
-    expect(screen.getByLabelText("Monthly state changes")).toBeTruthy();
-    expect(screen.getByLabelText("Level press")).toBeTruthy();
-    expect(screen.getByLabelText("Level events")).toBeTruthy();
+    expect(screen.getByLabelText('Level results')).toBeTruthy();
+    expect(screen.getByLabelText('Monthly state changes')).toBeTruthy();
+    expect(screen.getByLabelText('Level press')).toBeTruthy();
+    expect(screen.getByLabelText('Level events')).toBeTruthy();
   });
 
-  it("has accessibility label for tab container", () => {
+  it('has accessibility label for tab container', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    expect(screen.getByLabelText("Level overview sections")).toBeTruthy();
+    expect(screen.getByLabelText('Level overview sections')).toBeTruthy();
   });
 
-  it("defaults to results tab", () => {
+  it('defaults to results tab', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    expect(screen.getByText("Level Consequences")).toBeTruthy();
+    expect(screen.getByText('Level Consequences')).toBeTruthy();
   });
 
-  it("switches to changes tab when clicked", () => {
+  it('switches to changes tab when clicked', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    fireEvent.press(screen.getByText("Changes"));
-    expect(screen.getByText("Level Overview State")).toBeTruthy();
+    fireEvent.press(screen.getByText('Changes'));
+    expect(screen.getByText('Level Overview State')).toBeTruthy();
   });
 
-  it("switches to press tab when clicked", () => {
+  it('switches to press tab when clicked', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    fireEvent.press(screen.getByText("Press"));
-    expect(screen.getByText("Level Overview Press")).toBeTruthy();
+    fireEvent.press(screen.getByText('Press'));
+    expect(screen.getByText('Level Overview Press')).toBeTruthy();
   });
 
-  it("switches to events tab when clicked", () => {
+  it('switches to events tab when clicked', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
-    fireEvent.press(screen.getByText("Events"));
-    expect(screen.getByText("Level Overview Events")).toBeTruthy();
+    fireEvent.press(screen.getByText('Events'));
+    expect(screen.getByText('Level Overview Events')).toBeTruthy();
   });
 
-  it("passes levelId prop to child components", () => {
+  it('passes levelId prop to child components', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
     // Switch to different tabs to ensure all components receive levelId
-    fireEvent.press(screen.getByText("Changes"));
-    expect(screen.getByText("Level Overview State")).toBeTruthy();
+    fireEvent.press(screen.getByText('Changes'));
+    expect(screen.getByText('Level Overview State')).toBeTruthy();
 
-    fireEvent.press(screen.getByText("Press"));
-    expect(screen.getByText("Level Overview Press")).toBeTruthy();
+    fireEvent.press(screen.getByText('Press'));
+    expect(screen.getByText('Level Overview Press')).toBeTruthy();
 
-    fireEvent.press(screen.getByText("Events"));
-    expect(screen.getByText("Level Overview Events")).toBeTruthy();
+    fireEvent.press(screen.getByText('Events'));
+    expect(screen.getByText('Level Overview Events')).toBeTruthy();
 
-    fireEvent.press(screen.getByText("Results"));
-    expect(screen.getByText("Level Consequences")).toBeTruthy();
+    fireEvent.press(screen.getByText('Results'));
+    expect(screen.getByText('Level Consequences')).toBeTruthy();
   });
 
-  it("renders only one tab content at a time", () => {
+  it('renders only one tab content at a time', () => {
     render(<LevelOverviewContent {...defaultProps} />);
 
     // Initially on results tab
-    expect(screen.getByText("Level Consequences")).toBeTruthy();
-    expect(screen.queryByText("Level Overview State")).toBeFalsy();
-    expect(screen.queryByText("Level Overview Press")).toBeFalsy();
-    expect(screen.queryByText("Level Overview Events")).toBeFalsy();
+    expect(screen.getByText('Level Consequences')).toBeTruthy();
+    expect(screen.queryByText('Level Overview State')).toBeFalsy();
+    expect(screen.queryByText('Level Overview Press')).toBeFalsy();
+    expect(screen.queryByText('Level Overview Events')).toBeFalsy();
 
     // Switch to changes tab
-    fireEvent.press(screen.getByText("Changes"));
-    expect(screen.queryByText("Level Consequences")).toBeFalsy();
-    expect(screen.getByText("Level Overview State")).toBeTruthy();
-    expect(screen.queryByText("Level Overview Press")).toBeFalsy();
-    expect(screen.queryByText("Level Overview Events")).toBeFalsy();
+    fireEvent.press(screen.getByText('Changes'));
+    expect(screen.queryByText('Level Consequences')).toBeFalsy();
+    expect(screen.getByText('Level Overview State')).toBeTruthy();
+    expect(screen.queryByText('Level Overview Press')).toBeFalsy();
+    expect(screen.queryByText('Level Overview Events')).toBeFalsy();
   });
 });

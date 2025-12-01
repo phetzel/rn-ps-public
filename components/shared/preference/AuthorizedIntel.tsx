@@ -1,12 +1,12 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { CABINET_AUTHORIZED_THRESHOLD } from "~/lib/constants";
-import { Separator } from "~/components/ui/separator";
-import AuthorizedIcon from "~/components/shared/preference/AuthorizedIcon";
-import AuthorizedTooltip from "~/components/shared/preference/AuthorizedTooltip";
-import { Text } from "~/components/ui/text";
-import { cn } from "~/lib/utils";
+import AuthorizedIcon from '~/components/shared/preference/AuthorizedIcon';
+import AuthorizedTooltip from '~/components/shared/preference/AuthorizedTooltip';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
+import { cn } from '~/lib/utils';
 
 interface AuthorizedIntelProps {
   cabinetMemberName: string;
@@ -36,18 +36,15 @@ const AuthorizedIntel: React.FC<AuthorizedIntelProps> = ({
       <View className="flex-row items-center gap-2" accessible={false}>
         <Text
           className={cn(
-            "text-base text-gray-500 font-medium",
-            isAuthorized && "text-primary font-bold"
+            'text-base text-gray-500 font-medium',
+            isAuthorized && 'text-primary font-bold',
           )}
           accessible={false}
         >
-          Classified Info {isAuthorized ? "Authorized" : "Withheld"}
+          Classified Info {isAuthorized ? 'Authorized' : 'Withheld'}
         </Text>
 
-        <AuthorizedTooltip
-          isAuthorized={isAuthorized}
-          cabinetMemberName={cabinetMemberName}
-        />
+        <AuthorizedTooltip isAuthorized={isAuthorized} cabinetMemberName={cabinetMemberName} />
       </View>
 
       {isAuthorized && (

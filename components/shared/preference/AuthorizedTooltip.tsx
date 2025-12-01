@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { CABINET_AUTHORIZED_THRESHOLD } from "~/lib/constants";
-import InfoTooltip from "~/components/shared/InfoTooltip";
+import InfoTooltip from '~/components/shared/InfoTooltip';
+import { CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
 
 interface AuthorizedTooltipProps {
   isAuthorized: boolean;

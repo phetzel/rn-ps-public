@@ -1,4 +1,14 @@
-import { Database } from "@nozbe/watermelondb";
+import { Database } from '@nozbe/watermelondb';
+
+import { createCabinetMember } from '~/__tests__/support/factories/cabinetMemberFactory';
+import { createGame } from '~/__tests__/support/factories/gameFactory';
+import { createJournalist } from '~/__tests__/support/factories/journalistFactory';
+import { createLevel } from '~/__tests__/support/factories/levelFactory';
+import { createPressExchange } from '~/__tests__/support/factories/pressExchangeFactory';
+import { createPublication } from '~/__tests__/support/factories/publicationFactory';
+import { createSituation } from '~/__tests__/support/factories/situationFactory';
+import { createSubgroupApproval } from '~/__tests__/support/factories/subgroupApprovalFactory';
+import { GameFactoryOptions } from '~/__tests__/support/scenarios/types';
 import {
   Game,
   CabinetMember,
@@ -8,22 +18,13 @@ import {
   Level,
   Situation,
   PressExchange,
-} from "~/lib/db/models";
+} from '~/lib/db/models';
 import {
   CabinetStaticId,
   PublicationStaticId,
   JournalistStaticId,
   SubgroupStaticId,
-} from "~/types";
-import { createGame } from "~/__tests__/support/factories/gameFactory";
-import { createCabinetMember } from "~/__tests__/support/factories/cabinetMemberFactory";
-import { createPublication } from "~/__tests__/support/factories/publicationFactory";
-import { createJournalist } from "~/__tests__/support/factories/journalistFactory";
-import { createSubgroupApproval } from "~/__tests__/support/factories/subgroupApprovalFactory";
-import { createLevel } from "~/__tests__/support/factories/levelFactory";
-import { createSituation } from "~/__tests__/support/factories/situationFactory";
-import { createPressExchange } from "~/__tests__/support/factories/pressExchangeFactory";
-import { GameFactoryOptions } from "~/__tests__/support/scenarios/types";
+} from '~/types';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // BULK CREATION HELPERS
@@ -43,7 +44,7 @@ export interface GameScenarioOptions {
  */
 export async function createGameScenario(
   database: Database,
-  options: GameScenarioOptions = {}
+  options: GameScenarioOptions = {},
 ): Promise<{
   game: Game;
   cabinetMembers: CabinetMember[];
@@ -84,10 +85,7 @@ export async function createGameScenario(
   // Create journalists
   const journalists: Journalist[] = [];
   const journalistCount = options.journalistCount ?? 4;
-  const journalistIds = Object.values(JournalistStaticId).slice(
-    0,
-    journalistCount
-  );
+  const journalistIds = Object.values(JournalistStaticId).slice(0, journalistCount);
 
   for (let i = 0; i < journalistCount; i++) {
     const staticId = journalistIds[i];
@@ -142,7 +140,7 @@ export async function createGameScenario(
  */
 export async function createPressConferenceScenario(
   database: Database,
-  options: { gameId?: string; levelId?: string } = {}
+  options: { gameId?: string; levelId?: string } = {},
 ): Promise<{
   game: Game;
   level: Level;
@@ -153,14 +151,14 @@ export async function createPressConferenceScenario(
 }> {
   let game: Game;
   if (options.gameId) {
-    game = await database.get<Game>("games").find(options.gameId);
+    game = await database.get<Game>('games').find(options.gameId);
   } else {
     game = await createGame(database);
   }
 
   let level: Level;
   if (options.levelId) {
-    level = await database.get<Level>("levels").find(options.levelId);
+    level = await database.get<Level>('levels').find(options.levelId);
   } else {
     level = await createLevel(database, { gameId: game.id });
   }

@@ -1,18 +1,15 @@
-import React, { useState, useRef } from "react";
-import { Stack, useRouter } from "expo-router";
-import { Pressable, Platform, View } from "react-native";
-import { useSharedValue } from "react-native-reanimated";
+import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
+import { Stack, useRouter } from 'expo-router';
+import React, { useState, useRef } from 'react';
+import { Pressable, Platform, View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
 
-import {
-  BottomSheetModal,
-  BottomSheetView,
-  BottomSheetHandle,
-} from "~/components/ui/bottom-sheet";
-import ConferenceInfo from "~/components/screens/level-press-conference/ConferenceInfo";
-import { HeaderBackIcon } from "~/components/shared/layout/HeaderBackIcon";
-import { useCurrentLevelStore } from "~/lib/stores/currentLevelStore";
-import { Info } from "~/lib/icons/Info";
-import { cn } from "~/lib/utils";
+import ConferenceInfo from '~/components/screens/level-press-conference/ConferenceInfo';
+import { HeaderBackIcon } from '~/components/shared/layout/HeaderBackIcon';
+import { BottomSheetModal, BottomSheetView, BottomSheetHandle } from '~/components/ui/bottom-sheet';
+import { Info } from '~/lib/icons/Info';
+import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+import { cn } from '~/lib/utils';
 
 export default function LevelPressConferenceLayout() {
   const router = useRouter();
@@ -20,7 +17,7 @@ export default function LevelPressConferenceLayout() {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const animatedIndex = useSharedValue<number>(0);
   const animatedPosition = useSharedValue<number>(0);
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const bottomSheetModalRef = useRef<BottomSheetModalType>(null);
 
   const currentLevelId = useCurrentLevelStore((state) => state.currentLevelId);
   if (!currentLevelId) {
@@ -43,7 +40,7 @@ export default function LevelPressConferenceLayout() {
     }
   };
 
-  const snapPoints = [600, "95%"];
+  const snapPoints = [600, '95%'];
 
   return (
     <>
@@ -56,9 +53,7 @@ export default function LevelPressConferenceLayout() {
               onPress={handleInfo}
               accessibilityRole="button"
               accessibilityLabel={
-                isBottomSheetOpen
-                  ? "Close game information"
-                  : "Open game information"
+                isBottomSheetOpen ? 'Close game information' : 'Open game information'
               }
               accessibilityHint="Shows current relationships and approval ratings"
               className="web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2"
@@ -66,20 +61,16 @@ export default function LevelPressConferenceLayout() {
               {({ pressed }) => (
                 <View
                   className={cn(
-                    "flex-1 aspect-square pt-0.5 justify-center items-start web:px-5",
-                    pressed && "opacity-70"
+                    'flex-1 aspect-square pt-0.5 justify-center items-start web:px-5',
+                    pressed && 'opacity-70',
                   )}
                 >
-                  <Info
-                    className="text-foreground"
-                    size={23}
-                    strokeWidth={1.25}
-                  />
+                  <Info className="text-foreground" size={23} strokeWidth={1.25} />
                 </View>
               )}
             </Pressable>
           ),
-          headerTitle: "Press Conference",
+          headerTitle: 'Press Conference',
         }}
       />
 
@@ -96,7 +87,7 @@ export default function LevelPressConferenceLayout() {
         )}
       >
         <BottomSheetView className="flex-1 items-center bg-background">
-          {Platform.OS === "web" && (
+          {Platform.OS === 'web' && (
             <BottomSheetHandle
               className="bg-gray-300 mt-2"
               animatedIndex={animatedIndex}

@@ -1,13 +1,13 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { CONSEQUENCE_THRESHOLD } from "~/lib/constants";
+import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
 import {
   getRiskLevel,
   getRiskTextColor,
   getRiskDescription,
   formatRiskProbability,
-} from "~/lib/utils";
-import { RiskLevel } from "~/types";
+} from '~/lib/utils';
+import { RiskLevel } from '~/types';
 
 export interface RiskDisplayInfo {
   level: RiskLevel;
@@ -22,7 +22,7 @@ export interface RiskDisplayInfo {
 export function useRiskDisplay(
   currentValue: number,
   riskPercentage: number,
-  threshold: number = CONSEQUENCE_THRESHOLD
+  threshold: number = CONSEQUENCE_THRESHOLD,
 ): RiskDisplayInfo {
   return useMemo(() => {
     // Extract all the shared logic here

@@ -1,41 +1,32 @@
-import { Model, Relation } from "@nozbe/watermelondb";
-import {
-  field,
-  text,
-  date,
-  relation,
-  children,
-  readonly,
-} from "@nozbe/watermelondb/decorators";
-import type { Query } from "@nozbe/watermelondb";
-import type { Associations } from "@nozbe/watermelondb/Model"; // Import for clarity if needed, but as const is sufficient
+import { Model, Relation } from '@nozbe/watermelondb';
+import { field, text, date, relation, children, readonly } from '@nozbe/watermelondb/decorators';
 
-// Models
-import type Game from "./Game";
-import type Journalist from "./Journalist";
-// Data
-import { staticPublications } from "~/lib/data/staticMedia";
-// Types + Constants
-import type { PublicationStaticId, StaticPublication } from "~/types";
-import { AlignmentWeight } from "~/types";
+import { staticPublications } from '~/lib/data/staticMedia';
+import { AlignmentWeight } from '~/types';
+
+import type Game from './Game';
+import type Journalist from './Journalist';
+import type { Query } from '@nozbe/watermelondb';
+import type { Associations } from '@nozbe/watermelondb/Model'; // Import for clarity if needed, but as const is sufficient
+import type { PublicationStaticId, StaticPublication } from '~/types';
 
 export default class Publication extends Model {
-  static table = "publications";
+  static table = 'publications';
 
   static associations: Associations = {
-    games: { type: "belongs_to", key: "game_id" },
-    journalists: { type: "has_many", foreignKey: "publication_id" }, // How journalists link back
+    games: { type: 'belongs_to', key: 'game_id' },
+    journalists: { type: 'has_many', foreignKey: 'publication_id' }, // How journalists link back
   };
 
-  @relation("games", "game_id") game!: Relation<Game>;
-  @children("journalists") journalists!: Query<Journalist>; // Publications have many journalists
+  @relation('games', 'game_id') game!: Relation<Game>;
+  @children('journalists') journalists!: Query<Journalist>; // Publications have many journalists
 
-  @text("static_id") staticId!: PublicationStaticId;
+  @text('static_id') staticId!: PublicationStaticId;
 
-  @field("game_id") game_id!: string;
+  @field('game_id') game_id!: string;
 
-  @readonly @date("created_at") createdAt!: Date;
-  @readonly @date("updated_at") updatedAt!: Date;
+  @readonly @date('created_at') createdAt!: Date;
+  @readonly @date('updated_at') updatedAt!: Date;
 
   get staticData(): StaticPublication {
     return staticPublications[this.staticId];
@@ -67,13 +58,13 @@ export default class Publication extends Model {
 
     // Apply alignment bonus/penalty
     if (
-      (politicalLeaning === "liberal" && presidentLeaning === "liberal") ||
-      (politicalLeaning === "conservative" && presidentLeaning === "conservative")
+      (politicalLeaning === 'liberal' && presidentLeaning === 'liberal') ||
+      (politicalLeaning === 'conservative' && presidentLeaning === 'conservative')
     ) {
       totalApproval += AlignmentWeight.DoublePositive;
     } else if (
-      (politicalLeaning === "liberal" && presidentLeaning === "conservative") ||
-      (politicalLeaning === "conservative" && presidentLeaning === "liberal")
+      (politicalLeaning === 'liberal' && presidentLeaning === 'conservative') ||
+      (politicalLeaning === 'conservative' && presidentLeaning === 'liberal')
     ) {
       totalApproval += AlignmentWeight.DoubleNegative;
     }
@@ -91,13 +82,11 @@ export default class Publication extends Model {
 
     if (approvalRating >= midpoint) {
       // Positive coverage
-      const boost =
-        1 + ((approvalRating - midpoint) / midpoint) * (maxBoost - 1);
+      const boost = 1 + ((approvalRating - midpoint) / midpoint) * (maxBoost - 1);
       return parseFloat(boost.toFixed(2));
     } else {
       // Negative coverage
-      const boost =
-        1 - ((midpoint - approvalRating) / midpoint) * (1 - minBoost);
+      const boost = 1 - ((midpoint - approvalRating) / midpoint) * (1 - minBoost);
       return parseFloat(boost.toFixed(2));
     }
   }

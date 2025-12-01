@@ -1,56 +1,60 @@
 #!/usr/bin/env tsx
 
-import { LLMClient } from "./gen-situation/llm/client";
-import { SituationGenerator } from "./gen-situation/generator";
+import { SituationGenerator } from './gen-situation/generator';
+import { LLMClient } from './gen-situation/llm/client';
 
 /**
  * Main situation generation command
  * Generates a single situation with comprehensive error handling
  */
 async function main(): Promise<void> {
-  console.log("🎮 Press Secretary Situation Generator");
+  console.log('🎮 Press Secretary Situation Generator');
   console.log(`📅 Generation Date: ${new Date().toLocaleString()}`);
-  console.log("============================================================");
+  console.log('============================================================');
 
   // Get command line arguments
   const args = process.argv.slice(2);
   const debugMode = args.includes('--debug') || process.env.LLM_DEBUG_MODE === 'true';
   const traceMode = args.includes('--trace-llm') || process.env.LLM_TRACE_MODE === 'true';
 
-  if (args.some(arg => arg.startsWith('--count'))) {
-    console.warn("⚠️  Batch generation is no longer supported. Generating a single situation instead.");
+  if (args.some((arg) => arg.startsWith('--count'))) {
+    console.warn(
+      '⚠️  Batch generation is no longer supported. Generating a single situation instead.',
+    );
   }
 
   try {
-    console.log("🤖 Initializing situation generator...");
+    console.log('🤖 Initializing situation generator...');
     if (debugMode) {
-      console.log("🔍 Debug mode enabled - step-level logging active");
+      console.log('🔍 Debug mode enabled - step-level logging active');
     }
     if (traceMode) {
-      console.log("🛰️ LLM trace enabled - raw model outputs will be logged");
+      console.log('🛰️ LLM trace enabled - raw model outputs will be logged');
     }
 
     const llmClient = new LLMClient({ debugMode, traceResponses: traceMode });
     const generator = new SituationGenerator(llmClient);
 
-    console.log("🎯 Starting single situation generation...");
+    console.log('🎯 Starting single situation generation...');
     const result = await generator.generateComplete();
 
     if (result.success) {
-      console.log("✅ Generation completed successfully!");
+      console.log('✅ Generation completed successfully!');
       console.log(`📁 Files written to: ${result.files?.directoryPath}`);
       if (result.files?.files) {
-        console.log(`📄 Generated files: ${result.files.files.join(", ")}`);
+        console.log(`📄 Generated files: ${result.files.files.join(', ')}`);
       }
       if (result.usage) {
-        console.log(`💰 Usage: ${result.usage.requests} requests, ${result.usage.totalTokens} tokens, $${result.usage.totalCost.toFixed(4)}`);
+        console.log(
+          `💰 Usage: ${result.usage.requests} requests, ${result.usage.totalTokens} tokens, $${result.usage.totalCost.toFixed(4)}`,
+        );
       }
     } else {
-      console.error("❌ Generation failed:", result.error);
+      console.error('❌ Generation failed:', result.error);
       process.exit(1);
     }
   } catch (error) {
-    console.error("❌ Fatal error:", error);
+    console.error('❌ Fatal error:', error);
     process.exit(1);
   }
 }

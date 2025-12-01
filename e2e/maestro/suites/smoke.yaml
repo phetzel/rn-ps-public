@@ -1,0 +1,4 @@
+appId: com.phetzel.rnps
+name: Smoke Suite
+flows:
+  - flows/games/create_game.yaml

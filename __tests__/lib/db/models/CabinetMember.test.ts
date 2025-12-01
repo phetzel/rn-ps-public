@@ -18,15 +18,16 @@
  * - Game relationship integrity
  */
 
-import { Database } from "@nozbe/watermelondb";
-import { setupTestDatabase, resetDatabase } from "~/__tests__/support/db";
-import { createGame } from "~/__tests__/support/factories/gameFactory";
-import { createCabinetMember } from "~/__tests__/support/factories/cabinetMemberFactory";
-import { CabinetMember } from "~/lib/db/models";
-import { CabinetStaticId } from "~/types";
-import { staticCabinetMembers } from "~/lib/data/staticPolitics";
+import { Database } from '@nozbe/watermelondb';
 
-describe("CabinetMember Model", () => {
+import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
+import { createCabinetMember } from '~/__tests__/support/factories/cabinetMemberFactory';
+import { createGame } from '~/__tests__/support/factories/gameFactory';
+import { staticCabinetMembers } from '~/lib/data/staticPolitics';
+import { CabinetMember } from '~/lib/db/models';
+import { CabinetStaticId } from '~/types';
+
+describe('CabinetMember Model', () => {
   let database: Database;
 
   beforeAll(() => {
@@ -41,21 +42,21 @@ describe("CabinetMember Model", () => {
   // MODEL STRUCTURE & PROPERTIES
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Model Structure", () => {
-    it("should have correct table name and associations", () => {
-      expect(CabinetMember.table).toBe("cabinet_members");
+  describe('Model Structure', () => {
+    it('should have correct table name and associations', () => {
+      expect(CabinetMember.table).toBe('cabinet_members');
       expect(CabinetMember.associations.games).toEqual({
-        type: "belongs_to",
-        key: "game_id",
+        type: 'belongs_to',
+        key: 'game_id',
       });
     });
 
-    it("should create cabinet member with required properties", async () => {
+    it('should create cabinet member with required properties', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.State,
-        name: "John Smith",
+        name: 'John Smith',
         approvalRating: 75,
         psRelationship: 65,
         isActive: true,
@@ -63,7 +64,7 @@ describe("CabinetMember Model", () => {
 
       expect(member.game_id).toBe(game.id);
       expect(member.staticId).toBe(CabinetStaticId.State);
-      expect(member.name).toBe("John Smith");
+      expect(member.name).toBe('John Smith');
       expect(member.approvalRating).toBe(75);
       expect(member.psRelationship).toBe(65);
       expect(member.isActive).toBe(true);
@@ -71,7 +72,7 @@ describe("CabinetMember Model", () => {
       expect(member.updatedAt).toBeInstanceOf(Date);
     });
 
-    it("should belong to a game and be accessible from game", async () => {
+    it('should belong to a game and be accessible from game', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -90,27 +91,27 @@ describe("CabinetMember Model", () => {
   // STATIC DATA ACCESS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Static Data Integration", () => {
-    it("should return correct static data for all cabinet positions", async () => {
+  describe('Static Data Integration', () => {
+    it('should return correct static data for all cabinet positions', async () => {
       const game = await createGame(database);
       const testCases = [
-        { staticId: CabinetStaticId.State, expectedName: "Secretary of State" },
+        { staticId: CabinetStaticId.State, expectedName: 'Secretary of State' },
         {
           staticId: CabinetStaticId.Defense,
-          expectedName: "Secretary of Defense",
+          expectedName: 'Secretary of Defense',
         },
         {
           staticId: CabinetStaticId.Treasury,
-          expectedName: "Secretary of the Treasury",
+          expectedName: 'Secretary of the Treasury',
         },
-        { staticId: CabinetStaticId.Justice, expectedName: "Attorney General" },
+        { staticId: CabinetStaticId.Justice, expectedName: 'Attorney General' },
         {
           staticId: CabinetStaticId.HHS,
-          expectedName: "Secretary of Health and Human Services",
+          expectedName: 'Secretary of Health and Human Services',
         },
         {
           staticId: CabinetStaticId.Homeland,
-          expectedName: "Secretary of Homeland Security",
+          expectedName: 'Secretary of Homeland Security',
         },
       ];
 
@@ -130,8 +131,8 @@ describe("CabinetMember Model", () => {
   // RATING VALIDATION
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Rating Validation", () => {
-    it("should enforce approval rating bounds (0-100)", async () => {
+  describe('Rating Validation', () => {
+    it('should enforce approval rating bounds (0-100)', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -163,7 +164,7 @@ describe("CabinetMember Model", () => {
       expect(member.approvalRating).toBe(75);
     });
 
-    it("should enforce PS relationship bounds (0-100)", async () => {
+    it('should enforce PS relationship bounds (0-100)', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -195,7 +196,7 @@ describe("CabinetMember Model", () => {
       expect(member.psRelationship).toBe(85);
     });
 
-    it("should round decimal values to whole numbers", async () => {
+    it('should round decimal values to whole numbers', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -234,7 +235,7 @@ describe("CabinetMember Model", () => {
       expect(member.psRelationship).toBe(45);
     });
 
-    it("should handle edge cases with rounding and bounds", async () => {
+    it('should handle edge cases with rounding and bounds', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -269,7 +270,7 @@ describe("CabinetMember Model", () => {
       expect(member.psRelationship).toBe(100);
     });
 
-    it("should validate both ratings in single update", async () => {
+    it('should validate both ratings in single update', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -289,12 +290,12 @@ describe("CabinetMember Model", () => {
       expect(member.psRelationship).toBe(0);
     });
 
-    it("should preserve other properties during validation", async () => {
+    it('should preserve other properties during validation', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.Treasury,
-        name: "Treasury Secretary",
+        name: 'Treasury Secretary',
         approvalRating: 50,
         psRelationship: 60,
         isActive: true,
@@ -314,11 +315,11 @@ describe("CabinetMember Model", () => {
 
       // Check that other properties were preserved
       expect(member.staticId).toBe(CabinetStaticId.Treasury);
-      expect(member.name).toBe("Treasury Secretary");
+      expect(member.name).toBe('Treasury Secretary');
       expect(member.isActive).toBe(true);
     });
 
-    it("should validate when only one rating is updated", async () => {
+    it('should validate when only one rating is updated', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -354,8 +355,8 @@ describe("CabinetMember Model", () => {
   // ACTIVITY STATUS MANAGEMENT
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Activity Status", () => {
-    it("should manage active/inactive states", async () => {
+  describe('Activity Status', () => {
+    it('should manage active/inactive states', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
@@ -373,14 +374,14 @@ describe("CabinetMember Model", () => {
       expect(member.isActive).toBe(false);
     });
 
-    it("should support cabinet reshuffles", async () => {
+    it('should support cabinet reshuffles', async () => {
       const game = await createGame(database);
 
       // Create initial Secretary of State
       const originalSecretary = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.State,
-        name: "Original Secretary",
+        name: 'Original Secretary',
         isActive: true,
       });
 
@@ -391,10 +392,10 @@ describe("CabinetMember Model", () => {
         });
       });
 
-      const newSecretary = await createCabinetMember(database, {
+      await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.State,
-        name: "New Secretary",
+        name: 'New Secretary',
         isActive: true,
       });
 
@@ -404,11 +405,11 @@ describe("CabinetMember Model", () => {
 
       const activeMembers = allMembers.filter((m) => m.isActive);
       expect(activeMembers).toHaveLength(1);
-      expect(activeMembers[0].name).toBe("New Secretary");
+      expect(activeMembers[0].name).toBe('New Secretary');
 
       const inactiveMembers = allMembers.filter((m) => !m.isActive);
       expect(inactiveMembers).toHaveLength(1);
-      expect(inactiveMembers[0].name).toBe("Original Secretary");
+      expect(inactiveMembers[0].name).toBe('Original Secretary');
     });
   });
 
@@ -416,8 +417,8 @@ describe("CabinetMember Model", () => {
   // REALISTIC GAME SCENARIOS
   // ═══════════════════════════════════════════════════════════════════════════════
 
-  describe("Game Integration", () => {
-    it("should support full cabinet creation", async () => {
+  describe('Game Integration', () => {
+    it('should support full cabinet creation', async () => {
       const game = await createGame(database);
       const allPositions = Object.values(CabinetStaticId);
 
@@ -429,8 +430,8 @@ describe("CabinetMember Model", () => {
             staticId,
             approvalRating: 50 + index * 5, // Vary ratings realistically
             psRelationship: 60 + index * 3,
-          })
-        )
+          }),
+        ),
       );
 
       expect(members).toHaveLength(allPositions.length);
@@ -446,12 +447,12 @@ describe("CabinetMember Model", () => {
       });
     });
 
-    it("should maintain data consistency during rating updates with validation", async () => {
+    it('should maintain data consistency during rating updates with validation', async () => {
       const game = await createGame(database);
       const member = await createCabinetMember(database, {
         gameId: game.id,
         staticId: CabinetStaticId.Defense,
-        name: "Defense Secretary",
+        name: 'Defense Secretary',
         approvalRating: 60,
         psRelationship: 70,
         isActive: true,
@@ -476,12 +477,12 @@ describe("CabinetMember Model", () => {
       expect(member.updatedAt.getTime()).toBeGreaterThan(originalUpdatedAt);
 
       // Verify other properties unchanged
-      expect(member.name).toBe("Defense Secretary");
+      expect(member.name).toBe('Defense Secretary');
       expect(member.staticId).toBe(CabinetStaticId.Defense);
       expect(member.isActive).toBe(true);
     });
 
-    it("should efficiently query multiple cabinet members", async () => {
+    it('should efficiently query multiple cabinet members', async () => {
       const game = await createGame(database);
 
       // Create realistic cabinet size
@@ -497,8 +498,8 @@ describe("CabinetMember Model", () => {
           createCabinetMember(database, {
             gameId: game.id,
             staticId,
-          })
-        )
+          }),
+        ),
       );
 
       const startTime = Date.now();

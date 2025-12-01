@@ -1,10 +1,11 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { AlertCircle } from "~/lib/icons/AlertCircle";
-import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
-import type { Question } from "~/types";
+import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
+import { Text } from '~/components/ui/text';
+import { AlertCircle } from '~/lib/icons/AlertCircle';
+
+import type { Question } from '~/types';
 
 interface ExchangeQuestionHeaderProps {
   question: Question;
@@ -26,10 +27,7 @@ export default function ExchangeQuestionHeader({
         accessibilityLabel="Journalist was ignored - not called on during the press conference"
       >
         <View className="bg-red-100 rounded-full p-2">
-          <AlertCircle
-            className="text-red-600"
-            accessibilityLabel="Warning indicator"
-          />
+          <AlertCircle className="text-red-600" accessibilityLabel="Warning indicator" />
         </View>
         <View className="flex-1" accessible={false}>
           <Text className="text-base font-medium" accessible={false}>
@@ -50,10 +48,7 @@ export default function ExchangeQuestionHeader({
         accessibilityLabel="Follow-up question was ignored and not addressed"
       >
         <View className="bg-red-100 rounded-full p-2">
-          <AlertCircle
-            className="text-red-600"
-            accessibilityLabel="Warning indicator"
-          />
+          <AlertCircle className="text-red-600" accessibilityLabel="Warning indicator" />
         </View>
         <View className="flex-1" accessible={false}>
           <Text className="text-base font-medium" accessible={false}>
@@ -67,11 +62,6 @@ export default function ExchangeQuestionHeader({
     );
   } else {
     // Question was asked
-    return (
-      <QuestionDisplay
-        question={question.text}
-        isFollowUpQuestion={!isFirstQuestion}
-      />
-    );
+    return <QuestionDisplay question={question.text} isFollowUpQuestion={!isFirstQuestion} />;
   }
 }

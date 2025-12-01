@@ -1,7 +1,7 @@
-import { Database } from "@nozbe/watermelondb";
-import SQLiteAdapter from "@nozbe/watermelondb/adapters/sqlite";
-import { myAppSchema } from "~/lib/db/schema";
-import { migrations } from "~/lib/db/migrations";
+import { Database } from '@nozbe/watermelondb';
+import SQLiteAdapter from '@nozbe/watermelondb/adapters/sqlite';
+
+import { migrations } from '~/lib/db/migrations';
 import {
   CabinetMember,
   Game,
@@ -11,7 +11,8 @@ import {
   Situation,
   SubgroupApproval,
   PressExchange,
-} from "~/lib/db/models";
+} from '~/lib/db/models';
+import { myAppSchema } from '~/lib/db/schema';
 
 /**
  * Creates a new test database instance.

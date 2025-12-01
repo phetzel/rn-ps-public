@@ -1,17 +1,14 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import type { PressExchange, Situation, Journalist } from "~/lib/db/models";
-import {
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "~/components/ui/accordion";
-import { Text } from "~/components/ui/text";
-import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
-import ExchangeQuestionItem from "~/components/shared/exchanges-outcome-list/ExchangeQuestionItem";
-import { findQuestionById } from "~/lib/db/helpers/exchangeApi";
+import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
+import ExchangeQuestionItem from '~/components/shared/exchanges-outcome-list/ExchangeQuestionItem';
+import { AccordionItem, AccordionTrigger, AccordionContent } from '~/components/ui/accordion';
+import { Text } from '~/components/ui/text';
+import { findQuestionById } from '~/lib/db/helpers/exchangeApi';
+
+import type { PressExchange, Situation, Journalist } from '~/lib/db/models';
 
 interface ExchangeOutcomeItemProps {
   exchange: PressExchange;
@@ -19,11 +16,7 @@ interface ExchangeOutcomeItemProps {
   journalist: Journalist;
 }
 
-function ExchangeOutcomeItem({
-  exchange,
-  situation,
-  journalist,
-}: ExchangeOutcomeItemProps) {
+function ExchangeOutcomeItem({ exchange, situation, journalist }: ExchangeOutcomeItemProps) {
   const content = exchange.parseContent;
   const progress = exchange.parseProgress;
 
@@ -46,18 +39,16 @@ function ExchangeOutcomeItem({
       accessibilityLabel={`Exchange with ${journalist.staticData.name}. ${
         isJournalistCalledOn
           ? `${history.length} questions answered`
-          : "Journalist was not called on"
+          : 'Journalist was not called on'
       }.`}
     >
       <AccordionTrigger
         className="px-4"
         accessibilityLabel={`${
-          isJournalistCalledOn ? "Expand to view" : "View"
+          isJournalistCalledOn ? 'Expand to view' : 'View'
         } exchange details with ${journalist.staticData.name}`}
         accessibilityHint={`${
-          isJournalistCalledOn
-            ? "Shows questions and answers"
-            : "Shows ignored status"
+          isJournalistCalledOn ? 'Shows questions and answers' : 'Shows ignored status'
         } for this journalist`}
       >
         <JournalistDisplay journalistId={exchange.journalist_id} />
@@ -75,10 +66,7 @@ function ExchangeOutcomeItem({
             accessibilityLabel={`Context: ${situation.title}`}
             accessibilityRole="text"
           >
-            <Text
-              className="text-sm text-muted-foreground mb-1"
-              accessible={false}
-            >
+            <Text className="text-sm text-muted-foreground mb-1" accessible={false}>
               Context
             </Text>
             <Text className="font-semibold" accessible={false}>
@@ -98,19 +86,12 @@ function ExchangeOutcomeItem({
             <View
               className="gap-4"
               accessible={true}
-              accessibilityLabel={`${
-                history.length
-              } questions and answers with ${
-                pendingFollowUpQuestion
-                  ? "one unanswered follow-up"
-                  : "all questions addressed"
+              accessibilityLabel={`${history.length} questions and answers with ${
+                pendingFollowUpQuestion ? 'one unanswered follow-up' : 'all questions addressed'
               }`}
             >
               {history.map((interaction, index) => {
-                const question = findQuestionById(
-                  interaction.questionId,
-                  content
-                );
+                const question = findQuestionById(interaction.questionId, content);
                 if (!question) return null;
 
                 return (
@@ -139,7 +120,7 @@ function ExchangeOutcomeItem({
   );
 }
 
-export default withObservables(["exchange"], ({ exchange }) => ({
+export default withObservables(['exchange'], ({ exchange }) => ({
   exchange,
   situation: exchange.situation.observe(),
   journalist: exchange.journalist.observe(),

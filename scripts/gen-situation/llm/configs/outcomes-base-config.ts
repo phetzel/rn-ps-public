@@ -1,9 +1,15 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
-import type { ResponsesJSONSchemaOptions } from "../../types";
-import  { type GenerateSituationPlan, type GenerateBaseOutcomes, type GeneratePreferences, generateBaseOutcomesSchema } from "~/lib/schemas/generate";
-import { buildCreativePrompt } from "../prompt-constants";
-import { GPT_5 } from "../llm-constants";
+import { zodToJsonSchema } from 'zod-to-json-schema';
 
+import {
+  type GenerateSituationPlan,
+  type GeneratePreferences,
+  generateBaseOutcomesSchema,
+} from '~/lib/schemas/generate';
+
+import { GPT_5 } from '../llm-constants';
+import { buildCreativePrompt } from '../prompt-constants';
+
+import type { ResponsesJSONSchemaOptions } from '../../types';
 
 const OUTCOMES_SPECIFIC_INSTRUCTIONS = `
 Generate 2–4 distinct ABSURD outcomes for this fictional political situation.
@@ -24,38 +30,37 @@ TECHNICAL RULES
 
 const instructions = buildCreativePrompt(OUTCOMES_SPECIFIC_INSTRUCTIONS);
 
-
 export function buildOutcomesBaseRequest(
-    plan: GenerateSituationPlan,
-    prefs: GeneratePreferences
-  ): ResponsesJSONSchemaOptions {
-    const input = [
-      `SituationTitle: ${plan.title}`,
-      `Type: ${plan.type}`,
-      `Summary: ${plan.description}`,
-      `PresidentPref: ${prefs.president.answerType} — ${prefs.president.rationale}`,
-      `Cabinet: ${prefs.cabinet ? Object.keys(prefs.cabinet).join(", ") : "(none)"}`,
-      ``,
-      `Propose 2–4 distinct outcomes. Avoid near-duplicates. Provide weight per outcome.`,
-    ].join("\n");
-  
-    const jsonSchema = zodToJsonSchema(generateBaseOutcomesSchema, {
-        target: "jsonSchema7",
-        $refStrategy: "none",
-      });  
+  plan: GenerateSituationPlan,
+  prefs: GeneratePreferences,
+): ResponsesJSONSchemaOptions {
+  const input = [
+    `SituationTitle: ${plan.title}`,
+    `Type: ${plan.type}`,
+    `Summary: ${plan.description}`,
+    `PresidentPref: ${prefs.president.answerType} — ${prefs.president.rationale}`,
+    `Cabinet: ${prefs.cabinet ? Object.keys(prefs.cabinet).join(', ') : '(none)'}`,
+    ``,
+    `Propose 2–4 distinct outcomes. Avoid near-duplicates. Provide weight per outcome.`,
+  ].join('\n');
 
-    return {
-      model: GPT_5,
-      instructions,
-      input,
-      max_output_tokens: 16000,
-      text: {
-        format: {
-          type: "json_schema",
-          name: "outcome_base_list",
-          schema: jsonSchema,
-          strict: true,
-        },
+  const jsonSchema = zodToJsonSchema(generateBaseOutcomesSchema, {
+    target: 'jsonSchema7',
+    $refStrategy: 'none',
+  });
+
+  return {
+    model: GPT_5,
+    instructions,
+    input,
+    max_output_tokens: 16000,
+    text: {
+      format: {
+        type: 'json_schema',
+        name: 'outcome_base_list',
+        schema: jsonSchema,
+        strict: true,
       },
-    };
-  }
+    },
+  };
+}

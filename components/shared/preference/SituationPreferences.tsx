@@ -1,31 +1,28 @@
-import React, { useMemo } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React, { useMemo } from 'react';
+import { View } from 'react-native';
 
-import { observeCabinetMembersByLevel } from "~/lib/db/helpers/observations";
-// Components
-import { Text } from "~/components/ui/text";
-import { Separator } from "~/components/ui/separator";
-import { Situation, CabinetMember } from "~/lib/db/models";
-import { CabinetStaticId } from "~/types";
+import CabinetMemberPreference from '~/components/shared/preference/CabinetMemberPreference';
+import PresidentPreference from '~/components/shared/preference/PresidentPreference';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from "~/components/ui/accordion";
-import CabinetMemberPreference from "~/components/shared/preference/CabinetMemberPreference";
-import PresidentPreference from "~/components/shared/preference/PresidentPreference";
+} from '~/components/ui/accordion';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { observeCabinetMembersByLevel } from '~/lib/db/helpers/observations';
+// Components
+import { Situation, CabinetMember } from '~/lib/db/models';
+import { CabinetStaticId } from '~/types';
 
 interface SituationPreferencesProps {
   situation: Situation;
   cabinetMembers: CabinetMember[];
 }
 
-const SituationPreferences = ({
-  situation,
-  cabinetMembers,
-}: SituationPreferencesProps) => {
+const SituationPreferences = ({ situation, cabinetMembers }: SituationPreferencesProps) => {
   // Create a map for quick lookup: Static ID -> CabinetMember model
   const cabinetMemberMap = useMemo(() => {
     const map = new Map<CabinetStaticId, CabinetMember>();
@@ -47,19 +44,12 @@ const SituationPreferences = ({
   const cabinetPreferences = contentPreferences.cabinet;
 
   return (
-    <View
-      className="gap-4"
-      accessible={true}
-      accessibilityLabel={`Situation preferences section`}
-    >
+    <View className="gap-4" accessible={true} accessibilityLabel={`Situation preferences section`}>
       <Separator />
 
       {/* President's Position */}
       {presidentPreference && (
-        <PresidentPreference
-          gameId={situation.game_id}
-          preference={presidentPreference}
-        />
+        <PresidentPreference gameId={situation.game_id} preference={presidentPreference} />
       )}
 
       {cabinetPreferences && Object.keys(cabinetPreferences).length > 0 && (
@@ -89,28 +79,26 @@ const SituationPreferences = ({
                   Object.keys(cabinetPreferences).length
                 } cabinet member preferences`}
               >
-                {Object.entries(cabinetPreferences).map(
-                  ([member, cabPref], idx) => {
-                    const staticId = member as CabinetStaticId;
-                    const cabinetMember = cabinetMemberMap.get(staticId);
-                    if (!cabinetMember) {
-                      return null;
-                    }
-
-                    return (
-                      <View key={idx} className="gap-2" accessible={false}>
-                        <CabinetMemberPreference
-                          cabinetMember={cabinetMember}
-                          cabinetPreference={cabPref}
-                        />
-
-                        {idx !== Object.keys(cabinetPreferences).length - 1 && (
-                          <Separator className="mt-2" />
-                        )}
-                      </View>
-                    );
+                {Object.entries(cabinetPreferences).map(([member, cabPref], idx) => {
+                  const staticId = member as CabinetStaticId;
+                  const cabinetMember = cabinetMemberMap.get(staticId);
+                  if (!cabinetMember) {
+                    return null;
                   }
-                )}
+
+                  return (
+                    <View key={idx} className="gap-2" accessible={false}>
+                      <CabinetMemberPreference
+                        cabinetMember={cabinetMember}
+                        cabinetPreference={cabPref}
+                      />
+
+                      {idx !== Object.keys(cabinetPreferences).length - 1 && (
+                        <Separator className="mt-2" />
+                      )}
+                    </View>
+                  );
+                })}
               </View>
             </AccordionContent>
           </AccordionItem>
@@ -120,7 +108,7 @@ const SituationPreferences = ({
   );
 };
 
-const enhance = withObservables(["situation"], ({ situation }) => ({
+const enhance = withObservables(['situation'], ({ situation }) => ({
   cabinetMembers: observeCabinetMembersByLevel(situation.level_id),
 }));
 

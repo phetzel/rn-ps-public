@@ -1,7 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
-import { Level } from "~/lib/db/models";
-import { LevelStatus } from "~/types";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
+
+import { Level } from '~/lib/db/models';
+import { LevelStatus } from '~/types';
 
 type LevelOverrides = {
   gameId: string; // Required association
@@ -15,10 +16,7 @@ type LevelOverrides = {
   situationAdWatched: boolean;
 }>;
 
-export async function createLevel(
-  database: Database,
-  overrides: LevelOverrides
-): Promise<Level> {
+export async function createLevel(database: Database, overrides: LevelOverrides): Promise<Level> {
   const defaultValues = {
     year: 1,
     month: faker.number.int({ min: 1, max: 12 }),
@@ -32,7 +30,7 @@ export async function createLevel(
   const levelData = { ...defaultValues, ...overrides };
 
   return await database.write(async () => {
-    return await database.get<Level>("levels").create((level) => {
+    return await database.get<Level>('levels').create((level) => {
       level.game_id = levelData.gameId;
       level.year = levelData.year;
       level.month = levelData.month;

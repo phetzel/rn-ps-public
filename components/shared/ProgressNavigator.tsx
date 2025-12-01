@@ -1,12 +1,13 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
-import { Progress } from "~/components/ui/progress";
-import { Button } from "~/components/ui/button";
-import { Card, CardContent, CardFooter } from "~/components/ui/card";
-import { ArrowLeft } from "~/lib/icons/ArrowLeft";
-import { ArrowRight } from "~/lib/icons/ArrowRight";
-import { CheckCircle2 } from "~/lib/icons/CheckCircle2";
+import React from 'react';
+import { View } from 'react-native';
+
+import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardFooter } from '~/components/ui/card';
+import { Progress } from '~/components/ui/progress';
+import { Text } from '~/components/ui/text';
+import { ArrowLeft } from '~/lib/icons/ArrowLeft';
+import { ArrowRight } from '~/lib/icons/ArrowRight';
+import { CheckCircle2 } from '~/lib/icons/CheckCircle2';
 
 interface ProgressNavigatorProps {
   currentIndex: number;
@@ -39,14 +40,13 @@ export function ProgressNavigator({
   children,
   headerContent,
   progressLabel,
-  nextButtonText = "Next",
-  completeButtonText = "Complete",
-  previousButtonText = "Previous",
+  nextButtonText = 'Next',
+  completeButtonText = 'Complete',
+  previousButtonText = 'Previous',
   showPercentage = true,
-  cardClassName = "",
+  cardClassName = '',
 }: ProgressNavigatorProps) {
-  const progressPercentage =
-    totalItems > 0 ? ((currentIndex + 1) / totalItems) * 100 : 0;
+  const progressPercentage = totalItems > 0 ? ((currentIndex + 1) / totalItems) * 100 : 0;
 
   // Calculate isFirst and isLast
   const isFirst = currentIndex === 0;
@@ -61,15 +61,12 @@ export function ProgressNavigator({
       className="gap-4"
       accessible={true}
       accessibilityLabel={`Progress navigator: ${displayProgressLabel}, ${Math.round(
-        progressPercentage
+        progressPercentage,
       )}% complete`}
     >
       {/* Progress Bar */}
       <View className="gap-2" accessible={false}>
-        <View
-          className="flex-row justify-between items-center"
-          accessible={false}
-        >
+        <View className="flex-row justify-between items-center" accessible={false}>
           <Text className="text-md font-medium" accessible={false}>
             {displayProgressLabel}
           </Text>
@@ -83,9 +80,7 @@ export function ProgressNavigator({
           value={progressPercentage}
           className="h-2"
           accessible={true}
-          accessibilityLabel={`Progress: ${Math.round(
-            progressPercentage
-          )}% complete`}
+          accessibilityLabel={`Progress: ${Math.round(progressPercentage)}% complete`}
           accessibilityValue={{
             min: 0,
             max: 100,
@@ -113,6 +108,7 @@ export function ProgressNavigator({
                 : `${previousButtonText} to previous item`
             }
             accessibilityState={{ disabled: isFirst }}
+            testID="progress-previous-button"
           >
             <ArrowLeft className="text-foreground" />
             <Text accessible={false}>{previousButtonText}</Text>
@@ -124,16 +120,13 @@ export function ProgressNavigator({
             accessible={true}
             accessibilityRole="button"
             accessibilityLabel={
-              isLast
-                ? `${completeButtonText} the process`
-                : `${nextButtonText} to next item`
+              isLast ? `${completeButtonText} the process` : `${nextButtonText} to next item`
             }
             disabled={isLast && !onComplete}
             accessibilityState={{ disabled: isLast && !onComplete }}
+            testID="progress-next-button"
           >
-            <Text accessible={false}>
-              {isLast ? completeButtonText : nextButtonText}
-            </Text>
+            <Text accessible={false}>{isLast ? completeButtonText : nextButtonText}</Text>
             {isLast ? (
               <CheckCircle2 className="text-background" />
             ) : (

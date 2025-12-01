@@ -1,7 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
-import { Journalist } from "~/lib/db/models";
-import { JournalistStaticId } from "~/types";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
+
+import { Journalist } from '~/lib/db/models';
+import { JournalistStaticId } from '~/types';
 
 type JournalistOverrides = {
   gameId: string; // Required association
@@ -13,7 +14,7 @@ type JournalistOverrides = {
 
 export async function createJournalist(
   database: Database,
-  overrides: JournalistOverrides
+  overrides: JournalistOverrides,
 ): Promise<Journalist> {
   const defaultValues = {
     staticId: faker.helpers.enumValue(JournalistStaticId),
@@ -23,13 +24,11 @@ export async function createJournalist(
   const journalistData = { ...defaultValues, ...overrides };
 
   return await database.write(async () => {
-    return await database
-      .get<Journalist>("journalists")
-      .create((journalist) => {
-        journalist.game_id = journalistData.gameId;
-        journalist.publication_id = journalistData.publicationId;
-        journalist.staticId = journalistData.staticId;
-        journalist.psRelationship = journalistData.psRelationship;
-      });
+    return await database.get<Journalist>('journalists').create((journalist) => {
+      journalist.game_id = journalistData.gameId;
+      journalist.publication_id = journalistData.publicationId;
+      journalist.staticId = journalistData.staticId;
+      journalist.psRelationship = journalistData.psRelationship;
+    });
   });
 }

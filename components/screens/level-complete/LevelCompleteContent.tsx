@@ -1,15 +1,16 @@
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { View } from 'react-native';
 
-import { observeLevel } from "~/lib/db/helpers/observations";
-import type { Level } from "~/lib/db/models";
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
+import LevelOverviewContent from '~/components/shared/level-overview/LevelOverviewContent';
+import { Button } from '~/components/ui/button';
+import { Text } from '~/components/ui/text';
+import { observeLevel } from '~/lib/db/helpers/observations';
+import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 // Components
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
-import LevelOverviewContent from "~/components/shared/level-overview/LevelOverviewContent";
 // Types
-import { LevelStatus } from "~/types";
+import { LevelStatus } from '~/types';
+
+import type { Level } from '~/lib/db/models';
 
 interface LevelCompleteContentProps {
   gameId: string;
@@ -17,16 +18,9 @@ interface LevelCompleteContentProps {
   level: Level;
 }
 
-const LevelCompleteContent = ({
-  gameId,
-  levelId,
-  level,
-}: LevelCompleteContentProps) => {
-  const {
-    progressAndNavigate,
-    navigateToCurrentLevelScreen,
-    navigateToCurrentTab,
-  } = useLevelNavigation();
+const LevelCompleteContent = ({ gameId, levelId, level }: LevelCompleteContentProps) => {
+  const { progressAndNavigate, navigateToCurrentLevelScreen, navigateToCurrentTab } =
+    useLevelNavigation();
 
   const snapshot = level.parseOutcomeSnapshot;
 
@@ -41,7 +35,7 @@ const LevelCompleteContent = ({
       if (isLevelGameOver) {
         return await navigateToCurrentTab();
       } else {
-        if (level.status == LevelStatus.Completed) {
+        if (level.status === LevelStatus.Completed) {
           await progressAndNavigate();
           await navigateToCurrentTab();
         } else {
@@ -49,7 +43,7 @@ const LevelCompleteContent = ({
         }
       }
     } catch (error) {
-      console.error("Failed to complete level:", error);
+      console.error('Failed to complete level:', error);
     }
   };
 
@@ -76,7 +70,7 @@ const LevelCompleteContent = ({
   );
 };
 
-const enhance = withObservables(["gameId", "levelId"], ({ levelId }) => ({
+const enhance = withObservables(['gameId', 'levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
 }));
 

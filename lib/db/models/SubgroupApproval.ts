@@ -1,36 +1,28 @@
-import { Model, Relation } from "@nozbe/watermelondb";
-import {
-  field,
-  text,
-  date,
-  relation,
-  readonly,
-} from "@nozbe/watermelondb/decorators";
-import type { Associations } from "@nozbe/watermelondb/Model";
+import { Model, Relation } from '@nozbe/watermelondb';
+import { field, text, date, relation, readonly } from '@nozbe/watermelondb/decorators';
 
-// Models
-import type Game from "./Game";
-// Enums
-import type { SubgroupStaticId, StaticSubgroup } from "~/types";
-// Data
-import { staticSubgroups } from "~/lib/data/staticPolitics";
+import { staticSubgroups } from '~/lib/data/staticPolitics';
+
+import type Game from './Game';
+import type { Associations } from '@nozbe/watermelondb/Model';
+import type { SubgroupStaticId, StaticSubgroup } from '~/types';
 
 export default class SubgroupApproval extends Model {
-  static table = "subgroup_approvals";
+  static table = 'subgroup_approvals';
 
   static associations: Associations = {
-    games: { type: "belongs_to", key: "game_id" },
+    games: { type: 'belongs_to', key: 'game_id' },
   };
 
-  @relation("games", "game_id") game!: Relation<Game>;
+  @relation('games', 'game_id') game!: Relation<Game>;
 
-  @text("static_id") staticId!: SubgroupStaticId;
-  @field("approval_rating") approvalRating!: number;
+  @text('static_id') staticId!: SubgroupStaticId;
+  @field('approval_rating') approvalRating!: number;
 
-  @field("game_id") game_id!: string;
+  @field('game_id') game_id!: string;
 
-  @readonly @date("created_at") createdAt!: Date;
-  @readonly @date("updated_at") updatedAt!: Date;
+  @readonly @date('created_at') createdAt!: Date;
+  @readonly @date('updated_at') updatedAt!: Date;
 
   get staticData(): StaticSubgroup {
     return staticSubgroups[this.staticId];

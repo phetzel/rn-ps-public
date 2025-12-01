@@ -1,30 +1,27 @@
-import { situationsData } from "~/lib/data/situations";
+import { situationsData } from '~/lib/data/situations';
 import {
   SituationType,
   CabinetStaticId,
   SubgroupStaticId,
   PublicationStaticId,
   AnswerType,
-} from "~/types";
-import type { 
-  SituationDataType, 
-  CabinetPreference,
-  SituationOutcome 
-} from "~/lib/schemas/situations";
-import type { ExchangeData } from "~/lib/schemas/exchanges";
+} from '~/types';
+
+import type {
+  SituationOverview,
+  EntityPreferenceAnalysis,
+  EntityOutcomeAnalysis,
+  PublicationAnalysis,
+  GenerationAnalysis,
+} from './types';
+import type { ExchangeData } from '~/lib/schemas/exchanges';
+import type { CabinetPreference, SituationOutcome } from '~/lib/schemas/situations';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // GENERATION-SPECIFIC DISTRIBUTION ANALYSIS
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Types moved to root types.ts
-import type {
-  SituationOverview,
-  EntityPreferenceAnalysis,
-  EntityOutcomeAnalysis,
-  PublicationAnalysis,
-  GenerationAnalysis
-} from "./types";
 
 /**
  * Analyzes distribution specifically for generation context
@@ -35,10 +32,7 @@ import type {
  */
 export function generationAnalysis(): GenerationAnalysis {
   // Initialize situation analysis (filtering out governance)
-  const situationsByType: Record<SituationType, number> = {} as Record<
-    SituationType,
-    number
-  >;
+  const situationsByType: Record<SituationType, number> = {} as Record<SituationType, number>;
   const situationsList: SituationOverview[] = [];
 
   // Initialize all situation types with 0 (excluding governance)
@@ -54,8 +48,10 @@ export function generationAnalysis(): GenerationAnalysis {
     preferenceTypes: {} as Record<AnswerType, number>,
   };
 
-  const cabinetPreferences: Record<CabinetStaticId, EntityPreferenceAnalysis> =
-    {} as Record<CabinetStaticId, EntityPreferenceAnalysis>;
+  const cabinetPreferences: Record<CabinetStaticId, EntityPreferenceAnalysis> = {} as Record<
+    CabinetStaticId,
+    EntityPreferenceAnalysis
+  >;
   Object.values(CabinetStaticId).forEach((id) => {
     cabinetPreferences[id] = {
       appearanceCount: 0,
@@ -64,16 +60,20 @@ export function generationAnalysis(): GenerationAnalysis {
   });
 
   // Initialize entity outcome tracking
-  const cabinetOutcomes: Record<CabinetStaticId, EntityOutcomeAnalysis> =
-    {} as Record<CabinetStaticId, EntityOutcomeAnalysis>;
+  const cabinetOutcomes: Record<CabinetStaticId, EntityOutcomeAnalysis> = {} as Record<
+    CabinetStaticId,
+    EntityOutcomeAnalysis
+  >;
   Object.values(CabinetStaticId).forEach((id) => {
     cabinetOutcomes[id] = {
       appearanceCount: 0,
     };
   });
 
-  const subgroupOutcomes: Record<SubgroupStaticId, EntityOutcomeAnalysis> =
-    {} as Record<SubgroupStaticId, EntityOutcomeAnalysis>;
+  const subgroupOutcomes: Record<SubgroupStaticId, EntityOutcomeAnalysis> = {} as Record<
+    SubgroupStaticId,
+    EntityOutcomeAnalysis
+  >;
   Object.values(SubgroupStaticId).forEach((id) => {
     subgroupOutcomes[id] = {
       appearanceCount: 0,
@@ -126,17 +126,15 @@ export function generationAnalysis(): GenerationAnalysis {
 
     // Analyze cabinet preferences (excluding authorized)
     if (situation.content?.preferences?.cabinet) {
-      Object.entries(situation.content.preferences.cabinet).forEach(
-        ([cabinetId, pref]) => {
-          const id = cabinetId as CabinetStaticId;
-          const cabinetPref = pref as CabinetPreference;
-          if (cabinetPref?.preference?.answerType) {
-            cabinetPreferences[id].appearanceCount++;
-            const answerType = cabinetPref.preference.answerType as AnswerType;
-            cabinetPreferences[id].preferenceTypes[answerType]++;
-          }
+      Object.entries(situation.content.preferences.cabinet).forEach(([cabinetId, pref]) => {
+        const id = cabinetId as CabinetStaticId;
+        const cabinetPref = pref as CabinetPreference;
+        if (cabinetPref?.preference?.answerType) {
+          cabinetPreferences[id].appearanceCount++;
+          const answerType = cabinetPref.preference.answerType as AnswerType;
+          cabinetPreferences[id].preferenceTypes[answerType]++;
         }
-      );
+      });
     }
 
     // Analyze outcomes - track which entities are affected
@@ -146,20 +144,16 @@ export function generationAnalysis(): GenerationAnalysis {
     situation.content?.outcomes?.forEach((outcome: SituationOutcome) => {
       // Check cabinet members in approval changes
       if (outcome.consequences?.approvalChanges?.cabinet) {
-        Object.keys(outcome.consequences.approvalChanges.cabinet).forEach(
-          (cabinetId) => {
-            cabinetInSituation.add(cabinetId as CabinetStaticId);
-          }
-        );
+        Object.keys(outcome.consequences.approvalChanges.cabinet).forEach((cabinetId) => {
+          cabinetInSituation.add(cabinetId as CabinetStaticId);
+        });
       }
 
       // Check subgroups in approval changes
       if (outcome.consequences?.approvalChanges?.subgroups) {
-        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach(
-          (subgroupId) => {
-            subgroupsInSituation.add(subgroupId as SubgroupStaticId);
-          }
-        );
+        Object.keys(outcome.consequences.approvalChanges.subgroups).forEach((subgroupId) => {
+          subgroupsInSituation.add(subgroupId as SubgroupStaticId);
+        });
       }
     });
 
@@ -183,13 +177,12 @@ export function generationAnalysis(): GenerationAnalysis {
   });
 
   // Calculate publication percentages
-  const totalExchanges = Object.values(publicationCounts).reduce(
-    (sum, count) => sum + count,
-    0
-  );
+  const totalExchanges = Object.values(publicationCounts).reduce((sum, count) => sum + count, 0);
 
-  const publications: Record<PublicationStaticId, PublicationAnalysis> =
-    {} as Record<PublicationStaticId, PublicationAnalysis>;
+  const publications: Record<PublicationStaticId, PublicationAnalysis> = {} as Record<
+    PublicationStaticId,
+    PublicationAnalysis
+  >;
   Object.entries(publicationCounts).forEach(([publicationId, count]) => {
     const id = publicationId as PublicationStaticId;
     publications[id] = {

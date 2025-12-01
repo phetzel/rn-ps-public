@@ -1,16 +1,14 @@
-import { View } from "react-native";
+import { View } from 'react-native';
 
-import { Text } from "~/components/ui/text";
-import { Situation } from "~/lib/db/models";
-import SituationPreferences from "~/components/shared/preference/SituationPreferences";
+import SituationPreferences from '~/components/shared/preference/SituationPreferences';
+import { Text } from '~/components/ui/text';
+import { Situation } from '~/lib/db/models';
 
 interface ConferenceInfoSituationItemProps {
   situation: Situation;
 }
 
-const ConferenceInfoSituationItem = ({
-  situation,
-}: ConferenceInfoSituationItemProps) => {
+const ConferenceInfoSituationItem = ({ situation }: ConferenceInfoSituationItemProps) => {
   return (
     <View
       className="gap-4 mb-6 px-8 pb-8 border-b border-border"

@@ -1,5 +1,5 @@
-import { situationsData } from "~/lib/data/situations";
-import { PublicationStaticId, ExchangeImpactWeight } from "~/types";
+import { situationsData } from '~/lib/data/situations';
+import { PublicationStaticId, ExchangeImpactWeight } from '~/types';
 
 type BrokenAnswer = {
   publication: PublicationStaticId;
@@ -10,7 +10,9 @@ type BrokenAnswer = {
   outcomeModifiers?: Record<string, number>;
 };
 
-function getAllQuestions(exchangeContent: typeof situationsData[number]["exchanges"][number]["content"]) {
+function getAllQuestions(
+  exchangeContent: (typeof situationsData)[number]['exchanges'][number]['content'],
+) {
   return [
     exchangeContent.rootQuestion,
     ...exchangeContent.secondaryQuestions,
@@ -41,16 +43,13 @@ function findBrokenAnswers(): void {
         for (const answer of question.answers) {
           // Check 1: outcomeModifiers sum to zero
           const modifiers = answer.outcomeModifiers || {};
-          const total = Object.values(modifiers).reduce(
-            (sum, value) => sum + value,
-            0
-          );
+          const total = Object.values(modifiers).reduce((sum, value) => sum + value, 0);
           if (total !== 0) {
             broken.push({
               publication: exchange.publication,
               questionId: question.id,
               answerId: answer.id,
-              issue: "outcomeModifiers sum not zero",
+              issue: 'outcomeModifiers sum not zero',
               sum: total,
               outcomeModifiers: modifiers,
             });
@@ -78,7 +77,7 @@ function findBrokenAnswers(): void {
               publication: exchange.publication,
               questionId: question.id,
               answerId: answer.id,
-              issue: "missing mixed impacts (needs both positive AND negative impacts)",
+              issue: 'missing mixed impacts (needs both positive AND negative impacts)',
             });
           }
         }
@@ -102,7 +101,7 @@ function findBrokenAnswers(): void {
           broken.push({
             publication: exchange.publication,
             questionId: question.id,
-            answerId: "(question-level)",
+            answerId: '(question-level)',
             issue: `At least 3 of 4 answers must be net-negative (found ${netNegativeCount})`,
           });
         }
@@ -113,7 +112,7 @@ function findBrokenAnswers(): void {
           let hasNeg = false;
           question.answers.forEach((answer) => {
             const w = answer.outcomeModifiers?.[outcomeId];
-            if (typeof w === "number") {
+            if (typeof w === 'number') {
               if (w > 0) hasPos = true;
               if (w < 0) hasNeg = true;
             }
@@ -122,7 +121,7 @@ function findBrokenAnswers(): void {
             broken.push({
               publication: exchange.publication,
               questionId: question.id,
-              answerId: "(question-level)",
+              answerId: '(question-level)',
               issue: `Outcome "${outcomeId}" must have both positive and negative modifiers across question's answers (hasPos: ${hasPos}, hasNeg: ${hasNeg})`,
             });
           }
@@ -131,10 +130,12 @@ function findBrokenAnswers(): void {
     }
 
     if (broken.length > 0) {
-      console.log(`⚠️  First failing situation: "${situation.title}" (${situation.trigger.staticKey})`);
+      console.log(
+        `⚠️  First failing situation: "${situation.title}" (${situation.trigger.staticKey})`,
+      );
       broken.forEach((entry) => {
         console.log(
-          `  • Publication: ${entry.publication}, Question: ${entry.questionId}, Answer: ${entry.answerId}`
+          `  • Publication: ${entry.publication}, Question: ${entry.questionId}, Answer: ${entry.answerId}`,
         );
         console.log(`    Issue: ${entry.issue}`);
         if (entry.sum !== undefined) {
@@ -146,7 +147,7 @@ function findBrokenAnswers(): void {
     }
   }
 
-  console.log("✅ No situations with validation issues were found.");
+  console.log('✅ No situations with validation issues were found.');
 }
 
 findBrokenAnswers();

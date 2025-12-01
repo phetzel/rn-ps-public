@@ -1,36 +1,24 @@
-import {
-  SituationType,
-  CabinetStaticId,
-  SubgroupStaticId,
-  PublicationStaticId,
-} from "~/types";
-import type { GenerationAnalysis } from "../types";
+import { SituationType, CabinetStaticId, SubgroupStaticId, PublicationStaticId } from '~/types';
+
+import type { GenerationAnalysis, StrategicRequirements } from '../types';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION BALANCE ANALYZER - TRANSFORMS RAW ANALYSIS INTO STRATEGIC REQUIREMENTS
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // Types moved to root types.ts
-import type { StrategicRequirements } from "../types";
-
-// Re-export for backward compatibility
-export type { StrategicRequirements };
 
 /**
  * Analyzes raw generation data and returns strategic requirements
  */
-export function analyzeStrategicRequirements(
-  analysis: GenerationAnalysis
-): StrategicRequirements {
+export function analyzeStrategicRequirements(analysis: GenerationAnalysis): StrategicRequirements {
   // Find situation type with lowest count (excluding governance)
   const validTypes = Object.entries(analysis.situations.byType).filter(
-    ([type]) => type !== SituationType.Governance
+    ([type]) => type !== SituationType.Governance,
   );
 
   const minCount = Math.min(...validTypes.map(([, count]) => count));
-  const targetType = validTypes.find(
-    ([, count]) => count === minCount
-  )![0] as SituationType;
+  const targetType = validTypes.find(([, count]) => count === minCount)![0] as SituationType;
 
   // Get all situations of target type
   const existingSituationsOfType = analysis.situations.list
@@ -61,7 +49,7 @@ export function analyzeStrategicRequirements(
 function calculateEntityBalance(analysis: GenerationAnalysis) {
   // Cabinet balance
   const cabinetCounts = Object.values(analysis.entityOutcomes.cabinet).map(
-    (entity) => entity.appearanceCount
+    (entity) => entity.appearanceCount,
   );
   const cabinetAverage =
     cabinetCounts.reduce((sum, count) => sum + count, 0) / cabinetCounts.length;
@@ -80,11 +68,10 @@ function calculateEntityBalance(analysis: GenerationAnalysis) {
 
   // Subgroup balance
   const subgroupCounts = Object.values(analysis.entityOutcomes.subgroups).map(
-    (entity) => entity.appearanceCount
+    (entity) => entity.appearanceCount,
   );
   const subgroupAverage =
-    subgroupCounts.reduce((sum, count) => sum + count, 0) /
-    subgroupCounts.length;
+    subgroupCounts.reduce((sum, count) => sum + count, 0) / subgroupCounts.length;
 
   const underRepresentedSubgroups: SubgroupStaticId[] = [];
   const overRepresentedSubgroups: SubgroupStaticId[] = [];
@@ -99,12 +86,9 @@ function calculateEntityBalance(analysis: GenerationAnalysis) {
   });
 
   // Publication balance
-  const publicationCounts = Object.values(analysis.publications).map(
-    (pub) => pub.appearanceCount
-  );
+  const publicationCounts = Object.values(analysis.publications).map((pub) => pub.appearanceCount);
   const publicationAverage =
-    publicationCounts.reduce((sum, count) => sum + count, 0) /
-    publicationCounts.length;
+    publicationCounts.reduce((sum, count) => sum + count, 0) / publicationCounts.length;
 
   const underRepresentedPublications: PublicationStaticId[] = [];
   const overRepresentedPublications: PublicationStaticId[] = [];

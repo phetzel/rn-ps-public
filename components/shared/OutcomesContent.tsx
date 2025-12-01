@@ -1,15 +1,16 @@
 // components/shared/outcomes/OutcomesContent.tsx
-import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { useState } from 'react';
+import { View } from 'react-native';
 
-import { useLevelNavigation } from "~/lib/hooks/useLevelNavigation";
 // Components
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
+import { Button } from '~/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { Text } from '~/components/ui/text';
+import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 // Types
-import { LevelStatus } from "~/types";
-import type { Level } from "~/lib/db/models";
+import { LevelStatus } from '~/types';
+
+import type { Level } from '~/lib/db/models';
 
 interface TabConfig {
   value: string;
@@ -40,8 +41,7 @@ export function OutcomesContent({
 }: OutcomesContentProps) {
   const [currentTab, setCurrentTab] = useState<string>(defaultTab);
 
-  const { progressAndNavigate, navigateToCurrentLevelScreen } =
-    useLevelNavigation();
+  const { progressAndNavigate, navigateToCurrentLevelScreen } = useLevelNavigation();
 
   const handleComplete = async () => {
     try {
@@ -51,7 +51,7 @@ export function OutcomesContent({
         await navigateToCurrentLevelScreen();
       }
     } catch (error) {
-      console.error("Failed to complete outcomes:", error);
+      console.error('Failed to complete outcomes:', error);
     }
   };
 
@@ -62,7 +62,7 @@ export function OutcomesContent({
 
   const getButtonText = () => {
     if (isLastTab) {
-      return "Complete";
+      return 'Complete';
     }
     return `Continue to ${nextTab?.label}`;
   };
@@ -77,11 +77,7 @@ export function OutcomesContent({
 
   return (
     <View className="flex-1 gap-4" accessibilityLabel={accessibilityLabel}>
-      <Tabs
-        value={currentTab}
-        onValueChange={setCurrentTab}
-        accessibilityLabel="Results sections"
-      >
+      <Tabs value={currentTab} onValueChange={setCurrentTab} accessibilityLabel="Results sections">
         <TabsList className="flex-row w-full">
           {tabs.map((tab) => (
             <TabsTrigger
@@ -98,11 +94,7 @@ export function OutcomesContent({
 
         <View className="flex-1">
           {tabs.map((tab) => (
-            <TabsContent
-              key={tab.value}
-              value={tab.value}
-              className="mt-4 flex-1"
-            >
+            <TabsContent key={tab.value} value={tab.value} className="mt-4 flex-1">
               {tab.content}
             </TabsContent>
           ))}
@@ -119,7 +111,7 @@ export function OutcomesContent({
           accessibilityLabel={getButtonText()}
           accessibilityHint={
             isLastTab
-              ? "Complete outcomes and proceed to next screen"
+              ? 'Complete outcomes and proceed to next screen'
               : `Navigate to ${nextTab?.label} tab`
           }
         >

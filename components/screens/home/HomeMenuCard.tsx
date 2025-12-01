@@ -1,37 +1,36 @@
-import * as React from "react";
-import { ActivityIndicator } from "react-native";
+import * as React from 'react';
+import { ActivityIndicator } from 'react-native';
+import { useShallow } from 'zustand/shallow';
 
-import { MAX_ACTIVE_GAMES } from "~/lib/constants";
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { useGameNavigation } from "~/lib/hooks/useGameNavigation";
-import type Game from "~/lib/db/models/Game";
+import { HomePrivacySettings } from '~/components/screens/home/HomePrivacySettings';
+import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
+import { Button } from '~/components/ui/button';
+import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { MAX_ACTIVE_GAMES } from '~/lib/constants';
+import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
+import { FileText } from '~/lib/icons/FileText';
+import { Play } from '~/lib/icons/Play';
+import { Plus } from '~/lib/icons/Plus';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
+import type Game from '~/lib/db/models/Game';
+
 // Icons
-import { Play } from "~/lib/icons/Play";
-import { Plus } from "~/lib/icons/Plus";
-import { FileText } from "~/lib/icons/FileText";
 // Components
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardTitle,
-  CardDescription,
-} from "~/components/ui/card";
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
-import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
-import { HomePrivacySettings } from "~/components/screens/home/HomePrivacySettings";
 
 interface HomeMenuCardProps {
   games: Game[];
 }
 
 export function HomeMenuCard({ games }: HomeMenuCardProps) {
-  const { isLoading, error, currentGameId } = useGameManagerStore((state) => ({
-    isLoading: state.isLoading,
-    error: state.error,
-    currentGameId: state.currentGameId,
-  }));
+  const { isLoading, error, currentGameId } = useGameManagerStore(
+    useShallow((state) => ({
+      isLoading: state.isLoading,
+      error: state.error,
+      currentGameId: state.currentGameId,
+    })),
+  );
   const { goToCreateGame, goToGamesList, continueGame } = useGameNavigation();
 
   const canStartNewGame = games.length < MAX_ACTIVE_GAMES;
@@ -62,8 +61,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
           className="text-center"
           accessibilityLabel="Choose to continue an existing game, start a new career, or manage your saved games"
         >
-          Pick up where you left off, start a new career, or browse your
-          previous sessions
+          Pick up where you left off, start a new career, or browse your previous sessions
         </CardDescription>
       </CardHeader>
 
@@ -93,6 +91,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             onPress={handleNavigateToCreate}
             disabled={!canStartNewGame || isLoading}
             className="flex-row"
+            testID="start-new-game-button"
             accessibilityLabel={
               canStartNewGame
                 ? `Start new Press Secretary game. ${games.length} of ${MAX_ACTIVE_GAMES} game slots used.`
@@ -100,14 +99,12 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             }
             accessibilityHint={
               canStartNewGame
-                ? "Creates a new 4-year Press Secretary career simulation"
-                : "Delete an existing game to free up a slot for a new game"
+                ? 'Creates a new 4-year Press Secretary career simulation'
+                : 'Delete an existing game to free up a slot for a new game'
             }
           >
             <Plus className="mr-2 text-foreground" />
-            <Text>
-              {canStartNewGame ? "Start New Game" : "All Game Slots Full"}
-            </Text>
+            <Text>{canStartNewGame ? 'Start New Game' : 'All Game Slots Full'}</Text>
           </Button>
         )}
 
@@ -117,6 +114,7 @@ export function HomeMenuCard({ games }: HomeMenuCardProps) {
             variant="secondary"
             onPress={goToGamesList}
             className="flex-row"
+            testID="manage-games-button"
             accessibilityLabel={`Load or manage games. You have ${games.length} total games.`}
             accessibilityHint="View all your saved games, load a different game, or delete games to free up space"
           >

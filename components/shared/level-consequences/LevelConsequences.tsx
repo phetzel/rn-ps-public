@@ -1,12 +1,13 @@
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { View } from 'react-native';
 
-import { observeLevel, observeCabinetMembersByLevel } from "~/lib/db/helpers";
-import type { CabinetMember, Level } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
-import { OutcomeSnapshotType } from "~/types";
-import LevelConsequencesCard from "~/components/shared/level-consequences/LevelConsequencesCard";
-import LevelConsequencesRiskCard from "~/components/shared/level-consequences/LevelConsequencesRiskCard";
+import LevelConsequencesCard from '~/components/shared/level-consequences/LevelConsequencesCard';
+import LevelConsequencesRiskCard from '~/components/shared/level-consequences/LevelConsequencesRiskCard';
+import { Text } from '~/components/ui/text';
+import { observeLevel, observeCabinetMembersByLevel } from '~/lib/db/helpers';
+import { OutcomeSnapshotType } from '~/types';
+
+import type { CabinetMember, Level } from '~/lib/db/models';
 
 interface LevelConsequencesProps {
   level: Level;
@@ -14,10 +15,7 @@ interface LevelConsequencesProps {
   cabinetMembers: CabinetMember[];
 }
 
-const LevelConsequences = ({
-  level,
-  cabinetMembers,
-}: LevelConsequencesProps) => {
+const LevelConsequences = ({ level, cabinetMembers }: LevelConsequencesProps) => {
   // Get snapshot from level directly
   const outcomeSnapshot = level.parseOutcomeSnapshot;
 
@@ -71,7 +69,7 @@ const LevelConsequences = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
   cabinetMembers: observeCabinetMembersByLevel(levelId),
 }));

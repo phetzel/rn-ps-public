@@ -1,12 +1,14 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
-import { Game } from "~/lib/db/models";
-import { GameStatus, PoliticalLeaning } from "~/types";
-import { GameFactoryOptions } from "../scenarios/types";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
+
+import { Game } from '~/lib/db/models';
+import { GameStatus, PoliticalLeaning } from '~/types';
+
+import { GameFactoryOptions } from '../scenarios/types';
 
 export async function createGame(
   database: Database,
-  overrides: GameFactoryOptions = {}
+  overrides: GameFactoryOptions = {},
 ): Promise<Game> {
   const defaultValues = {
     status: GameStatus.Active,
@@ -25,7 +27,7 @@ export async function createGame(
   const finalUsedSituations = JSON.stringify(gameData.usedSituations);
 
   return await database.write(async () => {
-    return await database.get<Game>("games").create((game) => {
+    return await database.get<Game>('games').create((game) => {
       game.status = gameData.status;
       game.currentYear = gameData.currentYear;
       game.currentMonth = gameData.currentMonth;

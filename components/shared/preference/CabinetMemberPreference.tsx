@@ -1,13 +1,14 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import type { CabinetMember } from "~/lib/db/models";
-import { CABINET_PREFERENCE_THRESHOLD } from "~/lib/constants";
-import PreferenceDisplay from "~/components/shared/preference/PreferenceDisplay";
-import PreferenceLocked from "~/components/shared/preference/PreferenceLocked";
-import AuthorizedIntel from "~/components/shared/preference/AuthorizedIntel";
-import { CabinetMemberName } from "~/components/shared/entity/CabinetMemberName";
-import { CabinetPreference } from "~/types";
+import { CabinetMemberName } from '~/components/shared/entity/CabinetMemberName';
+import AuthorizedIntel from '~/components/shared/preference/AuthorizedIntel';
+import PreferenceDisplay from '~/components/shared/preference/PreferenceDisplay';
+import PreferenceLocked from '~/components/shared/preference/PreferenceLocked';
+import { CABINET_PREFERENCE_THRESHOLD } from '~/lib/constants';
+import { CabinetPreference } from '~/types';
+
+import type { CabinetMember } from '~/lib/db/models';
 
 interface CabinetMemberPreferenceProps {
   cabinetMember: CabinetMember;
@@ -18,22 +19,17 @@ const CabinetMemberPreference = ({
   cabinetMember,
   cabinetPreference,
 }: CabinetMemberPreferenceProps) => {
-  const isPreferenceLocked =
-    cabinetMember.psRelationship < CABINET_PREFERENCE_THRESHOLD;
+  const isPreferenceLocked = cabinetMember.psRelationship < CABINET_PREFERENCE_THRESHOLD;
 
   return (
     <View
       className="gap-2"
       accessible={true}
-      accessibilityLabel={`${cabinetMember.name}, ${
-        cabinetMember.staticData.cabinetName
-      }. ${
+      accessibilityLabel={`${cabinetMember.name}, ${cabinetMember.staticData.cabinetName}. ${
         isPreferenceLocked
           ? `Preference locked due to low relationship (${cabinetMember.psRelationship}). Need ${CABINET_PREFERENCE_THRESHOLD} minimum.`
           : `Preference available: ${cabinetPreference.preference.rationale}${
-              cabinetPreference.authorizedContent
-                ? ` Includes classified intel.`
-                : ``
+              cabinetPreference.authorizedContent ? ` Includes classified intel.` : ``
             }`
       }`}
     >

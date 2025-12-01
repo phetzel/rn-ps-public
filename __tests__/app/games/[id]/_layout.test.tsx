@@ -1,40 +1,39 @@
-import React from "react";
-import { renderRouter, screen } from "expo-router/testing-library";
-import { jest } from "@jest/globals";
+import { jest } from '@jest/globals';
+import { renderRouter, screen } from 'expo-router/testing-library';
 
 // Mock navigation functions
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();
 
 // Mock only the useRouter hook that the layout component uses
-jest.mock("expo-router", () => ({
+jest.mock('expo-router', () => ({
   useRouter: () => ({
     navigate: mockNavigate,
     replace: mockReplace,
   }),
 }));
 
-describe("GameTabLayout", () => {
+describe('GameTabLayout', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders the tab layout without errors", () => {
+  it('renders the tab layout without errors', () => {
     // Use simple string paths to create null components for basic routing test
-    renderRouter(["games/[id]/_layout", "games/[id]/current"], {
-      initialUrl: "/games/test-game/current",
+    renderRouter(['games/[id]/_layout', 'games/[id]/current'], {
+      initialUrl: '/games/test-game/current',
     });
 
     // Should render without the unmatched route error
-    expect(screen.queryByText("Unmatched Route")).toBeNull();
+    expect(screen.queryByText('Unmatched Route')).toBeNull();
   });
 
-  it("navigates to correct route", () => {
-    renderRouter(["games/[id]/_layout", "games/[id]/current"], {
-      initialUrl: "/games/test-game/current",
+  it('navigates to correct route', () => {
+    renderRouter(['games/[id]/_layout', 'games/[id]/current'], {
+      initialUrl: '/games/test-game/current',
     });
 
     // Should be on the current route
-    expect(screen).toHavePathname("/games/test-game/current");
+    expect(screen).toHavePathname('/games/test-game/current');
   });
 });

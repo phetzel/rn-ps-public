@@ -1,8 +1,8 @@
-import React from "react";
-import { Pressable, View } from "react-native";
+import React from 'react';
+import { Pressable, View } from 'react-native';
 
-import { ChevronLeft } from "~/lib/icons/ChevronLeft";
-import { cn } from "~/lib/utils";
+import { ChevronLeft } from '~/lib/icons/ChevronLeft';
+import { cn } from '~/lib/utils';
 
 interface HeaderBackIconProps {
   onPress: () => void;
@@ -21,16 +21,12 @@ export const HeaderBackIcon = ({ onPress }: HeaderBackIconProps) => {
       {({ pressed }) => (
         <View
           className={cn(
-            "flex-1 aspect-square pt-0.5 justify-center items-start web:px-5",
-            pressed && "opacity-70"
+            'flex-1 aspect-square pt-0.5 justify-center items-start web:px-5',
+            pressed && 'opacity-70',
           )}
           accessible={false}
         >
-          <ChevronLeft
-            className="text-foreground"
-            size={38}
-            strokeWidth={1.25}
-          />
+          <ChevronLeft className="text-foreground" size={38} strokeWidth={1.25} />
         </View>
       )}
     </Pressable>

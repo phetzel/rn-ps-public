@@ -1,20 +1,18 @@
-import { situationsData } from "~/lib/data/situations";
-import { CROSS_REFERENCE_THRESHOLDS } from "~/lib/constants";
-import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
+import { CROSS_REFERENCE_THRESHOLDS } from '~/lib/constants';
+import { situationsData } from '~/lib/data/situations';
+import { getAllQuestionsFromExchange } from '~/lib/db/helpers/exchangeApi';
 
-describe("Situation Data Cross-Reference Validation", () => {
+describe('Situation Data Cross-Reference Validation', () => {
   // Create lookup maps for efficient testing
-  const situationsByStaticKey = new Map(
-    situationsData.map((s) => [s.trigger.staticKey, s])
-  );
+  const situationsByStaticKey = new Map(situationsData.map((s) => [s.trigger.staticKey, s]));
 
-  describe("Follow-up Relationships", () => {
-    test("outcome follow-up IDs reference valid situation static keys", () => {
-      const errors: Array<{
+  describe('Follow-up Relationships', () => {
+    test('outcome follow-up IDs reference valid situation static keys', () => {
+      const errors: {
         situationTitle: string;
         outcomeId: string;
         followUpId: string;
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         situation.content.outcomes.forEach((outcome) => {
@@ -31,15 +29,12 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Invalid outcome follow-up references:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Invalid outcome follow-up references:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
 
-    test("follow-up situations are properly marked as isFollowUp", () => {
+    test('follow-up situations are properly marked as isFollowUp', () => {
       const followUpIds = new Set<string>();
 
       // Collect all follow-up IDs
@@ -51,11 +46,11 @@ describe("Situation Data Cross-Reference Validation", () => {
         });
       });
 
-      const errors: Array<{
+      const errors: {
         staticKey: string;
         title: string;
         isFollowUp: boolean;
-      }> = [];
+      }[] = [];
 
       // Check that referenced follow-ups are marked correctly
       followUpIds.forEach((followUpId) => {
@@ -71,18 +66,18 @@ describe("Situation Data Cross-Reference Validation", () => {
 
       if (errors.length > 0) {
         console.error(
-          "Follow-up situations not marked as isFollowUp:",
-          JSON.stringify(errors, null, 2)
+          'Follow-up situations not marked as isFollowUp:',
+          JSON.stringify(errors, null, 2),
         );
         expect(errors).toHaveLength(0);
       }
     });
 
-    test("no circular references in follow-up chains", () => {
-      const errors: Array<{
+    test('no circular references in follow-up chains', () => {
+      const errors: {
         chain: string[];
         circularReference: string;
-      }> = [];
+      }[] = [];
 
       // Check each situation for circular references
       situationsData.forEach((situation) => {
@@ -121,20 +116,17 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Circular follow-up references found:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Circular follow-up references found:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
 
     test("follow-up chains don't exceed reasonable depth", () => {
-      const errors: Array<{
+      const errors: {
         startingSituation: string;
         chain: string[];
         depth: number;
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         situation.content.outcomes.forEach((outcome) => {
@@ -143,10 +135,7 @@ describe("Situation Data Cross-Reference Validation", () => {
             let currentId: string | undefined = outcome.followUpId;
             let depth = 1;
 
-            while (
-              currentId &&
-              depth <= CROSS_REFERENCE_THRESHOLDS.MAX_FOLLOW_UP_DEPTH + 1
-            ) {
+            while (currentId && depth <= CROSS_REFERENCE_THRESHOLDS.MAX_FOLLOW_UP_DEPTH + 1) {
               // Check up to max + 1 to detect violations
               chain.push(currentId);
               const currentSituation = situationsByStaticKey.get(currentId);
@@ -175,23 +164,20 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Follow-up chains exceeding max depth:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Follow-up chains exceeding max depth:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
   });
 
-  describe("Question Flow Validation", () => {
-    test("question follow-up IDs reference valid questions within same exchange", () => {
-      const errors: Array<{
+  describe('Question Flow Validation', () => {
+    test('question follow-up IDs reference valid questions within same exchange', () => {
+      const errors: {
         situationTitle: string;
         questionId: string;
         answerId: string;
         followUpId: string;
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
@@ -200,9 +186,7 @@ describe("Situation Data Cross-Reference Validation", () => {
           allQuestions.forEach((question) => {
             question.answers.forEach((answer) => {
               if (answer.followUpId) {
-                const followUpExists = allQuestions.some(
-                  (q) => q.id === answer.followUpId
-                );
+                const followUpExists = allQuestions.some((q) => q.id === answer.followUpId);
                 if (!followUpExists) {
                   errors.push({
                     situationTitle: situation.title,
@@ -218,28 +202,24 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Invalid question follow-up references:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Invalid question follow-up references:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
 
-    test("question depth progression is logical for follow-ups", () => {
-      const errors: Array<{
+    test('question depth progression is logical for follow-ups', () => {
+      const errors: {
         situationTitle: string;
         parentQuestionId: string;
         parentDepth: number;
         followUpQuestionId: string;
         followUpDepth: number;
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
           // Helper to get questions with depth information
-          const questionsWithDepth: Array<{ question: any; depth: number }> =
-            [];
+          const questionsWithDepth: { question: any; depth: number }[] = [];
 
           // Add root question (depth 0)
           questionsWithDepth.push({
@@ -261,12 +241,9 @@ describe("Situation Data Cross-Reference Validation", () => {
             question.answers.forEach((answer: any) => {
               if (answer.followUpId) {
                 const followUpQuestionWithDepth = questionsWithDepth.find(
-                  (q) => q.question.id === answer.followUpId
+                  (q) => q.question.id === answer.followUpId,
                 );
-                if (
-                  followUpQuestionWithDepth &&
-                  followUpQuestionWithDepth.depth <= depth
-                ) {
+                if (followUpQuestionWithDepth && followUpQuestionWithDepth.depth <= depth) {
                   errors.push({
                     situationTitle: situation.title,
                     parentQuestionId: question.id,
@@ -282,20 +259,17 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Invalid question depth progression:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Invalid question depth progression:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
 
-    test("root questions have depth 0", () => {
-      const errors: Array<{
+    test('root questions have depth 0', () => {
+      const errors: {
         situationTitle: string;
         rootQuestionId: string;
         depth: number;
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
@@ -306,7 +280,7 @@ describe("Situation Data Cross-Reference Validation", () => {
           if (!rootQuestion || !rootQuestion.id || !rootQuestion.text) {
             errors.push({
               situationTitle: situation.title,
-              rootQuestionId: rootQuestion?.id || "missing",
+              rootQuestionId: rootQuestion?.id || 'missing',
               depth: 0,
             });
           }
@@ -314,19 +288,16 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Root questions with invalid structure:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Root questions with invalid structure:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
 
-    test("no orphaned questions (all questions reachable from root)", () => {
-      const errors: Array<{
+    test('no orphaned questions (all questions reachable from root)', () => {
+      const errors: {
         situationTitle: string;
         orphanedQuestions: string[];
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         situation.exchanges.forEach((exchange) => {
@@ -345,10 +316,7 @@ describe("Situation Data Cross-Reference Validation", () => {
 
             if (currentQuestion) {
               currentQuestion.answers.forEach((answer) => {
-                if (
-                  answer.followUpId &&
-                  !reachableQuestions.has(answer.followUpId)
-                ) {
+                if (answer.followUpId && !reachableQuestions.has(answer.followUpId)) {
                   queue.push(answer.followUpId);
                 }
               });
@@ -357,9 +325,7 @@ describe("Situation Data Cross-Reference Validation", () => {
 
           // Find orphaned questions
           const allQuestionIds = allQuestions.map((q) => q.id);
-          const orphanedQuestions = allQuestionIds.filter(
-            (id) => !reachableQuestions.has(id)
-          );
+          const orphanedQuestions = allQuestionIds.filter((id) => !reachableQuestions.has(id));
 
           if (orphanedQuestions.length > 0) {
             errors.push({
@@ -371,23 +337,20 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Orphaned questions found:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Orphaned questions found:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
   });
 
-  describe("Outcome Modifier Validation", () => {
-    test("outcome modifiers reference valid outcome IDs", () => {
-      const errors: Array<{
+  describe('Outcome Modifier Validation', () => {
+    test('outcome modifiers reference valid outcome IDs', () => {
+      const errors: {
         situationTitle: string;
         answerId: string;
         invalidOutcomeId: string;
         validOutcomeIds: string[];
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         const validOutcomeIds = situation.content.outcomes.map((o) => o.id);
@@ -413,22 +376,19 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Invalid outcome modifier references:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Invalid outcome modifier references:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
   });
 
-  describe("Data Consistency", () => {
-    test("situation types are consistent between trigger and main type", () => {
-      const errors: Array<{
+  describe('Data Consistency', () => {
+    test('situation types are consistent between trigger and main type', () => {
+      const errors: {
         situationTitle: string;
         triggerType: string;
         mainType: string;
-      }> = [];
+      }[] = [];
 
       situationsData.forEach((situation) => {
         if (situation.trigger.type !== situation.type) {
@@ -441,15 +401,12 @@ describe("Situation Data Cross-Reference Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Inconsistent situation types:",
-          JSON.stringify(errors, null, 2)
-        );
+        console.error('Inconsistent situation types:', JSON.stringify(errors, null, 2));
         expect(errors).toHaveLength(0);
       }
     });
 
-    test("all situations have unique static keys", () => {
+    test('all situations have unique static keys', () => {
       const staticKeys = situationsData.map((s) => s.trigger.staticKey);
       const uniqueKeys = new Set(staticKeys);
 

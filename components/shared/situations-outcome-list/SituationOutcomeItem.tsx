@@ -1,29 +1,30 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
 // DB
-import type { Situation } from "~/lib/db/models";
 // Hooks
-import { useGameManagerStore } from "~/lib/stores/gameManagerStore";
-import { useSituationOutcomeData } from "~/lib/hooks/useSituationOutcomeData";
 // Components
+import { EmptyState } from '~/components/shared/EmptyState';
+import { SituationStatusBadge } from '~/components/shared/entity/SituationStatusBadge';
+import { SituationTypeIcon } from '~/components/shared/entity/SituationTypeIcon';
+import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
+import ImpactList from '~/components/shared/impact/ImpactList';
+import SituationAlternativeOutcomes from '~/components/shared/situations-outcome-list/SituationAlternativeOutcomes';
+import SituationOutcomeExchanges from '~/components/shared/situations-outcome-list/SituationOutcomeExchanges';
+import { SituationSelectedOutcome } from '~/components/shared/situations-outcome-list/SituationSelectedOutcome';
 import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from "~/components/ui/accordion";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { SituationTypeIcon } from "~/components/shared/entity/SituationTypeIcon";
-import { SituationStatusBadge } from "~/components/shared/entity/SituationStatusBadge";
-import { Text } from "~/components/ui/text";
-import { Separator } from "~/components/ui/separator";
-import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
-import { EmptyState } from "~/components/shared/EmptyState";
-import ImpactList from "~/components/shared/impact/ImpactList";
-import SituationAlternativeOutcomes from "~/components/shared/situations-outcome-list/SituationAlternativeOutcomes";
-import SituationOutcomeExchanges from "~/components/shared/situations-outcome-list/SituationOutcomeExchanges";
-import { SituationSelectedOutcome } from "~/components/shared/situations-outcome-list/SituationSelectedOutcome";
+} from '~/components/ui/accordion';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
+import { useSituationOutcomeData } from '~/lib/hooks/useSituationOutcomeData';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
+import type { Situation } from '~/lib/db/models';
 
 interface SituationOutcomeItemProps {
   situation: Situation;
@@ -31,11 +32,6 @@ interface SituationOutcomeItemProps {
 
 const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
   const { currentGameId } = useGameManagerStore();
-
-  if (!currentGameId) {
-    return null;
-  }
-
   const {
     selectedOutcomeWeight,
     allOutcomes,
@@ -46,6 +42,9 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
     error,
   } = useSituationOutcomeData(situation);
 
+  if (!currentGameId) {
+    return null;
+  }
   // Handle loading state
   if (isLoading) {
     return null;
@@ -68,14 +67,8 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
       accessibilityLabel={`Situation: ${situation.title}. Outcome: ${selectedOutcomeWeight.title} with ${selectedOutcomeWeight.finalWeight}% probability`}
     >
       <CardHeader className="pb-2">
-        <View
-          className=" flex-row justify-between items-center"
-          accessible={false}
-        >
-          <View
-            className="flex-1 flex-row items-center gap-2 mr-2"
-            accessible={false}
-          >
+        <View className=" flex-row justify-between items-center" accessible={false}>
+          <View className="flex-1 flex-row items-center gap-2 mr-2" accessible={false}>
             <SituationTypeIcon type={situation.type} />
             <CardTitle
               className="text-xl flex-shrink"
@@ -135,9 +128,7 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
               <Text accessible={false}>Alternative Outcomes</Text>
             </AccordionTrigger>
             <AccordionContent>
-              <SituationAlternativeOutcomes
-                outcomes={alternativeOutcomesWeights}
-              />
+              <SituationAlternativeOutcomes outcomes={alternativeOutcomesWeights} />
             </AccordionContent>
           </AccordionItem>
 

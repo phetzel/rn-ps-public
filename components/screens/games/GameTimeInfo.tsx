@@ -1,8 +1,8 @@
-import * as React from "react";
-import { View } from "react-native";
+import * as React from 'react';
+import { View } from 'react-native';
 
-import { Clock } from "~/lib/icons/Clock";
-import { Text } from "~/components/ui/text";
+import { Text } from '~/components/ui/text';
+import { Clock } from '~/lib/icons/Clock';
 
 interface GameTimeInfoProps {
   lastPlayed: Date;
@@ -11,8 +11,8 @@ interface GameTimeInfoProps {
 export function GameTimeInfo({ lastPlayed }: GameTimeInfoProps) {
   const lastPlayedDate = lastPlayed.toLocaleDateString();
   const lastPlayedTime = lastPlayed.toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit",
+    hour: 'numeric',
+    minute: '2-digit',
   });
 
   const accessibilityTimeLabel = `Last played on ${lastPlayedDate} at ${lastPlayedTime}`;

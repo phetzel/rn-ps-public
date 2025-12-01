@@ -1,13 +1,14 @@
-import * as React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import * as React from 'react';
+import { View } from 'react-native';
 
-import { User } from "~/lib/icons/User";
-import { Award } from "~/lib/icons/Award";
-import { Text } from "~/components/ui/text";
-import PoliticalLeaningBadge from "~/components/shared/entity/PoliticalLeaningBadge";
-import { observePresidentApprovalRating } from "~/lib/db/helpers/observations";
-import type Game from "~/lib/db/models/Game";
+import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
+import { Text } from '~/components/ui/text';
+import { observePresidentApprovalRating } from '~/lib/db/helpers/observations';
+import { Award } from '~/lib/icons/Award';
+import { User } from '~/lib/icons/User';
+
+import type Game from '~/lib/db/models/Game';
 
 interface GameMetadataProps {
   game: Game;
@@ -49,7 +50,7 @@ function GameMetadata({ game, presApprovalRating }: GameMetadataProps) {
   );
 }
 
-const enhance = withObservables(["game"], ({ game }) => ({
+const enhance = withObservables(['game'], ({ game }) => ({
   game,
   presApprovalRating: observePresidentApprovalRating(game.id),
 }));

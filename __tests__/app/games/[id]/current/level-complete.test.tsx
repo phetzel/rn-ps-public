@@ -1,14 +1,16 @@
-import React from "react";
-import { render, screen } from "@testing-library/react-native";
-import { jest } from "@jest/globals";
+import { jest } from '@jest/globals';
+import { render, screen } from '@testing-library/react-native';
+import React from 'react';
 
-import LevelCompleteScreen from "~/app/games/[id]/current/level-complete";
+import LevelCompleteScreen from '~/app/games/[id]/current/level-complete';
+import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
 // Mock the stores
-const mockGameId = "game-1";
-const mockCurrentLevelId = "level-1";
+const mockGameId = 'game-1';
+const mockCurrentLevelId = 'level-1';
 
-jest.mock("~/lib/stores/gameManagerStore", () => ({
+jest.mock('~/lib/stores/gameManagerStore', () => ({
   useGameManagerStore: jest.fn((selector?: any) => {
     if (selector) {
       return selector({ currentGameId: mockGameId });
@@ -17,7 +19,7 @@ jest.mock("~/lib/stores/gameManagerStore", () => ({
   }),
 }));
 
-jest.mock("~/lib/stores/currentLevelStore", () => ({
+jest.mock('~/lib/stores/currentLevelStore', () => ({
   useCurrentLevelStore: jest.fn((selector?: any) => {
     if (selector) {
       return selector({ currentLevelId: mockCurrentLevelId });
@@ -27,7 +29,9 @@ jest.mock("~/lib/stores/currentLevelStore", () => ({
 }));
 
 // Mock LevelCompleteContent
-jest.mock("~/components/screens/level-complete/LevelCompleteContent", () => {
+jest.mock('~/components/screens/level-complete/LevelCompleteContent', () => {
+  const React = require('react');
+  const { Text } = require('react-native');
   return function MockLevelCompleteContent({
     gameId,
     levelId,
@@ -35,17 +39,17 @@ jest.mock("~/components/screens/level-complete/LevelCompleteContent", () => {
     gameId: string;
     levelId: string;
   }) {
-    const { Text } = require("react-native");
-    return (
-      <Text testID="level-complete-content">
-        LevelCompleteContent: {gameId} - {levelId}
-      </Text>
+    return React.createElement(
+      Text,
+      { testID: 'level-complete-content' },
+      `LevelCompleteContent: ${gameId} - ${levelId}`,
     );
   };
 });
 
 // Mock ParallaxScrollView
-jest.mock("~/components/shared/layout/ParallaxScrollView", () => {
+jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
+  const React = require('react');
   return function MockParallaxScrollView({
     children,
     headerImage,
@@ -53,57 +57,50 @@ jest.mock("~/components/shared/layout/ParallaxScrollView", () => {
     children: React.ReactNode;
     headerImage: React.ReactNode;
   }) {
-    const { View } = require("react-native");
-    return (
-      <View testID="parallax-scroll-view">
-        <View testID="header-image">{headerImage}</View>
-        {children}
-      </View>
+    return React.createElement(
+      'mock-view',
+      { testID: 'parallax-scroll-view' },
+      React.createElement('mock-view', { testID: 'header-image' }, headerImage),
+      children,
     );
   };
 });
 
-describe("LevelCompleteScreen", () => {
+describe('LevelCompleteScreen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  describe("with valid game and level IDs", () => {
-    it("should render ParallaxScrollView with header image", () => {
+  describe('with valid game and level IDs', () => {
+    it('should render ParallaxScrollView with header image', () => {
       render(<LevelCompleteScreen />);
 
-      expect(screen.getByTestId("parallax-scroll-view")).toBeTruthy();
-      expect(screen.getByTestId("header-image")).toBeTruthy();
+      expect(screen.getByTestId('parallax-scroll-view')).toBeTruthy();
+      expect(screen.getByTestId('header-image')).toBeTruthy();
     });
 
-    it("should render LevelCompleteContent with correct props", () => {
+    it('should render LevelCompleteContent with correct props', () => {
       render(<LevelCompleteScreen />);
 
-      const levelCompleteContent = screen.getByTestId("level-complete-content");
+      const levelCompleteContent = screen.getByTestId('level-complete-content');
       expect(levelCompleteContent).toBeTruthy();
       expect(
-        screen.getByText(
-          `LevelCompleteContent: ${mockGameId} - ${mockCurrentLevelId}`
-        )
+        screen.getByText(`LevelCompleteContent: ${mockGameId} - ${mockCurrentLevelId}`),
       ).toBeTruthy();
     });
 
-    it("should pass gameId and levelId to LevelCompleteContent", () => {
+    it('should pass gameId and levelId to LevelCompleteContent', () => {
       render(<LevelCompleteScreen />);
 
       // Verify the content shows the correct IDs were passed
-      expect(
-        screen.getByText("LevelCompleteContent: game-1 - level-1")
-      ).toBeTruthy();
+      expect(screen.getByText('LevelCompleteContent: game-1 - level-1')).toBeTruthy();
     });
   });
 
-  describe("without game ID", () => {
-    it("should return null when gameId is missing", () => {
+  describe('without game ID', () => {
+    it('should return null when gameId is missing', () => {
       // Mock store to return null gameId
-      const useGameManagerStore =
-        require("~/lib/stores/gameManagerStore").useGameManagerStore;
-      useGameManagerStore.mockImplementation((selector: any) => {
+      (useGameManagerStore as unknown as jest.Mock).mockImplementation((selector: any) => {
         if (selector) {
           return selector({ currentGameId: null });
         }
@@ -113,17 +110,15 @@ describe("LevelCompleteScreen", () => {
       render(<LevelCompleteScreen />);
 
       // Component should return null, so no content should be rendered
-      expect(screen.queryByTestId("parallax-scroll-view")).toBeNull();
-      expect(screen.queryByTestId("level-complete-content")).toBeNull();
+      expect(screen.queryByTestId('parallax-scroll-view')).toBeNull();
+      expect(screen.queryByTestId('level-complete-content')).toBeNull();
     });
   });
 
-  describe("without level ID", () => {
-    it("should return null when currentLevelId is missing", () => {
+  describe('without level ID', () => {
+    it('should return null when currentLevelId is missing', () => {
       // Mock store to return null levelId
-      const useCurrentLevelStore =
-        require("~/lib/stores/currentLevelStore").useCurrentLevelStore;
-      useCurrentLevelStore.mockImplementation((selector: any) => {
+      (useCurrentLevelStore as unknown as jest.Mock).mockImplementation((selector: any) => {
         if (selector) {
           return selector({ currentLevelId: null });
         }
@@ -133,8 +128,8 @@ describe("LevelCompleteScreen", () => {
       render(<LevelCompleteScreen />);
 
       // Component should return null, so no content should be rendered
-      expect(screen.queryByTestId("parallax-scroll-view")).toBeNull();
-      expect(screen.queryByTestId("level-complete-content")).toBeNull();
+      expect(screen.queryByTestId('parallax-scroll-view')).toBeNull();
+      expect(screen.queryByTestId('level-complete-content')).toBeNull();
     });
   });
 });

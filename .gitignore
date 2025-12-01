@@ -51,4 +51,14 @@ coverage/**/*
 .cursor/
 .notes/
 
-scripts/analysis-output
+# Maestro E2E testing
+maestro-debug/
+.maestro/
+
+.npm-cache/
+.eslintcache
+
+docs-site/node_modules
+docs-site/.docusaurus
+docs-site/build
+docs-site/backup-build

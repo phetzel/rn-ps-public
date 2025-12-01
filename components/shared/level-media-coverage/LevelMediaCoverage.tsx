@@ -1,25 +1,26 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
 // Components
+import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
+import MediaCoverageContent from '~/components/shared/level-media-coverage/LevelMediaCoverageContent';
+import { ResultsTableList } from '~/components/shared/results/ResultsTableList';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/components/ui/accordion";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Text } from "~/components/ui/text";
-import MediaCoverageContent from "~/components/shared/level-media-coverage/LevelMediaCoverageContent";
-import { ResultsTableList } from "~/components/shared/results/ResultsTableList";
-import { ErrorDisplay } from "~/components/shared/ErrorDisplay";
+} from '~/components/ui/accordion';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
 // Icons
-import { Newspaper } from "~/lib/icons/Newspaper";
+import { observeLevel } from '~/lib/db/helpers/observations';
+import { useMediaCoverageData } from '~/lib/hooks/useMediaCoverageData';
+import { Newspaper } from '~/lib/icons/Newspaper';
 // Hooks
-import { useMediaCoverageData } from "~/lib/hooks/useMediaCoverageData";
-import { observeLevel } from "~/lib/db/helpers/observations";
-import type { Level } from "~/lib/db/models";
+
+import type { Level } from '~/lib/db/models';
 
 interface LevelMediaCoverageProps {
   levelId: string;
@@ -27,8 +28,9 @@ interface LevelMediaCoverageProps {
 }
 
 function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
-  const { mediaBoosts, totalBoost, enhancedDeltas, isLoading, error } =
-    useMediaCoverageData({ levelId });
+  const { mediaBoosts, totalBoost, enhancedDeltas, error } = useMediaCoverageData({
+    levelId,
+  });
 
   if (error) {
     return <ErrorDisplay message={error.message} />;
@@ -40,24 +42,15 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
     <Card
       accessible={true}
       accessibilityLabel={`Media coverage analysis with total boost multiplier of ${totalBoost.toFixed(
-        2
-      )}${isAdWatched ? " with ad boost applied" : ""}`}
+        2,
+      )}${isAdWatched ? ' with ad boost applied' : ''}`}
     >
       <CardHeader className="pb-2">
-        <View
-          className=" flex-row justify-between items-center"
-          accessible={false}
-        >
-          <View
-            className="flex-1 flex-row items-center gap-2 mr-2"
-            accessible={false}
-          >
+        <View className=" flex-row justify-between items-center" accessible={false}>
+          <View className="flex-1 flex-row items-center gap-2 mr-2" accessible={false}>
             <Newspaper className="text-primary" />
 
-            <CardTitle
-              className="text-xl flex-shrink"
-              accessibilityRole="header"
-            >
+            <CardTitle className="text-xl flex-shrink" accessibilityRole="header">
               Media Coverage
             </CardTitle>
           </View>
@@ -67,7 +60,7 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
         <Accordion
           type="single"
           collapsible
-          defaultValue={"media-impact"}
+          defaultValue={'media-impact'}
           accessible={true}
           accessibilityLabel="Media coverage sections"
           accessibilityHint="Expandable sections showing media coverage details and approval impacts"
@@ -76,7 +69,7 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
           <AccordionItem value="media-boosts">
             <AccordionTrigger
               accessibilityLabel={`Media coverage breakdown with total boost multiplier of ${totalBoost.toFixed(
-                2
+                2,
               )}`}
               accessibilityHint="Shows individual publication approval ratings and boost multipliers"
             >
@@ -86,10 +79,7 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
               </View>
             </AccordionTrigger>
             <AccordionContent>
-              <MediaCoverageContent
-                mediaBoosts={mediaBoosts}
-                totalBoost={totalBoost}
-              />
+              <MediaCoverageContent mediaBoosts={mediaBoosts} totalBoost={totalBoost} />
             </AccordionContent>
           </AccordionItem>
 
@@ -115,7 +105,7 @@ function LevelMediaCoverage({ levelId, level }: LevelMediaCoverageProps) {
   );
 }
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
 }));
 

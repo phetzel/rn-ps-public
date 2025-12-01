@@ -1,28 +1,16 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
-import { useRouter } from "expo-router";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { useRouter } from 'expo-router';
+import React from 'react';
+import { View } from 'react-native';
 
-import {
-  AlertCircle,
-  ArrowRight,
-  CalendarClock,
-  CheckCircle2,
-} from "~/lib/icons";
-import { observeLevel, observeSituationsByLevelId } from "~/lib/db/helpers";
-import { Level, Situation } from "~/lib/db/models";
-import { formatDate } from "~/lib/utils";
+import { Button } from '~/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { observeLevel, observeSituationsByLevelId } from '~/lib/db/helpers';
+import { Level, Situation } from '~/lib/db/models';
+import { AlertCircle, ArrowRight, CalendarClock, CheckCircle2 } from '~/lib/icons';
+import { formatDate } from '~/lib/utils';
 // Components
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
-import { Text } from "~/components/ui/text";
-import { Button } from "~/components/ui/button";
 
 interface ArchivedLevelCardProps {
   level: Level | undefined;
@@ -30,11 +18,7 @@ interface ArchivedLevelCardProps {
   levelId: string;
 }
 
-const ArchivedLevelCard = ({
-  level,
-  situations,
-  levelId,
-}: ArchivedLevelCardProps) => {
+const ArchivedLevelCard = ({ level, situations, levelId }: ArchivedLevelCardProps) => {
   const router = useRouter();
 
   if (!level) return null;
@@ -44,8 +28,7 @@ const ArchivedLevelCard = ({
   // Calculate president approval rating change
 
   const finalApproval = outcomeSnapshot?.final?.president.approvalRating;
-  const finalPresRelationship =
-    outcomeSnapshot?.final?.president.psRelationship;
+  const finalPresRelationship = outcomeSnapshot?.final?.president.psRelationship;
 
   // Check if level had consequences
   const hasConsequences = outcomeSnapshot?.consequences
@@ -59,10 +42,10 @@ const ArchivedLevelCard = ({
 
   const cardAccessibilityLabel = `Archived ${formatDate(
     level.month,
-    level.year
+    level.year,
   )}. President approval: ${finalApproval}%. President relationship: ${finalPresRelationship}%. ${
     situations.length
-  } situations. ${hasConsequences ? "Had consequences" : "No consequences"}.`;
+  } situations. ${hasConsequences ? 'Had consequences' : 'No consequences'}.`;
 
   return (
     <Card
@@ -123,8 +106,8 @@ const ArchivedLevelCard = ({
             accessible={true}
             accessibilityLabel={
               hasConsequences
-                ? "This month had serious consequences"
-                : "This month had no major consequences"
+                ? 'This month had serious consequences'
+                : 'This month had no major consequences'
             }
           >
             <Text className="text-lg font-medium">Consequences</Text>
@@ -135,7 +118,7 @@ const ArchivedLevelCard = ({
                 <CheckCircle2 className="text-green-500" size={28} />
               )}
               <Text className="text-sm font-bold text-muted-foreground">
-                {hasConsequences ? "Had consequences" : "No consequences"}
+                {hasConsequences ? 'Had consequences' : 'No consequences'}
               </Text>
             </View>
           </View>
@@ -147,10 +130,7 @@ const ArchivedLevelCard = ({
           onPress={handleViewDetails}
           variant="ghost"
           className="flex-row gap-2"
-          accessibilityLabel={`View detailed breakdown for ${formatDate(
-            level.month,
-            level.year
-          )}`}
+          accessibilityLabel={`View detailed breakdown for ${formatDate(level.month, level.year)}`}
           accessibilityHint="Shows press exchanges, situation outcomes, and media coverage for this month"
         >
           <Text className="text-sm font-bold">View Details</Text>
@@ -161,7 +141,7 @@ const ArchivedLevelCard = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
   situations: observeSituationsByLevelId(levelId),
 }));

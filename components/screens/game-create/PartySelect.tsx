@@ -1,12 +1,13 @@
-import React from "react";
-import { View } from "react-native";
-import { Control, Controller, FieldError } from "react-hook-form";
-import { PoliticalLeaning } from "~/types";
-import { Label } from "~/components/ui/label";
-import { Text } from "~/components/ui/text";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { CreateGameFormData } from "~/lib/schemas";
-import InfoTooltip from "~/components/shared/InfoTooltip";
+import React from 'react';
+import { Control, Controller, FieldError } from 'react-hook-form';
+import { View } from 'react-native';
+
+import InfoTooltip from '~/components/shared/InfoTooltip';
+import { Label } from '~/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
+import { Text } from '~/components/ui/text';
+import { CreateGameFormData } from '~/lib/schemas';
+import { PoliticalLeaning } from '~/types';
 
 interface PartySelectProps {
   control: Control<CreateGameFormData>;
@@ -14,31 +15,23 @@ interface PartySelectProps {
   disabled?: boolean;
 }
 
-export function PartySelect({
-  control,
-  error,
-  disabled = false,
-}: PartySelectProps) {
+export function PartySelect({ control, error, disabled = false }: PartySelectProps) {
   const partyOptions = Object.values(PoliticalLeaning).filter(
-    (party) => party !== PoliticalLeaning.Neutral
+    (party) => party !== PoliticalLeaning.Neutral,
   );
 
   const formatParty = (party: PoliticalLeaning) => {
     return party.charAt(0).toUpperCase() + party.slice(1);
   };
 
-  const groupId = "presidentLeaningGroup";
-  const errorId = "presidentLeaningError";
+  const errorId = 'presidentLeaningError';
 
   return (
     <View className="gap-2">
       <View className="flex-row items-center gap-2">
-      <Label
-        nativeID="presidentLeaningLabel"
-        className={error ? "text-destructive" : ""}
-      >
-        President's Political Leaning
-      </Label>
+        <Label nativeID="presidentLeaningLabel" className={error ? 'text-destructive' : ''}>
+          President{"'"}s Political Leaning
+        </Label>
         <View className="ml-auto">
           <Controller
             control={control}
@@ -73,9 +66,7 @@ export function PartySelect({
                   nativeID={`party-${party}-label`}
                   htmlFor={`party-${party}`}
                   className={`${
-                    party === PoliticalLeaning.Liberal
-                      ? "text-blue-500"
-                      : "text-red-500"
+                    party === PoliticalLeaning.Liberal ? 'text-blue-500' : 'text-red-500'
                   }`}
                 >
                   {formatParty(party)}

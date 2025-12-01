@@ -1,37 +1,37 @@
-import { withObservables } from "@nozbe/watermelondb/react";
-import { View } from "react-native";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { View } from 'react-native';
 
 // Lib
-import { observeSubgroupApprovals } from "~/lib/db/helpers";
-import type SubgroupApproval from "~/lib/db/models/SubgroupApproval";
 // Components
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Separator } from "~/components/ui/separator";
-import { Text } from "~/components/ui/text";
-import { StateProgress } from "~/components/screens/tab-state/StateProgress";
-import { SubgroupCategoryIcon } from "~/components/shared/entity/SubgroupCategoryIcon";
+import { StateProgress } from '~/components/screens/tab-state/StateProgress';
+import { SubgroupCategoryIcon } from '~/components/shared/entity/SubgroupCategoryIcon';
+import InfoTooltip from '~/components/shared/InfoTooltip';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Separator } from '~/components/ui/separator';
+import { Text } from '~/components/ui/text';
 // Types
-import { SubgroupCategory } from "~/types";
-import InfoTooltip from "~/components/shared/InfoTooltip";
+import { observeSubgroupApprovals } from '~/lib/db/helpers';
+import { SubgroupCategory } from '~/types';
+
+import type SubgroupApproval from '~/lib/db/models/SubgroupApproval';
 
 interface SubgroupStateCardProps {
   subgroupApprovals: SubgroupApproval[];
 }
 
-export function SubgroupStateCard({
-  subgroupApprovals,
-}: SubgroupStateCardProps) {
+export function SubgroupStateCard({ subgroupApprovals }: SubgroupStateCardProps) {
   // Group subgroups by category
-  const groupedApprovals = subgroupApprovals.reduce<
-    Record<string, SubgroupApproval[]>
-  >((acc, approval) => {
-    const category = approval.staticData.category;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(approval);
-    return acc;
-  }, {});
+  const groupedApprovals = subgroupApprovals.reduce<Record<string, SubgroupApproval[]>>(
+    (acc, approval) => {
+      const category = approval.staticData.category;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(approval);
+      return acc;
+    },
+    {},
+  );
 
   // Create an ordered list of categories
   const categories = Object.keys(groupedApprovals) as SubgroupCategory[];
@@ -53,7 +53,7 @@ export function SubgroupStateCard({
         const categoryGroups = groupedApprovals[category];
         const categoryAverage = Math.round(
           categoryGroups.reduce((sum, group) => sum + group.approvalRating, 0) /
-            categoryGroups.length
+            categoryGroups.length,
         );
 
         return (
@@ -64,9 +64,7 @@ export function SubgroupStateCard({
           >
             <CardHeader className="pb-4 flex-row items-center gap-2">
               <SubgroupCategoryIcon category={category} />
-              <CardTitle>
-                {category.charAt(0).toUpperCase() + category.slice(1)} Groups
-              </CardTitle>
+              <CardTitle>{category.charAt(0).toUpperCase() + category.slice(1)} Groups</CardTitle>
             </CardHeader>
 
             <CardContent className="gap-2">
@@ -84,10 +82,7 @@ export function SubgroupStateCard({
                       {subgroupStaticData.name}
                     </Text>
 
-                    <StateProgress
-                      label="Approval Rating"
-                      value={subgroup.approvalRating}
-                    />
+                    <StateProgress label="Approval Rating" value={subgroup.approvalRating} />
 
                     {subgroupIdx !== groupedApprovals[category].length - 1 && (
                       <Separator className="mt-2" />
@@ -103,7 +98,7 @@ export function SubgroupStateCard({
   );
 }
 
-const enhance = withObservables(["gameId"], ({ gameId }) => ({
+const enhance = withObservables(['gameId'], ({ gameId }) => ({
   subgroupApprovals: observeSubgroupApprovals(gameId),
 }));
 

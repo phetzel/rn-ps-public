@@ -1,9 +1,6 @@
-import * as React from "react";
-import { View } from "react-native";
-import { Trash2 } from "~/lib/icons/Trash2";
-import { Play } from "~/lib/icons/Play";
-import { Button } from "~/components/ui/button";
-import { Text } from "~/components/ui/text";
+import * as React from 'react';
+import { View } from 'react-native';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,8 +11,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-import type Game from "~/lib/db/models/Game";
+} from '~/components/ui/alert-dialog';
+import { Button } from '~/components/ui/button';
+import { Text } from '~/components/ui/text';
+import { Play } from '~/lib/icons/Play';
+import { Trash2 } from '~/lib/icons/Trash2';
+
+import type Game from '~/lib/db/models/Game';
 
 interface GameActionsProps {
   game: Game;
@@ -24,17 +26,9 @@ interface GameActionsProps {
   onLoad: () => void;
 }
 
-export function GameActions({
-  game,
-  isLoading,
-  onDelete,
-  onLoad,
-}: GameActionsProps) {
+export function GameActions({ game, isLoading, onDelete, onLoad }: GameActionsProps) {
   return (
-    <View
-      className="flex-row gap-2"
-      accessibilityLabel={`Actions for ${game.presName} game`}
-    >
+    <View className="flex-row gap-2" accessibilityLabel={`Actions for ${game.presName} game`}>
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <Button
@@ -43,18 +37,16 @@ export function GameActions({
             disabled={isLoading}
             accessibilityLabel={`Delete ${game.presName} game`}
             accessibilityHint="Opens confirmation dialog to permanently delete this game"
+            testID="delete-game-button"
           >
             <Trash2 className="text-white" size={18} />
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle accessibilityRole="header">
-              Are you sure?
-            </AlertDialogTitle>
+            <AlertDialogTitle accessibilityRole="header">Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete this
-              game save.
+              This action cannot be undone. This will permanently delete this game save.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -69,6 +61,7 @@ export function GameActions({
               className="bg-destructive"
               accessibilityLabel={`Confirm delete ${game.presName} game`}
               accessibilityHint="Permanently deletes this game save"
+              testID="confirm-delete-button"
             >
               <Text>Delete</Text>
             </AlertDialogAction>
@@ -79,19 +72,20 @@ export function GameActions({
       <Button
         variant="default"
         size="icon"
-        disabled={game.status !== "active" || isLoading}
+        disabled={game.status !== 'active' || isLoading}
         onPress={onLoad}
         accessibilityLabel={
-          game.status !== "active"
+          game.status !== 'active'
             ? `Cannot load completed game for ${game.presName}`
             : `Load ${game.presName} game`
         }
         accessibilityHint={
-          game.status !== "active"
-            ? "This game has been completed and cannot be loaded"
-            : "Continue playing this Press Secretary game"
+          game.status !== 'active'
+            ? 'This game has been completed and cannot be loaded'
+            : 'Continue playing this Press Secretary game'
         }
-        accessibilityState={{ disabled: game.status !== "active" || isLoading }}
+        accessibilityState={{ disabled: game.status !== 'active' || isLoading }}
+        testID="load-game-button"
       >
         <Play className="text-background" size={18} />
       </Button>

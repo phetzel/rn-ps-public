@@ -1,16 +1,17 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import { findQuestionById } from "~/lib/db/helpers/exchangeApi";
 // Components
-import { Separator } from "~/components/ui/separator";
-import JournalistDisplay from "~/components/shared/entity/JournalistDisplay";
-import { QuestionDisplay } from "~/components/shared/entity/QuestionDisplay";
-import { AnswerDisplay } from "~/components/shared/entity/AnswerDisplay";
-import { SituationOutcomeExchangeImpactList } from "~/components/shared/situations-outcome-list/SituationOutcomeExchangeImpactList";
+import { AnswerDisplay } from '~/components/shared/entity/AnswerDisplay';
+import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
+import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
+import { SituationOutcomeExchangeImpactList } from '~/components/shared/situations-outcome-list/SituationOutcomeExchangeImpactList';
+import { Separator } from '~/components/ui/separator';
+import { findQuestionById } from '~/lib/db/helpers/exchangeApi';
+
 // Types
-import type { PressExchange } from "~/lib/db/models";
-import type { SituationOutcome } from "~/types";
+import type { PressExchange } from '~/lib/db/models';
+import type { SituationOutcome } from '~/types';
 
 interface SituationOutcomeExchangeItemProps {
   exchange: PressExchange;
@@ -29,10 +30,13 @@ function SituationOutcomeExchangeItem({
   if (!content || !progress) return null;
 
   // Create a map of outcomeId to outcome title for quick reference
-  const outcomeMap = allOutcomes.reduce((map, outcome) => {
-    map[outcome.id] = outcome.title;
-    return map;
-  }, {} as Record<string, string>);
+  const outcomeMap = allOutcomes.reduce(
+    (map, outcome) => {
+      map[outcome.id] = outcome.title;
+      return map;
+    },
+    {} as Record<string, string>,
+  );
 
   // Find questions and answers that affected ANY outcome
   const relevantExchanges = progress.history
@@ -46,9 +50,7 @@ function SituationOutcomeExchangeItem({
       if (!answer || !answer.outcomeModifiers) return false;
 
       // Check if this answer affected ANY outcome
-      return Object.values(answer.outcomeModifiers).some(
-        (modifier) => modifier !== 0
-      );
+      return Object.values(answer.outcomeModifiers).some((modifier) => modifier !== 0);
     })
     .map((item) => {
       const question = findQuestionById(item.questionId, content);
@@ -60,12 +62,12 @@ function SituationOutcomeExchangeItem({
     })
     .filter(
       (
-        item
+        item,
       ): item is {
         question: NonNullable<typeof item.question>;
         answerId: string;
         outcomeModifiers: Record<string, number>;
-      } => item.question !== null
+      } => item.question !== null,
     );
 
   if (relevantExchanges.length === 0) return null;
@@ -93,19 +95,13 @@ function SituationOutcomeExchangeItem({
             {index > 0 && <Separator />}
 
             {/* Question */}
-            <QuestionDisplay
-              question={item.question.text}
-              isFollowUpQuestion={index > 0}
-            />
+            <QuestionDisplay question={item.question.text} isFollowUpQuestion={index > 0} />
 
             <Separator />
 
             {/* Answer */}
             <AnswerDisplay
-              answer={
-                item.question.answers.find((a) => a.id === item.answerId)
-                  ?.text || ""
-              }
+              answer={item.question.answers.find((a) => a.id === item.answerId)?.text || ''}
             />
 
             <Separator className="my-1" />

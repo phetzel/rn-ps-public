@@ -1,7 +1,8 @@
 // components/shared/entity/FollowUpBadge.tsx
-import React from "react";
-import { Badge } from "~/components/ui/badge";
-import { Text } from "~/components/ui/text";
+import React from 'react';
+
+import { Badge } from '~/components/ui/badge';
+import { Text } from '~/components/ui/text';
 
 interface FollowUpBadgeProps {
   className?: string;
@@ -9,8 +10,8 @@ interface FollowUpBadgeProps {
 }
 
 export function FollowUpBadge({
-  className = "my-2 self-center",
-  accessibilityLabel = "Follow-up question indicator",
+  className = 'my-2 self-center',
+  accessibilityLabel = 'Follow-up question indicator',
 }: FollowUpBadgeProps) {
   return (
     <Badge className={className} accessibilityLabel={accessibilityLabel}>

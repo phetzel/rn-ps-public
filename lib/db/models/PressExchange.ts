@@ -1,48 +1,42 @@
-import { Model, Relation } from "@nozbe/watermelondb";
-import {
-  field,
-  text,
-  date,
-  relation,
-  readonly,
-  writer,
-} from "@nozbe/watermelondb/decorators";
-import type { Associations } from "@nozbe/watermelondb/Model";
+import { Model, Relation } from '@nozbe/watermelondb';
+import { field, text, date, relation, readonly, writer } from '@nozbe/watermelondb/decorators';
 
-import type Level from "./Level";
-import type Situation from "./Situation";
-import type Journalist from "./Journalist";
-import { exchangeContentSchema, exchangeProgressSchema } from "~/lib/schemas";
-import { ExchangeContent, ExchangeProgress, Question, Answer } from "~/types";
 import {
   getCurrentQuestion,
   updateProgressWithAnswer,
   updateProgressWithSkip,
   initializeExchangeProgress,
-} from "~/lib/db/helpers/exchangeApi";
+} from '~/lib/db/helpers/exchangeApi';
+import { exchangeContentSchema, exchangeProgressSchema } from '~/lib/schemas';
+import { ExchangeContent, ExchangeProgress, Question } from '~/types';
+
+import type Journalist from './Journalist';
+import type Level from './Level';
+import type Situation from './Situation';
+import type { Associations } from '@nozbe/watermelondb/Model';
 
 export default class PressExchange extends Model {
-  static table = "press_exchanges";
+  static table = 'press_exchanges';
 
   static associations: Associations = {
-    levels: { type: "belongs_to", key: "level_id" },
-    situations: { type: "belongs_to", key: "situation_id" },
-    journalists: { type: "belongs_to", key: "journalist_id" },
+    levels: { type: 'belongs_to', key: 'level_id' },
+    situations: { type: 'belongs_to', key: 'situation_id' },
+    journalists: { type: 'belongs_to', key: 'journalist_id' },
   };
 
-  @relation("levels", "level_id") level!: Relation<Level>;
-  @relation("situations", "situation_id") situation!: Relation<Situation>;
-  @relation("journalists", "journalist_id") journalist!: Relation<Journalist>;
+  @relation('levels', 'level_id') level!: Relation<Level>;
+  @relation('situations', 'situation_id') situation!: Relation<Situation>;
+  @relation('journalists', 'journalist_id') journalist!: Relation<Journalist>;
 
-  @text("content") content!: string; // Static exchange content (JSON)
-  @text("progress") progress!: string; // User's progress (JSON)
+  @text('content') content!: string; // Static exchange content (JSON)
+  @text('progress') progress!: string; // User's progress (JSON)
 
-  @field("level_id") level_id!: string;
-  @field("situation_id") situation_id!: string;
-  @field("journalist_id") journalist_id!: string;
+  @field('level_id') level_id!: string;
+  @field('situation_id') situation_id!: string;
+  @field('journalist_id') journalist_id!: string;
 
-  @readonly @date("created_at") createdAt!: Date;
-  @readonly @date("updated_at") updatedAt!: Date;
+  @readonly @date('created_at') createdAt!: Date;
+  @readonly @date('updated_at') updatedAt!: Date;
 
   // --- Content and Progress Parsing ---
   get parseContent(): ExchangeContent | null {
@@ -54,19 +48,16 @@ export default class PressExchange extends Model {
 
       if (!validationResult.success) {
         console.warn(
-          "PressExchange.content getter: Invalid data structure found in DB:",
-          validationResult.error.format()
+          'PressExchange.content getter: Invalid data structure found in DB:',
+          validationResult.error.format(),
         );
-        console.warn(
-          "Raw content causing validation error:",
-          JSON.stringify(parsed, null, 2)
-        );
+        console.warn('Raw content causing validation error:', JSON.stringify(parsed, null, 2));
         return null;
       }
       return validationResult.data;
     } catch (e) {
       console.error(`Error parsing PressExchange ${this.id} content:`, e);
-      console.error("Invalid JSON string:", this.content);
+      console.error('Invalid JSON string:', this.content);
       return null;
     }
   }
@@ -80,15 +71,15 @@ export default class PressExchange extends Model {
 
       if (!validationResult.success) {
         console.warn(
-          "PressExchange.progress getter: Invalid data structure found in DB:",
-          validationResult.error.format()
+          'PressExchange.progress getter: Invalid data structure found in DB:',
+          validationResult.error.format(),
         );
         return null;
       }
       return validationResult.data;
     } catch (e) {
       console.error(`Error parsing PressExchange ${this.id} progress:`, e);
-      console.error("Invalid JSON string:", this.progress);
+      console.error('Invalid JSON string:', this.progress);
       return null;
     }
   }
@@ -111,25 +102,18 @@ export default class PressExchange extends Model {
     const content = this.parseContent;
     const progress = this.parseProgress;
 
-    if (!content || !progress)
-      throw new Error("Exchange content or progress not found");
+    if (!content || !progress) throw new Error('Exchange content or progress not found');
 
     try {
       // Use the new utility function to update progress
-      const updatedProgress = updateProgressWithAnswer(
-        progress,
-        answerId,
-        content
-      );
+      const updatedProgress = updateProgressWithAnswer(progress, answerId, content);
 
       await this.update((exchange) => {
         exchange.progress = JSON.stringify(updatedProgress);
       });
     } catch (error) {
       throw new Error(
-        `Failed to answer question: ${
-          error instanceof Error ? error.message : String(error)
-        }`
+        `Failed to answer question: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }
@@ -138,8 +122,7 @@ export default class PressExchange extends Model {
     const content = this.parseContent;
     const progress = this.parseProgress;
 
-    if (!content || !progress)
-      throw new Error("Exchange content or progress not found");
+    if (!content || !progress) throw new Error('Exchange content or progress not found');
 
     try {
       // Use the new utility function to update progress
@@ -150,9 +133,7 @@ export default class PressExchange extends Model {
       });
     } catch (error) {
       throw new Error(
-        `Failed to skip question: ${
-          error instanceof Error ? error.message : String(error)
-        }`
+        `Failed to skip question: ${error instanceof Error ? error.message : String(error)}`,
       );
     }
   }

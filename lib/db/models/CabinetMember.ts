@@ -1,39 +1,34 @@
-import { Model, Relation } from "@nozbe/watermelondb";
-import {
-  field,
-  text,
-  date,
-  relation,
-  readonly,
-} from "@nozbe/watermelondb/decorators";
-import { Associations } from "@nozbe/watermelondb/Model";
+import { Model, Relation } from '@nozbe/watermelondb';
+import { field, text, date, relation, readonly } from '@nozbe/watermelondb/decorators';
+import { Associations } from '@nozbe/watermelondb/Model';
 
 // Models
-import type Game from "./Game";
+import { staticCabinetMembers } from '~/lib/data/staticPolitics';
+
+import type Game from './Game';
 // Data
-import { staticCabinetMembers } from "~/lib/data/staticPolitics";
 // Enums
-import type { CabinetStaticId, StaticCabinetMember } from "~/types";
+import type { CabinetStaticId, StaticCabinetMember } from '~/types';
 
 export default class CabinetMember extends Model {
-  static table = "cabinet_members";
+  static table = 'cabinet_members';
 
   static associations: Associations = {
-    games: { type: "belongs_to", key: "game_id" },
+    games: { type: 'belongs_to', key: 'game_id' },
   };
 
-  @relation("games", "game_id") game!: Relation<Game>;
+  @relation('games', 'game_id') game!: Relation<Game>;
 
-  @text("static_id") staticId!: CabinetStaticId;
-  @text("name") name!: string;
-  @field("approval_rating") approvalRating!: number;
-  @field("ps_relationship") psRelationship!: number;
-  @field("is_active") isActive!: boolean;
+  @text('static_id') staticId!: CabinetStaticId;
+  @text('name') name!: string;
+  @field('approval_rating') approvalRating!: number;
+  @field('ps_relationship') psRelationship!: number;
+  @field('is_active') isActive!: boolean;
 
-  @field("game_id") game_id!: string;
+  @field('game_id') game_id!: string;
 
-  @readonly @date("created_at") createdAt!: Date;
-  @readonly @date("updated_at") updatedAt!: Date;
+  @readonly @date('created_at') createdAt!: Date;
+  @readonly @date('updated_at') updatedAt!: Date;
 
   get staticData(): StaticCabinetMember {
     return staticCabinetMembers[this.staticId];

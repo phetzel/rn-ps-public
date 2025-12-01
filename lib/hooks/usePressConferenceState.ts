@@ -1,5 +1,6 @@
-import type { PressExchange } from "~/lib/db/models";
-import { QUESTIONS_PER_PRESS_CONFERENCE } from "~/lib/constants";
+import { QUESTIONS_PER_PRESS_CONFERENCE } from '~/lib/constants';
+
+import type { PressExchange } from '~/lib/db/models';
 
 export function usePressConferenceState(pressExchanges: PressExchange[]) {
   const questionsTakenCount = pressExchanges.reduce((total, exchange) => {

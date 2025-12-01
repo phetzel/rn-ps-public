@@ -1,14 +1,12 @@
-import React from "react";
-import { Image } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from 'expo-router';
+import React from 'react';
+import { Image } from 'react-native';
 
-import ParallaxScrollView from "~/components/shared/layout/ParallaxScrollView";
-import LevelOverviewContent from "~/components/shared/level-overview/LevelOverviewContent";
-import { EmptyState } from "~/components/shared/EmptyState";
+import { EmptyState } from '~/components/shared/EmptyState';
+import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
+import LevelOverviewContent from '~/components/shared/level-overview/LevelOverviewContent';
 
-interface ArchiveLevelScreenProps {}
-
-function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
+function ArchiveLevelScreen() {
   const { levelId } = useLocalSearchParams<{ levelId: string }>();
 
   if (!levelId) {
@@ -19,13 +17,13 @@ function ArchiveLevelScreen({}: ArchiveLevelScreenProps) {
     <ParallaxScrollView
       headerImage={
         <Image
-          source={require("~/assets/images/header-archive.png")}
+          source={require('~/assets/images/header-archive.png')}
           style={{
-            width: "100%",
-            height: "100%",
+            width: '100%',
+            height: '100%',
             bottom: 0,
             left: 0,
-            position: "absolute",
+            position: 'absolute',
           }}
         />
       }

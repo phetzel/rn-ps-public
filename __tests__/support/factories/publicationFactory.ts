@@ -1,7 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
-import { Publication } from "~/lib/db/models";
-import { PublicationStaticId } from "~/types";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
+
+import { Publication } from '~/lib/db/models';
+import { PublicationStaticId } from '~/types';
 
 type PublicationOverrides = {
   gameId: string; // Required association
@@ -11,7 +12,7 @@ type PublicationOverrides = {
 
 export async function createPublication(
   database: Database,
-  overrides: PublicationOverrides
+  overrides: PublicationOverrides,
 ): Promise<Publication> {
   const defaultValues = {
     staticId: faker.helpers.enumValue(PublicationStaticId),
@@ -20,11 +21,9 @@ export async function createPublication(
   const publicationData = { ...defaultValues, ...overrides };
 
   return await database.write(async () => {
-    return await database
-      .get<Publication>("publications")
-      .create((publication) => {
-        publication.game_id = publicationData.gameId;
-        publication.staticId = publicationData.staticId;
-      });
+    return await database.get<Publication>('publications').create((publication) => {
+      publication.game_id = publicationData.gameId;
+      publication.staticId = publicationData.staticId;
+    });
   });
 }

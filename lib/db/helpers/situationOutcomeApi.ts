@@ -1,16 +1,15 @@
-import { fetchSituationsByLevelId } from "~/lib/db/helpers/fetchApi";
-import { Situation } from "~/lib/db/models";
+import { fetchSituationsByLevelId } from '~/lib/db/helpers/fetchApi';
+import { calculatePressConferenceRawEffects } from '~/lib/db/helpers/pressConferenceApi';
+import { Situation } from '~/lib/db/models';
 import {
   SituationOutcomeWeightDeltas,
   SituationContent,
   SituationOutcome,
   SituationOutcomeWeight,
-} from "~/types";
+} from '~/types';
 
 // Helper to select an outcome from a situation by weighted random selection
-function selectOutcomeByWeightedRandom<T extends { weight: number }>(
-  items: T[]
-): T | null {
+function selectOutcomeByWeightedRandom<T extends { weight: number }>(items: T[]): T | null {
   if (!items || items.length === 0) {
     return null;
   }
@@ -48,22 +47,18 @@ function selectOutcomeByWeightedRandom<T extends { weight: number }>(
 
 export async function determineSituationOutcomes(
   levelId: string,
-  outcomeWeightDeltas: SituationOutcomeWeightDeltas
+  outcomeWeightDeltas: SituationOutcomeWeightDeltas,
 ): Promise<void> {
   const situationsToResolve = (await fetchSituationsByLevelId(levelId)).filter(
-    (s) => s.outcomeId === null
+    (s) => s.outcomeId === null,
   );
 
   for (const situation of situationsToResolve) {
     const situationContent = situation.parseContent as SituationContent | null;
 
-    if (
-      !situationContent ||
-      !situationContent.outcomes ||
-      situationContent.outcomes.length === 0
-    ) {
+    if (!situationContent || !situationContent.outcomes || situationContent.outcomes.length === 0) {
       console.warn(
-        `Situation ${situation.id} has no outcomes defined or content is unparsable. Skipping.`
+        `Situation ${situation.id} has no outcomes defined or content is unparsable. Skipping.`,
       );
       continue;
     }
@@ -71,22 +66,18 @@ export async function determineSituationOutcomes(
     const situationSpecificDeltas = outcomeWeightDeltas[situation.id] || {};
 
     // Prepare outcomes with their effective weights for weighted random selection
-    const outcomesWithEffectiveWeights = situationContent.outcomes.map(
-      (outcome) => {
-        const baseWeight = outcome.weight; // From SituationOutcome.weight
-        const delta = situationSpecificDeltas[outcome.id] || 0;
-        // Ensure effective weight is not negative for weighted random selection logic that expects positive weights
-        // Or adjust selectOutcomeByWeightedRandom to handle it. Current one expects positive.
-        const effectiveWeight = Math.max(0, baseWeight + delta); // Clamping at 0 for this selection method
-        return { ...outcome, effectiveWeight: effectiveWeight }; // Pass the original outcome along
-      }
-    );
+    const outcomesWithEffectiveWeights = situationContent.outcomes.map((outcome) => {
+      const baseWeight = outcome.weight; // From SituationOutcome.weight
+      const delta = situationSpecificDeltas[outcome.id] || 0;
+      // Ensure effective weight is not negative for weighted random selection logic that expects positive weights
+      // Or adjust selectOutcomeByWeightedRandom to handle it. Current one expects positive.
+      const effectiveWeight = Math.max(0, baseWeight + delta); // Clamping at 0 for this selection method
+      return { ...outcome, effectiveWeight: effectiveWeight }; // Pass the original outcome along
+    });
 
     // Filter out outcomes with zero or negative effective weight before selection,
     // as our current selectOutcomeByWeightedRandom expects positive weights.
-    const eligibleOutcomes = outcomesWithEffectiveWeights.filter(
-      (o) => o.effectiveWeight > 0
-    );
+    const eligibleOutcomes = outcomesWithEffectiveWeights.filter((o) => o.effectiveWeight > 0);
 
     let chosenOutcomeData: SituationOutcome | null = null;
 
@@ -96,7 +87,7 @@ export async function determineSituationOutcomes(
         eligibleOutcomes.map((o) => ({
           originalOutcome: o,
           weight: o.effectiveWeight,
-        }))
+        })),
       );
       if (selected) {
         chosenOutcomeData = selected.originalOutcome;
@@ -108,10 +99,10 @@ export async function determineSituationOutcomes(
       // For now, let's find the one with the absolute highest effective weight if no positive ones.
       if (outcomesWithEffectiveWeights.length > 0) {
         chosenOutcomeData = outcomesWithEffectiveWeights.sort(
-          (a, b) => b.effectiveWeight - a.effectiveWeight
+          (a, b) => b.effectiveWeight - a.effectiveWeight,
         )[0];
         console.warn(
-          `Situation ${situation.id}: No outcomes with positive effective weight. Fallback to highest effective weight: ${chosenOutcomeData?.title}`
+          `Situation ${situation.id}: No outcomes with positive effective weight. Fallback to highest effective weight: ${chosenOutcomeData?.title}`,
         );
       }
     }
@@ -126,22 +117,18 @@ export async function determineSituationOutcomes(
 }
 
 export async function calculateSituationOutcomeWeights(
-  situation: Situation
+  situation: Situation,
 ): Promise<SituationOutcomeWeight[]> {
   const content = situation.parseContent;
   if (!content || !content.outcomes) {
     return [];
   }
 
-  // Import calculatePressConferenceRawEffects directly
-  const {
-    calculatePressConferenceRawEffects,
-  } = require("./pressConferenceApi");
-
   try {
     // Get outcome weight deltas
-    const { situationOutcomeWeightDeltas } =
-      await calculatePressConferenceRawEffects(situation.level_id);
+    const { situationOutcomeWeightDeltas } = await calculatePressConferenceRawEffects(
+      situation.level_id,
+    );
 
     // Get deltas specific to this situation
     const outcomeDeltas = situationOutcomeWeightDeltas[situation.id] || {};
@@ -161,7 +148,7 @@ export async function calculateSituationOutcomeWeights(
       };
     });
   } catch (error) {
-    console.error("Error calculating outcome weights:", error);
+    console.error('Error calculating outcome weights:', error);
     return [];
   }
 }

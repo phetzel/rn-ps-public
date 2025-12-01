@@ -1,28 +1,23 @@
-import { useState, useMemo } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import { useState, useMemo } from 'react';
+import { View } from 'react-native';
 
-import { observePressExchangesForLevel } from "~/lib/db/helpers/observations";
-import { PressExchange } from "~/lib/db/models";
-import { QUESTIONS_PER_PRESS_CONFERENCE } from "~/lib/constants";
-import { usePressConferenceState } from "~/lib/hooks/usePressConferenceState";
-import ConferenceCompletion from "~/components/screens/level-press-conference/ConferenceCompletion";
-import ConferenceProgress from "~/components/screens/level-press-conference/ConferenceProgress";
-import ConferenceQuestionAnswer from "~/components/screens/level-press-conference/ConferenceQuestion";
-import ConferenceJournalistSelect from "~/components/screens/level-press-conference/ConferenceJournalistSelect";
+import ConferenceCompletion from '~/components/screens/level-press-conference/ConferenceCompletion';
+import ConferenceJournalistSelect from '~/components/screens/level-press-conference/ConferenceJournalistSelect';
+import ConferenceProgress from '~/components/screens/level-press-conference/ConferenceProgress';
+import ConferenceQuestionAnswer from '~/components/screens/level-press-conference/ConferenceQuestion';
+import { QUESTIONS_PER_PRESS_CONFERENCE } from '~/lib/constants';
+import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
+import { PressExchange } from '~/lib/db/models';
+import { usePressConferenceState } from '~/lib/hooks/usePressConferenceState';
 
 interface ConferenceContentProps {
   levelId: string;
   pressExchanges: PressExchange[];
 }
 
-const ConferenceContent = ({
-  levelId,
-  pressExchanges,
-}: ConferenceContentProps) => {
-  const [selectedExchangeId, setSelectedExchangeId] = useState<string | null>(
-    null
-  );
+const ConferenceContent = ({ levelId, pressExchanges }: ConferenceContentProps) => {
+  const [selectedExchangeId, setSelectedExchangeId] = useState<string | null>(null);
 
   const { questionsTakenCount, isPressConferenceComplete } =
     usePressConferenceState(pressExchanges);
@@ -37,9 +32,7 @@ const ConferenceContent = ({
 
   const selectedExchange = useMemo(() => {
     if (!selectedExchangeId) return null;
-    return pressExchanges.find(
-      (exchange) => exchange.id === selectedExchangeId
-    );
+    return pressExchanges.find((exchange) => exchange.id === selectedExchangeId);
   }, [pressExchanges, selectedExchangeId]);
 
   return (
@@ -84,7 +77,7 @@ const ConferenceContent = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   pressExchanges: observePressExchangesForLevel(levelId),
 }));
 

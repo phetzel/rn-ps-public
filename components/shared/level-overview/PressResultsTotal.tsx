@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 
-import { observeLevel } from "~/lib/db/helpers/observations";
-import type { Level } from "~/lib/db/models";
-import { Text } from "~/components/ui/text";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { getEnhancedRelationshipDeltas } from "~/lib/db/helpers";
-import { MessageSquare } from "~/lib/icons";
-import { ResultsTableList } from "~/components/shared/results/ResultsTableList";
-import type { EntityWithDelta } from "~/types";
+import { ResultsTableList } from '~/components/shared/results/ResultsTableList';
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
+import { Text } from '~/components/ui/text';
+import { getEnhancedRelationshipDeltas } from '~/lib/db/helpers';
+import { observeLevel } from '~/lib/db/helpers/observations';
+import { MessageSquare } from '~/lib/icons';
+
+import type { Level } from '~/lib/db/models';
+import type { EntityWithDelta } from '~/types';
 
 interface PressResultsTotalProps {
   levelId: string;
@@ -17,9 +18,7 @@ interface PressResultsTotalProps {
 }
 
 const PressResultsTotal = ({ levelId, level }: PressResultsTotalProps) => {
-  const [enhancedDeltas, setEnhancedDeltas] = useState<
-    EntityWithDelta[] | null
-  >(null);
+  const [enhancedDeltas, setEnhancedDeltas] = useState<EntityWithDelta[] | null>(null);
 
   useEffect(() => {
     async function loadDeltas() {
@@ -59,7 +58,7 @@ const PressResultsTotal = ({ levelId, level }: PressResultsTotalProps) => {
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   level: observeLevel(levelId),
 }));
 

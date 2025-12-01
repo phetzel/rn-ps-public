@@ -1,37 +1,30 @@
-import React from "react";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
-import { Progress } from "~/components/ui/progress";
+import React from 'react';
+import { View } from 'react-native';
+
+import { Progress } from '~/components/ui/progress';
+import { Text } from '~/components/ui/text';
 
 interface StateProgressProps {
   label: string;
   value: number;
-  size?: "small" | "medium";
+  size?: 'small' | 'medium';
 }
 
-export function StateProgress({
-  label,
-  value,
-  size = "small",
-}: StateProgressProps) {
+export function StateProgress({ label, value, size = 'small' }: StateProgressProps) {
   // Height variations based on size
   const progressHeight = {
-    small: "h-1.5",
-    medium: "h-2.5",
+    small: 'h-1.5',
+    medium: 'h-2.5',
   }[size];
 
   // Font size variations
   const labelSize = {
-    small: "text-sm",
-    medium: "text-base",
+    small: 'text-sm',
+    medium: 'text-base',
   }[size];
 
   return (
-    <View
-      className="gap-1"
-      accessible={true}
-      accessibilityLabel={`${label}: ${value}%`}
-    >
+    <View className="gap-1" accessible={true} accessibilityLabel={`${label}: ${value}%`}>
       <View className={`flex-row justify-between items-center`}>
         <Text className={labelSize}>{label}</Text>
         <Text className={labelSize} accessibilityLabel={`${value} percent`}>

@@ -1,180 +1,91 @@
 # Press Secretary Simulation Game
 
-A React Native mobile game where players take on the role of the US Press Secretary, navigating press conferences and media interactions over a 4-year presidential term.
+A React Native + Expo game where you play as the US Press Secretary, juggling cabinet intel, journalist relationships, and political subgroups to keep the administration alive for a full term.
 
-## 🎮 Game Overview
+## 📚 Documentation
 
-### Core Concept
+> **Full documentation is available in the [`docs-site/`](docs-site/) directory.**
 
-Survive a presidential term as Press Secretary by managing relationships with the President, Cabinet members, journalists, and various political subgroups. Balance transparency with loyalty while keeping approval ratings high enough to avoid being fired or having the President impeached.
-
-### Win/Lose Conditions
-
-- **Lose**: President's relationship drops too low (fired) OR President's approval rating drops too low (impeached)
-- **Win**: Successfully complete the 4-year term (48 levels)
-
-### Game Structure
-
-- **Term**: 4 years (48 months)
-- **Level**: 1 month of gameplay
-- **Stages per Level**:
-  1. **Briefing** - Receive situation updates and cabinet intel
-  2. **Press Conference** - Answer journalist questions
-  3. **Press Conference Outcomes** - See relationship impacts
-  4. **Situation Outcomes** - See approval rating changes
-  5. **Level Complete** - Progress to next month
-
-## 🏛️ Game Entities
-
-### Cabinet Members
-
-- Secretary of State
-- Secretary of Defense
-- Secretary of the Treasury
-- Attorney General
-- Secretary of Health and Human Services
-- Secretary of Homeland Security
-
-_Cabinet members provide classified intel if relationship is strong enough. If fired, all subgroups lose approval._
-
-### Political Subgroups
-
-**Political**: Left Wing Base, Right Wing Base, Independent Base  
-**Demographic**: Youth Voters, Senior Citizens, Rural Residents, Urban Residents  
-**Economic**: Labor Unions, Business Leaders, Tech Industry
-
-_President's approval rating = average of all subgroup approval ratings_
-
-### Situation Types
-
-1. **Domestic Policy** - Education, housing, healthcare
-2. **Foreign Affairs** - Diplomatic issues, treaties, trade
-3. **Economy** - Jobs reports, market volatility
-4. **Security** - Cyber attacks, terror threats
-5. **Environment** - Climate events, policy impacts
-6. **Ethics** - Corruption, nepotism scandals
-7. **Governance** - Elections, legislative drama
-
-## 🛠️ Tech Stack
-
-- **React Native + Expo**: Cross-platform mobile app with file-based routing
-- **React Native Reusables**: UI component library
-- **WatermelonDB**: Local database for game state
-- **Zustand**: Global state management
-- **TypeScript**: Type safety and better DX
+- **[Gameplay Guide](docs-site/docs/gameplay/guide.md)**: Mechanics, scoring, and how to play
+- **[Technical Handbook](docs-site/docs/technical/index.md)**: Architecture, database schema, and content pipeline
+- **[CI/CD & Infrastructure](docs-site/docs/technical/infra.md)**: Builds, monitoring, and deployment
+- **[Setup Guide](docs-site/docs/technical/setup-guide.md)**: External configuration (GitHub, EAS, stores)
+- **[Roadmap](docs-site/docs/technical/roadmap.md)**: Planned improvements and future work
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- npm or yarn
-- Expo CLI
-- iOS Simulator (Mac) or Android Studio
+- npm (or yarn/pnpm) + Expo CLI
+- Xcode Command Line Tools + iOS Simulator (macOS) or Android Studio/Emulator
+
+### macOS Environment Setup
+
+Before running builds, add these to your `~/.zshrc`:
+
+```bash
+# Required for CocoaPods with Ruby 3.4+
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+# Disable Sentry upload for local builds
+export SENTRY_DISABLE_AUTO_UPLOAD=true
+```
+
+Then run `source ~/.zshrc`.
+
+### iOS Simulator Setup
+
+If Xcode can't find your simulators:
+
+```bash
+# Download the iOS simulator runtime matching your Xcode SDK
+xcodebuild -downloadPlatform iOS
+```
 
 ### Installation
 
 ```bash
-# Clone the repository
-git clone [repository-url]
-cd press-secretary
-
-# Install dependencies
+git clone <repository-url>
+cd rn-ps
 npm install
 
-# Start development server
+# Start the Expo dev server
 npm run dev
 
-# Run on specific platform
-npm run ios     # iOS simulator
-npm run android # Android emulator
-npm run web     # Web browser
+# Run on specific platforms
+npm run ios      # iOS simulator
+npm run android  # Android emulator
+npm run web      # Expo web preview
 ```
 
-### Development Scripts
+### Local Native Build
+
+To build and run locally without EAS Cloud:
 
 ```bash
-npm run dev           # Start with cache clear
-npm run test          # Run Jest tests
-npm run clean         # Clean cache and node_modules
-npm run build:dev:ios # Build development iOS app
+# iOS (requires Xcode + iOS simulator)
+npx expo run:ios -d "iPhone 16"
+
+# Android (requires Android Studio + emulator)
+npx expo run:android
 ```
 
-## 📁 Project Structure
+## 🛠️ Tech Stack
 
-├── app/ # Expo Router pages
-├── components/ # Reusable UI components
-├── lib/
-│ ├── db/
-│ │ ├── models/ # WatermelonDB models
-│ │ └── schema.ts # Database schema
-│ ├── data/ # Static game data
-│ ├── stores/ # Zustand stores
-│ └── hooks/ # Custom React hooks
-├── types/ # TypeScript type definitions
-└── assets/ # Images, fonts, etc.
+- **Framework**: React Native + Expo Router
+- **Language**: TypeScript
+- **State**: Zustand + WatermelonDB (Offline-first SQLite)
+- **UI**: NativeWind (Tailwind) + React Native Reusables
+- **Testing**: Jest + Maestro (E2E)
 
-## 🎯 Game Mechanics
+## 🔧 Key Scripts
 
-### Answer Types
-
-- **Deflect**: Avoid direct answers
-- **Reassure**: Calm public concerns
-- **Challenge**: Push back on questions
-- **Admit**: Acknowledge issues
-- **Deny**: Reject allegations
-- **Inform**: Provide factual information
-- **Authorized**: Use classified intel (relationship-gated)
-
-### Relationship System
-
-- **President Relationship**: Affects job security
-- **Cabinet Relationships**: Unlock classified intel
-- **Journalist Relationships**: Amplify situation outcomes
-
-### Approval System
-
-- **Cabinet Approval**: Can lead to firing if too low
-- **Subgroup Approval**: Determines President's overall rating
-- **Outcome Magnification**: Journalist relationships amplify impacts
-
-## 🎨 Tone & Style
-
-**Late-night newsroom satire** with absurdist political energy:
-
-- Think _Veep_ × _The Daily Show_ headlines
-- Equal-opportunity ridicule of incompetence (not ideology)
-- No real politicians, parties, or conspiracy theories
-- Fictional countries/agencies ("Republic of Reallyfarawaystan")
-- Soft-pedal real tragedies with euphemisms
-
-## 🧪 Testing
-
-```bash
-npm run test              # Run all tests
-npm run test -- --watch   # Watch mode
-```
-
-## 📱 Building & Deployment
-
-### Development Builds
-
-```bash
-npm run build:dev:ios     # iOS development build
-npm run build:dev:android # Android development build
-```
-
-### Production Builds
-
-```bash
-npm run build:prod:ios     # iOS App Store build
-npm run build:prod:android # Google Play build
-```
-
-## 🤝 Contributing
-
-1. Follow the cursor rules in `.cursor/rules/`
-2. Use TypeScript for all new code
-3. Follow the established patterns for models and stores
-4. Write tests for new game mechanics
-5. Maintain the satirical tone in content
+| Script                         | Description                |
+| :----------------------------- | :------------------------- |
+| `npm run dev`                  | Start Expo server          |
+| `npm run test`                 | Run unit tests (Jest)      |
+| `npm run e2e`                  | Run E2E tests (Maestro)    |
+| `npm run gen-situation`        | Run content generation CLI |
+| `npm --prefix docs-site start` | Launch local docs site     |

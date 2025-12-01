@@ -1,19 +1,20 @@
-import { useState, useEffect, useMemo } from "react";
-import { calculateSituationOutcomeWeights } from "~/lib/db/helpers";
-import type { Situation } from "~/lib/db/models";
+import { useState, useEffect, useMemo } from 'react';
+
+import { calculateSituationOutcomeWeights } from '~/lib/db/helpers';
+
+import type { Situation } from '~/lib/db/models';
 import type {
   SituationOutcomeWeight,
   SituationImpacts,
   CabinetStaticId,
   SubgroupStaticId,
-} from "~/types";
+} from '~/types';
 
 export function useSituationOutcomeData(situation: Situation) {
-  const [outcomeWeights, setOutcomeWeights] = useState<
-    SituationOutcomeWeight[]
-  >([]);
-  const [selectedOutcomeWeight, setSelectedOutcomeWeight] =
-    useState<SituationOutcomeWeight | null>(null);
+  const [outcomeWeights, setOutcomeWeights] = useState<SituationOutcomeWeight[]>([]);
+  const [selectedOutcomeWeight, setSelectedOutcomeWeight] = useState<SituationOutcomeWeight | null>(
+    null,
+  );
   const [alternativeOutcomesWeights, setAlternativeOutcomesWeights] = useState<
     SituationOutcomeWeight[]
   >([]);
@@ -41,32 +42,28 @@ export function useSituationOutcomeData(situation: Situation) {
 
     // Add cabinet impacts
     if (consequences.approvalChanges.cabinet) {
-      Object.entries(consequences.approvalChanges.cabinet).forEach(
-        ([id, weight]) => {
-          if (!impacts.cabinet) {
-            impacts.cabinet = {};
-          }
-          impacts.cabinet[id as CabinetStaticId] = {
-            weight,
-            reaction: "",
-          };
+      Object.entries(consequences.approvalChanges.cabinet).forEach(([id, weight]) => {
+        if (!impacts.cabinet) {
+          impacts.cabinet = {};
         }
-      );
+        impacts.cabinet[id as CabinetStaticId] = {
+          weight,
+          reaction: '',
+        };
+      });
     }
 
     // Format subgroup impacts with proper structure
     if (consequences.approvalChanges.subgroups) {
-      Object.entries(consequences.approvalChanges.subgroups).forEach(
-        ([id, weight]) => {
-          if (!impacts.subgroups) {
-            impacts.subgroups = {};
-          }
-          impacts.subgroups[id as SubgroupStaticId] = {
-            weight,
-            reaction: "",
-          };
+      Object.entries(consequences.approvalChanges.subgroups).forEach(([id, weight]) => {
+        if (!impacts.subgroups) {
+          impacts.subgroups = {};
         }
-      );
+        impacts.subgroups[id as SubgroupStaticId] = {
+          weight,
+          reaction: '',
+        };
+      });
     }
 
     return impacts;
@@ -87,16 +84,11 @@ export function useSituationOutcomeData(situation: Situation) {
         setSelectedOutcomeWeight(selected || null);
 
         // Get alternatives
-        setAlternativeOutcomesWeights(
-          weights.filter((o) => o.id !== situation.outcomeId)
-        );
+        setAlternativeOutcomesWeights(weights.filter((o) => o.id !== situation.outcomeId));
       } catch (err) {
-        const error =
-          err instanceof Error
-            ? err
-            : new Error("Unknown error loading outcomes");
+        const error = err instanceof Error ? err : new Error('Unknown error loading outcomes');
         setError(error);
-        console.error("Error loading outcome weights:", err);
+        console.error('Error loading outcome weights:', err);
       } finally {
         setIsLoading(false);
       }

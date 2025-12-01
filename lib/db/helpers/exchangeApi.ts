@@ -1,4 +1,4 @@
-import { CabinetMember } from "~/lib/db/models";
+import { CabinetMember } from '~/lib/db/models';
 import {
   ExchangeContent,
   ExchangeProgress,
@@ -6,13 +6,11 @@ import {
   Answer,
   JournalistEngagementWeight,
   CabinetStaticId,
-} from "~/types";
+} from '~/types';
 
 // === EXCHANGE NAVIGATION UTILITIES ===
 
-export function getAllQuestionsFromExchange(
-  content: ExchangeContent
-): Question[] {
+export function getAllQuestionsFromExchange(content: ExchangeContent): Question[] {
   const allQuestions: Question[] = [];
 
   // Add root question
@@ -27,10 +25,7 @@ export function getAllQuestionsFromExchange(
   return allQuestions;
 }
 
-export function findQuestionById(
-  questionId: string,
-  content: ExchangeContent
-): Question | null {
+export function findQuestionById(questionId: string, content: ExchangeContent): Question | null {
   // Check root question
   if (content.rootQuestion.id === questionId) {
     return content.rootQuestion;
@@ -53,14 +48,9 @@ export function findQuestionById(
   return null;
 }
 
-export function findAnswerById(
-  answerId: string,
-  content: ExchangeContent
-): Answer | null {
+export function findAnswerById(answerId: string, content: ExchangeContent): Answer | null {
   // Check root question answers
-  const rootAnswer = content.rootQuestion.answers.find(
-    (a) => a.id === answerId
-  );
+  const rootAnswer = content.rootQuestion.answers.find((a) => a.id === answerId);
   if (rootAnswer) return rootAnswer;
 
   // Check secondary question answers
@@ -78,10 +68,7 @@ export function findAnswerById(
   return null;
 }
 
-export function getNextQuestionId(
-  answerId: string,
-  content: ExchangeContent
-): string | null {
+export function getNextQuestionId(answerId: string, content: ExchangeContent): string | null {
   const answer = findAnswerById(answerId, content);
   return answer?.followUpId || null;
 }
@@ -89,7 +76,7 @@ export function getNextQuestionId(
 // === EXCHANGE STATE UTILITIES ===
 
 export function calculateJournalistEngagement(
-  progress: ExchangeProgress
+  progress: ExchangeProgress,
 ): JournalistEngagementWeight {
   if (progress.hasSkipped) {
     return JournalistEngagementWeight.Partial;
@@ -109,7 +96,7 @@ export function isExchangeComplete(progress: ExchangeProgress): boolean {
 
 export function getCurrentQuestion(
   progress: ExchangeProgress,
-  content: ExchangeContent
+  content: ExchangeContent,
 ): Question | null {
   if (isExchangeComplete(progress)) {
     return null;
@@ -125,7 +112,7 @@ export function getCurrentQuestion(
 
 export function getAvailableAnswers(
   progress: ExchangeProgress,
-  content: ExchangeContent
+  content: ExchangeContent,
 ): Answer[] {
   const currentQuestion = getCurrentQuestion(progress, content);
   return currentQuestion?.answers || [];
@@ -135,7 +122,7 @@ export function canAnswerQuestion(
   answerId: string,
   progress: ExchangeProgress,
   content: ExchangeContent,
-  cabinetMembers: Map<CabinetStaticId, CabinetMember>
+  cabinetMembers: Map<CabinetStaticId, CabinetMember>,
 ): boolean {
   if (isExchangeComplete(progress)) {
     return false;
@@ -147,7 +134,7 @@ export function canAnswerQuestion(
   }
 
   // Check if authorized answer requires good cabinet relationship
-  if (answer.type === "authorized" && answer.authorizedCabinetMemberId) {
+  if (answer.type === 'authorized' && answer.authorizedCabinetMemberId) {
     const member = cabinetMembers.get(answer.authorizedCabinetMemberId);
     if (!member || member.psRelationship < 0) {
       return false;
@@ -170,9 +157,7 @@ export function initializeExchangeProgress(): ExchangeProgress {
   };
 }
 
-export function initializeExchangeProgressForContent(
-  content: ExchangeContent
-): ExchangeProgress {
+export function initializeExchangeProgressForContent(content: ExchangeContent): ExchangeProgress {
   return {
     history: [],
     currentQuestionId: content.rootQuestion.id, // Set to root question ID for v2 structure
@@ -186,11 +171,11 @@ export function initializeExchangeProgressForContent(
 export function updateProgressWithAnswer(
   progress: ExchangeProgress,
   answerId: string,
-  content: ExchangeContent
+  content: ExchangeContent,
 ): ExchangeProgress {
   // Check if exchange is already complete
   if (isExchangeComplete(progress)) {
-    throw new Error("No current question to answer");
+    throw new Error('No current question to answer');
   }
 
   const answer = findAnswerById(answerId, content);
@@ -198,8 +183,7 @@ export function updateProgressWithAnswer(
     throw new Error(`Answer with ID ${answerId} not found`);
   }
 
-  const currentQuestionId =
-    progress.currentQuestionId || content.rootQuestion.id;
+  const currentQuestionId = progress.currentQuestionId || content.rootQuestion.id;
 
   const newHistory = [
     ...progress.history,
@@ -224,8 +208,7 @@ export function updateProgressWithAnswer(
 
   // Only set journalistEngagement when the exchange is completed
   if (completed) {
-    updatedProgress.journalistEngagement =
-      calculateJournalistEngagement(updatedProgress);
+    updatedProgress.journalistEngagement = calculateJournalistEngagement(updatedProgress);
   }
 
   return updatedProgress;
@@ -233,15 +216,14 @@ export function updateProgressWithAnswer(
 
 export function updateProgressWithSkip(
   progress: ExchangeProgress,
-  content: ExchangeContent
+  content: ExchangeContent,
 ): ExchangeProgress {
   // Check if exchange is already complete
   if (isExchangeComplete(progress)) {
-    throw new Error("No current question to skip");
+    throw new Error('No current question to skip');
   }
 
-  const currentQuestionId =
-    progress.currentQuestionId || content.rootQuestion.id;
+  const currentQuestionId = progress.currentQuestionId || content.rootQuestion.id;
 
   const newHistory = [
     ...progress.history,

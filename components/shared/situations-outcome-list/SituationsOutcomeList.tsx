@@ -1,23 +1,20 @@
-import React from "react";
-import { View } from "react-native";
-import { withObservables } from "@nozbe/watermelondb/react";
+import { withObservables } from '@nozbe/watermelondb/react';
+import React from 'react';
+import { View } from 'react-native';
 
-import { observeSituationsByLevelId } from "~/lib/db/helpers/observations";
-import { Situation } from "~/lib/db/models";
-import { Accordion } from "~/components/ui/accordion";
-import { EmptyState } from "~/components/shared/EmptyState";
-import { Text } from "~/components/ui/text";
-import SituationOutcomeItem from "~/components/shared/situations-outcome-list/SituationOutcomeItem";
+import { EmptyState } from '~/components/shared/EmptyState';
+import SituationOutcomeItem from '~/components/shared/situations-outcome-list/SituationOutcomeItem';
+import { Accordion } from '~/components/ui/accordion';
+import { Text } from '~/components/ui/text';
+import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
+import { Situation } from '~/lib/db/models';
 
 interface SituationsOutcomeListProps {
   levelId: string;
   situations: Situation[];
 }
 
-const SituationsOutcomeList = ({
-  levelId,
-  situations,
-}: SituationsOutcomeListProps) => {
+const SituationsOutcomeList = ({ levelId, situations }: SituationsOutcomeListProps) => {
   if (!situations || situations.length === 0) {
     return <EmptyState message="No situations found for this level." />;
   }
@@ -47,7 +44,7 @@ const SituationsOutcomeList = ({
   );
 };
 
-const enhance = withObservables(["levelId"], ({ levelId }) => ({
+const enhance = withObservables(['levelId'], ({ levelId }) => ({
   situations: observeSituationsByLevelId(levelId),
 }));
 

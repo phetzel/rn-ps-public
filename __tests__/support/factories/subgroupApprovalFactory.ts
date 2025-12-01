@@ -1,7 +1,8 @@
-import { Database } from "@nozbe/watermelondb";
-import { faker } from "@faker-js/faker";
-import { SubgroupApproval } from "~/lib/db/models";
-import { SubgroupStaticId } from "~/types";
+import { faker } from '@faker-js/faker';
+import { Database } from '@nozbe/watermelondb';
+
+import { SubgroupApproval } from '~/lib/db/models';
+import { SubgroupStaticId } from '~/types';
 
 type SubgroupApprovalOverrides = {
   gameId: string; // Required association
@@ -12,7 +13,7 @@ type SubgroupApprovalOverrides = {
 
 export async function createSubgroupApproval(
   database: Database,
-  overrides: SubgroupApprovalOverrides
+  overrides: SubgroupApprovalOverrides,
 ): Promise<SubgroupApproval> {
   const defaultValues = {
     staticId: faker.helpers.enumValue(SubgroupStaticId),
@@ -22,12 +23,10 @@ export async function createSubgroupApproval(
   const subgroupData = { ...defaultValues, ...overrides };
 
   return await database.write(async () => {
-    return await database
-      .get<SubgroupApproval>("subgroup_approvals")
-      .create((subgroup) => {
-        subgroup.game_id = subgroupData.gameId;
-        subgroup.staticId = subgroupData.staticId;
-        subgroup.approvalRating = subgroupData.approvalRating;
-      });
+    return await database.get<SubgroupApproval>('subgroup_approvals').create((subgroup) => {
+      subgroup.game_id = subgroupData.gameId;
+      subgroup.staticId = subgroupData.staticId;
+      subgroup.approvalRating = subgroupData.approvalRating;
+    });
   });
 }

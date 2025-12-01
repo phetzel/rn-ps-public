@@ -1,14 +1,15 @@
-import * as React from "react";
-import { Link, Stack } from "expo-router";
-import { View } from "react-native";
-import { Text } from "~/components/ui/text";
+import { Link, Stack } from 'expo-router';
+import * as React from 'react';
+import { View } from 'react-native';
+
+import { Text } from '~/components/ui/text';
 
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: "Oops!" }} />
+      <Stack.Screen options={{ title: 'Oops!' }} />
       <View>
-        <Text accessibilityRole="header">This screen doesn't exist.</Text>
+        <Text accessibilityRole="header">This screen doesn{"'"}t exist.</Text>
 
         <Link
           href="/"

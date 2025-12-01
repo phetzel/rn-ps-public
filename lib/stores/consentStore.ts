@@ -1,7 +1,13 @@
-import { create } from "zustand";
-import mobileAds, { AdsConsent } from "react-native-google-mobile-ads";
-import { requestTrackingPermissionsAsync } from "expo-tracking-transparency";
-import { Platform } from "react-native";
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { Platform } from 'react-native';
+import mobileAds, { AdsConsent } from 'react-native-google-mobile-ads';
+import { create } from 'zustand';
+
+import { setAnalyticsEnabled as persistAnalyticsEnabled } from '~/lib/db/helpers/appSettings';
+import {
+  initIfEnabled as analyticsInitIfEnabled,
+  setEnabled as analyticsSetEnabled,
+} from '~/lib/infra/analytics';
 
 interface ConsentStoreState {
   // State
@@ -18,6 +24,18 @@ interface ConsentStoreState {
   startGoogleMobileAdsSDK: () => Promise<void>;
   showPrivacyOptions: () => Promise<void>;
 }
+
+const updateAnalyticsConsent = async (granted: boolean) => {
+  try {
+    await persistAnalyticsEnabled(granted);
+    analyticsSetEnabled(granted);
+    if (granted) {
+      analyticsInitIfEnabled();
+    }
+  } catch (error) {
+    console.error('Failed to update analytics consent:', error);
+  }
+};
 
 export const useConsentStore = create<ConsentStoreState>((set, get) => ({
   isSdkInitialized: false,
@@ -41,14 +59,16 @@ export const useConsentStore = create<ConsentStoreState>((set, get) => ({
 
     const form = consentInfo.isConsentFormAvailable;
     set({ formAvailable: form });
-    if (consentInfo.status === "NOT_REQUIRED") {
+    if (consentInfo.status === 'NOT_REQUIRED') {
       set({ canRequestAds: true });
+      await updateAnalyticsConsent(true);
       await get().startGoogleMobileAdsSDK();
-    } else if (consentInfo.status === "OBTAINED") {
+    } else if (consentInfo.status === 'OBTAINED') {
       if (gdrpApplies) {
         await get().checkConsentGDRP();
       } else {
         set({ canRequestAds: true });
+        await updateAnalyticsConsent(true);
         await get().startGoogleMobileAdsSDK();
       }
     } else {
@@ -66,7 +86,7 @@ export const useConsentStore = create<ConsentStoreState>((set, get) => ({
       await AdsConsent.gatherConsent();
       await get().checkConsentGDRP();
     } catch (error) {
-      console.error("Consent gathering failed:", error);
+      console.error('Consent gathering failed:', error);
     }
   },
 
@@ -82,12 +102,12 @@ export const useConsentStore = create<ConsentStoreState>((set, get) => ({
 
     // manually check for at least basic consent before requesting ads
     const hasBasicConsent =
-      userChoices.storeAndAccessInformationOnDevice &&
-      userChoices.selectBasicAds;
+      userChoices.storeAndAccessInformationOnDevice && userChoices.selectBasicAds;
 
     const finalCanRequestAds = consentInfo.canRequestAds && hasBasicConsent;
 
     set({ canRequestAds: finalCanRequestAds });
+    await updateAnalyticsConsent(finalCanRequestAds);
 
     if (finalCanRequestAds) await get().startGoogleMobileAdsSDK();
   },
@@ -97,9 +117,10 @@ export const useConsentStore = create<ConsentStoreState>((set, get) => ({
     try {
       await AdsConsent.gatherConsent();
       set({ canRequestAds: true });
+      await updateAnalyticsConsent(true);
       await get().startGoogleMobileAdsSDK();
     } catch (error) {
-      console.error("Consent gathering failed:", error);
+      console.error('Consent gathering failed:', error);
     }
   },
 
@@ -107,15 +128,22 @@ export const useConsentStore = create<ConsentStoreState>((set, get) => ({
   gatherATTConsentIOS: async () => {
     const gdprApplies = await AdsConsent.getGdprApplies();
     const hasConsentForPurposeOne =
-      gdprApplies && (await AdsConsent.getPurposeConsents()).startsWith("1");
+      gdprApplies && (await AdsConsent.getPurposeConsents()).startsWith('1');
     if (!gdprApplies || hasConsentForPurposeOne) {
-      await requestTrackingPermissionsAsync();
+      const status = await requestTrackingPermissionsAsync();
+      // If user specifically denies ATT, we should respect that for analytics too
+      if (status.status === 'denied') {
+        await updateAnalyticsConsent(false);
+      } else if (status.status === 'granted') {
+        // Re-affirm consent
+        await updateAnalyticsConsent(true);
+      }
     }
   },
 
   /** If user has consented to received ads at all or is allowed by local laws, request ATT on IOS and start the SDK */
   startGoogleMobileAdsSDK: async () => {
-    if (Platform.OS === "ios") {
+    if (Platform.OS === 'ios') {
       await get().gatherATTConsentIOS();
     }
 
@@ -132,6 +160,9 @@ export const useConsentStore = create<ConsentStoreState>((set, get) => ({
       await get().checkConsentGDRP();
     } else {
       await AdsConsent.showForm();
+      // For non-GDPR (e.g. US), the form might be a "Do Not Sell" toggle.
+      // We should strictly speaking check the status/result, but UMP API is opaque here for US.
+      // Assuming flow continues.
     }
   },
 }));

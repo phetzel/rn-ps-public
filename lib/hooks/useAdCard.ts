@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
-import {
-  useRewardedAd,
-  TestIds,
-  AdsConsentStatus,
-} from "react-native-google-mobile-ads";
-import { Platform } from "react-native";
-import { useConsentStore } from "~/lib/stores/consentStore";
+import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import { useRewardedAd, TestIds } from 'react-native-google-mobile-ads';
 
-type RewardAdType = "relationship" | "approval";
+import { useConsentStore } from '~/lib/stores/consentStore';
+
+type RewardAdType = 'relationship' | 'approval';
 
 interface UseAdCardProps {
   adType: RewardAdType;
@@ -66,12 +63,9 @@ export function useAdCard({
   // Only attempt to load ads if consent allows and not disabled
   const shouldLoadAd = isSdkInitialized && canRequestAds && !disabled;
 
-  const { isLoaded, load, show, reward, isEarnedReward } = useRewardedAd(
-    adUnitId,
-    {
-      keywords: ["games", "politics", "simulation"],
-    }
-  );
+  const { isLoaded, load, show, reward, isEarnedReward } = useRewardedAd(adUnitId, {
+    keywords: ['games', 'politics', 'simulation'],
+  });
 
   // Load ad when component mounts (only if conditions are met)
   useEffect(() => {
@@ -86,14 +80,7 @@ export function useAdCard({
       onAdComplete();
       setUserInitiatedShow(false);
     }
-  }, [
-    isEarnedReward,
-    userInitiatedShow,
-    onAdComplete,
-    adType,
-    disabled,
-    reward,
-  ]);
+  }, [isEarnedReward, userInitiatedShow, onAdComplete, adType, disabled, reward]);
 
   // Handle ad errors
   useEffect(() => {
@@ -107,28 +94,28 @@ export function useAdCard({
   const showAd = () => {
     if (disabled) {
       setHasError(true);
-      setErrorMessage("Ad already watched for this level.");
+      setErrorMessage('Ad already watched for this level.');
       return;
     }
 
     if (!canRequestAds) {
       setHasError(true);
-      setErrorMessage("Ads not available due to consent settings.");
+      setErrorMessage('Ads not available due to consent settings.');
       return;
     }
 
     if (!isLoaded) {
       setHasError(true);
-      setErrorMessage("Ad not ready yet. Please try again.");
+      setErrorMessage('Ad not ready yet. Please try again.');
       return;
     }
 
     try {
       setUserInitiatedShow(true);
       show();
-    } catch (error) {
+    } catch {
       setHasError(true);
-      setErrorMessage("Failed to show ad. Please try again.");
+      setErrorMessage('Failed to show ad. Please try again.');
       setUserInitiatedShow(false);
     }
   };

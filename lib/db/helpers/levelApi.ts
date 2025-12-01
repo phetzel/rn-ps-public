@@ -1,9 +1,9 @@
-import { database } from "~/lib/db";
-import { Game, Level } from "~/lib/db/models";
-import { levelsCollection } from "~/lib/db/helpers/collections";
-import { fetchActiveCabinetMembers } from "~/lib/db/helpers/fetchApi";
-import { cabinetSnapshotSchema } from "~/lib/schemas";
-import { CabinetSnapshot, LevelStatus, GameStatus } from "~/types";
+import { database } from '~/lib/db';
+import { levelsCollection } from '~/lib/db/helpers/collections';
+import { fetchActiveCabinetMembers } from '~/lib/db/helpers/fetchApi';
+import { Game, Level } from '~/lib/db/models';
+import { cabinetSnapshotSchema } from '~/lib/schemas';
+import { CabinetSnapshot, LevelStatus, GameStatus } from '~/types';
 
 export function isGameEnded(gameStatus: GameStatus): boolean {
   return (
@@ -17,9 +17,7 @@ export function isGameEnded(gameStatus: GameStatus): boolean {
 export async function createLevel(game: Game): Promise<Level> {
   // Check if game has ended
   if (isGameEnded(game.status)) {
-    throw new Error(
-      `Cannot create new level: Game has ended due to ${game.status}`
-    );
+    throw new Error(`Cannot create new level: Game has ended due to ${game.status}`);
   }
 
   return await database.write(async () => {
@@ -39,10 +37,10 @@ export async function createLevel(game: Game): Promise<Level> {
       // Validation failed - the snapshot is not complete as required by the schema.
       console.error(
         `Failed to create valid Cabinet Snapshot for game ${game.id} during level creation.`,
-        validationResult.error.format() // Log detailed Zod errors
+        validationResult.error.format(), // Log detailed Zod errors
       );
       throw new Error(
-        "Data integrity issue: Constructed cabinet snapshot does not meet schema requirements (likely incomplete)."
+        'Data integrity issue: Constructed cabinet snapshot does not meet schema requirements (likely incomplete).',
       );
     }
 

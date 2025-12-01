@@ -1,11 +1,11 @@
-import { situationsData } from "~/lib/data/situations";
-import { situationDataSchema } from "~/lib/schemas";
-import { getAllQuestionsFromExchange } from "~/lib/db/helpers/exchangeApi";
+import { situationsData } from '~/lib/data/situations';
+import { getAllQuestionsFromExchange } from '~/lib/db/helpers/exchangeApi';
+import { situationDataSchema } from '~/lib/schemas';
 
-describe("Situation Data Schema Validation", () => {
-  describe("Overall Schema Compliance", () => {
-    test("all situations conform to SituationData schema", () => {
-      const errors: Array<{ index: number; title: string; errors: any }> = [];
+describe('Situation Data Schema Validation', () => {
+  describe('Overall Schema Compliance', () => {
+    test('all situations conform to SituationData schema', () => {
+      const errors: { index: number; title: string; errors: any }[] = [];
 
       situationsData.forEach((situation, index) => {
         const result = situationDataSchema.safeParse(situation);
@@ -19,28 +19,23 @@ describe("Situation Data Schema Validation", () => {
       });
 
       if (errors.length > 0) {
-        console.error(
-          "Schema validation errors:",
-          JSON.stringify(errors, null, 2)
-        );
-        fail(
-          `${errors.length} situations failed schema validation. See console for details.`
-        );
+        console.error('Schema validation errors:', JSON.stringify(errors, null, 2));
+        fail(`${errors.length} situations failed schema validation. See console for details.`);
       }
 
       expect(errors).toHaveLength(0);
     });
   });
 
-  describe("Cross-Entity Uniqueness Validation", () => {
-    test("all trigger static keys are unique", () => {
+  describe('Cross-Entity Uniqueness Validation', () => {
+    test('all trigger static keys are unique', () => {
       const staticKeys = situationsData.map((s) => s.trigger.staticKey);
       const uniqueKeys = new Set(staticKeys);
 
       expect(uniqueKeys.size).toBe(staticKeys.length);
     });
 
-    test("outcome IDs are unique within each situation", () => {
+    test('outcome IDs are unique within each situation', () => {
       situationsData.forEach((situation, index) => {
         const outcomeIds = situation.content.outcomes.map((o) => o.id);
         const uniqueIds = new Set(outcomeIds);
@@ -49,7 +44,7 @@ describe("Situation Data Schema Validation", () => {
       });
     });
 
-    test("question IDs are unique within each exchange", () => {
+    test('question IDs are unique within each exchange', () => {
       situationsData.forEach((situation, index) => {
         situation.exchanges.forEach((exchange, exchangeIndex) => {
           const allQuestions = getAllQuestionsFromExchange(exchange.content);
@@ -61,7 +56,7 @@ describe("Situation Data Schema Validation", () => {
       });
     });
 
-    test("answer IDs are unique within each question", () => {
+    test('answer IDs are unique within each question', () => {
       situationsData.forEach((situation, index) => {
         situation.exchanges.forEach((exchange, exchangeIndex) => {
           const allQuestions = getAllQuestionsFromExchange(exchange.content);

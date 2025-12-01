@@ -1,6 +1,6 @@
 // src/gen/base/responses-generation-step.ts
-import type { LLMClient } from "../../llm/client";
-import type { ResponsesJSONSchemaOptions } from "../../types";
+import type { LLMClient } from '../../llm/client';
+import type { ResponsesJSONSchemaOptions } from '../../types';
 
 export abstract class ResponsesGenerationStep<I, R, O = R> {
   protected llmClient: LLMClient;
@@ -12,7 +12,7 @@ export abstract class ResponsesGenerationStep<I, R, O = R> {
   protected abstract buildRequest(input: I): ResponsesJSONSchemaOptions;
 
   protected validateInput(input: I): void {
-    if (input == null) throw new Error("Input required");
+    if (input == null) throw new Error('Input required');
   }
 
   protected async transform(result: R, _input: I): Promise<O> {
@@ -27,12 +27,12 @@ export abstract class ResponsesGenerationStep<I, R, O = R> {
       const { content } = await this.llmClient.generateResponse<R>(reqOptions);
       return this.transform(content, input);
     } catch (err: any) {
-      const prefix = this.constructor?.name || "ResponsesGenerationStep";
+      const prefix = this.constructor?.name || 'ResponsesGenerationStep';
       const message = err?.message || String(err);
       throw new Error(`${prefix} failed: ${message}`);
     }
   }
 }
 
-export type { GenerationLogger, StepDependencies } from "../../types";
-export { ConsoleGenerationLogger } from "../../types";
+export type { GenerationLogger, StepDependencies } from '../../types';
+export { ConsoleGenerationLogger } from '../../types';
