@@ -14,7 +14,7 @@ on:
         type: choice
         options:
           - ios
-          - android
+          # - android  # Disabled until Android testing is set up
 
 concurrency:
   group: e2e-${{ github.ref }}
@@ -107,13 +107,12 @@ jobs:
           retention-days: 7
 
   # Build and test Android
+  # TODO: Re-enable when Android testing is ready (need credentials.json or EAS credentials)
   android:
     name: Android E2E
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    if: |
-      github.event_name != 'workflow_dispatch' || 
-      github.event.inputs.platform == 'android'
+    if: false # Disabled until Android testing is set up
     steps:
       - name: Checkout
         uses: actions/checkout@v4
