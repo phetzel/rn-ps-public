@@ -12,6 +12,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   assetBundlePatterns: ['**/*'],
+  updates: {
+    url: 'https://u.expo.dev/48f8c4ca-a4f2-42c6-8a38-471524a90dcc',
+  },
   ios: {
     supportsTablet: true,
     bundleIdentifier: 'com.phetzel.rnps',
