@@ -1,73 +1,8 @@
 # CI/CD Pipeline
 
-Our CI/CD pipeline automates quality checks, testing, building, and deployment using **GitHub Actions** and **Expo Application Services (EAS)**.
-
-:::info Showcase Mode
-
-This project is currently configured for **public showcase**. Some workflows are disabled to conserve resources:
-
-| Workflow | Status | Reason |
-|----------|--------|--------|
-| `ci.yml` | ✅ Active | Quality checks are cheap (ubuntu runners) |
-| `e2e.yml` | 🚫 Disabled | macOS runners are ~10x cost |
-| `eas-build.yml` | 🚫 Disabled | Preserves EAS build quota |
-| `eas-update.yml` | 🚫 Disabled | Preserves EAS update quota |
-| `docs-pages.yml` | ⚠️ Partial | Build runs, deploy disabled |
-
-To re-enable any workflow, search for `if: false # SHOWCASE MODE` in the workflow files and remove those lines.
-
-:::
+Automated quality checks and testing using **GitHub Actions**.
 
 ## Pipeline Overview
-
-```mermaid
-flowchart TB
-    subgraph triggers["Triggers"]
-        PR[Pull Request]
-        Push[Push to main/release]
-        Manual[Manual Dispatch]
-    end
-
-    subgraph quality["Quality Gate"]
-        TC[TypeScript Check]
-        Lint[ESLint]
-        Test[Jest Unit Tests]
-        Format[Prettier Check]
-        Bundle[Bundle Analysis]
-    end
-
-    subgraph e2e["E2E Testing"]
-        iOS[iOS Simulator]
-        Android[Android Emulator]
-        Maestro[Maestro Tests]
-    end
-
-    subgraph builds["EAS Builds"]
-        Preview[Preview Build]
-        Prod[Production Build]
-    end
-
-    subgraph deploy["Deployment"]
-        OTA[OTA Update]
-        Store[App Store / Play Store]
-    end
-
-    PR --> quality
-    Push --> quality
-    Push --> e2e
-    Push --> builds
-    Manual --> builds
-
-    quality --> |Pass| e2e
-    e2e --> |Pass| builds
-    builds --> Preview
-    builds --> Prod
-
-    Preview --> OTA
-    Prod --> Store
-```
-
-### Text Diagram (Non-Mermaid)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -77,194 +12,78 @@ flowchart TB
 │  TRIGGERS                                                               │
 │  ────────                                                               │
 │  • Pull Request → Quality checks                                        │
-│  • Push to main/release/* → Full pipeline                               │
-│  • Manual dispatch → On-demand builds                                   │
+│  • Push to main → Full pipeline                                         │
 │                                                                         │
-│  ┌─────────────┐     ┌─────────────┐     ┌─────────────┐               │
-│  │   ci.yml    │     │  e2e.yml    │     │docs-pages   │               │
-│  │             │     │             │     │   .yml      │               │
-│  │ • typecheck │     │ • iOS E2E   │     │             │               │
-│  │ • lint      │     │ • Android   │     │ • Build     │               │
-│  │ • test      │     │   E2E       │     │ • Deploy    │               │
-│  │ • format    │     │             │     │             │               │
-│  │ • bundle    │     │             │     │             │               │
-│  └──────┬──────┘     └──────┬──────┘     └─────────────┘               │
-│         │                   │                                           │
-│         └─────────┬─────────┘                                           │
-│                   ▼                                                     │
-│         ┌─────────────────┐     ┌─────────────────┐                    │
-│         │  eas-build.yml  │     │ eas-update.yml  │                    │
-│         │                 │     │                 │                    │
-│         │ • preview builds│     │ • OTA updates   │                    │
-│         │ • prod builds   │     │ • JS-only       │                    │
-│         └────────┬────────┘     └────────┬────────┘                    │
-│                  │                       │                              │
-│                  ▼                       ▼                              │
-│         ┌─────────────────────────────────────────┐                    │
-│         │              EAS Cloud                   │                    │
-│         │                                          │                    │
-│         │  Channels: development │ preview │ prod  │                    │
-│         └─────────────────────────────────────────┘                    │
+│  ┌─────────────┐     ┌─────────────┐                                   │
+│  │   ci.yml    │     │  e2e.yml    │                                   │
+│  │             │     │             │                                   │
+│  │ • typecheck │     │ • iOS E2E   │                                   │
+│  │ • lint      │     │ • Android   │                                   │
+│  │ • test      │     │   E2E       │                                   │
+│  │ • format    │     │             │                                   │
+│  │ • bundle    │     │             │                                   │
+│  └─────────────┘     └─────────────┘                                   │
 │                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Workflows
 
-### 1. Quality Checks (`ci.yml`)
+### Quality Checks (`ci.yml`)
 
 Runs on every PR and push to ensure code quality.
 
-| Check       | Tool           | Purpose            |
-| ----------- | -------------- | ------------------ |
-| TypeScript  | `tsc --noEmit` | Type safety        |
-| Linting     | ESLint         | Code standards     |
-| Unit Tests  | Jest           | Logic verification |
-| Formatting  | Prettier       | Consistent style   |
-| Bundle Size | `expo export`  | Track bundle bloat |
+| Check | Tool | Purpose |
+|-------|------|---------|
+| TypeScript | `tsc --noEmit` | Type safety |
+| Linting | ESLint | Code standards |
+| Unit Tests | Jest | Logic verification |
+| Formatting | Prettier | Consistent style |
+| Bundle Size | `expo export` | Track bundle bloat |
 
 **Bundle Analysis**: On PRs, a comment is posted showing iOS and Android bundle sizes to catch size regressions early.
 
-```yaml
-# Trigger
-on:
-  pull_request:
-  push:
-    branches: [main, release/**]
-```
-
-### 2. E2E Tests (`e2e.yml`)
+### E2E Tests (`e2e.yml`)
 
 End-to-end testing using Maestro on real simulators/emulators.
 
-```mermaid
-sequenceDiagram
-    participant GH as GitHub Actions
-    participant EAS as EAS Build
-    participant Sim as Simulator
-    participant Maestro as Maestro CLI
-
-    GH->>EAS: Build test app (--local)
-    EAS-->>GH: .app / .apk
-    GH->>Sim: Boot & Install
-    GH->>Maestro: Run smoke suite
-    Maestro->>Sim: Execute flows
-    Sim-->>Maestro: Results
-    Maestro-->>GH: JUnit report
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           E2E Test Flow                                 │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│  GitHub Actions                                                         │
+│       │                                                                 │
+│       ▼                                                                 │
+│  Build test app (local)                                                 │
+│       │                                                                 │
+│       ├──────────────────┬──────────────────┐                          │
+│       ▼                  ▼                  │                          │
+│  iOS Simulator      Android Emulator       │                          │
+│  (iPhone 15)        (Pixel 5, API 34)      │                          │
+│       │                  │                  │                          │
+│       ▼                  ▼                  │                          │
+│  Maestro smoke suite runs on both          │                          │
+│       │                  │                  │                          │
+│       └──────────────────┴──────────────────┘                          │
+│                          │                                              │
+│                          ▼                                              │
+│                    JUnit reports + screenshots on failure               │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 **Platforms tested**:
-
 - iOS: iPhone 15 Simulator on macOS runner
 - Android: Pixel 5 (API 34) on Ubuntu runner with KVM
 
 **Artifacts on failure**:
-
 - JUnit XML reports
 - Screenshots for debugging
 
-### 3. EAS Builds (`eas-build.yml`)
+## Running Locally
 
-Automated native builds via Expo Application Services.
-
-| Profile       | Channel       | Distribution | Use Case                         |
-| ------------- | ------------- | ------------ | -------------------------------- |
-| `development` | `development` | Internal     | Dev client for local development |
-| `preview`     | `preview`     | Internal     | TestFlight / Internal testing    |
-| `production`  | `production`  | Store        | App Store / Play Store release   |
-| `test`        | `test`        | Internal     | E2E testing (simulator builds)   |
-
-**Triggers**:
-
-- Push to `main` → Preview builds
-- Push to `release/*` → Preview builds
-- Manual dispatch → Any profile
-
-### 4. OTA Updates (`eas-update.yml`)
-
-JavaScript-only updates delivered instantly without app store review.
-
-```mermaid
-flowchart LR
-    subgraph repo["Repository"]
-        JS[JS/TS Changes]
-    end
-
-    subgraph eas["EAS Update"]
-        Bundle[Bundle Assets]
-        Publish[Publish to Channel]
-    end
-
-    subgraph devices["User Devices"]
-        Preview[Preview Users]
-        Prod[Production Users]
-    end
-
-    JS -->|Push to main| Bundle
-    Bundle --> Publish
-    Publish -->|preview channel| Preview
-    Publish -->|production channel| Prod
-```
-
-**Triggers**:
-
-- Push to `main` with changes in: `app/`, `components/`, `lib/`, `assets/`
-- Manual dispatch for any channel
-
-**Update Flow**:
-
-1. Code pushed to `main`
-2. EAS bundles JS/assets
-3. Published to `preview` channel
-4. Users with preview builds receive update on next app launch
-
-### 5. Documentation (`docs-pages.yml`)
-
-Builds and deploys this documentation site.
-
-- **Trigger**: Push to `main` or changes in `docs-site/`
-- **Output**: Static site deployed to GitHub Pages
-
-## EAS Configuration
-
-Our `eas.json` defines build profiles and update channels:
-
-```json
-{
-  "build": {
-    "development": {
-      "channel": "development",
-      "developmentClient": true
-    },
-    "preview": {
-      "channel": "preview",
-      "distribution": "internal"
-    },
-    "production": {
-      "channel": "production",
-      "autoIncrement": true
-    },
-    "test": {
-      "channel": "test",
-      "ios": { "simulator": true },
-      "android": { "buildType": "apk" }
-    }
-  }
-}
-```
-
-## Required Secrets
-
-Configure these in **GitHub → Settings → Secrets → Actions**:
-
-| Secret            | Used By           | How to Obtain                                                              |
-| ----------------- | ----------------- | -------------------------------------------------------------------------- |
-| `EXPO_TOKEN`      | All EAS workflows | [expo.dev/settings/access-tokens](https://expo.dev/settings/access-tokens) |
-| `PUBLIC_DOCS_PAT` | docs-pages.yml    | GitHub PAT with repo access                                                |
-
-## Local Development
-
-### Run Quality Checks Locally
+### Quality Checks
 
 ```bash
 npm run typecheck    # TypeScript
@@ -273,19 +92,7 @@ npm run test         # Jest (watch mode)
 npm run format:check # Prettier
 ```
 
-### Build Test App Locally
-
-```bash
-# Build for simulator (requires Xcode/Android SDK)
-npm run build:test:local:ios
-npm run build:test:local:android
-
-# Or use EAS cloud
-npm run build:test:ios
-npm run build:test:android
-```
-
-### Run E2E Tests Locally
+### E2E Tests
 
 ```bash
 # Ensure simulator/emulator is running with app installed
@@ -293,23 +100,18 @@ npm run e2e         # Run smoke suite
 npm run e2e:studio  # Interactive test builder
 ```
 
-## Branch Protection (Recommended)
+See [Testing Strategy](./testing.md) for more details on the E2E framework.
 
-Configure in **GitHub → Settings → Branches → Add rule**:
+---
 
-- **Branch**: `main`
-- **Required status checks**:
-  - `quality` (from ci.yml)
-  - `ios` (from e2e.yml) — *when E2E is enabled*
-  - `android` (from e2e.yml) — *when E2E is enabled*
-- **Require pull request reviews**: 1 approval
+## Additional Capabilities (Not Covered Here)
 
-:::tip Showcase Mode
-With E2E disabled, only require `quality` as a status check.
-:::
+This project also includes production deployment infrastructure that isn't documented in detail here:
 
-## Monitoring & Alerts
+- **EAS Build** — Native builds for iOS/Android via Expo Application Services
+- **EAS Update** — Over-the-air JavaScript updates without app store review
+- **Store Submission** — Workflows for TestFlight, Play Console, and production releases
+- **Sentry & Amplitude** — Error tracking and analytics integration
+- **AdMob** — Consent-gated advertising with UMP/ATT flows
 
-- **GitHub Actions**: Check workflow runs at `/actions`
-- **EAS Dashboard**: View builds at [expo.dev](https://expo.dev)
-- **Sentry**: Error tracking integrated via `@sentry/react-native`
+See `.github/workflows/` and `eas.json` for the full configuration.

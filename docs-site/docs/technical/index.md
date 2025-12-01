@@ -80,7 +80,7 @@ flowchart TB
 | **Database**         | [WatermelonDB](https://watermelondb.dev/)                                           | Offline-first SQLite database      |
 | **Components**       | [rn-primitives](https://rn-primitives.vercel.app/)                                  | Radix-style accessible primitives  |
 | **Testing**          | [Maestro](https://maestro.mobile.dev/)                                              | E2E testing framework              |
-| **CI/CD**            | [GitHub Actions](https://github.com/features/actions) + [EAS](https://expo.dev/eas) | Automation & builds                |
+| **CI/CD**            | [GitHub Actions](https://github.com/features/actions)                               | Automation & testing               |
 
 ## Directory Structure
 
@@ -140,15 +140,12 @@ flowchart LR
 
 ## Documentation Sections
 
-| Section                                   | Description                                  |
-| ----------------------------------------- | -------------------------------------------- |
-| [Database](./database.md)                 | WatermelonDB schema and models               |
-| [Testing](./testing.md)                   | Unit tests and E2E testing with Maestro      |
-| [CI/CD Pipeline](./ci-cd.md)              | GitHub Actions and EAS workflows             |
-| [Infrastructure](./infra.md)              | Deployment, monitoring, and services         |
-| [Content Pipeline](./content-pipeline.md) | Situation generation system                  |
-| [Setup Guide](./setup-guide.md)           | External configuration (GitHub, EAS, stores) |
-| [Roadmap](./roadmap.md)                   | Planned improvements and future work         |
+| Section                                   | Description                             |
+| ----------------------------------------- | --------------------------------------- |
+| [Database](./database.md)                 | WatermelonDB schema and models          |
+| [Content Pipeline](./content-pipeline.md) | LLM-based situation generation          |
+| [Testing](./testing.md)                   | Unit tests and E2E testing with Maestro |
+| [CI/CD Pipeline](./ci-cd.md)              | GitHub Actions workflows                |
 
 ## Key Design Decisions
 

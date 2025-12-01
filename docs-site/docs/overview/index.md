@@ -2,7 +2,7 @@
 
 **Press Office** is a React Native simulation game where you play as the White House Press Secretary.
 
-Manage relationships with the press corps, spin difficult situations, and keep the administration's approval ratings afloat.
+Navigate press conferences, manage relationships with the press corps, and keep the administration's approval ratings afloat through a full four-year term.
 
 ## Getting Started
 
@@ -17,14 +17,15 @@ Manage relationships with the press corps, spin difficult situations, and keep t
 
 ## Project Vision
 
-We built Press Office to explore the intersection of simulation gameplay and modern React Native development. It demonstrates a "local-first" architecture using WatermelonDB and offline generation capabilities.
+Press Office explores the intersection of simulation gameplay and modern React Native development. It demonstrates a **local-first architecture** using WatermelonDB and a unique **LLM-powered content pipeline** for generating scenarios.
 
 ### Key Features
 
-- **Dynamic Content**: Situations are generated via an LLM pipeline, creating infinite replayability.
-- **Relationship System**: Balance favor with individual journalists, cabinet members, and voter subgroups.
-- **Offline First**: All game state is persisted locally.
+- **Dynamic Content**: ~600 situations generated via a custom LLM pipeline, creating deep replayability
+- **Relationship System**: Balance favor with journalists, cabinet members, and voter subgroups
+- **Offline First**: All game state persists locally — no backend required
+- **Production Patterns**: CI/CD, E2E testing, error boundaries, and consent flows
 
-## Join the Community
+## For Recruiters & Collaborators
 
-Check out our [GitHub Repository](https://github.com/press-office/rn-ps) to contribute or report issues.
+Check out the **[Showcase](./showcase.md)** page for a portfolio-focused summary of this project's scope and technical highlights.

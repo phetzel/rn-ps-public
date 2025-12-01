@@ -1,47 +1,107 @@
 ---
-title: Case Study & Highlights
+title: Portfolio Showcase
 sidebar_label: Showcase
 ---
 
-# Case Study & Highlights
+# Portfolio Showcase
 
-Use this page when sharing the project with recruiters, collaborators, or portfolio visitors. It keeps the bragging to a low simmer while showing the scope of the work.
+A summary of this project for recruiters, collaborators, and portfolio visitors.
 
 ## Role & Responsibilities
 
-- Solo designer/developer/content lead.
-- Built gameplay systems, custom UI kit, data tooling, and compliance flows.
-- Authored and curated ~600 scenario entries with tone/lore guardrails.
+- Solo designer, developer, and content lead
+- Built gameplay systems, custom UI kit, data tooling, and compliance flows
+- Authored and curated ~600 scenario entries with tone/lore guardrails
 
-## Screens & Media (Placeholders)
+## Screenshots
 
-> Drop in final screenshots or GIFs from `/assets/images/` or EAS builds.
+### Home & Navigation
 
-- Level briefing panel with cabinet intel callouts.
-- Press conference question stack with answer chips.
-- Outcome dashboard with subgroup swings/relationship charts.
+<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+  <img src="/img/screenshot-landing.png" alt="Home Screen" width="280" />
+  <img src="/img/screenshot-tab-current.png" alt="Current Month" width="280" />
+  <img src="/img/screenshot-tab-status.png" alt="Status Dashboard" width="280" />
+</div>
+
+*Home screen with game management • Current month with active situations • Status dashboard with approval ratings*
+
+### Gameplay Loop
+
+<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '24px' }}>
+  <img src="/img/screenshot-level-briefing.png" alt="Level Briefing" width="280" />
+  <img src="/img/screenshot-level-conference.png" alt="Press Conference" width="280" />
+</div>
+
+*Briefing with situation details and president's position • Press conference with journalist selection*
+
+### Outcomes & Results
+
+<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', marginTop: '24px' }}>
+  <img src="/img/screenshot-level-results.png" alt="Conference Results" width="280" />
+  <img src="/img/screenshot-level-situation.png" alt="Situation Outcomes" width="280" />
+</div>
+
+*Conference summary with relationship changes • Situation outcomes with probability tracking*
 
 ## Technical Highlights
 
-- **Offline-first simulation:** WatermelonDB + SQLite hold player state and authored situations; all progress is device-resident.
-- **Content tooling:** `scripts/run-gen-situation.ts` scaffolds copy, enforces tone guidelines, and validates Zod schemas before merging.
-- **UI system:** React Native Reusables (shadcn-inspired) + Nativewind for consistent theming and typography.
-- **Privacy-aware monetization:** Sentry, Amplitude, and AdMob gated behind toggles + UMP/ATT prompts; compliance docs live beside the code.
+### Offline-First Architecture
 
-## Notable Metrics
+All game data lives in SQLite via WatermelonDB. No backend, instant loads, full offline support, and user data stays on-device.
 
-- 48 in-game months per run.
-- 7 situation families × 11 subgroups × 6 cabinet officials.
-- Maestro smoke suites + Jest component tests guard core flows.
+**Key files:**
+- `lib/db/` — Schema, models, and migrations
+- `lib/stores/` — Zustand for ephemeral UI state
 
-## Repository Status
+### LLM Content Pipeline
 
-This project is configured for **public showcase**. The full CI/CD infrastructure is documented but expensive workflows (E2E tests, EAS builds) are disabled to conserve resources. Quality checks (linting, types, unit tests) run on every PR. See [CI/CD Pipeline](/docs/technical/ci-cd) for details.
+A custom CLI (`scripts/gen-situation/`) generates scenario content using OpenAI's structured outputs. The pipeline:
 
-## Roadmap Snapshot
+1. Analyzes current content balance
+2. Generates situations with journalist questions and response options
+3. Validates output against Zod schemas
+4. Writes to `lib/data/situations/`
 
-- Add localization hooks for authored content.
-- Ship more archetype-specific journalist personalities.
-- Experiment with adaptive difficulty based on approval volatility.
+**Key files:**
+- `scripts/gen-situation/generator.ts`
+- `scripts/gen-situation/steps/`
 
-Pair this page with gameplay clips and the README’s install instructions when showcasing the project externally.
+### Component Library
+
+Built on React Native Reusables (shadcn-inspired) with NativeWind for consistent theming. Accessible primitives with Tailwind-style classes.
+
+**Key files:**
+- `components/ui/` — Primitive atoms
+- `components/shared/` — Domain components
+
+### Testing Strategy
+
+- **Unit tests** (Jest) for utilities and component logic
+- **E2E tests** (Maestro) for critical user flows on real simulators
+- **CI integration** via GitHub Actions
+
+**Key files:**
+- `__tests__/` — Jest test suites
+- `e2e/maestro/` — Maestro flows and suites
+
+### Privacy & Consent
+
+Production-ready consent flows for analytics (Amplitude), crash reporting (Sentry), and advertising (AdMob) — all behind user-controlled toggles.
+
+## Project Metrics
+
+| Metric | Value |
+|--------|-------|
+| In-game duration | 48 months (4 years) |
+| Situation families | 7 types |
+| Voter subgroups | 11 demographics |
+| Cabinet officials | 6 positions |
+| Generated scenarios | ~600 |
+| E2E test flows | 4 critical paths |
+
+## Interesting Design Decisions
+
+1. **Local-first over cloud** — Eliminates backend complexity and ensures privacy
+2. **LLM for content, not runtime** — Scenarios are pre-generated and bundled, avoiding API latency
+3. **Maestro over Detox** — YAML-based E2E tests are more maintainable
+4. **File-based routing** — Expo Router for predictable navigation patterns

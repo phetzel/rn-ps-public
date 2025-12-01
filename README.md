@@ -1,54 +1,50 @@
-# Press Secretary Simulation Game
+# Press Office
 
-A React Native + Expo game where you play as the US Press Secretary, juggling cabinet intel, journalist relationships, and political subgroups to keep the administration alive for a full term.
+A React Native simulation game where you play as the White House Press Secretary, navigating press conferences, managing journalist relationships, and keeping the administration's approval ratings afloat.
 
-## 📚 Documentation
+<p align="center">
+  <img src="docs-site/static/img/screenshot-landing.png" alt="Press Office Home" width="250" />
+  <img src="docs-site/static/img/screenshot-level-conference.png" alt="Press Conference" width="250" />
+  <img src="docs-site/static/img/screenshot-level-results.png" alt="Results" width="250" />
+</p>
 
-> **Full documentation is available in the [`docs-site/`](docs-site/) directory.**
+## Why This Project Exists
 
-- **[Gameplay Guide](docs-site/docs/gameplay/guide.md)**: Mechanics, scoring, and how to play
-- **[Technical Handbook](docs-site/docs/technical/index.md)**: Architecture, database schema, and content pipeline
-- **[CI/CD & Infrastructure](docs-site/docs/technical/infra.md)**: Builds, monitoring, and deployment
-- **[Setup Guide](docs-site/docs/technical/setup-guide.md)**: External configuration (GitHub, EAS, stores)
-- **[Roadmap](docs-site/docs/technical/roadmap.md)**: Planned improvements and future work
+This is a portfolio project exploring **local-first architecture**, **LLM-generated content**, and **React Native best practices**. It demonstrates:
+
+- **Offline-first data** with WatermelonDB + SQLite
+- **~600 AI-generated scenarios** via a custom CLI content pipeline
+- **E2E testing** with Maestro on real simulators
+- **Production-ready patterns**: CI/CD, error boundaries, consent flows
+
+> 📖 **[View the full documentation](docs-site/docs/overview/index.md)** or check the **[Showcase](docs-site/docs/overview/showcase.md)** for portfolio highlights.
+
+## 🛠️ Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| **Framework** | React Native + Expo Router |
+| **Language** | TypeScript |
+| **Database** | WatermelonDB (offline-first SQLite) |
+| **State** | Zustand |
+| **Styling** | NativeWind (Tailwind CSS) |
+| **Components** | React Native Reusables (shadcn-inspired) |
+| **Testing** | Jest (unit) + Maestro (E2E) |
+| **CI/CD** | GitHub Actions |
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- npm (or yarn/pnpm) + Expo CLI
-- Xcode Command Line Tools + iOS Simulator (macOS) or Android Studio/Emulator
-
-### macOS Environment Setup
-
-Before running builds, add these to your `~/.zshrc`:
-
-```bash
-# Required for CocoaPods with Ruby 3.4+
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# Disable Sentry upload for local builds
-export SENTRY_DISABLE_AUTO_UPLOAD=true
-```
-
-Then run `source ~/.zshrc`.
-
-### iOS Simulator Setup
-
-If Xcode can't find your simulators:
-
-```bash
-# Download the iOS simulator runtime matching your Xcode SDK
-xcodebuild -downloadPlatform iOS
-```
+- npm + Expo CLI
+- Xcode (macOS) or Android Studio
 
 ### Installation
 
 ```bash
-git clone <repository-url>
-cd rn-ps
+git clone https://github.com/phetzel/rn-ps-public.git
+cd rn-ps-public
 npm install
 
 # Start the Expo dev server
@@ -57,35 +53,20 @@ npm run dev
 # Run on specific platforms
 npm run ios      # iOS simulator
 npm run android  # Android emulator
-npm run web      # Expo web preview
 ```
-
-### Local Native Build
-
-To build and run locally without EAS Cloud:
-
-```bash
-# iOS (requires Xcode + iOS simulator)
-npx expo run:ios -d "iPhone 16"
-
-# Android (requires Android Studio + emulator)
-npx expo run:android
-```
-
-## 🛠️ Tech Stack
-
-- **Framework**: React Native + Expo Router
-- **Language**: TypeScript
-- **State**: Zustand + WatermelonDB (Offline-first SQLite)
-- **UI**: NativeWind (Tailwind) + React Native Reusables
-- **Testing**: Jest + Maestro (E2E)
 
 ## 🔧 Key Scripts
 
-| Script                         | Description                |
-| :----------------------------- | :------------------------- |
-| `npm run dev`                  | Start Expo server          |
-| `npm run test`                 | Run unit tests (Jest)      |
-| `npm run e2e`                  | Run E2E tests (Maestro)    |
-| `npm run gen-situation`        | Run content generation CLI |
-| `npm --prefix docs-site start` | Launch local docs site     |
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start Expo dev server |
+| `npm run test` | Run Jest unit tests |
+| `npm run e2e` | Run Maestro E2E tests |
+| `npm run gen-situation` | Run LLM content generation CLI |
+
+## 📚 Documentation
+
+- **[Gameplay Guide](docs-site/docs/gameplay/guide.md)** — Mechanics and how to play
+- **[Technical Overview](docs-site/docs/technical/index.md)** — Architecture and design decisions
+- **[Content Pipeline](docs-site/docs/technical/content-pipeline.md)** — LLM-based scenario generation
+- **[Testing Strategy](docs-site/docs/technical/testing.md)** — Unit and E2E testing approach
