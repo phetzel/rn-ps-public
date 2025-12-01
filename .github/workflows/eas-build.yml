@@ -44,7 +44,8 @@ jobs:
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             PLATFORM="${{ github.event.inputs.platform }}"
           else
-            PLATFORM="all"
+            # TODO: Add "android" back when credentials are configured
+            PLATFORM="ios"
           fi
 
           if [ "$PLATFORM" == "all" ]; then
