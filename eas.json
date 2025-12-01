@@ -27,7 +27,8 @@
         "simulator": true
       },
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "credentialsSource": "local"
       },
       "env": {
         "SENTRY_DISABLE_AUTO_UPLOAD": "true"

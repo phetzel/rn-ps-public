@@ -60,8 +60,17 @@ jobs:
       - name: Boot iOS Simulator
         run: |
           xcrun simctl shutdown all || true
-          xcrun simctl boot "iPhone 15" || true
-          xcrun simctl bootstatus "iPhone 15" -b
+          # Find an available iPhone simulator (prefer iPhone 16, fall back to others)
+          SIMULATOR=$(xcrun simctl list devices available -j | jq -r '.devices | to_entries[] | select(.key | contains("iOS")) | .value[] | select(.name | startswith("iPhone")) | .udid' | head -1)
+          if [ -z "$SIMULATOR" ]; then
+            echo "No iPhone simulator found!"
+            xcrun simctl list devices available
+            exit 1
+          fi
+          SIMULATOR_NAME=$(xcrun simctl list devices available -j | jq -r ".devices | to_entries[] | .value[] | select(.udid == \"$SIMULATOR\") | .name")
+          echo "Booting simulator: $SIMULATOR_NAME ($SIMULATOR)"
+          xcrun simctl boot "$SIMULATOR" || true
+          xcrun simctl bootstatus "$SIMULATOR" -b
 
       - name: Install app
         run: |
