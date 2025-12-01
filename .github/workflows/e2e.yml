@@ -2,8 +2,8 @@ name: E2E Tests
 
 on:
   push:
-    branches: [main]  # Only run on merge to main (saves CI costs)
-  workflow_dispatch:  # Manual trigger for testing
+    branches: [main] # Only run on merge to main (saves CI costs)
+  workflow_dispatch: # Manual trigger for testing
 
 concurrency:
   group: e2e-${{ github.ref }}
@@ -47,25 +47,25 @@ jobs:
         timeout-minutes: 10
         run: |
           xcrun simctl shutdown all 2>/dev/null || true
-          
+
           # Find an available iPhone simulator
           SIMULATOR=$(xcrun simctl list devices available -j | jq -r '
             .devices | to_entries[] | select(.key | contains("iOS")) | .value[] 
             | select(.name | startswith("iPhone")) | .udid' | head -1)
-          
+
           if [ -z "$SIMULATOR" ]; then
             echo "::error::No iPhone simulator found!"
             xcrun simctl list devices available
             exit 1
           fi
-          
+
           SIMULATOR_NAME=$(xcrun simctl list devices available -j | jq -r \
             ".devices | to_entries[] | .value[] | select(.udid == \"$SIMULATOR\") | .name")
           echo "Booting simulator: $SIMULATOR_NAME ($SIMULATOR)"
-          
+
           # Boot and wait with timeout
           xcrun simctl boot "$SIMULATOR" 2>/dev/null || true
-          
+
           # Wait for boot with timeout (max 5 min)
           for i in {1..60}; do
             STATE=$(xcrun simctl list devices -j | jq -r ".devices[][] | select(.udid == \"$SIMULATOR\") | .state")
@@ -76,7 +76,7 @@ jobs:
             echo "Waiting for simulator to boot... ($i/60)"
             sleep 5
           done
-          
+
           # Verify it's booted
           STATE=$(xcrun simctl list devices -j | jq -r ".devices[][] | select(.udid == \"$SIMULATOR\") | .state")
           if [ "$STATE" != "Booted" ]; then
