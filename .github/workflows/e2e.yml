@@ -1,8 +1,8 @@
 name: E2E Tests
 
 on:
-  push:
-    branches: [main] # Only run on merge to main (saves CI costs)
+  pull_request:
+    branches: [main] # Run on PRs to main (catch issues before merge)
   workflow_dispatch: # Manual trigger for testing
 
 concurrency:
