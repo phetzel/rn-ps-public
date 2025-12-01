@@ -127,6 +127,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     ],
     '@sentry/react-native/expo',
   ],
+  // Runtime version policy for EAS Update compatibility
+  // Uses app version (e.g., "1.0.0") to determine OTA update compatibility
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
   experiments: {
     typedRoutes: true,
   },

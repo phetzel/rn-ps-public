@@ -136,19 +136,17 @@ eas update --channel production --message "Hotfix v1.0.1"
 
 ### Runtime Version Policy
 
-The `runtimeVersion` tells EAS Update which OTA updates are compatible with which native builds. We use the **`appVersion`** policy.
+The `runtimeVersion` tells EAS Update which OTA updates are compatible with which native builds. We use the **`appVersion`** policy, configured in `app.config.ts`:
 
-```json
-// eas.json
-{
-  "build": {
-    "production": {
-      "runtimeVersion": {
-        "policy": "appVersion"
-      }
-    }
-  }
-}
+```typescript
+// app.config.ts
+export default ({ config }: ConfigContext): ExpoConfig => ({
+  // ...
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
+  // ...
+});
 ```
 
 **Policy Options:**
