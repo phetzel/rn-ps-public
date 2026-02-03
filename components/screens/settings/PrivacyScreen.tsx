@@ -3,6 +3,11 @@ import { useRouter } from 'expo-router';
 import * as React from 'react';
 import { Linking, Platform, ScrollView, View } from 'react-native';
 
+import { Info } from '~/components/icons/Info';
+import { Settings } from '~/components/icons/Settings';
+import { Shield } from '~/components/icons/Shield';
+import { Trash2 } from '~/components/icons/Trash2';
+import { Users } from '~/components/icons/Users';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,11 +26,6 @@ import {
   setDiagnosticsEnabled as persistDiagnosticsEnabled,
 } from '~/lib/db/helpers/appSettings';
 import { resetAppData } from '~/lib/db/helpers/resetAppData';
-import { Info } from '~/lib/icons/Info';
-import { Settings } from '~/lib/icons/Settings';
-import { Shield } from '~/lib/icons/Shield';
-import { Trash2 } from '~/lib/icons/Trash2';
-import { Users } from '~/lib/icons/Users';
 import {
   initIfEnabled as analyticsInitIfEnabled,
   setEnabled as analyticsSetEnabled,

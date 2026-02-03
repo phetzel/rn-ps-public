@@ -2,6 +2,7 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { Award } from '~/components/icons/Award';
 import { StateProgress } from '~/components/screens/tab-state/StateProgress';
 import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
 import InfoTooltip from '~/components/shared/InfoTooltip';
@@ -9,7 +10,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeGame, observePresidentApprovalRating } from '~/lib/db/helpers';
 import { Game } from '~/lib/db/models';
-import { Award } from '~/lib/icons/Award';
 
 interface PresidentStateCardProps {
   game: Game | null;

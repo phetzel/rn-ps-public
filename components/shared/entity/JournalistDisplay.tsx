@@ -2,13 +2,13 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { User } from '~/components/icons/User';
 import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
 import { Text } from '~/components/ui/text';
 import {
   observeJournalist,
   observePublicationForJournalistId,
 } from '~/lib/db/helpers/observations';
-import { User } from '~/lib/icons/User';
 
 import type { Journalist, Publication } from '~/lib/db/models';
 

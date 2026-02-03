@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
 import { CabinetMember } from '~/lib/db/models';
-import { calculateRiskProbability } from '~/lib/utils';
+import { calculateRiskProbability } from '~/lib/game/consequences';
 import { CabinetStaticId, RelationshipSnapshot, CabinetRiskDisplayData } from '~/types';
 
 interface LevelConsequencesRiskCardProps {

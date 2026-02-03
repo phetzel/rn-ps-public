@@ -4,15 +4,15 @@ import React from 'react';
 import AdCardHeader from '~/components/shared/ad-card/AdCardHeader';
 
 // Mock icons - simplified
-jest.mock('~/lib/icons/Play', () => ({
+jest.mock('~/components/icons/Play', () => ({
   Play: () => null,
 }));
 
-jest.mock('~/lib/icons/CheckCircle2', () => ({
+jest.mock('~/components/icons/CheckCircle2', () => ({
   CheckCircle2: () => null,
 }));
 
-jest.mock('~/lib/icons/Film', () => ({
+jest.mock('~/components/icons/Film', () => ({
   Film: () => null,
 }));
 

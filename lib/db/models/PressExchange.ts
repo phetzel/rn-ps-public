@@ -6,7 +6,7 @@ import {
   updateProgressWithAnswer,
   updateProgressWithSkip,
   initializeExchangeProgress,
-} from '~/lib/db/helpers/exchangeApi';
+} from '~/lib/game/exchange-tree';
 import { exchangeContentSchema, exchangeProgressSchema } from '~/lib/schemas';
 import { ExchangeContent, ExchangeProgress, Question } from '~/types';
 

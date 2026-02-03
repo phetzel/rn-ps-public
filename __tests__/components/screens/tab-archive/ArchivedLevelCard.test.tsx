@@ -84,7 +84,7 @@ jest.mock('~/components/ui/text', () => {
 });
 
 // Mock icons
-jest.mock('~/lib/icons', () => {
+jest.mock('~/components/icons', () => {
   const React = require('react');
   const { View } = require('react-native');
   return {

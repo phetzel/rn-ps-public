@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { AlertCircle } from '~/components/icons/AlertCircle';
 import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
 import { Text } from '~/components/ui/text';
-import { AlertCircle } from '~/lib/icons/AlertCircle';
 
 import type { Question } from '~/types';
 

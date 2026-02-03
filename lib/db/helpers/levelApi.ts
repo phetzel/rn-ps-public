@@ -2,16 +2,11 @@ import { database } from '~/lib/db';
 import { levelsCollection } from '~/lib/db/helpers/collections';
 import { fetchActiveCabinetMembers } from '~/lib/db/helpers/fetchApi';
 import { Game, Level } from '~/lib/db/models';
+import { isGameEnded } from '~/lib/game/consequences';
 import { cabinetSnapshotSchema } from '~/lib/schemas';
-import { CabinetSnapshot, LevelStatus, GameStatus } from '~/types';
+import { CabinetSnapshot, LevelStatus } from '~/types';
 
-export function isGameEnded(gameStatus: GameStatus): boolean {
-  return (
-    gameStatus === GameStatus.Impeached ||
-    gameStatus === GameStatus.Fired ||
-    gameStatus === GameStatus.Completed
-  );
-}
+export { isGameEnded };
 
 // Level CRUD operations
 export async function createLevel(game: Game): Promise<Level> {

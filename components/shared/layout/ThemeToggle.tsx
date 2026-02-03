@@ -1,8 +1,8 @@
 import { Pressable, View } from 'react-native';
 
+import { MoonStar } from '~/components/icons/MoonStar';
+import { Sun } from '~/components/icons/Sun';
 import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
-import { MoonStar } from '~/lib/icons/MoonStar';
-import { Sun } from '~/lib/icons/Sun';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { cn } from '~/lib/utils';
 

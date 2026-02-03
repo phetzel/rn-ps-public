@@ -3,12 +3,12 @@ import { View } from 'react-native';
 
 // Icons
 // Components
+import { CheckCircle2 } from '~/components/icons/CheckCircle2';
+import { Film } from '~/components/icons/Film';
+import { Play } from '~/components/icons/Play';
 import { Button } from '~/components/ui/button';
 import { CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
-import { CheckCircle2 } from '~/lib/icons/CheckCircle2';
-import { Film } from '~/lib/icons/Film';
-import { Play } from '~/lib/icons/Play';
 // Utils
 import { cn } from '~/lib/utils';
 

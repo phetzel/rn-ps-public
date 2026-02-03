@@ -14,7 +14,7 @@ import {
   Level,
   PressExchange,
 } from '~/lib/db/models';
-import { calculatePresidentApprovalRating } from '~/lib/utils';
+import { calculatePresidentApprovalRating } from '~/lib/game/relationships';
 import { LevelStatus } from '~/types';
 
 import {

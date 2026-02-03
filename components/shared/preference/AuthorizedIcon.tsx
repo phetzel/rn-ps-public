@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { FileText } from '~/lib/icons/FileText';
-import { Lock } from '~/lib/icons/Lock';
+import { FileText } from '~/components/icons/FileText';
+import { Lock } from '~/components/icons/Lock';
 
 interface AuthorizedIconProps {
   isAuthorized: boolean;

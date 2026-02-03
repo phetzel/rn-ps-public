@@ -2,12 +2,12 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
+import { MessageSquare } from '~/components/icons';
 import { ResultsTableList } from '~/components/shared/results/ResultsTableList';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { getEnhancedRelationshipDeltas } from '~/lib/db/helpers';
 import { observeLevel } from '~/lib/db/helpers/observations';
-import { MessageSquare } from '~/lib/icons';
 
 import type { Level } from '~/lib/db/models';
 import type { EntityWithDelta } from '~/types';

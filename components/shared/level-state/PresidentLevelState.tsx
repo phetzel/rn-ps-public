@@ -2,13 +2,13 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { Award } from '~/components/icons';
 import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
 import LevelProgress from '~/components/shared/level-state/LevelProgress';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeGame } from '~/lib/db/helpers';
 import { Game } from '~/lib/db/models';
-import { Award } from '~/lib/icons';
 
 import type { OutcomeSnapshotType } from '~/types';
 

@@ -10,7 +10,7 @@ import {
   observeSubgroupApprovals,
 } from '~/lib/db/helpers';
 import { Game, CabinetMember, SubgroupApproval } from '~/lib/db/models';
-import { createCabinetMemberMap } from '~/lib/utils';
+import { createCabinetMemberMap } from '~/lib/game/cabinet';
 
 import ImpactItem from './ImpactItem';
 

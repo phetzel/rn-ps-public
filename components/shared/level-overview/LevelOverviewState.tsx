@@ -2,6 +2,7 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { Award, Briefcase, Newspaper, Users } from '~/components/icons';
 import { EmptyState } from '~/components/shared/EmptyState';
 import CabinetLevelState from '~/components/shared/level-state/CabinetLevelState';
 import MediaLevelState from '~/components/shared/level-state/MediaLevelState';
@@ -15,7 +16,6 @@ import {
 } from '~/components/ui/accordion';
 import { Text } from '~/components/ui/text';
 import { observeLevel } from '~/lib/db/helpers/observations';
-import { Award, Briefcase, Newspaper, Users } from '~/lib/icons';
 
 import type { Level } from '~/lib/db/models';
 

@@ -1,7 +1,7 @@
 import { database } from '~/lib/db';
 import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers/entityEnhancementApi';
 import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
-import { calculateAdBoost } from '~/lib/utils';
+import { calculateAdBoost } from '~/lib/game/relationships';
 import { PsRelationshipDeltas, EntityWithMediaDelta } from '~/types';
 
 export async function applyRelationshipDeltas(

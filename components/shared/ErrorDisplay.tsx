@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
+import { AlertCircle } from '~/components/icons/AlertCircle';
 import { Text } from '~/components/ui/text';
-import { AlertCircle } from '~/lib/icons/AlertCircle';
 
 export function ErrorDisplay({ message }: { message: string }) {
   return (

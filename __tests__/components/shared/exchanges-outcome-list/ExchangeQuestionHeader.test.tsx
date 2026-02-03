@@ -23,7 +23,7 @@ jest.mock('~/components/shared/entity/QuestionDisplay', () => {
 });
 
 // Mock icons
-jest.mock('~/lib/icons/AlertCircle', () => {
+jest.mock('~/components/icons/AlertCircle', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {

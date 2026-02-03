@@ -2,13 +2,13 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { Users } from '~/components/icons';
 import { SubgroupCategoryIcon } from '~/components/shared/entity/SubgroupCategoryIcon';
 import LevelProgress from '~/components/shared/level-state/LevelProgress';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 import { observeSubgroupApprovals } from '~/lib/db/helpers';
-import { Users } from '~/lib/icons';
 import { SubgroupCategory } from '~/types';
 
 import type SubgroupApproval from '~/lib/db/models/SubgroupApproval';

@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { ArrowLeft } from '~/components/icons/ArrowLeft';
+import { ArrowRight } from '~/components/icons/ArrowRight';
+import { CheckCircle2 } from '~/components/icons/CheckCircle2';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter } from '~/components/ui/card';
 import { Progress } from '~/components/ui/progress';
 import { Text } from '~/components/ui/text';
-import { ArrowLeft } from '~/lib/icons/ArrowLeft';
-import { ArrowRight } from '~/lib/icons/ArrowRight';
-import { CheckCircle2 } from '~/lib/icons/CheckCircle2';
 
 interface ProgressNavigatorProps {
   currentIndex: number;

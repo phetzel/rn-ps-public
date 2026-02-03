@@ -7,7 +7,7 @@ import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
 import { QuestionDisplay } from '~/components/shared/entity/QuestionDisplay';
 import { SituationOutcomeExchangeImpactList } from '~/components/shared/situations-outcome-list/SituationOutcomeExchangeImpactList';
 import { Separator } from '~/components/ui/separator';
-import { findQuestionById } from '~/lib/db/helpers/exchangeApi';
+import { findQuestionById } from '~/lib/game/exchange-tree';
 
 // Types
 import type { PressExchange } from '~/lib/db/models';

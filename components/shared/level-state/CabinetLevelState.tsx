@@ -2,12 +2,12 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { Briefcase } from '~/components/icons';
 import { CabinetMemberName } from '~/components/shared/entity/CabinetMemberName';
 import LevelProgress from '~/components/shared/level-state/LevelProgress';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { observeCabinetMembersByLevel } from '~/lib/db/helpers';
-import { Briefcase } from '~/lib/icons';
 
 import type CabinetMember from '~/lib/db/models/CabinetMember';
 import type { OutcomeSnapshotType } from '~/types';

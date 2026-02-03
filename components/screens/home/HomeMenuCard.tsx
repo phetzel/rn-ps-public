@@ -2,6 +2,9 @@ import * as React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useShallow } from 'zustand/shallow';
 
+import { FileText } from '~/components/icons/FileText';
+import { Play } from '~/components/icons/Play';
+import { Plus } from '~/components/icons/Plus';
 import { HomePrivacySettings } from '~/components/screens/home/HomePrivacySettings';
 import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
 import { Button } from '~/components/ui/button';
@@ -9,9 +12,6 @@ import { Card, CardHeader, CardContent, CardTitle, CardDescription } from '~/com
 import { Text } from '~/components/ui/text';
 import { MAX_ACTIVE_GAMES } from '~/lib/constants';
 import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
-import { FileText } from '~/lib/icons/FileText';
-import { Play } from '~/lib/icons/Play';
-import { Plus } from '~/lib/icons/Plus';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
 import type Game from '~/lib/db/models/Game';

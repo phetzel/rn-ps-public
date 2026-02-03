@@ -3,6 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 // Components
+import { Newspaper } from '~/components/icons/Newspaper';
 import { ErrorDisplay } from '~/components/shared/ErrorDisplay';
 import MediaCoverageContent from '~/components/shared/level-media-coverage/LevelMediaCoverageContent';
 import { ResultsTableList } from '~/components/shared/results/ResultsTableList';
@@ -17,7 +18,6 @@ import { Text } from '~/components/ui/text';
 // Icons
 import { observeLevel } from '~/lib/db/helpers/observations';
 import { useMediaCoverageData } from '~/lib/hooks/useMediaCoverageData';
-import { Newspaper } from '~/lib/icons/Newspaper';
 // Hooks
 
 import type { Level } from '~/lib/db/models';

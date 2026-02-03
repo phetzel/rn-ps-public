@@ -1,6 +1,6 @@
 import { database } from '~/lib/db';
 import { cabinetCollection } from '~/lib/db/helpers/collections';
-import { generateCabinetMemberName } from '~/lib/utils';
+import { generateCabinetMemberName } from '~/lib/game/cabinet';
 import { CabinetStaticId } from '~/types';
 
 /**

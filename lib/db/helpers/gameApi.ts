@@ -15,8 +15,7 @@ import {
 } from '~/lib/db/helpers/collections';
 // DB Models
 import { Game } from '~/lib/db/models';
-// Utils
-import { generateCabinetMemberName } from '~/lib/utils';
+import { generateCabinetMemberName } from '~/lib/game/cabinet';
 // Types, Data, and constants
 import {
   AlignmentWeight,

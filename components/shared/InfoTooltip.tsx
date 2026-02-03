@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { Info } from '~/components/icons/Info';
 import { getTooltip, TooltipKey } from '~/components/shared/tooltips';
 import { Tooltip, TooltipTrigger, TooltipContent } from '~/components/ui/tooltip';
-import { Info } from '~/lib/icons/Info';
 
 interface InfoTooltipProps {
   children?: React.ReactNode;

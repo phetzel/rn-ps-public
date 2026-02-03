@@ -13,8 +13,7 @@ import {
   getArchivedPublicationBoosts,
 } from '~/lib/db/helpers/publicationBoostApi';
 import { CabinetMember, SubgroupApproval, Journalist } from '~/lib/db/models';
-// Data + Types
-import { calculateAdBoost, calculateMediaCoverage } from '~/lib/utils';
+import { calculateAdBoost, calculateMediaCoverage } from '~/lib/game/relationships';
 import { EntityWithDelta, EntityWithMediaDelta, PublicationBoost, LevelStatus } from '~/types';
 
 // Enhance relationship deltas with entity data

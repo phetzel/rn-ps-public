@@ -2,13 +2,12 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
-// eslint-disable-next-line import/no-named-as-default
+import { Newspaper } from '~/components/icons/Newspaper';
 import PublicationStateItem from '~/components/screens/tab-state/PublicationStateItem';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { observePublications } from '~/lib/db/helpers';
-import { Newspaper } from '~/lib/icons/Newspaper';
 
 import type Publication from '~/lib/db/models/Publication';
 

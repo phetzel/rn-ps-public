@@ -1,12 +1,8 @@
 import { useMemo } from 'react';
 
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
-import {
-  getRiskLevel,
-  getRiskTextColor,
-  getRiskDescription,
-  formatRiskProbability,
-} from '~/lib/utils';
+import { getRiskLevel } from '~/lib/game/consequences';
+import { getRiskTextColor, getRiskDescription, formatRiskProbability } from '~/lib/utils';
 import { RiskLevel } from '~/types';
 
 export interface RiskDisplayInfo {

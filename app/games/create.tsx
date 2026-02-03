@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import { useShallow } from 'zustand/shallow';
 
+import { Save } from '~/components/icons/Save';
 import { BackgroundSelect } from '~/components/screens/game-create/BackgroundSelect';
 import { NameField } from '~/components/screens/game-create/NameField';
 import { PartySelect } from '~/components/screens/game-create/PartySelect';
@@ -13,7 +14,6 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
-import { Save } from '~/lib/icons/Save';
 import { createGameSchema, type CreateGameFormData } from '~/lib/schemas';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 // Components

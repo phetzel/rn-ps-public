@@ -2,11 +2,11 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import * as React from 'react';
 import { View } from 'react-native';
 
+import { Award } from '~/components/icons/Award';
+import { User } from '~/components/icons/User';
 import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
 import { Text } from '~/components/ui/text';
 import { observePresidentApprovalRating } from '~/lib/db/helpers/observations';
-import { Award } from '~/lib/icons/Award';
-import { User } from '~/lib/icons/User';
 
 import type Game from '~/lib/db/models/Game';
 

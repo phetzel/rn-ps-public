@@ -2,7 +2,7 @@
 // Main situation data schema with cross-validation
 import { z } from 'zod';
 
-import { getAllQuestionsFromExchange } from '~/lib/db/helpers/exchangeApi';
+import { getAllQuestionsFromExchange } from '~/lib/game/exchange-tree';
 import { AnswerType, CabinetStaticId } from '~/types';
 
 import { situationTypeSchema, textLengthSchema, publicationSchema } from '../common';

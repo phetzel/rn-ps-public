@@ -1,6 +1,7 @@
 // Helpers
 import { staticPublications } from '~/lib/data/staticMedia';
 import { fetchPublicationsForGame, fetchLevel } from '~/lib/db/helpers/fetchApi';
+import { calculatePublicationBoost } from '~/lib/game/media';
 // Data + Types
 import { LevelPublicationsBoost, PublicationBoost } from '~/types';
 
@@ -70,17 +71,8 @@ export async function getArchivedPublicationBoosts(
       }
 
       const approvalRating = data.approvalRating;
-      // Calculate boost using the same logic as the Publication model
-      let boost = 1.0;
-      if (approvalRating >= 75) {
-        boost = 1.5;
-      } else if (approvalRating >= 50) {
-        boost = 1.2;
-      } else if (approvalRating >= 25) {
-        boost = 1.0;
-      } else {
-        boost = 0.8;
-      }
+      // Calculate boost using pure game engine function
+      const boost = calculatePublicationBoost(approvalRating);
 
       boosts.push({
         id: publicationStaticId,

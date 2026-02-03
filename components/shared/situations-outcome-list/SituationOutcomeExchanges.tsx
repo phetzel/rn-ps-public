@@ -4,8 +4,8 @@ import { View } from 'react-native';
 
 import SituationOutcomeExchangeItem from '~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem';
 import { Text } from '~/components/ui/text';
-import { findQuestionById } from '~/lib/db/helpers/exchangeApi';
 import { observePressExchangesForSituation } from '~/lib/db/helpers/observations';
+import { findQuestionById } from '~/lib/game/exchange-tree';
 // Components
 
 // Types

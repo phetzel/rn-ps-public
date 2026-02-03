@@ -2,7 +2,7 @@ import { Model, Query } from '@nozbe/watermelondb';
 import { field, text, date, children, readonly, writer } from '@nozbe/watermelondb/decorators';
 
 import { PRESIDENTIAL_TERM_YEARS } from '~/lib/constants';
-import { calculatePresidentApprovalRating } from '~/lib/utils';
+import { calculatePresidentApprovalRating } from '~/lib/game/relationships';
 import { GameStatus, PoliticalLeaning, PressOfficeBackground } from '~/types';
 
 import type CabinetMember from './CabinetMember';

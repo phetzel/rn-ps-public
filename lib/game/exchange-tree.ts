@@ -1,4 +1,3 @@
-import { CabinetMember } from '~/lib/db/models';
 import {
   ExchangeContent,
   ExchangeProgress,
@@ -7,6 +6,11 @@ import {
   JournalistEngagementWeight,
   CabinetStaticId,
 } from '~/types';
+
+// Abstract interface so we don't depend on the WatermelonDB model
+interface CabinetMemberRelationship {
+  psRelationship: number;
+}
 
 // === EXCHANGE NAVIGATION UTILITIES ===
 
@@ -122,7 +126,7 @@ export function canAnswerQuestion(
   answerId: string,
   progress: ExchangeProgress,
   content: ExchangeContent,
-  cabinetMembers: Map<CabinetStaticId, CabinetMember>,
+  cabinetMembers: Map<CabinetStaticId, CabinetMemberRelationship>,
 ): boolean {
   if (isExchangeComplete(progress)) {
     return false;

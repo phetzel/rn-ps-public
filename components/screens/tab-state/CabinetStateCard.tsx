@@ -2,13 +2,13 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { Briefcase } from '~/components/icons/Briefcase';
 import { StateProgress } from '~/components/screens/tab-state/StateProgress';
 import { CabinetMemberName } from '~/components/shared/entity/CabinetMemberName';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { observeActiveCabinetMembers } from '~/lib/db/helpers';
-import { Briefcase } from '~/lib/icons/Briefcase';
 
 import type CabinetMember from '~/lib/db/models/CabinetMember';
 

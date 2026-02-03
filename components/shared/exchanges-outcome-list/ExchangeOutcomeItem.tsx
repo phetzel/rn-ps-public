@@ -6,7 +6,7 @@ import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
 import ExchangeQuestionItem from '~/components/shared/exchanges-outcome-list/ExchangeQuestionItem';
 import { AccordionItem, AccordionTrigger, AccordionContent } from '~/components/ui/accordion';
 import { Text } from '~/components/ui/text';
-import { findQuestionById } from '~/lib/db/helpers/exchangeApi';
+import { findQuestionById } from '~/lib/game/exchange-tree';
 
 import type { PressExchange, Situation, Journalist } from '~/lib/db/models';
 

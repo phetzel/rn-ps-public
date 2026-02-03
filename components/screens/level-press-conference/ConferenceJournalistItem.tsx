@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { View, Pressable } from 'react-native';
 
+import { ChevronRight } from '~/components/icons/ChevronRight';
 import { FollowUpBadge } from '~/components/shared/entity/FollowUpBadge';
 import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Card, CardContent } from '~/components/ui/card';
-import { ChevronRight } from '~/lib/icons/ChevronRight';
 
 import type PressExchange from '~/lib/db/models/PressExchange';
 

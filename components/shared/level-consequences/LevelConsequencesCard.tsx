@@ -1,5 +1,6 @@
 import { View } from 'react-native';
 
+import { UserX, CheckCircle2, AlertCircle, Trophy } from '~/components/icons';
 import ConsequenceCabinetMembersFired from '~/components/shared/level-consequences/ConsequenceCabinetMembersFired';
 import ConsequenceGameComplete from '~/components/shared/level-consequences/ConsequenceGameComplete';
 import ConsequenceGameOver from '~/components/shared/level-consequences/ConsequenceGameOver';
@@ -7,7 +8,6 @@ import ConsequenceNoNegative from '~/components/shared/level-consequences/Conseq
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { CabinetMember } from '~/lib/db/models';
-import { UserX, CheckCircle2, AlertCircle, Trophy } from '~/lib/icons';
 import { ConsequenceResult } from '~/types';
 
 interface LevelConsequencesCardProps {

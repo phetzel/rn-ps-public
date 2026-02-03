@@ -39,7 +39,8 @@
     "build:test:local:ios": "eas build --profile test --platform ios --local",
     "build:test:local:android": "eas build --profile test --platform android --local",
     "docs:start": "npm --prefix docs-site start",
-    "docs:build": "npm --prefix docs-site run build"
+    "docs:build": "npm --prefix docs-site run build",
+    "verify": "npm run typecheck && npm run lint && npm run test:ci"
   },
   "dependencies": {
     "@amplitude/analytics-react-native": "^1.5.16",
@@ -115,6 +116,7 @@
     "eslint-config-expo": "^10.0.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-boundaries": "^5.3.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-prettier": "^5.5.4",
     "husky": "^9.1.7",

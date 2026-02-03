@@ -5,9 +5,13 @@ import LevelConsequencesRiskCard from '~/components/shared/level-consequences/Le
 import { CabinetMember } from '~/lib/db/models';
 import { CabinetStaticId, RelationshipSnapshot } from '~/types';
 
-// Mock cn utility and risk calculation
+// Mock cn utility
 jest.mock('~/lib/utils', () => ({
   cn: (...args: any[]) => args.filter(Boolean).join(' '),
+}));
+
+// Mock risk calculation from game layer
+jest.mock('~/lib/game/consequences', () => ({
   calculateRiskProbability: (value: number) => {
     // Simple mock calculation for testing
     if (value >= 50) return 0;

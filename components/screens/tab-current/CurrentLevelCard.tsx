@@ -2,14 +2,14 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import React from 'react';
 import { View } from 'react-native';
 
+import { ArrowRight } from '~/components/icons/ArrowRight';
+import { CalendarClock } from '~/components/icons/CalendarClock';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeLevel } from '~/lib/db/helpers';
 import { Level } from '~/lib/db/models';
 import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
-import { ArrowRight } from '~/lib/icons/ArrowRight';
-import { CalendarClock } from '~/lib/icons/CalendarClock';
 import { formatDate } from '~/lib/utils';
 // Components
 import { LevelStatus } from '~/types';

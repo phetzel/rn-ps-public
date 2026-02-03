@@ -1,13 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { Newspaper } from '~/components/icons';
 import { PublicationStateHeader } from '~/components/shared/entity/PublicationStateHeader';
 import LevelProgress from '~/components/shared/level-state/LevelProgress';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 import { staticPublications, staticJournalists } from '~/lib/data/staticMedia';
-import { Newspaper } from '~/lib/icons';
 import { PublicationStaticId, JournalistStaticId } from '~/types';
 
 import type { OutcomeSnapshotType } from '~/types';

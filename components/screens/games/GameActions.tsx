@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
+import { Play } from '~/components/icons/Play';
+import { Trash2 } from '~/components/icons/Trash2';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -14,8 +16,6 @@ import {
 } from '~/components/ui/alert-dialog';
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
-import { Play } from '~/lib/icons/Play';
-import { Trash2 } from '~/lib/icons/Trash2';
 
 import type Game from '~/lib/db/models/Game';
 

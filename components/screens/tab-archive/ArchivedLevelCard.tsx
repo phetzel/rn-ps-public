@@ -3,12 +3,12 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
 
+import { AlertCircle, ArrowRight, CalendarClock, CheckCircle2 } from '~/components/icons';
 import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeLevel, observeSituationsByLevelId } from '~/lib/db/helpers';
 import { Level, Situation } from '~/lib/db/models';
-import { AlertCircle, ArrowRight, CalendarClock, CheckCircle2 } from '~/lib/icons';
 import { formatDate } from '~/lib/utils';
 // Components
 
