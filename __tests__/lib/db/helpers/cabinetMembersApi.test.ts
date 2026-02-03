@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { testDatabase, resetTestDatabase } from '~/__tests__/support/db';
 import { createGameScenario } from '~/__tests__/support/scenarios/game';

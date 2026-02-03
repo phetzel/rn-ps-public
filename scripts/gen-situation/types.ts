@@ -1,13 +1,4 @@
-import {
-  PublicationStaticId,
-  AnswerType,
-  SituationType,
-  CabinetStaticId,
-  SubgroupStaticId,
-} from '~/types';
-
-import { LLMClient } from './llm/client';
-
+import type { LLMClient } from './llm/client';
 import type {
   ResponseCreateParamsNonStreaming,
   ResponseUsage,
@@ -16,6 +7,13 @@ import type {
 import type { GenerateSituationPlan } from '~/lib/schemas/generate';
 import type { SituationOutcome } from '~/lib/schemas/situations/outcomes';
 import type { SituationPreferences } from '~/lib/schemas/situations/preferences';
+import type {
+  PublicationStaticId,
+  AnswerType,
+  SituationType,
+  CabinetStaticId,
+  SubgroupStaticId,
+} from '~/types';
 // ═══════════════════════════════════════════════════════════════════════════════
 // TYPES IMPORT
 // ═══════════════════════════════════════════════════════════════════════════════

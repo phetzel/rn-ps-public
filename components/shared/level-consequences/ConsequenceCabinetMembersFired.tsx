@@ -3,8 +3,9 @@ import { View } from 'react-native';
 import { AlertCircle, UserX } from '~/components/icons';
 import { Text } from '~/components/ui/text';
 import { CABINET_PENALTY_PER_FIRED_MEMBER } from '~/lib/constants';
-import { CabinetMember } from '~/lib/db/models';
-import { ConsequenceResult } from '~/types';
+
+import type { CabinetMember } from '~/lib/db/models';
+import type { ConsequenceResult } from '~/types';
 
 interface ConsequenceCabinetMembersFiredProps {
   consequences: ConsequenceResult;

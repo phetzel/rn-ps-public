@@ -3,7 +3,8 @@ import { View } from 'react-native';
 
 import PoliticalLeaningBadge from '~/components/shared/entity/PoliticalLeaningBadge';
 import { Text } from '~/components/ui/text';
-import { PoliticalLeaning } from '~/types';
+
+import type { PoliticalLeaning } from '~/types';
 
 interface PublicationStateHeaderProps {
   name: string;

@@ -1,16 +1,18 @@
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Label } from '~/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 import { Text } from '~/components/ui/text';
-import { CreateGameFormData } from '~/lib/schemas';
 import { PoliticalLeaning } from '~/types';
 
+import type { Control, FieldError } from 'react-hook-form';
+import type { CreateLevelFormData } from '~/lib/schemas';
+
 interface PartySelectProps {
-  control: Control<CreateGameFormData>;
+  control: Control<CreateLevelFormData>;
   error?: FieldError;
   disabled?: boolean;
 }

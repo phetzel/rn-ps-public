@@ -5,16 +5,17 @@ import { View } from 'react-native';
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
 import { observeLevel } from '~/lib/db/helpers/observations';
-import { Level } from '~/lib/db/models';
 import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 import { LevelStatus } from '~/types';
+
+import type { Level } from '~/lib/db/models';
 
 interface ConferenceCompletionProps {
   levelId: string;
   level: Level | null;
 }
 
-const ConferenceCompletion = ({ levelId, level }: ConferenceCompletionProps) => {
+const ConferenceCompletion = ({ levelId: _levelId, level }: ConferenceCompletionProps) => {
   const { progressAndNavigate, navigateToCurrentLevelScreen } = useLevelNavigation();
 
   const handleComplete = async () => {

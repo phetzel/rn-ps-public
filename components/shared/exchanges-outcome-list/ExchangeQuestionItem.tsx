@@ -10,10 +10,11 @@ import { Text } from '~/components/ui/text';
 import { useExchangeQuestion } from '~/lib/hooks/useExchangeQuestion';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
 // Hooks
 // Components
 // Types
-import { Question, ExchangeHistoryItem, JournalistStaticId } from '~/types';
+import type { Question, ExchangeHistoryItem, JournalistStaticId } from '~/types';
 
 interface ExchangeQuestionItemProps {
   question: Question;
@@ -37,6 +38,10 @@ export default function ExchangeQuestionItem({
     isFirstQuestion,
     journalistStaticId,
   });
+  let questionStatus = 'Ignored';
+  if (isAsked) {
+    questionStatus = isSkipped ? 'Skipped' : 'Answered';
+  }
 
   if (!currentLevelId || !currentGameId) {
     return null;
@@ -47,7 +52,7 @@ export default function ExchangeQuestionItem({
       className="border border-border rounded-md p-2 gap-2"
       accessible={true}
       accessibilityLabel={`${isFirstQuestion ? 'Initial' : 'Follow-up'} question. ${
-        isAsked ? (isSkipped ? 'Skipped' : 'Answered') : 'Ignored'
+        questionStatus
       }.`}
     >
       {/* Question Header */}

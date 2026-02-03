@@ -7,9 +7,11 @@ import { Lock } from '~/components/icons/Lock';
 import AuthorizedTooltip from '~/components/shared/preference/AuthorizedTooltip';
 import { Text } from '~/components/ui/text';
 import { CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
-import { CabinetMember } from '~/lib/db/models';
 import { cn } from '~/lib/utils';
-import { Answer, AnswerType } from '~/types';
+import { AnswerType } from '~/types';
+
+import type { CabinetMember } from '~/lib/db/models';
+import type { Answer } from '~/types';
 
 interface ConferenceAnswerProps {
   answer: Answer;

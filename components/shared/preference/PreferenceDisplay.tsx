@@ -3,7 +3,9 @@ import { View } from 'react-native';
 
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
-import { AnswerType, Preference } from '~/types';
+import { AnswerType } from '~/types';
+
+import type { Preference } from '~/types';
 
 interface PreferenceDisplayProps {
   preference: Preference;

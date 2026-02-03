@@ -7,8 +7,10 @@ import ConsequenceGameOver from '~/components/shared/level-consequences/Conseque
 import ConsequenceNoNegative from '~/components/shared/level-consequences/ConsequenceNoNegative';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
-import { CabinetMember } from '~/lib/db/models';
-import { ConsequenceResult } from '~/types';
+
+import type { ReactNode } from 'react';
+import type { CabinetMember } from '~/lib/db/models';
+import type { ConsequenceResult } from '~/types';
 
 interface LevelConsequencesCardProps {
   gameId: string;
@@ -51,6 +53,22 @@ export default function LevelConsequencesCard({
   const isGameEnded = consequences.gameEnded;
   const isGameCompleted = consequences.gameEndReason === 'completed';
   const cabinetMembersFired = consequences.cabinetMembersFired.length > 0;
+  let headerLabel = 'Month completion results';
+  let content: ReactNode = <ConsequenceNoNegative />;
+
+  if (isGameEnded) {
+    if (isGameCompleted) {
+      content = <ConsequenceGameComplete gameId={gameId} />;
+      headerLabel = 'Term completion results';
+    } else {
+      content = <ConsequenceGameOver consequences={consequences} />;
+      headerLabel = 'Game Over results';
+    }
+  } else if (cabinetMembersFired) {
+    content = (
+      <ConsequenceCabinetMembersFired consequences={consequences} cabinetMembers={cabinetMembers} />
+    );
+  }
 
   // Generate main card accessibility label
   const getMainAccessibilityLabel = () => {
@@ -80,33 +98,12 @@ export default function LevelConsequencesCard({
         className="flex-row items-center gap-2"
         accessible={true}
         accessibilityRole="header"
-        accessibilityLabel={
-          isGameEnded
-            ? isGameCompleted
-              ? 'Term completion results'
-              : 'Game Over results'
-            : 'Month completion results'
-        }
+        accessibilityLabel={headerLabel}
       >
         {getConsequenceIcon(consequences)}
         <CardTitle className="text-lg">{getCardTitle()}</CardTitle>
       </CardHeader>
-      <CardContent accessible={false}>
-        {isGameEnded ? (
-          isGameCompleted ? (
-            <ConsequenceGameComplete gameId={gameId} />
-          ) : (
-            <ConsequenceGameOver consequences={consequences} />
-          )
-        ) : cabinetMembersFired ? (
-          <ConsequenceCabinetMembersFired
-            consequences={consequences}
-            cabinetMembers={cabinetMembers}
-          />
-        ) : (
-          <ConsequenceNoNegative />
-        )}
-      </CardContent>
+      <CardContent accessible={false}>{content}</CardContent>
     </Card>
   );
 }

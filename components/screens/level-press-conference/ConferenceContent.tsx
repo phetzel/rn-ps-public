@@ -8,8 +8,9 @@ import ConferenceProgress from '~/components/screens/level-press-conference/Conf
 import ConferenceQuestionAnswer from '~/components/screens/level-press-conference/ConferenceQuestion';
 import { QUESTIONS_PER_PRESS_CONFERENCE } from '~/lib/constants';
 import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
-import { PressExchange } from '~/lib/db/models';
 import { usePressConferenceState } from '~/lib/hooks/usePressConferenceState';
+
+import type { PressExchange } from '~/lib/db/models';
 
 interface ConferenceContentProps {
   levelId: string;

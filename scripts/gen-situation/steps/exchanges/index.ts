@@ -1,10 +1,7 @@
-import {
-  validatedExchangeDataSchema,
-  type ValidatedExchangeData,
-  ExchangeData,
-} from '~/lib/schemas/exchanges';
+import type { ExchangeData } from '~/lib/schemas/exchanges';
+import { validatedExchangeDataSchema, type ValidatedExchangeData } from '~/lib/schemas/exchanges';
 
-import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from '../base';
+import { ConsoleGenerationLogger } from '../base';
 import { ExchangeFullSubstep } from './substeps/exchange-full-substep';
 import { ExchangesPlanSubstep } from './substeps/exchanges-plan-substep';
 import { logDeep } from '../../utils/logging';
@@ -15,6 +12,7 @@ import {
 } from '../../utils/schema-adapters';
 
 import type { ExchangesStepInput } from '../../types';
+import type { GenerationLogger, StepDependencies } from '../base';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // EXCHANGES STEP IMPLEMENTATION (CLEAN 2-PHASE SPLIT APPROACH)

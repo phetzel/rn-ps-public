@@ -3,12 +3,14 @@
 import { z } from 'zod';
 
 import { getAllQuestionsFromExchange } from '~/lib/game/exchange-tree';
-import { AnswerType, CabinetStaticId } from '~/types';
+import { AnswerType } from '~/types';
 
 import { situationTypeSchema, textLengthSchema, publicationSchema } from '../common';
 import { exchangeContentSchema } from '../exchanges';
 import { situationContentSchema } from './content';
 import { situationTriggerSchema } from './triggers';
+
+import type { CabinetStaticId } from '~/types';
 
 export * from '~/lib/schemas/situations/triggers';
 export * from '~/lib/schemas/situations/preferences';
@@ -145,32 +147,33 @@ const situationDataSchema = baseSituationDataSchema
   )
 
   .refine(
+    // eslint-disable-next-line sonarjs/cognitive-complexity -- deep validation logic
     (data) => {
       // Each question must have answers that positively and negatively modify every outcome
       const outcomeIds = data.content.outcomes.map((o) => o.id);
       const errors: string[] = [];
 
-      data.exchanges.forEach((exchange, exchangeIndex) => {
+      for (const [exchangeIndex, exchange] of data.exchanges.entries()) {
         const allQuestions = getAllQuestionsFromExchange(exchange.content);
-        allQuestions.forEach((question) => {
-          outcomeIds.forEach((outcomeId) => {
+        for (const question of allQuestions) {
+          for (const outcomeId of outcomeIds) {
             let hasPos = false;
             let hasNeg = false;
-            question.answers.forEach((answer) => {
+            for (const answer of question.answers) {
               const w = answer.outcomeModifiers?.[outcomeId];
               if (typeof w === 'number') {
                 if (w > 0) hasPos = true;
                 if (w < 0) hasNeg = true;
               }
-            });
+            }
             if (!hasPos || !hasNeg) {
               errors.push(
                 `Exchange ${exchangeIndex}, Question ${question.id}: must include answers with positive and negative modifiers for outcome ${outcomeId}`,
               );
             }
-          });
-        });
-      });
+          }
+        }
+      }
 
       return errors.length === 0;
     },
@@ -185,52 +188,55 @@ const situationDataSchema = baseSituationDataSchema
       const outcomeIdSet = new Set(data.content.outcomes.map((o) => o.id));
       const errors: string[] = [];
 
-      data.exchanges.forEach((exchange, exchangeIndex) => {
+      for (const [exchangeIndex, exchange] of data.exchanges.entries()) {
         const allQuestions = getAllQuestionsFromExchange(exchange.content);
-        allQuestions.forEach((question) => {
-          question.answers.forEach((answer, answerIndex) => {
+        for (const question of allQuestions) {
+          for (const [answerIndex, answer] of question.answers.entries()) {
             const keys = Object.keys(answer.outcomeModifiers || {});
-            keys.forEach((k) => {
-              if (!outcomeIdSet.has(k)) {
+            for (const key of keys) {
+              if (!outcomeIdSet.has(key)) {
                 errors.push(
-                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: outcomeModifiers contains unknown outcome ID ${k}`,
+                  `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: outcomeModifiers contains unknown outcome ID ${key}`,
                 );
               }
-            });
-          });
-        });
-      });
+            }
+          }
+        }
+      }
 
       return errors.length === 0;
     },
     { message: 'Outcome modifiers must reference known outcome IDs' },
   )
   .refine(
+    // eslint-disable-next-line sonarjs/cognitive-complexity -- deep validation logic
     (data) => {
       // Exchange answers may only impact president and cabinet involved in outcomes
       const errors: string[] = [];
       const involvedCabinet = new Set<CabinetStaticId>();
-      data.content.outcomes.forEach((outcome) => {
+      for (const outcome of data.content.outcomes) {
         const cab = outcome.consequences.approvalChanges.cabinet || {};
-        Object.keys(cab).forEach((id) => involvedCabinet.add(id as CabinetStaticId));
-      });
+        for (const id of Object.keys(cab)) {
+          involvedCabinet.add(id as CabinetStaticId);
+        }
+      }
 
-      data.exchanges.forEach((exchange, exchangeIndex) => {
+      for (const [exchangeIndex, exchange] of data.exchanges.entries()) {
         const allQuestions = getAllQuestionsFromExchange(exchange.content);
-        allQuestions.forEach((question) => {
-          question.answers.forEach((answer, answerIndex) => {
+        for (const question of allQuestions) {
+          for (const [answerIndex, answer] of question.answers.entries()) {
             const cabImpacts = answer.impacts.cabinet || {};
-            Object.keys(cabImpacts).forEach((cabId) => {
+            for (const cabId of Object.keys(cabImpacts)) {
               const typedId = cabId as CabinetStaticId;
               if (!involvedCabinet.has(typedId)) {
                 errors.push(
                   `Exchange ${exchangeIndex}, Question ${question.id}, Answer ${answerIndex}: cabinet ${typedId} is impacted but not involved in outcomes`,
                 );
               }
-            });
-          });
-        });
-      });
+            }
+          }
+        }
+      }
 
       return errors.length === 0;
     },

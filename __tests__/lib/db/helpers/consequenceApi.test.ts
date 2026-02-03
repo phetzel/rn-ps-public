@@ -19,7 +19,7 @@
  * - Game ending consequences prevent other consequences from applying
  */
 
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { testDatabase, resetTestDatabase } from '~/__tests__/support/db';
 import {

@@ -8,8 +8,8 @@ import LevelProgress from '~/components/shared/level-state/LevelProgress';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeGame } from '~/lib/db/helpers';
-import { Game } from '~/lib/db/models';
 
+import type { Game } from '~/lib/db/models';
 import type { OutcomeSnapshotType } from '~/types';
 
 interface PresidentLevelStateProps {
@@ -18,7 +18,11 @@ interface PresidentLevelStateProps {
   game: Game | null;
 }
 
-const PresidentLevelState = ({ gameId, outcomeSnapshot, game }: PresidentLevelStateProps) => {
+const PresidentLevelState = ({
+  gameId: _gameId,
+  outcomeSnapshot,
+  game,
+}: PresidentLevelStateProps) => {
   const { initial, final } = outcomeSnapshot;
 
   if (!game || !initial || !final) return null;

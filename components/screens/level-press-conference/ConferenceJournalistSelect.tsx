@@ -3,7 +3,8 @@ import { View } from 'react-native';
 
 import ConferenceJournalistItem from '~/components/screens/level-press-conference/ConferenceJournalistItem';
 import { Text } from '~/components/ui/text';
-import { PressExchange } from '~/lib/db/models';
+
+import type { PressExchange } from '~/lib/db/models';
 
 interface ConferenceJournalistSelectProps {
   pressExchanges: PressExchange[];
@@ -48,7 +49,7 @@ const ConferenceJournalistSelect = ({
         accessibilityHint="Select a journalist to see their question"
         className="gap-4"
       >
-        {sortedExchanges.map((exchange, index) => (
+        {sortedExchanges.map((exchange) => (
           <ConferenceJournalistItem
             key={exchange.id}
             pressExchange={exchange}

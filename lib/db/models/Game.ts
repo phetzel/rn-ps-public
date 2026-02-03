@@ -1,25 +1,27 @@
-import { Model, Query } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import { field, text, date, children, readonly, writer } from '@nozbe/watermelondb/decorators';
 
 import { PRESIDENTIAL_TERM_YEARS } from '~/lib/constants';
 import { calculatePresidentApprovalRating } from '~/lib/game/relationships';
-import { GameStatus, PoliticalLeaning, PressOfficeBackground } from '~/types';
+import { GameStatus } from '~/types';
 
 import type CabinetMember from './CabinetMember';
 import type Journalist from './Journalist';
 import type Level from './Level';
 import type Publication from './Publication';
 import type SubgroupApproval from './SubgroupApproval';
+import type { Query } from '@nozbe/watermelondb';
 import type { Associations } from '@nozbe/watermelondb/Model';
+import type { PoliticalLeaning, PressOfficeBackground } from '~/types';
 
 // Enums
 // Utils
 // Constants
 
 export default class Game extends Model {
-  static table = 'games';
+  static readonly table = 'games';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     levels: { type: 'has_many', foreignKey: 'game_id' },
     situations: { type: 'has_many', foreignKey: 'game_id' },
     cabinet_members: { type: 'has_many', foreignKey: 'game_id' },

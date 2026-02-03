@@ -1,7 +1,8 @@
 import { database } from '~/lib/db';
 import { cabinetCollection } from '~/lib/db/helpers/collections';
 import { generateCabinetMemberName } from '~/lib/game/cabinet';
-import { CabinetStaticId } from '~/types';
+
+import type { CabinetStaticId } from '~/types';
 
 /**
  * Hire new cabinet members to replace fired ones

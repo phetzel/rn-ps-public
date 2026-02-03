@@ -2,8 +2,9 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import LevelConsequencesCard from '~/components/shared/level-consequences/LevelConsequencesCard';
-import { CabinetMember } from '~/lib/db/models';
-import { ConsequenceResult, CabinetStaticId } from '~/types';
+import type { CabinetMember } from '~/lib/db/models';
+import type { ConsequenceResult } from '~/types';
+import { CabinetStaticId } from '~/types';
 
 // Mock WatermelonDB withObservables for ConsequenceGameComplete
 jest.mock('@nozbe/watermelondb/react', () => ({

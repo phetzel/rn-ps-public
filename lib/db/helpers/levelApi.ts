@@ -1,10 +1,12 @@
 import { database } from '~/lib/db';
 import { levelsCollection } from '~/lib/db/helpers/collections';
 import { fetchActiveCabinetMembers } from '~/lib/db/helpers/fetchApi';
-import { Game, Level } from '~/lib/db/models';
 import { isGameEnded } from '~/lib/game/consequences';
 import { cabinetSnapshotSchema } from '~/lib/schemas';
-import { CabinetSnapshot, LevelStatus } from '~/types';
+import { LevelStatus } from '~/types';
+
+import type { Game, Level } from '~/lib/db/models';
+import type { CabinetSnapshot } from '~/types';
 
 export { isGameEnded };
 

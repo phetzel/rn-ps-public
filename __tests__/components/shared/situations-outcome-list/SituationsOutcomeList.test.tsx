@@ -15,7 +15,7 @@ import { of } from 'rxjs';
 
 import SituationsOutcomeList from '~/components/shared/situations-outcome-list/SituationsOutcomeList';
 import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
-import { Situation } from '~/lib/db/models';
+import type { Situation } from '~/lib/db/models';
 
 // Mock withObservables HOC
 jest.mock('@nozbe/watermelondb/react', () => {

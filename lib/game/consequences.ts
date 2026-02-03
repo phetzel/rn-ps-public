@@ -1,5 +1,7 @@
 import { CONSEQUENCE_THRESHOLD, CONSEQUENCE_RISK_PER_LEVEL } from '~/lib/game/constants';
-import { CabinetStaticId, GameStatus, RiskLevel } from '~/types';
+import { GameStatus } from '~/types';
+
+import type { CabinetStaticId, RiskLevel } from '~/types';
 
 // Abstract interface so we don't depend on the WatermelonDB model
 interface CabinetMemberRisk {

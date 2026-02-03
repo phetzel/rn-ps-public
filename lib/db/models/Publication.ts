@@ -1,4 +1,4 @@
-import { Model, Relation } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import { field, text, date, relation, children, readonly } from '@nozbe/watermelondb/decorators';
 
 import { staticPublications } from '~/lib/data/staticMedia';
@@ -6,14 +6,14 @@ import { AlignmentWeight } from '~/types';
 
 import type Game from './Game';
 import type Journalist from './Journalist';
-import type { Query } from '@nozbe/watermelondb';
+import type { Query, Relation } from '@nozbe/watermelondb';
 import type { Associations } from '@nozbe/watermelondb/Model'; // Import for clarity if needed, but as const is sufficient
 import type { PublicationStaticId, StaticPublication } from '~/types';
 
 export default class Publication extends Model {
-  static table = 'publications';
+  static readonly table = 'publications';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     games: { type: 'belongs_to', key: 'game_id' },
     journalists: { type: 'has_many', foreignKey: 'publication_id' }, // How journalists link back
   };

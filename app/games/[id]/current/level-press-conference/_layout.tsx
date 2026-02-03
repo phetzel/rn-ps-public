@@ -1,4 +1,3 @@
-import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { Stack, useRouter } from 'expo-router';
 import React, { useState, useRef } from 'react';
 import { Pressable, Platform, View } from 'react-native';
@@ -10,6 +9,8 @@ import { HeaderBackIcon } from '~/components/shared/layout/HeaderBackIcon';
 import { BottomSheetModal, BottomSheetView, BottomSheetHandle } from '~/components/ui/bottom-sheet';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { cn } from '~/lib/utils';
+
+import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 
 export default function LevelPressConferenceLayout() {
   const router = useRouter();

@@ -5,9 +5,10 @@ import { AdCard } from '~/components/shared/ad-card/AdCard';
 // Hooks
 import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+
 // Models
 // Typess
-import { EntityWithMediaDelta } from '~/types';
+import type { EntityWithMediaDelta } from '~/types';
 
 interface SituationReviewProps {
   isAdWatched: boolean;

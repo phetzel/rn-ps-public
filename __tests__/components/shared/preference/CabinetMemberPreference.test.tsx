@@ -15,7 +15,8 @@ import React from 'react';
 
 import CabinetMemberPreference from '~/components/shared/preference/CabinetMemberPreference';
 import { CABINET_PREFERENCE_THRESHOLD, CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
-import { AnswerType, CabinetPreference } from '~/types';
+import type { CabinetPreference } from '~/types';
+import { AnswerType } from '~/types';
 
 // No mocks - testing actual component behavior
 

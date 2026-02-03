@@ -5,9 +5,9 @@ import LevelConsequencesCard from '~/components/shared/level-consequences/LevelC
 import LevelConsequencesRiskCard from '~/components/shared/level-consequences/LevelConsequencesRiskCard';
 import { Text } from '~/components/ui/text';
 import { observeLevel, observeCabinetMembersByLevel } from '~/lib/db/helpers';
-import { OutcomeSnapshotType } from '~/types';
 
 import type { CabinetMember, Level } from '~/lib/db/models';
+import type { OutcomeSnapshotType } from '~/types';
 
 interface LevelConsequencesProps {
   level: Level;

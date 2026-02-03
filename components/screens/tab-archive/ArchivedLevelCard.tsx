@@ -8,8 +8,9 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeLevel, observeSituationsByLevelId } from '~/lib/db/helpers';
-import { Level, Situation } from '~/lib/db/models';
 import { formatDate } from '~/lib/utils';
+
+import type { Level, Situation } from '~/lib/db/models';
 // Components
 
 interface ArchivedLevelCardProps {

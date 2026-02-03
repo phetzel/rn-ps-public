@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { PartySelect } from '~/components/screens/game-create/PartySelect';
-import { CreateGameFormData } from '~/lib/schemas';
+import type { CreateGameFormData } from '~/lib/schemas';
 import { PoliticalLeaning } from '~/types';
 
 function Wrapper() {

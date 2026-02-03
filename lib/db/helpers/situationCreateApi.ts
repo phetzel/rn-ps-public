@@ -5,9 +5,10 @@ import {
   fetchActiveJournalistsForGame,
   fetchPressExchangeForJournalistLevel,
 } from '~/lib/db/helpers/fetchApi';
-import { Situation, Game, Level } from '~/lib/db/models';
 import { initializeExchangeProgressForContent } from '~/lib/game/exchange-tree';
-import { SituationData, PublicationStaticId, JournalistStaticId } from '~/types';
+
+import type { Situation, Game, Level } from '~/lib/db/models';
+import type { SituationData, PublicationStaticId, JournalistStaticId } from '~/types';
 
 export async function createSituationsForLevel(
   game: Game,

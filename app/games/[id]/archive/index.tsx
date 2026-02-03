@@ -6,8 +6,9 @@ import ArchivedLevelCard from '~/components/screens/tab-archive/ArchivedLevelCar
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
 import { Text } from '~/components/ui/text';
 import { observeCompletedLevels } from '~/lib/db/helpers';
-import { Level } from '~/lib/db/models';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
+
+import type { Level } from '~/lib/db/models';
 
 interface ArchiveIndexScreenProps {
   completedLevels: Level[];

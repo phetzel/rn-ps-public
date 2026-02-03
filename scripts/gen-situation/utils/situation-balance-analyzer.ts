@@ -1,6 +1,7 @@
-import { SituationType, CabinetStaticId, SubgroupStaticId, PublicationStaticId } from '~/types';
+import { SituationType } from '~/types';
 
 import type { GenerationAnalysis, StrategicRequirements } from '../types';
+import type { CabinetStaticId, SubgroupStaticId, PublicationStaticId } from '~/types';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // SITUATION BALANCE ANALYZER - TRANSFORMS RAW ANALYSIS INTO STRATEGIC REQUIREMENTS

@@ -37,7 +37,7 @@ export class ExchangesPlanSubstep extends ResponsesGenerationStep<
 
   protected async transform(
     result: GenerateExchangesPlan,
-    input: ExchangesPlanInput,
+    _input: ExchangesPlanInput,
   ): Promise<GenerateExchangesPlan> {
     return generateExchangesPlanSchema.parse(result);
   }

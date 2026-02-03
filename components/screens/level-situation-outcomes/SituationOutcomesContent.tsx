@@ -20,9 +20,9 @@ interface SituationOutcomesContentProps {
 }
 
 const SituationOutcomesContent = ({
-  gameId,
+  gameId: _gameId,
   levelId,
-  game,
+  game: _game,
   level,
 }: SituationOutcomesContentProps) => {
   const [isAdWatched, setIsAdWatched] = useState<boolean>(false);

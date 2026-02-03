@@ -2,8 +2,9 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import ConsequenceCabinetMembersFired from '~/components/shared/level-consequences/ConsequenceCabinetMembersFired';
-import { CabinetMember } from '~/lib/db/models';
-import { ConsequenceResult, CabinetStaticId } from '~/types';
+import type { CabinetMember } from '~/lib/db/models';
+import type { ConsequenceResult } from '~/types';
+import { CabinetStaticId } from '~/types';
 
 // Mock constants
 jest.mock('~/lib/constants', () => ({

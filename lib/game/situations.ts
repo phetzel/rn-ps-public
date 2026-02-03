@@ -1,4 +1,4 @@
-import { PoliticalLeaning, SituationData, SituationType } from '~/types';
+import type { PoliticalLeaning, SituationData, SituationType } from '~/types';
 
 /** Game requirements used for filtering situations */
 export interface GameRequirements {
@@ -16,41 +16,46 @@ export function filterSituationsByRequirements(
   situations: SituationData[],
   requirements: GameRequirements,
 ): SituationData[] {
-  return situations.filter((situation) => {
-    const trigger = situation.trigger;
-    if (!trigger) return false;
+  return situations.filter(
+    // eslint-disable-next-line sonarjs/cognitive-complexity -- validation logic, refactor later
+    (situation) => {
+      const trigger = situation.trigger;
+      if (!trigger) return false;
 
-    // Year requirements
-    if (trigger.requirements?.year) {
-      const { min, max } = trigger.requirements.year;
-      if (min !== undefined && requirements.currentYear < min) return false;
-      if (max !== undefined && requirements.currentYear > max) return false;
-    }
+      // Year requirements
+      if (trigger.requirements?.year) {
+        const { min, max } = trigger.requirements.year;
+        if (min !== undefined && requirements.currentYear < min) return false;
+        if (max !== undefined && requirements.currentYear > max) return false;
+      }
 
-    // Month requirements
-    if (trigger.requirements?.month) {
-      const { min, max } = trigger.requirements.month;
-      if (min !== undefined && requirements.currentMonth < min) return false;
-      if (max !== undefined && requirements.currentMonth > max) return false;
-    }
+      // Month requirements
+      if (trigger.requirements?.month) {
+        const { min, max } = trigger.requirements.month;
+        if (min !== undefined && requirements.currentMonth < min) return false;
+        if (max !== undefined && requirements.currentMonth > max) return false;
+      }
 
-    // President party requirement
-    if (
-      trigger.requirements?.president?.leaning &&
-      trigger.requirements.president.leaning !== requirements.presLeaning
-    ) {
-      return false;
-    }
+      // President party requirement
+      if (
+        trigger.requirements?.president?.leaning &&
+        trigger.requirements.president.leaning !== requirements.presLeaning
+      ) {
+        return false;
+      }
 
-    // President approval requirement
-    if (trigger.requirements?.president) {
-      const { minApproval, maxApproval } = trigger.requirements.president;
-      if (minApproval !== undefined && requirements.presApprovalRating < minApproval) return false;
-      if (maxApproval !== undefined && requirements.presApprovalRating > maxApproval) return false;
-    }
+      // President approval requirement
+      if (trigger.requirements?.president) {
+        const { minApproval, maxApproval } = trigger.requirements.president;
+        if (minApproval !== undefined && requirements.presApprovalRating < minApproval)
+          return false;
+        if (maxApproval !== undefined && requirements.presApprovalRating > maxApproval)
+          return false;
+      }
 
-    return true;
-  });
+      return true;
+    },
+  );
 }
 
 /**
@@ -70,7 +75,7 @@ export function selectSituationsFromPool(
 ): SituationData[] {
   const selected: SituationData[] = [];
   const seenTypes = new Set(existingTypes);
-  let remaining = [...availableSituations];
+  let remaining = availableSituations.filter((s) => !seenTypes.has(s.type));
 
   while (selected.length < count && remaining.length > 0) {
     // Select a random situation

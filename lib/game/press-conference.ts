@@ -1,5 +1,7 @@
 import { findAnswerById, findQuestionById } from '~/lib/game/exchange-tree';
-import {
+import { AnswerType, JournalistInteractionImpact } from '~/types';
+
+import type {
   ExchangeContent,
   ExchangeProgress,
   PressConferenceRawEffects,
@@ -7,8 +9,6 @@ import {
   SituationOutcomeWeightDeltas,
   JournalistStaticId,
   CabinetStaticId,
-  AnswerType,
-  JournalistInteractionImpact,
 } from '~/types';
 
 /** A pre-fetched exchange record ready for pure processing */
@@ -24,6 +24,7 @@ export interface ExchangeRecord {
  * Pure function: given pre-fetched exchange records,
  * accumulate all relationship deltas and outcome weight deltas.
  */
+// eslint-disable-next-line sonarjs/cognitive-complexity -- complex scoring logic, refactor later
 export function accumulatePressConferenceEffects(
   exchanges: ExchangeRecord[],
 ): PressConferenceRawEffects {

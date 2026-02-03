@@ -25,6 +25,14 @@ export default function AdCardHeader({
   isButtonDisabled,
   canRequestAds = true,
 }: AdCardHeaderProps) {
+  let statusLabel = 'Boost not available due to consent settings';
+
+  if (isAdWatched) {
+    statusLabel = 'Boost has been applied';
+  } else if (canRequestAds) {
+    statusLabel = 'Boost available by watching ad';
+  }
+
   return (
     <CardHeader
       className={cn(
@@ -32,13 +40,7 @@ export default function AdCardHeader({
         isAdWatched ? 'bg-green-50' : 'bg-blue-50',
       )}
       accessible={true}
-      accessibilityLabel={`Ad boost section. ${
-        isAdWatched
-          ? 'Boost has been applied'
-          : canRequestAds
-            ? 'Boost available by watching ad'
-            : 'Boost not available due to consent settings'
-      }`}
+      accessibilityLabel={`Ad boost section. ${statusLabel}`}
     >
       {isAdWatched ? (
         <View className="flex-row items-center gap-2" accessible={false}>

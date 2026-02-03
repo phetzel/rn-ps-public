@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { CabinetMember } from '~/lib/db/models';
+import type { CabinetMember } from '~/lib/db/models';
 import { CabinetStaticId } from '~/types';
 
 type CabinetMemberOverrides = {

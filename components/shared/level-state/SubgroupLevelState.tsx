@@ -9,10 +9,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 import { observeSubgroupApprovals } from '~/lib/db/helpers';
-import { SubgroupCategory } from '~/types';
 
 import type SubgroupApproval from '~/lib/db/models/SubgroupApproval';
-import type { OutcomeSnapshotType } from '~/types';
+import type { OutcomeSnapshotType, SubgroupCategory } from '~/types';
 
 interface SubgroupLevelStateProps {
   gameId: string;
@@ -22,8 +21,8 @@ interface SubgroupLevelStateProps {
 }
 
 const SubgroupLevelState = ({
-  gameId,
-  levelId,
+  gameId: _gameId,
+  levelId: _levelId,
   outcomeSnapshot,
   subgroupApprovals,
 }: SubgroupLevelStateProps) => {

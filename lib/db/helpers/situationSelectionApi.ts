@@ -1,13 +1,11 @@
 import { Q } from '@nozbe/watermelondb';
 
 import { situationsData } from '~/lib/data/situations';
-import { Game } from '~/lib/db/models';
-import {
-  filterSituationsByRequirements,
-  GameRequirements,
-  selectSituationsFromPool,
-} from '~/lib/game/situations';
-import { SituationData, SituationType } from '~/types';
+import { filterSituationsByRequirements, selectSituationsFromPool } from '~/lib/game/situations';
+
+import type { Game } from '~/lib/db/models';
+import type { GameRequirements } from '~/lib/game/situations';
+import type { SituationData, SituationType } from '~/types';
 
 // Helper to get follow-up situations from the previous level
 async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
@@ -112,6 +110,7 @@ export async function selectSituationsForLevel(
     const remainingNeeded = neededRegularSituations - selectedRegularSituations.length;
     const randomSituations = situationsData
       .filter((s) => !s.trigger?.isFollowUp && !usedKeys.includes(s.trigger?.staticKey || ''))
+      // eslint-disable-next-line sonarjs/pseudo-random -- non-crypto shuffle for gameplay variety
       .sort(() => 0.5 - Math.random())
       .slice(0, remainingNeeded);
 

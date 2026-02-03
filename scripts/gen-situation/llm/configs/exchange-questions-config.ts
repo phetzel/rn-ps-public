@@ -7,12 +7,12 @@ import {
   type GenerateOutcomes,
   type ExchangesPlanArray,
 } from '~/lib/schemas/generate';
-import { CabinetStaticId } from '~/types';
 
 import { GPT_5 } from '../llm-constants';
 import { buildTechnicalPrompt } from '../prompt-constants';
 
 import type { ResponsesJSONSchemaOptions } from '../../types';
+import type { CabinetStaticId } from '~/types';
 
 export function buildExchangeQuestionsRequest(
   plan: GenerateSituationPlan,

@@ -2,7 +2,8 @@ import { database } from '~/lib/db';
 import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers/entityEnhancementApi';
 import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
 import { calculateAdBoost } from '~/lib/game/relationships';
-import { PsRelationshipDeltas, EntityWithMediaDelta } from '~/types';
+
+import type { PsRelationshipDeltas, EntityWithMediaDelta } from '~/types';
 
 export async function applyRelationshipDeltas(
   gameId: string,
@@ -16,54 +17,57 @@ export async function applyRelationshipDeltas(
     throw new Error(`No game found with ID: ${gameId}`);
   }
 
-  return await database.write(async () => {
-    // --- Apply President PS Relationship Delta ---
-    if (deltas.president !== 0) {
-      const boostedDelta = useAdBoost ? calculateAdBoost(deltas.president) : deltas.president;
+  return await database.write(
+    // eslint-disable-next-line sonarjs/cognitive-complexity -- complex update flow, refactor later
+    async () => {
+      // --- Apply President PS Relationship Delta ---
+      if (deltas.president !== 0) {
+        const boostedDelta = useAdBoost ? calculateAdBoost(deltas.president) : deltas.president;
 
-      await game.update((g) => {
-        const next = (g.presPsRelationship || 0) + boostedDelta;
-        g.presPsRelationship = Math.max(0, Math.min(100, Math.round(next)));
-      });
-    }
+        await game.update((g) => {
+          const next = (g.presPsRelationship || 0) + boostedDelta;
+          g.presPsRelationship = Math.max(0, Math.min(100, Math.round(next)));
+        });
+      }
 
-    // --- Apply Cabinet Member PS Relationship Deltas ---
-    if (deltas.cabinetMembers) {
-      for (const [staticId, deltaValue] of Object.entries(deltas.cabinetMembers)) {
-        if (deltaValue === 0) continue;
+      // --- Apply Cabinet Member PS Relationship Deltas ---
+      if (deltas.cabinetMembers) {
+        for (const [staticId, deltaValue] of Object.entries(deltas.cabinetMembers)) {
+          if (deltaValue === 0) continue;
 
-        const member = cabinetMembers.find((m) => m.staticId === staticId);
-        if (member) {
-          const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
+          const member = cabinetMembers.find((m) => m.staticId === staticId);
+          if (member) {
+            const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
 
-          await member.update((m) => {
-            const next = (m.psRelationship || 0) + boostedDelta;
-            m.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
-          });
-        } else {
-          console.warn(`Cabinet member with staticId ${staticId} not found for game ${gameId}.`);
+            await member.update((m) => {
+              const next = (m.psRelationship || 0) + boostedDelta;
+              m.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
+            });
+          } else {
+            console.warn(`Cabinet member with staticId ${staticId} not found for game ${gameId}.`);
+          }
         }
       }
-    }
 
-    if (deltas.journalists) {
-      for (const [staticId, deltaValue] of Object.entries(deltas.journalists)) {
-        if (deltaValue === 0) continue;
+      if (deltas.journalists) {
+        for (const [staticId, deltaValue] of Object.entries(deltas.journalists)) {
+          if (deltaValue === 0) continue;
 
-        const journalist = journalists.find((j) => j.staticId === staticId);
-        if (journalist) {
-          const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
+          const journalist = journalists.find((j) => j.staticId === staticId);
+          if (journalist) {
+            const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
 
-          await journalist.update((j) => {
-            const next = (j.psRelationship || 0) + boostedDelta;
-            j.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
-          });
-        } else {
-          console.warn(`Journalist with staticId ${staticId} not found for game ${gameId}.`);
+            await journalist.update((j) => {
+              const next = (j.psRelationship || 0) + boostedDelta;
+              j.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
+            });
+          } else {
+            console.warn(`Journalist with staticId ${staticId} not found for game ${gameId}.`);
+          }
         }
       }
-    }
-  });
+    },
+  );
 }
 
 // Applies the approval rating changes from the consequences of all resolved situation outcomes in a level.

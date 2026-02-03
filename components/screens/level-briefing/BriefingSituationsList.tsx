@@ -9,10 +9,11 @@ import { ProgressNavigator } from '~/components/shared/ProgressNavigator';
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
 import { observeSituationsByLevelId, observeLevel } from '~/lib/db/helpers/observations';
-import { Situation, Level } from '~/lib/db/models';
 import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 // Components
 import { LevelStatus } from '~/types';
+
+import type { Situation, Level } from '~/lib/db/models';
 
 interface BriefingSituationsListProps {
   levelId: string;
@@ -20,7 +21,11 @@ interface BriefingSituationsListProps {
   level: Level;
 }
 
-const BriefingSituationsList = ({ levelId, situations, level }: BriefingSituationsListProps) => {
+const BriefingSituationsList = ({
+  levelId: _levelId,
+  situations,
+  level,
+}: BriefingSituationsListProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { progressAndNavigate, navigateToCurrentLevelScreen } = useLevelNavigation();
 

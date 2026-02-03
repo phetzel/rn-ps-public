@@ -184,7 +184,7 @@ function replaceEnumPlaceholders(serialized: string): string {
 }
 
 function stripQuotesFromKeys(serialized: string): string {
-  return serialized.replace(/"([a-zA-Z_][a-zA-Z0-9_]*)":/g, '$1:');
+  return serialized.replace(/"([A-Za-z_]\\w*)":/g, '$1:');
 }
 
 function formatSerialized(value: unknown): string {

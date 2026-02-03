@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import ThresholdProgressBar from '~/components/shared/level-consequences/ThresholdProgressBar';
-import { RiskDisplayInfo } from '~/lib/hooks/useRiskDisplay';
+import type { RiskDisplayInfo } from '~/lib/hooks/useRiskDisplay';
 
 // Mock cn utility
 jest.mock('~/lib/utils', () => ({

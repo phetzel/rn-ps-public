@@ -8,7 +8,8 @@ import PresidentStateCard from '~/components/screens/tab-state/PresidentStateCar
 import SubgroupState from '~/components/screens/tab-state/SubgroupState';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Text } from '~/components/ui/text';
-import { TabItem } from '~/types';
+
+import type { TabItem } from '~/types';
 
 enum TabStateEnum {
   Admin = 'admin',

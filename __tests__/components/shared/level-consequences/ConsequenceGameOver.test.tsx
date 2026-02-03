@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import ConsequenceGameOver from '~/components/shared/level-consequences/ConsequenceGameOver';
-import { ConsequenceResult } from '~/types';
+import type { ConsequenceResult } from '~/types';
 
 describe('ConsequenceGameOver', () => {
   describe('when game ends due to firing', () => {

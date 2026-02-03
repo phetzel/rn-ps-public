@@ -6,9 +6,10 @@ import {
   rollForEvent,
   calculateCabinetFirings,
 } from '~/lib/game/consequences';
-import { ConsequenceResult, CabinetStaticId, GameStatus } from '~/types';
+import { GameStatus } from '~/types';
 
 import type { Game, CabinetMember, SubgroupApproval } from '~/lib/db/models';
+import type { ConsequenceResult, CabinetStaticId } from '~/types';
 
 /**
  * Calculate game ending consequences (impeachment and firing)

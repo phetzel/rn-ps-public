@@ -14,7 +14,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import LevelMediaCoverageContent from '~/components/shared/level-media-coverage/LevelMediaCoverageContent';
-import { PublicationBoost } from '~/types';
+import type { PublicationBoost } from '~/types';
 
 // Mock utils
 jest.mock('~/lib/utils', () => ({

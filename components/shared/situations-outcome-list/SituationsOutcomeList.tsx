@@ -7,14 +7,15 @@ import SituationOutcomeItem from '~/components/shared/situations-outcome-list/Si
 import { Accordion } from '~/components/ui/accordion';
 import { Text } from '~/components/ui/text';
 import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
-import { Situation } from '~/lib/db/models';
+
+import type { Situation } from '~/lib/db/models';
 
 interface SituationsOutcomeListProps {
   levelId: string;
   situations: Situation[];
 }
 
-const SituationsOutcomeList = ({ levelId, situations }: SituationsOutcomeListProps) => {
+const SituationsOutcomeList = ({ levelId: _levelId, situations }: SituationsOutcomeListProps) => {
   if (!situations || situations.length === 0) {
     return <EmptyState message="No situations found for this level." />;
   }
@@ -36,7 +37,7 @@ const SituationsOutcomeList = ({ levelId, situations }: SituationsOutcomeListPro
         accessibilityLabel="Expandable situations list"
         accessibilityHint="Each situation shows its outcome, approval changes, and press conference influences"
       >
-        {situations.map((situation, index) => (
+        {situations.map((situation) => (
           <SituationOutcomeItem key={situation.id} situation={situation} />
         ))}
       </Accordion>

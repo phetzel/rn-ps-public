@@ -17,11 +17,12 @@ export default function PresidentialLeaningTooltip({ leaning }: Props) {
       if (!sub.defaultPoliticalLeaning) continue;
       const magnitude = Math.abs(sub.weight ?? AlignmentWeight.Positive);
       const isAligned = sub.defaultPoliticalLeaning === leaning;
-      const base = isAligned
-        ? aligned
-        : sub.defaultPoliticalLeaning === PoliticalLeaning.Neutral
-          ? 0
-          : opposite;
+      let base = opposite;
+      if (isAligned) {
+        base = aligned;
+      } else if (sub.defaultPoliticalLeaning === PoliticalLeaning.Neutral) {
+        base = 0;
+      }
       const delta = Math.sign(base) * magnitude;
       if (delta !== 0) effects.push({ name: sub.name, delta });
     }

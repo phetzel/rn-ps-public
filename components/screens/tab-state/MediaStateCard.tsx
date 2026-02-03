@@ -3,7 +3,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import { Newspaper } from '~/components/icons/Newspaper';
-import PublicationStateItem from '~/components/screens/tab-state/PublicationStateItem';
+import PublicationStateItemCard from '~/components/screens/tab-state/PublicationStateItem';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
@@ -32,7 +32,7 @@ export function MediaStateCard({ publications }: MediaStateCardProps) {
       <CardContent>
         {publications.map((publication, idx) => (
           <View key={publication.id} className="gap-2">
-            <PublicationStateItem key={publication.id} publication={publication} />
+            <PublicationStateItemCard key={publication.id} publication={publication} />
 
             {idx !== publications.length - 1 && <Separator className="my-4" />}
           </View>

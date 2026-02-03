@@ -48,7 +48,6 @@ const SituationOutcomeItem = ({ situation }: SituationOutcomeItemProps) => {
   // Handle loading state
   if (isLoading) {
     return null;
-    // return <EmptyState message="Loading outcome details..." />;
   }
 
   // Handle error state

@@ -1,9 +1,11 @@
 const { defineConfig } = require('eslint/config');
 const expo = require('eslint-config-expo/flat');
 const boundaries = require('eslint-plugin-boundaries');
+const sonarjs = require('eslint-plugin-sonarjs');
 
 module.exports = defineConfig([
   ...expo,
+  sonarjs.configs.recommended,
   {
     plugins: {
       boundaries,
@@ -34,6 +36,12 @@ module.exports = defineConfig([
       'boundaries/ignore': ['**/*.test.ts', '**/*.test.tsx', '__tests__/**', '__mocks__/**'],
     },
     rules: {
+      // React 17+ / JSX runtime does not require React in scope
+      'react/react-in-jsx-scope': 'off',
+      'react/jsx-uses-react': 'off',
+      // React Hooks (Expo already provides the plugin; avoid redefinition)
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'warn',
       'import/order': [
         'error',
         {
@@ -133,6 +141,7 @@ module.exports = defineConfig([
               from: 'screens',
               allow: [
                 'types',
+                'schemas',
                 'shared',
                 'ui',
                 'icons',
@@ -186,13 +195,44 @@ module.exports = defineConfig([
     ],
   },
   {
-    files: ['__tests__/**/*'],
+    files: ['__tests__/**/*', '__mocks__/**/*'],
     rules: {
       'import/order': 'off',
       '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': 'off',
+      'sonarjs/cognitive-complexity': 'off',
+      'sonarjs/no-nested-conditional': 'off',
+      'sonarjs/no-nested-functions': 'off',
+      'sonarjs/pseudo-random': 'off',
+      'sonarjs/no-identical-functions': 'off',
+      'sonarjs/slow-regex': 'off',
+      'sonarjs/anchor-precedence': 'off',
+      'sonarjs/no-commented-code': 'off',
       // Disable boundary checks in tests
       'boundaries/element-types': 'off',
+    },
+  },
+  {
+    files: ['scripts/**/*.{js,jsx,ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-imports': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
+      'import/order': 'off',
+      'import/no-duplicates': 'off',
+      'sonarjs/cognitive-complexity': 'off',
+      'sonarjs/no-nested-conditional': 'off',
+      'sonarjs/no-nested-functions': 'off',
+      'sonarjs/no-identical-functions': 'off',
+      'sonarjs/no-commented-code': 'off',
+      'sonarjs/no-nested-template-literals': 'off',
+      'sonarjs/slow-regex': 'off',
+      'sonarjs/anchor-precedence': 'off',
     },
   },
 ]);

@@ -1,8 +1,8 @@
 import { fetchPressExchangesForLevel } from '~/lib/db/helpers/fetchApi';
 import { accumulatePressConferenceEffects } from '~/lib/game/press-conference';
-import { JournalistStaticId, PressConferenceRawEffects } from '~/types';
 
 import type { ExchangeRecord } from '~/lib/game/press-conference';
+import type { JournalistStaticId, PressConferenceRawEffects } from '~/types';
 
 // Calculate impacts from press exchanges
 export async function calculatePressConferenceRawEffects(

@@ -5,7 +5,8 @@ import { Badge } from '~/components/ui/badge';
 import { Text } from '~/components/ui/text';
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
 import { useRiskDisplay } from '~/lib/hooks/useRiskDisplay';
-import { CabinetRiskDisplayData } from '~/types';
+
+import type { CabinetRiskDisplayData } from '~/types';
 
 interface RiskItemCabinetProps {
   cabinetMember: CabinetRiskDisplayData;

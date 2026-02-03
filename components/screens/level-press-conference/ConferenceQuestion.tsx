@@ -14,8 +14,10 @@ import {
   observePublicationForJournalistId,
   observeCabinetMembersByLevel,
 } from '~/lib/db/helpers/observations';
-import { PressExchange, Journalist, CabinetMember } from '~/lib/db/models';
-import { CabinetStaticId, AnswerType } from '~/types';
+import { AnswerType } from '~/types';
+
+import type { PressExchange, Journalist, CabinetMember } from '~/lib/db/models';
+import type { CabinetStaticId } from '~/types';
 
 interface ConferenceQuestionProps {
   pressExchange: PressExchange;

@@ -19,7 +19,7 @@ interface CabinetLevelStateProps {
 }
 
 const CabinetLevelState = ({
-  levelId,
+  levelId: _levelId,
   outcomeSnapshot,
   cabinetMembers,
 }: CabinetLevelStateProps) => {

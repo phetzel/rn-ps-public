@@ -91,7 +91,7 @@ export function ProgressNavigator({
 
       {/* Content Card */}
       <Card className={cardClassName}>
-        {headerContent && headerContent}
+        {headerContent}
         <CardContent>{children}</CardContent>
 
         <CardFooter className="flex-row justify-between">

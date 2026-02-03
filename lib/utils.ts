@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-import { RiskLevel } from '~/types';
+import type { RiskLevel } from '~/types';
 
 // Tailwind Merge
 export function cn(...inputs: ClassValue[]) {

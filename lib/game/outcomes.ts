@@ -1,4 +1,4 @@
-import { SituationOutcome, SituationOutcomeWeight } from '~/types';
+import type { SituationOutcome, SituationOutcomeWeight } from '~/types';
 
 /**
  * Select an item from a weighted list using weighted random selection.
@@ -20,6 +20,7 @@ export function selectOutcomeByWeightedRandom<T extends { weight: number }>(item
     return null;
   }
 
+  // eslint-disable-next-line sonarjs/pseudo-random -- non-crypto RNG for gameplay outcomes
   let random = Math.random() * totalWeight;
 
   for (const item of items) {

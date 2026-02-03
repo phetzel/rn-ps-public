@@ -5,7 +5,8 @@ import { View } from 'react-native';
 import { Badge } from '~/components/ui/badge';
 import { Text } from '~/components/ui/text';
 import { observeGame, observePresidentApprovalRating } from '~/lib/db/helpers';
-import { Game } from '~/lib/db/models';
+
+import type { Game } from '~/lib/db/models';
 
 interface ConsequenceGameCompleteProps {
   game: Game | null;

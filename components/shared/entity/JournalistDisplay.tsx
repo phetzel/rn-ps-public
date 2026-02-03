@@ -18,7 +18,11 @@ interface JournalistDisplayProps {
   publication?: Publication | null;
 }
 
-function JournalistDisplay({ journalistId, journalist, publication }: JournalistDisplayProps) {
+function JournalistDisplay({
+  journalistId: _journalistId,
+  journalist,
+  publication,
+}: JournalistDisplayProps) {
   if (!journalist || !publication) return null;
 
   const journoStaticData = journalist.staticData;

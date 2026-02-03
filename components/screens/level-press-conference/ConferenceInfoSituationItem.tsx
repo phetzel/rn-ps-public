@@ -2,7 +2,8 @@ import { View } from 'react-native';
 
 import SituationPreferences from '~/components/shared/preference/SituationPreferences';
 import { Text } from '~/components/ui/text';
-import { Situation } from '~/lib/db/models';
+
+import type { Situation } from '~/lib/db/models';
 
 interface ConferenceInfoSituationItemProps {
   situation: Situation;

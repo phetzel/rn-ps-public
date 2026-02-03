@@ -5,9 +5,10 @@ import RiskItemPresidential from '~/components/shared/level-consequences/RiskIte
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
-import { CabinetMember } from '~/lib/db/models';
 import { calculateRiskProbability } from '~/lib/game/consequences';
-import { CabinetStaticId, RelationshipSnapshot, CabinetRiskDisplayData } from '~/types';
+
+import type { CabinetMember } from '~/lib/db/models';
+import type { CabinetStaticId, RelationshipSnapshot, CabinetRiskDisplayData } from '~/types';
 
 interface LevelConsequencesRiskCardProps {
   finalSnapshot: RelationshipSnapshot;
@@ -26,7 +27,7 @@ export default function LevelConsequencesRiskCard({
   // Get cabinet member risks with actual member data
   const cabinetRisks: CabinetRiskDisplayData[] = [];
 
-  Object.entries(finalSnapshot.cabinetMembers || {}).forEach(([staticId, memberData]) => {
+  for (const staticId of Object.keys(finalSnapshot.cabinetMembers || {})) {
     const cabinetStaticId = staticId as CabinetStaticId;
     const finalMemberData = finalSnapshot.cabinetMembers?.[cabinetStaticId];
     const actualMember = cabinetMembers.find((m) => m.staticId === cabinetStaticId);
@@ -45,7 +46,7 @@ export default function LevelConsequencesRiskCard({
         riskPercentage,
       });
     }
-  });
+  }
 
   return (
     <Card

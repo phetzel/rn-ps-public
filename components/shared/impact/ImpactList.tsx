@@ -9,11 +9,11 @@ import {
   observeCabinetMembersByLevel,
   observeSubgroupApprovals,
 } from '~/lib/db/helpers';
-import { Game, CabinetMember, SubgroupApproval } from '~/lib/db/models';
 import { createCabinetMemberMap } from '~/lib/game/cabinet';
 
 import ImpactItem from './ImpactItem';
 
+import type { Game, CabinetMember, SubgroupApproval } from '~/lib/db/models';
 import type {
   DisplayImpacts,
   CabinetStaticId,

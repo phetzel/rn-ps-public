@@ -1,11 +1,6 @@
-import {
-  ExchangeContent,
-  ExchangeProgress,
-  Question,
-  Answer,
-  JournalistEngagementWeight,
-  CabinetStaticId,
-} from '~/types';
+import { JournalistEngagementWeight } from '~/types';
+
+import type { ExchangeContent, ExchangeProgress, Question, Answer, CabinetStaticId } from '~/types';
 
 // Abstract interface so we don't depend on the WatermelonDB model
 interface CabinetMemberRelationship {

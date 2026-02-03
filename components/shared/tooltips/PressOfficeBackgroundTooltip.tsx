@@ -3,7 +3,8 @@ import { View } from 'react-native';
 
 import { Text } from '~/components/ui/text';
 import { pressBackgroundCabinetEffects, staticCabinetMembers } from '~/lib/data/staticPolitics';
-import { PressOfficeBackground } from '~/types';
+
+import type { PressOfficeBackground } from '~/types';
 
 type Props = { background?: PressOfficeBackground };
 

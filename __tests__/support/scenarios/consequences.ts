@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { createCabinetMember } from '~/__tests__/support/factories/cabinetMemberFactory';
 import { createSubgroupApproval } from '~/__tests__/support/factories/subgroupApprovalFactory';

@@ -9,7 +9,8 @@ import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeGame, observePresidentApprovalRating } from '~/lib/db/helpers';
-import { Game } from '~/lib/db/models';
+
+import type { Game } from '~/lib/db/models';
 
 interface PresidentStateCardProps {
   game: Game | null;

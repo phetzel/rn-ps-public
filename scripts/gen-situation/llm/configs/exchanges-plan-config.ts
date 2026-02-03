@@ -56,7 +56,7 @@ const instructions = buildTechnicalPrompt(EXCHANGES_PLAN_SPECIFIC_INSTRUCTIONS);
 export function buildExchangesPlanRequest(
   plan: GenerateSituationPlan,
   preferences: GeneratePreferences,
-  outcomes: GenerateOutcomes,
+  _outcomes: GenerateOutcomes,
 ): ResponsesJSONSchemaOptions {
   const pubs = plan.involvedEntities.publications;
   const authorizedMembers = Object.entries(preferences.cabinet || {})

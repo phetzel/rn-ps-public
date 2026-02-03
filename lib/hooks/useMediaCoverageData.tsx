@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers';
-import { PublicationBoost, EntityWithMediaDelta } from '~/types';
+
+import type { PublicationBoost, EntityWithMediaDelta } from '~/types';
 
 export function useMediaCoverageData({ levelId }: { levelId: string }) {
   const [mediaBoosts, setMediaBoosts] = useState<PublicationBoost[]>([]);

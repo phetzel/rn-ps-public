@@ -27,7 +27,7 @@ function ExchangeOutcomeItem({ exchange, situation, journalist }: ExchangeOutcom
   const { history } = progress;
   const isJournalistCalledOn = history.length > 0;
   const rootQuestion = content.rootQuestion;
-  const pendingFollowUpQuestion = !!progress.currentQuestionId
+  const pendingFollowUpQuestion = progress.currentQuestionId
     ? findQuestionById(progress.currentQuestionId, content)
     : null;
 

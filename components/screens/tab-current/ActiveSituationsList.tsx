@@ -7,7 +7,8 @@ import { EmptyState } from '~/components/shared/EmptyState';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Text } from '~/components/ui/text';
 import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
-import { Situation } from '~/lib/db/models';
+
+import type { Situation } from '~/lib/db/models';
 
 interface ActiveSituationsListProps {
   situations: Situation[];

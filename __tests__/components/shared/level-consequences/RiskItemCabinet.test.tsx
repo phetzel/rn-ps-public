@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import RiskItemCabinet from '~/components/shared/level-consequences/RiskItemCabinet';
-import { CabinetStaticId, CabinetRiskDisplayData } from '~/types';
+import type { CabinetRiskDisplayData } from '~/types';
+import { CabinetStaticId } from '~/types';
 
 // Mock the useRiskDisplay hook
 jest.mock('~/lib/hooks/useRiskDisplay', () => ({

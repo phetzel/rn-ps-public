@@ -1,5 +1,6 @@
 import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
-import {
+
+import type {
   RelationshipSnapshot,
   CabinetStaticId,
   JournalistStaticId,

@@ -5,9 +5,9 @@ import { View } from 'react-native';
 import PreferenceDisplay from '~/components/shared/preference/PreferenceDisplay';
 import { Text } from '~/components/ui/text';
 import { observeGame } from '~/lib/db/helpers/observations';
-import { Preference } from '~/types';
 
 import type { Game } from '~/lib/db/models';
+import type { Preference } from '~/types';
 
 interface PresidentPreferenceProps {
   gameId: string;

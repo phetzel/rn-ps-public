@@ -8,13 +8,14 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { observeLevel } from '~/lib/db/helpers';
-import { Level } from '~/lib/db/models';
 import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 import { formatDate } from '~/lib/utils';
 // Components
 import { LevelStatus } from '~/types';
 
 import { LevelStatusBadge } from './LevelStatusBadge';
+
+import type { Level } from '~/lib/db/models';
 // Types
 
 interface CurrentLevelCardProps {
@@ -60,6 +61,19 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
     }
   };
 
+  const getActionText = (status: LevelStatus) => {
+    switch (status) {
+      case LevelStatus.Briefing:
+      case LevelStatus.PressConference:
+        return 'Start';
+      case LevelStatus.PressResults:
+      case LevelStatus.SituationOutcomes:
+        return 'Review';
+      default:
+        return 'Next';
+    }
+  };
+
   const handleNavigate = async () => {
     await navigateToCurrentLevelScreen(true);
   };
@@ -96,16 +110,7 @@ const CurrentLevelCard = ({ level }: CurrentLevelCardProps) => {
           accessibilityHint="Navigate to the current step in this month's activities"
           testID="current-level-action-button"
         >
-          <Text>
-            {level.status === LevelStatus.Briefing
-              ? 'Start'
-              : level.status === LevelStatus.PressConference
-                ? 'Start'
-                : level.status === LevelStatus.PressResults ||
-                    level.status === LevelStatus.SituationOutcomes
-                  ? 'Review'
-                  : 'Next'}
-          </Text>
+          <Text>{getActionText(level.status)}</Text>
           <ArrowRight className="h-4 w-4 text-background" />
         </Button>
       </CardHeader>

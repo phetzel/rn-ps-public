@@ -1,6 +1,7 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
-import React, { ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import React from 'react';
 
 interface TestWrapperProps {
   children: ReactNode;

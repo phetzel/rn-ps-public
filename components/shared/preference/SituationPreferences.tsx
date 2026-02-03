@@ -13,9 +13,10 @@ import {
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 import { observeCabinetMembersByLevel } from '~/lib/db/helpers/observations';
+
 // Components
-import { Situation, CabinetMember } from '~/lib/db/models';
-import { CabinetStaticId } from '~/types';
+import type { Situation, CabinetMember } from '~/lib/db/models';
+import type { CabinetStaticId } from '~/types';
 
 interface SituationPreferencesProps {
   situation: Situation;

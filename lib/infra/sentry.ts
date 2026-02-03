@@ -1,30 +1,103 @@
+// eslint-disable-next-line sonarjs/slow-regex -- simple redaction heuristic on internal strings
+const EMAIL_RE = /\b[^\s@]+@[^\s@]+\.[^\s@]+\b/g;
+const PHONE_RE = /\+?\d[\d\s().-]{7,}\d/g;
+
+const sanitizeString = (value: string): string =>
+  value.replace(EMAIL_RE, '[redacted]').replace(PHONE_RE, '[redacted]');
+
+const redactObject = (value: unknown, visited = new WeakSet<object>()): void => {
+  if (!value || typeof value !== 'object') return;
+  if (visited.has(value)) return;
+  visited.add(value);
+
+  const record = value as Record<string, unknown>;
+  for (const key of Object.keys(record)) {
+    const entry = record[key];
+    if (typeof entry === 'string') {
+      record[key] = sanitizeString(entry);
+    } else if (typeof entry === 'object') {
+      redactObject(entry, visited);
+    }
+  }
+};
+
+const scrubBreadcrumb = (breadcrumb: unknown): unknown => {
+  if (!breadcrumb || typeof breadcrumb !== 'object') return breadcrumb;
+  const record = breadcrumb as Record<string, unknown>;
+
+  if (typeof record.message === 'string') {
+    record.message = sanitizeString(record.message);
+  }
+  if (record.data) {
+    redactObject(record.data);
+  }
+
+  return record;
+};
+
+const scrubEvent = (event: unknown): unknown => {
+  if (!event || typeof event !== 'object') return event;
+  const record = event as Record<string, unknown>;
+
+  const user = record.user;
+  if (user && typeof user === 'object') {
+    const userRecord = user as Record<string, unknown>;
+    delete userRecord.email;
+    delete userRecord.username;
+    delete userRecord.ip_address;
+  }
+
+  const request = record.request;
+  if (request && typeof request === 'object') {
+    const requestRecord = request as Record<string, unknown>;
+    const headers = requestRecord.headers;
+    if (headers && typeof headers === 'object') {
+      const headerRecord = headers as Record<string, unknown>;
+      delete headerRecord.Authorization;
+      delete headerRecord.Cookie;
+    }
+    delete requestRecord.cookies;
+  }
+
+  const breadcrumbs = record.breadcrumbs;
+  if (Array.isArray(breadcrumbs)) {
+    for (const breadcrumb of breadcrumbs) {
+      scrubBreadcrumb(breadcrumb);
+    }
+  }
+
+  if (record.extra) redactObject(record.extra);
+  if (record.tags) redactObject(record.tags);
+
+  return record;
+};
+
 export function initSentry(): void {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
     const Sentry = require('@sentry/react-native');
-
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
     const Constants = require('expo-constants').default;
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
     const { isDiagnosticsEnabled } = require('./diagnosticsGate') as {
       isDiagnosticsEnabled: () => boolean;
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
     const Application = require('expo-application');
-    const extra = (Constants?.expoConfig?.extra ?? Constants?.manifest?.extra ?? {}) as {
+
+    const manifest = Constants?.manifest as { extra?: unknown } | undefined;
+    const extra = (Constants?.expoConfig?.extra ?? manifest?.extra ?? {}) as {
       sentryDsn?: string;
       env?: string;
     };
+    const expoConfig = Constants?.expoConfig as { ios?: { bundleIdentifier?: string } } | undefined;
+
     const appVersion: string =
       (Constants?.expoConfig?.version as string | undefined) ||
       Application?.nativeApplicationVersion ||
       '0.0.0';
     const appId: string =
-      Application?.applicationId ||
-      // Fallback to bundle identifier if available in config at runtime
-      ((Constants?.expoConfig as any)?.ios?.bundleIdentifier as string | undefined) ||
-      'unknown.app';
+      Application?.applicationId || expoConfig?.ios?.bundleIdentifier || 'unknown.app';
     const nativeBuildVersion: string = Application?.nativeBuildVersion || '0';
     const environment: string = extra?.env || 'development';
     const release = `${appId}@${appVersion}+${nativeBuildVersion}`;
@@ -36,33 +109,14 @@ export function initSentry(): void {
       environment,
       release,
       dist: nativeBuildVersion,
-      beforeBreadcrumb(breadcrumb: any) {
+      beforeBreadcrumb(breadcrumb: unknown): unknown {
         try {
-          if (!breadcrumb) return breadcrumb;
-          const emailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
-          const phoneRe = /\+?\d[\d\s().-]{7,}\d/g;
-          const redactString = (val: unknown) =>
-            typeof val === 'string'
-              ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
-              : val;
-          const redactObject = (obj: any, visited = new WeakSet()) => {
-            if (!obj || typeof obj !== 'object' || visited.has(obj)) return;
-            visited.add(obj);
-            for (const key of Object.keys(obj)) {
-              const v = obj[key];
-              if (typeof v === 'string') obj[key] = redactString(v);
-              else if (typeof v === 'object') redactObject(v, visited);
-            }
-          };
-          if (breadcrumb.message) breadcrumb.message = redactString(breadcrumb.message) as any;
-          if ((breadcrumb as any).data) redactObject((breadcrumb as any).data);
-          return breadcrumb;
+          return scrubBreadcrumb(breadcrumb);
         } catch {
           return breadcrumb;
         }
       },
       beforeSend(event: unknown): unknown {
-        // Drop events entirely if user disabled diagnostics
         try {
           if (!isDiagnosticsEnabled()) {
             return null;
@@ -70,48 +124,8 @@ export function initSentry(): void {
         } catch {
           // ignore and continue to scrub
         }
-        // Basic PII scrubbing for user-entered text and identifiers
         try {
-          const e = event as any;
-          // Remove direct user identification
-          if (e.user) {
-            delete e.user.email;
-            delete e.user.username;
-            delete e.user.ip_address;
-          }
-          // Remove request headers/cookies if present
-          if (e.request) {
-            if (e.request.headers) {
-              delete e.request.headers.Authorization;
-              delete e.request.headers.Cookie;
-            }
-            delete e.request.cookies;
-          }
-          // Redact values matching email/phone patterns in breadcrumbs and extras
-          const emailRe = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
-          const phoneRe = /\+?\d[\d\s().-]{7,}\d/g;
-          const redactString = (val: unknown) =>
-            typeof val === 'string'
-              ? val.replace(emailRe, '[redacted]').replace(phoneRe, '[redacted]')
-              : val;
-          const redactObject = (obj: any, visited = new WeakSet()) => {
-            if (!obj || typeof obj !== 'object' || visited.has(obj)) return;
-            visited.add(obj);
-            for (const key of Object.keys(obj)) {
-              const v = obj[key];
-              if (typeof v === 'string') obj[key] = redactString(v);
-              else if (typeof v === 'object') redactObject(v, visited);
-            }
-          };
-          if (Array.isArray(e.breadcrumbs)) {
-            for (const b of e.breadcrumbs) {
-              if (b?.message) b.message = redactString(b.message);
-              if (b?.data) redactObject(b.data);
-            }
-          }
-          if (e.extra) redactObject(e.extra);
-          if (e.tags) redactObject(e.tags);
-          return e;
+          return scrubEvent(event);
         } catch {
           return event;
         }

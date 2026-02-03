@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { SubgroupApproval } from '~/lib/db/models';
+import type { SubgroupApproval } from '~/lib/db/models';
 import { SubgroupStaticId } from '~/types';
 
 type SubgroupApprovalOverrides = {

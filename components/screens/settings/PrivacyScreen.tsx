@@ -267,8 +267,8 @@ export function PrivacyScreen() {
   const [diagnosticsEnabled, setDiagnosticsEnabled] = React.useState<boolean>(true);
   const [analyticsEnabled, setAnalyticsEnabled] = React.useState<boolean>(false);
 
-  // Fix for TS error by safely accessing extra
-  const extra = (Constants.expoConfig?.extra ?? (Constants.manifest as any)?.extra ?? {}) as {
+  const manifest = Constants.manifest as { extra?: unknown } | null | undefined;
+  const extra = (Constants.expoConfig?.extra ?? manifest?.extra ?? {}) as {
     privacyPolicyUrl?: string;
     termsUrl?: string;
   };

@@ -1,8 +1,8 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { teachersStrikeBackExchanges } from '~/lib/data/situations/v1/domestic-policy/teachers-strike-back/exchanges';
-import { PressExchange } from '~/lib/db/models';
-import { ExchangeContent, ExchangeProgress } from '~/types';
+import type { PressExchange } from '~/lib/db/models';
+import type { ExchangeContent, ExchangeProgress } from '~/types';
 
 type ExchangeOverrides = {
   levelId: string;

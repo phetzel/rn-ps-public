@@ -11,9 +11,9 @@ import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 // Types
 import { observeSubgroupApprovals } from '~/lib/db/helpers';
-import { SubgroupCategory } from '~/types';
 
 import type SubgroupApproval from '~/lib/db/models/SubgroupApproval';
+import type { SubgroupCategory } from '~/types';
 
 interface SubgroupStateCardProps {
   subgroupApprovals: SubgroupApproval[];

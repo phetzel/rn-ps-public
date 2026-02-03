@@ -18,7 +18,7 @@
  * - Game relationship integrity
  */
 
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
 import { createCabinetMember } from '~/__tests__/support/factories/cabinetMemberFactory';

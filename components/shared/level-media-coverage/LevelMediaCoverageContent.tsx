@@ -3,7 +3,8 @@ import { View } from 'react-native';
 
 import { Text } from '~/components/ui/text';
 import { cn } from '~/lib/utils';
-import { PublicationBoost } from '~/types';
+
+import type { PublicationBoost } from '~/types';
 
 interface LevelMediaCoverageContentProps {
   mediaBoosts: PublicationBoost[];
@@ -11,6 +12,12 @@ interface LevelMediaCoverageContentProps {
 }
 
 function LevelMediaCoverageContent({ mediaBoosts, totalBoost }: LevelMediaCoverageContentProps) {
+  const approvalClassName = (approvalRating: number) => {
+    if (approvalRating > 50) return 'text-green-500';
+    if (approvalRating < 50) return 'text-red-500';
+    return 'text-foreground';
+  };
+
   return (
     <View
       className="gap-2"
@@ -51,14 +58,7 @@ function LevelMediaCoverageContent({ mediaBoosts, totalBoost }: LevelMediaCovera
 
           <View className="flex-row gap-8" accessible={false}>
             <Text
-              className={cn(
-                'text-right w-10',
-                item.approvalRating > 50
-                  ? 'text-green-500'
-                  : item.approvalRating < 50
-                    ? 'text-red-500'
-                    : 'text-foreground',
-              )}
+              className={cn('text-right w-10', approvalClassName(item.approvalRating))}
               accessible={false}
             >
               {item.approvalRating}%
@@ -66,11 +66,7 @@ function LevelMediaCoverageContent({ mediaBoosts, totalBoost }: LevelMediaCovera
             <Text
               className={cn(
                 'text-right w-14 font-semibold',
-                item.approvalRating > 50
-                  ? 'text-green-500'
-                  : item.approvalRating < 50
-                    ? 'text-red-500'
-                    : 'text-foreground',
+                approvalClassName(item.approvalRating),
               )}
               accessible={false}
             >

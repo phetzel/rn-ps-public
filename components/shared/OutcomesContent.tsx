@@ -7,10 +7,10 @@ import { Button } from '~/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Text } from '~/components/ui/text';
 import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
-// Types
-import { LevelStatus } from '~/types';
 
+// Types
 import type { Level } from '~/lib/db/models';
+import type { LevelStatus } from '~/types';
 
 interface TabConfig {
   value: string;
@@ -36,8 +36,8 @@ export function OutcomesContent({
   defaultTab,
   accessibilityLabel,
   expectedLevelStatus,
-  adWatched,
-  onAdComplete,
+  adWatched: _adWatched,
+  onAdComplete: _onAdComplete,
 }: OutcomesContentProps) {
   const [currentTab, setCurrentTab] = useState<string>(defaultTab);
 

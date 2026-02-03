@@ -1,13 +1,8 @@
 import { useMemo } from 'react';
 
-import {
-  Question,
-  ExchangeHistoryItem,
-  JournalistStaticId,
-  ExchangeImpacts,
-  JournalistInteractionImpact,
-  AnswerType,
-} from '~/types';
+import { JournalistInteractionImpact, AnswerType } from '~/types';
+
+import type { Question, ExchangeHistoryItem, JournalistStaticId, ExchangeImpacts } from '~/types';
 
 export function useExchangeQuestion({
   question,

@@ -2,8 +2,9 @@
 import { staticPublications } from '~/lib/data/staticMedia';
 import { fetchPublicationsForGame, fetchLevel } from '~/lib/db/helpers/fetchApi';
 import { calculatePublicationBoost } from '~/lib/game/media';
+
 // Data + Types
-import { LevelPublicationsBoost, PublicationBoost } from '~/types';
+import type { LevelPublicationsBoost, PublicationBoost } from '~/types';
 
 // Calculate publication boosts for a level
 export async function computePublicationBoosts(gameId: string): Promise<LevelPublicationsBoost> {

@@ -20,26 +20,27 @@ function GamesScreen({ allGames }: GamesScreenProps) {
   const actionError = useGameManagerStore((state) => state.error);
 
   const isLoading = allGames === undefined;
+  let content: React.ReactNode;
 
-  return (
-    <ThemedView className="p-4">
-      {isLoading ? ( // Show loading only if list is empty initially
-        <ActivityIndicator size="large" className="my-10" />
-      ) : actionError ? (
-        <ErrorDisplay message={actionError} />
-      ) : allGames.length === 0 ? (
-        <EmptyState message="No Saved Games Found" />
-      ) : (
-        <FlatList
-          data={allGames}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => <GameCard game={item} />}
-          ItemSeparatorComponent={() => <View className="h-3" />}
-          contentContainerClassName="py-4"
-        />
-      )}
-    </ThemedView>
-  );
+  if (isLoading) {
+    content = <ActivityIndicator size="large" className="my-10" />;
+  } else if (actionError) {
+    content = <ErrorDisplay message={actionError} />;
+  } else if (allGames.length === 0) {
+    content = <EmptyState message="No Saved Games Found" />;
+  } else {
+    content = (
+      <FlatList
+        data={allGames}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => <GameCard game={item} />}
+        ItemSeparatorComponent={() => <View className="h-3" />}
+        contentContainerClassName="py-4"
+      />
+    );
+  }
+
+  return <ThemedView className="p-4">{content}</ThemedView>;
 }
 
 const enhance = withObservables([], () => ({

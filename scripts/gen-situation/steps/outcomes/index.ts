@@ -1,10 +1,7 @@
-import {
-  GenerateOutcomes,
-  generateOutcomesSchema,
-  type GenerateOutcomesConsequences,
-} from '~/lib/schemas/generate';
+import type { GenerateOutcomes } from '~/lib/schemas/generate';
+import { generateOutcomesSchema, type GenerateOutcomesConsequences } from '~/lib/schemas/generate';
 
-import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from '../base';
+import { ConsoleGenerationLogger } from '../base';
 import { OutcomesBaseSubstep } from './substeps/outcomes-base-substep';
 import { OutcomesImpactsSubstep } from './substeps/outcomes-impact-substep';
 import { logDeep } from '../../utils/logging';
@@ -12,6 +9,7 @@ import { toGeneratePreferences, toSituationOutcomes } from '../../utils/schema-a
 import { assertParse } from '../../utils/validation';
 
 import type { OutcomesStepInput } from '../../types';
+import type { GenerationLogger, StepDependencies } from '../base';
 import type { SituationOutcome } from '~/lib/schemas/situations/outcomes';
 
 // ═══════════════════════════════════════════════════════════════════════════════

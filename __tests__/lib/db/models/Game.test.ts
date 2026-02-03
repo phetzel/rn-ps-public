@@ -25,12 +25,12 @@
  * - Concurrent operations
  */
 
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
 import { createGame } from '~/__tests__/support/factories/gameFactory';
 import { createSubgroupApproval } from '~/__tests__/support/factories/subgroupApprovalFactory';
-import { GameFactoryOptions } from '~/__tests__/support/scenarios/types';
+import type { GameFactoryOptions } from '~/__tests__/support/scenarios/types';
 import { Game } from '~/lib/db/models';
 import { GameStatus, PoliticalLeaning, SubgroupStaticId } from '~/types';
 

@@ -3,7 +3,7 @@ import {
   computeOutcomeWeights,
   chooseOutcomeForSituation,
 } from '~/lib/game/outcomes';
-import { SituationOutcome } from '~/types';
+import type { SituationOutcome } from '~/types';
 
 describe('outcomes', () => {
   describe('selectOutcomeByWeightedRandom', () => {

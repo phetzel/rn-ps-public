@@ -3,8 +3,9 @@ import { AnswerType } from '~/types';
 
 import { ExchangeImpactsSubstep } from './exchange-impacts-substep';
 import { ExchangeQuestionsSubstep } from './exchange-questions-substep';
-import { GenerationLogger, ConsoleGenerationLogger, StepDependencies } from '../../base';
+import { ConsoleGenerationLogger } from '../../base';
 
+import type { GenerationLogger, StepDependencies } from '../../base';
 import type {
   GenerateSituationPlan,
   GeneratePreferences,

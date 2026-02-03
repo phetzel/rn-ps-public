@@ -16,7 +16,8 @@ import { BehaviorSubject } from 'rxjs';
 
 import PresidentPreference from '~/components/shared/preference/PresidentPreference';
 import { observeGame } from '~/lib/db/helpers/observations';
-import { AnswerType, Preference } from '~/types';
+import type { Preference } from '~/types';
+import { AnswerType } from '~/types';
 
 // Mock observeGame to return test data
 jest.mock('~/lib/db/helpers/observations', () => ({

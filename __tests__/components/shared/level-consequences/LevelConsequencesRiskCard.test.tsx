@@ -2,8 +2,9 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import LevelConsequencesRiskCard from '~/components/shared/level-consequences/LevelConsequencesRiskCard';
-import { CabinetMember } from '~/lib/db/models';
-import { CabinetStaticId, RelationshipSnapshot } from '~/types';
+import type { CabinetMember } from '~/lib/db/models';
+import type { RelationshipSnapshot } from '~/types';
+import { CabinetStaticId } from '~/types';
 
 // Mock cn utility
 jest.mock('~/lib/utils', () => ({

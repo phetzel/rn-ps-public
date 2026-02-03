@@ -5,9 +5,10 @@ import { AdCard } from '~/components/shared/ad-card/AdCard';
 // Store
 import { getEnhancedRelationshipDeltas } from '~/lib/db/helpers';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
+
 // Models
 // Types
-import { EntityWithDelta } from '~/types';
+import type { EntityWithDelta } from '~/types';
 
 interface PressReviewProps {
   isAdWatched: boolean;

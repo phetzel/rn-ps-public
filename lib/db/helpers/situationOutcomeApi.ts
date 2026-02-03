@@ -1,8 +1,13 @@
 import { fetchSituationsByLevelId } from '~/lib/db/helpers/fetchApi';
 import { calculatePressConferenceRawEffects } from '~/lib/db/helpers/pressConferenceApi';
-import { Situation } from '~/lib/db/models';
 import { chooseOutcomeForSituation, computeOutcomeWeights } from '~/lib/game/outcomes';
-import { SituationOutcomeWeightDeltas, SituationContent, SituationOutcomeWeight } from '~/types';
+
+import type { Situation } from '~/lib/db/models';
+import type {
+  SituationOutcomeWeightDeltas,
+  SituationContent,
+  SituationOutcomeWeight,
+} from '~/types';
 
 export async function determineSituationOutcomes(
   levelId: string,

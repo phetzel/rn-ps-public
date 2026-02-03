@@ -1,5 +1,5 @@
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { View, Platform } from 'react-native';
 
 import InfoTooltip from '~/components/shared/InfoTooltip';
@@ -13,11 +13,13 @@ import {
   SelectValue,
 } from '~/components/ui/select';
 import { Text } from '~/components/ui/text';
-import { CreateGameFormData } from '~/lib/schemas';
 import { PressOfficeBackground } from '~/types';
 
+import type { Control, FieldError } from 'react-hook-form';
+import type { CreateLevelFormData } from '~/lib/schemas';
+
 interface Props {
-  control: Control<CreateGameFormData>;
+  control: Control<CreateLevelFormData>;
   error?: FieldError;
   disabled?: boolean;
 }
@@ -53,10 +55,9 @@ export function BackgroundSelect({ control, error, disabled = false }: Props) {
           </View>
 
           <Select
-            value={value as any}
-            onValueChange={(v) => {
-              const next = typeof v === 'string' ? v : (v as any)?.value;
-              onChange(next as PressOfficeBackground);
+            value={value ?? undefined}
+            onValueChange={(v: string) => {
+              onChange(v as PressOfficeBackground);
             }}
             disabled={disabled}
           >

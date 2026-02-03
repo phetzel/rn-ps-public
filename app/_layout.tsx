@@ -1,7 +1,7 @@
 import '~/global.css';
 
 import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack, SplashScreen } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -27,6 +27,8 @@ import { useConsentStore } from '~/lib/stores/consentStore';
 import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 import { useColorScheme } from '~/lib/useColorScheme';
+
+import type { Theme } from '@react-navigation/native';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

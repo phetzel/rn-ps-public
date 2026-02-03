@@ -8,14 +8,15 @@ import { Accordion } from '~/components/ui/accordion';
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
-import { PressExchange } from '~/lib/db/models';
+
+import type { PressExchange } from '~/lib/db/models';
 
 interface ExchangesOutcomeListProps {
   levelId: string;
   pressExchanges: PressExchange[];
 }
 
-const ExchangesOutcomeList = ({ levelId, pressExchanges }: ExchangesOutcomeListProps) => {
+const ExchangesOutcomeList = ({ levelId: _levelId, pressExchanges }: ExchangesOutcomeListProps) => {
   if (!pressExchanges || pressExchanges.length === 0) {
     return <EmptyState message="No press exchanges found for this level." />;
   }

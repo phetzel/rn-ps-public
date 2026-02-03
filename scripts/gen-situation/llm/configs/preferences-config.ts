@@ -50,7 +50,7 @@ const instructions = buildCreativePrompt(PREFERENCES_SPECIFIC_INSTRUCTIONS);
 
 export function buildPreferencesRequest(
   plan: GenerateSituationPlan,
-  analysis: GenerationAnalysis,
+  _analysis: GenerationAnalysis,
 ): ResponsesJSONSchemaOptions {
   const input = [
     `SituationTitle: ${plan.title}`,

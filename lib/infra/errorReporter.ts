@@ -8,7 +8,7 @@ type ReportOptions = {
 
 export function reportError(error: unknown, options?: ReportOptions): void {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
     const Sentry = require('@sentry/react-native');
     if (options?.tags || options?.extras || options?.level) {
       Sentry.withScope(

@@ -18,7 +18,7 @@ interface LevelCompleteContentProps {
   level: Level;
 }
 
-const LevelCompleteContent = ({ gameId, levelId, level }: LevelCompleteContentProps) => {
+const LevelCompleteContent = ({ gameId: _gameId, levelId, level }: LevelCompleteContentProps) => {
   const { progressAndNavigate, navigateToCurrentLevelScreen, navigateToCurrentTab } =
     useLevelNavigation();
 
