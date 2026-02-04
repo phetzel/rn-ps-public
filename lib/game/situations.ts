@@ -8,6 +8,99 @@ export interface GameRequirements {
   presApprovalRating: number;
 }
 
+function matchesYearRequirements(
+  requirements: GameRequirements,
+  yearRequirements:
+    | {
+        min?: number;
+        max?: number;
+      }
+    | undefined,
+): boolean {
+  if (!yearRequirements) return true;
+  if (yearRequirements.min !== undefined && requirements.currentYear < yearRequirements.min) {
+    return false;
+  }
+  if (yearRequirements.max !== undefined && requirements.currentYear > yearRequirements.max) {
+    return false;
+  }
+  return true;
+}
+
+function matchesMonthRequirements(
+  requirements: GameRequirements,
+  monthRequirements:
+    | {
+        min?: number;
+        max?: number;
+      }
+    | undefined,
+): boolean {
+  if (!monthRequirements) return true;
+  if (monthRequirements.min !== undefined && requirements.currentMonth < monthRequirements.min) {
+    return false;
+  }
+  if (monthRequirements.max !== undefined && requirements.currentMonth > monthRequirements.max) {
+    return false;
+  }
+  return true;
+}
+
+function matchesPresidentLeaningRequirements(
+  requirements: GameRequirements,
+  presidentRequirements:
+    | {
+        minApproval?: number;
+        maxApproval?: number;
+        leaning?: PoliticalLeaning;
+      }
+    | undefined,
+): boolean {
+  if (!presidentRequirements?.leaning) return true;
+  return presidentRequirements.leaning === requirements.presLeaning;
+}
+
+function matchesPresidentApprovalRequirements(
+  requirements: GameRequirements,
+  presidentRequirements:
+    | {
+        minApproval?: number;
+        maxApproval?: number;
+        leaning?: PoliticalLeaning;
+      }
+    | undefined,
+): boolean {
+  if (!presidentRequirements) return true;
+  if (
+    presidentRequirements.minApproval !== undefined &&
+    requirements.presApprovalRating < presidentRequirements.minApproval
+  ) {
+    return false;
+  }
+  if (
+    presidentRequirements.maxApproval !== undefined &&
+    requirements.presApprovalRating > presidentRequirements.maxApproval
+  ) {
+    return false;
+  }
+  return true;
+}
+
+function situationMeetsRequirements(
+  situation: SituationData,
+  requirements: GameRequirements,
+): boolean {
+  const triggerRequirements = situation.trigger?.requirements;
+  if (!situation.trigger || !triggerRequirements) return false;
+
+  if (!matchesYearRequirements(requirements, triggerRequirements.year)) return false;
+  if (!matchesMonthRequirements(requirements, triggerRequirements.month)) return false;
+  if (!matchesPresidentLeaningRequirements(requirements, triggerRequirements.president)) {
+    return false;
+  }
+  return matchesPresidentApprovalRequirements(requirements, triggerRequirements.president);
+}
+
 /**
  * Filter situations based on game requirements.
  * Pure function - no DB access.
@@ -16,46 +109,7 @@ export function filterSituationsByRequirements(
   situations: SituationData[],
   requirements: GameRequirements,
 ): SituationData[] {
-  return situations.filter(
-    // eslint-disable-next-line sonarjs/cognitive-complexity -- validation logic, refactor later
-    (situation) => {
-      const trigger = situation.trigger;
-      if (!trigger) return false;
-
-      // Year requirements
-      if (trigger.requirements?.year) {
-        const { min, max } = trigger.requirements.year;
-        if (min !== undefined && requirements.currentYear < min) return false;
-        if (max !== undefined && requirements.currentYear > max) return false;
-      }
-
-      // Month requirements
-      if (trigger.requirements?.month) {
-        const { min, max } = trigger.requirements.month;
-        if (min !== undefined && requirements.currentMonth < min) return false;
-        if (max !== undefined && requirements.currentMonth > max) return false;
-      }
-
-      // President party requirement
-      if (
-        trigger.requirements?.president?.leaning &&
-        trigger.requirements.president.leaning !== requirements.presLeaning
-      ) {
-        return false;
-      }
-
-      // President approval requirement
-      if (trigger.requirements?.president) {
-        const { minApproval, maxApproval } = trigger.requirements.president;
-        if (minApproval !== undefined && requirements.presApprovalRating < minApproval)
-          return false;
-        if (maxApproval !== undefined && requirements.presApprovalRating > maxApproval)
-          return false;
-      }
-
-      return true;
-    },
-  );
+  return situations.filter((situation) => situationMeetsRequirements(situation, requirements));
 }
 
 /**

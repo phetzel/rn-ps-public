@@ -26,121 +26,167 @@ import type {
   SubgroupStaticId,
 } from '~/types';
 
-export async function createGameWithDetails(details: NewGameDetails): Promise<Game> {
-  // Pre-process journalists, grouping them by publicationStaticId
+function groupJournalistsByPublication(): Map<PublicationStaticId, StaticJournalist[]> {
   const journalistsByPublication = new Map<PublicationStaticId, StaticJournalist[]>();
-  for (const journoData of Object.values(staticJournalists)) {
-    const list = journalistsByPublication.get(journoData.publicationStaticId) || [];
-    list.push(journoData);
-    journalistsByPublication.set(journoData.publicationStaticId, list);
+  for (const journalistData of Object.values(staticJournalists)) {
+    const publicationId = journalistData.publicationStaticId;
+    const publicationJournalists = journalistsByPublication.get(publicationId) || [];
+    publicationJournalists.push(journalistData);
+    journalistsByPublication.set(publicationId, publicationJournalists);
   }
-  // Find the static ID associated with each StaticJournalist object for later use
+  return journalistsByPublication;
+}
+
+function buildJournalistStaticIdMap(): Map<StaticJournalist, JournalistStaticId> {
   const journalistStaticIdMap = new Map<StaticJournalist, JournalistStaticId>();
-  for (const [staticId, journoData] of Object.entries(staticJournalists)) {
-    journalistStaticIdMap.set(journoData, staticId as JournalistStaticId);
+  for (const [staticId, journalistData] of Object.entries(staticJournalists)) {
+    journalistStaticIdMap.set(journalistData, staticId as JournalistStaticId);
+  }
+  return journalistStaticIdMap;
+}
+
+function clampPercent(value: number): number {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function areOppositeLeanings(
+  presidentLeaning: PoliticalLeaning,
+  subgroupLeaning: PoliticalLeaning,
+): boolean {
+  return (
+    (presidentLeaning === PoliticalLeaning.Conservative &&
+      subgroupLeaning === PoliticalLeaning.Liberal) ||
+    (presidentLeaning === PoliticalLeaning.Liberal &&
+      subgroupLeaning === PoliticalLeaning.Conservative)
+  );
+}
+
+function calculateInitialSubgroupApproval(
+  presidentLeaning: PoliticalLeaning,
+  subgroupLeaning: PoliticalLeaning | undefined,
+  subgroupWeight: AlignmentWeight | null | undefined,
+): number {
+  if (!subgroupLeaning) {
+    return 50;
   }
 
-  return await database.write(
-    // eslint-disable-next-line sonarjs/cognitive-complexity -- complex setup flow, refactor later
-    async () => {
-      // Create the Game
-      const newGame = await gamesCollection.create((game) => {
-        game.status = GameStatus.Active;
-        game.currentYear = 1;
-        game.currentMonth = 0;
-        game.psName = details.pressSecretaryName;
-        game.presName = details.presidentName;
-        game.presPsRelationship = 80;
-        game.presLeaning = details.presidentLeaning;
-        game.psBackground = details.pressOfficeBackground;
-        game.usedSituations = JSON.stringify([]);
-        game.startTimestamp = Math.floor(Date.now() / 1000);
-      });
-      const gameId = newGame.id;
+  const magnitude = Math.abs(subgroupWeight ?? AlignmentWeight.Positive);
+  if (subgroupLeaning === presidentLeaning) {
+    const alignedEffect = presidentialLeaningEffects[presidentLeaning].aligned;
+    return 50 + Math.sign(alignedEffect) * magnitude;
+  }
 
-      // Create Political entities
-      const baseRelationship = 50;
-      const background = details.pressOfficeBackground;
+  if (areOppositeLeanings(presidentLeaning, subgroupLeaning)) {
+    const oppositeEffect = presidentialLeaningEffects[presidentLeaning].opposite;
+    return 50 + Math.sign(oppositeEffect) * magnitude;
+  }
 
-      for (const [role] of Object.entries(staticCabinetMembers)) {
-        await cabinetCollection.create((member) => {
-          member.game.id = gameId;
-          member.staticId = role as CabinetStaticId;
-          member.name = generateCabinetMemberName(role as CabinetStaticId);
-          member.approvalRating = 50;
-          // Base and background delta (from staticPolitics config)
-          const multiplier = background
-            ? pressBackgroundCabinetEffects[background]?.[role as CabinetStaticId]
-            : undefined;
-          const delta = multiplier ?? 0;
-          member.psRelationship = Math.max(0, Math.min(100, baseRelationship + delta));
-          member.isActive = true;
-        });
-      }
+  return 50;
+}
 
-      for (const [key, subData] of Object.entries(staticSubgroups)) {
-        let initialApproval = 50;
-        if (subData.defaultPoliticalLeaning) {
-          const presidentLeaning = details.presidentLeaning;
-          const subgroupLeaning = subData.defaultPoliticalLeaning;
-          const subgroupMagnitude = Math.abs(subData.weight ?? AlignmentWeight.Positive);
-          if (subgroupLeaning === presidentLeaning) {
-            const aligned = presidentialLeaningEffects[presidentLeaning].aligned; // numeric
-            const sign = Math.sign(aligned);
-            initialApproval += sign * subgroupMagnitude;
-          } else if (
-            (presidentLeaning === PoliticalLeaning.Conservative &&
-              subgroupLeaning === PoliticalLeaning.Liberal) ||
-            (presidentLeaning === PoliticalLeaning.Liberal &&
-              subgroupLeaning === PoliticalLeaning.Conservative)
-          ) {
-            const opposite = presidentialLeaningEffects[presidentLeaning].opposite; // numeric
-            const sign = Math.sign(opposite);
-            initialApproval += sign * subgroupMagnitude;
-          }
-        }
+async function createCabinetMembersForGame(
+  gameId: string,
+  pressOfficeBackground: NewGameDetails['pressOfficeBackground'],
+): Promise<void> {
+  for (const role of Object.keys(staticCabinetMembers) as CabinetStaticId[]) {
+    await cabinetCollection.create((member) => {
+      member.game.id = gameId;
+      member.staticId = role;
+      member.name = generateCabinetMemberName(role);
+      member.approvalRating = 50;
 
-        await subgroupCollection.create((subgroup) => {
-          subgroup.game.id = gameId;
-          subgroup.staticId = key as SubgroupStaticId;
-          const clampedApproval = Math.max(0, Math.min(100, Math.round(initialApproval)));
-          subgroup.approvalRating = clampedApproval;
-        });
-      }
+      const relationshipDelta = pressBackgroundCabinetEffects[pressOfficeBackground]?.[role] ?? 0;
+      member.psRelationship = clampPercent(50 + relationshipDelta);
+      member.isActive = true;
+    });
+  }
+}
 
-      // Create media
-      for (const [pubStaticId] of Object.entries(staticPublications)) {
-        // Create Publication DB Record
-        const createdPub = await publicationCollection.create((pub) => {
-          pub.game.id = gameId;
-          pub.staticId = pubStaticId as PublicationStaticId;
-        });
-        const publicationDbId = createdPub.id;
+async function createSubgroupsForGame(
+  gameId: string,
+  presidentLeaning: PoliticalLeaning,
+): Promise<void> {
+  for (const [subgroupId, subgroupData] of Object.entries(staticSubgroups)) {
+    const initialApproval = calculateInitialSubgroupApproval(
+      presidentLeaning,
+      subgroupData.defaultPoliticalLeaning,
+      subgroupData.weight,
+    );
 
-        const associatedJournalists = journalistsByPublication.get(
-          pubStaticId as PublicationStaticId,
-        );
-        if (associatedJournalists && associatedJournalists.length > 0) {
-          for (const journoData of associatedJournalists) {
-            const journalistStaticId = journalistStaticIdMap.get(journoData);
-            if (!journalistStaticId) {
-              console.warn(`Could not find static ID for journalist ${journoData.name}. Skipping.`);
-              continue;
-            }
+    await subgroupCollection.create((subgroup) => {
+      subgroup.game.id = gameId;
+      subgroup.staticId = subgroupId as SubgroupStaticId;
+      subgroup.approvalRating = clampPercent(initialApproval);
+    });
+  }
+}
 
-            await journalistCollection.create((journalist) => {
-              journalist.game.id = gameId;
-              journalist.publication.id = publicationDbId;
-              journalist.staticId = journalistStaticId;
-              journalist.psRelationship = 50;
-            });
-          }
-        }
-      }
+async function createPublicationWithJournalists(
+  gameId: string,
+  publicationStaticId: PublicationStaticId,
+  journalistsByPublication: Map<PublicationStaticId, StaticJournalist[]>,
+  journalistStaticIdMap: Map<StaticJournalist, JournalistStaticId>,
+): Promise<void> {
+  const createdPublication = await publicationCollection.create((publication) => {
+    publication.game.id = gameId;
+    publication.staticId = publicationStaticId;
+  });
 
-      return newGame;
-    },
-  );
+  const associatedJournalists = journalistsByPublication.get(publicationStaticId) || [];
+  for (const journalistData of associatedJournalists) {
+    const journalistStaticId = journalistStaticIdMap.get(journalistData);
+    if (!journalistStaticId) {
+      console.warn(`Could not find static ID for journalist ${journalistData.name}. Skipping.`);
+      continue;
+    }
+
+    await journalistCollection.create((journalist) => {
+      journalist.game.id = gameId;
+      journalist.publication.id = createdPublication.id;
+      journalist.staticId = journalistStaticId;
+      journalist.psRelationship = 50;
+    });
+  }
+}
+
+async function createMediaForGame(
+  gameId: string,
+  journalistsByPublication: Map<PublicationStaticId, StaticJournalist[]>,
+  journalistStaticIdMap: Map<StaticJournalist, JournalistStaticId>,
+): Promise<void> {
+  for (const publicationStaticId of Object.keys(staticPublications) as PublicationStaticId[]) {
+    await createPublicationWithJournalists(
+      gameId,
+      publicationStaticId,
+      journalistsByPublication,
+      journalistStaticIdMap,
+    );
+  }
+}
+
+export async function createGameWithDetails(details: NewGameDetails): Promise<Game> {
+  const journalistsByPublication = groupJournalistsByPublication();
+  const journalistStaticIdMap = buildJournalistStaticIdMap();
+
+  return await database.write(async () => {
+    const newGame = await gamesCollection.create((game) => {
+      game.status = GameStatus.Active;
+      game.currentYear = 1;
+      game.currentMonth = 0;
+      game.psName = details.pressSecretaryName;
+      game.presName = details.presidentName;
+      game.presPsRelationship = 80;
+      game.presLeaning = details.presidentLeaning;
+      game.psBackground = details.pressOfficeBackground;
+      game.usedSituations = JSON.stringify([]);
+      game.startTimestamp = Math.floor(Date.now() / 1000);
+    });
+    await createCabinetMembersForGame(newGame.id, details.pressOfficeBackground);
+    await createSubgroupsForGame(newGame.id, details.presidentLeaning);
+    await createMediaForGame(newGame.id, journalistsByPublication, journalistStaticIdMap);
+
+    return newGame;
+  });
 }
 
 export async function destroyGame(gameId: string): Promise<void> {

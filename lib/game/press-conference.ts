@@ -2,13 +2,14 @@ import { findAnswerById, findQuestionById } from '~/lib/game/exchange-tree';
 import { AnswerType, JournalistInteractionImpact } from '~/types';
 
 import type {
+  Answer,
+  CabinetStaticId,
   ExchangeContent,
   ExchangeProgress,
+  JournalistStaticId,
   PressConferenceRawEffects,
   PsRelationshipDeltas,
   SituationOutcomeWeightDeltas,
-  JournalistStaticId,
-  CabinetStaticId,
 } from '~/types';
 
 /** A pre-fetched exchange record ready for pure processing */
@@ -20,135 +21,212 @@ export interface ExchangeRecord {
   progress: ExchangeProgress | null;
 }
 
+interface ProcessableExchange extends ExchangeRecord {
+  content: ExchangeContent;
+  progress: ExchangeProgress;
+}
+
+function initializeEffects(): PressConferenceRawEffects {
+  return {
+    psRelationshipDeltas: {
+      president: 0,
+      cabinetMembers: {},
+      journalists: {},
+    },
+    situationOutcomeWeightDeltas: {},
+  };
+}
+
+function addJournalistDelta(
+  psRelationshipDeltas: PsRelationshipDeltas,
+  journalistStaticId: JournalistStaticId,
+  delta: number,
+): void {
+  psRelationshipDeltas.journalists[journalistStaticId] =
+    (psRelationshipDeltas.journalists[journalistStaticId] || 0) + delta;
+}
+
+function addCabinetDeltasFromAnswer(
+  psRelationshipDeltas: PsRelationshipDeltas,
+  answer: Answer,
+): void {
+  const cabinetImpacts = answer.impacts.cabinet;
+  if (!cabinetImpacts) return;
+
+  for (const [cabinetId, impactData] of Object.entries(cabinetImpacts)) {
+    if (!impactData?.weight) continue;
+    const staticId = cabinetId as CabinetStaticId;
+    psRelationshipDeltas.cabinetMembers[staticId] =
+      (psRelationshipDeltas.cabinetMembers[staticId] || 0) + impactData.weight;
+  }
+}
+
+function addJournalistDeltasFromAnswer(
+  psRelationshipDeltas: PsRelationshipDeltas,
+  answer: Answer,
+): void {
+  const journalistImpacts = answer.impacts.journalists;
+  if (!journalistImpacts) return;
+
+  for (const [journalistId, impactData] of Object.entries(journalistImpacts)) {
+    if (!impactData?.weight) continue;
+    const staticId = journalistId as JournalistStaticId;
+    psRelationshipDeltas.journalists[staticId] =
+      (psRelationshipDeltas.journalists[staticId] || 0) + impactData.weight;
+  }
+}
+
+function addRelationshipDeltasFromAnswer(
+  psRelationshipDeltas: PsRelationshipDeltas,
+  journalistStaticId: JournalistStaticId,
+  answer: Answer,
+): void {
+  const answerImpact =
+    answer.type === AnswerType.Authorized
+      ? JournalistInteractionImpact.AuthorizedAnswer
+      : JournalistInteractionImpact.Answered;
+  addJournalistDelta(psRelationshipDeltas, journalistStaticId, answerImpact);
+
+  const presidentWeight = answer.impacts.president?.weight;
+  if (presidentWeight) {
+    psRelationshipDeltas.president += presidentWeight;
+  }
+
+  addCabinetDeltasFromAnswer(psRelationshipDeltas, answer);
+  addJournalistDeltasFromAnswer(psRelationshipDeltas, answer);
+}
+
+function addOutcomeModifierDeltas(
+  situationOutcomeWeightDeltas: SituationOutcomeWeightDeltas,
+  situationId: string | null,
+  answer: Answer,
+): void {
+  if (!situationId || !answer.outcomeModifiers) return;
+
+  if (!situationOutcomeWeightDeltas[situationId]) {
+    situationOutcomeWeightDeltas[situationId] = {};
+  }
+
+  for (const [outcomeId, modifierValue] of Object.entries(answer.outcomeModifiers)) {
+    situationOutcomeWeightDeltas[situationId][outcomeId] =
+      (situationOutcomeWeightDeltas[situationId][outcomeId] || 0) + modifierValue;
+  }
+}
+
+function getProcessableExchange(exchange: ExchangeRecord): ProcessableExchange | null {
+  if (!exchange.content || !exchange.progress || !exchange.journalistStaticId) {
+    console.warn(`Exchange ${exchange.id} is missing content, progress, or journalist. Skipping.`);
+    return null;
+  }
+  return exchange as ProcessableExchange;
+}
+
+function getAnsweredQuestion(
+  exchange: ProcessableExchange,
+  historyItem: ExchangeProgress['history'][number],
+): Answer | null {
+  if (!historyItem.questionId || !historyItem.answerId) {
+    return null;
+  }
+
+  const question = findQuestionById(historyItem.questionId, exchange.content);
+  if (!question) {
+    console.warn(
+      `Question ${historyItem.questionId} not found in exchange ${exchange.id}. Skipping.`,
+    );
+    return null;
+  }
+
+  const selectedAnswer = findAnswerById(historyItem.answerId, exchange.content);
+  if (!selectedAnswer || !selectedAnswer.impacts || !selectedAnswer.outcomeModifiers) {
+    console.warn(
+      `Answer ${historyItem.answerId} (for question ${historyItem.questionId}) not found or is missing impacts/outcomeModifiers in exchange ${exchange.id}. Skipping.`,
+    );
+    return null;
+  }
+
+  return selectedAnswer;
+}
+
+function processHistoryItem(
+  exchange: ProcessableExchange,
+  historyItem: ExchangeProgress['history'][number],
+  effects: PressConferenceRawEffects,
+): void {
+  if (historyItem.skipped) {
+    addJournalistDelta(
+      effects.psRelationshipDeltas,
+      exchange.journalistStaticId,
+      JournalistInteractionImpact.Skipped,
+    );
+    return;
+  }
+
+  const selectedAnswer = getAnsweredQuestion(exchange, historyItem);
+  if (!selectedAnswer) return;
+
+  addRelationshipDeltasFromAnswer(
+    effects.psRelationshipDeltas,
+    exchange.journalistStaticId,
+    selectedAnswer,
+  );
+  addOutcomeModifierDeltas(
+    effects.situationOutcomeWeightDeltas,
+    exchange.situationId,
+    selectedAnswer,
+  );
+}
+
+function applyFollowUpBonusIfEligible(
+  exchange: ProcessableExchange,
+  effects: PressConferenceRawEffects,
+): void {
+  if (!exchange.progress.completed || exchange.progress.hasSkipped) return;
+  if (!exchange.progress.history.length) return;
+
+  const lastHistoryItem = exchange.progress.history[exchange.progress.history.length - 1];
+  if (lastHistoryItem.skipped || !lastHistoryItem.answerId) return;
+
+  const lastAnswer = findAnswerById(lastHistoryItem.answerId, exchange.content);
+  if (!lastAnswer?.followUpId) return;
+
+  addJournalistDelta(
+    effects.psRelationshipDeltas,
+    exchange.journalistStaticId,
+    JournalistInteractionImpact.HadFollowUp,
+  );
+}
+
+function processExchange(exchange: ExchangeRecord, effects: PressConferenceRawEffects): void {
+  const processableExchange = getProcessableExchange(exchange);
+  if (!processableExchange) return;
+
+  if (!processableExchange.progress.history.length) {
+    addJournalistDelta(
+      effects.psRelationshipDeltas,
+      processableExchange.journalistStaticId,
+      JournalistInteractionImpact.Ignore,
+    );
+    return;
+  }
+
+  for (const historyItem of processableExchange.progress.history) {
+    processHistoryItem(processableExchange, historyItem, effects);
+  }
+
+  applyFollowUpBonusIfEligible(processableExchange, effects);
+}
+
 /**
  * Pure function: given pre-fetched exchange records,
  * accumulate all relationship deltas and outcome weight deltas.
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity -- complex scoring logic, refactor later
 export function accumulatePressConferenceEffects(
   exchanges: ExchangeRecord[],
 ): PressConferenceRawEffects {
-  const psRelationshipDeltas: PsRelationshipDeltas = {
-    president: 0,
-    cabinetMembers: {},
-    journalists: {},
-  };
-  const situationOutcomeWeightDeltas: SituationOutcomeWeightDeltas = {};
-
+  const effects = initializeEffects();
   for (const exchange of exchanges) {
-    const { journalistStaticId, situationId, content, progress } = exchange;
-
-    if (!content || !progress || !journalistStaticId) {
-      console.warn(
-        `Exchange ${exchange.id} is missing content, progress, or journalist. Skipping.`,
-      );
-      continue;
-    }
-
-    // Process each answered question in the exchange history
-    if (!progress.history.length) {
-      psRelationshipDeltas.journalists[journalistStaticId] =
-        (psRelationshipDeltas.journalists[journalistStaticId] || 0) +
-        JournalistInteractionImpact.Ignore;
-    } else {
-      for (const historyItem of progress.history) {
-        // Handle skipped questions
-        if (historyItem.skipped) {
-          psRelationshipDeltas.journalists[journalistStaticId] =
-            (psRelationshipDeltas.journalists[journalistStaticId] || 0) +
-            JournalistInteractionImpact.Skipped;
-          continue;
-        }
-
-        // Handle answered questions
-        if (historyItem.questionId && historyItem.answerId) {
-          const question = findQuestionById(historyItem.questionId, content);
-          if (!question) {
-            console.warn(
-              `Question ${historyItem.questionId} not found in exchange ${exchange.id}. Skipping.`,
-            );
-            continue;
-          }
-
-          const selectedAnswer = findAnswerById(historyItem.answerId, content);
-          if (!selectedAnswer || !selectedAnswer.impacts || !selectedAnswer.outcomeModifiers) {
-            console.warn(
-              `Answer ${historyItem.answerId} (for question ${historyItem.questionId}) not found or is missing impacts/outcomeModifiers in exchange ${exchange.id}. Skipping.`,
-            );
-            continue;
-          }
-
-          // Boost journalist relationship for answering their question
-          const answerImpact =
-            selectedAnswer.type === AnswerType.Authorized
-              ? JournalistInteractionImpact.AuthorizedAnswer
-              : JournalistInteractionImpact.Answered;
-          psRelationshipDeltas.journalists[journalistStaticId] =
-            (psRelationshipDeltas.journalists[journalistStaticId] || 0) + answerImpact;
-
-          // Apply PS RELATIONSHIP impacts from the answer
-          const answerImpacts = selectedAnswer.impacts;
-
-          // President PS Relationship
-          if (answerImpacts.president?.weight) {
-            psRelationshipDeltas.president =
-              psRelationshipDeltas.president + answerImpacts.president.weight;
-          }
-
-          // Apply cabinet impacts
-          if (answerImpacts.cabinet) {
-            Object.entries(answerImpacts.cabinet).forEach(([id, impactData]) => {
-              if (impactData?.weight) {
-                const cabinetId = id as CabinetStaticId;
-                psRelationshipDeltas.cabinetMembers![cabinetId] =
-                  (psRelationshipDeltas.cabinetMembers![cabinetId] || 0) + impactData.weight;
-              }
-            });
-          }
-
-          // Journalists (additional direct impacts beyond the base for answering)
-          if (answerImpacts.journalists) {
-            Object.entries(answerImpacts.journalists).forEach(([id, impactData]) => {
-              if (impactData?.weight) {
-                const jStaticId = id as JournalistStaticId;
-                psRelationshipDeltas.journalists![jStaticId] =
-                  (psRelationshipDeltas.journalists![jStaticId] || 0) + impactData.weight;
-              }
-            });
-          }
-
-          // Apply SITUATION OUTCOME weight adjustments from outcomeModifiers
-          if (situationId && selectedAnswer.outcomeModifiers) {
-            if (!situationOutcomeWeightDeltas[situationId]) {
-              situationOutcomeWeightDeltas[situationId] = {};
-            }
-            Object.entries(selectedAnswer.outcomeModifiers).forEach(
-              ([outcomeId, modifierValue]) => {
-                situationOutcomeWeightDeltas[situationId][outcomeId] =
-                  (situationOutcomeWeightDeltas[situationId][outcomeId] || 0) + modifierValue;
-              },
-            );
-          }
-        }
-      }
-
-      // Handle follow-up questions
-      if (progress.completed && !progress.hasSkipped) {
-        const lastHistory = progress.history[progress.history.length - 1];
-        if (!lastHistory.skipped && lastHistory.answerId) {
-          const lastAnswer = findAnswerById(lastHistory.answerId, content);
-          if (lastAnswer && lastAnswer.followUpId) {
-            psRelationshipDeltas.journalists[journalistStaticId] =
-              (psRelationshipDeltas.journalists[journalistStaticId] || 0) +
-              JournalistInteractionImpact.HadFollowUp;
-          }
-        }
-      }
-    }
+    processExchange(exchange, effects);
   }
-
-  return {
-    psRelationshipDeltas,
-    situationOutcomeWeightDeltas,
-  };
+  return effects;
 }
