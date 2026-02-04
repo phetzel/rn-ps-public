@@ -1,6 +1,12 @@
-// eslint-disable-next-line sonarjs/slow-regex -- simple redaction heuristic on internal strings
-const EMAIL_RE = /\b[^\s@]+@[^\s@]+\.[^\s@]+\b/g;
-const PHONE_RE = /\+?\d[\d\s().-]{7,}\d/g;
+import { isDiagnosticsEnabled } from '~/lib/infra/diagnosticsGate';
+import { optionalRequire } from '~/lib/infra/optionalModule';
+
+import type * as SentryModule from '@sentry/react-native';
+import type * as ExpoApplicationModule from 'expo-application';
+import type * as ExpoConstantsModule from 'expo-constants';
+
+const EMAIL_RE = /\b[A-Za-z0-9._%+-]{1,64}@[A-Za-z0-9.-]{1,253}\.[A-Za-z]{2,24}\b/g;
+const PHONE_RE = /\+?\d[\d().\-\s]{7,}\d/g;
 
 const sanitizeString = (value: string): string =>
   value.replace(EMAIL_RE, '[redacted]').replace(PHONE_RE, '[redacted]');
@@ -73,18 +79,16 @@ const scrubEvent = (event: unknown): unknown => {
 };
 
 export function initSentry(): void {
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
-    const Sentry = require('@sentry/react-native');
-    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
-    const Constants = require('expo-constants').default;
-    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
-    const { isDiagnosticsEnabled } = require('./diagnosticsGate') as {
-      isDiagnosticsEnabled: () => boolean;
-    };
-    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
-    const Application = require('expo-application');
+  const Sentry = optionalRequire<typeof SentryModule>('@sentry/react-native');
+  const constantsModule = optionalRequire<typeof ExpoConstantsModule>('expo-constants');
+  const Application = optionalRequire<typeof ExpoApplicationModule>('expo-application');
+  const Constants = constantsModule?.default;
 
+  if (!Sentry || !Constants) {
+    return;
+  }
+
+  try {
     const manifest = Constants?.manifest as { extra?: unknown } | undefined;
     const extra = (Constants?.expoConfig?.extra ?? manifest?.extra ?? {}) as {
       sentryDsn?: string;

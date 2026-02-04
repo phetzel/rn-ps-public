@@ -1,5 +1,7 @@
 import Constants from 'expo-constants';
 
+import { optionalRequire } from '~/lib/infra/optionalModule';
+
 type AmplitudeModule = typeof import('@amplitude/analytics-react-native');
 type AmplitudeClient = ReturnType<AmplitudeModule['createInstance']> & {
   shutdown?: () => void;
@@ -21,12 +23,7 @@ let amplitudeModule: AmplitudeModule | null = null;
 
 function loadAmplitudeModule(): AmplitudeModule | null {
   if (amplitudeModule) return amplitudeModule;
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports -- optional dependency at runtime
-    amplitudeModule = require('@amplitude/analytics-react-native') as AmplitudeModule;
-  } catch {
-    amplitudeModule = null;
-  }
+  amplitudeModule = optionalRequire<AmplitudeModule>('@amplitude/analytics-react-native');
   return amplitudeModule;
 }
 
