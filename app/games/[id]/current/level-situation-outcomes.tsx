@@ -1,6 +1,6 @@
 import { Image } from 'react-native';
 
-import SituationOutcomesContent from '~/components/screens/level-situation-outcomes/SituationOutcomesContent';
+import SituationOutcomesContent from '~/components/connected/level-situation-outcomes/SituationOutcomesContent';
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';

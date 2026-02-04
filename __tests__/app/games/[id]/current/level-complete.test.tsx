@@ -29,7 +29,7 @@ jest.mock('~/lib/stores/currentLevelStore', () => ({
 }));
 
 // Mock LevelCompleteContent
-jest.mock('~/components/screens/level-complete/LevelCompleteContent', () => {
+jest.mock('~/components/connected/level-complete/LevelCompleteContent', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return function MockLevelCompleteContent({

@@ -1,0 +1,94 @@
+name: Promote Staging
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to perform'
+        required: true
+        default: 'open-pr'
+        type: choice
+        options:
+          - open-pr
+          - merge
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: promote-staging
+  cancel-in-progress: true
+
+jobs:
+  promote:
+    name: Promote staging -> main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update promotion PR
+        if: github.event_name == 'push' || github.event.inputs.action == 'open-pr'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const head = `${owner}:staging`;
+            const base = 'main';
+
+            const { data: prs } = await github.rest.pulls.list({
+              owner,
+              repo,
+              head,
+              base,
+              state: 'open',
+            });
+
+            if (prs.length > 0) {
+              core.info(`Promotion PR already open: #${prs[0].number}`);
+              return;
+            }
+
+            const pr = await github.rest.pulls.create({
+              owner,
+              repo,
+              head: 'staging',
+              base,
+              title: 'Promote staging to main',
+              body: 'Auto-generated promotion PR from staging.',
+            });
+
+            core.info(`Created promotion PR: #${pr.data.number}`);
+
+      - name: Merge promotion PR
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'merge'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const head = `${owner}:staging`;
+            const base = 'main';
+
+            const { data: prs } = await github.rest.pulls.list({
+              owner,
+              repo,
+              head,
+              base,
+              state: 'open',
+            });
+
+            if (prs.length === 0) {
+              throw new Error('No open promotion PR from staging to main.');
+            }
+
+            const pr = prs[0];
+            await github.rest.pulls.merge({
+              owner,
+              repo,
+              pull_number: pr.number,
+              merge_method: 'merge',
+            });
+
+            core.info(`Merged promotion PR: #${pr.number}`);

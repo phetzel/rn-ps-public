@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 
-import ExchangeQuestionItem from '~/components/shared/exchanges-outcome-list/ExchangeQuestionItem';
+import ExchangeQuestionItem from '~/components/connected/exchanges-outcome-list/ExchangeQuestionItem';
 import { useExchangeQuestion } from '~/lib/hooks/useExchangeQuestion';
 
 import type { Question, ExchangeHistoryItem, JournalistStaticId } from '~/types';
@@ -31,7 +31,7 @@ jest.mock('~/lib/hooks/useExchangeQuestion', () => ({
 }));
 
 // Mock the ImpactList component
-jest.mock('~/components/shared/impact/ImpactList', () => {
+jest.mock('~/components/connected/impact/ImpactList', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return function MockImpactList({ impacts }: any) {

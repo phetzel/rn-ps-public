@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react-native';
 
-import { AdCard } from '~/components/shared/ad-card/AdCard';
+import { AdCard } from '~/components/connected/ad-card/AdCard';
 import { useAdCard } from '~/lib/hooks/useAdCard';
 import type { EntityWithDelta } from '~/types';
 

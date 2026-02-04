@@ -17,6 +17,7 @@ module.exports = defineConfig([
       react: { version: 'detect' },
       // Define the architectural layers for eslint-plugin-boundaries
       'boundaries/elements': [
+        { type: 'entry', pattern: 'index.js', mode: 'file' },
         { type: 'game', pattern: 'lib/game' },
         { type: 'db', pattern: 'lib/db' },
         { type: 'stores', pattern: 'lib/stores' },
@@ -29,11 +30,22 @@ module.exports = defineConfig([
         { type: 'lib-constants', pattern: 'lib/constants.ts', mode: 'file' },
         { type: 'ui', pattern: 'components/ui' },
         { type: 'icons', pattern: 'components/icons' },
+        { type: 'connected', pattern: 'components/connected' },
         { type: 'shared', pattern: 'components/shared' },
         { type: 'screens', pattern: 'components/screens' },
         { type: 'app', pattern: 'app' },
+        { type: 'scripts', pattern: 'scripts' },
       ],
-      'boundaries/ignore': ['**/*.test.ts', '**/*.test.tsx', '__tests__/**', '__mocks__/**'],
+      'boundaries/ignore': [
+        '**/*.css',
+        '**/*.d.ts',
+        '**/*.config.js',
+        '**/*.config.ts',
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        '__tests__/**',
+        '__mocks__/**',
+      ],
     },
     rules: {
       // React 17+ / JSX runtime does not require React in scope
@@ -63,6 +75,11 @@ module.exports = defineConfig([
         {
           default: 'disallow',
           rules: [
+            // entry: app startup
+            {
+              from: 'entry',
+              allow: ['app', 'infra', 'lib-utils', 'lib-constants', 'types'],
+            },
             // game layer: only imports types (THE core constraint - pure game logic)
             {
               from: 'game',
@@ -118,17 +135,34 @@ module.exports = defineConfig([
               from: 'icons',
               allow: ['icons'],
             },
-            // shared: imports types, ui, icons, hooks, stores, db, game, shared itself, utils, constants
+            // connected: data-aware UI composition
             {
-              from: 'shared',
+              from: 'connected',
               allow: [
                 'types',
+                'schemas',
+                'shared',
+                'screens',
                 'ui',
                 'icons',
                 'hooks',
                 'stores',
                 'db',
                 'game',
+                'infra',
+                'data',
+                'connected',
+                'lib-utils',
+                'lib-constants',
+              ],
+            },
+            // shared: presentational-only components
+            {
+              from: 'shared',
+              allow: [
+                'types',
+                'ui',
+                'icons',
                 'data',
                 'infra',
                 'shared',
@@ -136,7 +170,7 @@ module.exports = defineConfig([
                 'lib-constants',
               ],
             },
-            // screens: imports types, shared, ui, icons, hooks, stores, db, game, screens itself, utils, constants
+            // screens: presentational, no db/helpers
             {
               from: 'screens',
               allow: [
@@ -146,10 +180,8 @@ module.exports = defineConfig([
                 'ui',
                 'icons',
                 'hooks',
-                'stores',
-                'db',
                 'game',
-                'infra',
+                'data',
                 'screens',
                 'lib-utils',
                 'lib-constants',
@@ -172,11 +204,19 @@ module.exports = defineConfig([
                 'lib-utils',
                 'lib-constants',
                 'infra',
+                'connected',
               ],
+            },
+            // scripts: content generation / tooling
+            {
+              from: 'scripts',
+              allow: ['types', 'schemas', 'data', 'game', 'lib-utils', 'lib-constants', 'scripts'],
             },
           ],
         },
       ],
+      'boundaries/no-unknown-files': 'error',
+      'boundaries/no-unknown': 'error',
     },
   },
   {
@@ -212,6 +252,8 @@ module.exports = defineConfig([
       'sonarjs/no-commented-code': 'off',
       // Disable boundary checks in tests
       'boundaries/element-types': 'off',
+      'boundaries/no-unknown-files': 'off',
+      'boundaries/no-unknown': 'off',
     },
   },
   {

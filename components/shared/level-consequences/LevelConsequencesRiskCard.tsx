@@ -5,10 +5,10 @@ import RiskItemPresidential from '~/components/shared/level-consequences/RiskIte
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
-import { calculateRiskProbability } from '~/lib/game/consequences';
+import { calculateRiskProbability } from '~/lib/utils';
 
-import type { CabinetMember } from '~/lib/db/models';
 import type { CabinetStaticId, RelationshipSnapshot, CabinetRiskDisplayData } from '~/types';
+import type { CabinetMember } from '~/types/view-models';
 
 interface LevelConsequencesRiskCardProps {
   finalSnapshot: RelationshipSnapshot;

@@ -40,6 +40,36 @@ jest.mock('~/lib/hooks/useRiskDisplay', () => ({
 // Mock cn utility
 jest.mock('~/lib/utils', () => ({
   cn: (...args: any[]) => args.filter(Boolean).join(' '),
+  getRiskDisplay: (currentValue: number, riskPercentage: number, threshold: number) => ({
+    level:
+      riskPercentage === 0
+        ? 'safe'
+        : riskPercentage < 0.25
+          ? 'low'
+          : riskPercentage < 0.5
+            ? 'medium'
+            : 'high',
+    color:
+      riskPercentage === 0
+        ? 'text-green-700'
+        : riskPercentage < 0.25
+          ? 'text-yellow-700'
+          : riskPercentage < 0.5
+            ? 'text-orange-700'
+            : 'text-red-700',
+    formattedRisk: `${Math.round(riskPercentage * 100)}%`,
+    description:
+      riskPercentage === 0
+        ? 'No risk'
+        : riskPercentage < 0.25
+          ? 'Low risk'
+          : riskPercentage < 0.5
+            ? 'Medium risk'
+            : 'High risk',
+    isAboveThreshold: currentValue >= threshold,
+    progressValue: Math.max(0, Math.min(100, currentValue)),
+    thresholdPercentage: threshold,
+  }),
 }));
 
 describe('RiskItemPresidential', () => {

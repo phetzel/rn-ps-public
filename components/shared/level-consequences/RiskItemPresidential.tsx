@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import ThresholdProgressBar from '~/components/shared/level-consequences/ThresholdProgressBar';
 import { Text } from '~/components/ui/text';
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
-import { useRiskDisplay } from '~/lib/hooks/useRiskDisplay';
+import { getRiskDisplay } from '~/lib/utils';
 
 interface RiskItemPresidentialProps {
   title: string;
@@ -18,7 +18,7 @@ export default function RiskItemPresidential({
   riskPercentage,
   threshold = CONSEQUENCE_THRESHOLD,
 }: RiskItemPresidentialProps) {
-  const riskInfo = useRiskDisplay(currentValue, riskPercentage, threshold);
+  const riskInfo = getRiskDisplay(currentValue, riskPercentage, threshold);
 
   return (
     <View

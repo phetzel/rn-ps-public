@@ -10,8 +10,8 @@ import { CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
 import { cn } from '~/lib/utils';
 import { AnswerType } from '~/types';
 
-import type { CabinetMember } from '~/lib/db/models';
 import type { Answer } from '~/types';
+import type { CabinetMember } from '~/types/view-models';
 
 interface ConferenceAnswerProps {
   answer: Answer;

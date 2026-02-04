@@ -7,8 +7,8 @@ import PreferenceDisplay from '~/components/shared/preference/PreferenceDisplay'
 import PreferenceLocked from '~/components/shared/preference/PreferenceLocked';
 import { CABINET_PREFERENCE_THRESHOLD } from '~/lib/constants';
 
-import type { CabinetMember } from '~/lib/db/models';
 import type { CabinetPreference } from '~/types';
+import type { CabinetMember } from '~/types/view-models';
 
 interface CabinetMemberPreferenceProps {
   cabinetMember: CabinetMember;

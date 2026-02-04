@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 import { of } from 'rxjs';
 
-import ExchangesOutcomeList from '~/components/shared/exchanges-outcome-list/ExchangesOutcomeList';
+import ExchangesOutcomeList from '~/components/connected/exchanges-outcome-list/ExchangesOutcomeList';
 import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
 
 // Mock Accordion components to avoid asChild issues
@@ -49,7 +49,7 @@ jest.mock('~/components/ui/separator', () => {
 });
 
 // Mock ExchangeOutcomeItem component
-jest.mock('~/components/shared/exchanges-outcome-list/ExchangeOutcomeItem', () => {
+jest.mock('~/components/connected/exchanges-outcome-list/ExchangeOutcomeItem', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return function MockExchangeOutcomeItem({ exchange }: any) {

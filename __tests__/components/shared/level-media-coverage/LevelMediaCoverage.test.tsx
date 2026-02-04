@@ -12,7 +12,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import LevelMediaCoverage from '~/components/shared/level-media-coverage/LevelMediaCoverage';
+import LevelMediaCoverage from '~/components/connected/level-media-coverage/LevelMediaCoverage';
 // Import the mocked hook
 import { useMediaCoverageData } from '~/lib/hooks/useMediaCoverageData';
 

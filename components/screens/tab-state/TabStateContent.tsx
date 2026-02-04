@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
 
-import CabinetStateCard from '~/components/screens/tab-state/CabinetStateCard';
-// eslint-disable-next-line import/no-named-as-default
-import MediaStateCard from '~/components/screens/tab-state/MediaStateCard';
-import PresidentStateCard from '~/components/screens/tab-state/PresidentStateCard';
-import SubgroupState from '~/components/screens/tab-state/SubgroupState';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Text } from '~/components/ui/text';
 
@@ -19,31 +14,34 @@ enum TabStateEnum {
 
 interface TabStateContentProps {
   gameId: string;
+  renderAdminCards: (gameId: string) => React.ReactNode;
+  renderMediaCard: (gameId: string) => React.ReactNode;
+  renderOpinionCard: (gameId: string) => React.ReactNode;
 }
 
-export function TabStateContent({ gameId }: TabStateContentProps) {
+export function TabStateContent({
+  gameId,
+  renderAdminCards,
+  renderMediaCard,
+  renderOpinionCard,
+}: TabStateContentProps) {
   const [currentTab, setCurrentTab] = useState<string>(TabStateEnum.Admin);
 
   const tabs: TabItem[] = [
     {
       value: TabStateEnum.Admin,
       label: 'Admin',
-      content: (
-        <View className="gap-4">
-          <PresidentStateCard gameId={gameId} />
-          <CabinetStateCard gameId={gameId} />
-        </View>
-      ),
+      content: <View className="gap-4">{renderAdminCards(gameId)}</View>,
     },
     {
       value: TabStateEnum.Media,
       label: 'Media',
-      content: <MediaStateCard gameId={gameId} />,
+      content: renderMediaCard(gameId),
     },
     {
       value: TabStateEnum.Opinion,
       label: 'Opinion',
-      content: <SubgroupState gameId={gameId} />,
+      content: renderOpinionCard(gameId),
     },
   ];
 

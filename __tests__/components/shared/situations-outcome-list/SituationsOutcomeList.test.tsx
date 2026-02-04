@@ -13,7 +13,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 import { of } from 'rxjs';
 
-import SituationsOutcomeList from '~/components/shared/situations-outcome-list/SituationsOutcomeList';
+import SituationsOutcomeList from '~/components/connected/situations-outcome-list/SituationsOutcomeList';
 import { observeSituationsByLevelId } from '~/lib/db/helpers/observations';
 import type { Situation } from '~/lib/db/models';
 
@@ -57,7 +57,7 @@ jest.mock('~/components/shared/EmptyState', () => {
 });
 
 // Mock SituationOutcomeItem component
-jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeItem', () => {
+jest.mock('~/components/connected/situations-outcome-list/SituationOutcomeItem', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return function MockSituationOutcomeItem({ situation }: any) {

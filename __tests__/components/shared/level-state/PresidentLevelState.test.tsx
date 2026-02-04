@@ -12,7 +12,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import PresidentLevelState from '~/components/shared/level-state/PresidentLevelState';
+import PresidentLevelState from '~/components/connected/level-state/PresidentLevelState';
 
 // Mock child components
 jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);

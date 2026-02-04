@@ -1,0 +1,45 @@
+import { Pressable, View } from 'react-native';
+
+import { MoonStar } from '~/components/icons/MoonStar';
+import { Sun } from '~/components/icons/Sun';
+import { cn } from '~/lib/utils';
+
+interface ThemeToggleViewProps {
+  isDarkColorScheme: boolean;
+  colorScheme: string;
+  onToggle: () => void;
+}
+
+export function ThemeToggleView({
+  isDarkColorScheme,
+  colorScheme,
+  onToggle,
+}: ThemeToggleViewProps) {
+  return (
+    <Pressable
+      onPress={onToggle}
+      className="web:ring-offset-background web:transition-colors web:focus-visible:outline-none web:focus-visible:ring-2 web:focus-visible:ring-ring web:focus-visible:ring-offset-2"
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel="Switch"
+      accessibilityHint={`Currently using ${colorScheme} theme. Tap to switch.`}
+      accessibilityState={{ selected: isDarkColorScheme }}
+    >
+      {({ pressed }) => (
+        <View
+          className={cn(
+            'flex-1 aspect-square pt-0.5 justify-center items-start web:px-5',
+            pressed && 'opacity-70',
+          )}
+          accessible={false}
+        >
+          {isDarkColorScheme ? (
+            <MoonStar className="text-foreground" size={23} strokeWidth={1.25} />
+          ) : (
+            <Sun className="text-foreground" size={24} strokeWidth={1.25} />
+          )}
+        </View>
+      )}
+    </Pressable>
+  );
+}

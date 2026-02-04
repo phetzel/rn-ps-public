@@ -12,10 +12,10 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import LevelOverviewContent from '~/components/shared/level-overview/LevelOverviewContent';
+import LevelOverviewContent from '~/components/connected/level-overview/LevelOverviewContent';
 
 // Mock child components
-jest.mock('~/components/shared/level-consequences/LevelConsequences', () => {
+jest.mock('~/components/connected/level-consequences/LevelConsequences', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {
@@ -24,7 +24,7 @@ jest.mock('~/components/shared/level-consequences/LevelConsequences', () => {
   };
 });
 
-jest.mock('~/components/shared/level-overview/LevelOverviewEvents', () => {
+jest.mock('~/components/connected/level-overview/LevelOverviewEvents', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {
@@ -33,7 +33,7 @@ jest.mock('~/components/shared/level-overview/LevelOverviewEvents', () => {
   };
 });
 
-jest.mock('~/components/shared/level-overview/LevelOverviewPress', () => {
+jest.mock('~/components/connected/level-overview/LevelOverviewPress', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {
@@ -42,7 +42,7 @@ jest.mock('~/components/shared/level-overview/LevelOverviewPress', () => {
   };
 });
 
-jest.mock('~/components/shared/level-overview/LevelOverviewState', () => {
+jest.mock('~/components/connected/level-overview/LevelOverviewState', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {

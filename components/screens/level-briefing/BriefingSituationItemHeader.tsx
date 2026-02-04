@@ -5,7 +5,7 @@ import { SituationStatusBadge } from '~/components/shared/entity/SituationStatus
 import { SituationTypeIcon } from '~/components/shared/entity/SituationTypeIcon';
 import { CardHeader, CardTitle, CardDescription } from '~/components/ui/card';
 
-import type { Situation } from '~/lib/db/models';
+import type { Situation } from '~/types/view-models';
 
 interface BriefingSituationItemHeaderProps {
   situation: Situation;

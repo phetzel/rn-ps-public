@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import LevelConsequences from '~/components/shared/level-consequences/LevelConsequences';
+import LevelConsequences from '~/components/connected/level-consequences/LevelConsequences';
 import type { CabinetMember, Level } from '~/lib/db/models';
 import type { OutcomeSnapshotType, ConsequenceResult } from '~/types';
 import { CabinetStaticId } from '~/types';
@@ -16,6 +16,36 @@ jest.mock('~/lib/utils', () => ({
     if (value >= 20) return 0.6;
     return 0.9;
   },
+  getRiskDisplay: (currentValue: number, riskPercentage: number, threshold: number) => ({
+    level:
+      riskPercentage === 0
+        ? 'safe'
+        : riskPercentage < 0.25
+          ? 'low'
+          : riskPercentage < 0.5
+            ? 'medium'
+            : 'high',
+    color:
+      riskPercentage === 0
+        ? 'text-green-700'
+        : riskPercentage < 0.25
+          ? 'text-yellow-700'
+          : riskPercentage < 0.5
+            ? 'text-orange-700'
+            : 'text-red-700',
+    formattedRisk: `${Math.round(riskPercentage * 100)}%`,
+    description:
+      riskPercentage === 0
+        ? 'No risk'
+        : riskPercentage < 0.25
+          ? 'Low risk'
+          : riskPercentage < 0.5
+            ? 'Medium risk'
+            : 'High risk',
+    isAboveThreshold: currentValue >= threshold,
+    progressValue: Math.max(0, Math.min(100, currentValue)),
+    thresholdPercentage: threshold,
+  }),
   cn: (...args: any[]) => args.filter(Boolean).join(' '),
 }));
 

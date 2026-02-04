@@ -14,7 +14,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 import { BehaviorSubject } from 'rxjs';
 
-import PresidentPreference from '~/components/shared/preference/PresidentPreference';
+import PresidentPreference from '~/components/connected/preference/PresidentPreference';
 import { observeGame } from '~/lib/db/helpers/observations';
 import type { Preference } from '~/types';
 import { AnswerType } from '~/types';

@@ -11,10 +11,10 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import LevelOverviewPress from '~/components/shared/level-overview/LevelOverviewPress';
+import LevelOverviewPress from '~/components/connected/level-overview/LevelOverviewPress';
 
 // Mock child components
-jest.mock('~/components/shared/exchanges-outcome-list/ExchangesOutcomeList', () => {
+jest.mock('~/components/connected/exchanges-outcome-list/ExchangesOutcomeList', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {
@@ -24,7 +24,7 @@ jest.mock('~/components/shared/exchanges-outcome-list/ExchangesOutcomeList', () 
   };
 });
 
-jest.mock('~/components/shared/level-overview/PressResultsTotal', () => {
+jest.mock('~/components/connected/level-overview/PressResultsTotal', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {

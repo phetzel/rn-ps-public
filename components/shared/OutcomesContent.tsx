@@ -6,10 +6,8 @@ import { View } from 'react-native';
 import { Button } from '~/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Text } from '~/components/ui/text';
-import { useLevelNavigation } from '~/lib/hooks/useLevelNavigation';
 
 // Types
-import type { Level } from '~/lib/db/models';
 import type { LevelStatus } from '~/types';
 
 interface TabConfig {
@@ -21,39 +19,25 @@ interface TabConfig {
 }
 
 interface OutcomesContentProps {
-  level: Level;
   tabs: TabConfig[];
   defaultTab: string;
   accessibilityLabel: string;
   expectedLevelStatus: LevelStatus;
   adWatched: boolean;
   onAdComplete: () => Promise<void>;
+  onComplete: () => Promise<void>;
 }
 
 export function OutcomesContent({
-  level,
   tabs,
   defaultTab,
   accessibilityLabel,
-  expectedLevelStatus,
+  expectedLevelStatus: _expectedLevelStatus,
   adWatched: _adWatched,
   onAdComplete: _onAdComplete,
+  onComplete,
 }: OutcomesContentProps) {
   const [currentTab, setCurrentTab] = useState<string>(defaultTab);
-
-  const { progressAndNavigate, navigateToCurrentLevelScreen } = useLevelNavigation();
-
-  const handleComplete = async () => {
-    try {
-      if (level.status === expectedLevelStatus) {
-        await progressAndNavigate();
-      } else {
-        await navigateToCurrentLevelScreen();
-      }
-    } catch (error) {
-      console.error('Failed to complete outcomes:', error);
-    }
-  };
 
   // Find current tab index
   const currentTabIndex = tabs.findIndex((tab) => tab.value === currentTab);
@@ -69,7 +53,7 @@ export function OutcomesContent({
 
   const handleBottomButtonPress = async () => {
     if (isLastTab) {
-      await handleComplete();
+      await onComplete();
     } else if (nextTab) {
       setCurrentTab(nextTab.value);
     }

@@ -12,7 +12,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import SubgroupLevelState from '~/components/shared/level-state/SubgroupLevelState';
+import SubgroupLevelState from '~/components/connected/level-state/SubgroupLevelState';
 
 // Mock child components
 jest.mock('~/components/shared/level-state/LevelProgress', () => () => null);

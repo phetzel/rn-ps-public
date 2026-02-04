@@ -1,6 +1,6 @@
 import { Image } from 'react-native';
 
-import { TabStateContent } from '~/components/screens/tab-state/TabStateContent';
+import { TabStateContent } from '~/components/connected/tab-state/TabStateContent';
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
 import { Text } from '~/components/ui/text';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';

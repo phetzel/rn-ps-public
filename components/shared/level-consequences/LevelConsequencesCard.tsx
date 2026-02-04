@@ -2,26 +2,27 @@ import { View } from 'react-native';
 
 import { UserX, CheckCircle2, AlertCircle, Trophy } from '~/components/icons';
 import ConsequenceCabinetMembersFired from '~/components/shared/level-consequences/ConsequenceCabinetMembersFired';
-import ConsequenceGameComplete from '~/components/shared/level-consequences/ConsequenceGameComplete';
 import ConsequenceGameOver from '~/components/shared/level-consequences/ConsequenceGameOver';
 import ConsequenceNoNegative from '~/components/shared/level-consequences/ConsequenceNoNegative';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 
 import type { ReactNode } from 'react';
-import type { CabinetMember } from '~/lib/db/models';
 import type { ConsequenceResult } from '~/types';
+import type { CabinetMember } from '~/types/view-models';
 
 interface LevelConsequencesCardProps {
   gameId: string;
   consequences?: ConsequenceResult;
   cabinetMembers: CabinetMember[];
+  renderConsequenceGameComplete: (gameId: string) => React.ReactNode;
 }
 
 export default function LevelConsequencesCard({
   gameId,
   consequences,
   cabinetMembers,
+  renderConsequenceGameComplete,
 }: LevelConsequencesCardProps) {
   const getConsequenceIcon = (consequences?: ConsequenceResult) => {
     if (consequences?.gameEnded) {
@@ -58,7 +59,7 @@ export default function LevelConsequencesCard({
 
   if (isGameEnded) {
     if (isGameCompleted) {
-      content = <ConsequenceGameComplete gameId={gameId} />;
+      content = renderConsequenceGameComplete(gameId);
       headerLabel = 'Term completion results';
     } else {
       content = <ConsequenceGameOver consequences={consequences} />;

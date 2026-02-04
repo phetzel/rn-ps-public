@@ -12,12 +12,12 @@
 
 import { render, screen } from '@testing-library/react-native';
 
-import SituationOutcomeExchangeItem from '~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem';
+import SituationOutcomeExchangeItem from '~/components/connected/situations-outcome-list/SituationOutcomeExchangeItem';
 
 import type { SituationOutcome } from '~/types';
 
 // Mock JournalistDisplay component
-jest.mock('~/components/shared/entity/JournalistDisplay', () => {
+jest.mock('~/components/connected/entity/JournalistDisplay', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return function MockJournalistDisplay({ journalistId }: { journalistId: string }) {

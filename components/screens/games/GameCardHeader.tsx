@@ -6,7 +6,7 @@ import { formatDate } from '~/lib/utils';
 
 import { GameStatusBadge } from './GameStatusBadge';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface GameCardHeaderProps {
   game: Game;

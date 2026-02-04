@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import ArchiveIndexScreen from '~/app/games/[id]/archive/index';
+import ArchiveIndexScreen from '~/components/connected/tab-archive/ArchiveIndexScreen';
 import { LevelStatus } from '~/types';
 
 // Mock withObservables HOC
@@ -35,7 +35,7 @@ jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
 });
 
 // Mock ArchivedLevelCard
-jest.mock('~/components/screens/tab-archive/ArchivedLevelCard', () => {
+jest.mock('~/components/connected/tab-archive/ArchivedLevelCard', () => {
   const React = require('react');
   return function MockArchivedLevelCard({ levelId }: { levelId: string }) {
     return React.createElement(

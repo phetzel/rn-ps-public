@@ -4,16 +4,18 @@ import { View } from 'react-native';
 import ConferenceJournalistItem from '~/components/screens/level-press-conference/ConferenceJournalistItem';
 import { Text } from '~/components/ui/text';
 
-import type { PressExchange } from '~/lib/db/models';
+import type { PressExchange } from '~/types/view-models';
 
 interface ConferenceJournalistSelectProps {
   pressExchanges: PressExchange[];
   onSelectExchange: (exchange: PressExchange) => void;
+  renderJournalist: (journalistId: string) => React.ReactNode;
 }
 
 const ConferenceJournalistSelect = ({
   pressExchanges,
   onSelectExchange,
+  renderJournalist,
 }: ConferenceJournalistSelectProps) => {
   const sortedExchanges = useMemo(() => {
     return [...pressExchanges].sort((a, b) => {
@@ -54,6 +56,7 @@ const ConferenceJournalistSelect = ({
             key={exchange.id}
             pressExchange={exchange}
             onSelect={onSelectExchange}
+            renderJournalist={renderJournalist}
           />
         ))}
       </View>

@@ -13,7 +13,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 import { of } from 'rxjs';
 
-import SituationOutcomeExchanges from '~/components/shared/situations-outcome-list/SituationOutcomeExchanges';
+import SituationOutcomeExchanges from '~/components/connected/situations-outcome-list/SituationOutcomeExchanges';
 import { observePressExchangesForSituation } from '~/lib/db/helpers/observations';
 import { AnswerType, OutcomeModifierWeight } from '~/types';
 
@@ -35,7 +35,7 @@ jest.mock('~/lib/db/helpers/observations', () => ({
 }));
 
 // Mock SituationOutcomeExchangeItem component
-jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchangeItem', () => {
+jest.mock('~/components/connected/situations-outcome-list/SituationOutcomeExchangeItem', () => {
   const React = require('react');
   const { Text } = require('react-native');
   const MockSituationOutcomeExchangeItem = ({ exchange, selectedOutcomeId }: any) => {

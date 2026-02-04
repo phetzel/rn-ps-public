@@ -13,7 +13,7 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { BehaviorSubject } from 'rxjs';
 
-import SituationPreferences from '~/components/shared/preference/SituationPreferences';
+import SituationPreferences from '~/components/connected/preference/SituationPreferences';
 import { observeCabinetMembersByLevel, observeGame } from '~/lib/db/helpers/observations';
 import { AnswerType, CabinetStaticId } from '~/types';
 

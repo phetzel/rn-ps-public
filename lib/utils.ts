@@ -1,6 +1,13 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+import { createCabinetMemberMap as createCabinetMemberMapFromGame } from '~/lib/game/cabinet';
+import {
+  calculateRiskProbability as calculateRiskProbabilityFromGame,
+  getRiskLevel,
+} from '~/lib/game/consequences';
+import { findQuestionById as findQuestionByIdFromTree } from '~/lib/game/exchange-tree';
+
 import type { RiskLevel } from '~/types';
 
 // Tailwind Merge
@@ -55,4 +62,42 @@ export function formatRiskProbability(probability: number): string {
 // Date Formatting Helper
 export function formatDate(month: number, year: number): string {
   return `Month ${month}, Year ${year}`;
+}
+
+export const createCabinetMemberMap = createCabinetMemberMapFromGame;
+export const calculateRiskProbability = calculateRiskProbabilityFromGame;
+export const findQuestionById = findQuestionByIdFromTree;
+
+export interface RiskDisplayInfo {
+  level: RiskLevel;
+  color: string;
+  formattedRisk: string;
+  description: string;
+  isAboveThreshold: boolean;
+  progressValue: number;
+  thresholdPercentage: number;
+}
+
+export function getRiskDisplay(
+  currentValue: number,
+  riskPercentage: number,
+  threshold: number,
+): RiskDisplayInfo {
+  const level = getRiskLevel(riskPercentage);
+  const color = getRiskTextColor(level);
+  const formattedRisk = formatRiskProbability(riskPercentage);
+  const description = getRiskDescription(level);
+  const isAboveThreshold = currentValue >= threshold;
+  const progressValue = Math.max(0, Math.min(100, currentValue));
+  const thresholdPercentage = threshold;
+
+  return {
+    level,
+    color,
+    formattedRisk,
+    description,
+    isAboveThreshold,
+    progressValue,
+    thresholdPercentage,
+  };
 }

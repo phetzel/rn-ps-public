@@ -17,7 +17,7 @@ import {
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface GameActionsProps {
   game: Game;

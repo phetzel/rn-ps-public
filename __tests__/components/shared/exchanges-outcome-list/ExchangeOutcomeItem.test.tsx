@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 import { of } from 'rxjs';
 
-import ExchangeOutcomeItem from '~/components/shared/exchanges-outcome-list/ExchangeOutcomeItem';
+import ExchangeOutcomeItem from '~/components/connected/exchanges-outcome-list/ExchangeOutcomeItem';
 
 // Mock Accordion components to avoid asChild issues
 jest.mock('~/components/ui/accordion', () => {
@@ -34,7 +34,7 @@ jest.mock('@nozbe/watermelondb/react', () => {
 });
 
 // Mock JournalistDisplay component
-jest.mock('~/components/shared/entity/JournalistDisplay', () => {
+jest.mock('~/components/connected/entity/JournalistDisplay', () => {
   const React = require('react');
   const { Text } = require('react-native');
   const MockJournalistDisplay = ({ journalistId }: { journalistId: string }) => {
@@ -44,7 +44,7 @@ jest.mock('~/components/shared/entity/JournalistDisplay', () => {
 });
 
 // Mock ExchangeQuestionItem component
-jest.mock('~/components/shared/exchanges-outcome-list/ExchangeQuestionItem', () => {
+jest.mock('~/components/connected/exchanges-outcome-list/ExchangeQuestionItem', () => {
   const React = require('react');
   const { Text } = require('react-native');
   const MockExchangeQuestionItem = (props: any) => {

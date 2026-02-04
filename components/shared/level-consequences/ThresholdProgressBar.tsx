@@ -4,7 +4,7 @@ import { Progress } from '~/components/ui/progress';
 import { Text } from '~/components/ui/text';
 import { cn } from '~/lib/utils';
 
-import type { RiskDisplayInfo } from '~/lib/hooks/useRiskDisplay';
+import type { RiskDisplayInfo } from '~/lib/utils';
 
 interface ThresholdProgressBarProps {
   currentValue: number;

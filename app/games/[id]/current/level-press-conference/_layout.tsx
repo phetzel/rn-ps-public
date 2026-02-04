@@ -3,8 +3,8 @@ import React, { useState, useRef } from 'react';
 import { Pressable, Platform, View } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 
+import ConferenceInfo from '~/components/connected/level-press-conference/ConferenceInfo';
 import { Info } from '~/components/icons/Info';
-import ConferenceInfo from '~/components/screens/level-press-conference/ConferenceInfo';
 import { HeaderBackIcon } from '~/components/shared/layout/HeaderBackIcon';
 import { BottomSheetModal, BottomSheetView, BottomSheetHandle } from '~/components/ui/bottom-sheet';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
