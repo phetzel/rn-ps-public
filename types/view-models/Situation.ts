@@ -1,9 +1,12 @@
+import type { SituationContent, SituationType } from '~/types';
+
 export default interface Situation {
   id: string;
   game_id: string;
   level_id: string;
-  type: string;
+  outcomeId: string | null;
+  type: SituationType;
   title: string;
   description: string;
-  parseContent: any;
+  parseContent: SituationContent | null;
 }

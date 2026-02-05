@@ -4,7 +4,7 @@ import { HomeMenuCard } from '~/components/connected/home/HomeMenuCard';
 import { HomeScreenView } from '~/components/screens/home/HomeScreenView';
 import { observeAllGames } from '~/lib/db/helpers';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface HomeScreenProps {
   games: Game[];

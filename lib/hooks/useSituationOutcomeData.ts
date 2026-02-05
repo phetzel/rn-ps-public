@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 
 import { calculateSituationOutcomeWeights } from '~/lib/db/helpers';
 
-import type { Situation } from '~/lib/db/models';
+import type { SituationOutcomeSource } from '~/lib/db/helpers/situationOutcomeApi';
 import type {
   SituationOutcomeWeight,
   SituationImpacts,
@@ -10,7 +10,7 @@ import type {
   SubgroupStaticId,
 } from '~/types';
 
-export function useSituationOutcomeData(situation: Situation) {
+export function useSituationOutcomeData(situation: SituationOutcomeSource) {
   const [outcomeWeights, setOutcomeWeights] = useState<SituationOutcomeWeight[]>([]);
   const [selectedOutcomeWeight, setSelectedOutcomeWeight] = useState<SituationOutcomeWeight | null>(
     null,

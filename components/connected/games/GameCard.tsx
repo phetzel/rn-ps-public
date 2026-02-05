@@ -6,7 +6,7 @@ import { GameCardView } from '~/components/screens/games/GameCardView';
 import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface GameCardProps {
   game: Game;

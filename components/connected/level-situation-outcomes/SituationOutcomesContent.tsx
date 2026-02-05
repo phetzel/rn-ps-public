@@ -22,6 +22,7 @@ function SituationOutcomesContent({ gameId, levelId, game, level }: SituationOut
       levelId={levelId}
       game={game}
       level={level}
+      onMarkSituationAdWatched={() => level.markSituationAdWatched()}
       renderSituationsOutcomeList={(contentLevelId) => (
         <SituationsOutcomeList levelId={contentLevelId} />
       )}

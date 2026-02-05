@@ -5,7 +5,7 @@ import { GamesScreenView } from '~/components/screens/games/GamesScreenView';
 import { observeAllGames } from '~/lib/db/helpers';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface GamesScreenProps {
   allGames: Game[] | undefined;

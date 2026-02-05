@@ -5,6 +5,7 @@ import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 import { LevelStatus } from '~/types';
 
+import type { RelativePathString } from 'expo-router';
 export function useLevelNavigation() {
   const router = useRouter();
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
@@ -39,7 +40,7 @@ export function useLevelNavigation() {
 
     const navigate = fromCurrentTab ? router.push : router.replace;
     try {
-      navigate(`/games/${currentGameId}/current/${route}`);
+      navigate(`/games/${currentGameId}/current/${route}` as RelativePathString);
       return true;
     } catch (error) {
       console.error('Failed to navigate to level screen:', error);
@@ -92,7 +93,7 @@ export function useLevelNavigation() {
       return false;
     }
 
-    router.navigate(`/games/${currentGameId}/${tab}`);
+    router.navigate(`/games/${currentGameId}/${tab}` as RelativePathString);
     return true;
   };
 

@@ -3,7 +3,7 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import { GameMetadataView } from '~/components/screens/games/GameMetadataView';
 import { observePresidentApprovalRating } from '~/lib/db/helpers/observations';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface GameMetadataProps {
   game: Game;

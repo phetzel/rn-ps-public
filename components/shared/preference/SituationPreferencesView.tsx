@@ -11,13 +11,13 @@ import {
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 
-import type { CabinetStaticId } from '~/types';
+import type { CabinetPreference, CabinetStaticId, Preference } from '~/types';
 import type { CabinetMember, Situation } from '~/types/view-models';
 
 interface SituationPreferencesViewProps {
   situation: Situation;
   cabinetMembers: CabinetMember[];
-  renderPresidentPreference: (args: { gameId: string; preference: any }) => React.ReactNode;
+  renderPresidentPreference: (args: { gameId: string; preference: Preference }) => React.ReactNode;
 }
 
 export function SituationPreferencesView({
@@ -83,6 +83,7 @@ export function SituationPreferencesView({
                 {Object.entries(cabinetPreferences).map(([member, cabPref], idx) => {
                   const staticId = member as CabinetStaticId;
                   const cabinetMember = cabinetMemberMap.get(staticId);
+                  const cabinetPreference = cabPref as CabinetPreference;
                   if (!cabinetMember) {
                     return null;
                   }
@@ -91,7 +92,7 @@ export function SituationPreferencesView({
                     <View key={idx} className="gap-2" accessible={false}>
                       <CabinetMemberPreference
                         cabinetMember={cabinetMember}
-                        cabinetPreference={cabPref}
+                        cabinetPreference={cabinetPreference}
                       />
 
                       {idx !== Object.keys(cabinetPreferences).length - 1 && (

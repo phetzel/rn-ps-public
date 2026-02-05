@@ -1,10 +1,8 @@
+import type { JournalistStaticId, StaticJournalist } from '~/types';
+
 export default interface Journalist {
   id: string;
-  staticId: string;
+  staticId: JournalistStaticId;
   psRelationship: number;
-  staticData: {
-    name: string;
-    publicationStaticId: string;
-    [key: string]: any;
-  };
+  staticData: StaticJournalist;
 }

@@ -1,10 +1,8 @@
+import type { PublicationStaticId, StaticPublication } from '~/types';
+
 export default interface Publication {
   id: string;
-  staticData: {
-    name: string;
-    description: string;
-    politicalLeaning: string;
-    [key: string]: any;
-  };
-  getApprovalRating: () => Promise<number>;
+  staticId: PublicationStaticId;
+  staticData: StaticPublication;
+  approvalRating?: number | null;
 }

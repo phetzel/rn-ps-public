@@ -10,7 +10,7 @@ import type Game from '~/types/view-models/Game';
 interface GamesScreenViewProps {
   allGames: Game[] | undefined;
   actionError: string | null;
-  renderGameCard: (game: Game) => React.ReactNode;
+  renderGameCard: (game: Game) => React.ReactElement | null;
 }
 
 export function GamesScreenView({ allGames, actionError, renderGameCard }: GamesScreenViewProps) {

@@ -5,7 +5,7 @@ import { ArchiveIndexScreenView } from '~/components/screens/tab-archive/Archive
 import { observeCompletedLevels } from '~/lib/db/helpers';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
-import type { Level } from '~/lib/db/models';
+import type { Level } from '~/types/view-models';
 
 interface ArchiveIndexScreenProps {
   completedLevels: Level[];

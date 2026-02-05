@@ -1,10 +1,8 @@
+import type { StaticSubgroup, SubgroupStaticId } from '~/types';
+
 export default interface SubgroupApproval {
   id: string;
-  staticId: string;
+  staticId: SubgroupStaticId;
   approvalRating: number;
-  staticData: {
-    name: string;
-    category: string;
-    [key: string]: any;
-  };
+  staticData: StaticSubgroup;
 }

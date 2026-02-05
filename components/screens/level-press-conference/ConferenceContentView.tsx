@@ -68,7 +68,7 @@ export function ConferenceContentView({
           {!selectedExchange ? (
             renderJournalistSelect({
               pressExchanges,
-              onSelectExchange = { handleSelectExchange },
+              onSelectExchange: handleSelectExchange,
             })
           ) : (
             <View

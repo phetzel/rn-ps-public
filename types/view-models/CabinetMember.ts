@@ -1,11 +1,10 @@
+import type { CabinetStaticId, StaticCabinetMember } from '~/types';
+
 export default interface CabinetMember {
   id: string;
   name: string;
-  staticId: string;
+  staticId: CabinetStaticId;
   approvalRating: number;
   psRelationship: number;
-  staticData: {
-    cabinetName: string;
-    [key: string]: any;
-  };
+  staticData: StaticCabinetMember;
 }

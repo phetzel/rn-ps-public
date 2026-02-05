@@ -1,12 +1,12 @@
+import type { LevelStatus, OutcomeSnapshotType } from '~/types';
+
 export default interface Level {
   id: string;
   game_id: string;
   month: number;
   year: number;
-  status: string;
+  status: LevelStatus;
   pressAdWatched: boolean;
   situationAdWatched: boolean;
-  parseOutcomeSnapshot: any;
-  markPressAdWatched: () => Promise<void>;
-  markSituationAdWatched: () => Promise<void>;
+  parseOutcomeSnapshot: OutcomeSnapshotType | null;
 }

@@ -6,7 +6,7 @@ import { MAX_ACTIVE_GAMES } from '~/lib/constants';
 import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
-import type Game from '~/lib/db/models/Game';
+import type Game from '~/types/view-models/Game';
 
 interface HomeMenuCardProps {
   games: Game[];

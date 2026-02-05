@@ -2,6 +2,7 @@ import { isDiagnosticsEnabled } from '~/lib/infra/diagnosticsGate';
 import { optionalRequire } from '~/lib/infra/optionalModule';
 
 import type * as SentryModule from '@sentry/react-native';
+import type { Breadcrumb, BreadcrumbHint, ErrorEvent, EventHint } from '@sentry/types';
 import type * as ExpoApplicationModule from 'expo-application';
 import type * as ExpoConstantsModule from 'expo-constants';
 
@@ -27,8 +28,7 @@ const redactObject = (value: unknown, visited = new WeakSet<object>()): void => 
   }
 };
 
-const scrubBreadcrumb = (breadcrumb: unknown): unknown => {
-  if (!breadcrumb || typeof breadcrumb !== 'object') return breadcrumb;
+const scrubBreadcrumb = (breadcrumb: Breadcrumb): Breadcrumb => {
   const record = breadcrumb as Record<string, unknown>;
 
   if (typeof record.message === 'string') {
@@ -41,9 +41,8 @@ const scrubBreadcrumb = (breadcrumb: unknown): unknown => {
   return record;
 };
 
-const scrubEvent = (event: unknown): unknown => {
-  if (!event || typeof event !== 'object') return event;
-  const record = event as Record<string, unknown>;
+const scrubEvent = (event: ErrorEvent): ErrorEvent => {
+  const record = event as ErrorEvent & Record<string, unknown>;
 
   const user = record.user;
   if (user && typeof user === 'object') {
@@ -75,7 +74,7 @@ const scrubEvent = (event: unknown): unknown => {
   if (record.extra) redactObject(record.extra);
   if (record.tags) redactObject(record.tags);
 
-  return record;
+  return event;
 };
 
 export function initSentry(): void {
@@ -113,14 +112,14 @@ export function initSentry(): void {
       environment,
       release,
       dist: nativeBuildVersion,
-      beforeBreadcrumb(breadcrumb: unknown): unknown {
+      beforeBreadcrumb(breadcrumb: Breadcrumb, _hint?: BreadcrumbHint): Breadcrumb | null {
         try {
           return scrubBreadcrumb(breadcrumb);
         } catch {
           return breadcrumb;
         }
       },
-      beforeSend(event: unknown): unknown {
+      beforeSend(event: ErrorEvent, _hint: EventHint): ErrorEvent | null {
         try {
           if (!isDiagnosticsEnabled()) {
             return null;

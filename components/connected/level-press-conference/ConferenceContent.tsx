@@ -7,7 +7,7 @@ import { ConferenceContentView } from '~/components/screens/level-press-conferen
 import ConferenceJournalistSelect from '~/components/screens/level-press-conference/ConferenceJournalistSelect';
 import { observePressExchangesForLevel } from '~/lib/db/helpers/observations';
 
-import type { PressExchange } from '~/lib/db/models';
+import type { PressExchange } from '~/types/view-models';
 
 interface ConferenceContentProps {
   levelId: string;

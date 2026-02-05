@@ -7,7 +7,8 @@ import {
   observePublicationForJournalistId,
 } from '~/lib/db/helpers/observations';
 
-import type { CabinetMember, Journalist, PressExchange, Publication } from '~/lib/db/models';
+import type { PressExchange as PressExchangeModel } from '~/lib/db/models';
+import type { CabinetMember, Journalist, PressExchange, Publication } from '~/types/view-models';
 
 interface ConferenceQuestionProps {
   pressExchange: PressExchange;
@@ -24,6 +25,7 @@ function ConferenceQuestion({
   cabinetMembers,
   handleClear,
 }: ConferenceQuestionProps) {
+  const pressExchangeModel = pressExchange as PressExchangeModel;
   return (
     <ConferenceQuestionView
       pressExchange={pressExchange}
@@ -31,6 +33,8 @@ function ConferenceQuestion({
       publication={publication}
       cabinetMembers={cabinetMembers}
       handleClear={handleClear}
+      onAnswerQuestion={(answerId) => pressExchangeModel.answerQuestion(answerId)}
+      onSkipQuestion={() => pressExchangeModel.skipQuestion()}
     />
   );
 }

@@ -11,6 +11,7 @@ interface SituationOutcomesContentViewProps {
   levelId: string;
   game: Game | null;
   level: Level;
+  onMarkSituationAdWatched: () => Promise<void>;
   renderSituationsOutcomeList: (levelId: string) => React.ReactNode;
   renderLevelMediaCoverage: (levelId: string) => React.ReactNode;
   renderSituationReview: (args: {
@@ -24,6 +25,7 @@ export function SituationOutcomesContentView({
   levelId,
   game: _game,
   level,
+  onMarkSituationAdWatched,
   renderSituationsOutcomeList,
   renderLevelMediaCoverage,
   renderSituationReview,
@@ -39,7 +41,7 @@ export function SituationOutcomesContentView({
 
   const handleAdComplete = async () => {
     try {
-      await level.markSituationAdWatched();
+      await onMarkSituationAdWatched();
       setIsAdWatched(true);
     } catch (error) {
       console.error('Failed to mark situation ad as watched:', error);

@@ -9,6 +9,7 @@ import type { Level } from '~/types/view-models';
 interface PressOutcomesContentViewProps {
   levelId: string;
   level: Level;
+  onMarkPressAdWatched: () => Promise<void>;
   renderExchangesOutcomeList: (levelId: string) => React.ReactNode;
   renderPressResultsTotal: (levelId: string) => React.ReactNode;
   renderPressReview: (args: {
@@ -20,6 +21,7 @@ interface PressOutcomesContentViewProps {
 export function PressOutcomesContentView({
   levelId,
   level,
+  onMarkPressAdWatched,
   renderExchangesOutcomeList,
   renderPressResultsTotal,
   renderPressReview,
@@ -35,7 +37,7 @@ export function PressOutcomesContentView({
 
   const handleAdComplete = async () => {
     try {
-      await level.markPressAdWatched();
+      await onMarkPressAdWatched();
       setIsAdWatched(true);
     } catch (error) {
       console.error('Failed to mark press ad as watched:', error);

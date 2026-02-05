@@ -2,12 +2,18 @@ import { fetchSituationsByLevelId } from '~/lib/db/helpers/fetchApi';
 import { calculatePressConferenceRawEffects } from '~/lib/db/helpers/pressConferenceApi';
 import { chooseOutcomeForSituation, computeOutcomeWeights } from '~/lib/game/outcomes';
 
-import type { Situation } from '~/lib/db/models';
 import type {
   SituationOutcomeWeightDeltas,
   SituationContent,
   SituationOutcomeWeight,
 } from '~/types';
+
+export interface SituationOutcomeSource {
+  id: string;
+  level_id: string;
+  parseContent: SituationContent | null;
+  outcomeId: string | null;
+}
 
 export async function determineSituationOutcomes(
   levelId: string,
@@ -44,7 +50,7 @@ export async function determineSituationOutcomes(
 }
 
 export async function calculateSituationOutcomeWeights(
-  situation: Situation,
+  situation: SituationOutcomeSource,
 ): Promise<SituationOutcomeWeight[]> {
   const content = situation.parseContent;
   if (!content || !content.outcomes) {

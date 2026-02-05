@@ -8,7 +8,7 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
-import { AnswerType } from '~/types';
+import { AnswerType, PoliticalLeaning } from '~/types';
 
 import type { CabinetStaticId } from '~/types';
 import type { CabinetMember, Journalist, PressExchange, Publication } from '~/types/view-models';
@@ -19,6 +19,8 @@ interface ConferenceQuestionViewProps {
   publication: Publication | null;
   cabinetMembers: CabinetMember[];
   handleClear: () => void;
+  onAnswerQuestion: (answerId: string) => Promise<void>;
+  onSkipQuestion: () => Promise<void>;
 }
 
 export function ConferenceQuestionView({
@@ -27,6 +29,8 @@ export function ConferenceQuestionView({
   publication,
   cabinetMembers,
   handleClear,
+  onAnswerQuestion,
+  onSkipQuestion,
 }: ConferenceQuestionViewProps) {
   const cabinetMemberMap = useMemo(() => {
     const map = new Map<CabinetStaticId, CabinetMember>();
@@ -43,7 +47,7 @@ export function ConferenceQuestionView({
 
   const handleAnswerQuestion = async (answerId: string) => {
     try {
-      await pressExchange.answerQuestion(answerId);
+      await onAnswerQuestion(answerId);
       handleClear();
     } catch (error) {
       console.error('Error answering question:', error);
@@ -52,7 +56,7 @@ export function ConferenceQuestionView({
 
   const handleSkipQuestion = async () => {
     try {
-      await pressExchange.skipQuestion();
+      await onSkipQuestion();
       handleClear();
     } catch (error) {
       console.error('Error skipping question:', error);
@@ -76,7 +80,7 @@ export function ConferenceQuestionView({
           publicationName={
             publication?.staticData.name ?? journalist.staticData.publicationStaticId
           }
-          publicationLeaning={publication?.staticData.politicalLeaning}
+          publicationLeaning={publication?.staticData.politicalLeaning ?? PoliticalLeaning.Neutral}
         />
       </CardHeader>
 
@@ -93,7 +97,7 @@ export function ConferenceQuestionView({
           accessibilityLabel={`Answer options: ${answers.length} available`}
           accessibilityHint="Select an answer to respond to the question"
         >
-          {answers.map((answer, index) => {
+          {answers.map((answer) => {
             let cabinetMember;
 
             if (answer.type === AnswerType.Authorized && answer.authorizedCabinetMemberId) {
@@ -102,7 +106,7 @@ export function ConferenceQuestionView({
 
             return (
               <ConferenceAnswer
-                key={index}
+                key={answer.id}
                 answer={answer}
                 onPress={handleAnswerQuestion}
                 authorizedCabinetMember={cabinetMember}

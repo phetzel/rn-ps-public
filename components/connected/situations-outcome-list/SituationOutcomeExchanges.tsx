@@ -3,8 +3,8 @@ import { withObservables } from '@nozbe/watermelondb/react';
 import { SituationOutcomeExchangesView } from '~/components/connected/situations-outcome-list/SituationOutcomeExchangesView';
 import { observePressExchangesForSituation } from '~/lib/db/helpers/observations';
 
-import type { PressExchange } from '~/lib/db/models';
 import type { SituationOutcome } from '~/types';
+import type { PressExchange } from '~/types/view-models';
 
 interface SituationOutcomeExchangesProps {
   situationId: string;

@@ -1,10 +1,12 @@
+import type { GameStatus, PoliticalLeaning } from '~/types';
+
 export default interface Game {
   id: string;
-  status: string;
+  status: GameStatus;
   presName: string;
-  presLeaning: string;
+  presLeaning: PoliticalLeaning;
   presPsRelationship: number;
   currentMonth: number;
   currentYear: number;
-  updatedAt: string | number | Date;
+  updatedAt: Date;
 }

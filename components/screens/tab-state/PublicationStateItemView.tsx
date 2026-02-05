@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View } from 'react-native';
 
 import { StateProgress } from '~/components/screens/tab-state/StateProgress';
@@ -25,18 +25,7 @@ export function PublicationStateItemView({
   journalists,
 }: PublicationStateItemViewProps) {
   const pubStaticData = publication.staticData;
-  const [approvalRating, setApprovalRating] = useState<number | null>(null);
-
-  useEffect(() => {
-    let isMounted = true;
-    publication.getApprovalRating().then((rating) => {
-      if (isMounted) setApprovalRating(rating);
-    });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [publication]);
+  const approvalRating = publication.approvalRating ?? null;
 
   if (!publication) {
     return null;
@@ -60,7 +49,7 @@ export function PublicationStateItemView({
         description={pubStaticData.description}
       />
 
-      {approvalRating && <StateProgress label="Approval Rating" value={approvalRating} />}
+      {approvalRating !== null && <StateProgress label="Approval Rating" value={approvalRating} />}
 
       <Accordion type="single" className="w-full">
         <AccordionItem value={publication.id}>

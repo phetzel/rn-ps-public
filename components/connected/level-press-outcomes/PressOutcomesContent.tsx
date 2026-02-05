@@ -18,6 +18,7 @@ function PressOutcomesContent({ levelId, level }: PressOutcomesContentProps) {
     <PressOutcomesContentView
       levelId={levelId}
       level={level}
+      onMarkPressAdWatched={() => level.markPressAdWatched()}
       renderExchangesOutcomeList={(contentLevelId) => (
         <ExchangesOutcomeList levelId={contentLevelId} />
       )}

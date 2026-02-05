@@ -41,7 +41,12 @@ jobs:
         id: eas-build
         run: |
           eas build --platform ios --profile test --non-interactive --wait --json > build.json
-          node -e "const fs=require('fs');const data=JSON.parse(fs.readFileSync('build.json','utf8'));const build=data[0]||{};const url=(build.artifacts&& (build.artifacts.buildUrl||build.artifacts.applicationArchiveUrl))||'';if(!url){console.error('Missing build URL from EAS.');process.exit(1);}fs.appendFileSync(process.env.GITHUB_OUTPUT, `url=${url}\n`);"
+          URL=$(jq -r '.[0].artifacts.buildUrl // .[0].artifacts.applicationArchiveUrl // empty' build.json)
+          if [ -z "$URL" ]; then
+            echo "Missing build URL from EAS." >&2
+            exit 1
+          fi
+          echo "url=$URL" >> "$GITHUB_OUTPUT"
 
       - name: Download iOS build artifact
         run: |

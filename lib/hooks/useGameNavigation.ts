@@ -5,8 +5,8 @@ import { useShallow } from 'zustand/shallow';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 
-import type Game from '~/lib/db/models/Game';
 import type { NewGameDetails } from '~/types';
+import type Game from '~/types/view-models/Game';
 
 export function useGameNavigation() {
   const router = useRouter();
@@ -34,7 +34,7 @@ export function useGameNavigation() {
   /**
    * Navigate to a specific game's current tab
    */
-  const continueGame = async (gameId?: string, activeGames?: Game[]) => {
+  const continueGame = async (gameId?: string, activeGames?: Pick<Game, 'id'>[]) => {
     try {
       // Use provided gameId, current game from store, or single active game
       const targetGameId =
