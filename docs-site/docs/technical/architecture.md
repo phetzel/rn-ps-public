@@ -47,7 +47,12 @@ return (
 
 ```tsx
 // components/shared/level-consequences/LevelConsequencesView.tsx
-export function LevelConsequencesView({ gameId, outcomeSnapshot, cabinetMembers, renderConsequenceGameComplete }) {
+export function LevelConsequencesView({
+  gameId,
+  outcomeSnapshot,
+  cabinetMembers,
+  renderConsequenceGameComplete,
+}) {
   if (!outcomeSnapshot) return <EmptyState />;
   return (
     <View>
