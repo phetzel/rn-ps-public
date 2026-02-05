@@ -37,7 +37,7 @@ jobs:
   setup:
     name: Setup Build Matrix
     runs-on: ubuntu-latest
-    if: github.repository == 'phetzel/rn-ps'
+    if: ${{ secrets.EXPO_TOKEN != '' }}
     outputs:
       platforms: ${{ steps.set-platforms.outputs.platforms }}
       profile: ${{ steps.set-profile.outputs.profile }}
@@ -124,7 +124,7 @@ jobs:
     name: Notify Build Complete
     needs: [setup, build]
     runs-on: ubuntu-latest
-    if: github.repository == 'phetzel/rn-ps' && always()
+    if: ${{ github.repository == 'phetzel/rn-ps' && secrets.EXPO_TOKEN != '' && always() }}
     steps:
       - name: Build Summary
         run: |
