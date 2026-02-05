@@ -26,6 +26,7 @@ const sidebars: SidebarsConfig = {
       collapsible: false,
       items: [
         'technical/index',
+        'technical/architecture',
         'technical/database',
         'technical/content-pipeline',
         'technical/testing',

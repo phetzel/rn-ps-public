@@ -40,6 +40,14 @@ The interaction loop for a situation.
 - `subgroup_approvals`: Tracks approval rating (0-100) with each voter demographic.
 - `publications` / `journalists`: Tracks relationship scores with media entities.
 
+## Access Patterns
+
+Database access is isolated to `components/connected` and `lib/db` helpers.
+
+- **Observables**: `withObservables` is used only in `components/connected`.
+- **Helpers**: `lib/db/helpers` exposes observation and mutation helpers that connected components call.
+- **Presentational UI**: `components/screens` and `components/shared` receive data via props only.
+
 ## Migrations
 
 Schema changes are handled in `lib/db/migrations.ts`. Since this is a local-first app, we use WatermelonDB's migration mechanics to safely upgrade user databases between app versions.
