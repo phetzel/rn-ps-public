@@ -1,8 +1,11 @@
 import { Q } from '@nozbe/watermelondb';
 
 import { situationsData } from '~/lib/data/situations';
-import { Game } from '~/lib/db/models';
-import { SituationData, SituationType } from '~/types';
+import { filterSituationsByRequirements, selectSituationsFromPool } from '~/lib/game/situations';
+
+import type { Game } from '~/lib/db/models';
+import type { GameRequirements } from '~/lib/game/situations';
+import type { SituationData, SituationType } from '~/types';
 
 // Helper to get follow-up situations from the previous level
 async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
@@ -42,59 +45,11 @@ async function getFollowUpSituations(game: Game): Promise<SituationData[]> {
   return followUps;
 }
 
-async function filterSituationsByRequirements(
-  situations: SituationData[],
-  game: Game,
-  currentLevel: number,
-): Promise<SituationData[]> {
-  const currentPresApproval = await game.getPresApprovalRating();
-
-  return situations.filter((situation) => {
-    const trigger = situation.trigger;
-    if (!trigger) return false;
-
-    // Year requirements
-    if (trigger.requirements?.year) {
-      const { min, max } = trigger.requirements.year;
-      if (min !== undefined && game.currentYear < min) return false;
-      if (max !== undefined && game.currentYear > max) return false;
-    }
-
-    // Month requirements
-    if (trigger.requirements?.month) {
-      const { min, max } = trigger.requirements.month;
-      if (min !== undefined && game.currentMonth < min) return false;
-      if (max !== undefined && game.currentMonth > max) return false;
-    }
-
-    // President party requirement
-    if (
-      trigger.requirements?.president?.leaning &&
-      trigger.requirements.president.leaning !== game.presLeaning
-    ) {
-      return false;
-    }
-
-    // President approval requirement
-    if (trigger.requirements?.president) {
-      const { minApproval, maxApproval } = trigger.requirements.president;
-      if (minApproval !== undefined && currentPresApproval < minApproval) return false;
-      if (maxApproval !== undefined && currentPresApproval > maxApproval) return false;
-    }
-
-    // More complex filters for cabinet/subgroup approvals could be added here
-
-    return true;
-  });
-}
-
 // Main function to select situations for a new level
 export async function selectSituationsForLevel(
   game: Game,
   count: number = 2,
 ): Promise<SituationData[]> {
-  const currentLevel = (game.currentYear - 1) * 12 + game.currentMonth;
-
   // 1. Get any follow-up situations from previous level outcomes
   const followUpSituations = await getFollowUpSituations(game);
 
@@ -128,35 +83,22 @@ export async function selectSituationsForLevel(
       !seenTypes.has(situation.type),
   );
 
-  // 7. Filter by game requirements
-  availableSituations = await filterSituationsByRequirements(
+  // 7. Build requirements and filter by game state using pure function
+  const currentPresApproval = await game.getPresApprovalRating();
+  const requirements: GameRequirements = {
+    currentYear: game.currentYear,
+    currentMonth: game.currentMonth,
+    presLeaning: game.presLeaning,
+    presApprovalRating: currentPresApproval,
+  };
+  availableSituations = filterSituationsByRequirements(availableSituations, requirements);
+
+  // 8. Select situations using pure function (ensures type diversity)
+  const selectedRegularSituations = selectSituationsFromPool(
     availableSituations,
-    game,
-    currentLevel,
+    neededRegularSituations,
+    seenTypes,
   );
-
-  // 8. Select situations one by one, updating the filter each time
-  const selectedRegularSituations: SituationData[] = [];
-
-  while (
-    selectedRegularSituations.length < neededRegularSituations &&
-    availableSituations.length > 0
-  ) {
-    // Select a random situation
-    const randomIndex = Math.floor(Math.random() * availableSituations.length);
-    const selectedSituation = availableSituations[randomIndex];
-
-    // Add it to our result
-    selectedRegularSituations.push(selectedSituation);
-
-    // Add this type to seen types
-    seenTypes.add(selectedSituation.type);
-
-    // Remove this situation and any others of the same type
-    availableSituations = availableSituations.filter(
-      (s) => s !== selectedSituation && s.type !== selectedSituation.type,
-    );
-  }
 
   // 9. Handle the case where we still don't have enough situations after trying to select one of each type
   if (selectedRegularSituations.length < neededRegularSituations) {
@@ -168,6 +110,7 @@ export async function selectSituationsForLevel(
     const remainingNeeded = neededRegularSituations - selectedRegularSituations.length;
     const randomSituations = situationsData
       .filter((s) => !s.trigger?.isFollowUp && !usedKeys.includes(s.trigger?.staticKey || ''))
+      // eslint-disable-next-line sonarjs/pseudo-random -- non-crypto shuffle for gameplay variety
       .sort(() => 0.5 - Math.random())
       .slice(0, remainingNeeded);
 

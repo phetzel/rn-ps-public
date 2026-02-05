@@ -1,5 +1,5 @@
 import { situationsData } from '~/lib/data/situations';
-import { AnswerType } from '~/types';
+import type { AnswerType } from '~/types';
 
 export interface ExchangeStructureAnalysis {
   situationTitle: string;

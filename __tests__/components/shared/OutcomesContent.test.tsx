@@ -4,19 +4,6 @@ import React from 'react';
 import { OutcomesContent } from '~/components/shared/outcomes/OutcomesContent';
 import { LevelStatus } from '~/types';
 
-import type { Level } from '~/lib/db/models';
-
-// Mock the level navigation hook
-const mockProgressAndNavigate = jest.fn();
-const mockNavigateToCurrentLevelScreen = jest.fn();
-
-jest.mock('~/lib/hooks/useLevelNavigation', () => ({
-  useLevelNavigation: () => ({
-    progressAndNavigate: mockProgressAndNavigate,
-    navigateToCurrentLevelScreen: mockNavigateToCurrentLevelScreen,
-  }),
-}));
-
 // Mock Tabs components
 jest.mock('~/components/ui/tabs', () => {
   const React = require('react');
@@ -42,11 +29,6 @@ jest.mock('~/components/ui/tabs', () => {
 });
 
 describe('OutcomesContent', () => {
-  const mockLevel = {
-    id: 'level-1',
-    status: LevelStatus.PressResults,
-  } as Level;
-
   const mockTabs = [
     {
       value: 'tab1',
@@ -64,14 +46,16 @@ describe('OutcomesContent', () => {
     },
   ];
 
+  const mockOnComplete = jest.fn().mockResolvedValue(undefined);
+
   const defaultProps = {
-    level: mockLevel,
     tabs: mockTabs,
     defaultTab: 'tab1',
     accessibilityLabel: 'Test outcomes content',
     expectedLevelStatus: LevelStatus.PressResults,
     adWatched: false,
     onAdComplete: jest.fn(),
+    onComplete: mockOnComplete,
   };
 
   beforeEach(() => {
@@ -102,7 +86,7 @@ describe('OutcomesContent', () => {
   it('shows correct button text for last tab', () => {
     render(<OutcomesContent {...defaultProps} defaultTab="tab2" />);
 
-    expect(screen.getByText('Continue')).toBeTruthy();
+    expect(screen.getByText('Complete')).toBeTruthy();
   });
 
   it('navigates to next tab when continue button pressed', () => {
@@ -115,27 +99,13 @@ describe('OutcomesContent', () => {
     expect(screen.getByTestId('tabs-tab2')).toBeTruthy();
   });
 
-  it('calls progressAndNavigate when on last tab and level status matches', async () => {
+  it('calls onComplete when on last tab', () => {
     render(<OutcomesContent {...defaultProps} defaultTab="tab2" />);
 
-    const continueButton = screen.getByText('Continue');
+    const continueButton = screen.getByText('Complete');
     fireEvent.press(continueButton);
 
-    expect(mockProgressAndNavigate).toHaveBeenCalledTimes(1);
-  });
-
-  it('calls navigateToCurrentLevelScreen when level status does not match', async () => {
-    const modifiedLevel = {
-      ...mockLevel,
-      status: LevelStatus.Completed,
-    } as Level;
-
-    render(<OutcomesContent {...defaultProps} level={modifiedLevel} defaultTab="tab2" />);
-
-    const continueButton = screen.getByText('Continue');
-    fireEvent.press(continueButton);
-
-    expect(mockNavigateToCurrentLevelScreen).toHaveBeenCalledTimes(1);
+    expect(mockOnComplete).toHaveBeenCalledTimes(1);
   });
 
   it('has proper accessibility properties', () => {
@@ -149,6 +119,6 @@ describe('OutcomesContent', () => {
 
     render(<OutcomesContent {...defaultProps} tabs={singleTab} />);
 
-    expect(screen.getByText('Continue')).toBeTruthy();
+    expect(screen.getByText('Complete')).toBeTruthy();
   });
 });

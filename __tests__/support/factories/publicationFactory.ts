@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { Publication } from '~/lib/db/models';
+import type { Publication } from '~/lib/db/models';
 import { PublicationStaticId } from '~/types';
 
 type PublicationOverrides = {

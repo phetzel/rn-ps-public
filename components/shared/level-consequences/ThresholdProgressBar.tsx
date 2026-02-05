@@ -2,8 +2,9 @@ import { View } from 'react-native';
 
 import { Progress } from '~/components/ui/progress';
 import { Text } from '~/components/ui/text';
-import { RiskDisplayInfo } from '~/lib/hooks/useRiskDisplay';
 import { cn } from '~/lib/utils';
+
+import type { RiskDisplayInfo } from '~/lib/utils';
 
 interface ThresholdProgressBarProps {
   currentValue: number;

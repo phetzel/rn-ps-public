@@ -1,6 +1,6 @@
 import { Image } from 'react-native';
 
-import ConferenceContent from '~/components/screens/level-press-conference/ConferenceContent';
+import ConferenceContent from '~/components/connected/level-press-conference/ConferenceContent';
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 

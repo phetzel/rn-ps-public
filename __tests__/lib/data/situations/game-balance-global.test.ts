@@ -4,7 +4,7 @@ import {
   analyzeMixedOutcomes,
 } from '~/__tests__/support/utils/global-analysis';
 import { BALANCE_THRESHOLDS } from '~/lib/constants';
-import { SituationType } from '~/types';
+import type { SituationType } from '~/types';
 
 describe('Game Balance Validation - Global Patterns', () => {
   describe('Situation Type Balance', () => {

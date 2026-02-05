@@ -1,16 +1,17 @@
-import { Model, Relation } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import { field, text, date, relation, readonly } from '@nozbe/watermelondb/decorators';
 
 import { staticSubgroups } from '~/lib/data/staticPolitics';
 
 import type Game from './Game';
+import type { Relation } from '@nozbe/watermelondb';
 import type { Associations } from '@nozbe/watermelondb/Model';
 import type { SubgroupStaticId, StaticSubgroup } from '~/types';
 
 export default class SubgroupApproval extends Model {
-  static table = 'subgroup_approvals';
+  static readonly table = 'subgroup_approvals';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     games: { type: 'belongs_to', key: 'game_id' },
   };
 

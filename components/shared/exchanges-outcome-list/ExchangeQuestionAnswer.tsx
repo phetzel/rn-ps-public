@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { SkipForward } from '~/components/icons/SkipForward';
 import { AnswerDisplay } from '~/components/shared/entity/AnswerDisplay';
 import { Text } from '~/components/ui/text';
-import { SkipForward } from '~/lib/icons/SkipForward';
 
 import type { Question } from '~/types';
 

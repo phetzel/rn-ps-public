@@ -8,7 +8,7 @@ import BottomSheet, {
 import { cssInterop } from 'nativewind';
 import React, { Fragment, forwardRef } from 'react';
 
-import { BottomSheetProps, BSHandleProps } from './types';
+import type { BottomSheetProps, BSHandleProps } from './types';
 
 const BottomSheetTrigger = Fragment;
 

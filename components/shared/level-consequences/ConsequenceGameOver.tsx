@@ -3,7 +3,8 @@ import { View } from 'react-native';
 
 import { Badge } from '~/components/ui/badge';
 import { Text } from '~/components/ui/text';
-import { ConsequenceResult } from '~/types';
+
+import type { ConsequenceResult } from '~/types';
 
 interface ConsequenceGameOverProps {
   consequences: ConsequenceResult;

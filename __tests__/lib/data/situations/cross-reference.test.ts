@@ -1,6 +1,6 @@
 import { CROSS_REFERENCE_THRESHOLDS } from '~/lib/constants';
 import { situationsData } from '~/lib/data/situations';
-import { getAllQuestionsFromExchange } from '~/lib/db/helpers/exchangeApi';
+import { getAllQuestionsFromExchange } from '~/lib/game/exchange-tree';
 
 describe('Situation Data Cross-Reference Validation', () => {
   // Create lookup maps for efficient testing

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import ImpactList from '~/components/shared/impact/ImpactList';
+import ImpactList from '~/components/connected/impact/ImpactList';
 import {
   CabinetStaticId,
   SubgroupStaticId,

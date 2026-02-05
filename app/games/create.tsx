@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import { useShallow } from 'zustand/shallow';
 
+import { Save } from '~/components/icons/Save';
 import { BackgroundSelect } from '~/components/screens/game-create/BackgroundSelect';
 import { NameField } from '~/components/screens/game-create/NameField';
 import { PartySelect } from '~/components/screens/game-create/PartySelect';
@@ -13,12 +14,9 @@ import { Button } from '~/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 import { useGameNavigation } from '~/lib/hooks/useGameNavigation';
-import { Save } from '~/lib/icons/Save';
-import { createGameSchema, type CreateGameFormData } from '~/lib/schemas';
+import { createGameSchema, type CreateLevelFormData } from '~/lib/schemas';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
-// Components
-// Types
-import { NewGameDetails, PoliticalLeaning } from '~/types';
+import { PoliticalLeaning, type NewGameDetails } from '~/types';
 
 export default function GameCreateScreen() {
   const { createGame } = useGameNavigation();
@@ -34,7 +32,7 @@ export default function GameCreateScreen() {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<CreateGameFormData>({
+  } = useForm<CreateLevelFormData>({
     resolver: zodResolver(createGameSchema),
     defaultValues: {
       pressSecretaryName: '',
@@ -45,7 +43,7 @@ export default function GameCreateScreen() {
   });
 
   // Form submission handler
-  const onSubmit = async (data: CreateGameFormData) => {
+  const onSubmit = async (data: CreateLevelFormData) => {
     const details: NewGameDetails = {
       pressSecretaryName: data.pressSecretaryName,
       presidentName: data.presidentName,

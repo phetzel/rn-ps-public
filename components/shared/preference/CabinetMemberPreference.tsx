@@ -6,9 +6,9 @@ import AuthorizedIntel from '~/components/shared/preference/AuthorizedIntel';
 import PreferenceDisplay from '~/components/shared/preference/PreferenceDisplay';
 import PreferenceLocked from '~/components/shared/preference/PreferenceLocked';
 import { CABINET_PREFERENCE_THRESHOLD } from '~/lib/constants';
-import { CabinetPreference } from '~/types';
 
-import type { CabinetMember } from '~/lib/db/models';
+import type { CabinetPreference } from '~/types';
+import type { CabinetMember } from '~/types/view-models';
 
 interface CabinetMemberPreferenceProps {
   cabinetMember: CabinetMember;
@@ -20,17 +20,17 @@ const CabinetMemberPreference = ({
   cabinetPreference,
 }: CabinetMemberPreferenceProps) => {
   const isPreferenceLocked = cabinetMember.psRelationship < CABINET_PREFERENCE_THRESHOLD;
+  const authorizedNote = cabinetPreference.authorizedContent ? ' Includes classified intel.' : '';
+  const preferenceLabel = isPreferenceLocked
+    ? `Preference locked due to low relationship (${cabinetMember.psRelationship}). Need ${CABINET_PREFERENCE_THRESHOLD} minimum.`
+    : `Preference available: ${cabinetPreference.preference.rationale}${authorizedNote}`;
 
   return (
     <View
       className="gap-2"
       accessible={true}
       accessibilityLabel={`${cabinetMember.name}, ${cabinetMember.staticData.cabinetName}. ${
-        isPreferenceLocked
-          ? `Preference locked due to low relationship (${cabinetMember.psRelationship}). Need ${CABINET_PREFERENCE_THRESHOLD} minimum.`
-          : `Preference available: ${cabinetPreference.preference.rationale}${
-              cabinetPreference.authorizedContent ? ` Includes classified intel.` : ``
-            }`
+        preferenceLabel
       }`}
     >
       <CabinetMemberName cabinetMember={cabinetMember} />

@@ -4,17 +4,7 @@ import { map, switchMap } from 'rxjs/operators';
 
 // Import collections
 // Import model types
-import {
-  CabinetMember,
-  Game,
-  Journalist,
-  Publication,
-  SubgroupApproval,
-  Situation,
-  Level,
-  PressExchange,
-} from '~/lib/db/models';
-import { calculatePresidentApprovalRating } from '~/lib/utils';
+import { calculatePresidentApprovalRating } from '~/lib/game/relationships';
 import { LevelStatus } from '~/types';
 
 import {
@@ -27,6 +17,17 @@ import {
   journalistCollection,
   pressExchangeCollection,
 } from './collections';
+
+import type {
+  CabinetMember,
+  Game,
+  Journalist,
+  Publication,
+  SubgroupApproval,
+  Situation,
+  Level,
+  PressExchange,
+} from '~/lib/db/models';
 
 export function observeAllGames(): Observable<Game[]> {
   return gamesCollection.query(Q.sortBy('updated_at', Q.desc)).observe();

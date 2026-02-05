@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, View } from 'react-native';
 
-import { ChevronLeft } from '~/lib/icons/ChevronLeft';
+import { ChevronLeft } from '~/components/icons/ChevronLeft';
 import { cn } from '~/lib/utils';
 
 interface HeaderBackIconProps {

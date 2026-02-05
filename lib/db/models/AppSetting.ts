@@ -2,7 +2,7 @@ import { Model } from '@nozbe/watermelondb';
 import { field, date, readonly } from '@nozbe/watermelondb/decorators';
 
 export default class AppSetting extends Model {
-  static table = 'app_settings';
+  static readonly table = 'app_settings';
 
   @field('has_fiction_disclaimer_ack') hasFictionDisclaimerAck!: boolean;
   @field('fiction_disclaimer_acknowledged_at') fictionDisclaimerAcknowledgedAt!: number | null;

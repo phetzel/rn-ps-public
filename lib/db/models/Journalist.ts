@@ -1,4 +1,4 @@
-import { Model, Relation, Query } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import { field, text, date, relation, readonly, children } from '@nozbe/watermelondb/decorators';
 
 import { staticJournalists } from '~/lib/data/staticMedia';
@@ -6,12 +6,13 @@ import { staticJournalists } from '~/lib/data/staticMedia';
 import type Game from './Game';
 import type PressExchange from './PressExchange';
 import type Publication from './Publication';
+import type { Relation, Query } from '@nozbe/watermelondb';
 import type { Associations } from '@nozbe/watermelondb/Model';
 import type { JournalistStaticId, StaticJournalist } from '~/types';
 export default class Journalist extends Model {
-  static table = 'journalists';
+  static readonly table = 'journalists';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     games: { type: 'belongs_to', key: 'game_id' },
     publications: { type: 'belongs_to', key: 'publication_id' },
     press_exchanges: { type: 'has_many', foreignKey: 'journalist_id' },

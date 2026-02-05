@@ -2,12 +2,54 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import LevelConsequencesRiskCard from '~/components/shared/level-consequences/LevelConsequencesRiskCard';
-import { CabinetMember } from '~/lib/db/models';
-import { CabinetStaticId, RelationshipSnapshot } from '~/types';
+import type { CabinetMember } from '~/lib/db/models';
+import type { RelationshipSnapshot } from '~/types';
+import { CabinetStaticId } from '~/types';
 
-// Mock cn utility and risk calculation
+// Mock cn utility
 jest.mock('~/lib/utils', () => ({
   cn: (...args: any[]) => args.filter(Boolean).join(' '),
+  calculateRiskProbability: (value: number) => {
+    if (value >= 50) return 0;
+    if (value >= 40) return 0.1;
+    if (value >= 30) return 0.3;
+    if (value >= 20) return 0.6;
+    return 0.9;
+  },
+  getRiskDisplay: (currentValue: number, riskPercentage: number, threshold: number) => ({
+    level:
+      riskPercentage === 0
+        ? 'safe'
+        : riskPercentage < 0.25
+          ? 'low'
+          : riskPercentage < 0.5
+            ? 'medium'
+            : 'high',
+    color:
+      riskPercentage === 0
+        ? 'text-green-700'
+        : riskPercentage < 0.25
+          ? 'text-yellow-700'
+          : riskPercentage < 0.5
+            ? 'text-orange-700'
+            : 'text-red-700',
+    formattedRisk: `${Math.round(riskPercentage * 100)}%`,
+    description:
+      riskPercentage === 0
+        ? 'No risk'
+        : riskPercentage < 0.25
+          ? 'Low risk'
+          : riskPercentage < 0.5
+            ? 'Medium risk'
+            : 'High risk',
+    isAboveThreshold: currentValue >= threshold,
+    progressValue: Math.max(0, Math.min(100, currentValue)),
+    thresholdPercentage: threshold,
+  }),
+}));
+
+// Mock risk calculation from game layer
+jest.mock('~/lib/game/consequences', () => ({
   calculateRiskProbability: (value: number) => {
     // Simple mock calculation for testing
     if (value >= 50) return 0;

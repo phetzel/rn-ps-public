@@ -1,5 +1,5 @@
 import { situationsData } from '~/lib/data/situations';
-import { getAllQuestionsFromExchange } from '~/lib/db/helpers/exchangeApi';
+import { getAllQuestionsFromExchange } from '~/lib/game/exchange-tree';
 import { situationDataSchema } from '~/lib/schemas';
 
 describe('Situation Data Schema Validation', () => {

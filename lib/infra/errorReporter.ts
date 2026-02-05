@@ -1,4 +1,7 @@
+import { optionalRequire } from '~/lib/infra/optionalModule';
+
 import type { SeverityLevel } from '@sentry/core';
+import type * as SentryModule from '@sentry/react-native';
 
 type ReportOptions = {
   level?: SeverityLevel;
@@ -7,9 +10,10 @@ type ReportOptions = {
 };
 
 export function reportError(error: unknown, options?: ReportOptions): void {
+  const Sentry = optionalRequire<typeof SentryModule>('@sentry/react-native');
+  if (!Sentry) return;
+
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const Sentry = require('@sentry/react-native');
     if (options?.tags || options?.extras || options?.level) {
       Sentry.withScope(
         (scope: {

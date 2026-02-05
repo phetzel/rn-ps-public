@@ -1,7 +1,7 @@
 import '~/global.css';
 
 import { DatabaseProvider } from '@nozbe/watermelondb/DatabaseProvider';
-import { DarkTheme, DefaultTheme, Theme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { Stack, SplashScreen } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -9,24 +9,26 @@ import * as React from 'react';
 import { Platform, View } from 'react-native';
 import { useShallow } from 'zustand/shallow';
 
-import { DisclaimerModal } from '~/components/shared/DisclaimerModal';
+import { DisclaimerModal } from '~/components/connected/shared/DisclaimerModal';
 import { GlobalErrorBoundary } from '~/components/shared/GlobalErrorBoundary';
 import { BottomSheetModalProvider } from '~/components/ui/bottom-sheet';
 import { Text } from '~/components/ui/text';
-import { setAndroidNavigationBar } from '~/lib/android-navigation-bar';
 import { NAV_THEME } from '~/lib/constants';
 import { database } from '~/lib/db';
 import { getOrCreateAppSettings } from '~/lib/db/helpers';
 import { getPrivacyFlags } from '~/lib/db/helpers/appSettings';
+import { useColorScheme } from '~/lib/hooks/useColorScheme';
 import {
   setEnabled as analyticsSetEnabled,
   initIfEnabled as analyticsInitIfEnabled,
 } from '~/lib/infra/analytics';
+import { setAndroidNavigationBar } from '~/lib/infra/android-navigation-bar';
 import { setDiagnosticsEnabled as gateSetDiagnosticsEnabled } from '~/lib/infra/diagnosticsGate';
 import { useConsentStore } from '~/lib/stores/consentStore';
 import { useDisclaimerDialogStore } from '~/lib/stores/disclaimerDialogStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
-import { useColorScheme } from '~/lib/useColorScheme';
+
+import type { Theme } from '@react-navigation/native';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -72,14 +74,17 @@ export default function RootLayout() {
 
   React.useEffect(() => {
     if (Platform.OS === 'android') {
-      setAndroidNavigationBar('light');
+      setAndroidNavigationBar({
+        theme: isDarkColorScheme ? 'dark' : 'light',
+        backgroundColor: isDarkColorScheme ? NAV_THEME.dark.background : NAV_THEME.light.background,
+      });
     }
     if (Platform.OS === 'web') {
       document.documentElement.classList.add('bg-background');
     }
 
     setIsColorSchemeLoaded(true);
-  }, [colorScheme]);
+  }, [colorScheme, isDarkColorScheme]);
 
   // Hide splash screen once DB is initialized (or errored) and color scheme is ready
   React.useEffect(() => {

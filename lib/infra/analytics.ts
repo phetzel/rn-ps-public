@@ -1,5 +1,7 @@
 import Constants from 'expo-constants';
 
+import { optionalRequire } from '~/lib/infra/optionalModule';
+
 type AmplitudeModule = typeof import('@amplitude/analytics-react-native');
 type AmplitudeClient = ReturnType<AmplitudeModule['createInstance']> & {
   shutdown?: () => void;
@@ -7,7 +9,7 @@ type AmplitudeClient = ReturnType<AmplitudeModule['createInstance']> & {
   flush?: () => void;
 };
 type IdentifyConstructor = AmplitudeModule['Identify'];
-type IdentifyInstance = IdentifyConstructor extends new (...args: any) => infer R ? R : never;
+type IdentifyInstance = IdentifyConstructor extends new (...args: unknown[]) => infer R ? R : never;
 type IdentifyValue = IdentifyInstance extends {
   set: (key: string, value: infer V) => unknown;
 }
@@ -21,17 +23,19 @@ let amplitudeModule: AmplitudeModule | null = null;
 
 function loadAmplitudeModule(): AmplitudeModule | null {
   if (amplitudeModule) return amplitudeModule;
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    amplitudeModule = require('@amplitude/analytics-react-native') as AmplitudeModule;
-  } catch {
-    amplitudeModule = null;
-  }
+  amplitudeModule = optionalRequire<AmplitudeModule>('@amplitude/analytics-react-native');
   return amplitudeModule;
 }
 
+function readExtraValue(source: unknown, key: string): string | undefined {
+  if (!source || typeof source !== 'object') return undefined;
+  const value = (source as Record<string, unknown>)[key];
+  return typeof value === 'string' ? value : undefined;
+}
+
 function getExtra(key: string): string | undefined {
-  return (Constants as any)?.expoConfig?.extra?.[key] ?? (Constants as any)?.manifest?.extra?.[key];
+  const manifest = (Constants as { manifest?: { extra?: unknown } }).manifest;
+  return readExtraValue(Constants.expoConfig?.extra, key) ?? readExtraValue(manifest?.extra, key);
 }
 
 export function setEnabled(enabled: boolean): void {

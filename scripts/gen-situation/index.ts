@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // LLM integration
-export * from './llm/client';
+export { LLMClient } from './llm/client';
 
 // Main generator
-export * from './generator';
+export { SituationGenerator } from './generator';

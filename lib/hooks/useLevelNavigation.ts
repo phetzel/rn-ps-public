@@ -5,9 +5,17 @@ import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';
 import { LevelStatus } from '~/types';
 
+import type { RelativePathString } from 'expo-router';
 export function useLevelNavigation() {
   const router = useRouter();
   const currentGameId = useGameManagerStore((state) => state.currentGameId);
+  const levelRouteMap: Record<LevelStatus, string> = {
+    [LevelStatus.Briefing]: 'level-briefing',
+    [LevelStatus.PressConference]: 'level-press-conference',
+    [LevelStatus.PressResults]: 'level-press-outcomes',
+    [LevelStatus.SituationOutcomes]: 'level-situation-outcomes',
+    [LevelStatus.Completed]: 'level-complete',
+  };
 
   const { getCurrentLevel, progressCurrentLevel } = useCurrentLevelStore(
     useShallow((state) => ({
@@ -24,53 +32,15 @@ export function useLevelNavigation() {
       console.warn('No game ID available');
       return false;
     }
+    const route = levelRouteMap[status];
+    if (!route) {
+      console.warn(`Unknown level status: ${status}`);
+      return false;
+    }
+
+    const navigate = fromCurrentTab ? router.push : router.replace;
     try {
-      switch (status) {
-        case LevelStatus.Briefing:
-          if (fromCurrentTab) {
-            router.push(`/games/${currentGameId}/current/level-briefing`);
-          } else {
-            router.replace(`/games/${currentGameId}/current/level-briefing`);
-          }
-          break;
-
-        case LevelStatus.PressConference:
-          if (fromCurrentTab) {
-            router.push(`/games/${currentGameId}/current/level-press-conference`);
-          } else {
-            router.replace(`/games/${currentGameId}/current/level-press-conference`);
-          }
-          break;
-
-        case LevelStatus.PressResults:
-          if (fromCurrentTab) {
-            router.push(`/games/${currentGameId}/current/level-press-outcomes`);
-          } else {
-            router.replace(`/games/${currentGameId}/current/level-press-outcomes`);
-          }
-          break;
-
-        case LevelStatus.SituationOutcomes:
-          if (fromCurrentTab) {
-            router.push(`/games/${currentGameId}/current/level-situation-outcomes`);
-          } else {
-            router.replace(`/games/${currentGameId}/current/level-situation-outcomes`);
-          }
-          break;
-
-        case LevelStatus.Completed:
-          if (fromCurrentTab) {
-            router.push(`/games/${currentGameId}/current/level-complete`);
-          } else {
-            router.replace(`/games/${currentGameId}/current/level-complete`);
-          }
-          break;
-
-        default:
-          console.warn(`Unknown level status: ${status}`);
-          return false;
-      }
-
+      navigate(`/games/${currentGameId}/current/${route}` as RelativePathString);
       return true;
     } catch (error) {
       console.error('Failed to navigate to level screen:', error);
@@ -123,7 +93,7 @@ export function useLevelNavigation() {
       return false;
     }
 
-    router.navigate(`/games/${currentGameId}/${tab}`);
+    router.navigate(`/games/${currentGameId}/${tab}` as RelativePathString);
     return true;
   };
 

@@ -2,7 +2,7 @@ import { render, screen, act, waitFor } from '@testing-library/react-native';
 import React from 'react';
 import { of, BehaviorSubject } from 'rxjs';
 
-import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
+import JournalistDisplay from '~/components/connected/entity/JournalistDisplay';
 import {
   observeJournalist,
   observePublicationForJournalistId,

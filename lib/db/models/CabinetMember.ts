@@ -1,19 +1,20 @@
-import { Model, Relation } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import { field, text, date, relation, readonly } from '@nozbe/watermelondb/decorators';
-import { Associations } from '@nozbe/watermelondb/Model';
 
 // Models
 import { staticCabinetMembers } from '~/lib/data/staticPolitics';
 
 import type Game from './Game';
+import type { Relation } from '@nozbe/watermelondb';
+import type { Associations } from '@nozbe/watermelondb/Model';
 // Data
 // Enums
 import type { CabinetStaticId, StaticCabinetMember } from '~/types';
 
 export default class CabinetMember extends Model {
-  static table = 'cabinet_members';
+  static readonly table = 'cabinet_members';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     games: { type: 'belongs_to', key: 'game_id' },
   };
 

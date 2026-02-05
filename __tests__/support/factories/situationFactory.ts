@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { Situation } from '~/lib/db/models';
-import { SituationType, AnswerType, SituationContent } from '~/types';
+import type { Situation } from '~/lib/db/models';
+import type { SituationContent } from '~/types';
+import { SituationType, AnswerType } from '~/types';
 
 type SituationOverrides = {
   gameId: string; // Required association

@@ -4,8 +4,9 @@ import ThresholdProgressBar from '~/components/shared/level-consequences/Thresho
 import { Badge } from '~/components/ui/badge';
 import { Text } from '~/components/ui/text';
 import { CONSEQUENCE_THRESHOLD } from '~/lib/constants';
-import { useRiskDisplay } from '~/lib/hooks/useRiskDisplay';
-import { CabinetRiskDisplayData } from '~/types';
+import { getRiskDisplay } from '~/lib/utils';
+
+import type { CabinetRiskDisplayData } from '~/types';
 
 interface RiskItemCabinetProps {
   cabinetMember: CabinetRiskDisplayData;
@@ -13,7 +14,7 @@ interface RiskItemCabinetProps {
 }
 
 export default function RiskItemCabinet({ cabinetMember, wasFired }: RiskItemCabinetProps) {
-  const riskInfo = useRiskDisplay(
+  const riskInfo = getRiskDisplay(
     cabinetMember.currentValue,
     cabinetMember.riskPercentage,
     cabinetMember.threshold || CONSEQUENCE_THRESHOLD,

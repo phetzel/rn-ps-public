@@ -1,15 +1,9 @@
 name: EAS Build
 
-# ============================================================================
-# 🎭 SHOWCASE MODE: This workflow is disabled to preserve EAS build quota.
-# To re-enable for production: remove `if: false` from the `setup` and `build` jobs.
-# ============================================================================
-
 on:
   push:
     branches:
       - main
-      - release/**
   workflow_dispatch:
     inputs:
       platform:
@@ -34,12 +28,15 @@ on:
 env:
   EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
+concurrency:
+  group: eas-build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   # Determine what to build
   setup:
     name: Setup Build Matrix
     runs-on: ubuntu-latest
-    if: false # SHOWCASE MODE: Disabled to preserve EAS build quota
     outputs:
       platforms: ${{ steps.set-platforms.outputs.platforms }}
       profile: ${{ steps.set-profile.outputs.profile }}
@@ -76,7 +73,6 @@ jobs:
     name: Build ${{ matrix.platform }}
     needs: setup
     runs-on: ubuntu-latest
-    if: false # SHOWCASE MODE: Disabled to preserve EAS build quota
     timeout-minutes: 60
     strategy:
       fail-fast: false
@@ -127,7 +123,7 @@ jobs:
     name: Notify Build Complete
     needs: [setup, build]
     runs-on: ubuntu-latest
-    if: false # SHOWCASE MODE: Disabled (was: always())
+    if: always()
     steps:
       - name: Build Summary
         run: |

@@ -12,10 +12,11 @@ import {
   computePublicationBoosts,
   getArchivedPublicationBoosts,
 } from '~/lib/db/helpers/publicationBoostApi';
-import { CabinetMember, SubgroupApproval, Journalist } from '~/lib/db/models';
-// Data + Types
-import { calculateAdBoost, calculateMediaCoverage } from '~/lib/utils';
-import { EntityWithDelta, EntityWithMediaDelta, PublicationBoost, LevelStatus } from '~/types';
+import { calculateAdBoost, calculateMediaCoverage } from '~/lib/game/relationships';
+import { LevelStatus } from '~/types';
+
+import type { CabinetMember, SubgroupApproval, Journalist } from '~/lib/db/models';
+import type { EntityWithDelta, EntityWithMediaDelta, PublicationBoost } from '~/types';
 
 // Enhance relationship deltas with entity data
 export async function getEnhancedRelationshipDeltas(levelId: string): Promise<EntityWithDelta[]> {

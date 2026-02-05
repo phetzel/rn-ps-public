@@ -1,14 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { Award } from '~/components/icons/Award';
+import { Briefcase } from '~/components/icons/Briefcase';
+import { Landmark } from '~/components/icons/Landmark';
+import { Minus } from '~/components/icons/Minus';
+import { TrendingDown } from '~/components/icons/TrendingDown';
+import { TrendingUp } from '~/components/icons/TrendingUp';
+import { User } from '~/components/icons/User';
 import { Text } from '~/components/ui/text';
-import { Award } from '~/lib/icons/Award';
-import { Briefcase } from '~/lib/icons/Briefcase';
-import { Landmark } from '~/lib/icons/Landmark';
-import { Minus } from '~/lib/icons/Minus';
-import { TrendingDown } from '~/lib/icons/TrendingDown';
-import { TrendingUp } from '~/lib/icons/TrendingUp';
-import { User } from '~/lib/icons/User';
 
 interface ImpactItemProps {
   title: string;

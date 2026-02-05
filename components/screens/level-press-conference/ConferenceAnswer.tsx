@@ -1,15 +1,17 @@
 import React from 'react';
 import { View, Pressable } from 'react-native';
 
+import { ChevronRight } from '~/components/icons/ChevronRight';
+import { FileText } from '~/components/icons/FileText';
+import { Lock } from '~/components/icons/Lock';
 import AuthorizedTooltip from '~/components/shared/preference/AuthorizedTooltip';
 import { Text } from '~/components/ui/text';
 import { CABINET_AUTHORIZED_THRESHOLD } from '~/lib/constants';
-import { CabinetMember } from '~/lib/db/models';
-import { ChevronRight } from '~/lib/icons/ChevronRight';
-import { FileText } from '~/lib/icons/FileText';
-import { Lock } from '~/lib/icons/Lock';
 import { cn } from '~/lib/utils';
-import { Answer, AnswerType } from '~/types';
+import { AnswerType } from '~/types';
+
+import type { Answer } from '~/types';
+import type { CabinetMember } from '~/types/view-models';
 
 interface ConferenceAnswerProps {
   answer: Answer;

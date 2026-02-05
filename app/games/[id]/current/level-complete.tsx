@@ -1,6 +1,6 @@
 import { Image } from 'react-native';
 
-import LevelCompleteContent from '~/components/screens/level-complete/LevelCompleteContent';
+import LevelCompleteContent from '~/components/connected/level-complete/LevelCompleteContent';
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
 import { useCurrentLevelStore } from '~/lib/stores/currentLevelStore';
 import { useGameManagerStore } from '~/lib/stores/gameManagerStore';

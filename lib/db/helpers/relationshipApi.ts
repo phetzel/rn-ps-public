@@ -1,8 +1,79 @@
 import { database } from '~/lib/db';
 import { getEnhancedSituationOutcomeDeltas } from '~/lib/db/helpers/entityEnhancementApi';
 import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
-import { calculateAdBoost } from '~/lib/utils';
-import { PsRelationshipDeltas, EntityWithMediaDelta } from '~/types';
+import { calculateAdBoost } from '~/lib/game/relationships';
+
+import type { CabinetMember, Game, Journalist } from '~/lib/db/models';
+import type { PsRelationshipDeltas, EntityWithMediaDelta } from '~/types';
+
+function clampPercent(value: number): number {
+  return Math.max(0, Math.min(100, Math.round(value)));
+}
+
+function getDeltaWithAdBoost(delta: number, useAdBoost: boolean): number {
+  return useAdBoost ? calculateAdBoost(delta) : delta;
+}
+
+async function applyPresidentRelationshipDelta(
+  game: Game,
+  delta: number,
+  useAdBoost: boolean,
+): Promise<void> {
+  if (delta === 0) return;
+
+  const boostedDelta = getDeltaWithAdBoost(delta, useAdBoost);
+  await game.update((record) => {
+    record.presPsRelationship = clampPercent((record.presPsRelationship || 0) + boostedDelta);
+  });
+}
+
+async function applyCabinetRelationshipDeltas(
+  gameId: string,
+  cabinetMembers: CabinetMember[],
+  cabinetDeltas: PsRelationshipDeltas['cabinetMembers'] | undefined,
+  useAdBoost: boolean,
+): Promise<void> {
+  if (!cabinetDeltas) return;
+
+  for (const [staticId, deltaValue] of Object.entries(cabinetDeltas)) {
+    if (deltaValue === 0) continue;
+
+    const member = cabinetMembers.find((item) => item.staticId === staticId);
+    if (!member) {
+      console.warn(`Cabinet member with staticId ${staticId} not found for game ${gameId}.`);
+      continue;
+    }
+
+    const boostedDelta = getDeltaWithAdBoost(deltaValue, useAdBoost);
+    await member.update((record) => {
+      record.psRelationship = clampPercent((record.psRelationship || 0) + boostedDelta);
+    });
+  }
+}
+
+async function applyJournalistRelationshipDeltas(
+  gameId: string,
+  journalists: Journalist[],
+  journalistDeltas: PsRelationshipDeltas['journalists'] | undefined,
+  useAdBoost: boolean,
+): Promise<void> {
+  if (!journalistDeltas) return;
+
+  for (const [staticId, deltaValue] of Object.entries(journalistDeltas)) {
+    if (deltaValue === 0) continue;
+
+    const journalist = journalists.find((item) => item.staticId === staticId);
+    if (!journalist) {
+      console.warn(`Journalist with staticId ${staticId} not found for game ${gameId}.`);
+      continue;
+    }
+
+    const boostedDelta = getDeltaWithAdBoost(deltaValue, useAdBoost);
+    await journalist.update((record) => {
+      record.psRelationship = clampPercent((record.psRelationship || 0) + boostedDelta);
+    });
+  }
+}
 
 export async function applyRelationshipDeltas(
   gameId: string,
@@ -17,52 +88,9 @@ export async function applyRelationshipDeltas(
   }
 
   return await database.write(async () => {
-    // --- Apply President PS Relationship Delta ---
-    if (deltas.president !== 0) {
-      const boostedDelta = useAdBoost ? calculateAdBoost(deltas.president) : deltas.president;
-
-      await game.update((g) => {
-        const next = (g.presPsRelationship || 0) + boostedDelta;
-        g.presPsRelationship = Math.max(0, Math.min(100, Math.round(next)));
-      });
-    }
-
-    // --- Apply Cabinet Member PS Relationship Deltas ---
-    if (deltas.cabinetMembers) {
-      for (const [staticId, deltaValue] of Object.entries(deltas.cabinetMembers)) {
-        if (deltaValue === 0) continue;
-
-        const member = cabinetMembers.find((m) => m.staticId === staticId);
-        if (member) {
-          const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
-
-          await member.update((m) => {
-            const next = (m.psRelationship || 0) + boostedDelta;
-            m.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
-          });
-        } else {
-          console.warn(`Cabinet member with staticId ${staticId} not found for game ${gameId}.`);
-        }
-      }
-    }
-
-    if (deltas.journalists) {
-      for (const [staticId, deltaValue] of Object.entries(deltas.journalists)) {
-        if (deltaValue === 0) continue;
-
-        const journalist = journalists.find((j) => j.staticId === staticId);
-        if (journalist) {
-          const boostedDelta = useAdBoost ? calculateAdBoost(deltaValue) : deltaValue;
-
-          await journalist.update((j) => {
-            const next = (j.psRelationship || 0) + boostedDelta;
-            j.psRelationship = Math.max(0, Math.min(100, Math.round(next)));
-          });
-        } else {
-          console.warn(`Journalist with staticId ${staticId} not found for game ${gameId}.`);
-        }
-      }
-    }
+    await applyPresidentRelationshipDelta(game, deltas.president, useAdBoost);
+    await applyCabinetRelationshipDeltas(gameId, cabinetMembers, deltas.cabinetMembers, useAdBoost);
+    await applyJournalistRelationshipDeltas(gameId, journalists, deltas.journalists, useAdBoost);
   });
 }
 

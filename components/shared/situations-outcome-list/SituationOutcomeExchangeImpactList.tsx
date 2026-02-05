@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { TrendingDown } from '~/components/icons/TrendingDown';
+import { TrendingUp } from '~/components/icons/TrendingUp';
 import { Text } from '~/components/ui/text';
-import { TrendingDown } from '~/lib/icons/TrendingDown';
-import { TrendingUp } from '~/lib/icons/TrendingUp';
 import { cn } from '~/lib/utils';
 
 interface SituationOutcomeExchangeImpactListProps {

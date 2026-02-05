@@ -11,7 +11,8 @@ import {
   pressExchangeCollection,
   situationCollection,
 } from '~/lib/db/helpers/collections';
-import {
+
+import type {
   CabinetMember,
   Publication,
   SubgroupApproval,

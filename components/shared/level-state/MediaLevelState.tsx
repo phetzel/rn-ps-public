@@ -1,16 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { Newspaper } from '~/components/icons';
 import { PublicationStateHeader } from '~/components/shared/entity/PublicationStateHeader';
 import LevelProgress from '~/components/shared/level-state/LevelProgress';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Separator } from '~/components/ui/separator';
 import { Text } from '~/components/ui/text';
 import { staticPublications, staticJournalists } from '~/lib/data/staticMedia';
-import { Newspaper } from '~/lib/icons';
-import { PublicationStaticId, JournalistStaticId } from '~/types';
 
-import type { OutcomeSnapshotType } from '~/types';
+import type { JournalistStaticId, OutcomeSnapshotType, PublicationStaticId } from '~/types';
 
 interface MediaLevelStateProps {
   outcomeSnapshot: OutcomeSnapshotType;
@@ -78,10 +77,14 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
           accessible={true}
           accessibilityLabel={`Media monthly update: ${publicationsWithData.length} publications`}
         >
-          {publicationsWithData.map((publication, pubIndex) => {
+          {publicationsWithData.map((publication) => {
             const publicationJournalists = journalistsByPublication[publication.id] || [];
 
             const approvalChange = publication.finalApproval - publication.initialApproval;
+            const approvalChangeSign = approvalChange > 0 ? '+' : '';
+            const approvalChangeLabel = publication.hasApprovalData
+              ? `Approval changed by ${approvalChangeSign}${approvalChange}%.`
+              : '';
 
             return (
               <View
@@ -89,9 +92,7 @@ const MediaLevelState = ({ outcomeSnapshot }: MediaLevelStateProps) => {
                 className="gap-4"
                 accessible={true}
                 accessibilityLabel={`${publication.name}. ${
-                  publication.hasApprovalData
-                    ? `Approval changed by ${approvalChange > 0 ? '+' : ''}${approvalChange}%.`
-                    : ''
+                  approvalChangeLabel
                 } ${publicationJournalists.length} journalists.`}
               >
                 <View className="gap-2" accessible={false}>

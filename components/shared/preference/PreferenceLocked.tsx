@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { Lock } from '~/components/icons/Lock';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Text } from '~/components/ui/text';
 import { CABINET_PREFERENCE_THRESHOLD } from '~/lib/constants';
-import { Lock } from '~/lib/icons/Lock';
 
 interface PreferenceLockedProps {
   cabinetMemberName: string;

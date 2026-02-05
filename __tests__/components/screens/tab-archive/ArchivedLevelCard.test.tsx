@@ -2,7 +2,7 @@ import { jest } from '@jest/globals';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import ArchivedLevelCard from '~/components/screens/tab-archive/ArchivedLevelCard';
+import ArchivedLevelCard from '~/components/connected/tab-archive/ArchivedLevelCard';
 import { LevelStatus } from '~/types';
 
 // Mock withObservables HOC
@@ -84,7 +84,7 @@ jest.mock('~/components/ui/text', () => {
 });
 
 // Mock icons
-jest.mock('~/lib/icons', () => {
+jest.mock('~/components/icons', () => {
   const React = require('react');
   const { View } = require('react-native');
   return {

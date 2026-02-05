@@ -2,9 +2,9 @@ import { useRouter } from 'expo-router';
 import * as React from 'react';
 import { View } from 'react-native';
 
+import { Settings } from '~/components/icons';
 import { Button } from '~/components/ui/button';
 import { Text } from '~/components/ui/text';
-import { Settings } from '~/lib/icons';
 
 export function HomePrivacySettings() {
   const router = useRouter();

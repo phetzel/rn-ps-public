@@ -1,6 +1,7 @@
 import { database } from '~/lib/db';
+
 // Import models using the new index file
-import {
+import type {
   CabinetMember,
   Game,
   Journalist,

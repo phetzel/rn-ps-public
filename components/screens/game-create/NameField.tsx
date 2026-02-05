@@ -1,15 +1,17 @@
 import React from 'react';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { Input } from '~/components/ui/input';
 import { Label } from '~/components/ui/label';
 import { Text } from '~/components/ui/text';
-import { CreateGameFormData } from '~/lib/schemas';
+
+import type { Control, FieldError } from 'react-hook-form';
+import type { CreateLevelFormData } from '~/lib/schemas';
 
 interface NameFieldProps {
-  control: Control<CreateGameFormData>;
-  name: keyof CreateGameFormData;
+  control: Control<CreateLevelFormData>;
+  name: keyof CreateLevelFormData;
   label: string;
   placeholder: string;
   error?: FieldError;

@@ -7,7 +7,8 @@ Press Office is a React Native application built with Expo. It uses a "Local-Fir
 ```mermaid
 flowchart TB
     subgraph app["Mobile App"]
-        UI[React Native UI]
+        UI[Presentational UI]
+        Connected[Connected Components]
         Router[Expo Router]
         State[Zustand Stores]
         DB[(WatermelonDB)]
@@ -24,9 +25,10 @@ flowchart TB
         EAS[EAS Build/Update]
     end
 
-    UI --> Router
-    UI --> State
-    State --> DB
+    UI --> Connected
+    Connected --> State
+    Connected --> DB
+    Router --> Connected
 
     UI --> Sentry
     UI --> Amplitude
@@ -47,12 +49,18 @@ flowchart TB
 │   │                        Mobile App                                │   │
 │   │                                                                  │   │
 │   │   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐      │   │
-│   │   │  React Native│◄──▶│  Expo Router │◄──▶│   Zustand    │      │   │
+│   │   │Presentational│◄──▶│  Expo Router │◄──▶│   Zustand    │      │   │
 │   │   │      UI      │    │  (Navigation)│    │   (State)    │      │   │
 │   │   └──────┬───────┘    └──────────────┘    └──────┬───────┘      │   │
 │   │          │                                       │               │   │
 │   │          │            ┌──────────────┐           │               │   │
-│   │          └───────────▶│ WatermelonDB │◄──────────┘               │   │
+│   │          └───────────▶│  Connected   │◄──────────┘               │   │
+│   │                       │ Components  │                           │   │
+│   │                       └──────┬──────┘                           │   │
+│   │                              │                                   │   │
+│   │                              ▼                                   │   │
+│   │                       ┌──────────────┐                           │   │
+│   │                       │ WatermelonDB │                           │   │
 │   │                       │  (SQLite)    │                           │   │
 │   │                       └──────────────┘                           │   │
 │   └─────────────────────────────────────────────────────────────────┘   │
@@ -92,15 +100,19 @@ press-office/
 │   └── games/              # Game-related screens
 │       └── [id]/           # Dynamic game routes
 ├── components/
+│   ├── connected/          # Data-aware components (DB/observables)
 │   ├── ui/                 # Primitive atoms (buttons, inputs)
-│   ├── shared/             # Reusable domain components
-│   └── screens/            # Screen-specific compositions
+│   ├── shared/             # Presentational reusable components
+│   └── screens/            # Presentational screen views
 ├── lib/
 │   ├── db/                 # Database schema, models, helpers
 │   ├── stores/             # Zustand stores
 │   ├── hooks/              # Custom React hooks
 │   ├── schemas/            # Zod validation schemas
-│   └── data/               # Static content (situations)
+│   ├── data/               # Static content (situations)
+│   └── infra/              # Runtime integrations (sentry, analytics)
+├── types/
+│   └── view-models/         # View-level type projections
 ├── e2e/
 │   └── maestro/            # E2E test flows
 ├── scripts/                # Automation tools
@@ -124,25 +136,28 @@ flowchart LR
     end
 
     subgraph component["React Components"]
-        Screen[Screen]
-        Child[Child Components]
+        Connected[Connected Components]
+        Screen[Screen Views]
+        Child[Shared Views]
     end
 
-    Game --> Screen
-    Level --> Screen
-    UI --> Screen
+    Game --> Connected
+    Level --> Connected
+    UI --> Connected
+    Connected --> Screen
     Screen --> Child
 ```
 
 1. **Persisted Data**: Game state (current level, stats) is stored in **WatermelonDB**.
 2. **Ephemeral Data**: UI state (current dialog open, animation flags) is stored in **Zustand**.
-3. **Reactivity**: Components observe WatermelonDB objects using `withObservables` or interact with Zustand hooks.
+3. **Reactivity**: `withObservables` and DB helpers are used only in `components/connected`, which passes props to presentational views.
 
 ## Documentation Sections
 
 | Section                                   | Description                             |
 | ----------------------------------------- | --------------------------------------- |
 | [Database](./database.md)                 | WatermelonDB schema and models          |
+| [Architecture](./architecture.md)         | Layered UI and boundaries               |
 | [Content Pipeline](./content-pipeline.md) | LLM-based situation generation          |
 | [Testing](./testing.md)                   | Unit tests and E2E testing with Maestro |
 | [CI/CD Pipeline](./ci-cd.md)              | GitHub Actions workflows                |
@@ -158,12 +173,19 @@ All game data is stored locally in SQLite via WatermelonDB. This ensures:
 - ✅ No backend infrastructure needed
 - ✅ User data stays on device (privacy)
 
+### Layered UI with Boundaries
+
+UI is split into **presentational** and **connected** layers. `components/connected` is the only layer allowed to access WatermelonDB and `withObservables`. `components/screens` and `components/shared` are presentational only.
+
+Boundaries are enforced with `eslint-plugin-boundaries` and documented in the [Architecture](./architecture.md) doc.
+
 ### File-Based Routing
 
 Expo Router provides automatic routing based on the `app/` directory structure:
 
 - `app/index.tsx` → `/`
-- `app/games/[id]/play.tsx` → `/games/123/play`
+- `app/games/[id]/current/index.tsx` → `/games/123/current`
+- `app/games/[id]/archive/index.tsx` → `/games/123/archive`
 
 ### Tailwind-Style Styling
 

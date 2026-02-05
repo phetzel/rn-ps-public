@@ -23,8 +23,10 @@ import {
   calculateAndApplyConsequences,
   hireReplacementCabinetMembers,
 } from '~/lib/db/helpers';
-import { Game, Level, Situation } from '~/lib/db/models';
-import { LevelStatus, OutcomeSnapshotType, GameStatus } from '~/types';
+import { LevelStatus, GameStatus } from '~/types';
+
+import type { Game, Level, Situation } from '~/lib/db/models';
+import type { OutcomeSnapshotType } from '~/types';
 
 interface CurrentLevelStoreState {
   currentLevelId: string | null;
@@ -106,12 +108,12 @@ export const useCurrentLevelStore = create<CurrentLevelStoreState>((set, get) =>
     try {
       // Check if game has ended
       if (isGameEnded(game.status)) {
-        const endReason =
-          game.status === GameStatus.Impeached
-            ? 'impeachment'
-            : game.status === GameStatus.Fired
-              ? 'firing'
-              : 'completion';
+        let endReason = 'completion';
+        if (game.status === GameStatus.Impeached) {
+          endReason = 'impeachment';
+        } else if (game.status === GameStatus.Fired) {
+          endReason = 'firing';
+        }
         set({
           isLoading: false,
           error: `Cannot create new level: Game has ended due to ${endReason}.`,

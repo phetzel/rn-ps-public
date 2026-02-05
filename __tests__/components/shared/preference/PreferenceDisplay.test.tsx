@@ -13,7 +13,8 @@ import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import PreferenceDisplay from '~/components/shared/preference/PreferenceDisplay';
-import { AnswerType, Preference, PreferenceAnswerType } from '~/types';
+import type { Preference, PreferenceAnswerType } from '~/types';
+import { AnswerType } from '~/types';
 
 // No mocks - testing actual component behavior
 

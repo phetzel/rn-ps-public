@@ -1,4 +1,4 @@
-import { Model, Relation } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import { field, text, date, relation, readonly, writer } from '@nozbe/watermelondb/decorators';
 
 import {
@@ -6,19 +6,20 @@ import {
   updateProgressWithAnswer,
   updateProgressWithSkip,
   initializeExchangeProgress,
-} from '~/lib/db/helpers/exchangeApi';
+} from '~/lib/game/exchange-tree';
 import { exchangeContentSchema, exchangeProgressSchema } from '~/lib/schemas';
-import { ExchangeContent, ExchangeProgress, Question } from '~/types';
 
 import type Journalist from './Journalist';
 import type Level from './Level';
 import type Situation from './Situation';
+import type { Relation } from '@nozbe/watermelondb';
 import type { Associations } from '@nozbe/watermelondb/Model';
+import type { ExchangeContent, ExchangeProgress, Question } from '~/types';
 
 export default class PressExchange extends Model {
-  static table = 'press_exchanges';
+  static readonly table = 'press_exchanges';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     levels: { type: 'belongs_to', key: 'level_id' },
     situations: { type: 'belongs_to', key: 'situation_id' },
     journalists: { type: 'belongs_to', key: 'journalist_id' },

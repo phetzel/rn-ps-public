@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { View } from 'react-native';
 
 import { NameField } from '~/components/screens/game-create/NameField';
-import { CreateGameFormData } from '~/lib/schemas';
+import type { CreateGameFormData } from '~/lib/schemas';
 
 function Wrapper({ withError = false }: { withError?: boolean }) {
   const { control } = useForm<CreateGameFormData>({

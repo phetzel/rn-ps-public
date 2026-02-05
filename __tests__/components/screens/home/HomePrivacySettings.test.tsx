@@ -10,7 +10,7 @@ jest.mock('expo-router', () => ({
 }));
 
 // Mock the Settings icon
-jest.mock('~/lib/icons', () => ({
+jest.mock('~/components/icons', () => ({
   Settings: () => null,
 }));
 

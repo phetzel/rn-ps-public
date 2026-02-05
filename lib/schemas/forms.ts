@@ -14,4 +14,4 @@ export type CreateLevelFormData = z.infer<typeof createLevelSchema>;
 
 // Keep the old export for backward compatibility
 export const createGameSchema = createLevelSchema;
-export type CreateGameFormData = CreateLevelFormData;
+export type CreateGameFormData = z.infer<typeof createGameSchema>;

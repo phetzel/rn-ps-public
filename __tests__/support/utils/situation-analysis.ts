@@ -1,5 +1,6 @@
 import { situationsData } from '~/lib/data/situations';
-import { AnswerType, CabinetStaticId } from '~/types';
+import type { CabinetStaticId } from '~/types';
+import { AnswerType } from '~/types';
 
 export interface PreferenceValidationResult {
   totalPreferences: number;

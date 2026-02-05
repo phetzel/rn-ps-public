@@ -8,11 +8,11 @@ import {
   type ExchangesPlanArray,
   createDynamicImpactsSchema,
 } from '~/lib/schemas/generate';
-import { CabinetStaticId } from '~/types';
 
 import { GPT_5 } from '../llm-constants';
 
 import type { ResponsesJSONSchemaOptions } from '../../types';
+import type { CabinetStaticId } from '~/types';
 
 // Helper to present outcomes for the model (ids must be used in outcomeModifiers)
 function summarizeOutcomes(outcomes: GenerateOutcomes['outcomes']) {

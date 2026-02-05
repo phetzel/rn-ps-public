@@ -37,7 +37,7 @@ export const useGameManagerStore = create<GameManagerStoreState>((set, get) => (
       await database.get('games').query(Q.take(1)).fetch();
       set({ isDbReady: true, error: null });
       console.log('Database connection ready.');
-    } catch (e: any) {
+    } catch (e: unknown) {
       console.error('Database initialization check failed:', e);
       set({ isDbReady: false, error: 'Database connection failed.' });
     }
@@ -70,9 +70,10 @@ export const useGameManagerStore = create<GameManagerStoreState>((set, get) => (
       } else {
         throw new Error('Game creation returned null unexpectedly.');
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : String(e);
       console.error('Failed to create game:', e);
-      set({ isLoading: false, error: `Failed to create game: ${e.message}` });
+      set({ isLoading: false, error: `Failed to create game: ${message}` });
       return null;
     }
   },
@@ -89,9 +90,10 @@ export const useGameManagerStore = create<GameManagerStoreState>((set, get) => (
       } else {
         set({ isLoading: false });
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : String(e);
       console.error(`Failed to delete game ${gameId}:`, e);
-      set({ isLoading: false, error: `Failed to delete game: ${e.message}` });
+      set({ isLoading: false, error: `Failed to delete game: ${message}` });
     }
   },
 }));

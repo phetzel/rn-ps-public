@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { Level } from '~/lib/db/models';
+import type { Level } from '~/lib/db/models';
 import { LevelStatus } from '~/types';
 
 type LevelOverrides = {

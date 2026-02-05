@@ -1,4 +1,4 @@
-import { Game } from '~/lib/db/models';
+import type { Game } from '~/lib/db/models';
 
 export type GameOptions = Partial<Game>;
 

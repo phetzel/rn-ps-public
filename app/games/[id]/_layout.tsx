@@ -1,9 +1,9 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
 
-import { FileText } from '~/lib/icons/FileText';
-import { History } from '~/lib/icons/History';
-import { LayoutDashboard } from '~/lib/icons/LayoutDashboard';
+import { FileText } from '~/components/icons/FileText';
+import { History } from '~/components/icons/History';
+import { LayoutDashboard } from '~/components/icons/LayoutDashboard';
 
 export const unstable_settings = {
   initialRouteName: 'current',

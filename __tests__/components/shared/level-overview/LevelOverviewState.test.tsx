@@ -12,10 +12,10 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import LevelOverviewState from '~/components/shared/level-overview/LevelOverviewState';
+import LevelOverviewState from '~/components/connected/level-overview/LevelOverviewState';
 
 // Mock child components
-jest.mock('~/components/shared/level-state/PresidentLevelState', () => {
+jest.mock('~/components/connected/level-state/PresidentLevelState', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {
@@ -25,7 +25,7 @@ jest.mock('~/components/shared/level-state/PresidentLevelState', () => {
   };
 });
 
-jest.mock('~/components/shared/level-state/CabinetLevelState', () => {
+jest.mock('~/components/connected/level-state/CabinetLevelState', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {
@@ -44,7 +44,7 @@ jest.mock('~/components/shared/level-state/MediaLevelState', () => {
   };
 });
 
-jest.mock('~/components/shared/level-state/SubgroupLevelState', () => {
+jest.mock('~/components/connected/level-state/SubgroupLevelState', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return {

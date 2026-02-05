@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import React from 'react';
 
-import { ThemeToggle } from '~/components/shared/layout/ThemeToggle';
+import { ThemeToggle } from '~/components/connected/layout/ThemeToggle';
 
 // Mock the useColorScheme hook - matches the actual implementation (light mode only)
-jest.mock('~/lib/useColorScheme', () => ({
+jest.mock('~/lib/hooks/useColorScheme', () => ({
   useColorScheme: () => ({
     isDarkColorScheme: false,
     colorScheme: 'light',
@@ -14,7 +14,7 @@ jest.mock('~/lib/useColorScheme', () => ({
 }));
 
 // Mock the android navigation bar
-jest.mock('~/lib/android-navigation-bar', () => ({
+jest.mock('~/lib/infra/android-navigation-bar', () => ({
   setAndroidNavigationBar: jest.fn(),
 }));
 
@@ -52,7 +52,7 @@ describe('ThemeToggle', () => {
 
   it('calls toggle function when pressed', () => {
     // get the mocked function from the jest.mock above
-    const { setAndroidNavigationBar } = jest.requireMock('~/lib/android-navigation-bar');
+    const { setAndroidNavigationBar } = jest.requireMock('~/lib/infra/android-navigation-bar');
 
     render(<ThemeToggle />);
 
@@ -60,7 +60,11 @@ describe('ThemeToggle', () => {
     fireEvent.press(button);
 
     // Since light mode is active, it should attempt to switch to dark
-    expect(setAndroidNavigationBar).toHaveBeenCalledWith('dark');
+    expect(setAndroidNavigationBar).toHaveBeenCalledWith(
+      expect.objectContaining({
+        theme: 'dark',
+      }),
+    );
   });
 
   it('renders pressable component', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Icons
-import { AlertCircle, Globe, DollarSign, Shield, Users, Leaf, Library } from '~/lib/icons';
+import { AlertCircle, Globe, DollarSign, Shield, Users, Leaf, Library } from '~/components/icons';
 // Types
 import { SituationType } from '~/types';
 

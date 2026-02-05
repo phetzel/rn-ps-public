@@ -19,7 +19,7 @@ jest.mock('~/components/shared/layout/ParallaxScrollView', () => {
 });
 
 // Mock LevelOverviewContent
-jest.mock('~/components/shared/level-overview/LevelOverviewContent', () => {
+jest.mock('~/components/connected/level-overview/LevelOverviewContent', () => {
   const React = require('react');
   const { Text } = require('react-native');
   return function MockLevelOverviewContent({ levelId }: { levelId: string }) {

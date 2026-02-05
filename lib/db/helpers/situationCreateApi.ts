@@ -1,13 +1,14 @@
 import { staticJournalists } from '~/lib/data/staticMedia';
 import { database } from '~/lib/db';
 import { situationCollection, pressExchangeCollection } from '~/lib/db/helpers/collections';
-import { initializeExchangeProgressForContent } from '~/lib/db/helpers/exchangeApi';
 import {
   fetchActiveJournalistsForGame,
   fetchPressExchangeForJournalistLevel,
 } from '~/lib/db/helpers/fetchApi';
-import { Situation, Game, Level } from '~/lib/db/models';
-import { SituationData, PublicationStaticId, JournalistStaticId } from '~/types';
+import { initializeExchangeProgressForContent } from '~/lib/game/exchange-tree';
+
+import type { Situation, Game, Level } from '~/lib/db/models';
+import type { SituationData, PublicationStaticId, JournalistStaticId } from '~/types';
 
 export async function createSituationsForLevel(
   game: Game,

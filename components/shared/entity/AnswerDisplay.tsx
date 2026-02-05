@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import { CheckCircle2 } from '~/components/icons/CheckCircle2';
 import { Text } from '~/components/ui/text';
-import { CheckCircle2 } from '~/lib/icons/CheckCircle2';
 
 interface AnswerDisplayProps {
   answer: string;

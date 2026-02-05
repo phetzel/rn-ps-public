@@ -2,9 +2,9 @@ import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { Image } from 'react-native';
 
+import LevelOverviewContent from '~/components/connected/level-overview/LevelOverviewContent';
 import { EmptyState } from '~/components/shared/EmptyState';
 import ParallaxScrollView from '~/components/shared/layout/ParallaxScrollView';
-import LevelOverviewContent from '~/components/shared/level-overview/LevelOverviewContent';
 
 function ArchiveLevelScreen() {
   const { levelId } = useLocalSearchParams<{ levelId: string }>();

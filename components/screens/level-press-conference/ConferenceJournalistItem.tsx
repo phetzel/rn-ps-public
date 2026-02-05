@@ -1,20 +1,24 @@
 import React, { useMemo } from 'react';
 import { View, Pressable } from 'react-native';
 
+import { ChevronRight } from '~/components/icons/ChevronRight';
 import { FollowUpBadge } from '~/components/shared/entity/FollowUpBadge';
-import JournalistDisplay from '~/components/shared/entity/JournalistDisplay';
 import InfoTooltip from '~/components/shared/InfoTooltip';
 import { Card, CardContent } from '~/components/ui/card';
-import { ChevronRight } from '~/lib/icons/ChevronRight';
 
-import type PressExchange from '~/lib/db/models/PressExchange';
+import type PressExchange from '~/types/view-models/PressExchange';
 
 interface ConferenceJournalistItemProps {
   pressExchange: PressExchange;
   onSelect: (exchange: PressExchange) => void;
+  renderJournalist: (journalistId: string) => React.ReactNode;
 }
 
-const ConferenceJournalistItem = ({ pressExchange, onSelect }: ConferenceJournalistItemProps) => {
+const ConferenceJournalistItem = ({
+  pressExchange,
+  onSelect,
+  renderJournalist,
+}: ConferenceJournalistItemProps) => {
   // // Determine exchange status from progress
   const exchangeProgress = pressExchange.parseProgress;
 
@@ -77,9 +81,7 @@ const ConferenceJournalistItem = ({ pressExchange, onSelect }: ConferenceJournal
             {/* Show follow-up badge if journalist has been called on */}
             {hasBeenCalledOn && !isDisabled && <FollowUpBadge className="self-center my-0" />}
             <View className="flex-row justify-between items-center" accessible={false}>
-              <View className="flex-1">
-                <JournalistDisplay journalistId={pressExchange.journalist_id} />
-              </View>
+              <View className="flex-1">{renderJournalist(pressExchange.journalist_id)}</View>
               <View className="px-1">
                 {isDisabled ? (
                   <InfoTooltip

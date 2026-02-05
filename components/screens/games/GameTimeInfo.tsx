@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
+import { Clock } from '~/components/icons/Clock';
 import { Text } from '~/components/ui/text';
-import { Clock } from '~/lib/icons/Clock';
 
 interface GameTimeInfoProps {
   lastPlayed: Date;

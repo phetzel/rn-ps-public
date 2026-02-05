@@ -1,17 +1,15 @@
 import { CABINET_PENALTY_PER_FIRED_MEMBER } from '~/lib/constants';
 import { database } from '~/lib/db';
 import { fetchGameEntities } from '~/lib/db/helpers/fetchApi';
-import { calculateRiskProbability } from '~/lib/utils';
-import { ConsequenceResult, CabinetStaticId, GameStatus } from '~/types';
+import {
+  calculateRiskProbability,
+  rollForEvent,
+  calculateCabinetFirings,
+} from '~/lib/game/consequences';
+import { GameStatus } from '~/types';
 
 import type { Game, CabinetMember, SubgroupApproval } from '~/lib/db/models';
-
-/**
- * Roll dice to determine if an event occurs
- */
-function rollForEvent(probability: number, randomProvider: () => number = Math.random): boolean {
-  return randomProvider() < probability;
-}
+import type { ConsequenceResult, CabinetStaticId } from '~/types';
 
 /**
  * Calculate game ending consequences (impeachment and firing)
@@ -45,26 +43,6 @@ async function calculateGameEndingConsequences(
   }
 
   return null;
-}
-
-/**
- * Calculate cabinet member firings
- */
-function calculateCabinetFirings(
-  cabinetMembers: CabinetMember[],
-  randomProvider: () => number,
-): CabinetStaticId[] {
-  const cabinetMembersToFire: CabinetStaticId[] = [];
-
-  for (const member of cabinetMembers) {
-    const firingProbability = calculateRiskProbability(member.approvalRating);
-
-    if (rollForEvent(firingProbability, randomProvider)) {
-      cabinetMembersToFire.push(member.staticId);
-    }
-  }
-
-  return cabinetMembersToFire;
 }
 
 /**

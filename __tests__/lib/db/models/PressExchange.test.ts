@@ -8,7 +8,7 @@
  * - Error handling for malformed data
  */
 
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { setupTestDatabase, resetDatabase } from '~/__tests__/support/db';
 import { createGame } from '~/__tests__/support/factories/gameFactory';

@@ -17,6 +17,16 @@ export function ResultsEntityRow({
   isAdWatched,
   showAdColumn = true,
 }: ResultsEntityRowProps) {
+  const formatDelta = (value: number) => ({
+    sign: value >= 0 ? '+' : '-',
+    word: value >= 0 ? 'plus' : 'minus',
+    abs: Math.abs(value),
+  });
+  const getDeltaClassName = (value: number, emphasize: boolean) => {
+    if (!emphasize) return 'text-muted-foreground';
+    return value >= 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold';
+  };
+
   // Check if entity has media data and should show base column
   const hasMediaData = 'preMediaDelta' in entity;
   const showBaseColumn = hasMediaData && !showAdColumn;
@@ -24,6 +34,12 @@ export function ResultsEntityRow({
   // Calculate column count and get widths
   const columnCount = 2 + (showBaseColumn ? 1 : 0) + 1 + (showAdColumn ? 1 : 0); // Name + Start + Base? + Change + Boosted?
   const { name: nameWidth, data: dataWidth } = calculateTableColumnWidths(columnCount);
+  const titleSuffix = entity.title ? `, ${entity.title}` : '';
+  const nameLabel = `${entity.name}${titleSuffix}`;
+  const baseDelta = hasMediaData ? (entity as EntityWithMediaDelta).preMediaDelta : 0;
+  const baseDeltaInfo = formatDelta(baseDelta);
+  const deltaInfo = formatDelta(entity.delta);
+  const adDeltaInfo = formatDelta(entity.adBoostedDelta);
 
   return (
     <View className="flex-row border-b border-border pb-2">
@@ -31,7 +47,7 @@ export function ResultsEntityRow({
       <View
         style={{ width: nameWidth }}
         accessible={true}
-        accessibilityLabel={`${entity.name}${entity.title ? `, ${entity.title}` : ''}`}
+        accessibilityLabel={nameLabel}
         className="gap-1"
       >
         <Text className="text-base font-bold leading-none" accessible={false}>
@@ -62,13 +78,11 @@ export function ResultsEntityRow({
           style={{ width: dataWidth }}
           className="justify-center items-center"
           accessible={true}
-          accessibilityLabel={`Base change: ${
-            (entity as EntityWithMediaDelta).preMediaDelta >= 0 ? 'plus' : 'minus'
-          } ${Math.abs((entity as EntityWithMediaDelta).preMediaDelta)}`}
+          accessibilityLabel={`Base change: ${baseDeltaInfo.word} ${baseDeltaInfo.abs}`}
         >
           <Text className={'text-lg text-muted-foreground'} accessible={false}>
-            {(entity as EntityWithMediaDelta).preMediaDelta >= 0 ? '+' : '-'}
-            {Math.abs((entity as EntityWithMediaDelta).preMediaDelta)}
+            {baseDeltaInfo.sign}
+            {baseDeltaInfo.abs}
           </Text>
         </View>
       )}
@@ -78,23 +92,14 @@ export function ResultsEntityRow({
         style={{ width: dataWidth }}
         className="justify-center items-center"
         accessible={true}
-        accessibilityLabel={`Change: ${
-          entity.delta >= 0 ? 'plus' : 'minus'
-        } ${Math.abs(entity.delta)}`}
+        accessibilityLabel={`Change: ${deltaInfo.word} ${deltaInfo.abs}`}
       >
         <Text
-          className={cn(
-            'text-lg',
-            !showAdColumn || !isAdWatched
-              ? entity.delta >= 0
-                ? 'text-green-600 font-bold'
-                : 'text-red-600 font-bold'
-              : 'text-muted-foreground',
-          )}
+          className={cn('text-lg', getDeltaClassName(entity.delta, !showAdColumn || !isAdWatched))}
           accessible={false}
         >
-          {entity.delta >= 0 ? '+' : '-'}
-          {Math.abs(entity.delta)}
+          {deltaInfo.sign}
+          {deltaInfo.abs}
         </Text>
       </View>
 
@@ -106,21 +111,14 @@ export function ResultsEntityRow({
           accessible={true}
           accessibilityLabel={`${
             isAdWatched ? 'Ad boosted' : 'Potential boost'
-          }: ${entity.adBoostedDelta >= 0 ? 'plus' : 'minus'} ${Math.abs(entity.adBoostedDelta)}`}
+          }: ${adDeltaInfo.word} ${adDeltaInfo.abs}`}
         >
           <Text
-            className={cn(
-              'text-lg',
-              isAdWatched
-                ? entity.adBoostedDelta >= 0
-                  ? 'text-green-600 font-bold'
-                  : 'text-red-600 font-bold'
-                : 'text-muted-foreground',
-            )}
+            className={cn('text-lg', getDeltaClassName(entity.adBoostedDelta, isAdWatched))}
             accessible={false}
           >
-            {entity.adBoostedDelta >= 0 ? '+' : '-'}
-            {Math.abs(entity.adBoostedDelta)}
+            {adDeltaInfo.sign}
+            {adDeltaInfo.abs}
           </Text>
         </View>
       )}

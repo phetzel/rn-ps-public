@@ -26,11 +26,18 @@ const sidebars: SidebarsConfig = {
       collapsible: false,
       items: [
         'technical/index',
+        'technical/architecture',
         'technical/database',
         'technical/content-pipeline',
         'technical/testing',
         'technical/ci-cd',
       ],
+    },
+    {
+      type: 'category',
+      label: 'Compliance',
+      collapsible: false,
+      items: ['compliance/index', 'compliance/privacy'],
     },
   ],
 };

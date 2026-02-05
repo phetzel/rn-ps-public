@@ -1,9 +1,11 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
+import { ConsequenceGameCompleteView } from '~/components/shared/level-consequences/ConsequenceGameCompleteView';
 import LevelConsequencesCard from '~/components/shared/level-consequences/LevelConsequencesCard';
-import { CabinetMember } from '~/lib/db/models';
-import { ConsequenceResult, CabinetStaticId } from '~/types';
+import type { CabinetMember } from '~/lib/db/models';
+import type { ConsequenceResult } from '~/types';
+import { CabinetStaticId } from '~/types';
 
 // Mock WatermelonDB withObservables for ConsequenceGameComplete
 jest.mock('@nozbe/watermelondb/react', () => ({
@@ -33,6 +35,15 @@ jest.mock('~/lib/db/helpers', () => ({
 }));
 
 describe('LevelConsequencesCard', () => {
+  const renderConsequenceGameComplete = () => (
+    <ConsequenceGameCompleteView
+      psName="Test PS"
+      presName="Test President"
+      presPsRelationship={75}
+      presApprovalRating={65}
+    />
+  );
+
   const mockCabinetMembers: CabinetMember[] = [
     {
       id: '1',
@@ -60,6 +71,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -79,6 +91,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -98,6 +111,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -116,6 +130,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -135,6 +150,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -159,6 +175,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -178,6 +195,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={undefined}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -191,6 +209,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={undefined}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -212,6 +231,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -229,6 +249,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -247,6 +268,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -265,6 +287,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -283,6 +306,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -302,6 +326,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -320,6 +345,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -341,6 +367,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -360,6 +387,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -381,6 +409,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -398,6 +427,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -415,6 +445,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -435,6 +466,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 
@@ -453,6 +485,7 @@ describe('LevelConsequencesCard', () => {
           gameId="game-1"
           consequences={consequences}
           cabinetMembers={mockCabinetMembers}
+          renderConsequenceGameComplete={renderConsequenceGameComplete}
         />,
       );
 

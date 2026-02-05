@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { Game } from '~/lib/db/models';
+import type { Game } from '~/lib/db/models';
 import { GameStatus, PoliticalLeaning } from '~/types';
 
-import { GameFactoryOptions } from '../scenarios/types';
+import type { GameFactoryOptions } from '../scenarios/types';
 
 export async function createGame(
   database: Database,

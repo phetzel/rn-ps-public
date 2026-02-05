@@ -6,7 +6,7 @@ import { SituationTypeIcon } from '~/components/shared/entity/SituationTypeIcon'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
 import { Text } from '~/components/ui/text';
 
-import type Situation from '~/lib/db/models/Situation';
+import type Situation from '~/types/view-models/Situation';
 
 interface SituationCardProps {
   situation: Situation;

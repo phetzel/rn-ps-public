@@ -13,7 +13,7 @@
 import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
-import SituationOutcomeItem from '~/components/shared/situations-outcome-list/SituationOutcomeItem';
+import SituationOutcomeItem from '~/components/connected/situations-outcome-list/SituationOutcomeItem';
 
 import type { Situation } from '~/lib/db/models';
 
@@ -141,7 +141,7 @@ jest.mock('~/components/shared/situations-outcome-list/SituationSelectedOutcome'
   };
 });
 
-jest.mock('~/components/shared/impact/ImpactList', () => {
+jest.mock('~/components/connected/impact/ImpactList', () => {
   const React = require('react');
   const { Text } = require('react-native');
   const MockImpactList = ({ impacts }: any) => {
@@ -159,7 +159,7 @@ jest.mock('~/components/shared/situations-outcome-list/SituationAlternativeOutco
   return MockSituationAlternativeOutcomes;
 });
 
-jest.mock('~/components/shared/situations-outcome-list/SituationOutcomeExchanges', () => {
+jest.mock('~/components/connected/situations-outcome-list/SituationOutcomeExchanges', () => {
   const React = require('react');
   const { Text } = require('react-native');
   const MockSituationOutcomeExchanges = ({ situationId, selectedOutcome }: any) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { Briefcase } from '~/lib/icons/Briefcase';
-import { Landmark } from '~/lib/icons/Landmark';
-import { Users } from '~/lib/icons/Users';
+import { Briefcase } from '~/components/icons/Briefcase';
+import { Landmark } from '~/components/icons/Landmark';
+import { Users } from '~/components/icons/Users';
 import { SubgroupCategory } from '~/types';
 
 interface SubgroupCategoryIconProps {

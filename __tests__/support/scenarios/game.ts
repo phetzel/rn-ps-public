@@ -1,4 +1,4 @@
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
 import { createCabinetMember } from '~/__tests__/support/factories/cabinetMemberFactory';
 import { createGame } from '~/__tests__/support/factories/gameFactory';
@@ -8,8 +8,8 @@ import { createPressExchange } from '~/__tests__/support/factories/pressExchange
 import { createPublication } from '~/__tests__/support/factories/publicationFactory';
 import { createSituation } from '~/__tests__/support/factories/situationFactory';
 import { createSubgroupApproval } from '~/__tests__/support/factories/subgroupApprovalFactory';
-import { GameFactoryOptions } from '~/__tests__/support/scenarios/types';
-import {
+import type { GameFactoryOptions } from '~/__tests__/support/scenarios/types';
+import type {
   Game,
   CabinetMember,
   Publication,

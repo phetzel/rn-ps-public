@@ -1,10 +1,10 @@
 import { generationAnalysis } from './generation-analysis';
-import { LLMClient } from './llm/client';
 import { PlanningStep, PreferencesStep, OutcomesStep, ExchangesStep } from './steps';
 import { validateFinalSituation } from './utils/final-validator';
 import { logDeep } from './utils/logging';
 import { writeSituationFiles } from './utils/situation-file-writer';
 
+import type { LLMClient } from './llm/client';
 import type { GenerationStage, GenerationResult } from './types';
 
 // ═══════════════════════════════════════════════════════════════════════════════

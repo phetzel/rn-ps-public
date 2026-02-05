@@ -1,8 +1,12 @@
 import { QUESTIONS_PER_PRESS_CONFERENCE } from '~/lib/constants';
 
-import type { PressExchange } from '~/lib/db/models';
+import type { ExchangeProgress } from '~/types';
 
-export function usePressConferenceState(pressExchanges: PressExchange[]) {
+interface PressExchangeProgressSource {
+  parseProgress: ExchangeProgress | null;
+}
+
+export function usePressConferenceState(pressExchanges: PressExchangeProgressSource[]) {
   const questionsTakenCount = pressExchanges.reduce((total, exchange) => {
     const progress = exchange.parseProgress;
     return total + (progress?.history.length || 0);

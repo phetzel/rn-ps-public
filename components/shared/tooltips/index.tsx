@@ -26,7 +26,7 @@ export const tooltipRegistry = {
 
 export type TooltipKey = keyof typeof tooltipRegistry;
 
-export function getTooltip<K extends TooltipKey>(key: K, params?: any) {
-  const Comp = tooltipRegistry[key];
-  return Comp ? React.createElement(Comp as any, params) : null;
+export function getTooltip<K extends TooltipKey>(key: K, params?: Record<string, unknown>) {
+  const Comp = tooltipRegistry[key] as React.ComponentType<Record<string, unknown>>;
+  return Comp ? React.createElement(Comp, params) : null;
 }

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
-import { Database } from '@nozbe/watermelondb';
+import type { Database } from '@nozbe/watermelondb';
 
-import { Journalist } from '~/lib/db/models';
+import type { Journalist } from '~/lib/db/models';
 import { JournalistStaticId } from '~/types';
 
 type JournalistOverrides = {

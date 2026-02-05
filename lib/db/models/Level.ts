@@ -1,4 +1,4 @@
-import { Model, Relation, Query } from '@nozbe/watermelondb';
+import { Model } from '@nozbe/watermelondb';
 import {
   field,
   text,
@@ -15,12 +15,13 @@ import { type LevelStatus, type OutcomeSnapshotType, type CabinetSnapshot } from
 import type Game from './Game';
 import type PressExchange from './PressExchange';
 import type Situation from './Situation';
+import type { Relation, Query } from '@nozbe/watermelondb';
 import type { Associations } from '@nozbe/watermelondb/Model'; // Import for clarity if needed, but as const is sufficient
 
 export default class Level extends Model {
-  static table = 'levels';
+  static readonly table = 'levels';
 
-  static associations: Associations = {
+  static readonly associations: Associations = {
     games: { type: 'belongs_to', key: 'game_id' },
     situations: { type: 'has_many', foreignKey: 'level_id' },
     press_exchanges: { type: 'has_many', foreignKey: 'level_id' },

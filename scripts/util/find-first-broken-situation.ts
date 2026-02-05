@@ -1,5 +1,7 @@
 import { situationsData } from '~/lib/data/situations';
-import { PublicationStaticId, ExchangeImpactWeight } from '~/types';
+import { ExchangeImpactWeight } from '~/types';
+
+import type { PublicationStaticId } from '~/types';
 
 type BrokenAnswer = {
   publication: PublicationStaticId;

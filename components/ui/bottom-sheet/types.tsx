@@ -1,6 +1,6 @@
 //#region Gorhom Bottom Sheet
 
-import { BottomSheetProps as BSProps, BottomSheetHandleProps } from '@gorhom/bottom-sheet';
+import type { BottomSheetProps as BSProps, BottomSheetHandleProps } from '@gorhom/bottom-sheet';
 
 export interface BSHandleProps extends BottomSheetHandleProps {
   className?: string;
@@ -8,9 +8,6 @@ export interface BSHandleProps extends BottomSheetHandleProps {
 //#endregion
 
 //#region Vaul
-
-// type WithFadeFromProps = Record<string, never>;
-// type WithoutFadeFromProps = Record<string, never>;
 
 interface DialogProps {
   activeSnapPoint?: number | string | null;

@@ -1,18 +1,20 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { getTooltip, TooltipKey } from '~/components/shared/tooltips';
+import { Info } from '~/components/icons/Info';
+import { getTooltip } from '~/components/shared/tooltips';
 import { Tooltip, TooltipTrigger, TooltipContent } from '~/components/ui/tooltip';
-import { Info } from '~/lib/icons/Info';
+
+import type { TooltipKey } from '~/components/shared/tooltips';
 
 interface InfoTooltipProps {
   children?: React.ReactNode;
   tooltipId?: TooltipKey;
-  tooltipParams?: any;
+  tooltipParams?: Record<string, unknown>;
 }
 
 const InfoTooltip: React.FC<InfoTooltipProps> = ({ children, tooltipId, tooltipParams }) => {
-  const content = tooltipId ? getTooltip(tooltipId as TooltipKey, tooltipParams) : children;
+  const content = tooltipId ? getTooltip(tooltipId, tooltipParams) : children;
   if (!content) return null;
 
   return (

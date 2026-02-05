@@ -9,7 +9,7 @@
 import { render } from '@testing-library/react-native';
 import React from 'react';
 
-import PressResultsTotal from '~/components/shared/level-overview/PressResultsTotal';
+import PressResultsTotal from '~/components/connected/level-overview/PressResultsTotal';
 import { getEnhancedRelationshipDeltas } from '~/lib/db/helpers';
 
 // Mock child components

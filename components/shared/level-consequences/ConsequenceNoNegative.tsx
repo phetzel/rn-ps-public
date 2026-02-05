@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 
+import { CheckCircle2 } from '~/components/icons';
 import { Text } from '~/components/ui/text';
-import { CheckCircle2 } from '~/lib/icons';
 
 export default function ConsequenceNoNegative() {
   return (
