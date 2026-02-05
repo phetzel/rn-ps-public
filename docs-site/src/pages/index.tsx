@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Heading from '@theme/Heading';
 import Layout from '@theme/Layout';
@@ -24,7 +25,7 @@ function HomepageHeader() {
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link className="button button--secondary button--lg" to="/docs/overview">
+          <Link className="button button--secondary button--lg" to={useBaseUrl('docs/overview')}>
             Read the Docs
           </Link>
         </div>
@@ -37,22 +38,22 @@ const quickLinks = [
   {
     title: 'Overview',
     description: 'Project goals, tone, and portfolio-ready highlights.',
-    to: '/docs/overview',
+    to: 'docs/overview',
   },
   {
     title: 'Gameplay',
     description: 'Stage flow, win/lose rules, and systems tables.',
-    to: '/docs/gameplay/guide',
+    to: 'docs/gameplay/guide',
   },
   {
     title: 'Technical',
     description: 'Setup, scripts, content tooling, and compliance notes.',
-    to: '/docs/technical',
+    to: 'docs/technical',
   },
   {
     title: 'Compliance',
     description: 'Privacy disclosures, ATT/UMP flow, and store prep.',
-    to: '/docs/compliance',
+    to: 'docs/compliance',
   },
 ];
 
@@ -72,7 +73,7 @@ export default function Home(): ReactNode {
                 <Heading as="h3">{link.title}</Heading>
                 <p>{link.description}</p>
                 <div className={styles.cardFooter}>
-                  <Link className="button button--primary button--sm" to={link.to}>
+                  <Link className="button button--primary button--sm" to={useBaseUrl(link.to)}>
                     Open
                   </Link>
                 </div>
